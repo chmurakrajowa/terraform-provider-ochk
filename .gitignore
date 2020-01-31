@@ -1,0 +1,21 @@
+# Idea files
+.idea
+*.iml
+
+# Dep package manager
+/vendor
+/Gopkg.lock
+/Gopkg.toml
+
+# Terraform
+./*.tfstate
+.terraform
+
+# Mac Weirdness
+.DS_Store
+
+# Build
+terraform-provider-ochk
+terraform.tfvars
+terraform.tfplan
+terraform.tfstate
