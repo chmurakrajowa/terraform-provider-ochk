@@ -13,11 +13,29 @@ func Provider() terraform.ResourceProvider {
 	provider := &schema.Provider{
 		Schema: map[string]*schema.Schema{
 			"host": {
-				Type:        schema.TypeString,
-				Required:    true,
+				Type:         schema.TypeString,
+				Required:     true,
 				ValidateFunc: validateHost,
-				Description: "host value",
+				Description:  "host value",
 			},
+			"tenant": {
+				Type:         schema.TypeString,
+				Required:     true,
+				Description:  "tenant value",
+			},
+			"username": {
+				Type:         schema.TypeString,
+				Required:     true,
+				Description:  "username value",
+			},
+			"password": {
+				Type:         schema.TypeString,
+				Required:     true,
+				Description:  "password value",
+			},
+		},
+		ResourcesMap: map[string]*schema.Resource{
+			"virtual_machine": resourceVirtualMachine(),
 		},
 	}
 
@@ -29,5 +47,5 @@ func validateHost(val interface{}, key string) (warns []string, errs []error) {
 		errs = append(errs, fmt.Errorf("%s value is not valid: %s", key, val.(string)))
 	}
 
-	return
+	return nil, errs
 }
