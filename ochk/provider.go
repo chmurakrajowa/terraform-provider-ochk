@@ -4,13 +4,11 @@ import (
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client"
 )
 
-// Provider returns a terraform.ResourceProvider.
 func Provider() terraform.ResourceProvider {
-
-	// The actual provider
-	provider := &schema.Provider{
+	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
 			"host": {
 				Type:         schema.TypeString,
@@ -37,9 +35,16 @@ func Provider() terraform.ResourceProvider {
 		ResourcesMap: map[string]*schema.Resource{
 			"virtual_machine": resourceVirtualMachine(),
 		},
-	}
+		ConfigureFunc: func(d *schema.ResourceData) (interface{}, error) {
+			transportConfig := &client.TransportConfig{
+				Host:     d.Get("host").(string),
+				BasePath: "",
+				Schemes:  nil,
+			}
 
-	return provider
+			return client.NewHTTPClientWithConfig(nil, transportConfig), nil
+		},
+	}
 }
 
 func validateHost(val interface{}, key string) (warns []string, errs []error) {

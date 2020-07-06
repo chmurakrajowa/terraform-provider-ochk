@@ -1,0 +1,729 @@
+swagger: '2.0'
+info:
+  description: Api Documentation
+  version: '1.0'
+  title: Api Documentation
+  termsOfService: 'urn:tos'
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0'
+host: 'localhost:8442'
+basePath: /
+tags:
+  - name: ip-set-controller
+    description: IP Set Controller
+  - name: security-group-controller
+    description: Security Group Controller
+  - name: auth-controller
+    description: Auth Controller
+  - name: virtual-machine-controller
+    description: Virtual Machine Controller
+  - name: logical-port-controller
+    description: Logical Port Controller
+  - name: service-controller
+    description: Service Controller
+  - name: request-controller
+    description: Request Controller
+paths:
+  /auth:
+    post:
+      tags:
+        - auth-controller
+      summary: AuthTokenGet
+      operationId: AuthTokenGetUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AuthTokenCreateResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /nsx/cs/:
+    get:
+      tags:
+        - service-controller
+      summary: ServiceList
+      operationId: ServiceListUsingGET
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ServiceListResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /nsx/ips/:
+    get:
+      tags:
+        - ip-set-controller
+      summary: IPSetList
+      operationId: IPSetListUsingGET
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/IPSetListResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /nsx/lp/:
+    get:
+      tags:
+        - logical-port-controller
+      summary: LogicalPortList
+      operationId: LogicalPortListUsingGET
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/LogicalPortListResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /nsx/sg/:
+    get:
+      tags:
+        - security-group-controller
+      summary: List
+      operationId: ListUsingGET
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SecurityGroupListResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - security-group-controller
+      summary: Create
+      operationId: CreateUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: securityGroup
+          description: securityGroup
+          required: true
+          schema:
+            $ref: '#/definitions/SecurityGroup'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CreateResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/nsx/sg/{GroupId}':
+    delete:
+      tags:
+        - security-group-controller
+      summary: Delete
+      operationId: DeleteUsingDELETE
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: GroupId
+          in: path
+          description: GroupId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DeleteResponse'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /nsx/vms/:
+    get:
+      tags:
+        - virtual-machine-controller
+      summary: VirtualMachineList
+      operationId: VirtualMachineListUsingGET
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/VirtualMachineListResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /request/:
+    get:
+      tags:
+        - request-controller
+      summary: RequestList
+      operationId: RequestListUsingGET
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/RequestInstanceListResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/request/{requestId}':
+    get:
+      tags:
+        - request-controller
+      summary: RequestGet
+      operationId: RequestGetUsingGET
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: requestId
+          in: path
+          description: requestId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/RequestInstanceGetResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+definitions:
+  AuthToken:
+    type: object
+    properties:
+      creationDate:
+        $ref: '#/definitions/Timestamp'
+      tokenId:
+        type: string
+      tokenInstance:
+        $ref: '#/definitions/TokenInstance'
+  AuthTokenCreateResponse:
+    type: object
+    properties:
+      authToken:
+        $ref: '#/definitions/AuthToken'
+      messages:
+        type: string
+      success:
+        type: boolean
+      timestamp:
+        $ref: '#/definitions/Timestamp'
+  CreateResponse:
+    type: object
+    properties:
+      messages:
+        type: string
+      requestInstance:
+        $ref: '#/definitions/RequestInstance'
+      securityGroup:
+        $ref: '#/definitions/SecurityGroup'
+      success:
+        type: boolean
+      timestamp:
+        $ref: '#/definitions/Timestamp'
+  DeleteResponse:
+    type: object
+    properties:
+      messages:
+        type: string
+      requestInstance:
+        $ref: '#/definitions/RequestInstance'
+      securityGroup:
+        $ref: '#/definitions/SecurityGroup'
+      success:
+        type: boolean
+      timestamp:
+        $ref: '#/definitions/Timestamp'
+  IPSet:
+    type: object
+    properties:
+      createdBy:
+        type: string
+      creationDate:
+        $ref: '#/definitions/Timestamp'
+      displayName:
+        type: string
+      externalId:
+        type: string
+      ipSetAddresses:
+        type: array
+        items:
+          $ref: '#/definitions/IPSetAddress'
+      ipSetId:
+        type: string
+      modificationDate:
+        $ref: '#/definitions/Timestamp'
+      modifiedBy:
+        type: string
+      resourceType:
+        $ref: '#/definitions/ResourceType'
+      tags:
+        type: array
+        items:
+          $ref: '#/definitions/TagInstance'
+  IPSetAddress:
+    type: object
+    properties:
+      ipAddress:
+        type: string
+      ipSetAddressId:
+        type: integer
+        format: int32
+  IPSetListResponse:
+    type: object
+    properties:
+      ipSetCollection:
+        type: array
+        items:
+          $ref: '#/definitions/IPSet'
+      messages:
+        type: string
+      success:
+        type: boolean
+      timestamp:
+        $ref: '#/definitions/Timestamp'
+  LogicalPort:
+    type: object
+    properties:
+      displayName:
+        type: string
+      externalId:
+        type: string
+      logicalPortAdminState:
+        $ref: '#/definitions/LogicalPortAdminState'
+      logicalPortId:
+        type: string
+      resourceType:
+        $ref: '#/definitions/ResourceType'
+      tags:
+        type: array
+        items:
+          $ref: '#/definitions/TagInstance'
+  LogicalPortAdminState:
+    type: object
+    properties:
+      stateId:
+        type: integer
+        format: int32
+      stateName:
+        type: string
+  LogicalPortListResponse:
+    type: object
+    properties:
+      logicalPortCollection:
+        type: array
+        items:
+          $ref: '#/definitions/LogicalPort'
+      messages:
+        type: string
+      success:
+        type: boolean
+      timestamp:
+        $ref: '#/definitions/Timestamp'
+  RequestInstance:
+    type: object
+    properties:
+      endDate:
+        $ref: '#/definitions/Timestamp'
+      requestBody:
+        type: string
+      requestId:
+        type: string
+      requestMessageList:
+        type: array
+        items:
+          $ref: '#/definitions/RequestMessage'
+      requestPhase:
+        type: string
+        enum:
+          - NEW
+          - PROCESSING
+          - FINISHED
+          - CANCELLED
+          - TIMEOUT
+      requestStatus:
+        type: string
+        enum:
+          - SUCCESS
+          - FAILED
+      requestType:
+        type: string
+        enum:
+          - SECURITY_GROUP_CREATE
+          - SECURITY_GROUP_DELETE
+      requestor:
+        type: string
+      requestorId:
+        type: string
+      startDate:
+        $ref: '#/definitions/Timestamp'
+  RequestInstanceGetResponse:
+    type: object
+    properties:
+      messages:
+        type: string
+      requestInstance:
+        $ref: '#/definitions/RequestInstance'
+      success:
+        type: boolean
+      timestamp:
+        $ref: '#/definitions/Timestamp'
+  RequestInstanceListResponse:
+    type: object
+    properties:
+      messages:
+        type: string
+      requestInstanceList:
+        type: array
+        items:
+          $ref: '#/definitions/RequestInstance'
+      success:
+        type: boolean
+      timestamp:
+        $ref: '#/definitions/Timestamp'
+  RequestMessage:
+    type: object
+    properties:
+      messageDate:
+        $ref: '#/definitions/Timestamp'
+      messageValue:
+        type: string
+  ResourceType:
+    type: object
+    properties:
+      resourceTypeId:
+        type: integer
+        format: int32
+      resourceTypeName:
+        type: string
+  SecurityGroup:
+    type: object
+    properties:
+      createdBy:
+        type: string
+      creationDate:
+        $ref: '#/definitions/Timestamp'
+      displayName:
+        type: string
+      externalId:
+        type: string
+      id:
+        type: string
+      members:
+        type: array
+        items:
+          $ref: '#/definitions/SecurityGroupMember'
+      modificationDate:
+        $ref: '#/definitions/Timestamp'
+      modifiedBy:
+        type: string
+      parentPath:
+        type: string
+      path:
+        type: string
+      relativePath:
+        type: string
+      resourceType:
+        $ref: '#/definitions/ResourceType'
+      tags:
+        type: array
+        items:
+          $ref: '#/definitions/TagInstance'
+  SecurityGroupListResponse:
+    type: object
+    properties:
+      messages:
+        type: string
+      securityGroupCollection:
+        type: array
+        items:
+          $ref: '#/definitions/SecurityGroup'
+      success:
+        type: boolean
+      timestamp:
+        $ref: '#/definitions/Timestamp'
+  SecurityGroupMember:
+    type: object
+    properties:
+      displayName:
+        type: string
+      externalId:
+        type: string
+      id:
+        type: string
+      memberType:
+        type: string
+        enum:
+          - IPSET
+          - LOGICAL_PORT
+          - VIRTUAL_MACHINE
+  ServiceInstance:
+    type: object
+    properties:
+      createdBy:
+        type: string
+      creationDate:
+        $ref: '#/definitions/Timestamp'
+      default:
+        type: boolean
+      description:
+        type: string
+      displayName:
+        type: string
+      externalId:
+        type: string
+      modificationDate:
+        $ref: '#/definitions/Timestamp'
+      modifiedBy:
+        type: string
+      parentPath:
+        type: string
+      path:
+        type: string
+      relativePath:
+        type: string
+      resourceType:
+        $ref: '#/definitions/ResourceType'
+      serviceId:
+        type: string
+      serviceType:
+        $ref: '#/definitions/ServiceType'
+  ServiceListResponse:
+    type: object
+    properties:
+      messages:
+        type: string
+      serviceInstanceCollection:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceInstance'
+      success:
+        type: boolean
+      timestamp:
+        $ref: '#/definitions/Timestamp'
+  ServiceType:
+    type: object
+    properties:
+      serviceType:
+        type: string
+      serviceTypeId:
+        type: integer
+        format: int32
+  TagInstance:
+    type: object
+    properties:
+      scope:
+        type: string
+      tagId:
+        type: integer
+        format: int32
+      value:
+        type: string
+  TenantInstance:
+    type: object
+    properties:
+      tenantDescription:
+        type: string
+      tenantDisplayName:
+        type: string
+      tenantId:
+        type: string
+      tenantName:
+        type: string
+  Timestamp:
+    type: object
+    properties:
+      date:
+        type: integer
+        format: int32
+      day:
+        type: integer
+        format: int32
+      hours:
+        type: integer
+        format: int32
+      minutes:
+        type: integer
+        format: int32
+      month:
+        type: integer
+        format: int32
+      nanos:
+        type: integer
+        format: int32
+      seconds:
+        type: integer
+        format: int32
+      time:
+        type: integer
+        format: int64
+      timezoneOffset:
+        type: integer
+        format: int32
+      year:
+        type: integer
+        format: int32
+  TokenInstance:
+    type: object
+    properties:
+      tenantInstance:
+        $ref: '#/definitions/TenantInstance'
+      userInstance:
+        $ref: '#/definitions/UserInstance'
+  UserInstance:
+    type: object
+    properties:
+      userId:
+        type: string
+      userTempId:
+        type: string
+  VirtualMachine:
+    type: object
+    properties:
+      biosUuid:
+        type: string
+      computerExternalId:
+        type: string
+      computerName:
+        type: string
+      displayName:
+        type: string
+      externalId:
+        type: string
+      hostId:
+        type: string
+      hostLocationId:
+        type: integer
+        format: int32
+      instanceUuid:
+        type: string
+      localHost:
+        type: integer
+        format: int32
+      locationId:
+        type: string
+      moIdOnHost:
+        type: integer
+        format: int32
+      resourceType:
+        $ref: '#/definitions/ResourceType'
+      tags:
+        type: array
+        items:
+          $ref: '#/definitions/TagInstance'
+      virtualMachineId:
+        type: string
+      virtualMachinePowerState:
+        $ref: '#/definitions/VirtualMachinePowerState'
+      virtualMachineType:
+        $ref: '#/definitions/VirtualMachineType'
+      virtualmachineOS:
+        $ref: '#/definitions/VirtualMachineOS'
+  VirtualMachineListResponse:
+    type: object
+    properties:
+      messages:
+        type: string
+      success:
+        type: boolean
+      timestamp:
+        $ref: '#/definitions/Timestamp'
+      virtualMachineCollection:
+        type: array
+        items:
+          $ref: '#/definitions/VirtualMachine'
+  VirtualMachineOS:
+    type: object
+    properties:
+      osId:
+        type: integer
+        format: int32
+      osName:
+        type: string
+  VirtualMachinePowerState:
+    type: object
+    properties:
+      powerState:
+        type: string
+      powerStateId:
+        type: integer
+        format: int32
+  VirtualMachineType:
+    type: object
+    properties:
+      vmType:
+        type: string
+      vmTypeId:
+        type: integer
+        format: int32
