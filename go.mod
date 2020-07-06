@@ -8,7 +8,7 @@ require (
 	github.com/go-openapi/strfmt v0.19.5
 	github.com/go-openapi/swag v0.19.9
 	github.com/go-openapi/validate v0.19.10
-	github.com/go-swagger/go-swagger v0.24.0 // indirect
-	github.com/golangci/golangci-lint v1.28.0 // indirect
+	github.com/go-swagger/go-swagger v0.24.0
+	github.com/golangci/golangci-lint v1.28.0
 	github.com/hashicorp/terraform-plugin-sdk v1.14.0
 )
