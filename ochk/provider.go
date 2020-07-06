@@ -19,19 +19,19 @@ func Provider() terraform.ResourceProvider {
 				Description:  "host value",
 			},
 			"tenant": {
-				Type:         schema.TypeString,
-				Required:     true,
-				Description:  "tenant value",
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "tenant value",
 			},
 			"username": {
-				Type:         schema.TypeString,
-				Required:     true,
-				Description:  "username value",
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "username value",
 			},
 			"password": {
-				Type:         schema.TypeString,
-				Required:     true,
-				Description:  "password value",
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "password value",
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{

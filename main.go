@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/plugin"
-	"ochk.pl/terraform_provider/ochk"
+	"github.com/ochk/terraform-provider-ochk/ochk"
 )
 
 func main() {
