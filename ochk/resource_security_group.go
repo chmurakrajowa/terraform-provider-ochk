@@ -1,6 +1,8 @@
 package ochk
 
 import (
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client"
+	controller "github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_group_controller"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -11,12 +13,13 @@ const (
 	VMDeleteRetryTimeout = 30 * time.Minute
 )
 
-func resourceVirtualMachine() *schema.Resource {
+func resourceSecurityGroup() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceOchkVmCreate,
+		Create: resourceServiceGroupCreate,
 		Read:   resourceOchkVmRead,
 		Update: resourceOchkVmUpdate,
 		Delete: resourceOchkVmDelete,
+		Exists: resourceServiceGroupExists,
 
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(VMRetryTimeout),
@@ -44,7 +47,12 @@ func resourceVirtualMachine() *schema.Resource {
 	}
 }
 
-func resourceOchkVmCreate(d *schema.ResourceData, meta interface{}) error {
+func resourceServiceGroupCreate(d *schema.ResourceData, meta interface{}) error {
+	service := meta.(*client.Ochk).SecurityGroupController
+
+	params := controller.NewCreateUsingPUTParams().WithSecurityGroup()
+
+	put, created, err := service.CreateUsingPUT(params)
 	return nil
 }
 
@@ -58,4 +66,8 @@ func resourceOchkVmUpdate(d *schema.ResourceData, meta interface{}) error {
 
 func resourceOchkVmDelete(d *schema.ResourceData, meta interface{}) error {
 	return nil
+}
+
+func resourceServiceGroupExists(d *schema.ResourceData, meta interface{}) (b bool, err error) {
+	return false, nil
 }

@@ -30,16 +30,22 @@ func Provider() terraform.ResourceProvider {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "password value",
+				Sensitive:   true,
+			},
+			"insecure": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "if set uses http scheme instead of https",
+				Default:     false,
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"virtual_machine": resourceVirtualMachine(),
+			"security_group": resourceSecurityGroup(),
 		},
 		ConfigureFunc: func(d *schema.ResourceData) (interface{}, error) {
 			transportConfig := &client.TransportConfig{
-				Host:     d.Get("host").(string),
-				BasePath: "",
-				Schemes:  nil,
+				Host:    d.Get("host").(string),
+				Schemes: mapToSchemes(d.Get("insecure").(bool)),
 			}
 
 			return client.NewHTTPClientWithConfig(nil, transportConfig), nil
@@ -53,4 +59,12 @@ func validateHost(val interface{}, key string) (warns []string, errs []error) {
 	}
 
 	return nil, errs
+}
+
+func mapToSchemes(insecure bool) []string {
+	if insecure {
+		return []string{"http"}
+	}
+
+	return []string{"https"}
 }
