@@ -31,7 +31,9 @@ type ClientService interface {
 
 	DeleteUsingDELETE(params *DeleteUsingDELETEParams) (*DeleteUsingDELETEOK, *DeleteUsingDELETENoContent, error)
 
-	ListUsingGET(params *ListUsingGETParams) (*ListUsingGETOK, error)
+	GetUsingGET3(params *GetUsingGET3Params) (*GetUsingGET3OK, error)
+
+	ListUsingGET6(params *ListUsingGET6Params) (*ListUsingGET6OK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -107,36 +109,70 @@ func (a *Client) DeleteUsingDELETE(params *DeleteUsingDELETEParams) (*DeleteUsin
 }
 
 /*
-  ListUsingGET lists
+  GetUsingGET3 gets
 */
-func (a *Client) ListUsingGET(params *ListUsingGETParams) (*ListUsingGETOK, error) {
+func (a *Client) GetUsingGET3(params *GetUsingGET3Params) (*GetUsingGET3OK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewListUsingGETParams()
+		params = NewGetUsingGET3Params()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ListUsingGET",
+		ID:                 "GetUsingGET_3",
 		Method:             "GET",
-		PathPattern:        "/nsx/sg/",
+		PathPattern:        "/nsx/sg/{GroupId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &ListUsingGETReader{formats: a.formats},
+		Reader:             &GetUsingGET3Reader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*ListUsingGETOK)
+	success, ok := result.(*GetUsingGET3OK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for GetUsingGET_3: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  ListUsingGET6 lists
+*/
+func (a *Client) ListUsingGET6(params *ListUsingGET6Params) (*ListUsingGET6OK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListUsingGET6Params()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ListUsingGET_6",
+		Method:             "GET",
+		PathPattern:        "/nsx/sg/",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &ListUsingGET6Reader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ListUsingGET6OK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for ListUsingGET_6: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

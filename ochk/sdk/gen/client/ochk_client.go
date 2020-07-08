@@ -11,10 +11,15 @@ import (
 	"github.com/go-openapi/strfmt"
 
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/auth_controller"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/context_profile_controller"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/dfw_rule_controller"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/gateway_policy_controller"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/gfw_rule_controller"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/ip_set_controller"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/logical_port_controller"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/request_controller"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_group_controller"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_policy_controller"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/service_controller"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machine_controller"
 )
@@ -25,7 +30,7 @@ var Default = NewHTTPClient(nil)
 const (
 	// DefaultHost is the default Host
 	// found in Meta (info) section of spec file
-	DefaultHost string = "localhost:8442"
+	DefaultHost string = "iaas-api-core.ochk.pilot"
 	// DefaultBasePath is the default BasePath
 	// found in Meta (info) section of spec file
 	DefaultBasePath string = "/"
@@ -62,10 +67,15 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli := new(Ochk)
 	cli.Transport = transport
 	cli.AuthController = auth_controller.New(transport, formats)
+	cli.ContextProfileController = context_profile_controller.New(transport, formats)
+	cli.DfwRuleController = dfw_rule_controller.New(transport, formats)
+	cli.GatewayPolicyController = gateway_policy_controller.New(transport, formats)
+	cli.GfwRuleController = gfw_rule_controller.New(transport, formats)
 	cli.IPSetController = ip_set_controller.New(transport, formats)
 	cli.LogicalPortController = logical_port_controller.New(transport, formats)
 	cli.RequestController = request_controller.New(transport, formats)
 	cli.SecurityGroupController = security_group_controller.New(transport, formats)
+	cli.SecurityPolicyController = security_policy_controller.New(transport, formats)
 	cli.ServiceController = service_controller.New(transport, formats)
 	cli.VirtualMachineController = virtual_machine_controller.New(transport, formats)
 	return cli
@@ -114,6 +124,14 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 type Ochk struct {
 	AuthController auth_controller.ClientService
 
+	ContextProfileController context_profile_controller.ClientService
+
+	DfwRuleController dfw_rule_controller.ClientService
+
+	GatewayPolicyController gateway_policy_controller.ClientService
+
+	GfwRuleController gfw_rule_controller.ClientService
+
 	IPSetController ip_set_controller.ClientService
 
 	LogicalPortController logical_port_controller.ClientService
@@ -121,6 +139,8 @@ type Ochk struct {
 	RequestController request_controller.ClientService
 
 	SecurityGroupController security_group_controller.ClientService
+
+	SecurityPolicyController security_policy_controller.ClientService
 
 	ServiceController service_controller.ClientService
 
@@ -133,10 +153,15 @@ type Ochk struct {
 func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 	c.AuthController.SetTransport(transport)
+	c.ContextProfileController.SetTransport(transport)
+	c.DfwRuleController.SetTransport(transport)
+	c.GatewayPolicyController.SetTransport(transport)
+	c.GfwRuleController.SetTransport(transport)
 	c.IPSetController.SetTransport(transport)
 	c.LogicalPortController.SetTransport(transport)
 	c.RequestController.SetTransport(transport)
 	c.SecurityGroupController.SetTransport(transport)
+	c.SecurityPolicyController.SetTransport(transport)
 	c.ServiceController.SetTransport(transport)
 	c.VirtualMachineController.SetTransport(transport)
 }
