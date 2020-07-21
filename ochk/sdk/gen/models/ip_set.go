@@ -27,9 +27,6 @@ type IPSet struct {
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
 
-	// external Id
-	ExternalID string `json:"externalId,omitempty"`
-
 	// ip set addresses
 	IPSetAddresses []*IPSetAddress `json:"ipSetAddresses"`
 
@@ -41,12 +38,6 @@ type IPSet struct {
 
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`
-
-	// resource type
-	ResourceType *ResourceType `json:"resourceType,omitempty"`
-
-	// tags
-	Tags []*TagInstance `json:"tags"`
 }
 
 // Validate validates this IP set
@@ -62,14 +53,6 @@ func (m *IPSet) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateModificationDate(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateResourceType(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateTags(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -135,49 +118,6 @@ func (m *IPSet) validateModificationDate(formats strfmt.Registry) error {
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *IPSet) validateResourceType(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ResourceType) { // not required
-		return nil
-	}
-
-	if m.ResourceType != nil {
-		if err := m.ResourceType.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("resourceType")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *IPSet) validateTags(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Tags) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Tags); i++ {
-		if swag.IsZero(m.Tags[i]) { // not required
-			continue
-		}
-
-		if m.Tags[i] != nil {
-			if err := m.Tags[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("tags" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

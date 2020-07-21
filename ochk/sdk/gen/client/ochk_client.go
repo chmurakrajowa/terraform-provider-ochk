@@ -10,18 +10,18 @@ import (
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/auth_controller"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/context_profile_controller"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/dfw_rule_controller"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/gateway_policy_controller"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/gfw_rule_controller"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/ip_set_controller"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/logical_port_controller"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/request_controller"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_group_controller"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_policy_controller"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/service_controller"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machine_controller"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/context_profiles"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/default_services"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_e_w"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_s_n"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/gateway_policies"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/ip_sets"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/logical_ports"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/routers"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_groups"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_policies"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/vidm_controller"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machines"
 )
 
 // Default ochk HTTP client.
@@ -30,7 +30,7 @@ var Default = NewHTTPClient(nil)
 const (
 	// DefaultHost is the default Host
 	// found in Meta (info) section of spec file
-	DefaultHost string = "iaas-api-core.ochk.pilot"
+	DefaultHost string = "iaas-api-proxy.ochk.pilot"
 	// DefaultBasePath is the default BasePath
 	// found in Meta (info) section of spec file
 	DefaultBasePath string = "/"
@@ -66,18 +66,18 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 
 	cli := new(Ochk)
 	cli.Transport = transport
-	cli.AuthController = auth_controller.New(transport, formats)
-	cli.ContextProfileController = context_profile_controller.New(transport, formats)
-	cli.DfwRuleController = dfw_rule_controller.New(transport, formats)
-	cli.GatewayPolicyController = gateway_policy_controller.New(transport, formats)
-	cli.GfwRuleController = gfw_rule_controller.New(transport, formats)
-	cli.IPSetController = ip_set_controller.New(transport, formats)
-	cli.LogicalPortController = logical_port_controller.New(transport, formats)
-	cli.RequestController = request_controller.New(transport, formats)
-	cli.SecurityGroupController = security_group_controller.New(transport, formats)
-	cli.SecurityPolicyController = security_policy_controller.New(transport, formats)
-	cli.ServiceController = service_controller.New(transport, formats)
-	cli.VirtualMachineController = virtual_machine_controller.New(transport, formats)
+	cli.ContextProfiles = context_profiles.New(transport, formats)
+	cli.DefaultServices = default_services.New(transport, formats)
+	cli.FirewallRulesew = firewall_rules_e_w.New(transport, formats)
+	cli.FirewallRulessn = firewall_rules_s_n.New(transport, formats)
+	cli.GatewayPolicies = gateway_policies.New(transport, formats)
+	cli.IPSets = ip_sets.New(transport, formats)
+	cli.LogicalPorts = logical_ports.New(transport, formats)
+	cli.Routers = routers.New(transport, formats)
+	cli.SecurityGroups = security_groups.New(transport, formats)
+	cli.SecurityPolicies = security_policies.New(transport, formats)
+	cli.VidmController = vidm_controller.New(transport, formats)
+	cli.VirtualMachines = virtual_machines.New(transport, formats)
 	return cli
 }
 
@@ -122,29 +122,29 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 
 // Ochk is a client for ochk
 type Ochk struct {
-	AuthController auth_controller.ClientService
+	ContextProfiles context_profiles.ClientService
 
-	ContextProfileController context_profile_controller.ClientService
+	DefaultServices default_services.ClientService
 
-	DfwRuleController dfw_rule_controller.ClientService
+	FirewallRulesew firewall_rules_e_w.ClientService
 
-	GatewayPolicyController gateway_policy_controller.ClientService
+	FirewallRulessn firewall_rules_s_n.ClientService
 
-	GfwRuleController gfw_rule_controller.ClientService
+	GatewayPolicies gateway_policies.ClientService
 
-	IPSetController ip_set_controller.ClientService
+	IPSets ip_sets.ClientService
 
-	LogicalPortController logical_port_controller.ClientService
+	LogicalPorts logical_ports.ClientService
 
-	RequestController request_controller.ClientService
+	Routers routers.ClientService
 
-	SecurityGroupController security_group_controller.ClientService
+	SecurityGroups security_groups.ClientService
 
-	SecurityPolicyController security_policy_controller.ClientService
+	SecurityPolicies security_policies.ClientService
 
-	ServiceController service_controller.ClientService
+	VidmController vidm_controller.ClientService
 
-	VirtualMachineController virtual_machine_controller.ClientService
+	VirtualMachines virtual_machines.ClientService
 
 	Transport runtime.ClientTransport
 }
@@ -152,16 +152,16 @@ type Ochk struct {
 // SetTransport changes the transport on the client and all its subresources
 func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
-	c.AuthController.SetTransport(transport)
-	c.ContextProfileController.SetTransport(transport)
-	c.DfwRuleController.SetTransport(transport)
-	c.GatewayPolicyController.SetTransport(transport)
-	c.GfwRuleController.SetTransport(transport)
-	c.IPSetController.SetTransport(transport)
-	c.LogicalPortController.SetTransport(transport)
-	c.RequestController.SetTransport(transport)
-	c.SecurityGroupController.SetTransport(transport)
-	c.SecurityPolicyController.SetTransport(transport)
-	c.ServiceController.SetTransport(transport)
-	c.VirtualMachineController.SetTransport(transport)
+	c.ContextProfiles.SetTransport(transport)
+	c.DefaultServices.SetTransport(transport)
+	c.FirewallRulesew.SetTransport(transport)
+	c.FirewallRulessn.SetTransport(transport)
+	c.GatewayPolicies.SetTransport(transport)
+	c.IPSets.SetTransport(transport)
+	c.LogicalPorts.SetTransport(transport)
+	c.Routers.SetTransport(transport)
+	c.SecurityGroups.SetTransport(transport)
+	c.SecurityPolicies.SetTransport(transport)
+	c.VidmController.SetTransport(transport)
+	c.VirtualMachines.SetTransport(transport)
 }

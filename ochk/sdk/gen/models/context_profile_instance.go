@@ -24,38 +24,14 @@ type ContextProfileInstance struct {
 	// context profile Id
 	ContextProfileID string `json:"contextProfileId,omitempty"`
 
-	// description
-	Description string `json:"description,omitempty"`
-
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
-
-	// external Id
-	ExternalID string `json:"externalId,omitempty"`
-
-	// parent path
-	ParentPath string `json:"parentPath,omitempty"`
-
-	// path
-	Path string `json:"path,omitempty"`
 
 	// protection
 	Protection string `json:"protection,omitempty"`
 
-	// relative path
-	RelativePath string `json:"relativePath,omitempty"`
-
 	// resource type
 	ResourceType *ResourceType `json:"resourceType,omitempty"`
-
-	// revision
-	Revision int64 `json:"revision,omitempty"`
-
-	// schema value
-	SchemaValue string `json:"schemaValue,omitempty"`
-
-	// system owned
-	SystemOwned bool `json:"systemOwned,omitempty"`
 }
 
 // Validate validates this context profile instance

@@ -22,9 +22,6 @@ type SecurityGroupMember struct {
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
 
-	// external Id
-	ExternalID string `json:"externalId,omitempty"`
-
 	// id
 	ID string `json:"id,omitempty"`
 

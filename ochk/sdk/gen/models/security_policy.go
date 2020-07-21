@@ -11,6 +11,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // SecurityPolicy security policy
@@ -21,9 +22,6 @@ type SecurityPolicy struct {
 	// category
 	Category *Category `json:"category,omitempty"`
 
-	// comments
-	Comments string `json:"comments,omitempty"`
-
 	// connectivity strategy
 	ConnectivityStrategy *ConnectivityStrategy `json:"connectivityStrategy,omitempty"`
 
@@ -31,61 +29,24 @@ type SecurityPolicy struct {
 	CreatedBy string `json:"createdBy,omitempty"`
 
 	// creation date
-	CreationDate *Timestamp `json:"creationDate,omitempty"`
-
-	// description
-	Description string `json:"description,omitempty"`
+	// Format: date-time
+	CreationDate strfmt.DateTime `json:"creationDate,omitempty"`
 
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
 
-	// external Id
-	ExternalID string `json:"externalId,omitempty"`
-
-	// internal sequence number
-	InternalSequenceNumber int64 `json:"internalSequenceNumber,omitempty"`
-
-	// is default
-	IsDefault bool `json:"isDefault,omitempty"`
-
-	// locked
-	Locked bool `json:"locked,omitempty"`
-
 	// modification date
-	ModificationDate *Timestamp `json:"modificationDate,omitempty"`
+	// Format: date-time
+	ModificationDate strfmt.DateTime `json:"modificationDate,omitempty"`
 
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`
 
-	// overridden
-	Overridden bool `json:"overridden,omitempty"`
-
-	// parent path
-	ParentPath string `json:"parentPath,omitempty"`
-
-	// path
-	Path string `json:"path,omitempty"`
-
-	// relative path
-	RelativePath string `json:"relativePath,omitempty"`
-
 	// resource type
 	ResourceType *ResourceType `json:"resourceType,omitempty"`
 
-	// revision
-	Revision int64 `json:"revision,omitempty"`
-
-	// scheduler path
-	SchedulerPath string `json:"schedulerPath,omitempty"`
-
-	// schema value
-	SchemaValue string `json:"schemaValue,omitempty"`
-
 	// security policy Id
 	SecurityPolicyID string `json:"securityPolicyId,omitempty"`
-
-	// sequence number
-	SequenceNumber int64 `json:"sequenceNumber,omitempty"`
 
 	// stateful
 	Stateful bool `json:"stateful,omitempty"`
@@ -173,13 +134,8 @@ func (m *SecurityPolicy) validateCreationDate(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.CreationDate != nil {
-		if err := m.CreationDate.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("creationDate")
-			}
-			return err
-		}
+	if err := validate.FormatOf("creationDate", "body", "date-time", m.CreationDate.String(), formats); err != nil {
+		return err
 	}
 
 	return nil
@@ -191,13 +147,8 @@ func (m *SecurityPolicy) validateModificationDate(formats strfmt.Registry) error
 		return nil
 	}
 
-	if m.ModificationDate != nil {
-		if err := m.ModificationDate.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("modificationDate")
-			}
-			return err
-		}
+	if err := validate.FormatOf("modificationDate", "body", "date-time", m.ModificationDate.String(), formats); err != nil {
+		return err
 	}
 
 	return nil
