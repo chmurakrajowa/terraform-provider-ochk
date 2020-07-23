@@ -17,6 +17,7 @@ import (
 )
 
 func TestHttpClient(t *testing.T) {
+	t.SkipNow()
 
 	ctx := context.Background()
 	iasHttpClient := http.Client{
@@ -92,7 +93,7 @@ func TestHttpClient(t *testing.T) {
 		securityGroupCreateUsingPUTOKResponse, securityGroupCreateUsingPUTCreatedResponse, err := iasAPIAuthClient.SecurityGroups.SecurityGroupCreateUsingPUT(&security_groups.SecurityGroupCreateUsingPUTParams{
 			SecurityGroup: &models.SecurityGroup{
 
-				DisplayName: fmt.Sprintf("sg-tf-test-%d",rand.Intn(100000)),
+				DisplayName: fmt.Sprintf("sg-tf-test-%d", rand.Intn(100000)),
 				Members: []*models.SecurityGroupMember{
 					{
 						ID:         vmList[0].VirtualMachineID,
@@ -117,7 +118,7 @@ func TestHttpClient(t *testing.T) {
 			securityGroupID := securityGroupCreateUsingPUTCreatedResponse.Payload.SecurityGroup.ID
 
 			securityGroupListUsingGETResponse, err := iasAPIAuthClient.SecurityGroups.SecurityGroupGetUsingGET(&security_groups.SecurityGroupGetUsingGETParams{
-				GroupID: securityGroupID,
+				GroupID:    securityGroupID,
 				Context:    ctx,
 				HTTPClient: &iasHttpClient,
 			})

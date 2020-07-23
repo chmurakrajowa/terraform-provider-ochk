@@ -18,7 +18,6 @@ func resourceVirtualMachine() *schema.Resource {
 		Update: resourceOchkVmUpdate,
 		Delete: resourceOchkVmDelete,
 
-
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(VMRetryTimeout),
 			Update: schema.DefaultTimeout(VMRetryTimeout),
