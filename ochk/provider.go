@@ -33,14 +33,14 @@ func Provider() terraform.ResourceProvider {
 				Sensitive:   true,
 			},
 			"insecure": {
-				Type:        schema.TypeString,
+				Type:        schema.TypeBool,
 				Optional:    true,
 				Description: "if set uses http scheme instead of https",
 				Default:     false,
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"security_group": resourceSecurityGroup(),
+			"ochk_security_group": resourceSecurityGroup(),
 		},
 		ConfigureFunc: func(d *schema.ResourceData) (interface{}, error) {
 			return sdk.NewClient(

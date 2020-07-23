@@ -1,6 +1,7 @@
 package sdk
 
 import (
+	"context"
 	"crypto/tls"
 	"fmt"
 	httptransport "github.com/go-openapi/runtime/client"
@@ -16,6 +17,8 @@ type Client struct {
 }
 
 func NewClient(host string, tenant string, username string, password string, insecure bool) (*Client, error) {
+	ctx := context.Background()
+
 	httpClient := &http.Client{
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
@@ -33,6 +36,7 @@ func NewClient(host string, tenant string, username string, password string, ins
 			Password: password,
 			Username: username,
 		},
+		Context:    ctx,
 		HTTPClient: httpClient,
 	}
 
