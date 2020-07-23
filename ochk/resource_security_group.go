@@ -97,6 +97,8 @@ func resourceServiceGroupRead(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error while reading security group: %+v", err)
 	}
 
+	//TODO w jaki sposób możemy dowiedzieć że dany zasób nie działa? bo jeśli nie ma go to trzeba jego id ustawić na ""
+
 	if !response.Payload.Success {
 		return fmt.Errorf("retrieving security group failed: %s", response.Payload.Messages)
 	}
@@ -115,9 +117,25 @@ func resourceServiceGroupRead(d *schema.ResourceData, meta interface{}) error {
 }
 
 func resourceServiceGroupUpdate(d *schema.ResourceData, meta interface{}) error {
+	//TODO brak usługi modyfikacji security group
 	return nil
 }
 
 func resourceServiceGroupDelete(d *schema.ResourceData, meta interface{}) error {
+	service := meta.(*client.Ochk).SecurityGroups
+
+	params := controller.NewSecurityGroupDeleteUsingDELETEParams().WithGroupID(d.Id())
+
+	response, err := service.SecurityGroupDeleteUsingDELETE(params)
+	if err != nil {
+		return fmt.Errorf("error while deleting security group: %+v", err)
+	}
+
+	if !response.Payload.Success {
+		return fmt.Errorf("retrieving security group failed: %s", response.Payload.Messages)
+	}
+
+	//TODO po co nam security group w odpowiedzi? securityGroup := response.Payload.SecurityGroup
+
 	return nil
 }
