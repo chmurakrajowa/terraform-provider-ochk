@@ -3,7 +3,7 @@ package ochk
 import (
 	"fmt"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client"
-	controller "github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_group_controller"
+	controller "github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_groups"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 	"time"
 
@@ -43,6 +43,10 @@ func resourceSecurityGroup() *schema.Resource {
 							Type:     schema.TypeString,
 							Required: true,
 						},
+						"displayName": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"type": {
 							Type:         schema.TypeString,
 							Required:     true,
@@ -56,16 +60,20 @@ func resourceSecurityGroup() *schema.Resource {
 }
 
 func resourceServiceGroupCreate(d *schema.ResourceData, meta interface{}) error {
-	service := meta.(*client.Ochk).SecurityGroupController
+	service := meta.(*client.Ochk).SecurityGroups
 
 	securityGroup := &models.SecurityGroup{
 		DisplayName: d.Get("display_name").(string),
-		Members:     nil,
+		Members:     expandSecurityGroupMembers(d.Get("members").([]interface{})),
 	}
 
-	params := controller.NewCreateUsingPUTParams().WithSecurityGroup(securityGroup)
+	if err := securityGroup.Validate(nil); err != nil {
+		return fmt.Errorf("error while validating security group structure: %+v", err)
+	}
 
-	put, _, err := service.CreateUsingPUT(params)
+	params := controller.NewSecurityGroupCreateUsingPUTParams().WithSecurityGroup(securityGroup)
+
+	put, _, err := service.SecurityGroupCreateUsingPUT(params)
 	if err != nil {
 		return fmt.Errorf("error while creating security group: %+v", err)
 	}
@@ -80,20 +88,27 @@ func resourceServiceGroupCreate(d *schema.ResourceData, meta interface{}) error 
 }
 
 func resourceServiceGroupRead(d *schema.ResourceData, meta interface{}) error {
-	service := meta.(*client.Ochk).SecurityGroupController
+	service := meta.(*client.Ochk).SecurityGroups
 
-	params := controller.NewGetUsingGET3Params().WithGroupID(d.Id())
+	params := controller.NewSecurityGroupGetUsingGETParams().WithGroupID(d.Id())
 
-	response, err := service.GetUsingGET3(params)
+	response, err := service.SecurityGroupGetUsingGET(params)
 	if err != nil {
 		return fmt.Errorf("error while reading security group: %+v", err)
 	}
 
+	if !response.Payload.Success {
+		return fmt.Errorf("retrieving security group failed: %s", response.Payload.Messages)
+	}
+
 	securityGroup := response.Payload.SecurityGroup
 
-	err = d.Set("members", flattenSecurityGroupMember(securityGroup.Members))
-	if err != nil {
+	if err := d.Set("displayName", securityGroup.ID); err != nil {
+		return fmt.Errorf("error setting displayName: %+v", err)
+	}
 
+	if err := d.Set("members", flattenSecurityGroupMembers(securityGroup.Members)); err != nil {
+		return fmt.Errorf("error setting members: %+v", err)
 	}
 
 	return nil
