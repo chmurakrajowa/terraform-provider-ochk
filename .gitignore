@@ -19,3 +19,4 @@ terraform-provider-ochk
 terraform.tfvars
 terraform.tfplan
 terraform.tfstate
+*.log

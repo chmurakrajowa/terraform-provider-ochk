@@ -14,10 +14,19 @@ import (
 type Client struct {
 	client     *client.Ochk
 	httpClient *http.Client
+	logger     *FileLogger
 }
 
-func NewClient(host string, tenant string, username string, password string, insecure bool) (*Client, error) {
+func NewClient(host string, tenant string, username string, password string, insecure bool, debugLogFile string) (*Client, error) {
 	ctx := context.Background()
+
+	var logger *FileLogger
+	if debugLogFile != "" {
+		logger = NewFileLogger(debugLogFile)
+		if err := logger.Init(); err != nil {
+			return nil, fmt.Errorf("error initializing file logger: %v", err)
+		}
+	}
 
 	httpClient := &http.Client{
 		Transport: &http.Transport{
@@ -51,6 +60,9 @@ func NewClient(host string, tenant string, username string, password string, ins
 
 	apiClientAuthTransport := httptransport.New(host, client.DefaultBasePath, mapToSchemes(insecure))
 	apiClientAuthTransport.Debug = true
+	if logger != nil {
+		apiClientAuthTransport.SetLogger(logger)
+	}
 	apiClientAuthTransport.DefaultAuthentication = httptransport.APIKeyAuth("token", "header", authResponse.Payload.Token)
 
 	authClient := client.New(apiClientAuthTransport, nil)
@@ -62,6 +74,7 @@ func NewClient(host string, tenant string, username string, password string, ins
 				TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 			},
 		},
+		logger: logger,
 	}, nil
 }
 

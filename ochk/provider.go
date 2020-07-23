@@ -38,6 +38,12 @@ func Provider() terraform.ResourceProvider {
 				Description: "if set uses http scheme instead of https",
 				Default:     false,
 			},
+			"debug_log_file": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "path to debug log",
+				Sensitive:   true,
+			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"ochk_security_group": resourceSecurityGroup(),
@@ -49,6 +55,7 @@ func Provider() terraform.ResourceProvider {
 				d.Get("username").(string),
 				d.Get("password").(string),
 				d.Get("insecure").(bool),
+				d.Get("debug_log_file").(string),
 			)
 		},
 	}

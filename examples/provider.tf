@@ -3,10 +3,11 @@ provider "ochk" {
   tenant = "devel"
   username = "devel-admin"
   password = "zaq1@WSX"
+  debug_log_file = "debug.log"
 }
 
 resource "ochk_security_group" "demo" {
-  display_name = "testM&L"
+  display_name = "testM&L3"
 
   members {
     id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
