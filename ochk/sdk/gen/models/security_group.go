@@ -11,6 +11,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // SecurityGroup security group
@@ -22,13 +23,11 @@ type SecurityGroup struct {
 	CreatedBy string `json:"createdBy,omitempty"`
 
 	// creation date
-	CreationDate *Timestamp `json:"creationDate,omitempty"`
+	// Format: date-time
+	CreationDate *strfmt.DateTime `json:"creationDate,omitempty"`
 
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
-
-	// external Id
-	ExternalID string `json:"externalId,omitempty"`
 
 	// id
 	ID string `json:"id,omitempty"`
@@ -37,25 +36,11 @@ type SecurityGroup struct {
 	Members []*SecurityGroupMember `json:"members"`
 
 	// modification date
-	ModificationDate *Timestamp `json:"modificationDate,omitempty"`
+	// Format: date-time
+	ModificationDate *strfmt.DateTime `json:"modificationDate,omitempty"`
 
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`
-
-	// parent path
-	ParentPath string `json:"parentPath,omitempty"`
-
-	// path
-	Path string `json:"path,omitempty"`
-
-	// relative path
-	RelativePath string `json:"relativePath,omitempty"`
-
-	// resource type
-	ResourceType *ResourceType `json:"resourceType,omitempty"`
-
-	// tags
-	Tags []*TagInstance `json:"tags"`
 }
 
 // Validate validates this security group
@@ -74,14 +59,6 @@ func (m *SecurityGroup) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateResourceType(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateTags(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -94,13 +71,8 @@ func (m *SecurityGroup) validateCreationDate(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.CreationDate != nil {
-		if err := m.CreationDate.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("creationDate")
-			}
-			return err
-		}
+	if err := validate.FormatOf("creationDate", "body", "date-time", m.CreationDate.String(), formats); err != nil {
+		return err
 	}
 
 	return nil
@@ -137,56 +109,8 @@ func (m *SecurityGroup) validateModificationDate(formats strfmt.Registry) error 
 		return nil
 	}
 
-	if m.ModificationDate != nil {
-		if err := m.ModificationDate.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("modificationDate")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *SecurityGroup) validateResourceType(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ResourceType) { // not required
-		return nil
-	}
-
-	if m.ResourceType != nil {
-		if err := m.ResourceType.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("resourceType")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *SecurityGroup) validateTags(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Tags) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Tags); i++ {
-		if swag.IsZero(m.Tags[i]) { // not required
-			continue
-		}
-
-		if m.Tags[i] != nil {
-			if err := m.Tags[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("tags" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
+	if err := validate.FormatOf("modificationDate", "body", "date-time", m.ModificationDate.String(), formats); err != nil {
+		return err
 	}
 
 	return nil

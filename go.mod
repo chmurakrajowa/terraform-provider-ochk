@@ -11,4 +11,5 @@ require (
 	github.com/go-swagger/go-swagger v0.24.0
 	github.com/golangci/golangci-lint v1.28.0
 	github.com/hashicorp/terraform-plugin-sdk v1.14.0
+	github.com/stretchr/testify v1.6.1
 )

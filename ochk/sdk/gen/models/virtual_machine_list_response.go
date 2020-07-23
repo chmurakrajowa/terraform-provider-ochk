@@ -11,6 +11,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // VirtualMachineListResponse virtual machine list response
@@ -25,7 +26,8 @@ type VirtualMachineListResponse struct {
 	Success bool `json:"success,omitempty"`
 
 	// timestamp
-	Timestamp *Timestamp `json:"timestamp,omitempty"`
+	// Format: date-time
+	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
 
 	// virtual machine collection
 	VirtualMachineCollection []*VirtualMachine `json:"virtualMachineCollection"`
@@ -55,13 +57,8 @@ func (m *VirtualMachineListResponse) validateTimestamp(formats strfmt.Registry) 
 		return nil
 	}
 
-	if m.Timestamp != nil {
-		if err := m.Timestamp.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("timestamp")
-			}
-			return err
-		}
+	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
+		return err
 	}
 
 	return nil

@@ -11,6 +11,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // LogicalPortListResponse logical port list response
@@ -28,7 +29,8 @@ type LogicalPortListResponse struct {
 	Success bool `json:"success,omitempty"`
 
 	// timestamp
-	Timestamp *Timestamp `json:"timestamp,omitempty"`
+	// Format: date-time
+	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
 // Validate validates this logical port list response
@@ -80,13 +82,8 @@ func (m *LogicalPortListResponse) validateTimestamp(formats strfmt.Registry) err
 		return nil
 	}
 
-	if m.Timestamp != nil {
-		if err := m.Timestamp.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("timestamp")
-			}
-			return err
-		}
+	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
+		return err
 	}
 
 	return nil

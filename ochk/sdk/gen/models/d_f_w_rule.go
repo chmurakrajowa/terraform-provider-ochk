@@ -28,16 +28,14 @@ type DFWRule struct {
 	CreatedBy string `json:"createdBy,omitempty"`
 
 	// creation date
-	CreationDate *Timestamp `json:"creationDate,omitempty"`
+	// Format: date-time
+	CreationDate strfmt.DateTime `json:"creationDate,omitempty"`
 
 	// default services
 	DefaultServices []*ServiceInstance `json:"defaultServices"`
 
 	// destination
 	Destination []*SecurityGroup `json:"destination"`
-
-	// destination excluded
-	DestinationExcluded bool `json:"destinationExcluded,omitempty"`
 
 	// direction
 	// Enum: [IN_OUT IN OUT]
@@ -49,39 +47,19 @@ type DFWRule struct {
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
 
-	// external Id
-	ExternalID string `json:"externalId,omitempty"`
-
 	// ip protocol
 	// Enum: [IPV4_IPV6 IPV4 IPV6]
 	IPProtocol string `json:"ipProtocol,omitempty"`
 
-	// logged
-	Logged bool `json:"logged,omitempty"`
-
 	// modification date
-	ModificationDate *Timestamp `json:"modificationDate,omitempty"`
+	// Format: date-time
+	ModificationDate strfmt.DateTime `json:"modificationDate,omitempty"`
 
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`
 
-	// parent path
-	ParentPath string `json:"parentPath,omitempty"`
-
-	// path
-	Path string `json:"path,omitempty"`
-
-	// profile
-	Profile []*ContextProfileInstance `json:"profile"`
-
-	// protection
-	Protection *Protection `json:"protection,omitempty"`
-
-	// relative path
-	RelativePath string `json:"relativePath,omitempty"`
-
-	// resource type
-	ResourceType *ResourceType `json:"resourceType,omitempty"`
+	// position
+	Position *Position `json:"position,omitempty"`
 
 	// rule Id
 	RuleID string `json:"ruleId,omitempty"`
@@ -89,17 +67,8 @@ type DFWRule struct {
 	// scope
 	Scope []*SecurityGroup `json:"scope"`
 
-	// sequence number
-	SequenceNumber int64 `json:"sequenceNumber,omitempty"`
-
 	// source
 	Source []*SecurityGroup `json:"source"`
-
-	// sources excluded
-	SourcesExcluded bool `json:"sourcesExcluded,omitempty"`
-
-	// tag
-	Tag string `json:"tag,omitempty"`
 }
 
 // Validate validates this d f w rule
@@ -134,15 +103,7 @@ func (m *DFWRule) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateProfile(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateProtection(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateResourceType(formats); err != nil {
+	if err := m.validatePosition(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -212,13 +173,8 @@ func (m *DFWRule) validateCreationDate(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.CreationDate != nil {
-		if err := m.CreationDate.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("creationDate")
-			}
-			return err
-		}
+	if err := validate.FormatOf("creationDate", "body", "date-time", m.CreationDate.String(), formats); err != nil {
+		return err
 	}
 
 	return nil
@@ -372,71 +328,23 @@ func (m *DFWRule) validateModificationDate(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.ModificationDate != nil {
-		if err := m.ModificationDate.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("modificationDate")
-			}
-			return err
-		}
+	if err := validate.FormatOf("modificationDate", "body", "date-time", m.ModificationDate.String(), formats); err != nil {
+		return err
 	}
 
 	return nil
 }
 
-func (m *DFWRule) validateProfile(formats strfmt.Registry) error {
+func (m *DFWRule) validatePosition(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Profile) { // not required
+	if swag.IsZero(m.Position) { // not required
 		return nil
 	}
 
-	for i := 0; i < len(m.Profile); i++ {
-		if swag.IsZero(m.Profile[i]) { // not required
-			continue
-		}
-
-		if m.Profile[i] != nil {
-			if err := m.Profile[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("profile" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *DFWRule) validateProtection(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Protection) { // not required
-		return nil
-	}
-
-	if m.Protection != nil {
-		if err := m.Protection.Validate(formats); err != nil {
+	if m.Position != nil {
+		if err := m.Position.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("protection")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *DFWRule) validateResourceType(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ResourceType) { // not required
-		return nil
-	}
-
-	if m.ResourceType != nil {
-		if err := m.ResourceType.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("resourceType")
+				return ve.ValidateName("position")
 			}
 			return err
 		}
