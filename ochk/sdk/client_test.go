@@ -11,6 +11,7 @@ import (
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machines"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 	"github.com/stretchr/testify/assert"
+	"math/rand"
 	"net/http"
 	"testing"
 )
@@ -91,7 +92,7 @@ func TestHttpClient(t *testing.T) {
 		securityGroupCreateUsingPUTOKResponse, securityGroupCreateUsingPUTCreatedResponse, err := iasAPIAuthClient.SecurityGroups.SecurityGroupCreateUsingPUT(&security_groups.SecurityGroupCreateUsingPUTParams{
 			SecurityGroup: &models.SecurityGroup{
 
-				DisplayName: "sg-tf-test-1",
+				DisplayName: fmt.Sprintf("sg-tf-test-%d",rand.Intn(100000)),
 				Members: []*models.SecurityGroupMember{
 					{
 						ID:         vmList[0].VirtualMachineID,
@@ -112,6 +113,20 @@ func TestHttpClient(t *testing.T) {
 		}
 		if securityGroupCreateUsingPUTCreatedResponse != nil {
 			fmt.Printf("securityGroupCreateUsingPUTCreatedResponse: %+v", securityGroupCreateUsingPUTCreatedResponse)
+
+			securityGroupID := securityGroupCreateUsingPUTCreatedResponse.Payload.SecurityGroup.ID
+
+			securityGroupListUsingGETResponse, err := iasAPIAuthClient.SecurityGroups.SecurityGroupGetUsingGET(&security_groups.SecurityGroupGetUsingGETParams{
+				GroupID: securityGroupID,
+				Context:    ctx,
+				HTTPClient: &iasHttpClient,
+			})
+
+			if !assert.NoError(t, err) {
+				return
+			}
+
+			fmt.Printf("securityGroup %s: %+v\n", securityGroupID, securityGroupListUsingGETResponse.Payload)
 		}
 	}
 }
