@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"fmt"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
 	controller "github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_groups"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 	"time"
@@ -60,7 +60,8 @@ func resourceSecurityGroup() *schema.Resource {
 }
 
 func resourceServiceGroupCreate(d *schema.ResourceData, meta interface{}) error {
-	service := meta.(*client.Ochk).SecurityGroups
+	client := meta.(*sdk.Client)
+	service := client.GetOchk().SecurityGroups
 
 	securityGroup := &models.SecurityGroup{
 		DisplayName: d.Get("display_name").(string),
@@ -71,7 +72,7 @@ func resourceServiceGroupCreate(d *schema.ResourceData, meta interface{}) error 
 		return fmt.Errorf("error while validating security group structure: %+v", err)
 	}
 
-	params := controller.NewSecurityGroupCreateUsingPUTParams().WithSecurityGroup(securityGroup)
+	params := controller.NewSecurityGroupCreateUsingPUTParamsWithHTTPClient(client.GetHTTPClient()).WithSecurityGroup(securityGroup)
 
 	put, _, err := service.SecurityGroupCreateUsingPUT(params)
 	if err != nil {
@@ -88,9 +89,10 @@ func resourceServiceGroupCreate(d *schema.ResourceData, meta interface{}) error 
 }
 
 func resourceServiceGroupRead(d *schema.ResourceData, meta interface{}) error {
-	service := meta.(*client.Ochk).SecurityGroups
+	client := meta.(*sdk.Client)
+	service := client.GetOchk().SecurityGroups
 
-	params := controller.NewSecurityGroupGetUsingGETParams().WithGroupID(d.Id())
+	params := controller.NewSecurityGroupGetUsingGETParamsWithHTTPClient(client.GetHTTPClient()).WithGroupID(d.Id())
 
 	response, err := service.SecurityGroupGetUsingGET(params)
 	if err != nil {
@@ -122,9 +124,10 @@ func resourceServiceGroupUpdate(d *schema.ResourceData, meta interface{}) error 
 }
 
 func resourceServiceGroupDelete(d *schema.ResourceData, meta interface{}) error {
-	service := meta.(*client.Ochk).SecurityGroups
+	client := meta.(*sdk.Client)
+	service := client.GetOchk().SecurityGroups
 
-	params := controller.NewSecurityGroupDeleteUsingDELETEParams().WithGroupID(d.Id())
+	params := controller.NewSecurityGroupDeleteUsingDELETEParamsWithHTTPClient(client.GetHTTPClient()).WithGroupID(d.Id())
 
 	response, err := service.SecurityGroupDeleteUsingDELETE(params)
 	if err != nil {

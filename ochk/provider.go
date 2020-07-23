@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
 )
 
 func Provider() terraform.ResourceProvider {
@@ -43,12 +43,13 @@ func Provider() terraform.ResourceProvider {
 			"security_group": resourceSecurityGroup(),
 		},
 		ConfigureFunc: func(d *schema.ResourceData) (interface{}, error) {
-			transportConfig := &client.TransportConfig{
-				Host:    d.Get("host").(string),
-				Schemes: mapToSchemes(d.Get("insecure").(bool)),
-			}
-
-			return client.NewHTTPClientWithConfig(nil, transportConfig), nil
+			return sdk.NewClient(
+				d.Get("host").(string),
+				d.Get("tenant").(string),
+				d.Get("username").(string),
+				d.Get("password").(string),
+				d.Get("insecure").(bool),
+			)
 		},
 	}
 }
@@ -59,12 +60,4 @@ func validateHost(val interface{}, key string) (warns []string, errs []error) {
 	}
 
 	return nil, errs
-}
-
-func mapToSchemes(insecure bool) []string {
-	if insecure {
-		return []string{"http"}
-	}
-
-	return []string{"https"}
 }
