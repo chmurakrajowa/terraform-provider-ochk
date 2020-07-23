@@ -1,8 +1,10 @@
 package ochk
 
 import (
+	"fmt"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client"
 	controller "github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_group_controller"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -16,10 +18,9 @@ const (
 func resourceSecurityGroup() *schema.Resource {
 	return &schema.Resource{
 		Create: resourceServiceGroupCreate,
-		Read:   resourceOchkVmRead,
-		Update: resourceOchkVmUpdate,
-		Delete: resourceOchkVmDelete,
-		Exists: resourceServiceGroupExists,
+		Read:   resourceServiceGroupRead,
+		Update: resourceServiceGroupUpdate,
+		Delete: resourceServiceGroupDelete,
 
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(VMRetryTimeout),
@@ -28,20 +29,27 @@ func resourceSecurityGroup() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
-			"count": {
-				Type:     schema.TypeInt,
-				Required: true,
-				Default:  1,
-			},
-			"catalog_item_name": {
+			"displayName": {
 				Type:     schema.TypeString,
 				Required: true,
-				ForceNew: true,
 			},
-			"resource_configuration": {
-				Type:     schema.TypeMap,
+			"members": {
+				Type:     schema.TypeList,
+				MinItems: 1,
 				Required: true,
-				Elem:     schema.TypeString,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+						"type": {
+							Type:         schema.TypeString,
+							Required:     true,
+							ExactlyOneOf: []string{"IPSET", "VIRTUAL_MACHINE", "LOGICAL_PORT"},
+						},
+					},
+				},
 			},
 		},
 	}
@@ -50,24 +58,51 @@ func resourceSecurityGroup() *schema.Resource {
 func resourceServiceGroupCreate(d *schema.ResourceData, meta interface{}) error {
 	service := meta.(*client.Ochk).SecurityGroupController
 
-	params := controller.NewCreateUsingPUTParams().WithSecurityGroup()
+	securityGroup := &models.SecurityGroup{
+		DisplayName: d.Get("display_name").(string),
+		Members:     nil,
+	}
 
-	put, created, err := service.CreateUsingPUT(params)
+	params := controller.NewCreateUsingPUTParams().WithSecurityGroup(securityGroup)
+
+	put, _, err := service.CreateUsingPUT(params)
+	if err != nil {
+		return fmt.Errorf("error while creating security group: %+v", err)
+	}
+
+	if !put.Payload.Success {
+		return fmt.Errorf("creating security group failed: %s", put.Payload.Messages)
+	}
+
+	d.SetId(put.Payload.SecurityGroup.ID)
+
 	return nil
 }
 
-func resourceOchkVmRead(d *schema.ResourceData, meta interface{}) error {
+func resourceServiceGroupRead(d *schema.ResourceData, meta interface{}) error {
+	service := meta.(*client.Ochk).SecurityGroupController
+
+	params := controller.NewGetUsingGET3Params().WithGroupID(d.Id())
+
+	response, err := service.GetUsingGET3(params)
+	if err != nil {
+		return fmt.Errorf("error while reading security group: %+v", err)
+	}
+
+	securityGroup := response.Payload.SecurityGroup
+
+	err = d.Set("members", flattenSecurityGroupMember(securityGroup.Members))
+	if err != nil {
+
+	}
+
 	return nil
 }
 
-func resourceOchkVmUpdate(d *schema.ResourceData, meta interface{}) error {
+func resourceServiceGroupUpdate(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-func resourceOchkVmDelete(d *schema.ResourceData, meta interface{}) error {
+func resourceServiceGroupDelete(d *schema.ResourceData, meta interface{}) error {
 	return nil
-}
-
-func resourceServiceGroupExists(d *schema.ResourceData, meta interface{}) (b bool, err error) {
-	return false, nil
 }
