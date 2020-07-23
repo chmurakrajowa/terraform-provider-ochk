@@ -21,7 +21,8 @@ import (
 type RequestInstance struct {
 
 	// end date
-	EndDate *Timestamp `json:"endDate,omitempty"`
+	// Format: date-time
+	EndDate strfmt.DateTime `json:"endDate,omitempty"`
 
 	// request body
 	RequestBody string `json:"requestBody,omitempty"`
@@ -41,7 +42,7 @@ type RequestInstance struct {
 	RequestStatus string `json:"requestStatus,omitempty"`
 
 	// request type
-	// Enum: [SECURITY_GROUP_CREATE SECURITY_GROUP_DELETE]
+	// Enum: [SECURITY_GROUP_CREATE SECURITY_GROUP_DELETE FIREWALL_DFW_RULE_CREATE FIREWALL_DFW_RULE_DELETE FIREWALL_GFW_RULE_CREATE FIREWALL_GFW_RULE_DELETE]
 	RequestType string `json:"requestType,omitempty"`
 
 	// requestor
@@ -51,7 +52,8 @@ type RequestInstance struct {
 	RequestorID string `json:"requestorId,omitempty"`
 
 	// start date
-	StartDate *Timestamp `json:"startDate,omitempty"`
+	// Format: date-time
+	StartDate strfmt.DateTime `json:"startDate,omitempty"`
 }
 
 // Validate validates this request instance
@@ -94,13 +96,8 @@ func (m *RequestInstance) validateEndDate(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.EndDate != nil {
-		if err := m.EndDate.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("endDate")
-			}
-			return err
-		}
+	if err := validate.FormatOf("endDate", "body", "date-time", m.EndDate.String(), formats); err != nil {
+		return err
 	}
 
 	return nil
@@ -230,7 +227,7 @@ var requestInstanceTypeRequestTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["SECURITY_GROUP_CREATE","SECURITY_GROUP_DELETE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["SECURITY_GROUP_CREATE","SECURITY_GROUP_DELETE","FIREWALL_DFW_RULE_CREATE","FIREWALL_DFW_RULE_DELETE","FIREWALL_GFW_RULE_CREATE","FIREWALL_GFW_RULE_DELETE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -245,6 +242,18 @@ const (
 
 	// RequestInstanceRequestTypeSECURITYGROUPDELETE captures enum value "SECURITY_GROUP_DELETE"
 	RequestInstanceRequestTypeSECURITYGROUPDELETE string = "SECURITY_GROUP_DELETE"
+
+	// RequestInstanceRequestTypeFIREWALLDFWRULECREATE captures enum value "FIREWALL_DFW_RULE_CREATE"
+	RequestInstanceRequestTypeFIREWALLDFWRULECREATE string = "FIREWALL_DFW_RULE_CREATE"
+
+	// RequestInstanceRequestTypeFIREWALLDFWRULEDELETE captures enum value "FIREWALL_DFW_RULE_DELETE"
+	RequestInstanceRequestTypeFIREWALLDFWRULEDELETE string = "FIREWALL_DFW_RULE_DELETE"
+
+	// RequestInstanceRequestTypeFIREWALLGFWRULECREATE captures enum value "FIREWALL_GFW_RULE_CREATE"
+	RequestInstanceRequestTypeFIREWALLGFWRULECREATE string = "FIREWALL_GFW_RULE_CREATE"
+
+	// RequestInstanceRequestTypeFIREWALLGFWRULEDELETE captures enum value "FIREWALL_GFW_RULE_DELETE"
+	RequestInstanceRequestTypeFIREWALLGFWRULEDELETE string = "FIREWALL_GFW_RULE_DELETE"
 )
 
 // prop value enum
@@ -275,13 +284,8 @@ func (m *RequestInstance) validateStartDate(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.StartDate != nil {
-		if err := m.StartDate.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("startDate")
-			}
-			return err
-		}
+	if err := validate.FormatOf("startDate", "body", "date-time", m.StartDate.String(), formats); err != nil {
+		return err
 	}
 
 	return nil

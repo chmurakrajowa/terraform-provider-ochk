@@ -9,6 +9,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // RequestMessage request message
@@ -17,7 +18,8 @@ import (
 type RequestMessage struct {
 
 	// message date
-	MessageDate *Timestamp `json:"messageDate,omitempty"`
+	// Format: date-time
+	MessageDate strfmt.DateTime `json:"messageDate,omitempty"`
 
 	// message value
 	MessageValue string `json:"messageValue,omitempty"`
@@ -43,13 +45,8 @@ func (m *RequestMessage) validateMessageDate(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.MessageDate != nil {
-		if err := m.MessageDate.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("messageDate")
-			}
-			return err
-		}
+	if err := validate.FormatOf("messageDate", "body", "date-time", m.MessageDate.String(), formats); err != nil {
+		return err
 	}
 
 	return nil

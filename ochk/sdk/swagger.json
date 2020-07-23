@@ -11,101 +11,67 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0"
     }
   },
-  "host": "iaas-api-core.ochk.pilot",
+  "host": "iaas-api-proxy.ochk.pilot",
   "basePath": "/",
   "tags": [
     {
-      "name": "gateway-policy-controller",
-      "description": "Gateway Policy Controller"
-    },
-    {
-      "name": "ip-set-controller",
-      "description": "IP Set Controller"
-    },
-    {
-      "name": "dfw-rule-controller",
-      "description": "DFW Rule Controller"
-    },
-    {
-      "name": "security-group-controller",
-      "description": "Security Group Controller"
-    },
-    {
-      "name": "auth-controller",
-      "description": "Auth Controller"
-    },
-    {
-      "name": "gfw-rule-controller",
+      "name": "Firewall rules S-N",
       "description": "GFW Rule Controller"
     },
     {
-      "name": "virtual-machine-controller",
-      "description": "Virtual Machine Controller"
-    },
-    {
-      "name": "context-profile-controller",
-      "description": "Context Profile Controller"
-    },
-    {
-      "name": "logical-port-controller",
-      "description": "Logical Port Controller"
-    },
-    {
-      "name": "service-controller",
+      "name": "Default services",
       "description": "Service Controller"
     },
     {
-      "name": "request-controller",
-      "description": "Request Controller"
+      "name": "Gateway policies",
+      "description": "Gateway Policy Controller"
     },
     {
-      "name": "security-policy-controller",
+      "name": "IPSets",
+      "description": "IP Set Controller"
+    },
+    {
+      "name": "Security groups",
+      "description": "Security Group Controller"
+    },
+    {
+      "name": "vidm-controller",
+      "description": "VIDM Controller"
+    },
+    {
+      "name": "Firewall rules E-W",
+      "description": "DFW Rule Controller"
+    },
+    {
+      "name": "Virtual machines",
+      "description": "Virtual Machine Controller"
+    },
+    {
+      "name": "Routers",
+      "description": "Router Controller"
+    },
+    {
+      "name": "Security policies",
       "description": "Security Policy Controller"
+    },
+    {
+      "name": "Context profiles",
+      "description": "Context Profile Controller"
+    },
+    {
+      "name": "Logical ports",
+      "description": "Logical Port Controller"
     }
   ],
   "paths": {
-    "/auth": {
-      "post": {
-        "tags": [
-          "auth-controller"
-        ],
-        "summary": "AuthTokenGet",
-        "operationId": "AuthTokenGetUsingPOST",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/AuthTokenCreateResponse"
-            }
-          },
-          "201": {
-            "description": "Created"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      }
-    },
-    "/nsx/cp": {
+    "/network/context-profiles": {
       "get": {
         "tags": [
-          "context-profile-controller"
+          "Context profiles"
         ],
         "summary": "List",
-        "operationId": "ListUsingGET",
+        "description": "List context profiles from NSX-T",
+        "operationId": "ContextProfileListUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -119,25 +85,20 @@
               "$ref": "#/definitions/ContextProfileListResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
     },
-    "/nsx/cs/": {
+    "/network/default-services/": {
       "get": {
         "tags": [
-          "service-controller"
+          "Default services"
         ],
         "summary": "List",
-        "operationId": "ListUsingGET_8",
+        "description": "List default services from NSX-T",
+        "operationId": "ServiceListUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -151,25 +112,59 @@
               "$ref": "#/definitions/ServiceListResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
     },
-    "/nsx/fw/gp/": {
+    "/network/default-services/{serviceId}": {
       "get": {
         "tags": [
-          "gateway-policy-controller"
+          "Default services"
+        ],
+        "summary": "Get",
+        "description": "Get default service from NSX-T",
+        "operationId": "ServiceGetUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "serviceId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ServiceGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/network/firewall/gateway-policies/": {
+      "get": {
+        "tags": [
+          "Gateway policies"
         ],
         "summary": "List",
-        "operationId": "ListUsingGET_2",
+        "description": "List gateway policies from NSX-T",
+        "operationId": "GatewayPolicyListUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -183,25 +178,20 @@
               "$ref": "#/definitions/GatewayPolicyListResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
     },
-    "/nsx/fw/gp/{gatewayPolicyId}": {
+    "/network/firewall/gateway-policies/{gatewayPolicyId}": {
       "get": {
         "tags": [
-          "gateway-policy-controller"
+          "Gateway policies"
         ],
         "summary": "Get",
-        "operationId": "GetUsingGET_1",
+        "description": "Get gateway policies from NSX-T",
+        "operationId": "GatewayPolicyGetUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -224,25 +214,23 @@
               "$ref": "#/definitions/GatewayPolicyGetResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           },
           "404": {
-            "description": "Not Found"
+            "description": "Entity not found."
           }
         }
       }
     },
-    "/nsx/fw/gp/{gatewayPolicyId}/rules": {
+    "/network/firewall/gateway-policies/{gatewayPolicyId}/rules": {
       "get": {
         "tags": [
-          "gfw-rule-controller"
+          "Firewall rules S-N"
         ],
         "summary": "List",
-        "operationId": "ListUsingGET_3",
+        "description": "List firewall rules (south-north) from NSX-T",
+        "operationId": "GFWRuleListUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -265,25 +253,71 @@
               "$ref": "#/definitions/GFWRuleListResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
     },
-    "/nsx/fw/gp/{gatewayPolicyId}/rules/{RuleId}": {
+    "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/": {
+      "put": {
+        "tags": [
+          "Firewall rules S-N"
+        ],
+        "summary": "Create",
+        "description": "Create firewall rule (south-north) in NSX-T",
+        "operationId": "GFWRuleCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "gatewayPolicyId",
+            "in": "path",
+            "description": "gatewayPolicyId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "gfwRule",
+            "description": "gfwRule",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GFWRule"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{RuleId}": {
       "get": {
         "tags": [
-          "gfw-rule-controller"
+          "Firewall rules S-N"
         ],
         "summary": "Get",
-        "operationId": "GetUsingGET_2",
+        "description": "Get firewall rule (south-north) from NSX-T",
+        "operationId": "GFWRuleGetUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -313,25 +347,64 @@
               "$ref": "#/definitions/GFWRuleGetResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           },
           "404": {
-            "description": "Not Found"
+            "description": "Entity not found."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Firewall rules S-N"
+        ],
+        "summary": "Delete",
+        "description": "Delete firewall rule (south-north) from NSX-T",
+        "operationId": "GFWRuleDeleteUsingDELETE",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "gatewayPolicyId",
+            "in": "path",
+            "description": "gatewayPolicyId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "RuleId",
+            "in": "path",
+            "description": "RuleId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
     },
-    "/nsx/fw/sp/": {
+    "/network/firewall/security-policies/": {
       "get": {
         "tags": [
-          "security-policy-controller"
+          "Security policies"
         ],
         "summary": "List",
-        "operationId": "ListUsingGET_7",
+        "description": "List security policies from NSX-T",
+        "operationId": "SecurityPolicyListUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -345,25 +418,20 @@
               "$ref": "#/definitions/SecurityPolicyListResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
     },
-    "/nsx/fw/sp/{SecurityPolicyId}": {
+    "/network/firewall/security-policies/{SecurityPolicyId}": {
       "get": {
         "tags": [
-          "security-policy-controller"
+          "Security policies"
         ],
         "summary": "Get",
-        "operationId": "GetUsingGET_4",
+        "description": "Get security policy from NSX-T",
+        "operationId": "SecurityPolicyGetUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -386,25 +454,74 @@
               "$ref": "#/definitions/SecurityPolicyGetResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           },
           "404": {
-            "description": "Not Found"
+            "description": "Entity not found."
           }
         }
       }
     },
-    "/nsx/fw/sp/{SecurityPolicyId}/rules/{RuleId}": {
+    "/network/firewall/security-policies/{SecurityPolicyId}/rules/": {
+      "put": {
+        "tags": [
+          "Firewall rules E-W"
+        ],
+        "summary": "Create",
+        "description": "Create firewall rule (east-west) in NSX-T",
+        "operationId": "DFWRuleCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "SecurityPolicyId",
+            "in": "path",
+            "description": "SecurityPolicyId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "dfwRule",
+            "description": "dfwRule",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DFWRule"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/network/firewall/security-policies/{SecurityPolicyId}/rules/{RuleId}": {
       "get": {
         "tags": [
-          "dfw-rule-controller"
+          "Firewall rules E-W"
         ],
         "summary": "Get",
-        "operationId": "GetUsingGET",
+        "description": "Get firewall rule (east-west) from NSX-T",
+        "operationId": "DFWRuleGetUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -434,25 +551,64 @@
               "$ref": "#/definitions/DFWRuleGetResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           },
           "404": {
-            "description": "Not Found"
+            "description": "Entity not found."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Firewall rules E-W"
+        ],
+        "summary": "Delete",
+        "description": "Delete firewall rule (east-west) from NSX-T",
+        "operationId": "DFWRuleDeleteUsingDELETE",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "SecurityPolicyId",
+            "in": "path",
+            "description": "SecurityPolicyId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "RuleId",
+            "in": "path",
+            "description": "RuleId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
     },
-    "/nsx/fw/sp/{securityPolicyId}/rules": {
+    "/network/firewall/security-policies/{securityPolicyId}/rules": {
       "get": {
         "tags": [
-          "dfw-rule-controller"
+          "Firewall rules E-W"
         ],
         "summary": "List",
-        "operationId": "ListUsingGET_1",
+        "description": "List firewall rules (east-west) from NSX-T",
+        "operationId": "DFWRuleListUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -475,25 +631,20 @@
               "$ref": "#/definitions/DFWRuleListResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
     },
-    "/nsx/ips/": {
+    "/network/ipsets/": {
       "get": {
         "tags": [
-          "ip-set-controller"
+          "IPSets"
         ],
         "summary": "List",
-        "operationId": "ListUsingGET_4",
+        "description": "List IPSets from NSX-T",
+        "operationId": "IPSetListUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -507,25 +658,59 @@
               "$ref": "#/definitions/IPSetListResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
     },
-    "/nsx/lp/": {
+    "/network/ipsets/{ipSetId}": {
       "get": {
         "tags": [
-          "logical-port-controller"
+          "IPSets"
+        ],
+        "summary": "Get",
+        "description": "Get IPSet from NSX-T",
+        "operationId": "IPSetGetUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ipSetId",
+            "in": "path",
+            "description": "ipSetId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/IPSetGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/network/logical-ports/": {
+      "get": {
+        "tags": [
+          "Logical ports"
         ],
         "summary": "List",
-        "operationId": "ListUsingGET_5",
+        "description": "List logical ports from NSX-T",
+        "operationId": "LogicalPortListUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -539,25 +724,125 @@
               "$ref": "#/definitions/LogicalPortListResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
     },
-    "/nsx/sg/": {
+    "/network/logical-ports/{logicalPortId}": {
       "get": {
         "tags": [
-          "security-group-controller"
+          "Logical ports"
+        ],
+        "summary": "Get",
+        "description": "Get logical port from NSX-T",
+        "operationId": "LogicalPortGetUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "logicalPortId",
+            "in": "path",
+            "description": "logicalPortId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/LogicalPortGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/network/routers/": {
+      "get": {
+        "tags": [
+          "Routers"
         ],
         "summary": "List",
-        "operationId": "ListUsingGET_6",
+        "description": "List routers T0/T1 from NSX-T",
+        "operationId": "RouterListUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RouterListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/network/routers/{routerId}": {
+      "get": {
+        "tags": [
+          "Routers"
+        ],
+        "summary": "Get",
+        "description": "Get router from NSX-T",
+        "operationId": "RouterGetUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "routerId",
+            "in": "path",
+            "description": "routerId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RouterGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/network/security-groups/": {
+      "get": {
+        "tags": [
+          "Security groups"
+        ],
+        "summary": "List",
+        "description": "List security groups from NSX-T",
+        "operationId": "SecurityGroupListUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -571,23 +856,18 @@
               "$ref": "#/definitions/SecurityGroupListResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       },
       "put": {
         "tags": [
-          "security-group-controller"
+          "Security groups"
         ],
         "summary": "Create",
-        "operationId": "CreateUsingPUT",
+        "description": "Create security group in NSX-T",
+        "operationId": "SecurityGroupCreateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -613,66 +893,25 @@
             }
           },
           "201": {
-            "description": "Created"
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateResponse"
+            }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
     },
-    "/nsx/sg/{GroupId}": {
-      "get": {
-        "tags": [
-          "security-group-controller"
-        ],
-        "summary": "Get",
-        "operationId": "GetUsingGET_3",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "GroupId",
-            "in": "path",
-            "description": "GroupId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/SecurityGroupGetResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      },
+    "/network/security-groups/{GroupId}": {
       "delete": {
         "tags": [
-          "security-group-controller"
+          "Security groups"
         ],
         "summary": "Delete",
-        "operationId": "DeleteUsingDELETE",
+        "description": "Delete security group from NSX-T",
+        "operationId": "SecurityGroupDeleteUsingDELETE",
         "consumes": [
           "application/json"
         ],
@@ -695,24 +934,58 @@
               "$ref": "#/definitions/DeleteResponse"
             }
           },
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
     },
-    "/nsx/vms/": {
+    "/network/security-groups/{groupId}": {
       "get": {
         "tags": [
-          "virtual-machine-controller"
+          "Security groups"
         ],
-        "summary": "VirtualMachineList",
+        "summary": "Get",
+        "description": "Get security group from NSX-T",
+        "operationId": "SecurityGroupGetUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "groupId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SecurityGroupGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/network/virtual-machines/": {
+      "get": {
+        "tags": [
+          "Virtual machines"
+        ],
+        "summary": "List virtual machines",
+        "description": "List virtual machines from NSX-T level",
         "operationId": "VirtualMachineListUsingGET",
         "consumes": [
           "application/json"
@@ -727,57 +1000,20 @@
               "$ref": "#/definitions/VirtualMachineListResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
     },
-    "/request/": {
+    "/network/virtual-machines/{virtualMachineId}": {
       "get": {
         "tags": [
-          "request-controller"
+          "Virtual machines"
         ],
-        "summary": "RequestList",
-        "operationId": "RequestListUsingGET",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/RequestInstanceListResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      }
-    },
-    "/request/{requestId}": {
-      "get": {
-        "tags": [
-          "request-controller"
-        ],
-        "summary": "RequestGet",
-        "operationId": "RequestGetUsingGET",
+        "summary": "Get",
+        "description": "Get virtual machine from NSX-T",
+        "operationId": "VirtualMachineGetUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -786,9 +1022,9 @@
         ],
         "parameters": [
           {
-            "name": "requestId",
+            "name": "virtualMachineId",
             "in": "path",
-            "description": "requestId",
+            "description": "virtualMachineId",
             "required": true,
             "type": "string"
           }
@@ -797,17 +1033,52 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/RequestInstanceGetResponse"
+              "$ref": "#/definitions/VirtualMachineGetResponse"
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           },
           "404": {
-            "description": "Not Found"
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/vidm/token": {
+      "post": {
+        "tags": [
+          "vidm-controller"
+        ],
+        "summary": "Get",
+        "description": "Generate authorization token",
+        "operationId": "getTokenUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "vidmTokenRequest",
+            "description": "vidmTokenRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VIDMTokenRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VIDMTokenResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
@@ -859,37 +1130,6 @@
         }
       }
     },
-    "AuthToken": {
-      "type": "object",
-      "properties": {
-        "creationDate": {
-          "$ref": "#/definitions/Timestamp"
-        },
-        "tokenId": {
-          "type": "string"
-        },
-        "tokenInstance": {
-          "$ref": "#/definitions/TokenInstance"
-        }
-      }
-    },
-    "AuthTokenCreateResponse": {
-      "type": "object",
-      "properties": {
-        "authToken": {
-          "$ref": "#/definitions/AuthToken"
-        },
-        "messages": {
-          "type": "string"
-        },
-        "success": {
-          "type": "boolean"
-        },
-        "timestamp": {
-          "$ref": "#/definitions/Timestamp"
-        }
-      }
-    },
     "Category": {
       "type": "object",
       "properties": {
@@ -926,39 +1166,14 @@
         "contextProfileId": {
           "type": "string"
         },
-        "description": {
-          "type": "string"
-        },
         "displayName": {
-          "type": "string"
-        },
-        "externalId": {
-          "type": "string"
-        },
-        "parentPath": {
-          "type": "string"
-        },
-        "path": {
           "type": "string"
         },
         "protection": {
           "type": "string"
         },
-        "relativePath": {
-          "type": "string"
-        },
         "resourceType": {
           "$ref": "#/definitions/ResourceType"
-        },
-        "revision": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "schemaValue": {
-          "type": "string"
-        },
-        "systemOwned": {
-          "type": "boolean"
         }
       }
     },
@@ -978,7 +1193,8 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -998,7 +1214,8 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -1017,7 +1234,8 @@
           "type": "string"
         },
         "creationDate": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         },
         "defaultServices": {
           "type": "array",
@@ -1030,9 +1248,6 @@
           "items": {
             "$ref": "#/definitions/SecurityGroup"
           }
-        },
-        "destinationExcluded": {
-          "type": "boolean"
         },
         "direction": {
           "type": "string",
@@ -1048,9 +1263,6 @@
         "displayName": {
           "type": "string"
         },
-        "externalId": {
-          "type": "string"
-        },
         "ipProtocol": {
           "type": "string",
           "enum": [
@@ -1059,35 +1271,15 @@
             "IPV6"
           ]
         },
-        "logged": {
-          "type": "boolean"
-        },
         "modificationDate": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         },
         "modifiedBy": {
           "type": "string"
         },
-        "parentPath": {
-          "type": "string"
-        },
-        "path": {
-          "type": "string"
-        },
-        "profile": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ContextProfileInstance"
-          }
-        },
-        "protection": {
-          "$ref": "#/definitions/Protection"
-        },
-        "relativePath": {
-          "type": "string"
-        },
-        "resourceType": {
-          "$ref": "#/definitions/ResourceType"
+        "position": {
+          "$ref": "#/definitions/Position"
         },
         "ruleId": {
           "type": "string"
@@ -1098,21 +1290,11 @@
             "$ref": "#/definitions/SecurityGroup"
           }
         },
-        "sequenceNumber": {
-          "type": "integer",
-          "format": "int64"
-        },
         "source": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/SecurityGroup"
           }
-        },
-        "sourcesExcluded": {
-          "type": "boolean"
-        },
-        "tag": {
-          "type": "string"
         }
       }
     },
@@ -1129,7 +1311,8 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -1149,7 +1332,8 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -1169,7 +1353,32 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "DhcpConfigPath": {
+      "type": "object",
+      "properties": {
+        "dhcpConfigPath": {
+          "type": "string"
+        },
+        "dhcpConfigPathId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "FailoverMode": {
+      "type": "object",
+      "properties": {
+        "failoverMode": {
+          "type": "string"
+        },
+        "failoverModeId": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
@@ -1188,7 +1397,8 @@
           "type": "string"
         },
         "creationDate": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         },
         "defaultServices": {
           "type": "array",
@@ -1201,9 +1411,6 @@
           "items": {
             "$ref": "#/definitions/SecurityGroup"
           }
-        },
-        "destinationExcluded": {
-          "type": "boolean"
         },
         "direction": {
           "type": "string",
@@ -1219,9 +1426,6 @@
         "displayName": {
           "type": "string"
         },
-        "externalId": {
-          "type": "string"
-        },
         "ipProtocol": {
           "type": "string",
           "enum": [
@@ -1230,35 +1434,15 @@
             "IPV6"
           ]
         },
-        "logged": {
-          "type": "boolean"
-        },
         "modificationDate": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         },
         "modifiedBy": {
           "type": "string"
         },
-        "parentPath": {
-          "type": "string"
-        },
-        "path": {
-          "type": "string"
-        },
-        "profile": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ContextProfileInstance"
-          }
-        },
-        "protection": {
-          "$ref": "#/definitions/Protection"
-        },
-        "relativePath": {
-          "type": "string"
-        },
-        "resourceType": {
-          "$ref": "#/definitions/ResourceType"
+        "position": {
+          "$ref": "#/definitions/Position"
         },
         "ruleId": {
           "type": "string"
@@ -1266,24 +1450,14 @@
         "scope": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/RouterInstance"
           }
-        },
-        "sequenceNumber": {
-          "type": "integer",
-          "format": "int64"
         },
         "source": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/SecurityGroup"
           }
-        },
-        "sourcesExcluded": {
-          "type": "boolean"
-        },
-        "tag": {
-          "type": "string"
         }
       }
     },
@@ -1300,7 +1474,8 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -1320,93 +1495,33 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
     "GatewayPolicy": {
       "type": "object",
       "properties": {
-        "category": {
-          "$ref": "#/definitions/Category"
-        },
-        "comments": {
-          "type": "string"
-        },
         "createdBy": {
           "type": "string"
         },
         "creationDate": {
-          "$ref": "#/definitions/Timestamp"
-        },
-        "description": {
-          "type": "string"
+          "type": "string",
+          "format": "date-time"
         },
         "displayName": {
-          "type": "string"
-        },
-        "externalId": {
           "type": "string"
         },
         "gatewayPolicyId": {
           "type": "string"
         },
-        "internalSequenceNumber": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "isDefault": {
-          "type": "boolean"
-        },
-        "locked": {
-          "type": "boolean"
-        },
         "modificationDate": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         },
         "modifiedBy": {
           "type": "string"
-        },
-        "overridden": {
-          "type": "boolean"
-        },
-        "parentPath": {
-          "type": "string"
-        },
-        "path": {
-          "type": "string"
-        },
-        "relativePath": {
-          "type": "string"
-        },
-        "resourceType": {
-          "$ref": "#/definitions/ResourceType"
-        },
-        "revision": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "schedulerPath": {
-          "type": "string"
-        },
-        "schemaValue": {
-          "type": "string"
-        },
-        "sequenceNumber": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "stateful": {
-          "type": "boolean"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TagInstance"
-          }
-        },
-        "tcpStrict": {
-          "type": "boolean"
         }
       }
     },
@@ -1423,7 +1538,8 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -1443,7 +1559,32 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "HAMode": {
+      "type": "object",
+      "properties": {
+        "haMode": {
+          "type": "string"
+        },
+        "haModeId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "IP6ProfilePath": {
+      "type": "object",
+      "properties": {
+        "ip6ProfilePath": {
+          "type": "string"
+        },
+        "ip6ProfilePathId": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
@@ -1457,9 +1598,6 @@
           "$ref": "#/definitions/Timestamp"
         },
         "displayName": {
-          "type": "string"
-        },
-        "externalId": {
           "type": "string"
         },
         "ipSetAddresses": {
@@ -1476,15 +1614,6 @@
         },
         "modifiedBy": {
           "type": "string"
-        },
-        "resourceType": {
-          "$ref": "#/definitions/ResourceType"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TagInstance"
-          }
         }
       }
     },
@@ -1497,6 +1626,24 @@
         "ipSetAddressId": {
           "type": "integer",
           "format": "int32"
+        }
+      }
+    },
+    "IPSetGetResponse": {
+      "type": "object",
+      "properties": {
+        "ipSet": {
+          "$ref": "#/definitions/IPSet"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -1516,7 +1663,20 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "InternalTransitSubnet": {
+      "type": "object",
+      "properties": {
+        "internalTransitSubnet": {
+          "type": "string"
+        },
+        "internalTransitSubnetId": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
@@ -1526,35 +1686,26 @@
         "displayName": {
           "type": "string"
         },
-        "externalId": {
-          "type": "string"
-        },
-        "logicalPortAdminState": {
-          "$ref": "#/definitions/LogicalPortAdminState"
-        },
         "logicalPortId": {
           "type": "string"
-        },
-        "resourceType": {
-          "$ref": "#/definitions/ResourceType"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TagInstance"
-          }
         }
       }
     },
-    "LogicalPortAdminState": {
+    "LogicalPortGetResponse": {
       "type": "object",
       "properties": {
-        "stateId": {
-          "type": "integer",
-          "format": "int32"
+        "logicalPort": {
+          "$ref": "#/definitions/LogicalPort"
         },
-        "stateName": {
+        "messages": {
           "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -1574,7 +1725,25 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Position": {
+      "type": "object",
+      "properties": {
+        "reviseOperation": {
+          "type": "string",
+          "enum": [
+            "TOP",
+            "BOTTOM",
+            "BEFORE",
+            "AFTER"
+          ]
+        },
+        "ruleId": {
+          "type": "string"
         }
       }
     },
@@ -1594,7 +1763,8 @@
       "type": "object",
       "properties": {
         "endDate": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         },
         "requestBody": {
           "type": "string"
@@ -1629,7 +1799,11 @@
           "type": "string",
           "enum": [
             "SECURITY_GROUP_CREATE",
-            "SECURITY_GROUP_DELETE"
+            "SECURITY_GROUP_DELETE",
+            "FIREWALL_DFW_RULE_CREATE",
+            "FIREWALL_DFW_RULE_DELETE",
+            "FIREWALL_GFW_RULE_CREATE",
+            "FIREWALL_GFW_RULE_DELETE"
           ]
         },
         "requestor": {
@@ -1639,44 +1813,8 @@
           "type": "string"
         },
         "startDate": {
-          "$ref": "#/definitions/Timestamp"
-        }
-      }
-    },
-    "RequestInstanceGetResponse": {
-      "type": "object",
-      "properties": {
-        "messages": {
-          "type": "string"
-        },
-        "requestInstance": {
-          "$ref": "#/definitions/RequestInstance"
-        },
-        "success": {
-          "type": "boolean"
-        },
-        "timestamp": {
-          "$ref": "#/definitions/Timestamp"
-        }
-      }
-    },
-    "RequestInstanceListResponse": {
-      "type": "object",
-      "properties": {
-        "messages": {
-          "type": "string"
-        },
-        "requestInstanceList": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/RequestInstance"
-          }
-        },
-        "success": {
-          "type": "boolean"
-        },
-        "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -1684,7 +1822,8 @@
       "type": "object",
       "properties": {
         "messageDate": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         },
         "messageValue": {
           "type": "string"
@@ -1703,6 +1842,126 @@
         }
       }
     },
+    "RouterGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "routerInstance": {
+          "$ref": "#/definitions/RouterInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "RouterInstance": {
+      "type": "object",
+      "properties": {
+        "createdBy": {
+          "type": "string"
+        },
+        "creationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "defaultRuleLogging": {
+          "type": "boolean"
+        },
+        "dhcpConfigPathList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DhcpConfigPath"
+          }
+        },
+        "disableFirewall": {
+          "type": "boolean"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "failoverMode": {
+          "$ref": "#/definitions/FailoverMode"
+        },
+        "forceWithListing": {
+          "type": "boolean"
+        },
+        "haMode": {
+          "$ref": "#/definitions/HAMode"
+        },
+        "internalTransitSubnetList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InternalTransitSubnet"
+          }
+        },
+        "ip6ProfilePathList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IP6ProfilePath"
+          }
+        },
+        "modificationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "modifiedBy": {
+          "type": "string"
+        },
+        "protection": {
+          "$ref": "#/definitions/Protection"
+        },
+        "resourceType": {
+          "$ref": "#/definitions/ResourceType"
+        },
+        "revision": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "routerId": {
+          "type": "string"
+        },
+        "routerType": {
+          "type": "string",
+          "enum": [
+            "TIER0",
+            "TIER1"
+          ]
+        },
+        "transitSubnetList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TransitSubnet"
+          }
+        }
+      }
+    },
+    "RouterListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "routerCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RouterInstance"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
     "SecurityGroup": {
       "type": "object",
       "properties": {
@@ -1710,12 +1969,11 @@
           "type": "string"
         },
         "creationDate": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
         },
         "displayName": {
-          "type": "string"
-        },
-        "externalId": {
           "type": "string"
         },
         "id": {
@@ -1728,28 +1986,12 @@
           }
         },
         "modificationDate": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
         },
         "modifiedBy": {
           "type": "string"
-        },
-        "parentPath": {
-          "type": "string"
-        },
-        "path": {
-          "type": "string"
-        },
-        "relativePath": {
-          "type": "string"
-        },
-        "resourceType": {
-          "$ref": "#/definitions/ResourceType"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TagInstance"
-          }
         }
       }
     },
@@ -1766,7 +2008,8 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -1786,7 +2029,8 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -1794,9 +2038,6 @@
       "type": "object",
       "properties": {
         "displayName": {
-          "type": "string"
-        },
-        "externalId": {
           "type": "string"
         },
         "id": {
@@ -1818,9 +2059,6 @@
         "category": {
           "$ref": "#/definitions/Category"
         },
-        "comments": {
-          "type": "string"
-        },
         "connectivityStrategy": {
           "$ref": "#/definitions/ConnectivityStrategy"
         },
@@ -1828,64 +2066,24 @@
           "type": "string"
         },
         "creationDate": {
-          "$ref": "#/definitions/Timestamp"
-        },
-        "description": {
-          "type": "string"
+          "type": "string",
+          "format": "date-time"
         },
         "displayName": {
           "type": "string"
         },
-        "externalId": {
-          "type": "string"
-        },
-        "internalSequenceNumber": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "isDefault": {
-          "type": "boolean"
-        },
-        "locked": {
-          "type": "boolean"
-        },
         "modificationDate": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         },
         "modifiedBy": {
-          "type": "string"
-        },
-        "overridden": {
-          "type": "boolean"
-        },
-        "parentPath": {
-          "type": "string"
-        },
-        "path": {
-          "type": "string"
-        },
-        "relativePath": {
           "type": "string"
         },
         "resourceType": {
           "$ref": "#/definitions/ResourceType"
         },
-        "revision": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "schedulerPath": {
-          "type": "string"
-        },
-        "schemaValue": {
-          "type": "string"
-        },
         "securityPolicyId": {
           "type": "string"
-        },
-        "sequenceNumber": {
-          "type": "integer",
-          "format": "int64"
         },
         "stateful": {
           "type": "boolean"
@@ -1914,7 +2112,8 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -1934,7 +2133,26 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ServiceGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "serviceInstance": {
+          "$ref": "#/definitions/ServiceInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -1945,43 +2163,21 @@
           "type": "string"
         },
         "creationDate": {
-          "$ref": "#/definitions/Timestamp"
-        },
-        "default": {
-          "type": "boolean"
-        },
-        "description": {
-          "type": "string"
+          "type": "string",
+          "format": "date-time"
         },
         "displayName": {
           "type": "string"
         },
-        "externalId": {
-          "type": "string"
-        },
         "modificationDate": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         },
         "modifiedBy": {
           "type": "string"
         },
-        "parentPath": {
-          "type": "string"
-        },
-        "path": {
-          "type": "string"
-        },
-        "relativePath": {
-          "type": "string"
-        },
-        "resourceType": {
-          "$ref": "#/definitions/ResourceType"
-        },
         "serviceId": {
           "type": "string"
-        },
-        "serviceType": {
-          "$ref": "#/definitions/ServiceType"
         }
       }
     },
@@ -2001,19 +2197,8 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
-        }
-      }
-    },
-    "ServiceType": {
-      "type": "object",
-      "properties": {
-        "serviceType": {
-          "type": "string"
-        },
-        "serviceTypeId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -2065,23 +2250,6 @@
         }
       }
     },
-    "TenantInstance": {
-      "type": "object",
-      "properties": {
-        "tenantDescription": {
-          "type": "string"
-        },
-        "tenantDisplayName": {
-          "type": "string"
-        },
-        "tenantId": {
-          "type": "string"
-        },
-        "tenantName": {
-          "type": "string"
-        }
-      }
-    },
     "Timestamp": {
       "type": "object",
       "properties": {
@@ -2127,24 +2295,46 @@
         }
       }
     },
-    "TokenInstance": {
+    "TransitSubnet": {
       "type": "object",
       "properties": {
-        "tenantInstance": {
-          "$ref": "#/definitions/TenantInstance"
+        "transitSubnet": {
+          "type": "string"
         },
-        "userInstance": {
-          "$ref": "#/definitions/UserInstance"
+        "transitSubnetId": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
-    "UserInstance": {
+    "VIDMTokenRequest": {
       "type": "object",
       "properties": {
-        "userId": {
+        "password": {
           "type": "string"
         },
-        "userTempId": {
+        "tenant": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "VIDMTokenResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "token": {
           "type": "string"
         }
       }
@@ -2152,62 +2342,32 @@
     "VirtualMachine": {
       "type": "object",
       "properties": {
-        "biosUuid": {
-          "type": "string"
-        },
-        "computerExternalId": {
-          "type": "string"
-        },
-        "computerName": {
-          "type": "string"
-        },
         "displayName": {
-          "type": "string"
-        },
-        "externalId": {
           "type": "string"
         },
         "hostId": {
           "type": "string"
         },
-        "hostLocationId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "instanceUuid": {
-          "type": "string"
-        },
-        "localHost": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "locationId": {
-          "type": "string"
-        },
-        "moIdOnHost": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "resourceType": {
-          "$ref": "#/definitions/ResourceType"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TagInstance"
-          }
-        },
         "virtualMachineId": {
           "type": "string"
+        }
+      }
+    },
+    "VirtualMachineGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
         },
-        "virtualMachinePowerState": {
-          "$ref": "#/definitions/VirtualMachinePowerState"
+        "success": {
+          "type": "boolean"
         },
-        "virtualMachineType": {
-          "$ref": "#/definitions/VirtualMachineType"
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
         },
-        "virtualmachineOS": {
-          "$ref": "#/definitions/VirtualMachineOS"
+        "virtualMachine": {
+          "$ref": "#/definitions/VirtualMachine"
         }
       }
     },
@@ -2221,49 +2381,14 @@
           "type": "boolean"
         },
         "timestamp": {
-          "$ref": "#/definitions/Timestamp"
+          "type": "string",
+          "format": "date-time"
         },
         "virtualMachineCollection": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/VirtualMachine"
           }
-        }
-      }
-    },
-    "VirtualMachineOS": {
-      "type": "object",
-      "properties": {
-        "osId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "osName": {
-          "type": "string"
-        }
-      }
-    },
-    "VirtualMachinePowerState": {
-      "type": "object",
-      "properties": {
-        "powerState": {
-          "type": "string"
-        },
-        "powerStateId": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
-    },
-    "VirtualMachineType": {
-      "type": "object",
-      "properties": {
-        "vmType": {
-          "type": "string"
-        },
-        "vmTypeId": {
-          "type": "integer",
-          "format": "int32"
         }
       }
     }
