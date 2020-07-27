@@ -9,6 +9,7 @@ import (
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/vidm_controller"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 	"net/http"
+	"os"
 )
 
 type Client struct {
@@ -17,7 +18,20 @@ type Client struct {
 	logger     *FileLogger
 }
 
+func getEnvOrDefault(env string, defaultValue string) string {
+	if envValue := os.Getenv(env); envValue != "" {
+		return envValue
+	}
+
+	return defaultValue
+}
+
 func NewClient(host string, tenant string, username string, password string, insecure bool, debugLogFile string) (*Client, error) {
+	host = getEnvOrDefault("OCHK_HOST", host)
+	tenant = getEnvOrDefault("OCHK_TENANT", tenant)
+	username = getEnvOrDefault("OCHK_USERNAME", username)
+	password = getEnvOrDefault("OCHK_PASSWORD", password)
+
 	ctx := context.Background()
 
 	var logger *FileLogger

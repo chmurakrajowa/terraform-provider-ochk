@@ -7,7 +7,7 @@ provider "ochk" {
 }
 
 resource "ochk_security_group" "demo" {
-  display_name = "testM&L3"
+  display_name = "testM&L5"
 
   members {
     id = "e1e2f617-014c-4119-bac8-49fa4a93db47"

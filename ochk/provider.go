@@ -12,23 +12,23 @@ func Provider() terraform.ResourceProvider {
 		Schema: map[string]*schema.Schema{
 			"host": {
 				Type:         schema.TypeString,
-				Required:     true,
+				Optional:     true,
 				ValidateFunc: validateHost,
 				Description:  "host value",
 			},
 			"tenant": {
 				Type:        schema.TypeString,
-				Required:    true,
+				Optional:    true,
 				Description: "tenant value",
 			},
 			"username": {
 				Type:        schema.TypeString,
-				Required:    true,
+				Optional:    true,
 				Description: "username value",
 			},
 			"password": {
 				Type:        schema.TypeString,
-				Required:    true,
+				Optional:    true,
 				Description: "password value",
 				Sensitive:   true,
 			},

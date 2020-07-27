@@ -89,6 +89,7 @@ func resourceServiceGroupCreate(d *schema.ResourceData, meta interface{}) error 
 
 	d.SetId(put.Payload.SecurityGroup.ID)
 
+
 	return nil
 }
 
@@ -127,8 +128,7 @@ func resourceServiceGroupRead(d *schema.ResourceData, meta interface{}) error {
 }
 
 func resourceServiceGroupUpdate(d *schema.ResourceData, meta interface{}) error {
-	//TODO brak usługi modyfikacji security group
-	return nil
+	return fmt.Errorf("updating SecurityGroup is not implemented")
 }
 
 func resourceServiceGroupDelete(d *schema.ResourceData, meta interface{}) error {
