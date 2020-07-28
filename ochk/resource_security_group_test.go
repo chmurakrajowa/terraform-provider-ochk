@@ -26,6 +26,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 				Config: testAccSecurityGroupResourceConfig(name),
 				Check: resource.ComposeTestCheckFunc(
 					testAccSecurityGroupResourceExists("ochk_security_group.test"),
+					//todo check display_name
 				),
 			},
 		},

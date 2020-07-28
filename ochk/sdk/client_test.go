@@ -17,7 +17,7 @@ import (
 )
 
 func TestHttpClient(t *testing.T) {
-	//t.SkipNow()
+	t.SkipNow()
 
 	ctx := context.Background()
 	iasHttpClient := http.Client{

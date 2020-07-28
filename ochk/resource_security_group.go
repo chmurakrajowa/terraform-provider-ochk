@@ -2,6 +2,7 @@ package ochk
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
 	controller "github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_groups"
@@ -12,8 +13,7 @@ import (
 )
 
 const (
-	VMRetryTimeout       = 15 * time.Minute
-	VMDeleteRetryTimeout = 30 * time.Minute
+	SecurityGroupRetryTimeout = 1 * time.Minute
 )
 
 func resourceSecurityGroup() *schema.Resource {
@@ -24,9 +24,9 @@ func resourceSecurityGroup() *schema.Resource {
 		Delete: resourceServiceGroupDelete,
 
 		Timeouts: &schema.ResourceTimeout{
-			Create: schema.DefaultTimeout(VMRetryTimeout),
-			Update: schema.DefaultTimeout(VMRetryTimeout),
-			Delete: schema.DefaultTimeout(VMDeleteRetryTimeout),
+			Create: schema.DefaultTimeout(SecurityGroupRetryTimeout),
+			Update: schema.DefaultTimeout(SecurityGroupRetryTimeout),
+			Delete: schema.DefaultTimeout(SecurityGroupRetryTimeout),
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -89,7 +89,6 @@ func resourceServiceGroupCreate(d *schema.ResourceData, meta interface{}) error 
 
 	d.SetId(put.Payload.SecurityGroup.ID)
 
-
 	return nil
 }
 
@@ -108,7 +107,11 @@ func resourceServiceGroupRead(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error while reading security group: %+v", err)
 	}
 
-	//TODO w jaki sposób możemy dowiedzieć że dany zasób nie działa? bo jeśli nie ma go to trzeba jego id ustawić na ""
+	var notFound *controller.SecurityGroupGetUsingGETNotFound
+	if ok := errors.As(err, &notFound); ok {
+		d.SetId("")
+		return nil
+	}
 
 	if !response.Payload.Success {
 		return fmt.Errorf("retrieving security group failed: %s", response.Payload.Messages)
