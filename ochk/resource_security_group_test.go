@@ -14,7 +14,7 @@ import (
 )
 
 func TestAccSecurityGroupResource_create(t *testing.T) {
-	name := fmt.Sprintf("tf-test-%s", acctest.RandStringFromCharSet(8, acctest.CharSetAlphaNum)
+	name := fmt.Sprintf("tf-test-%s", acctest.RandStringFromCharSet(8, acctest.CharSetAlphaNum))
 
 	resource.Test(t, resource.TestCase{
 		PreCheck: func() {
