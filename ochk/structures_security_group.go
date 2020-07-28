@@ -1,12 +1,11 @@
 package ochk
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
 func flattenSecurityGroupMembers(in []*models.SecurityGroupMember) []map[string]interface{} {
-	var out = make([]map[string]interface{}, len(in), len(in))
+	var out = make([]map[string]interface{}, len(in))
 
 	for i, v := range in {
 		m := make(map[string]interface{})
@@ -22,13 +21,12 @@ func flattenSecurityGroupMembers(in []*models.SecurityGroupMember) []map[string]
 	return out
 }
 
-func expandSecurityGroupMembers(list *schema.Set) []*models.SecurityGroupMember {
-	in := list.List()
+func expandSecurityGroupMembers(in []interface{}) []*models.SecurityGroupMember {
 	if len(in) == 0 {
 		return nil
 	}
 
-	var out = make([]*models.SecurityGroupMember, len(in), len(in))
+	var out = make([]*models.SecurityGroupMember, len(in))
 	for i, v := range in {
 		m := v.(map[string]interface{})
 
@@ -37,7 +35,7 @@ func expandSecurityGroupMembers(list *schema.Set) []*models.SecurityGroupMember 
 			MemberType: m["type"].(string),
 		}
 
-		if displayName := m["display_name"].(string); displayName != "" {
+		if displayName, ok := m["display_name"].(string); ok && displayName != "" {
 			member.DisplayName = displayName
 		}
 

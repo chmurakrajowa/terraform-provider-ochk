@@ -14,7 +14,7 @@ func Provider() terraform.ResourceProvider {
 				Type:         schema.TypeString,
 				Optional:     true,
 				ValidateFunc: validateHost,
-				DefaultFunc: schema.EnvDefaultFunc("OCHK_HOST", nil),
+				DefaultFunc:  schema.EnvDefaultFunc("OCHK_HOST", nil),
 				Description:  "host value",
 			},
 			"tenant": {

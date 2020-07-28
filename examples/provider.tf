@@ -2,7 +2,6 @@ provider "ochk" {
   host = "iaas-api-proxy.ochk.pilot"
   tenant = "devel"
   username = "devel-admin"
-  password = "zaq1@WSX"
   debug_log_file = "debug.log"
 }
 

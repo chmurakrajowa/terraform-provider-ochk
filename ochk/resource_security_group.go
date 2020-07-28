@@ -35,7 +35,7 @@ func resourceSecurityGroup() *schema.Resource {
 				Required: true,
 			},
 			"members": {
-				Type:     schema.TypeSet,
+				Type:     schema.TypeList,
 				MinItems: 1,
 				Required: true,
 				Elem: &schema.Resource{
@@ -65,7 +65,7 @@ func resourceServiceGroupCreate(d *schema.ResourceData, meta interface{}) error 
 
 	securityGroup := &models.SecurityGroup{
 		DisplayName: d.Get("display_name").(string),
-		Members:     expandSecurityGroupMembers(d.Get("members").(*schema.Set)),
+		Members:     expandSecurityGroupMembers(d.Get("members").([]interface{})),
 	}
 
 	if err := securityGroup.Validate(nil); err != nil {
