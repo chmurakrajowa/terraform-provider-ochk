@@ -12,9 +12,8 @@ import (
 )
 
 type Client struct {
-	client     *client.Ochk
-	httpClient *http.Client
-	logger     *FileLogger
+	logger         *FileLogger
+	SecurityGroups SecurityGroupsProxy
 }
 
 func NewClient(host string, tenant string, username string, password string, insecure bool, debugLogFile string) (*Client, error) {
@@ -68,22 +67,12 @@ func NewClient(host string, tenant string, username string, password string, ins
 	authClient := client.New(apiClientAuthTransport, nil)
 
 	return &Client{
-		client: authClient,
-		httpClient: &http.Client{
-			Transport: &http.Transport{
-				TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-			},
-		},
 		logger: logger,
+		SecurityGroups: SecurityGroupsProxy{
+			httpClient: httpClient,
+			service:    authClient.SecurityGroups,
+		},
 	}, nil
-}
-
-func (c *Client) GetOchk() *client.Ochk {
-	return c.client
-}
-
-func (c *Client) GetHTTPClient() *http.Client {
-	return c.httpClient
 }
 
 func mapToSchemes(insecure bool) []string {

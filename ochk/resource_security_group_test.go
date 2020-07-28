@@ -2,13 +2,11 @@ package ochk
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_groups"
 	"log"
 	"testing"
 )
@@ -16,6 +14,7 @@ import (
 func TestAccSecurityGroupResource_create(t *testing.T) {
 	name := fmt.Sprintf("tf-test-%s", acctest.RandStringFromCharSet(8, acctest.CharSetAlphaNum))
 
+	//TODO zbyt wiele razy jest wołany POST /vidm/token HTTP/1.1, coś jest nie tak
 	resource.Test(t, resource.TestCase{
 		Providers:    testAccProviders,
 		CheckDestroy: testAccSecurityGroupResourceDestroy(),
@@ -24,7 +23,6 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 				Config: testAccSecurityGroupResourceConfig(name),
 				Check: resource.ComposeTestCheckFunc(
 					testAccSecurityGroupResourceExists("ochk_security_group.test"),
-					//todo check display_name
 				),
 			},
 		},
@@ -42,15 +40,20 @@ func testAccSecurityGroupResourceExists(resourceID string) resource.TestCheckFun
 			return fmt.Errorf("resource %s has no ID set", resourceID)
 		}
 
-		client := testAccProvider.Meta().(*sdk.Client)
-		exists, err := checkSecurityGroupExists(client, rs.Primary.ID)
+		proxy := testAccProvider.Meta().(*sdk.Client).SecurityGroups
+
+		securityGroup, err := proxy.Read(context.Background(), rs.Primary.ID)
 		if err != nil {
 			return err
 		}
 
-		if !exists {
-			return fmt.Errorf("security group %s does not exist", rs.Primary.ID)
+		displayName := rs.Primary.Attributes["display_name"]
+
+		if securityGroup.DisplayName != displayName {
+			return fmt.Errorf("security group display name does not match: actual %s, expected %s", securityGroup.DisplayName, displayName)
 		}
+
+		//TODO jak porównywać members?
 
 		return nil
 	}
@@ -78,36 +81,18 @@ func testAccSecurityGroupResourceDestroy() resource.TestCheckFunc {
 			}
 
 			log.Printf("checking security group %s exists", rs.Primary.ID)
-			client := testAccProvider.Meta().(*sdk.Client)
-			exists, err := checkSecurityGroupExists(client, rs.Primary.ID)
+			proxy := testAccProvider.Meta().(*sdk.Client).SecurityGroups
+
+			securityGroup, err := proxy.Read(context.Background(), rs.Primary.ID)
 			if err != nil {
 				return err
 			}
 
-			if exists {
+			if securityGroup != nil {
 				return fmt.Errorf("security group %s still exists", rs.Primary.ID)
 			}
 		}
 
 		return nil
 	}
-}
-
-func checkSecurityGroupExists(client *sdk.Client, id string) (bool, error) {
-	_, err := client.GetOchk().SecurityGroups.SecurityGroupGetUsingGET(&security_groups.SecurityGroupGetUsingGETParams{
-		GroupID:    id,
-		Context:    context.Background(),
-		HTTPClient: client.GetHTTPClient(),
-	})
-
-	if err != nil {
-		var notFoundErr *security_groups.SecurityGroupGetUsingGETNotFound
-		if ok := errors.As(err, &notFoundErr); ok {
-			return false, nil
-		}
-
-		return false, fmt.Errorf("error getting security group: %w", err)
-	}
-
-	return true, nil
 }

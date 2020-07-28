@@ -2,10 +2,8 @@ package ochk
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
-	controller "github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_groups"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 	"time"
 
@@ -60,71 +58,46 @@ func resourceSecurityGroup() *schema.Resource {
 }
 
 func resourceServiceGroupCreate(d *schema.ResourceData, meta interface{}) error {
-	client := meta.(*sdk.Client)
-	service := client.GetOchk().SecurityGroups
+	proxy := meta.(*sdk.Client).SecurityGroups
+
+	ctx := context.Background()
 
 	securityGroup := &models.SecurityGroup{
 		DisplayName: d.Get("display_name").(string),
 		Members:     expandSecurityGroupMembers(d.Get("members").([]interface{})),
 	}
 
-	if err := securityGroup.Validate(nil); err != nil {
-		return fmt.Errorf("error while validating security group structure: %+v", err)
-	}
-
-	params := &controller.SecurityGroupCreateUsingPUTParams{
-		SecurityGroup: securityGroup,
-		Context:       context.Background(),
-		HTTPClient:    client.GetHTTPClient(),
-	}
-
-	_, put, err := service.SecurityGroupCreateUsingPUT(params)
+	created, err := proxy.Create(ctx, securityGroup)
 	if err != nil {
-		return fmt.Errorf("error while creating security group: %+v", err)
+		return fmt.Errorf("error while creating security group: %w", err)
 	}
 
-	if !put.Payload.Success {
-		return fmt.Errorf("creating security group failed: %s", put.Payload.Messages)
-	}
-
-	d.SetId(put.Payload.SecurityGroup.ID)
+	d.SetId(created.ID)
 
 	return nil
 }
 
 func resourceServiceGroupRead(d *schema.ResourceData, meta interface{}) error {
-	client := meta.(*sdk.Client)
-	service := client.GetOchk().SecurityGroups
+	proxy := meta.(*sdk.Client).SecurityGroups
 
-	params := &controller.SecurityGroupGetUsingGETParams{
-		GroupID:    d.Id(),
-		Context:    context.Background(),
-		HTTPClient: client.GetHTTPClient(),
-	}
+	ctx := context.Background()
 
-	response, err := service.SecurityGroupGetUsingGET(params)
+	securityGroup, err := proxy.Read(ctx, d.Id())
 	if err != nil {
-		return fmt.Errorf("error while reading security group: %+v", err)
-	}
+		if sdk.IsNotFoundError(err) {
+			d.SetId("")
+			return fmt.Errorf("security group with id %s not found: %w", d.Id(), err)
+		}
 
-	var notFound *controller.SecurityGroupGetUsingGETNotFound
-	if ok := errors.As(err, &notFound); ok {
-		d.SetId("")
-		return nil
+		return fmt.Errorf("error while reading security group: %w", err)
 	}
-
-	if !response.Payload.Success {
-		return fmt.Errorf("retrieving security group failed: %s", response.Payload.Messages)
-	}
-
-	securityGroup := response.Payload.SecurityGroup
 
 	if err := d.Set("display_name", securityGroup.DisplayName); err != nil {
-		return fmt.Errorf("error setting displayName: %+v", err)
+		return fmt.Errorf("error setting displayName: %w", err)
 	}
 
 	if err := d.Set("members", flattenSecurityGroupMembers(securityGroup.Members)); err != nil {
-		return fmt.Errorf("error setting members: %+v", err)
+		return fmt.Errorf("error setting members: %w", err)
 	}
 
 	return nil
@@ -135,25 +108,19 @@ func resourceServiceGroupUpdate(d *schema.ResourceData, meta interface{}) error 
 }
 
 func resourceServiceGroupDelete(d *schema.ResourceData, meta interface{}) error {
-	client := meta.(*sdk.Client)
-	service := client.GetOchk().SecurityGroups
+	proxy := meta.(*sdk.Client).SecurityGroups
 
-	params := &controller.SecurityGroupDeleteUsingDELETEParams{
-		GroupID:    d.Id(),
-		Context:    context.Background(),
-		HTTPClient: client.GetHTTPClient(),
-	}
+	ctx := context.Background()
 
-	response, err := service.SecurityGroupDeleteUsingDELETE(params)
+	err := proxy.Delete(ctx, d.Id())
 	if err != nil {
-		return fmt.Errorf("error while deleting security group: %+v", err)
-	}
+		if sdk.IsNotFoundError(err) {
+			d.SetId("")
+			return fmt.Errorf("security group with id %s not found: %w", d.Id(), err)
+		}
 
-	if !response.Payload.Success {
-		return fmt.Errorf("retrieving security group failed: %s", response.Payload.Messages)
+		return fmt.Errorf("error while reading deleting group: %w", err)
 	}
-
-	//TODO po co nam security group w odpowiedzi? securityGroup := response.Payload.SecurityGroup
 
 	return nil
 }
