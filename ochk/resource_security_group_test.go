@@ -21,9 +21,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSecurityGroupResourceConfig(name),
-				Check: resource.ComposeTestCheckFunc(
-					testAccSecurityGroupResourceExists("ochk_security_group.test"),
-				),
+				Check:  testAccSecurityGroupResourceExists("ochk_security_group.test"),
 			},
 		},
 	})
@@ -83,12 +81,12 @@ func testAccSecurityGroupResourceDestroy() resource.TestCheckFunc {
 			log.Printf("checking security group %s exists", rs.Primary.ID)
 			proxy := testAccProvider.Meta().(*sdk.Client).SecurityGroups
 
-			securityGroup, err := proxy.Read(context.Background(), rs.Primary.ID)
+			exists, err := proxy.Exists(context.Background(), rs.Primary.ID)
 			if err != nil {
 				return err
 			}
 
-			if securityGroup != nil {
+			if exists {
 				return fmt.Errorf("security group %s still exists", rs.Primary.ID)
 			}
 		}

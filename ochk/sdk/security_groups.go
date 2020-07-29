@@ -62,6 +62,19 @@ func (p *SecurityGroupsProxy) Read(ctx context.Context, securityGroupID string) 
 	return response.Payload.SecurityGroup, nil
 }
 
+func (p *SecurityGroupsProxy) Exists(ctx context.Context, securityGroupID string) (bool, error) {
+	_, err := p.Read(ctx, securityGroupID)
+	if err != nil {
+		if IsNotFoundError(err) {
+			return false, nil
+		}
+
+		return false, fmt.Errorf("error while reading security group: %w", err)
+	}
+
+	return true, nil
+}
+
 func (p *SecurityGroupsProxy) Delete(ctx context.Context, securityGroupID string) error {
 	params := &security_groups.SecurityGroupDeleteUsingDELETEParams{
 		GroupID:    securityGroupID,
