@@ -48,7 +48,7 @@ func (p *SecurityGroupsProxy) Read(ctx context.Context, securityGroupID string) 
 	response, err := p.service.SecurityGroupGetUsingGET(params)
 	if err != nil {
 		var notFound *security_groups.SecurityGroupGetUsingGETNotFound
-		if ok := errors.Is(err, notFound); ok {
+		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
 		}
 
@@ -85,7 +85,7 @@ func (p *SecurityGroupsProxy) Delete(ctx context.Context, securityGroupID string
 	response, err := p.service.SecurityGroupDeleteUsingDELETE(params)
 	if err != nil {
 		var notFound *security_groups.SecurityGroupGetUsingGETNotFound
-		if ok := errors.Is(err, notFound); ok {
+		if ok := errors.As(err, &notFound); ok {
 			return &NotFoundError{Err: err}
 		}
 
