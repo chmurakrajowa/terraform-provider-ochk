@@ -18,5 +18,5 @@ func (e *NotFoundError) Unwrap() error { return e.Err }
 func IsNotFoundError(err error) bool {
 	var notFound *NotFoundError
 
-	return errors.Is(err, notFound)
+	return errors.As(err, &notFound)
 }
