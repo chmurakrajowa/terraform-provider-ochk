@@ -3,9 +3,9 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-	"github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
 	"log"
 	"testing"
@@ -16,8 +16,8 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 
 	//TODO zbyt wiele razy jest wołany POST /vidm/token HTTP/1.1, coś jest nie tak
 	resource.Test(t, resource.TestCase{
-		Providers:    testAccProviders,
-		CheckDestroy: testAccSecurityGroupResourceDestroy(),
+		ProviderFactories: testAccProviderFactories,
+		CheckDestroy:      testAccSecurityGroupResourceDestroy(),
 		Steps: []resource.TestStep{
 			{
 				Config: testAccSecurityGroupResourceConfig(name),

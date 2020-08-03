@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	httptransport "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/vidm_controller"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
@@ -16,9 +17,7 @@ type Client struct {
 	SecurityGroups SecurityGroupsProxy
 }
 
-func NewClient(host string, tenant string, username string, password string, insecure bool, debugLogFile string) (*Client, error) {
-	ctx := context.Background()
-
+func NewClient(ctx context.Context, host string, tenant string, username string, password string, insecure bool, debugLogFile string) (*Client, error) {
 	var logger *FileLogger
 	if debugLogFile != "" {
 		logger = NewFileLogger(debugLogFile)
@@ -34,9 +33,12 @@ func NewClient(host string, tenant string, username string, password string, ins
 	}
 
 	apiClientTransport := httptransport.New(host, client.DefaultBasePath, mapToSchemes(insecure))
-	apiClientTransport.Debug = true
+	apiClientTransport.SetDebug(true)
+	apiClientTransport.Transport = &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
 
-	ochkClient := client.New(apiClientTransport, nil)
+	ochkClient := client.New(apiClientTransport, strfmt.Default)
 
 	params := vidm_controller.GetTokenUsingPOSTParams{
 		VidmTokenRequest: &models.VIDMTokenRequest{
@@ -58,13 +60,13 @@ func NewClient(host string, tenant string, username string, password string, ins
 	}
 
 	apiClientAuthTransport := httptransport.New(host, client.DefaultBasePath, mapToSchemes(insecure))
-	apiClientAuthTransport.Debug = true
+	apiClientAuthTransport.SetDebug(true)
 	if logger != nil {
 		apiClientAuthTransport.SetLogger(logger)
 	}
 	apiClientAuthTransport.DefaultAuthentication = httptransport.APIKeyAuth("token", "header", authResponse.Payload.Token)
 
-	authClient := client.New(apiClientAuthTransport, nil)
+	authClient := client.New(apiClientAuthTransport, strfmt.Default)
 
 	return &Client{
 		logger: logger,
