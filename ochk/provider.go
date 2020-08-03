@@ -1,21 +1,22 @@
 package ochk
 
 import (
-	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"context"
+	"github.com/hashicorp/go-cty/cty"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
 )
 
-func Provider() terraform.ResourceProvider {
+func Provider() *schema.Provider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
 			"host": {
-				Type:         schema.TypeString,
-				Optional:     true,
-				ValidateFunc: validateHost,
-				DefaultFunc:  schema.EnvDefaultFunc("OCHK_HOST", nil),
-				Description:  "host value",
+				Type:             schema.TypeString,
+				Optional:         true,
+				ValidateDiagFunc: validateHost,
+				DefaultFunc:      schema.EnvDefaultFunc("OCHK_HOST", nil),
+				Description:      "host value",
 			},
 			"tenant": {
 				Type:        schema.TypeString,
@@ -49,11 +50,15 @@ func Provider() terraform.ResourceProvider {
 				Sensitive:   true,
 			},
 		},
+		DataSourcesMap: map[string]*schema.Resource{
+			"ochk_security_group": dataSourceSecurityGroup(),
+		},
 		ResourcesMap: map[string]*schema.Resource{
 			"ochk_security_group": resourceSecurityGroup(),
 		},
-		ConfigureFunc: func(d *schema.ResourceData) (interface{}, error) {
-			return sdk.NewClient(
+		ConfigureContextFunc: func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
+			client, err := sdk.NewClient(
+				ctx,
 				d.Get("host").(string),
 				d.Get("tenant").(string),
 				d.Get("username").(string),
@@ -61,14 +66,19 @@ func Provider() terraform.ResourceProvider {
 				d.Get("insecure").(bool),
 				d.Get("debug_log_file").(string),
 			)
+			if err != nil {
+				return nil, diag.FromErr(err)
+			}
+
+			return client, nil
 		},
 	}
 }
 
-func validateHost(val interface{}, key string) (warns []string, errs []error) {
+func validateHost(val interface{}, path cty.Path) diag.Diagnostics {
 	if val == nil || val.(string) == "" {
-		errs = append(errs, fmt.Errorf("%s value is not valid: %s", key, val.(string)))
+		diag.Errorf("%s value is not valid: %s", path, val.(string))
 	}
 
-	return nil, errs
+	return nil
 }
