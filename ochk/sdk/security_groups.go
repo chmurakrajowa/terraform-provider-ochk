@@ -71,11 +71,11 @@ func (p *SecurityGroupsProxy) ListByDisplayName(ctx context.Context, displayName
 
 	response, err := p.service.SecurityGroupListUsingGET(params)
 	if err != nil {
-		return nil, fmt.Errorf("error while reading security group: %w", err)
+		return nil, fmt.Errorf("error while listing security groups: %w", err)
 	}
 
 	if !response.Payload.Success {
-		return nil, fmt.Errorf("retrieving security group failed: %s", response.Payload.Messages)
+		return nil, fmt.Errorf("listing security groups failed: %s", response.Payload.Messages)
 	}
 
 	return response.Payload.SecurityGroupCollection, nil
