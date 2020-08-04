@@ -7,6 +7,7 @@ import (
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
 )
 
+//TODO brak testu akceptacyjnego
 func dataSourceSecurityGroup() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: datSourceServiceGroupRead,
@@ -43,21 +44,24 @@ func dataSourceSecurityGroup() *schema.Resource {
 func datSourceServiceGroupRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).SecurityGroups
 
-	securityGroup, err := proxy.Read(ctx, d.Id())
-	if err != nil {
-		if sdk.IsNotFoundError(err) {
-			d.SetId("")
-			return diag.Errorf("security group with id %s not found: %+v", d.Id(), err)
-		}
+	displayName := d.Get("display_name").(string)
 
+	securityGroups, err := proxy.ListByDisplayName(ctx, displayName)
+	if err != nil {
 		return diag.Errorf("error while reading security group: %+v", err)
 	}
 
-	if err := d.Set("display_name", securityGroup.DisplayName); err != nil {
-		return diag.Errorf("error setting displayName: %+v", err)
+	if len(securityGroups) < 1 {
+		return diag.Errorf("no security group found for display_name: %s", displayName)
 	}
 
-	if err := d.Set("members", flattenSecurityGroupMembers(securityGroup.Members)); err != nil {
+	if len(securityGroups) > 1 {
+		return diag.Errorf("more than one security group with display_name: %s found!", displayName)
+	}
+
+	d.SetId(securityGroups[0].ID)
+
+	if err := d.Set("members", flattenSecurityGroupMembers(securityGroups[0].Members)); err != nil {
 		return diag.Errorf("error setting members: %+v", err)
 	}
 
