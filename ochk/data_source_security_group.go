@@ -10,7 +10,7 @@ import (
 //TODO brak testu akceptacyjnego
 func dataSourceSecurityGroup() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: datSourceServiceGroupRead,
+		ReadContext: datSourceSecurityGroupRead,
 
 		Schema: map[string]*schema.Schema{
 			"display_name": {
@@ -41,14 +41,14 @@ func dataSourceSecurityGroup() *schema.Resource {
 	}
 }
 
-func datSourceServiceGroupRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func datSourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).SecurityGroups
 
 	displayName := d.Get("display_name").(string)
 
 	securityGroups, err := proxy.ListByDisplayName(ctx, displayName)
 	if err != nil {
-		return diag.Errorf("error while reading security group: %+v", err)
+		return diag.Errorf("error while listing security group: %+v", err)
 	}
 
 	if len(securityGroups) < 1 {

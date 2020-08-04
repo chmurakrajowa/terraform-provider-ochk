@@ -17,10 +17,10 @@ const (
 
 func resourceSecurityGroup() *schema.Resource {
 	return &schema.Resource{
-		CreateContext: resourceServiceGroupCreate,
-		ReadContext:   resourceServiceGroupRead,
-		UpdateContext: resourceServiceGroupUpdate,
-		DeleteContext: resourceServiceGroupDelete,
+		CreateContext: resourceSecurityGroupCreate,
+		ReadContext:   resourceSecurityGroupRead,
+		UpdateContext: resourceSecurityGroupUpdate,
+		DeleteContext: resourceSecurityGroupDelete,
 
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(SecurityGroupRetryTimeout),
@@ -58,7 +58,7 @@ func resourceSecurityGroup() *schema.Resource {
 	}
 }
 
-func resourceServiceGroupCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSecurityGroupCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).SecurityGroups
 
 	securityGroup := &models.SecurityGroup{
@@ -73,10 +73,10 @@ func resourceServiceGroupCreate(ctx context.Context, d *schema.ResourceData, met
 
 	d.SetId(created.ID)
 
-	return nil
+	return resourceSecurityGroupRead(ctx, d, meta)
 }
 
-func resourceServiceGroupRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).SecurityGroups
 
 	securityGroup, err := proxy.Read(ctx, d.Id())
@@ -100,11 +100,11 @@ func resourceServiceGroupRead(ctx context.Context, d *schema.ResourceData, meta 
 	return nil
 }
 
-func resourceServiceGroupUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSecurityGroupUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	return diag.FromErr(fmt.Errorf("updating SecurityGroup is not implemented"))
 }
 
-func resourceServiceGroupDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSecurityGroupDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).SecurityGroups
 
 	err := proxy.Delete(ctx, d.Id())
