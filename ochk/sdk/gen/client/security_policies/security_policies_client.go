@@ -84,7 +84,7 @@ func (a *Client) SecurityPolicyListUsingGET(params *SecurityPolicyListUsingGETPa
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "SecurityPolicyListUsingGET",
 		Method:             "GET",
-		PathPattern:        "/network/firewall/security-policies/",
+		PathPattern:        "/network/firewall/security-policies",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

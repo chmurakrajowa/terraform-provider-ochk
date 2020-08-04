@@ -19,7 +19,7 @@ import (
 // NewGatewayPolicyListUsingGETParams creates a new GatewayPolicyListUsingGETParams object
 // with the default values initialized.
 func NewGatewayPolicyListUsingGETParams() *GatewayPolicyListUsingGETParams {
-
+	var ()
 	return &GatewayPolicyListUsingGETParams{
 
 		timeout: cr.DefaultTimeout,
@@ -29,7 +29,7 @@ func NewGatewayPolicyListUsingGETParams() *GatewayPolicyListUsingGETParams {
 // NewGatewayPolicyListUsingGETParamsWithTimeout creates a new GatewayPolicyListUsingGETParams object
 // with the default values initialized, and the ability to set a timeout on a request
 func NewGatewayPolicyListUsingGETParamsWithTimeout(timeout time.Duration) *GatewayPolicyListUsingGETParams {
-
+	var ()
 	return &GatewayPolicyListUsingGETParams{
 
 		timeout: timeout,
@@ -39,7 +39,7 @@ func NewGatewayPolicyListUsingGETParamsWithTimeout(timeout time.Duration) *Gatew
 // NewGatewayPolicyListUsingGETParamsWithContext creates a new GatewayPolicyListUsingGETParams object
 // with the default values initialized, and the ability to set a context for a request
 func NewGatewayPolicyListUsingGETParamsWithContext(ctx context.Context) *GatewayPolicyListUsingGETParams {
-
+	var ()
 	return &GatewayPolicyListUsingGETParams{
 
 		Context: ctx,
@@ -49,7 +49,7 @@ func NewGatewayPolicyListUsingGETParamsWithContext(ctx context.Context) *Gateway
 // NewGatewayPolicyListUsingGETParamsWithHTTPClient creates a new GatewayPolicyListUsingGETParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewGatewayPolicyListUsingGETParamsWithHTTPClient(client *http.Client) *GatewayPolicyListUsingGETParams {
-
+	var ()
 	return &GatewayPolicyListUsingGETParams{
 		HTTPClient: client,
 	}
@@ -59,6 +59,13 @@ func NewGatewayPolicyListUsingGETParamsWithHTTPClient(client *http.Client) *Gate
 for the gateway policy list using g e t operation typically these are written to a http.Request
 */
 type GatewayPolicyListUsingGETParams struct {
+
+	/*DisplayName
+	  displayName
+
+	*/
+	DisplayName *string
+
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -97,6 +104,17 @@ func (o *GatewayPolicyListUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithDisplayName adds the displayName to the gateway policy list using g e t params
+func (o *GatewayPolicyListUsingGETParams) WithDisplayName(displayName *string) *GatewayPolicyListUsingGETParams {
+	o.SetDisplayName(displayName)
+	return o
+}
+
+// SetDisplayName adds the displayName to the gateway policy list using g e t params
+func (o *GatewayPolicyListUsingGETParams) SetDisplayName(displayName *string) {
+	o.DisplayName = displayName
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *GatewayPolicyListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -104,6 +122,22 @@ func (o *GatewayPolicyListUsingGETParams) WriteToRequest(r runtime.ClientRequest
 		return err
 	}
 	var res []error
+
+	if o.DisplayName != nil {
+
+		// query param displayName
+		var qrDisplayName string
+		if o.DisplayName != nil {
+			qrDisplayName = *o.DisplayName
+		}
+		qDisplayName := qrDisplayName
+		if qDisplayName != "" {
+			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

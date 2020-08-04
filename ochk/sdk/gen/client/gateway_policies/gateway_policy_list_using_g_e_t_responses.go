@@ -55,7 +55,7 @@ type GatewayPolicyListUsingGETOK struct {
 }
 
 func (o *GatewayPolicyListUsingGETOK) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/gateway-policies/][%d] gatewayPolicyListUsingGETOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /network/firewall/gateway-policies][%d] gatewayPolicyListUsingGETOK  %+v", 200, o.Payload)
 }
 
 func (o *GatewayPolicyListUsingGETOK) GetPayload() *models.GatewayPolicyListResponse {
@@ -87,7 +87,7 @@ type GatewayPolicyListUsingGETBadRequest struct {
 }
 
 func (o *GatewayPolicyListUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/gateway-policies/][%d] gatewayPolicyListUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/firewall/gateway-policies][%d] gatewayPolicyListUsingGETBadRequest ", 400)
 }
 
 func (o *GatewayPolicyListUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

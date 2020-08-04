@@ -7,7 +7,7 @@ import (
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/vidm_controller"
+	vidm_controller "github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/v_id_m"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 	"net/http"
 )
@@ -52,7 +52,7 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		HTTPClient: httpClient,
 	}
 
-	authResponse, err := ochkClient.VidmController.GetTokenUsingPOST(&params)
+	authResponse, err := ochkClient.VIDm.GetTokenUsingPOST(&params)
 	if err != nil {
 		return nil, fmt.Errorf("error while retrieving auth token: %+v", err)
 	}

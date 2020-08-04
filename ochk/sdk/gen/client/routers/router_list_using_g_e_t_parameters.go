@@ -19,7 +19,7 @@ import (
 // NewRouterListUsingGETParams creates a new RouterListUsingGETParams object
 // with the default values initialized.
 func NewRouterListUsingGETParams() *RouterListUsingGETParams {
-
+	var ()
 	return &RouterListUsingGETParams{
 
 		timeout: cr.DefaultTimeout,
@@ -29,7 +29,7 @@ func NewRouterListUsingGETParams() *RouterListUsingGETParams {
 // NewRouterListUsingGETParamsWithTimeout creates a new RouterListUsingGETParams object
 // with the default values initialized, and the ability to set a timeout on a request
 func NewRouterListUsingGETParamsWithTimeout(timeout time.Duration) *RouterListUsingGETParams {
-
+	var ()
 	return &RouterListUsingGETParams{
 
 		timeout: timeout,
@@ -39,7 +39,7 @@ func NewRouterListUsingGETParamsWithTimeout(timeout time.Duration) *RouterListUs
 // NewRouterListUsingGETParamsWithContext creates a new RouterListUsingGETParams object
 // with the default values initialized, and the ability to set a context for a request
 func NewRouterListUsingGETParamsWithContext(ctx context.Context) *RouterListUsingGETParams {
-
+	var ()
 	return &RouterListUsingGETParams{
 
 		Context: ctx,
@@ -49,7 +49,7 @@ func NewRouterListUsingGETParamsWithContext(ctx context.Context) *RouterListUsin
 // NewRouterListUsingGETParamsWithHTTPClient creates a new RouterListUsingGETParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewRouterListUsingGETParamsWithHTTPClient(client *http.Client) *RouterListUsingGETParams {
-
+	var ()
 	return &RouterListUsingGETParams{
 		HTTPClient: client,
 	}
@@ -59,6 +59,13 @@ func NewRouterListUsingGETParamsWithHTTPClient(client *http.Client) *RouterListU
 for the router list using g e t operation typically these are written to a http.Request
 */
 type RouterListUsingGETParams struct {
+
+	/*DisplayName
+	  displayName
+
+	*/
+	DisplayName *string
+
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -97,6 +104,17 @@ func (o *RouterListUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithDisplayName adds the displayName to the router list using g e t params
+func (o *RouterListUsingGETParams) WithDisplayName(displayName *string) *RouterListUsingGETParams {
+	o.SetDisplayName(displayName)
+	return o
+}
+
+// SetDisplayName adds the displayName to the router list using g e t params
+func (o *RouterListUsingGETParams) SetDisplayName(displayName *string) {
+	o.DisplayName = displayName
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *RouterListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -104,6 +122,22 @@ func (o *RouterListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg s
 		return err
 	}
 	var res []error
+
+	if o.DisplayName != nil {
+
+		// query param displayName
+		var qrDisplayName string
+		if o.DisplayName != nil {
+			qrDisplayName = *o.DisplayName
+		}
+		qDisplayName := qrDisplayName
+		if qDisplayName != "" {
+			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

@@ -63,10 +63,10 @@ func (p *SecurityGroupsProxy) Read(ctx context.Context, securityGroupID string) 
 }
 
 func (p *SecurityGroupsProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.SecurityGroup, error) {
-	//TODO nie ma jak przekazać display name
 	params := &security_groups.SecurityGroupListUsingGETParams{
-		Context:    ctx,
-		HTTPClient: p.httpClient,
+		DisplayName: &displayName,
+		Context:     ctx,
+		HTTPClient:  p.httpClient,
 	}
 
 	response, err := p.service.SecurityGroupListUsingGET(params)

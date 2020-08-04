@@ -17,10 +17,12 @@ import (
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/gateway_policies"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/ip_sets"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/logical_ports"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/networks"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/routers"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_groups"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/security_policies"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/vidm_controller"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/subtenants"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/v_id_m"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machines"
 )
 
@@ -73,10 +75,12 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.GatewayPolicies = gateway_policies.New(transport, formats)
 	cli.IPSets = ip_sets.New(transport, formats)
 	cli.LogicalPorts = logical_ports.New(transport, formats)
+	cli.Networks = networks.New(transport, formats)
 	cli.Routers = routers.New(transport, formats)
 	cli.SecurityGroups = security_groups.New(transport, formats)
 	cli.SecurityPolicies = security_policies.New(transport, formats)
-	cli.VidmController = vidm_controller.New(transport, formats)
+	cli.Subtenants = subtenants.New(transport, formats)
+	cli.VIDm = v_id_m.New(transport, formats)
 	cli.VirtualMachines = virtual_machines.New(transport, formats)
 	return cli
 }
@@ -136,13 +140,17 @@ type Ochk struct {
 
 	LogicalPorts logical_ports.ClientService
 
+	Networks networks.ClientService
+
 	Routers routers.ClientService
 
 	SecurityGroups security_groups.ClientService
 
 	SecurityPolicies security_policies.ClientService
 
-	VidmController vidm_controller.ClientService
+	Subtenants subtenants.ClientService
+
+	VIDm v_id_m.ClientService
 
 	VirtualMachines virtual_machines.ClientService
 
@@ -159,9 +167,11 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.GatewayPolicies.SetTransport(transport)
 	c.IPSets.SetTransport(transport)
 	c.LogicalPorts.SetTransport(transport)
+	c.Networks.SetTransport(transport)
 	c.Routers.SetTransport(transport)
 	c.SecurityGroups.SetTransport(transport)
 	c.SecurityPolicies.SetTransport(transport)
-	c.VidmController.SetTransport(transport)
+	c.Subtenants.SetTransport(transport)
+	c.VIDm.SetTransport(transport)
 	c.VirtualMachines.SetTransport(transport)
 }

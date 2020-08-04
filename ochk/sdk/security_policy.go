@@ -32,17 +32,17 @@ func (p *SecurityPolicyProxy) Read(ctx context.Context, securityPolicyID string)
 	}
 
 	if !response.Payload.Success {
-		return nil, fmt.Errorf("retrieving service failed: %s", response.Payload.Messages)
+		return nil, fmt.Errorf("retrieving security policy failed: %s", response.Payload.Messages)
 	}
 
 	return response.Payload.SecurityPolicy, nil
 }
 
 func (p *SecurityPolicyProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.SecurityPolicy, error) {
-	//TODO nie ma jak przekazać display name
 	params := &security_policies.SecurityPolicyListUsingGETParams{
-		Context:    ctx,
-		HTTPClient: p.httpClient,
+		DisplayName: &displayName,
+		Context:     ctx,
+		HTTPClient:  p.httpClient,
 	}
 
 	response, err := p.service.SecurityPolicyListUsingGET(params)

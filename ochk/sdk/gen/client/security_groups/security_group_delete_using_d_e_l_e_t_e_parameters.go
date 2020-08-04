@@ -61,7 +61,7 @@ for the security group delete using d e l e t e operation typically these are wr
 type SecurityGroupDeleteUsingDELETEParams struct {
 
 	/*GroupID
-	  GroupId
+	  groupId
 
 	*/
 	GroupID string
@@ -123,8 +123,8 @@ func (o *SecurityGroupDeleteUsingDELETEParams) WriteToRequest(r runtime.ClientRe
 	}
 	var res []error
 
-	// path param GroupId
-	if err := r.SetPathParam("GroupId", o.GroupID); err != nil {
+	// path param groupId
+	if err := r.SetPathParam("groupId", o.GroupID); err != nil {
 		return err
 	}
 
