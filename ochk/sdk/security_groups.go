@@ -62,6 +62,25 @@ func (p *SecurityGroupsProxy) Read(ctx context.Context, securityGroupID string) 
 	return response.Payload.SecurityGroup, nil
 }
 
+func (p *SecurityGroupsProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.SecurityGroup, error) {
+	//TODO nie ma jak przekazać display name
+	params := &security_groups.SecurityGroupListUsingGETParams{
+		Context:    ctx,
+		HTTPClient: p.httpClient,
+	}
+
+	response, err := p.service.SecurityGroupListUsingGET(params)
+	if err != nil {
+		return nil, fmt.Errorf("error while reading security group: %w", err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("retrieving security group failed: %s", response.Payload.Messages)
+	}
+
+	return response.Payload.SecurityGroupCollection, nil
+}
+
 func (p *SecurityGroupsProxy) Exists(ctx context.Context, securityGroupID string) (bool, error) {
 	_, err := p.Read(ctx, securityGroupID)
 	if err != nil {

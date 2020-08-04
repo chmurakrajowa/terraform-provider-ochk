@@ -5,14 +5,15 @@ import (
 	"testing"
 )
 
-var testAccProvider *schema.Provider
 var testAccProviderFactories map[string]func() (*schema.Provider, error)
+var testAccProvider *schema.Provider
 
 func init() {
 	testAccProvider = Provider()
 	testAccProviderFactories = map[string]func() (*schema.Provider, error){
-		"ochk": func() (provider *schema.Provider, _ error) {
-			return Provider(), nil
+		//nolint:unparam
+		"ochk": func() (*schema.Provider, error) {
+			return testAccProvider, nil
 		},
 	}
 }
