@@ -15,6 +15,7 @@ import (
 type Client struct {
 	logger         *FileLogger
 	SecurityGroups SecurityGroupsProxy
+	SecurityPolicy SecurityPolicyProxy
 	Services       ServicesProxy
 }
 
@@ -74,6 +75,10 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		SecurityGroups: SecurityGroupsProxy{
 			httpClient: httpClient,
 			service:    authClient.SecurityGroups,
+		},
+		SecurityPolicy: SecurityPolicyProxy{
+			httpClient: httpClient,
+			service:    authClient.SecurityPolicies,
 		},
 		Services: ServicesProxy{
 			httpClient: httpClient,

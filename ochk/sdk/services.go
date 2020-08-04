@@ -47,11 +47,11 @@ func (p *ServicesProxy) ListByDisplayName(ctx context.Context, displayName strin
 
 	response, err := p.service.ServiceListUsingGET(params)
 	if err != nil {
-		return nil, fmt.Errorf("error while reading service: %w", err)
+		return nil, fmt.Errorf("error while listing services: %w", err)
 	}
 
 	if !response.Payload.Success {
-		return nil, fmt.Errorf("retrieving service failed: %s", response.Payload.Messages)
+		return nil, fmt.Errorf("listing services failed: %s", response.Payload.Messages)
 	}
 
 	return response.Payload.ServiceInstanceCollection, nil
