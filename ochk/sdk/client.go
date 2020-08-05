@@ -16,6 +16,7 @@ type Client struct {
 	logger           *FileLogger
 	SecurityGroups   SecurityGroupsProxy
 	SecurityPolicy   SecurityPolicyProxy
+	GatewayPolicy    GatewayPolicyProxy
 	FirewallEWFRules FirewallEWRules
 	Services         ServicesProxy
 }
@@ -88,6 +89,10 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		Services: ServicesProxy{
 			httpClient: httpClient,
 			service:    authClient.DefaultServices,
+		},
+		GatewayPolicy: GatewayPolicyProxy{
+			httpClient: httpClient,
+			service:    authClient.GatewayPolicies,
 		},
 	}, nil
 }
