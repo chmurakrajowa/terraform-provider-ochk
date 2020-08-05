@@ -12,10 +12,10 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// DeleteResponse delete response
+// DeleteDFWRuleResponse delete d f w rule response
 //
-// swagger:model DeleteResponse
-type DeleteResponse struct {
+// swagger:model DeleteDFWRuleResponse
+type DeleteDFWRuleResponse struct {
 
 	// messages
 	Messages string `json:"messages,omitempty"`
@@ -31,8 +31,8 @@ type DeleteResponse struct {
 	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
-// Validate validates this delete response
-func (m *DeleteResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this delete d f w rule response
+func (m *DeleteDFWRuleResponse) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateRequestInstance(formats); err != nil {
@@ -49,7 +49,7 @@ func (m *DeleteResponse) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *DeleteResponse) validateRequestInstance(formats strfmt.Registry) error {
+func (m *DeleteDFWRuleResponse) validateRequestInstance(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
@@ -67,7 +67,7 @@ func (m *DeleteResponse) validateRequestInstance(formats strfmt.Registry) error 
 	return nil
 }
 
-func (m *DeleteResponse) validateTimestamp(formats strfmt.Registry) error {
+func (m *DeleteDFWRuleResponse) validateTimestamp(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
@@ -81,7 +81,7 @@ func (m *DeleteResponse) validateTimestamp(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *DeleteResponse) MarshalBinary() ([]byte, error) {
+func (m *DeleteDFWRuleResponse) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -89,8 +89,8 @@ func (m *DeleteResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *DeleteResponse) UnmarshalBinary(b []byte) error {
-	var res DeleteResponse
+func (m *DeleteDFWRuleResponse) UnmarshalBinary(b []byte) error {
+	var res DeleteDFWRuleResponse
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

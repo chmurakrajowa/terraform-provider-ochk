@@ -23,7 +23,7 @@ func TestAccFirewallEWRuleResource_create(t *testing.T) {
 				Config: testAccFirewallEWRuleResourceConfig(name),
 				//TODO [M.K.] IMO nie ma sensu sprawdzać czy dany zasób istnieje, on jest pobierany na końcu create
 				//Trzeba po prostu sprawdzić czy state się jakoś zgadza
-				Check:  testAccFirewallEWRuleResourceExists("ochk_firewall_ew_rule.test"),
+				Check: testAccFirewallEWRuleResourceExists("ochk_firewall_ew_rule.test"),
 			},
 		},
 	})

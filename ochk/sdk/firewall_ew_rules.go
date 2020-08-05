@@ -36,8 +36,7 @@ func (p *FirewallEWRules) Create(ctx context.Context, securityPolicyID string, r
 		return nil, fmt.Errorf("creating firewall EW rule failed: %s", put.Payload.Messages)
 	}
 
-	//TODO zwracana jest błędnie SecurityGroup zamiast DFWRule
-	return nil, nil
+	return put.Payload.DfwRule, nil
 }
 
 func (p *FirewallEWRules) Read(ctx context.Context, securityPolicyID string, ruleID string) (*models.DFWRule, error) {

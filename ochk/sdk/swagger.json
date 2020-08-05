@@ -337,13 +337,13 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/CreateResponse"
+              "$ref": "#/definitions/CreateGFWRuleResponse"
             }
           },
           "201": {
             "description": "Entity has been created",
             "schema": {
-              "$ref": "#/definitions/CreateResponse"
+              "$ref": "#/definitions/CreateGFWRuleResponse"
             }
           },
           "400": {
@@ -430,7 +430,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/DeleteResponse"
+              "$ref": "#/definitions/DeleteGFWRuleResponse"
             }
           },
           "400": {
@@ -550,13 +550,13 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/CreateResponse"
+              "$ref": "#/definitions/CreateDFWRuleResponse"
             }
           },
           "201": {
             "description": "Entity has been created",
             "schema": {
-              "$ref": "#/definitions/CreateResponse"
+              "$ref": "#/definitions/CreateDFWRuleResponse"
             }
           },
           "400": {
@@ -643,7 +643,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/DeleteResponse"
+              "$ref": "#/definitions/DeleteDFWRuleResponse"
             }
           },
           "400": {
@@ -983,13 +983,13 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/CreateResponse"
+              "$ref": "#/definitions/CreateSecurityGroupResponse"
             }
           },
           "201": {
             "description": "Entity has been created",
             "schema": {
-              "$ref": "#/definitions/CreateResponse"
+              "$ref": "#/definitions/CreateSecurityGroupResponse"
             }
           },
           "400": {
@@ -1062,7 +1062,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/DeleteResponse"
+              "$ref": "#/definitions/DeleteSecurityGroupResponse"
             }
           },
           "400": {
@@ -1497,7 +1497,49 @@
         }
       }
     },
-    "CreateResponse": {
+    "CreateDFWRuleResponse": {
+      "type": "object",
+      "properties": {
+        "dfwRule": {
+          "$ref": "#/definitions/DFWRule"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "CreateGFWRuleResponse": {
+      "type": "object",
+      "properties": {
+        "gfwRule": {
+          "$ref": "#/definitions/GFWRule"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "CreateSecurityGroupResponse": {
       "type": "object",
       "properties": {
         "messages": {
@@ -1636,7 +1678,43 @@
         }
       }
     },
-    "DeleteResponse": {
+    "DeleteDFWRuleResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "DeleteGFWRuleResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "DeleteSecurityGroupResponse": {
       "type": "object",
       "properties": {
         "messages": {
