@@ -9,15 +9,15 @@ import (
 	"testing"
 )
 
-func TestAccFirewallEWRuleResource_noPosition(t *testing.T) {
-	resourceName := "ochk_firewall_ew_rule.no_position"
+func TestAccFirewallSNRuleResource_noPosition(t *testing.T) {
+	resourceName := "ochk_firewall_sn_rule.no_position"
 	displayName := generateRandName()
 
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFirewallEWRuleResourceConfig(displayName),
+				Config: testAccFirewallSNRuleResourceConfig(displayName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", displayName),
 					resource.TestCheckResourceAttr(resourceName, "action", "ALLOW"),
@@ -27,17 +27,17 @@ func TestAccFirewallEWRuleResource_noPosition(t *testing.T) {
 				),
 			},
 		},
-		CheckDestroy: testAccFirewallEWRuleResourceNotExists(displayName),
+		CheckDestroy: testAccFirewallSNRuleResourceNotExists(displayName),
 	})
 }
 
-func testAccFirewallEWRuleResourceConfig(displayName string) string {
+func testAccFirewallSNRuleResourceConfig(displayName string) string {
 	source := generateRandName()
 	destination := generateRandName()
 
 	return fmt.Sprintf(`
-data "ochk_security_policy" "default" {
-  display_name = "devel"
+data "ochk_gateway_policy" "default" {
+  display_name = "T1"
 }
 
 data "ochk_service" "http" {
@@ -62,9 +62,9 @@ resource "ochk_security_group" "destination" {
   }
 }
 
-resource "ochk_firewall_ew_rule" "no_position" {
+resource "ochk_firewall_sn_rule" "no_position" {
   display_name = %[3]q
-  security_policy_id = data.ochk_security_policy.default.id
+  gateway_policy_id = data.ochk_gateway_policy.default.id
 
   services = [data.ochk_service.http.id]
   source = [ochk_security_group.source.id]
@@ -73,28 +73,28 @@ resource "ochk_firewall_ew_rule" "no_position" {
 `, source, destination, displayName)
 }
 
-func testAccFirewallEWRuleResourceNotExists(displayName string) resource.TestCheckFunc {
+func testAccFirewallSNRuleResourceNotExists(displayName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		ctx := context.Background()
 
 		client := testAccProvider.Meta().(*sdk.Client)
 
-		securityPolicies, err := client.SecurityPolicy.ListByDisplayName(ctx, "devel")
+		gatewayPolicies, err := client.GatewayPolicy.ListByDisplayName(ctx, "T1")
 		if err != nil {
 			return err
 		}
 
-		if len(securityPolicies) != 1 {
-			return fmt.Errorf("wrong number of security policies")
+		if len(gatewayPolicies) != 1 {
+			return fmt.Errorf("wrong number of gateway policies")
 		}
 
-		firewallRule, err := client.FirewallEWRules.ListByDisplayName(ctx, securityPolicies[0].SecurityPolicyID, displayName)
+		firewallRule, err := client.FirewallSNRules.ListByDisplayName(ctx, gatewayPolicies[0].GatewayPolicyID, displayName)
 		if err != nil {
 			return err
 		}
 
 		if len(firewallRule) > 0 {
-			return fmt.Errorf("firewall EW rule %s still exists", firewallRule[0].RuleID)
+			return fmt.Errorf("firewall SN rule %s still exists", firewallRule[0].RuleID)
 		}
 
 		return nil

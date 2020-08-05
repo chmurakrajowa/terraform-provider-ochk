@@ -7,18 +7,19 @@ import (
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client"
-	vidm_controller "github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/v_id_m"
+	vidmcontroller "github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/v_id_m"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 	"net/http"
 )
 
 type Client struct {
-	logger           *FileLogger
-	SecurityGroups   SecurityGroupsProxy
-	SecurityPolicy   SecurityPolicyProxy
-	GatewayPolicy    GatewayPolicyProxy
-	FirewallEWFRules FirewallEWRules
-	Services         ServicesProxy
+	logger          *FileLogger
+	SecurityGroups  SecurityGroupsProxy
+	SecurityPolicy  SecurityPolicyProxy
+	GatewayPolicy   GatewayPolicyProxy
+	FirewallEWRules FirewallEWRulesProxy
+	FirewallSNRules FirewallSNRulesProxy
+	Services        ServicesProxy
 }
 
 func NewClient(ctx context.Context, host string, tenant string, username string, password string, insecure bool, debugLogFile string) (*Client, error) {
@@ -44,7 +45,7 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 
 	ochkClient := client.New(apiClientTransport, strfmt.Default)
 
-	params := vidm_controller.GetTokenUsingPOSTParams{
+	params := vidmcontroller.GetTokenUsingPOSTParams{
 		VidmTokenRequest: &models.VIDMTokenRequest{
 			Tenant:   tenant,
 			Password: password,
@@ -82,9 +83,13 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 			httpClient: httpClient,
 			service:    authClient.SecurityPolicies,
 		},
-		FirewallEWFRules: FirewallEWRules{
+		FirewallEWRules: FirewallEWRulesProxy{
 			httpClient: httpClient,
 			service:    authClient.FirewallRulesew,
+		},
+		FirewallSNRules: FirewallSNRulesProxy{
+			httpClient: httpClient,
+			service:    authClient.FirewallRulessn,
 		},
 		Services: ServicesProxy{
 			httpClient: httpClient,

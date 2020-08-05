@@ -10,13 +10,13 @@ import (
 	"net/http"
 )
 
-type FirewallEWRules struct {
+type FirewallEWRulesProxy struct {
 	httpClient *http.Client
 	service    firewall_rules_e_w.ClientService
 }
 
 //TODO przy create wysyłane są też daty, które powinny być opcjonalne i wyliczone po stronie backendu
-func (p *FirewallEWRules) Create(ctx context.Context, securityPolicyID string, rule *models.DFWRule) (*models.DFWRule, error) {
+func (p *FirewallEWRulesProxy) Create(ctx context.Context, securityPolicyID string, rule *models.DFWRule) (*models.DFWRule, error) {
 	if err := rule.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating firewall EW rule struct: %w", err)
 	}
@@ -40,7 +40,7 @@ func (p *FirewallEWRules) Create(ctx context.Context, securityPolicyID string, r
 	return put.Payload.DfwRule, nil
 }
 
-func (p *FirewallEWRules) Read(ctx context.Context, securityPolicyID string, ruleID string) (*models.DFWRule, error) {
+func (p *FirewallEWRulesProxy) Read(ctx context.Context, securityPolicyID string, ruleID string) (*models.DFWRule, error) {
 	params := &firewall_rules_e_w.DFWRuleGetUsingGETParams{
 		RuleID:           ruleID,
 		SecurityPolicyID: securityPolicyID,
@@ -60,7 +60,7 @@ func (p *FirewallEWRules) Read(ctx context.Context, securityPolicyID string, rul
 	return response.Payload.RuleInstance, nil
 }
 
-func (p *FirewallEWRules) ListByDisplayName(ctx context.Context, securityPolicyID string, displayName string) ([]*models.DFWRule, error) {
+func (p *FirewallEWRulesProxy) ListByDisplayName(ctx context.Context, securityPolicyID string, displayName string) ([]*models.DFWRule, error) {
 	params := &firewall_rules_e_w.DFWRuleListUsingGETParams{
 		SecurityPolicyID: securityPolicyID,
 		DisplayName:      &displayName,
@@ -74,13 +74,13 @@ func (p *FirewallEWRules) ListByDisplayName(ctx context.Context, securityPolicyI
 	}
 
 	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing firewall ER rule failed: %s", response.Payload.Messages)
+		return nil, fmt.Errorf("listing firewall EW rule failed: %s", response.Payload.Messages)
 	}
 
 	return response.Payload.RuleInstances, nil
 }
 
-func (p *FirewallEWRules) Exists(ctx context.Context, securityPolicyID string, ruleID string) (bool, error) {
+func (p *FirewallEWRulesProxy) Exists(ctx context.Context, securityPolicyID string, ruleID string) (bool, error) {
 	_, err := p.Read(ctx, securityPolicyID, ruleID)
 	if err != nil {
 		if IsNotFoundError(err) {
@@ -93,7 +93,7 @@ func (p *FirewallEWRules) Exists(ctx context.Context, securityPolicyID string, r
 	return true, nil
 }
 
-func (p *FirewallEWRules) Delete(ctx context.Context, securityPolicyID string, ruleID string) error {
+func (p *FirewallEWRulesProxy) Delete(ctx context.Context, securityPolicyID string, ruleID string) error {
 	params := &firewall_rules_e_w.DFWRuleDeleteUsingDELETEParams{
 		SecurityPolicyID: securityPolicyID,
 		RuleID:           ruleID,
