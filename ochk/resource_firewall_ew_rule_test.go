@@ -3,62 +3,48 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
-	"log"
 	"testing"
 )
 
-func TestAccFirewallEWRuleResource_create(t *testing.T) {
-	name := fmt.Sprintf("tf-test-%s", acctest.RandStringFromCharSet(8, acctest.CharSetAlphaNum))
+func TestAccFirewallEWRuleResource_noPosition(t *testing.T) {
+	resourceName := "ochk_firewall_ew_rule.no_position"
+	displayName := generateRandName()
 
-	//TODO zbyt wiele razy jest wołany POST /vidm/token HTTP/1.1, coś jest nie tak
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
-		CheckDestroy:      testAccFirewallEWRuleResourceDestroy(),
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFirewallEWRuleResourceConfig(name),
-				//TODO [M.K.] IMO nie ma sensu sprawdzać czy dany zasób istnieje, on jest pobierany na końcu create
-				//Trzeba po prostu sprawdzić czy state się jakoś zgadza
-				Check: testAccFirewallEWRuleResourceExists("ochk_firewall_ew_rule.test"),
+				Config: testAccFirewallEWRuleResourceConfig(displayName),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr(resourceName, "display_name", displayName),
+					resource.TestCheckResourceAttr(resourceName, "action", "ALLOW"),
+					resource.TestCheckResourceAttr(resourceName, "direction", "IN_OUT"),
+					resource.TestCheckResourceAttr(resourceName, "ip_protocol", "IPV4_IPV6"),
+					resource.TestCheckNoResourceAttr(resourceName, "position"),
+				),
 			},
 		},
+		CheckDestroy: testAccFirewallEWRuleResourceNotExists(displayName),
 	})
 }
 
-func testAccFirewallEWRuleResourceExists(resourceID string) resource.TestCheckFunc {
-	return func(s *terraform.State) error {
-		rs, ok := s.RootModule().Resources[resourceID]
-		if !ok {
-			return fmt.Errorf("resource not found: %s", resourceID)
-		}
+func testAccFirewallEWRuleResourceConfig(displayName string) string {
+	source := generateRandName()
+	destination := generateRandName()
 
-		if rs.Primary.ID == "" {
-			return fmt.Errorf("resource %s has no ID set", resourceID)
-		}
-
-		securityPolicyID, ok := rs.Primary.Attributes["security_policy_id"]
-		if !ok {
-			return fmt.Errorf("resource %s has no security_policy_id set", securityPolicyID)
-		}
-
-		proxy := testAccProvider.Meta().(*sdk.Client).FirewallEWFRules
-
-		_, err := proxy.Read(context.Background(), securityPolicyID, rs.Primary.ID)
-		if err != nil {
-			return err
-		}
-
-		return nil
-	}
+	return fmt.Sprintf(`
+data "ochk_security_policy" "default" {
+  display_name = "devel"
 }
 
-func testAccFirewallEWRuleResourceConfig(name string) string {
-	return fmt.Sprintf(`
-resource "ochk_firewall_ew_rule" "test" {
+data "ochk_service" "http" {
+  display_name = "http"
+}
+
+resource "ochk_security_group" "source" {
   display_name = %[1]q
 
   members {
@@ -66,27 +52,49 @@ resource "ochk_firewall_ew_rule" "test" {
     type = "VIRTUAL_MACHINE"
   }
 }
-`, name)
+
+resource "ochk_security_group" "destination" {
+  display_name = %[2]q
+  
+  members {
+    id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
+    type = "VIRTUAL_MACHINE"
+  }
 }
 
-func testAccFirewallEWRuleResourceDestroy() resource.TestCheckFunc {
-	return func(state *terraform.State) error {
-		for _, rs := range state.RootModule().Resources {
-			if rs.Type != "ochk_firewall_ew_rule" {
-				continue
-			}
+resource "ochk_firewall_ew_rule" "no_position" {
+  display_name = %[3]q
+  security_policy_id = data.ochk_security_policy.default.id
 
-			log.Printf("checking security group %s exists", rs.Primary.ID)
-			proxy := testAccProvider.Meta().(*sdk.Client).SecurityGroups
+  services = [data.ochk_service.http.id]
+  source = [ochk_security_group.source.id]
+  destination = [ochk_security_group.destination.id]
+}
+`, source, destination, displayName)
+}
 
-			exists, err := proxy.Exists(context.Background(), rs.Primary.ID)
-			if err != nil {
-				return err
-			}
+func testAccFirewallEWRuleResourceNotExists(displayName string) resource.TestCheckFunc {
+	return func(s *terraform.State) error {
+		ctx := context.Background()
 
-			if exists {
-				return fmt.Errorf("security group %s still exists", rs.Primary.ID)
-			}
+		client := testAccProvider.Meta().(*sdk.Client)
+
+		securityPolicies, err := client.SecurityPolicy.ListByDisplayName(ctx, "devel")
+		if err != nil {
+			return err
+		}
+
+		if len(securityPolicies) != 1 {
+			return fmt.Errorf("wrong number of security policies")
+		}
+
+		firewallRule, err := client.FirewallEWFRules.ListByDisplayName(ctx, securityPolicies[0].SecurityPolicyID, displayName)
+		if err != nil {
+			return err
+		}
+
+		if len(firewallRule) > 0 {
+			return fmt.Errorf("firewall EW rule %s still exists", firewallRule[0].RuleID)
 		}
 
 		return nil

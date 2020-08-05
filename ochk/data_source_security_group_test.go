@@ -2,14 +2,13 @@ package ochk
 
 import (
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"testing"
 )
 
 func TestAccSecurityGroupDataSource_read(t *testing.T) {
 	resourceName := "data.ochk_security_group.one_member"
-	displayName := fmt.Sprintf("tf-acc_test-%s", acctest.RandStringFromCharSet(8, acctest.CharSetAlphaNum))
+	displayName := generateRandName()
 
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
@@ -24,7 +23,6 @@ func TestAccSecurityGroupDataSource_read(t *testing.T) {
 				),
 			},
 		},
-		CheckDestroy: testAccSecurityGroupResourceExists(displayName),
 	})
 }
 

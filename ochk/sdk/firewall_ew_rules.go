@@ -15,6 +15,7 @@ type FirewallEWRules struct {
 	service    firewall_rules_e_w.ClientService
 }
 
+//TODO przy create wysyłane są też daty, które powinny być opcjonalne i wyliczone po stronie backendu
 func (p *FirewallEWRules) Create(ctx context.Context, securityPolicyID string, rule *models.DFWRule) (*models.DFWRule, error) {
 	if err := rule.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating firewall EW rule struct: %w", err)
@@ -57,6 +58,26 @@ func (p *FirewallEWRules) Read(ctx context.Context, securityPolicyID string, rul
 	}
 
 	return response.Payload.RuleInstance, nil
+}
+
+func (p *FirewallEWRules) ListByDisplayName(ctx context.Context, securityPolicyID string, displayName string) ([]*models.DFWRule, error) {
+	params := &firewall_rules_e_w.DFWRuleListUsingGETParams{
+		SecurityPolicyID: securityPolicyID,
+		DisplayName:      &displayName,
+		Context:          ctx,
+		HTTPClient:       p.httpClient,
+	}
+
+	response, err := p.service.DFWRuleListUsingGET(params)
+	if err != nil {
+		return nil, fmt.Errorf("error while listing firewall EW rule: %w", err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("listing firewall ER rule failed: %s", response.Payload.Messages)
+	}
+
+	return response.Payload.RuleInstances, nil
 }
 
 func (p *FirewallEWRules) Exists(ctx context.Context, securityPolicyID string, ruleID string) (bool, error) {

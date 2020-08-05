@@ -6,7 +6,9 @@ import (
 )
 
 func flattenSecurityGroupFromIDs(m []*models.SecurityGroup) *schema.Set {
-	s := &schema.Set{}
+	s := &schema.Set{
+		F: schema.HashString,
+	}
 
 	for _, v := range m {
 		s.Add(v.ID)
@@ -14,26 +16,32 @@ func flattenSecurityGroupFromIDs(m []*models.SecurityGroup) *schema.Set {
 	return s
 }
 
-func expandSecurityGroupFromIDs(l []interface{}) []*models.SecurityGroup {
-	if len(l) == 0 {
+func expandSecurityGroupFromIDs(in []interface{}) []*models.SecurityGroup {
+	if len(in) == 0 {
 		return nil
 	}
 
-	var m = make([]*models.SecurityGroup, len(l))
+	var out = make([]*models.SecurityGroup, len(in))
 
-	for i, v := range l {
+	for i, v := range in {
 		securityGroup := &models.SecurityGroup{
 			ID: v.(string),
 		}
 
-		m[i] = securityGroup
+		out[i] = securityGroup
 	}
 
-	return m
+	return out
 }
 
 func flattenSecurityGroupMembers(in []*models.SecurityGroupMember) *schema.Set {
-	out := &schema.Set{}
+	if len(in) == 0 {
+		return nil
+	}
+
+	out := &schema.Set{
+		F: securityGroupMembersHash,
+	}
 
 	for _, v := range in {
 		m := make(map[string]interface{})
@@ -70,4 +78,10 @@ func expandSecurityGroupMembers(in []interface{}) []*models.SecurityGroupMember 
 		out[i] = member
 	}
 	return out
+}
+
+func securityGroupMembersHash(v interface{}) int {
+	m := v.(map[string]interface{})
+
+	return schema.HashString(m["id"])
 }

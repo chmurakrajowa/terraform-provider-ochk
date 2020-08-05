@@ -5,29 +5,31 @@ import (
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-func flattenServicesFromIDs(m []*models.ServiceInstance) *schema.Set {
-	s := &schema.Set{}
-
-	for _, v := range m {
-		s.Add(v.ServiceID)
+func flattenServicesFromIDs(in []*models.ServiceInstance) *schema.Set {
+	out := &schema.Set{
+		F: schema.HashString,
 	}
-	return s
+
+	for _, v := range in {
+		out.Add(v.ServiceID)
+	}
+	return out
 }
 
-func expandServicesFromIDs(l []interface{}) []*models.ServiceInstance {
-	if len(l) == 0 {
+func expandServicesFromIDs(in []interface{}) []*models.ServiceInstance {
+	if len(in) == 0 {
 		return nil
 	}
 
-	var m = make([]*models.ServiceInstance, len(l))
+	var out = make([]*models.ServiceInstance, len(in))
 
-	for i, v := range l {
+	for i, v := range in {
 		service := &models.ServiceInstance{
 			ServiceID: v.(string),
 		}
 
-		m[i] = service
+		out[i] = service
 	}
 
-	return m
+	return out
 }

@@ -39,12 +39,12 @@ func resourceFirewallEWRule() *schema.Resource {
 			},
 			"action": {
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
 				Default:  "ALLOW",
 			},
 			"direction": {
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
 				Default:  "IN_OUT",
 			},
 			"disabled": {
@@ -54,7 +54,7 @@ func resourceFirewallEWRule() *schema.Resource {
 			},
 			"ip_protocol": {
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
 				Default:  "IPV4_IPV6",
 			},
 			"services": {
@@ -80,7 +80,7 @@ func resourceFirewallEWRule() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"rule_id": {
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"revise_operation": {
 							Type:     schema.TypeString,

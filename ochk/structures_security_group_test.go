@@ -1,6 +1,7 @@
 package ochk
 
 import (
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -71,11 +72,12 @@ func TestFlattenExpandSecurityGroupMembers(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		outFlattened := flattenSecurityGroupMembers(c.expanded)
-		assert.Equal(t, c.flattened, outFlattened, "Error matching output and flattened: %#v vs %#v", outFlattened, c.flattened)
+		flattenedSetType := schema.NewSet(securityGroupMembersHash, toInterfaceSlice(c.flattened)).List()
+		outFlattened := flattenSecurityGroupMembers(c.expanded).List()
+		assert.EqualValues(t, flattenedSetType, outFlattened, "Error matching output and flattened: %#v vs %#v", outFlattened, c.flattened)
 
 		flattenedInterfaceSlice := toInterfaceSlice(c.flattened)
 		outExpanded := expandSecurityGroupMembers(flattenedInterfaceSlice)
-		assert.Equal(t, c.expanded, outExpanded, "Error matching output and expanded: %#v vs %#v", outExpanded, c.expanded)
+		assert.EqualValues(t, c.expanded, outExpanded, "Error matching output and expanded: %#v vs %#v", outExpanded, c.expanded)
 	}
 }
