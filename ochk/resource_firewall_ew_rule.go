@@ -94,7 +94,7 @@ func resourceFirewallEWRule() *schema.Resource {
 }
 
 func resourceFirewallEWRuleCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	proxy := meta.(*sdk.Client).FirewallEWFRules
+	proxy := meta.(*sdk.Client).FirewallEWRules
 
 	securityPolicyID := d.Get("security_policy_id").(string)
 
@@ -139,7 +139,7 @@ func resourceFirewallEWRuleCreate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	proxy := meta.(*sdk.Client).FirewallEWFRules
+	proxy := meta.(*sdk.Client).FirewallEWRules
 
 	securityPolicyID := d.Get("security_policy_id").(string)
 
@@ -197,7 +197,7 @@ func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceFirewallEWRuleDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	proxy := meta.(*sdk.Client).FirewallEWFRules
+	proxy := meta.(*sdk.Client).FirewallEWRules
 
 	securityPolicyID := d.Get("security_policy_id").(string)
 
