@@ -1,13 +1,49 @@
 package ochk
 
 import (
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-func flattenSecurityGroupMembers(in []*models.SecurityGroupMember) []map[string]interface{} {
-	var out = make([]map[string]interface{}, len(in))
+func flattenSecurityGroupFromIDs(m []*models.SecurityGroup) *schema.Set {
+	s := &schema.Set{
+		F: schema.HashString,
+	}
+
+	for _, v := range m {
+		s.Add(v.ID)
+	}
+	return s
+}
+
+func expandSecurityGroupFromIDs(in []interface{}) []*models.SecurityGroup {
+	if len(in) == 0 {
+		return nil
+	}
+
+	var out = make([]*models.SecurityGroup, len(in))
 
 	for i, v := range in {
+		securityGroup := &models.SecurityGroup{
+			ID: v.(string),
+		}
+
+		out[i] = securityGroup
+	}
+
+	return out
+}
+
+func flattenSecurityGroupMembers(in []*models.SecurityGroupMember) *schema.Set {
+	if len(in) == 0 {
+		return nil
+	}
+
+	out := &schema.Set{
+		F: securityGroupMembersHash,
+	}
+
+	for _, v := range in {
 		m := make(map[string]interface{})
 		m["id"] = v.ID
 		m["type"] = v.MemberType
@@ -16,7 +52,7 @@ func flattenSecurityGroupMembers(in []*models.SecurityGroupMember) []map[string]
 			m["display_name"] = v.DisplayName
 		}
 
-		out[i] = m
+		out.Add(m)
 	}
 	return out
 }
@@ -42,4 +78,10 @@ func expandSecurityGroupMembers(in []interface{}) []*models.SecurityGroupMember 
 		out[i] = member
 	}
 	return out
+}
+
+func securityGroupMembersHash(v interface{}) int {
+	m := v.(map[string]interface{})
+
+	return schema.HashString(m["id"])
 }

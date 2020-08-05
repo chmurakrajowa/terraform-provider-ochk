@@ -57,20 +57,20 @@ func NewGFWRuleCreateUsingPUTOK() *GFWRuleCreateUsingPUTOK {
 OK
 */
 type GFWRuleCreateUsingPUTOK struct {
-	Payload *models.CreateResponse
+	Payload *models.CreateGFWRuleResponse
 }
 
 func (o *GFWRuleCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/firewall/gateway-policies/{gatewayPolicyId}/rules/][%d] gFWRuleCreateUsingPUTOK  %+v", 200, o.Payload)
 }
 
-func (o *GFWRuleCreateUsingPUTOK) GetPayload() *models.CreateResponse {
+func (o *GFWRuleCreateUsingPUTOK) GetPayload() *models.CreateGFWRuleResponse {
 	return o.Payload
 }
 
 func (o *GFWRuleCreateUsingPUTOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.CreateResponse)
+	o.Payload = new(models.CreateGFWRuleResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
@@ -90,20 +90,20 @@ func NewGFWRuleCreateUsingPUTCreated() *GFWRuleCreateUsingPUTCreated {
 Entity has been created
 */
 type GFWRuleCreateUsingPUTCreated struct {
-	Payload *models.CreateResponse
+	Payload *models.CreateGFWRuleResponse
 }
 
 func (o *GFWRuleCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/firewall/gateway-policies/{gatewayPolicyId}/rules/][%d] gFWRuleCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
 
-func (o *GFWRuleCreateUsingPUTCreated) GetPayload() *models.CreateResponse {
+func (o *GFWRuleCreateUsingPUTCreated) GetPayload() *models.CreateGFWRuleResponse {
 	return o.Payload
 }
 
 func (o *GFWRuleCreateUsingPUTCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.CreateResponse)
+	o.Payload = new(models.CreateGFWRuleResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

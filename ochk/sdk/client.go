@@ -13,10 +13,11 @@ import (
 )
 
 type Client struct {
-	logger         *FileLogger
-	SecurityGroups SecurityGroupsProxy
-	SecurityPolicy SecurityPolicyProxy
-	Services       ServicesProxy
+	logger           *FileLogger
+	SecurityGroups   SecurityGroupsProxy
+	SecurityPolicy   SecurityPolicyProxy
+	FirewallEWFRules FirewallEWRules
+	Services         ServicesProxy
 }
 
 func NewClient(ctx context.Context, host string, tenant string, username string, password string, insecure bool, debugLogFile string) (*Client, error) {
@@ -79,6 +80,10 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		SecurityPolicy: SecurityPolicyProxy{
 			httpClient: httpClient,
 			service:    authClient.SecurityPolicies,
+		},
+		FirewallEWFRules: FirewallEWRules{
+			httpClient: httpClient,
+			service:    authClient.FirewallRulesew,
 		},
 		Services: ServicesProxy{
 			httpClient: httpClient,

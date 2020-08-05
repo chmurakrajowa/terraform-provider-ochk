@@ -12,19 +12,19 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// CreateResponse create response
+// CreateDFWRuleResponse create d f w rule response
 //
-// swagger:model CreateResponse
-type CreateResponse struct {
+// swagger:model CreateDFWRuleResponse
+type CreateDFWRuleResponse struct {
+
+	// dfw rule
+	DfwRule *DFWRule `json:"dfwRule,omitempty"`
 
 	// messages
 	Messages string `json:"messages,omitempty"`
 
 	// request instance
 	RequestInstance *RequestInstance `json:"requestInstance,omitempty"`
-
-	// security group
-	SecurityGroup *SecurityGroup `json:"securityGroup,omitempty"`
 
 	// success
 	Success bool `json:"success,omitempty"`
@@ -34,15 +34,15 @@ type CreateResponse struct {
 	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
-// Validate validates this create response
-func (m *CreateResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this create d f w rule response
+func (m *CreateDFWRuleResponse) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateRequestInstance(formats); err != nil {
+	if err := m.validateDfwRule(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateSecurityGroup(formats); err != nil {
+	if err := m.validateRequestInstance(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -56,7 +56,25 @@ func (m *CreateResponse) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *CreateResponse) validateRequestInstance(formats strfmt.Registry) error {
+func (m *CreateDFWRuleResponse) validateDfwRule(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.DfwRule) { // not required
+		return nil
+	}
+
+	if m.DfwRule != nil {
+		if err := m.DfwRule.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("dfwRule")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *CreateDFWRuleResponse) validateRequestInstance(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
@@ -74,25 +92,7 @@ func (m *CreateResponse) validateRequestInstance(formats strfmt.Registry) error 
 	return nil
 }
 
-func (m *CreateResponse) validateSecurityGroup(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.SecurityGroup) { // not required
-		return nil
-	}
-
-	if m.SecurityGroup != nil {
-		if err := m.SecurityGroup.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("securityGroup")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *CreateResponse) validateTimestamp(formats strfmt.Registry) error {
+func (m *CreateDFWRuleResponse) validateTimestamp(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
@@ -106,7 +106,7 @@ func (m *CreateResponse) validateTimestamp(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *CreateResponse) MarshalBinary() ([]byte, error) {
+func (m *CreateDFWRuleResponse) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -114,8 +114,8 @@ func (m *CreateResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *CreateResponse) UnmarshalBinary(b []byte) error {
-	var res CreateResponse
+func (m *CreateDFWRuleResponse) UnmarshalBinary(b []byte) error {
+	var res CreateDFWRuleResponse
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

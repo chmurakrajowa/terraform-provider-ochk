@@ -103,8 +103,8 @@ func (p *SecurityGroupsProxy) Delete(ctx context.Context, securityGroupID string
 
 	response, err := p.service.SecurityGroupDeleteUsingDELETE(params)
 	if err != nil {
-		var notFound *security_groups.SecurityGroupGetUsingGETNotFound
-		if ok := errors.As(err, &notFound); ok {
+		var badRequest *security_groups.SecurityGroupDeleteUsingDELETEBadRequest
+		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}
 

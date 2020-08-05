@@ -51,20 +51,20 @@ func NewSecurityGroupDeleteUsingDELETEOK() *SecurityGroupDeleteUsingDELETEOK {
 OK
 */
 type SecurityGroupDeleteUsingDELETEOK struct {
-	Payload *models.DeleteResponse
+	Payload *models.DeleteSecurityGroupResponse
 }
 
 func (o *SecurityGroupDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /network/security-groups/{groupId}][%d] securityGroupDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
 
-func (o *SecurityGroupDeleteUsingDELETEOK) GetPayload() *models.DeleteResponse {
+func (o *SecurityGroupDeleteUsingDELETEOK) GetPayload() *models.DeleteSecurityGroupResponse {
 	return o.Payload
 }
 
 func (o *SecurityGroupDeleteUsingDELETEOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.DeleteResponse)
+	o.Payload = new(models.DeleteSecurityGroupResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
