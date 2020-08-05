@@ -52,7 +52,7 @@ func (a *Client) SecurityGroupCreateUsingPUT(params *SecurityGroupCreateUsingPUT
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "SecurityGroupCreateUsingPUT",
 		Method:             "PUT",
-		PathPattern:        "/network/security-groups/",
+		PathPattern:        "/network/security-groups",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -89,7 +89,7 @@ func (a *Client) SecurityGroupDeleteUsingDELETE(params *SecurityGroupDeleteUsing
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "SecurityGroupDeleteUsingDELETE",
 		Method:             "DELETE",
-		PathPattern:        "/network/security-groups/{GroupId}",
+		PathPattern:        "/network/security-groups/{groupId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -161,7 +161,7 @@ func (a *Client) SecurityGroupListUsingGET(params *SecurityGroupListUsingGETPara
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "SecurityGroupListUsingGET",
 		Method:             "GET",
-		PathPattern:        "/network/security-groups/",
+		PathPattern:        "/network/security-groups",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

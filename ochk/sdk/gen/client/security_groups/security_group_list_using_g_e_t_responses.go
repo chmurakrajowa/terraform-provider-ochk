@@ -55,7 +55,7 @@ type SecurityGroupListUsingGETOK struct {
 }
 
 func (o *SecurityGroupListUsingGETOK) Error() string {
-	return fmt.Sprintf("[GET /network/security-groups/][%d] securityGroupListUsingGETOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /network/security-groups][%d] securityGroupListUsingGETOK  %+v", 200, o.Payload)
 }
 
 func (o *SecurityGroupListUsingGETOK) GetPayload() *models.SecurityGroupListResponse {
@@ -87,7 +87,7 @@ type SecurityGroupListUsingGETBadRequest struct {
 }
 
 func (o *SecurityGroupListUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/security-groups/][%d] securityGroupListUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/security-groups][%d] securityGroupListUsingGETBadRequest ", 400)
 }
 
 func (o *SecurityGroupListUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

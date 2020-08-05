@@ -2,6 +2,9 @@
 
 set -ex
 
+echo "Clear ochk/sdk/gen directory"
+rm -rf ochk/sdk/gen/*
+
 echo "Install swagger"
 go install github.com/go-swagger/go-swagger/cmd/swagger
 

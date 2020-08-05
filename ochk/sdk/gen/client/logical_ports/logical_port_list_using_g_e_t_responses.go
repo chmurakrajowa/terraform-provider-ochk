@@ -55,7 +55,7 @@ type LogicalPortListUsingGETOK struct {
 }
 
 func (o *LogicalPortListUsingGETOK) Error() string {
-	return fmt.Sprintf("[GET /network/logical-ports/][%d] logicalPortListUsingGETOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /network/logical-ports][%d] logicalPortListUsingGETOK  %+v", 200, o.Payload)
 }
 
 func (o *LogicalPortListUsingGETOK) GetPayload() *models.LogicalPortListResponse {
@@ -87,7 +87,7 @@ type LogicalPortListUsingGETBadRequest struct {
 }
 
 func (o *LogicalPortListUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/logical-ports/][%d] logicalPortListUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/logical-ports][%d] logicalPortListUsingGETBadRequest ", 400)
 }
 
 func (o *LogicalPortListUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

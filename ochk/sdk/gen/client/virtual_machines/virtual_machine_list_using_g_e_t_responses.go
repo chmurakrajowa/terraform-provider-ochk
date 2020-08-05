@@ -55,7 +55,7 @@ type VirtualMachineListUsingGETOK struct {
 }
 
 func (o *VirtualMachineListUsingGETOK) Error() string {
-	return fmt.Sprintf("[GET /network/virtual-machines/][%d] virtualMachineListUsingGETOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /network/virtual-machines][%d] virtualMachineListUsingGETOK  %+v", 200, o.Payload)
 }
 
 func (o *VirtualMachineListUsingGETOK) GetPayload() *models.VirtualMachineListResponse {
@@ -87,7 +87,7 @@ type VirtualMachineListUsingGETBadRequest struct {
 }
 
 func (o *VirtualMachineListUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/virtual-machines/][%d] virtualMachineListUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/virtual-machines][%d] virtualMachineListUsingGETBadRequest ", 400)
 }
 
 func (o *VirtualMachineListUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -55,7 +55,7 @@ type SecurityGroupDeleteUsingDELETEOK struct {
 }
 
 func (o *SecurityGroupDeleteUsingDELETEOK) Error() string {
-	return fmt.Sprintf("[DELETE /network/security-groups/{GroupId}][%d] securityGroupDeleteUsingDELETEOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[DELETE /network/security-groups/{groupId}][%d] securityGroupDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
 
 func (o *SecurityGroupDeleteUsingDELETEOK) GetPayload() *models.DeleteResponse {
@@ -87,7 +87,7 @@ type SecurityGroupDeleteUsingDELETEBadRequest struct {
 }
 
 func (o *SecurityGroupDeleteUsingDELETEBadRequest) Error() string {
-	return fmt.Sprintf("[DELETE /network/security-groups/{GroupId}][%d] securityGroupDeleteUsingDELETEBadRequest ", 400)
+	return fmt.Sprintf("[DELETE /network/security-groups/{groupId}][%d] securityGroupDeleteUsingDELETEBadRequest ", 400)
 }
 
 func (o *SecurityGroupDeleteUsingDELETEBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

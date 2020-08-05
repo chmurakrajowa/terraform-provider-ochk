@@ -84,7 +84,7 @@ func (a *Client) LogicalPortListUsingGET(params *LogicalPortListUsingGETParams) 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "LogicalPortListUsingGET",
 		Method:             "GET",
-		PathPattern:        "/network/logical-ports/",
+		PathPattern:        "/network/logical-ports",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

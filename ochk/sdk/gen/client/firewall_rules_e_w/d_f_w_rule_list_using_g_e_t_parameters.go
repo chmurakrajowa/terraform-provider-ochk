@@ -60,6 +60,11 @@ for the d f w rule list using g e t operation typically these are written to a h
 */
 type DFWRuleListUsingGETParams struct {
 
+	/*DisplayName
+	  displayName
+
+	*/
+	DisplayName *string
 	/*SecurityPolicyID
 	  securityPolicyId
 
@@ -104,6 +109,17 @@ func (o *DFWRuleListUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithDisplayName adds the displayName to the d f w rule list using g e t params
+func (o *DFWRuleListUsingGETParams) WithDisplayName(displayName *string) *DFWRuleListUsingGETParams {
+	o.SetDisplayName(displayName)
+	return o
+}
+
+// SetDisplayName adds the displayName to the d f w rule list using g e t params
+func (o *DFWRuleListUsingGETParams) SetDisplayName(displayName *string) {
+	o.DisplayName = displayName
+}
+
 // WithSecurityPolicyID adds the securityPolicyID to the d f w rule list using g e t params
 func (o *DFWRuleListUsingGETParams) WithSecurityPolicyID(securityPolicyID string) *DFWRuleListUsingGETParams {
 	o.SetSecurityPolicyID(securityPolicyID)
@@ -122,6 +138,22 @@ func (o *DFWRuleListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg 
 		return err
 	}
 	var res []error
+
+	if o.DisplayName != nil {
+
+		// query param displayName
+		var qrDisplayName string
+		if o.DisplayName != nil {
+			qrDisplayName = *o.DisplayName
+		}
+		qDisplayName := qrDisplayName
+		if qDisplayName != "" {
+			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	// path param securityPolicyId
 	if err := r.SetPathParam("securityPolicyId", o.SecurityPolicyID); err != nil {

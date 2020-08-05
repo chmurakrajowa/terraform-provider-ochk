@@ -27,11 +27,87 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	VcsVirtualMachineGroupGetUsingGET1(params *VcsVirtualMachineGroupGetUsingGET1Params) (*VcsVirtualMachineGroupGetUsingGET1OK, error)
+
+	VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsingGET1Params) (*VcsVirtualMachineListUsingGET1OK, error)
+
 	VirtualMachineGetUsingGET(params *VirtualMachineGetUsingGETParams) (*VirtualMachineGetUsingGETOK, error)
 
 	VirtualMachineListUsingGET(params *VirtualMachineListUsingGETParams) (*VirtualMachineListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  VcsVirtualMachineGroupGetUsingGET1 gets
+
+  Get vSphere vCenter virtual machine
+*/
+func (a *Client) VcsVirtualMachineGroupGetUsingGET1(params *VcsVirtualMachineGroupGetUsingGET1Params) (*VcsVirtualMachineGroupGetUsingGET1OK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewVcsVirtualMachineGroupGetUsingGET1Params()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "VcsVirtualMachineGroupGetUsingGET_1",
+		Method:             "GET",
+		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &VcsVirtualMachineGroupGetUsingGET1Reader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*VcsVirtualMachineGroupGetUsingGET1OK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for VcsVirtualMachineGroupGetUsingGET_1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  VcsVirtualMachineListUsingGET1 lists
+
+  List vSphere vCenter virtual machines
+*/
+func (a *Client) VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsingGET1Params) (*VcsVirtualMachineListUsingGET1OK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewVcsVirtualMachineListUsingGET1Params()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "VcsVirtualMachineListUsingGET_1",
+		Method:             "GET",
+		PathPattern:        "/vcs/virtual-machines",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &VcsVirtualMachineListUsingGET1Reader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*VcsVirtualMachineListUsingGET1OK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for VcsVirtualMachineListUsingGET_1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -84,7 +160,7 @@ func (a *Client) VirtualMachineListUsingGET(params *VirtualMachineListUsingGETPa
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "VirtualMachineListUsingGET",
 		Method:             "GET",
-		PathPattern:        "/network/virtual-machines/",
+		PathPattern:        "/network/virtual-machines",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

@@ -39,10 +39,10 @@ func (p *ServicesProxy) Read(ctx context.Context, serviceID string) (*models.Ser
 }
 
 func (p *ServicesProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.ServiceInstance, error) {
-	//TODO nie ma jak przekazać display name
 	params := &default_services.ServiceListUsingGETParams{
-		Context:    ctx,
-		HTTPClient: p.httpClient,
+		DisplayName: &displayName,
+		Context:     ctx,
+		HTTPClient:  p.httpClient,
 	}
 
 	response, err := p.service.ServiceListUsingGET(params)

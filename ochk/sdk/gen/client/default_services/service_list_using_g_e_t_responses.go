@@ -55,7 +55,7 @@ type ServiceListUsingGETOK struct {
 }
 
 func (o *ServiceListUsingGETOK) Error() string {
-	return fmt.Sprintf("[GET /network/default-services/][%d] serviceListUsingGETOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /network/default-services][%d] serviceListUsingGETOK  %+v", 200, o.Payload)
 }
 
 func (o *ServiceListUsingGETOK) GetPayload() *models.ServiceListResponse {
@@ -87,7 +87,7 @@ type ServiceListUsingGETBadRequest struct {
 }
 
 func (o *ServiceListUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/default-services/][%d] serviceListUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/default-services][%d] serviceListUsingGETBadRequest ", 400)
 }
 
 func (o *ServiceListUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

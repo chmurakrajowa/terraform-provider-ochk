@@ -19,7 +19,7 @@ import (
 // NewSecurityPolicyListUsingGETParams creates a new SecurityPolicyListUsingGETParams object
 // with the default values initialized.
 func NewSecurityPolicyListUsingGETParams() *SecurityPolicyListUsingGETParams {
-
+	var ()
 	return &SecurityPolicyListUsingGETParams{
 
 		timeout: cr.DefaultTimeout,
@@ -29,7 +29,7 @@ func NewSecurityPolicyListUsingGETParams() *SecurityPolicyListUsingGETParams {
 // NewSecurityPolicyListUsingGETParamsWithTimeout creates a new SecurityPolicyListUsingGETParams object
 // with the default values initialized, and the ability to set a timeout on a request
 func NewSecurityPolicyListUsingGETParamsWithTimeout(timeout time.Duration) *SecurityPolicyListUsingGETParams {
-
+	var ()
 	return &SecurityPolicyListUsingGETParams{
 
 		timeout: timeout,
@@ -39,7 +39,7 @@ func NewSecurityPolicyListUsingGETParamsWithTimeout(timeout time.Duration) *Secu
 // NewSecurityPolicyListUsingGETParamsWithContext creates a new SecurityPolicyListUsingGETParams object
 // with the default values initialized, and the ability to set a context for a request
 func NewSecurityPolicyListUsingGETParamsWithContext(ctx context.Context) *SecurityPolicyListUsingGETParams {
-
+	var ()
 	return &SecurityPolicyListUsingGETParams{
 
 		Context: ctx,
@@ -49,7 +49,7 @@ func NewSecurityPolicyListUsingGETParamsWithContext(ctx context.Context) *Securi
 // NewSecurityPolicyListUsingGETParamsWithHTTPClient creates a new SecurityPolicyListUsingGETParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewSecurityPolicyListUsingGETParamsWithHTTPClient(client *http.Client) *SecurityPolicyListUsingGETParams {
-
+	var ()
 	return &SecurityPolicyListUsingGETParams{
 		HTTPClient: client,
 	}
@@ -59,6 +59,13 @@ func NewSecurityPolicyListUsingGETParamsWithHTTPClient(client *http.Client) *Sec
 for the security policy list using g e t operation typically these are written to a http.Request
 */
 type SecurityPolicyListUsingGETParams struct {
+
+	/*DisplayName
+	  displayName
+
+	*/
+	DisplayName *string
+
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -97,6 +104,17 @@ func (o *SecurityPolicyListUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithDisplayName adds the displayName to the security policy list using g e t params
+func (o *SecurityPolicyListUsingGETParams) WithDisplayName(displayName *string) *SecurityPolicyListUsingGETParams {
+	o.SetDisplayName(displayName)
+	return o
+}
+
+// SetDisplayName adds the displayName to the security policy list using g e t params
+func (o *SecurityPolicyListUsingGETParams) SetDisplayName(displayName *string) {
+	o.DisplayName = displayName
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *SecurityPolicyListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -104,6 +122,22 @@ func (o *SecurityPolicyListUsingGETParams) WriteToRequest(r runtime.ClientReques
 		return err
 	}
 	var res []error
+
+	if o.DisplayName != nil {
+
+		// query param displayName
+		var qrDisplayName string
+		if o.DisplayName != nil {
+			qrDisplayName = *o.DisplayName
+		}
+		qDisplayName := qrDisplayName
+		if qDisplayName != "" {
+			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
