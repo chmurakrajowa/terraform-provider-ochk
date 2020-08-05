@@ -4,28 +4,31 @@ import (
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-func flattenFirewallRulePosition(in *models.Position) interface{} {
+func flattenFirewallRulePosition(in *models.Position) []map[string]interface{} {
 	if in == nil {
 		return nil
 	}
 
-	out := make(map[string]interface{})
+	out := make([]map[string]interface{}, 1)
+	position := make(map[string]interface{})
 
-	out["rule_id"] = in.RuleID
-	out["revise_operation"] = in.ReviseOperation
+	position["rule_id"] = in.RuleID
+	position["revise_operation"] = in.ReviseOperation
+
+	out = append(out, position)
 
 	return out
 }
 
-func expandFirewallRulePosition(in interface{}) *models.Position {
+func expandFirewallRulePosition(in []interface{}) *models.Position {
 	if in == nil {
 		return nil
 	}
 
-	m := in.(map[string]interface{})
+	position := in[0].(map[string]interface{})
 
 	return &models.Position{
-		RuleID:          m["rule_id"].(string),
-		ReviseOperation: m["revise_operation"].(string),
+		RuleID:          position["rule_id"].(string),
+		ReviseOperation: position["revise_operation"].(string),
 	}
 }
