@@ -55,7 +55,7 @@ type SecurityPolicyListUsingGETOK struct {
 }
 
 func (o *SecurityPolicyListUsingGETOK) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/security-policies/][%d] securityPolicyListUsingGETOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /network/firewall/security-policies][%d] securityPolicyListUsingGETOK  %+v", 200, o.Payload)
 }
 
 func (o *SecurityPolicyListUsingGETOK) GetPayload() *models.SecurityPolicyListResponse {
@@ -87,7 +87,7 @@ type SecurityPolicyListUsingGETBadRequest struct {
 }
 
 func (o *SecurityPolicyListUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/security-policies/][%d] securityPolicyListUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/firewall/security-policies][%d] securityPolicyListUsingGETBadRequest ", 400)
 }
 
 func (o *SecurityPolicyListUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

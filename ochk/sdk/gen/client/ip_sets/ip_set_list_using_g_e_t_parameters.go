@@ -19,7 +19,7 @@ import (
 // NewIPSetListUsingGETParams creates a new IPSetListUsingGETParams object
 // with the default values initialized.
 func NewIPSetListUsingGETParams() *IPSetListUsingGETParams {
-
+	var ()
 	return &IPSetListUsingGETParams{
 
 		timeout: cr.DefaultTimeout,
@@ -29,7 +29,7 @@ func NewIPSetListUsingGETParams() *IPSetListUsingGETParams {
 // NewIPSetListUsingGETParamsWithTimeout creates a new IPSetListUsingGETParams object
 // with the default values initialized, and the ability to set a timeout on a request
 func NewIPSetListUsingGETParamsWithTimeout(timeout time.Duration) *IPSetListUsingGETParams {
-
+	var ()
 	return &IPSetListUsingGETParams{
 
 		timeout: timeout,
@@ -39,7 +39,7 @@ func NewIPSetListUsingGETParamsWithTimeout(timeout time.Duration) *IPSetListUsin
 // NewIPSetListUsingGETParamsWithContext creates a new IPSetListUsingGETParams object
 // with the default values initialized, and the ability to set a context for a request
 func NewIPSetListUsingGETParamsWithContext(ctx context.Context) *IPSetListUsingGETParams {
-
+	var ()
 	return &IPSetListUsingGETParams{
 
 		Context: ctx,
@@ -49,7 +49,7 @@ func NewIPSetListUsingGETParamsWithContext(ctx context.Context) *IPSetListUsingG
 // NewIPSetListUsingGETParamsWithHTTPClient creates a new IPSetListUsingGETParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewIPSetListUsingGETParamsWithHTTPClient(client *http.Client) *IPSetListUsingGETParams {
-
+	var ()
 	return &IPSetListUsingGETParams{
 		HTTPClient: client,
 	}
@@ -59,6 +59,13 @@ func NewIPSetListUsingGETParamsWithHTTPClient(client *http.Client) *IPSetListUsi
 for the IP set list using g e t operation typically these are written to a http.Request
 */
 type IPSetListUsingGETParams struct {
+
+	/*DisplayName
+	  displayName
+
+	*/
+	DisplayName *string
+
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -97,6 +104,17 @@ func (o *IPSetListUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithDisplayName adds the displayName to the IP set list using g e t params
+func (o *IPSetListUsingGETParams) WithDisplayName(displayName *string) *IPSetListUsingGETParams {
+	o.SetDisplayName(displayName)
+	return o
+}
+
+// SetDisplayName adds the displayName to the IP set list using g e t params
+func (o *IPSetListUsingGETParams) SetDisplayName(displayName *string) {
+	o.DisplayName = displayName
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *IPSetListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -104,6 +122,22 @@ func (o *IPSetListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg st
 		return err
 	}
 	var res []error
+
+	if o.DisplayName != nil {
+
+		// query param displayName
+		var qrDisplayName string
+		if o.DisplayName != nil {
+			qrDisplayName = *o.DisplayName
+		}
+		qDisplayName := qrDisplayName
+		if qDisplayName != "" {
+			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

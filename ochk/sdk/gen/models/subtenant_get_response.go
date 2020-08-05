@@ -12,16 +12,16 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// DeleteResponse delete response
+// SubtenantGetResponse subtenant get response
 //
-// swagger:model DeleteResponse
-type DeleteResponse struct {
+// swagger:model SubtenantGetResponse
+type SubtenantGetResponse struct {
 
 	// messages
 	Messages string `json:"messages,omitempty"`
 
-	// request instance
-	RequestInstance *RequestInstance `json:"requestInstance,omitempty"`
+	// subtenant instance
+	SubtenantInstance *SubtenantInstance `json:"subtenantInstance,omitempty"`
 
 	// success
 	Success bool `json:"success,omitempty"`
@@ -31,11 +31,11 @@ type DeleteResponse struct {
 	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
-// Validate validates this delete response
-func (m *DeleteResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this subtenant get response
+func (m *SubtenantGetResponse) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateRequestInstance(formats); err != nil {
+	if err := m.validateSubtenantInstance(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -49,16 +49,16 @@ func (m *DeleteResponse) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *DeleteResponse) validateRequestInstance(formats strfmt.Registry) error {
+func (m *SubtenantGetResponse) validateSubtenantInstance(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.RequestInstance) { // not required
+	if swag.IsZero(m.SubtenantInstance) { // not required
 		return nil
 	}
 
-	if m.RequestInstance != nil {
-		if err := m.RequestInstance.Validate(formats); err != nil {
+	if m.SubtenantInstance != nil {
+		if err := m.SubtenantInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("requestInstance")
+				return ve.ValidateName("subtenantInstance")
 			}
 			return err
 		}
@@ -67,7 +67,7 @@ func (m *DeleteResponse) validateRequestInstance(formats strfmt.Registry) error 
 	return nil
 }
 
-func (m *DeleteResponse) validateTimestamp(formats strfmt.Registry) error {
+func (m *SubtenantGetResponse) validateTimestamp(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
@@ -81,7 +81,7 @@ func (m *DeleteResponse) validateTimestamp(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *DeleteResponse) MarshalBinary() ([]byte, error) {
+func (m *SubtenantGetResponse) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -89,8 +89,8 @@ func (m *DeleteResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *DeleteResponse) UnmarshalBinary(b []byte) error {
-	var res DeleteResponse
+func (m *SubtenantGetResponse) UnmarshalBinary(b []byte) error {
+	var res SubtenantGetResponse
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

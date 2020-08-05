@@ -84,7 +84,7 @@ func (a *Client) IPSetListUsingGET(params *IPSetListUsingGETParams) (*IPSetListU
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "IPSetListUsingGET",
 		Method:             "GET",
-		PathPattern:        "/network/ipsets/",
+		PathPattern:        "/network/ipsets",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

@@ -6,22 +6,24 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-// DeleteResponse delete response
+// NetworkListResponse network list response
 //
-// swagger:model DeleteResponse
-type DeleteResponse struct {
+// swagger:model NetworkListResponse
+type NetworkListResponse struct {
 
 	// messages
 	Messages string `json:"messages,omitempty"`
 
-	// request instance
-	RequestInstance *RequestInstance `json:"requestInstance,omitempty"`
+	// network instance collection
+	NetworkInstanceCollection []*NetworkInstance `json:"networkInstanceCollection"`
 
 	// success
 	Success bool `json:"success,omitempty"`
@@ -31,11 +33,11 @@ type DeleteResponse struct {
 	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
-// Validate validates this delete response
-func (m *DeleteResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this network list response
+func (m *NetworkListResponse) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateRequestInstance(formats); err != nil {
+	if err := m.validateNetworkInstanceCollection(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -49,25 +51,32 @@ func (m *DeleteResponse) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *DeleteResponse) validateRequestInstance(formats strfmt.Registry) error {
+func (m *NetworkListResponse) validateNetworkInstanceCollection(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.RequestInstance) { // not required
+	if swag.IsZero(m.NetworkInstanceCollection) { // not required
 		return nil
 	}
 
-	if m.RequestInstance != nil {
-		if err := m.RequestInstance.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("requestInstance")
-			}
-			return err
+	for i := 0; i < len(m.NetworkInstanceCollection); i++ {
+		if swag.IsZero(m.NetworkInstanceCollection[i]) { // not required
+			continue
 		}
+
+		if m.NetworkInstanceCollection[i] != nil {
+			if err := m.NetworkInstanceCollection[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("networkInstanceCollection" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
 }
 
-func (m *DeleteResponse) validateTimestamp(formats strfmt.Registry) error {
+func (m *NetworkListResponse) validateTimestamp(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
@@ -81,7 +90,7 @@ func (m *DeleteResponse) validateTimestamp(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *DeleteResponse) MarshalBinary() ([]byte, error) {
+func (m *NetworkListResponse) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -89,8 +98,8 @@ func (m *DeleteResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *DeleteResponse) UnmarshalBinary(b []byte) error {
-	var res DeleteResponse
+func (m *NetworkListResponse) UnmarshalBinary(b []byte) error {
+	var res NetworkListResponse
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

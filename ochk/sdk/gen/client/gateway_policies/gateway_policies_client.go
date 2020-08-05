@@ -84,7 +84,7 @@ func (a *Client) GatewayPolicyListUsingGET(params *GatewayPolicyListUsingGETPara
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GatewayPolicyListUsingGET",
 		Method:             "GET",
-		PathPattern:        "/network/firewall/gateway-policies/",
+		PathPattern:        "/network/firewall/gateway-policies",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

@@ -19,7 +19,7 @@ import (
 // NewSecurityGroupListUsingGETParams creates a new SecurityGroupListUsingGETParams object
 // with the default values initialized.
 func NewSecurityGroupListUsingGETParams() *SecurityGroupListUsingGETParams {
-
+	var ()
 	return &SecurityGroupListUsingGETParams{
 
 		timeout: cr.DefaultTimeout,
@@ -29,7 +29,7 @@ func NewSecurityGroupListUsingGETParams() *SecurityGroupListUsingGETParams {
 // NewSecurityGroupListUsingGETParamsWithTimeout creates a new SecurityGroupListUsingGETParams object
 // with the default values initialized, and the ability to set a timeout on a request
 func NewSecurityGroupListUsingGETParamsWithTimeout(timeout time.Duration) *SecurityGroupListUsingGETParams {
-
+	var ()
 	return &SecurityGroupListUsingGETParams{
 
 		timeout: timeout,
@@ -39,7 +39,7 @@ func NewSecurityGroupListUsingGETParamsWithTimeout(timeout time.Duration) *Secur
 // NewSecurityGroupListUsingGETParamsWithContext creates a new SecurityGroupListUsingGETParams object
 // with the default values initialized, and the ability to set a context for a request
 func NewSecurityGroupListUsingGETParamsWithContext(ctx context.Context) *SecurityGroupListUsingGETParams {
-
+	var ()
 	return &SecurityGroupListUsingGETParams{
 
 		Context: ctx,
@@ -49,7 +49,7 @@ func NewSecurityGroupListUsingGETParamsWithContext(ctx context.Context) *Securit
 // NewSecurityGroupListUsingGETParamsWithHTTPClient creates a new SecurityGroupListUsingGETParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewSecurityGroupListUsingGETParamsWithHTTPClient(client *http.Client) *SecurityGroupListUsingGETParams {
-
+	var ()
 	return &SecurityGroupListUsingGETParams{
 		HTTPClient: client,
 	}
@@ -59,6 +59,13 @@ func NewSecurityGroupListUsingGETParamsWithHTTPClient(client *http.Client) *Secu
 for the security group list using g e t operation typically these are written to a http.Request
 */
 type SecurityGroupListUsingGETParams struct {
+
+	/*DisplayName
+	  displayName
+
+	*/
+	DisplayName *string
+
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -97,6 +104,17 @@ func (o *SecurityGroupListUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithDisplayName adds the displayName to the security group list using g e t params
+func (o *SecurityGroupListUsingGETParams) WithDisplayName(displayName *string) *SecurityGroupListUsingGETParams {
+	o.SetDisplayName(displayName)
+	return o
+}
+
+// SetDisplayName adds the displayName to the security group list using g e t params
+func (o *SecurityGroupListUsingGETParams) SetDisplayName(displayName *string) {
+	o.DisplayName = displayName
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *SecurityGroupListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -104,6 +122,22 @@ func (o *SecurityGroupListUsingGETParams) WriteToRequest(r runtime.ClientRequest
 		return err
 	}
 	var res []error
+
+	if o.DisplayName != nil {
+
+		// query param displayName
+		var qrDisplayName string
+		if o.DisplayName != nil {
+			qrDisplayName = *o.DisplayName
+		}
+		qDisplayName := qrDisplayName
+		if qDisplayName != "" {
+			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

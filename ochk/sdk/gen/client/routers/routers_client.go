@@ -84,7 +84,7 @@ func (a *Client) RouterListUsingGET(params *RouterListUsingGETParams) (*RouterLi
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "RouterListUsingGET",
 		Method:             "GET",
-		PathPattern:        "/network/routers/",
+		PathPattern:        "/network/routers",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

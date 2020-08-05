@@ -60,6 +60,11 @@ for the g f w rule list using g e t operation typically these are written to a h
 */
 type GFWRuleListUsingGETParams struct {
 
+	/*DisplayName
+	  displayName
+
+	*/
+	DisplayName *string
 	/*GatewayPolicyID
 	  gatewayPolicyId
 
@@ -104,6 +109,17 @@ func (o *GFWRuleListUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithDisplayName adds the displayName to the g f w rule list using g e t params
+func (o *GFWRuleListUsingGETParams) WithDisplayName(displayName *string) *GFWRuleListUsingGETParams {
+	o.SetDisplayName(displayName)
+	return o
+}
+
+// SetDisplayName adds the displayName to the g f w rule list using g e t params
+func (o *GFWRuleListUsingGETParams) SetDisplayName(displayName *string) {
+	o.DisplayName = displayName
+}
+
 // WithGatewayPolicyID adds the gatewayPolicyID to the g f w rule list using g e t params
 func (o *GFWRuleListUsingGETParams) WithGatewayPolicyID(gatewayPolicyID string) *GFWRuleListUsingGETParams {
 	o.SetGatewayPolicyID(gatewayPolicyID)
@@ -122,6 +138,22 @@ func (o *GFWRuleListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg 
 		return err
 	}
 	var res []error
+
+	if o.DisplayName != nil {
+
+		// query param displayName
+		var qrDisplayName string
+		if o.DisplayName != nil {
+			qrDisplayName = *o.DisplayName
+		}
+		qDisplayName := qrDisplayName
+		if qDisplayName != "" {
+			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	// path param gatewayPolicyId
 	if err := r.SetPathParam("gatewayPolicyId", o.GatewayPolicyID); err != nil {

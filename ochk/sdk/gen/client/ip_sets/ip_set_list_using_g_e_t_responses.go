@@ -55,7 +55,7 @@ type IPSetListUsingGETOK struct {
 }
 
 func (o *IPSetListUsingGETOK) Error() string {
-	return fmt.Sprintf("[GET /network/ipsets/][%d] ipSetListUsingGETOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /network/ipsets][%d] ipSetListUsingGETOK  %+v", 200, o.Payload)
 }
 
 func (o *IPSetListUsingGETOK) GetPayload() *models.IPSetListResponse {
@@ -87,7 +87,7 @@ type IPSetListUsingGETBadRequest struct {
 }
 
 func (o *IPSetListUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/ipsets/][%d] ipSetListUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/ipsets][%d] ipSetListUsingGETBadRequest ", 400)
 }
 
 func (o *IPSetListUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

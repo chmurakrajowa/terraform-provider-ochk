@@ -61,7 +61,7 @@ type SecurityGroupCreateUsingPUTOK struct {
 }
 
 func (o *SecurityGroupCreateUsingPUTOK) Error() string {
-	return fmt.Sprintf("[PUT /network/security-groups/][%d] securityGroupCreateUsingPUTOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /network/security-groups][%d] securityGroupCreateUsingPUTOK  %+v", 200, o.Payload)
 }
 
 func (o *SecurityGroupCreateUsingPUTOK) GetPayload() *models.CreateResponse {
@@ -94,7 +94,7 @@ type SecurityGroupCreateUsingPUTCreated struct {
 }
 
 func (o *SecurityGroupCreateUsingPUTCreated) Error() string {
-	return fmt.Sprintf("[PUT /network/security-groups/][%d] securityGroupCreateUsingPUTCreated  %+v", 201, o.Payload)
+	return fmt.Sprintf("[PUT /network/security-groups][%d] securityGroupCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
 
 func (o *SecurityGroupCreateUsingPUTCreated) GetPayload() *models.CreateResponse {
@@ -126,7 +126,7 @@ type SecurityGroupCreateUsingPUTBadRequest struct {
 }
 
 func (o *SecurityGroupCreateUsingPUTBadRequest) Error() string {
-	return fmt.Sprintf("[PUT /network/security-groups/][%d] securityGroupCreateUsingPUTBadRequest ", 400)
+	return fmt.Sprintf("[PUT /network/security-groups][%d] securityGroupCreateUsingPUTBadRequest ", 400)
 }
 
 func (o *SecurityGroupCreateUsingPUTBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

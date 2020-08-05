@@ -19,7 +19,7 @@ import (
 // NewServiceListUsingGETParams creates a new ServiceListUsingGETParams object
 // with the default values initialized.
 func NewServiceListUsingGETParams() *ServiceListUsingGETParams {
-
+	var ()
 	return &ServiceListUsingGETParams{
 
 		timeout: cr.DefaultTimeout,
@@ -29,7 +29,7 @@ func NewServiceListUsingGETParams() *ServiceListUsingGETParams {
 // NewServiceListUsingGETParamsWithTimeout creates a new ServiceListUsingGETParams object
 // with the default values initialized, and the ability to set a timeout on a request
 func NewServiceListUsingGETParamsWithTimeout(timeout time.Duration) *ServiceListUsingGETParams {
-
+	var ()
 	return &ServiceListUsingGETParams{
 
 		timeout: timeout,
@@ -39,7 +39,7 @@ func NewServiceListUsingGETParamsWithTimeout(timeout time.Duration) *ServiceList
 // NewServiceListUsingGETParamsWithContext creates a new ServiceListUsingGETParams object
 // with the default values initialized, and the ability to set a context for a request
 func NewServiceListUsingGETParamsWithContext(ctx context.Context) *ServiceListUsingGETParams {
-
+	var ()
 	return &ServiceListUsingGETParams{
 
 		Context: ctx,
@@ -49,7 +49,7 @@ func NewServiceListUsingGETParamsWithContext(ctx context.Context) *ServiceListUs
 // NewServiceListUsingGETParamsWithHTTPClient creates a new ServiceListUsingGETParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewServiceListUsingGETParamsWithHTTPClient(client *http.Client) *ServiceListUsingGETParams {
-
+	var ()
 	return &ServiceListUsingGETParams{
 		HTTPClient: client,
 	}
@@ -59,6 +59,13 @@ func NewServiceListUsingGETParamsWithHTTPClient(client *http.Client) *ServiceLis
 for the service list using g e t operation typically these are written to a http.Request
 */
 type ServiceListUsingGETParams struct {
+
+	/*DisplayName
+	  displayName
+
+	*/
+	DisplayName *string
+
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -97,6 +104,17 @@ func (o *ServiceListUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithDisplayName adds the displayName to the service list using g e t params
+func (o *ServiceListUsingGETParams) WithDisplayName(displayName *string) *ServiceListUsingGETParams {
+	o.SetDisplayName(displayName)
+	return o
+}
+
+// SetDisplayName adds the displayName to the service list using g e t params
+func (o *ServiceListUsingGETParams) SetDisplayName(displayName *string) {
+	o.DisplayName = displayName
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *ServiceListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -104,6 +122,22 @@ func (o *ServiceListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg 
 		return err
 	}
 	var res []error
+
+	if o.DisplayName != nil {
+
+		// query param displayName
+		var qrDisplayName string
+		if o.DisplayName != nil {
+			qrDisplayName = *o.DisplayName
+		}
+		qDisplayName := qrDisplayName
+		if qDisplayName != "" {
+			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

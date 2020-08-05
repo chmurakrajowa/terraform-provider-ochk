@@ -11,6 +11,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // IPSet IP set
@@ -22,7 +23,8 @@ type IPSet struct {
 	CreatedBy string `json:"createdBy,omitempty"`
 
 	// creation date
-	CreationDate *Timestamp `json:"creationDate,omitempty"`
+	// Format: date-time
+	CreationDate strfmt.DateTime `json:"creationDate,omitempty"`
 
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
@@ -34,7 +36,8 @@ type IPSet struct {
 	IPSetID string `json:"ipSetId,omitempty"`
 
 	// modification date
-	ModificationDate *Timestamp `json:"modificationDate,omitempty"`
+	// Format: date-time
+	ModificationDate strfmt.DateTime `json:"modificationDate,omitempty"`
 
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`
@@ -68,13 +71,8 @@ func (m *IPSet) validateCreationDate(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.CreationDate != nil {
-		if err := m.CreationDate.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("creationDate")
-			}
-			return err
-		}
+	if err := validate.FormatOf("creationDate", "body", "date-time", m.CreationDate.String(), formats); err != nil {
+		return err
 	}
 
 	return nil
@@ -111,13 +109,8 @@ func (m *IPSet) validateModificationDate(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.ModificationDate != nil {
-		if err := m.ModificationDate.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("modificationDate")
-			}
-			return err
-		}
+	if err := validate.FormatOf("modificationDate", "body", "date-time", m.ModificationDate.String(), formats); err != nil {
+		return err
 	}
 
 	return nil

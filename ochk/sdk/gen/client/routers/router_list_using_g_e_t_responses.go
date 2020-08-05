@@ -55,7 +55,7 @@ type RouterListUsingGETOK struct {
 }
 
 func (o *RouterListUsingGETOK) Error() string {
-	return fmt.Sprintf("[GET /network/routers/][%d] routerListUsingGETOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /network/routers][%d] routerListUsingGETOK  %+v", 200, o.Payload)
 }
 
 func (o *RouterListUsingGETOK) GetPayload() *models.RouterListResponse {
@@ -87,7 +87,7 @@ type RouterListUsingGETBadRequest struct {
 }
 
 func (o *RouterListUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/routers/][%d] routerListUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/routers][%d] routerListUsingGETBadRequest ", 400)
 }
 
 func (o *RouterListUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
