@@ -51,20 +51,20 @@ func NewDFWRuleDeleteUsingDELETEOK() *DFWRuleDeleteUsingDELETEOK {
 OK
 */
 type DFWRuleDeleteUsingDELETEOK struct {
-	Payload *models.DeleteResponse
+	Payload *models.DeleteDFWRuleResponse
 }
 
 func (o *DFWRuleDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /network/firewall/security-policies/{SecurityPolicyId}/rules/{RuleId}][%d] dFWRuleDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
 
-func (o *DFWRuleDeleteUsingDELETEOK) GetPayload() *models.DeleteResponse {
+func (o *DFWRuleDeleteUsingDELETEOK) GetPayload() *models.DeleteDFWRuleResponse {
 	return o.Payload
 }
 
 func (o *DFWRuleDeleteUsingDELETEOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.DeleteResponse)
+	o.Payload = new(models.DeleteDFWRuleResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

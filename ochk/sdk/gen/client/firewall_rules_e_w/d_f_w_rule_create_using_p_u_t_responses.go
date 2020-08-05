@@ -57,20 +57,20 @@ func NewDFWRuleCreateUsingPUTOK() *DFWRuleCreateUsingPUTOK {
 OK
 */
 type DFWRuleCreateUsingPUTOK struct {
-	Payload *models.CreateResponse
+	Payload *models.CreateDFWRuleResponse
 }
 
 func (o *DFWRuleCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/firewall/security-policies/{SecurityPolicyId}/rules/][%d] dFWRuleCreateUsingPUTOK  %+v", 200, o.Payload)
 }
 
-func (o *DFWRuleCreateUsingPUTOK) GetPayload() *models.CreateResponse {
+func (o *DFWRuleCreateUsingPUTOK) GetPayload() *models.CreateDFWRuleResponse {
 	return o.Payload
 }
 
 func (o *DFWRuleCreateUsingPUTOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.CreateResponse)
+	o.Payload = new(models.CreateDFWRuleResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
@@ -90,20 +90,20 @@ func NewDFWRuleCreateUsingPUTCreated() *DFWRuleCreateUsingPUTCreated {
 Entity has been created
 */
 type DFWRuleCreateUsingPUTCreated struct {
-	Payload *models.CreateResponse
+	Payload *models.CreateDFWRuleResponse
 }
 
 func (o *DFWRuleCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/firewall/security-policies/{SecurityPolicyId}/rules/][%d] dFWRuleCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
 
-func (o *DFWRuleCreateUsingPUTCreated) GetPayload() *models.CreateResponse {
+func (o *DFWRuleCreateUsingPUTCreated) GetPayload() *models.CreateDFWRuleResponse {
 	return o.Payload
 }
 
 func (o *DFWRuleCreateUsingPUTCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.CreateResponse)
+	o.Payload = new(models.CreateDFWRuleResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

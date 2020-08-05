@@ -3,7 +3,6 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
@@ -12,7 +11,7 @@ import (
 
 func TestAccSecurityGroupResource_create(t *testing.T) {
 	resourceName := "ochk_security_group.one_member"
-	displayName := fmt.Sprintf("tf-acc_test-%s", acctest.RandStringFromCharSet(8, acctest.CharSetAlphaNum))
+	displayName := generateRandName()
 
 	//TODO zbyt wiele razy jest wołany POST /vidm/token HTTP/1.1, coś jest nie tak
 	resource.Test(t, resource.TestCase{
@@ -28,11 +27,11 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 				),
 			},
 		},
-		CheckDestroy: testAccSecurityGroupResourceExists(displayName),
+		CheckDestroy: testAccSecurityGroupResourceNotExists(displayName),
 	})
 }
 
-func testAccSecurityGroupResourceExists(displayName string) resource.TestCheckFunc {
+func testAccSecurityGroupResourceNotExists(displayName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		proxy := testAccProvider.Meta().(*sdk.Client).SecurityGroups
 

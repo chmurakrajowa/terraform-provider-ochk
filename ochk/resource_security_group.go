@@ -34,7 +34,7 @@ func resourceSecurityGroup() *schema.Resource {
 				Required: true,
 			},
 			"members": {
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				MinItems: 1,
 				Required: true,
 				Elem: &schema.Resource{
@@ -63,7 +63,7 @@ func resourceSecurityGroupCreate(ctx context.Context, d *schema.ResourceData, me
 
 	securityGroup := &models.SecurityGroup{
 		DisplayName: d.Get("display_name").(string),
-		Members:     expandSecurityGroupMembers(d.Get("members").([]interface{})),
+		Members:     expandSecurityGroupMembers(d.Get("members").(*schema.Set).List()),
 	}
 
 	created, err := proxy.Create(ctx, securityGroup)

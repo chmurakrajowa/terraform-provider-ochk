@@ -57,20 +57,20 @@ func NewSecurityGroupCreateUsingPUTOK() *SecurityGroupCreateUsingPUTOK {
 OK
 */
 type SecurityGroupCreateUsingPUTOK struct {
-	Payload *models.CreateResponse
+	Payload *models.CreateSecurityGroupResponse
 }
 
 func (o *SecurityGroupCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/security-groups][%d] securityGroupCreateUsingPUTOK  %+v", 200, o.Payload)
 }
 
-func (o *SecurityGroupCreateUsingPUTOK) GetPayload() *models.CreateResponse {
+func (o *SecurityGroupCreateUsingPUTOK) GetPayload() *models.CreateSecurityGroupResponse {
 	return o.Payload
 }
 
 func (o *SecurityGroupCreateUsingPUTOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.CreateResponse)
+	o.Payload = new(models.CreateSecurityGroupResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
@@ -90,20 +90,20 @@ func NewSecurityGroupCreateUsingPUTCreated() *SecurityGroupCreateUsingPUTCreated
 Entity has been created
 */
 type SecurityGroupCreateUsingPUTCreated struct {
-	Payload *models.CreateResponse
+	Payload *models.CreateSecurityGroupResponse
 }
 
 func (o *SecurityGroupCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/security-groups][%d] securityGroupCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
 
-func (o *SecurityGroupCreateUsingPUTCreated) GetPayload() *models.CreateResponse {
+func (o *SecurityGroupCreateUsingPUTCreated) GetPayload() *models.CreateSecurityGroupResponse {
 	return o.Payload
 }
 
 func (o *SecurityGroupCreateUsingPUTCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.CreateResponse)
+	o.Payload = new(models.CreateSecurityGroupResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
