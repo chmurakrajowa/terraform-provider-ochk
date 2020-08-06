@@ -47,6 +47,24 @@ func (p *SecurityPolicyProxy) ListByDisplayName(ctx context.Context, displayName
 
 	response, err := p.service.SecurityPolicyListUsingGET(params)
 	if err != nil {
+		return nil, fmt.Errorf("error while listing security policies by display name %s: %w", displayName, err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("listing security policies by display name %s failed: %s", displayName, response.Payload.Messages)
+	}
+
+	return response.Payload.SecurityPolicyCollection, nil
+}
+
+func (p *SecurityPolicyProxy) List(ctx context.Context) ([]*models.SecurityPolicy, error) {
+	params := &security_policies.SecurityPolicyListUsingGETParams{
+		Context:    ctx,
+		HTTPClient: p.httpClient,
+	}
+
+	response, err := p.service.SecurityPolicyListUsingGET(params)
+	if err != nil {
 		return nil, fmt.Errorf("error while listing security policies: %w", err)
 	}
 
