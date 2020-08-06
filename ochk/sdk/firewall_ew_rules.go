@@ -80,6 +80,25 @@ func (p *FirewallEWRulesProxy) ListByDisplayName(ctx context.Context, securityPo
 	return response.Payload.RuleInstances, nil
 }
 
+func (p *FirewallEWRulesProxy) List(ctx context.Context, securityPolicyID string) ([]*models.DFWRule, error) {
+	params := &firewall_rules_e_w.DFWRuleListUsingGETParams{
+		SecurityPolicyID: securityPolicyID,
+		Context:          ctx,
+		HTTPClient:       p.httpClient,
+	}
+
+	response, err := p.service.DFWRuleListUsingGET(params)
+	if err != nil {
+		return nil, fmt.Errorf("error while listing firewall EW rule: %w", err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("listing firewall EW rule failed: %s", response.Payload.Messages)
+	}
+
+	return response.Payload.RuleInstances, nil
+}
+
 func (p *FirewallEWRulesProxy) Exists(ctx context.Context, securityPolicyID string, ruleID string) (bool, error) {
 	_, err := p.Read(ctx, securityPolicyID, ruleID)
 	if err != nil {
