@@ -55,6 +55,7 @@ func Provider() *schema.Provider {
 			"ochk_security_policy": dataSourceSecurityPolicy(),
 			"ochk_gateway_policy":  dataSourceGatewayPolicy(),
 			"ochk_service":         dataSourceService(),
+			"ochk_router":          dataSourceRouter(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"ochk_security_group":   resourceSecurityGroup(),

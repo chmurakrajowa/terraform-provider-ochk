@@ -36,8 +36,16 @@ func testAccFirewallSNRuleResourceConfig(displayName string) string {
 	destination := generateRandName()
 
 	return fmt.Sprintf(`
+local {
+	routerDisplayName = "T1"
+}
+
 data "ochk_gateway_policy" "default" {
-  display_name = "T1"
+  display_name = locals.routerDisplayName
+}
+
+data "ochk_router" "default" {
+  display_name = locals.routerDisplayName
 }
 
 data "ochk_service" "http" {
