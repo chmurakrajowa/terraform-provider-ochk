@@ -13,6 +13,7 @@ issues:
   max-same-issues: 0
 
 linters:
+  disable-all: true
   enable:
     - deadcode
     - errcheck
