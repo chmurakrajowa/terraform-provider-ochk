@@ -67,6 +67,11 @@ func resourceFirewallSNRule() *schema.Resource {
 				Optional: true,
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
+			"scope": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem:     &schema.Schema{Type: schema.TypeString},
+			},
 			"destination": {
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -122,6 +127,10 @@ func resourceFirewallSNRuleCreate(ctx context.Context, d *schema.ResourceData, m
 
 	if destination, ok := d.GetOk("destination"); ok {
 		firewallSNRule.Destination = expandSecurityGroupFromIDs(destination.(*schema.Set).List())
+	}
+
+	if scope, ok := d.GetOk("scope"); ok {
+		firewallSNRule.Scope = expandRouterInstancesFromIDs(scope.(*schema.Set).List())
 	}
 
 	if position, ok := d.GetOk("position"); ok {
@@ -187,6 +196,10 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 
 	if err := d.Set("position", flattenFirewallRulePosition(firewallSNRule.Position)); err != nil {
 		return diag.Errorf("error setting position: %+v", err)
+	}
+
+	if err := d.Set("scope", flattenRouterInstancesFromIDs(firewallSNRule.Scope)); err != nil {
+		return diag.Errorf("error setting scope: %+v", err)
 	}
 
 	return nil

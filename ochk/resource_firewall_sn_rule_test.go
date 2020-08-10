@@ -36,16 +36,16 @@ func testAccFirewallSNRuleResourceConfig(displayName string) string {
 	destination := generateRandName()
 
 	return fmt.Sprintf(`
-local {
+locals {
 	routerDisplayName = "T1"
 }
 
 data "ochk_gateway_policy" "default" {
-  display_name = locals.routerDisplayName
+  display_name = local.routerDisplayName
 }
 
 data "ochk_router" "default" {
-  display_name = locals.routerDisplayName
+  display_name = local.routerDisplayName
 }
 
 data "ochk_service" "http" {
@@ -77,6 +77,7 @@ resource "ochk_firewall_sn_rule" "no_position" {
   services = [data.ochk_service.http.id]
   source = [ochk_security_group.source.id]
   destination = [ochk_security_group.destination.id]
+  scope = [data.ochk_router.default.id]
 }
 `, source, destination, displayName)
 }
