@@ -20,6 +20,7 @@ type Client struct {
 	FirewallEWRules FirewallEWRulesProxy
 	FirewallSNRules FirewallSNRulesProxy
 	Services        ServicesProxy
+	Routers         RoutersProxy
 }
 
 func NewClient(ctx context.Context, host string, tenant string, username string, password string, insecure bool, debugLogFile string) (*Client, error) {
@@ -98,6 +99,10 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		GatewayPolicy: GatewayPolicyProxy{
 			httpClient: httpClient,
 			service:    authClient.GatewayPolicies,
+		},
+		Routers: RoutersProxy{
+			httpClient: httpClient,
+			service:    authClient.Routers,
 		},
 	}, nil
 }
