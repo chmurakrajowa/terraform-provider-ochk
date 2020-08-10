@@ -6,8 +6,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
+	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/stretchr/testify/assert"
 	"testing"
-	"time"
 )
 
 func TestAccFirewallEWRuleResource_noPosition(t *testing.T) {
@@ -44,7 +45,7 @@ func TestAccFirewallEWRuleResource_withPositions(t *testing.T) {
 			{
 				Config: testAccFirewallEWRuleResourceConfigWithOrder(displayNameBefore, displayNameMiddle, displayNameAfter),
 				Check: resource.ComposeTestCheckFunc(
-					checkFuncWithRetry(30, testAccFirewallEWRuleCheckRulesOrder("data.ochk_security_policy.default", displayNameBefore, displayNameMiddle, displayNameAfter)),
+					testAccFirewallEWRuleCheckRulesOrder("data.ochk_security_policy.default", displayNameBefore, displayNameMiddle, displayNameAfter),
 				),
 			},
 		},
@@ -71,24 +72,72 @@ func testAccFirewallEWRuleCheckRulesOrder(securityPolicyResourceName string, dis
 			return err
 		}
 
-		for i := 0; i < len(securityPolicies); {
-			if securityPolicies[i].DisplayName == displayNames[0] {
-				for j := 1; j < len(displayNames) && i+j < len(securityPolicies); {
-					if securityPolicies[i+j].DisplayName != displayNames[j] {
-						return fmt.Errorf("invalid order of security policies, expected %s but is %s", displayNames[j], securityPolicies[i+j].DisplayName)
-					}
-					i++
-					j++
-				}
-
-				return nil
-			}
-
-			i++
+		if !checkOrderOfSecurityPolicies(securityPolicies, displayNames) {
+			securityPoliciesDisplayNames := transformToStringSlice(len(securityPolicies), func(idx int) string {
+				return securityPolicies[idx].DisplayName
+			})
+			return fmt.Errorf("security policies not found in expected order: %+v, security polices: %+v", displayNames, securityPoliciesDisplayNames)
 		}
 
-		return fmt.Errorf("invalid order of security policies, policy %s not found", displayNames[0])
+		return nil
 	}
+}
+
+func TestCheckOrderOfSecurityPolicies(t *testing.T) {
+	assert.NotPanics(t, func() {
+		expectedOrder := []string{"a", "b", "c"}
+
+		matchingCases := [][]string{
+			{"a", "b", "c"},
+			{"0", "a", "b", "c"},
+			{"a", "b", "c", "d"},
+			{"1", "2", "3", "4", "a", "b", "c"},
+			{"1", "2", "3", "4", "a", "b", "c", "5", "6", "7"},
+		}
+
+		notMatchingCases := [][]string{
+			{"a", "b"},
+			{"0", "a", "b"},
+			{"b", "c", "d"},
+			{"1", "2", "3", "4"},
+			{},
+		}
+
+		stringArrayToDFWRule := func(strArr []string) []*models.DFWRule {
+			var result []*models.DFWRule
+			for i := 0; i < len(strArr); i++ {
+				result = append(result, &models.DFWRule{DisplayName: strArr[i]})
+			}
+			return result
+		}
+
+		for i := 0; i < len(matchingCases); i++ {
+			assert.True(t, checkOrderOfSecurityPolicies(stringArrayToDFWRule(matchingCases[i]), expectedOrder))
+		}
+
+		for i := 0; i < len(notMatchingCases); i++ {
+			assert.False(t, checkOrderOfSecurityPolicies(stringArrayToDFWRule(notMatchingCases[i]), expectedOrder))
+		}
+	})
+}
+
+func checkOrderOfSecurityPolicies(securityPolicies []*models.DFWRule, displayNames []string) bool {
+	indexOfFirstElement := findIndexOfFirstMatch(len(securityPolicies), func(idx int) bool {
+		return securityPolicies[idx].DisplayName == displayNames[0]
+	})
+
+	if indexOfFirstElement == -1 {
+		return false
+	}
+
+	if indexOfFirstElement+len(displayNames) > len(securityPolicies) {
+		return false
+	}
+
+	leftSlice := securityPolicies[indexOfFirstElement : indexOfFirstElement+len(displayNames)]
+	return slicesEqual(len(leftSlice), len(displayNames), func(lhsIdx int, rhsIdx int) bool {
+		return leftSlice[lhsIdx].DisplayName == displayNames[rhsIdx]
+	})
 }
 
 func testAccFirewallEWRuleResourceConfig(displayName string) string {
@@ -219,6 +268,10 @@ resource "ochk_firewall_ew_rule" "before" {
  	rule_id = ochk_firewall_ew_rule.middle.id
 	revise_operation = "BEFORE"
   }
+
+  lifecycle {
+	ignore_changes = [position]
+  }
 }
 
 resource "ochk_firewall_ew_rule" "after" {
@@ -232,28 +285,14 @@ resource "ochk_firewall_ew_rule" "after" {
  	rule_id = ochk_firewall_ew_rule.middle.id
 	revise_operation = "AFTER"
   }
+
+  depends_on = [ochk_firewall_ew_rule.before]
+
+  lifecycle {
+	ignore_changes = [position]
+  }
 }
 `, source, destination, displayNameMiddle, displayNameBefore, displayNameAfter)
-}
-
-func checkFuncWithRetry(checkCount int, checkFunc resource.TestCheckFunc) resource.TestCheckFunc {
-	return func(s *terraform.State) error {
-		for i := 0; i < checkCount; i++ {
-			err := checkFunc(s)
-			if err != nil {
-				if i == checkCount-1 {
-					return err
-				}
-
-				time.Sleep(time.Second)
-				continue
-			}
-
-			break
-		}
-
-		return nil
-	}
 }
 
 func testAccFirewallEWRuleResourceDoesntExist(displayName string) resource.TestCheckFunc {
