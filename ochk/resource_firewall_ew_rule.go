@@ -2,7 +2,6 @@ package ochk
 
 import (
 	"context"
-	"fmt"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 	"time"
@@ -193,7 +192,32 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 }
 
 func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	return diag.FromErr(fmt.Errorf("updating firewall EW rule is not implemented"))
+	if !d.HasChanges("display_name", "action", "direction", "disabled", "ip_protocol", "services", "source", "destination", "position") {
+		return nil
+	}
+
+	proxy := meta.(*sdk.Client).FirewallEWRules
+
+	securityPolicyID := d.Get("security_policy_id").(string)
+
+	firewallEWRule := &models.DFWRule{
+		RuleID:          d.Id(),
+		Action:          d.Get("action").(string),
+		DefaultServices: expandServicesFromIDs(d.Get("services").(*schema.Set).List()),
+		Destination:     expandSecurityGroupFromIDs(d.Get("destination").(*schema.Set).List()),
+		Direction:       d.Get("direction").(string),
+		Disabled:        d.Get("disabled").(bool),
+		DisplayName:     d.Get("display_name").(string),
+		IPProtocol:      d.Get("ip_protocol").(string),
+		Source:          expandSecurityGroupFromIDs(d.Get("source").(*schema.Set).List()),
+	}
+
+	_, err := proxy.Update(ctx, securityPolicyID, firewallEWRule)
+	if err != nil {
+		return diag.Errorf("error while creating firewall EW rule: %+v", err)
+	}
+
+	return resourceFirewallEWRuleRead(ctx, d, meta)
 }
 
 func resourceFirewallEWRuleDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {

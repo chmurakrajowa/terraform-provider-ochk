@@ -21,7 +21,7 @@ func flattenFirewallRulePosition(in *models.Position) []map[string]interface{} {
 }
 
 func expandFirewallRulePosition(in []interface{}) *models.Position {
-	if in == nil {
+	if len(in) == 0 {
 		return nil
 	}
 

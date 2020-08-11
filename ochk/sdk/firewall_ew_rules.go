@@ -60,6 +60,31 @@ func (p *FirewallEWRulesProxy) Read(ctx context.Context, securityPolicyID string
 	return response.Payload.RuleInstance, nil
 }
 
+func (p *FirewallEWRulesProxy) Update(ctx context.Context, securityPolicyID string, rule *models.DFWRule) (*models.DFWRule, error) {
+	if err := rule.Validate(strfmt.Default); err != nil {
+		return nil, fmt.Errorf("error while validating firewall EW rule struct: %w", err)
+	}
+
+	params := &firewall_rules_e_w.DFWRuleUpdateUsingPUTParams{
+		SecurityPolicyID: securityPolicyID,
+		RuleID:           rule.RuleID,
+		DfwRule:          rule,
+		Context:          ctx,
+		HTTPClient:       p.httpClient,
+	}
+
+	put, err := p.service.DFWRuleUpdateUsingPUT(params)
+	if err != nil {
+		return nil, fmt.Errorf("error while updating firewall EW rule: %w", err)
+	}
+
+	if !put.Payload.Success {
+		return nil, fmt.Errorf("creating updating EW rule failed: %s", put.Payload.Messages)
+	}
+
+	return put.Payload.DfwRule, nil
+}
+
 func (p *FirewallEWRulesProxy) ListByDisplayName(ctx context.Context, securityPolicyID string, displayName string) ([]*models.DFWRule, error) {
 	params := &firewall_rules_e_w.DFWRuleListUsingGETParams{
 		SecurityPolicyID: securityPolicyID,
