@@ -55,7 +55,7 @@ type GFWRuleDeleteUsingDELETEOK struct {
 }
 
 func (o *GFWRuleDeleteUsingDELETEOK) Error() string {
-	return fmt.Sprintf("[DELETE /network/firewall/gateway-policies/{gatewayPolicyId}/rules/{RuleId}][%d] gFWRuleDeleteUsingDELETEOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[DELETE /network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}][%d] gFWRuleDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
 
 func (o *GFWRuleDeleteUsingDELETEOK) GetPayload() *models.DeleteGFWRuleResponse {
@@ -87,7 +87,7 @@ type GFWRuleDeleteUsingDELETEBadRequest struct {
 }
 
 func (o *GFWRuleDeleteUsingDELETEBadRequest) Error() string {
-	return fmt.Sprintf("[DELETE /network/firewall/gateway-policies/{gatewayPolicyId}/rules/{RuleId}][%d] gFWRuleDeleteUsingDELETEBadRequest ", 400)
+	return fmt.Sprintf("[DELETE /network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}][%d] gFWRuleDeleteUsingDELETEBadRequest ", 400)
 }
 
 func (o *GFWRuleDeleteUsingDELETEBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -61,7 +61,7 @@ type DFWRuleCreateUsingPUTOK struct {
 }
 
 func (o *DFWRuleCreateUsingPUTOK) Error() string {
-	return fmt.Sprintf("[PUT /network/firewall/security-policies/{SecurityPolicyId}/rules/][%d] dFWRuleCreateUsingPUTOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /network/firewall/security-policies/{securityPolicyId}/rules/][%d] dFWRuleCreateUsingPUTOK  %+v", 200, o.Payload)
 }
 
 func (o *DFWRuleCreateUsingPUTOK) GetPayload() *models.CreateDFWRuleResponse {
@@ -94,7 +94,7 @@ type DFWRuleCreateUsingPUTCreated struct {
 }
 
 func (o *DFWRuleCreateUsingPUTCreated) Error() string {
-	return fmt.Sprintf("[PUT /network/firewall/security-policies/{SecurityPolicyId}/rules/][%d] dFWRuleCreateUsingPUTCreated  %+v", 201, o.Payload)
+	return fmt.Sprintf("[PUT /network/firewall/security-policies/{securityPolicyId}/rules/][%d] dFWRuleCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
 
 func (o *DFWRuleCreateUsingPUTCreated) GetPayload() *models.CreateDFWRuleResponse {
@@ -126,7 +126,7 @@ type DFWRuleCreateUsingPUTBadRequest struct {
 }
 
 func (o *DFWRuleCreateUsingPUTBadRequest) Error() string {
-	return fmt.Sprintf("[PUT /network/firewall/security-policies/{SecurityPolicyId}/rules/][%d] dFWRuleCreateUsingPUTBadRequest ", 400)
+	return fmt.Sprintf("[PUT /network/firewall/security-policies/{securityPolicyId}/rules/][%d] dFWRuleCreateUsingPUTBadRequest ", 400)
 }
 
 func (o *DFWRuleCreateUsingPUTBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

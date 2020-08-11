@@ -35,6 +35,8 @@ type ClientService interface {
 
 	GFWRuleListUsingGET(params *GFWRuleListUsingGETParams) (*GFWRuleListUsingGETOK, error)
 
+	GFWRuleUpdateUsingPUT(params *GFWRuleUpdateUsingPUTParams) (*GFWRuleUpdateUsingPUTOK, error)
+
 	SetTransport(transport runtime.ClientTransport)
 }
 
@@ -89,7 +91,7 @@ func (a *Client) GFWRuleDeleteUsingDELETE(params *GFWRuleDeleteUsingDELETEParams
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GFWRuleDeleteUsingDELETE",
 		Method:             "DELETE",
-		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{RuleId}",
+		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -125,7 +127,7 @@ func (a *Client) GFWRuleGetUsingGET(params *GFWRuleGetUsingGETParams) (*GFWRuleG
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GFWRuleGetUsingGET",
 		Method:             "GET",
-		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{RuleId}",
+		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -180,6 +182,42 @@ func (a *Client) GFWRuleListUsingGET(params *GFWRuleListUsingGETParams) (*GFWRul
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for GFWRuleListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  GFWRuleUpdateUsingPUT updates
+
+  Create firewall rule (south-north) in NSX-T
+*/
+func (a *Client) GFWRuleUpdateUsingPUT(params *GFWRuleUpdateUsingPUTParams) (*GFWRuleUpdateUsingPUTOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGFWRuleUpdateUsingPUTParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GFWRuleUpdateUsingPUT",
+		Method:             "PUT",
+		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &GFWRuleUpdateUsingPUTReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GFWRuleUpdateUsingPUTOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for GFWRuleUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

@@ -61,7 +61,7 @@ type GFWRuleGetUsingGETOK struct {
 }
 
 func (o *GFWRuleGetUsingGETOK) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/gateway-policies/{gatewayPolicyId}/rules/{RuleId}][%d] gFWRuleGetUsingGETOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}][%d] gFWRuleGetUsingGETOK  %+v", 200, o.Payload)
 }
 
 func (o *GFWRuleGetUsingGETOK) GetPayload() *models.GFWRuleGetResponse {
@@ -93,7 +93,7 @@ type GFWRuleGetUsingGETBadRequest struct {
 }
 
 func (o *GFWRuleGetUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/gateway-policies/{gatewayPolicyId}/rules/{RuleId}][%d] gFWRuleGetUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}][%d] gFWRuleGetUsingGETBadRequest ", 400)
 }
 
 func (o *GFWRuleGetUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -114,7 +114,7 @@ type GFWRuleGetUsingGETNotFound struct {
 }
 
 func (o *GFWRuleGetUsingGETNotFound) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/gateway-policies/{gatewayPolicyId}/rules/{RuleId}][%d] gFWRuleGetUsingGETNotFound ", 404)
+	return fmt.Sprintf("[GET /network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}][%d] gFWRuleGetUsingGETNotFound ", 404)
 }
 
 func (o *GFWRuleGetUsingGETNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

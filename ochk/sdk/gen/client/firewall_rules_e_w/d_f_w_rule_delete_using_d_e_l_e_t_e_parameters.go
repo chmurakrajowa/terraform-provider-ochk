@@ -61,12 +61,12 @@ for the d f w rule delete using d e l e t e operation typically these are writte
 type DFWRuleDeleteUsingDELETEParams struct {
 
 	/*RuleID
-	  RuleId
+	  ruleId
 
 	*/
 	RuleID string
 	/*SecurityPolicyID
-	  SecurityPolicyId
+	  securityPolicyId
 
 	*/
 	SecurityPolicyID string
@@ -139,13 +139,13 @@ func (o *DFWRuleDeleteUsingDELETEParams) WriteToRequest(r runtime.ClientRequest,
 	}
 	var res []error
 
-	// path param RuleId
-	if err := r.SetPathParam("RuleId", o.RuleID); err != nil {
+	// path param ruleId
+	if err := r.SetPathParam("ruleId", o.RuleID); err != nil {
 		return err
 	}
 
-	// path param SecurityPolicyId
-	if err := r.SetPathParam("SecurityPolicyId", o.SecurityPolicyID); err != nil {
+	// path param securityPolicyId
+	if err := r.SetPathParam("securityPolicyId", o.SecurityPolicyID); err != nil {
 		return err
 	}
 

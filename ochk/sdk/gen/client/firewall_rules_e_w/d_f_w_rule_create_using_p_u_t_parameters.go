@@ -62,16 +62,16 @@ for the d f w rule create using p u t operation typically these are written to a
 */
 type DFWRuleCreateUsingPUTParams struct {
 
-	/*SecurityPolicyID
-	  SecurityPolicyId
-
-	*/
-	SecurityPolicyID string
 	/*DfwRule
 	  dfwRule
 
 	*/
 	DfwRule *models.DFWRule
+	/*SecurityPolicyID
+	  securityPolicyId
+
+	*/
+	SecurityPolicyID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -111,17 +111,6 @@ func (o *DFWRuleCreateUsingPUTParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithSecurityPolicyID adds the securityPolicyID to the d f w rule create using p u t params
-func (o *DFWRuleCreateUsingPUTParams) WithSecurityPolicyID(securityPolicyID string) *DFWRuleCreateUsingPUTParams {
-	o.SetSecurityPolicyID(securityPolicyID)
-	return o
-}
-
-// SetSecurityPolicyID adds the securityPolicyId to the d f w rule create using p u t params
-func (o *DFWRuleCreateUsingPUTParams) SetSecurityPolicyID(securityPolicyID string) {
-	o.SecurityPolicyID = securityPolicyID
-}
-
 // WithDfwRule adds the dfwRule to the d f w rule create using p u t params
 func (o *DFWRuleCreateUsingPUTParams) WithDfwRule(dfwRule *models.DFWRule) *DFWRuleCreateUsingPUTParams {
 	o.SetDfwRule(dfwRule)
@@ -133,6 +122,17 @@ func (o *DFWRuleCreateUsingPUTParams) SetDfwRule(dfwRule *models.DFWRule) {
 	o.DfwRule = dfwRule
 }
 
+// WithSecurityPolicyID adds the securityPolicyID to the d f w rule create using p u t params
+func (o *DFWRuleCreateUsingPUTParams) WithSecurityPolicyID(securityPolicyID string) *DFWRuleCreateUsingPUTParams {
+	o.SetSecurityPolicyID(securityPolicyID)
+	return o
+}
+
+// SetSecurityPolicyID adds the securityPolicyId to the d f w rule create using p u t params
+func (o *DFWRuleCreateUsingPUTParams) SetSecurityPolicyID(securityPolicyID string) {
+	o.SecurityPolicyID = securityPolicyID
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *DFWRuleCreateUsingPUTParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -141,15 +141,15 @@ func (o *DFWRuleCreateUsingPUTParams) WriteToRequest(r runtime.ClientRequest, re
 	}
 	var res []error
 
-	// path param SecurityPolicyId
-	if err := r.SetPathParam("SecurityPolicyId", o.SecurityPolicyID); err != nil {
-		return err
-	}
-
 	if o.DfwRule != nil {
 		if err := r.SetBodyParam(o.DfwRule); err != nil {
 			return err
 		}
+	}
+
+	// path param securityPolicyId
+	if err := r.SetPathParam("securityPolicyId", o.SecurityPolicyID); err != nil {
+		return err
 	}
 
 	if len(res) > 0 {

@@ -61,7 +61,7 @@ type DFWRuleGetUsingGETOK struct {
 }
 
 func (o *DFWRuleGetUsingGETOK) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/security-policies/{SecurityPolicyId}/rules/{RuleId}][%d] dFWRuleGetUsingGETOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}][%d] dFWRuleGetUsingGETOK  %+v", 200, o.Payload)
 }
 
 func (o *DFWRuleGetUsingGETOK) GetPayload() *models.DFWRuleGetResponse {
@@ -93,7 +93,7 @@ type DFWRuleGetUsingGETBadRequest struct {
 }
 
 func (o *DFWRuleGetUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/security-policies/{SecurityPolicyId}/rules/{RuleId}][%d] dFWRuleGetUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}][%d] dFWRuleGetUsingGETBadRequest ", 400)
 }
 
 func (o *DFWRuleGetUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -114,7 +114,7 @@ type DFWRuleGetUsingGETNotFound struct {
 }
 
 func (o *DFWRuleGetUsingGETNotFound) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/security-policies/{SecurityPolicyId}/rules/{RuleId}][%d] dFWRuleGetUsingGETNotFound ", 404)
+	return fmt.Sprintf("[GET /network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}][%d] dFWRuleGetUsingGETNotFound ", 404)
 }
 
 func (o *DFWRuleGetUsingGETNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

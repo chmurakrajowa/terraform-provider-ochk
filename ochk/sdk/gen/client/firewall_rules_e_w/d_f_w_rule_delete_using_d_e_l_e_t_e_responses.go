@@ -55,7 +55,7 @@ type DFWRuleDeleteUsingDELETEOK struct {
 }
 
 func (o *DFWRuleDeleteUsingDELETEOK) Error() string {
-	return fmt.Sprintf("[DELETE /network/firewall/security-policies/{SecurityPolicyId}/rules/{RuleId}][%d] dFWRuleDeleteUsingDELETEOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[DELETE /network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}][%d] dFWRuleDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
 
 func (o *DFWRuleDeleteUsingDELETEOK) GetPayload() *models.DeleteDFWRuleResponse {
@@ -87,7 +87,7 @@ type DFWRuleDeleteUsingDELETEBadRequest struct {
 }
 
 func (o *DFWRuleDeleteUsingDELETEBadRequest) Error() string {
-	return fmt.Sprintf("[DELETE /network/firewall/security-policies/{SecurityPolicyId}/rules/{RuleId}][%d] dFWRuleDeleteUsingDELETEBadRequest ", 400)
+	return fmt.Sprintf("[DELETE /network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}][%d] dFWRuleDeleteUsingDELETEBadRequest ", 400)
 }
 
 func (o *DFWRuleDeleteUsingDELETEBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

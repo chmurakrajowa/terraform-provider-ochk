@@ -60,16 +60,16 @@ for the g f w rule get using g e t operation typically these are written to a ht
 */
 type GFWRuleGetUsingGETParams struct {
 
-	/*RuleID
-	  RuleId
-
-	*/
-	RuleID string
 	/*GatewayPolicyID
 	  gatewayPolicyId
 
 	*/
 	GatewayPolicyID string
+	/*RuleID
+	  ruleId
+
+	*/
+	RuleID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -109,17 +109,6 @@ func (o *GFWRuleGetUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithRuleID adds the ruleID to the g f w rule get using g e t params
-func (o *GFWRuleGetUsingGETParams) WithRuleID(ruleID string) *GFWRuleGetUsingGETParams {
-	o.SetRuleID(ruleID)
-	return o
-}
-
-// SetRuleID adds the ruleId to the g f w rule get using g e t params
-func (o *GFWRuleGetUsingGETParams) SetRuleID(ruleID string) {
-	o.RuleID = ruleID
-}
-
 // WithGatewayPolicyID adds the gatewayPolicyID to the g f w rule get using g e t params
 func (o *GFWRuleGetUsingGETParams) WithGatewayPolicyID(gatewayPolicyID string) *GFWRuleGetUsingGETParams {
 	o.SetGatewayPolicyID(gatewayPolicyID)
@@ -131,6 +120,17 @@ func (o *GFWRuleGetUsingGETParams) SetGatewayPolicyID(gatewayPolicyID string) {
 	o.GatewayPolicyID = gatewayPolicyID
 }
 
+// WithRuleID adds the ruleID to the g f w rule get using g e t params
+func (o *GFWRuleGetUsingGETParams) WithRuleID(ruleID string) *GFWRuleGetUsingGETParams {
+	o.SetRuleID(ruleID)
+	return o
+}
+
+// SetRuleID adds the ruleId to the g f w rule get using g e t params
+func (o *GFWRuleGetUsingGETParams) SetRuleID(ruleID string) {
+	o.RuleID = ruleID
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *GFWRuleGetUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -139,13 +139,13 @@ func (o *GFWRuleGetUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg s
 	}
 	var res []error
 
-	// path param RuleId
-	if err := r.SetPathParam("RuleId", o.RuleID); err != nil {
+	// path param gatewayPolicyId
+	if err := r.SetPathParam("gatewayPolicyId", o.GatewayPolicyID); err != nil {
 		return err
 	}
 
-	// path param gatewayPolicyId
-	if err := r.SetPathParam("gatewayPolicyId", o.GatewayPolicyID); err != nil {
+	// path param ruleId
+	if err := r.SetPathParam("ruleId", o.RuleID); err != nil {
 		return err
 	}
 

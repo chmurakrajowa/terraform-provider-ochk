@@ -35,6 +35,8 @@ type ClientService interface {
 
 	DFWRuleListUsingGET(params *DFWRuleListUsingGETParams) (*DFWRuleListUsingGETOK, error)
 
+	DFWRuleUpdateUsingPUT(params *DFWRuleUpdateUsingPUTParams) (*DFWRuleUpdateUsingPUTOK, error)
+
 	SetTransport(transport runtime.ClientTransport)
 }
 
@@ -52,7 +54,7 @@ func (a *Client) DFWRuleCreateUsingPUT(params *DFWRuleCreateUsingPUTParams) (*DF
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DFWRuleCreateUsingPUT",
 		Method:             "PUT",
-		PathPattern:        "/network/firewall/security-policies/{SecurityPolicyId}/rules/",
+		PathPattern:        "/network/firewall/security-policies/{securityPolicyId}/rules/",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -89,7 +91,7 @@ func (a *Client) DFWRuleDeleteUsingDELETE(params *DFWRuleDeleteUsingDELETEParams
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DFWRuleDeleteUsingDELETE",
 		Method:             "DELETE",
-		PathPattern:        "/network/firewall/security-policies/{SecurityPolicyId}/rules/{RuleId}",
+		PathPattern:        "/network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -125,7 +127,7 @@ func (a *Client) DFWRuleGetUsingGET(params *DFWRuleGetUsingGETParams) (*DFWRuleG
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DFWRuleGetUsingGET",
 		Method:             "GET",
-		PathPattern:        "/network/firewall/security-policies/{SecurityPolicyId}/rules/{RuleId}",
+		PathPattern:        "/network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -180,6 +182,42 @@ func (a *Client) DFWRuleListUsingGET(params *DFWRuleListUsingGETParams) (*DFWRul
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for DFWRuleListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  DFWRuleUpdateUsingPUT updates
+
+  Update firewall rule (east-west) in NSX-T
+*/
+func (a *Client) DFWRuleUpdateUsingPUT(params *DFWRuleUpdateUsingPUTParams) (*DFWRuleUpdateUsingPUTOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDFWRuleUpdateUsingPUTParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "DFWRuleUpdateUsingPUT",
+		Method:             "PUT",
+		PathPattern:        "/network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &DFWRuleUpdateUsingPUTReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DFWRuleUpdateUsingPUTOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for DFWRuleUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

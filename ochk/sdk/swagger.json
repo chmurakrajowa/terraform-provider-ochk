@@ -352,7 +352,7 @@
         }
       }
     },
-    "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{RuleId}": {
+    "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}": {
       "get": {
         "tags": [
           "Firewall rules S-N"
@@ -375,9 +375,9 @@
             "type": "string"
           },
           {
-            "name": "RuleId",
+            "name": "ruleId",
             "in": "path",
-            "description": "RuleId",
+            "description": "ruleId",
             "required": true,
             "type": "string"
           }
@@ -394,6 +394,56 @@
           },
           "404": {
             "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Firewall rules S-N"
+        ],
+        "summary": "Update",
+        "description": "Create firewall rule (south-north) in NSX-T",
+        "operationId": "GFWRuleUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "gatewayPolicyId",
+            "in": "path",
+            "description": "gatewayPolicyId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ruleId",
+            "in": "path",
+            "description": "ruleId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "gfwRule",
+            "description": "gfwRule",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GFWRule"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateGFWRuleResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       },
@@ -419,9 +469,9 @@
             "type": "string"
           },
           {
-            "name": "RuleId",
+            "name": "ruleId",
             "in": "path",
-            "description": "RuleId",
+            "description": "ruleId",
             "required": true,
             "type": "string"
           }
@@ -514,144 +564,6 @@
         }
       }
     },
-    "/network/firewall/security-policies/{SecurityPolicyId}/rules/": {
-      "put": {
-        "tags": [
-          "Firewall rules E-W"
-        ],
-        "summary": "Create",
-        "description": "Create firewall rule (east-west) in NSX-T",
-        "operationId": "DFWRuleCreateUsingPUT",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "SecurityPolicyId",
-            "in": "path",
-            "description": "SecurityPolicyId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "dfwRule",
-            "description": "dfwRule",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/DFWRule"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/CreateDFWRuleResponse"
-            }
-          },
-          "201": {
-            "description": "Entity has been created",
-            "schema": {
-              "$ref": "#/definitions/CreateDFWRuleResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          }
-        }
-      }
-    },
-    "/network/firewall/security-policies/{SecurityPolicyId}/rules/{RuleId}": {
-      "get": {
-        "tags": [
-          "Firewall rules E-W"
-        ],
-        "summary": "Get",
-        "description": "Get firewall rule (east-west) from NSX-T",
-        "operationId": "DFWRuleGetUsingGET",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "SecurityPolicyId",
-            "in": "path",
-            "description": "SecurityPolicyId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "RuleId",
-            "in": "path",
-            "description": "RuleId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/DFWRuleGetResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          },
-          "404": {
-            "description": "Entity not found."
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Firewall rules E-W"
-        ],
-        "summary": "Delete",
-        "description": "Delete firewall rule (east-west) from NSX-T",
-        "operationId": "DFWRuleDeleteUsingDELETE",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "SecurityPolicyId",
-            "in": "path",
-            "description": "SecurityPolicyId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "RuleId",
-            "in": "path",
-            "description": "RuleId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/DeleteDFWRuleResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          }
-        }
-      }
-    },
     "/network/firewall/security-policies/{securityPolicyId}/rules": {
       "get": {
         "tags": [
@@ -687,6 +599,194 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/DFWRuleListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/network/firewall/security-policies/{securityPolicyId}/rules/": {
+      "put": {
+        "tags": [
+          "Firewall rules E-W"
+        ],
+        "summary": "Create",
+        "description": "Create firewall rule (east-west) in NSX-T",
+        "operationId": "DFWRuleCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "securityPolicyId",
+            "in": "path",
+            "description": "securityPolicyId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "dfwRule",
+            "description": "dfwRule",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DFWRule"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateDFWRuleResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateDFWRuleResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}": {
+      "get": {
+        "tags": [
+          "Firewall rules E-W"
+        ],
+        "summary": "Get",
+        "description": "Get firewall rule (east-west) from NSX-T",
+        "operationId": "DFWRuleGetUsingGET",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "securityPolicyId",
+            "in": "path",
+            "description": "securityPolicyId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ruleId",
+            "in": "path",
+            "description": "ruleId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DFWRuleGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Firewall rules E-W"
+        ],
+        "summary": "Update",
+        "description": "Update firewall rule (east-west) in NSX-T",
+        "operationId": "DFWRuleUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "securityPolicyId",
+            "in": "path",
+            "description": "securityPolicyId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ruleId",
+            "in": "path",
+            "description": "ruleId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "dfwRule",
+            "description": "dfwRule",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DFWRule"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateDFWRuleResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Firewall rules E-W"
+        ],
+        "summary": "Delete",
+        "description": "Delete firewall rule (east-west) from NSX-T",
+        "operationId": "DFWRuleDeleteUsingDELETE",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "securityPolicyId",
+            "in": "path",
+            "description": "securityPolicyId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ruleId",
+            "in": "path",
+            "description": "ruleId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteDFWRuleResponse"
             }
           },
           "400": {
@@ -1033,6 +1133,49 @@
           },
           "404": {
             "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Security groups"
+        ],
+        "summary": "Update",
+        "description": "Update security group from NSX-T",
+        "operationId": "SecurityGroupUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "groupId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "securityGroup",
+            "description": "securityGroup",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SecurityGroup"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateSecurityGroupResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       },
@@ -2311,7 +2454,10 @@
             "FIREWALL_DFW_RULE_CREATE",
             "FIREWALL_DFW_RULE_DELETE",
             "FIREWALL_GFW_RULE_CREATE",
-            "FIREWALL_GFW_RULE_DELETE"
+            "FIREWALL_GFW_RULE_DELETE",
+            "SECURITY_GROUP_UPDATE",
+            "FIREWALL_DFW_RULE_UPDATE",
+            "FIREWALL_GFW_RULE_UPDATE"
           ]
         },
         "requestor": {
@@ -2818,6 +2964,69 @@
         "transitSubnetId": {
           "type": "integer",
           "format": "int32"
+        }
+      }
+    },
+    "UpdateDFWRuleResponse": {
+      "type": "object",
+      "properties": {
+        "dfwRule": {
+          "$ref": "#/definitions/DFWRule"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "UpdateGFWRuleResponse": {
+      "type": "object",
+      "properties": {
+        "gfwRule": {
+          "$ref": "#/definitions/GFWRule"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "UpdateSecurityGroupResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "securityGroup": {
+          "$ref": "#/definitions/SecurityGroup"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },

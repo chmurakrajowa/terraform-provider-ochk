@@ -42,7 +42,7 @@ type RequestInstance struct {
 	RequestStatus string `json:"requestStatus,omitempty"`
 
 	// request type
-	// Enum: [SECURITY_GROUP_CREATE SECURITY_GROUP_DELETE FIREWALL_DFW_RULE_CREATE FIREWALL_DFW_RULE_DELETE FIREWALL_GFW_RULE_CREATE FIREWALL_GFW_RULE_DELETE]
+	// Enum: [SECURITY_GROUP_CREATE SECURITY_GROUP_DELETE FIREWALL_DFW_RULE_CREATE FIREWALL_DFW_RULE_DELETE FIREWALL_GFW_RULE_CREATE FIREWALL_GFW_RULE_DELETE SECURITY_GROUP_UPDATE FIREWALL_DFW_RULE_UPDATE FIREWALL_GFW_RULE_UPDATE]
 	RequestType string `json:"requestType,omitempty"`
 
 	// requestor
@@ -227,7 +227,7 @@ var requestInstanceTypeRequestTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["SECURITY_GROUP_CREATE","SECURITY_GROUP_DELETE","FIREWALL_DFW_RULE_CREATE","FIREWALL_DFW_RULE_DELETE","FIREWALL_GFW_RULE_CREATE","FIREWALL_GFW_RULE_DELETE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["SECURITY_GROUP_CREATE","SECURITY_GROUP_DELETE","FIREWALL_DFW_RULE_CREATE","FIREWALL_DFW_RULE_DELETE","FIREWALL_GFW_RULE_CREATE","FIREWALL_GFW_RULE_DELETE","SECURITY_GROUP_UPDATE","FIREWALL_DFW_RULE_UPDATE","FIREWALL_GFW_RULE_UPDATE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -254,6 +254,15 @@ const (
 
 	// RequestInstanceRequestTypeFIREWALLGFWRULEDELETE captures enum value "FIREWALL_GFW_RULE_DELETE"
 	RequestInstanceRequestTypeFIREWALLGFWRULEDELETE string = "FIREWALL_GFW_RULE_DELETE"
+
+	// RequestInstanceRequestTypeSECURITYGROUPUPDATE captures enum value "SECURITY_GROUP_UPDATE"
+	RequestInstanceRequestTypeSECURITYGROUPUPDATE string = "SECURITY_GROUP_UPDATE"
+
+	// RequestInstanceRequestTypeFIREWALLDFWRULEUPDATE captures enum value "FIREWALL_DFW_RULE_UPDATE"
+	RequestInstanceRequestTypeFIREWALLDFWRULEUPDATE string = "FIREWALL_DFW_RULE_UPDATE"
+
+	// RequestInstanceRequestTypeFIREWALLGFWRULEUPDATE captures enum value "FIREWALL_GFW_RULE_UPDATE"
+	RequestInstanceRequestTypeFIREWALLGFWRULEUPDATE string = "FIREWALL_GFW_RULE_UPDATE"
 )
 
 // prop value enum

@@ -61,12 +61,12 @@ for the d f w rule get using g e t operation typically these are written to a ht
 type DFWRuleGetUsingGETParams struct {
 
 	/*RuleID
-	  RuleId
+	  ruleId
 
 	*/
 	RuleID string
 	/*SecurityPolicyID
-	  SecurityPolicyId
+	  securityPolicyId
 
 	*/
 	SecurityPolicyID string
@@ -139,13 +139,13 @@ func (o *DFWRuleGetUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg s
 	}
 	var res []error
 
-	// path param RuleId
-	if err := r.SetPathParam("RuleId", o.RuleID); err != nil {
+	// path param ruleId
+	if err := r.SetPathParam("ruleId", o.RuleID); err != nil {
 		return err
 	}
 
-	// path param SecurityPolicyId
-	if err := r.SetPathParam("SecurityPolicyId", o.SecurityPolicyID); err != nil {
+	// path param securityPolicyId
+	if err := r.SetPathParam("securityPolicyId", o.SecurityPolicyID); err != nil {
 		return err
 	}
 
