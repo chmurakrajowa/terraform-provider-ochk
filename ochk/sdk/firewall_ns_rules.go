@@ -39,6 +39,31 @@ func (p *FirewallSNRulesProxy) Create(ctx context.Context, gatewayPolicyID strin
 	return put.Payload.GfwRule, nil
 }
 
+func (p *FirewallSNRulesProxy) Update(ctx context.Context, gatewayPolicyID string, rule *models.GFWRule) (*models.GFWRule, error) {
+	if err := rule.Validate(strfmt.Default); err != nil {
+		return nil, fmt.Errorf("error while validating firewall SN rule struct: %w", err)
+	}
+
+	params := &firewall_rules_s_n.GFWRuleUpdateUsingPUTParams{
+		GatewayPolicyID: gatewayPolicyID,
+		RuleID:          rule.RuleID,
+		GfwRule:         rule,
+		Context:         ctx,
+		HTTPClient:      p.httpClient,
+	}
+
+	put, err := p.service.GFWRuleUpdateUsingPUT(params)
+	if err != nil {
+		return nil, fmt.Errorf("error while modifing firewall SN rule: %w", err)
+	}
+
+	if !put.Payload.Success {
+		return nil, fmt.Errorf("modifing firewall SN rule failed: %s", put.Payload.Messages)
+	}
+
+	return put.Payload.GfwRule, nil
+}
+
 func (p *FirewallSNRulesProxy) Read(ctx context.Context, gatewayPolicyID string, ruleID string) (*models.GFWRule, error) {
 	params := &firewall_rules_s_n.GFWRuleGetUsingGETParams{
 		RuleID:          ruleID,
