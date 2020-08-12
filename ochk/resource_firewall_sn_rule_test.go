@@ -11,15 +11,27 @@ import (
 
 func TestAccFirewallSNRuleResource_noPosition(t *testing.T) {
 	resourceName := "ochk_firewall_sn_rule.no_position"
-	displayName := generateRandName()
+	sourceDisplayName := generateRandName()
+	destinationDisplayName := generateRandName()
+	ruleDisplayName := generateRandName()
 
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFirewallSNRuleResourceConfig(displayName),
+				Config: testAccFirewallSNRuleResourceConfig("T1", sourceDisplayName, destinationDisplayName, ruleDisplayName),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "display_name", displayName),
+					resource.TestCheckResourceAttr(resourceName, "display_name", ruleDisplayName),
+					resource.TestCheckResourceAttr(resourceName, "action", "ALLOW"),
+					resource.TestCheckResourceAttr(resourceName, "direction", "IN_OUT"),
+					resource.TestCheckResourceAttr(resourceName, "ip_protocol", "IPV4_IPV6"),
+					resource.TestCheckNoResourceAttr(resourceName, "position"),
+				),
+			},
+			{
+				Config: testAccFirewallSNRuleResourceConfig("T0", sourceDisplayName, destinationDisplayName, ruleDisplayName),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr(resourceName, "display_name", ruleDisplayName),
 					resource.TestCheckResourceAttr(resourceName, "action", "ALLOW"),
 					resource.TestCheckResourceAttr(resourceName, "direction", "IN_OUT"),
 					resource.TestCheckResourceAttr(resourceName, "ip_protocol", "IPV4_IPV6"),
@@ -27,17 +39,14 @@ func TestAccFirewallSNRuleResource_noPosition(t *testing.T) {
 				),
 			},
 		},
-		CheckDestroy: testAccFirewallSNRuleResourceNotExists(displayName),
+		CheckDestroy: testAccFirewallSNRuleResourceNotExists(ruleDisplayName),
 	})
 }
 
-func testAccFirewallSNRuleResourceConfig(displayName string) string {
-	source := generateRandName()
-	destination := generateRandName()
-
+func testAccFirewallSNRuleResourceConfig(router string, source string, destination string, rule string) string {
 	return fmt.Sprintf(`
 locals {
-	routerDisplayName = "T1"
+	routerDisplayName = %[1]q
 }
 
 data "ochk_gateway_policy" "default" {
@@ -53,7 +62,7 @@ data "ochk_service" "http" {
 }
 
 resource "ochk_security_group" "source" {
-  display_name = %[1]q
+  display_name = %[2]q
 
   members {
     id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
@@ -62,7 +71,7 @@ resource "ochk_security_group" "source" {
 }
 
 resource "ochk_security_group" "destination" {
-  display_name = %[2]q
+  display_name = %[3]q
   
   members {
     id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
@@ -71,7 +80,7 @@ resource "ochk_security_group" "destination" {
 }
 
 resource "ochk_firewall_sn_rule" "no_position" {
-  display_name = %[3]q
+  display_name = %[4]q
   gateway_policy_id = data.ochk_gateway_policy.default.id
 
   services = [data.ochk_service.http.id]
@@ -79,7 +88,7 @@ resource "ochk_firewall_sn_rule" "no_position" {
   destination = [ochk_security_group.destination.id]
   scope = [data.ochk_router.default.id]
 }
-`, source, destination, displayName)
+`, router, source, destination, rule)
 }
 
 func testAccFirewallSNRuleResourceNotExists(displayName string) resource.TestCheckFunc {
