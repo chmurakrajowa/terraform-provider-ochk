@@ -14,17 +14,37 @@ import (
 func TestAccFirewallEWRuleResource_noPosition(t *testing.T) {
 	resourceName := "ochk_firewall_ew_rule.no_position"
 	displayName := generateRandName()
+	displayNameUpdated := displayName + "-updated"
+	action := "ALLOW"
+	actionUpdated := "DROP"
+	direction := "IN_OUT"
+	directionUpdated := "OUT"
+	ipProtocol := "IPV4_IPV6"
+	ipProtocolUpdated := "IPV4"
+
+	source := generateRandName()
+	destination := generateRandName()
 
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFirewallEWRuleResourceConfig(displayName),
+				Config: testAccFirewallEWRuleResourceConfig(displayName, source, destination, action, ipProtocol, direction),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", displayName),
-					resource.TestCheckResourceAttr(resourceName, "action", "ALLOW"),
-					resource.TestCheckResourceAttr(resourceName, "direction", "IN_OUT"),
-					resource.TestCheckResourceAttr(resourceName, "ip_protocol", "IPV4_IPV6"),
+					resource.TestCheckResourceAttr(resourceName, "action", action),
+					resource.TestCheckResourceAttr(resourceName, "direction", direction),
+					resource.TestCheckResourceAttr(resourceName, "ip_protocol", ipProtocol),
+					resource.TestCheckNoResourceAttr(resourceName, "position"),
+				),
+			},
+			{
+				Config: testAccFirewallEWRuleResourceConfig(displayNameUpdated, source, destination, actionUpdated, ipProtocolUpdated, directionUpdated),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr(resourceName, "display_name", displayNameUpdated),
+					resource.TestCheckResourceAttr(resourceName, "action", actionUpdated),
+					resource.TestCheckResourceAttr(resourceName, "direction", directionUpdated),
+					resource.TestCheckResourceAttr(resourceName, "ip_protocol", ipProtocolUpdated),
 					resource.TestCheckNoResourceAttr(resourceName, "position"),
 				),
 			},
@@ -140,10 +160,7 @@ func checkOrderOfSecurityPolicies(securityPolicies []*models.DFWRule, displayNam
 	})
 }
 
-func testAccFirewallEWRuleResourceConfig(displayName string) string {
-	source := generateRandName()
-	destination := generateRandName()
-
+func testAccFirewallEWRuleResourceConfig(displayName string, source string, destination string, action string, ipProtocol string, direction string) string {
 	return fmt.Sprintf(`
 data "ochk_security_policy" "default" {
   display_name = "devel"
@@ -178,8 +195,12 @@ resource "ochk_firewall_ew_rule" "no_position" {
   services = [data.ochk_service.http.id]
   source = [ochk_security_group.source.id]
   destination = [ochk_security_group.destination.id]
+
+  action = %[4]q 
+  ip_protocol = %[5]q
+  direction = %[6]q
 }
-`, source, destination, displayName)
+`, source, destination, displayName, action, ipProtocol, direction)
 }
 
 func testAccFirewallEWRuleResourceConfigWithOrder(displayNameBefore string, displayNameMiddle string, displayNameAfter string) string {
