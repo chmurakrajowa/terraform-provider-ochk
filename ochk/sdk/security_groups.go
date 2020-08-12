@@ -38,6 +38,30 @@ func (p *SecurityGroupsProxy) Create(ctx context.Context, securityGroup *models.
 	return put.Payload.SecurityGroup, nil
 }
 
+func (p *SecurityGroupsProxy) Update(ctx context.Context, securityGroup *models.SecurityGroup) (*models.SecurityGroup, error) {
+	if err := securityGroup.Validate(strfmt.Default); err != nil {
+		return nil, fmt.Errorf("error while validating security group struct: %w", err)
+	}
+
+	params := &security_groups.SecurityGroupUpdateUsingPUTParams{
+		GroupID:       securityGroup.ID,
+		SecurityGroup: securityGroup,
+		Context:       ctx,
+		HTTPClient:    p.httpClient,
+	}
+
+	put, err := p.service.SecurityGroupUpdateUsingPUT(params)
+	if err != nil {
+		return nil, fmt.Errorf("error while modifying security group: %w", err)
+	}
+
+	if !put.Payload.Success {
+		return nil, fmt.Errorf("modifying security group failed: %s", put.Payload.Messages)
+	}
+
+	return put.Payload.SecurityGroup, nil
+}
+
 func (p *SecurityGroupsProxy) Read(ctx context.Context, securityGroupID string) (*models.SecurityGroup, error) {
 	params := &security_groups.SecurityGroupGetUsingGETParams{
 		GroupID:    securityGroupID,

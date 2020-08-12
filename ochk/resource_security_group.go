@@ -2,7 +2,6 @@ package ochk
 
 import (
 	"context"
-	"fmt"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
 	"time"
@@ -61,10 +60,7 @@ func resourceSecurityGroup() *schema.Resource {
 func resourceSecurityGroupCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).SecurityGroups
 
-	securityGroup := &models.SecurityGroup{
-		DisplayName: d.Get("display_name").(string),
-		Members:     expandSecurityGroupMembers(d.Get("members").(*schema.Set).List()),
-	}
+	securityGroup := mapResourceDataToSecurityGroup(d)
 
 	created, err := proxy.Create(ctx, securityGroup)
 	if err != nil {
@@ -101,7 +97,17 @@ func resourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta
 }
 
 func resourceSecurityGroupUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	return diag.FromErr(fmt.Errorf("updating SecurityGroup is not implemented"))
+	proxy := meta.(*sdk.Client).SecurityGroups
+
+	securityGroup := mapResourceDataToSecurityGroup(d)
+	securityGroup.ID = d.Id()
+
+	_, err := proxy.Update(ctx, securityGroup)
+	if err != nil {
+		return diag.Errorf("error while modifying security group: %+v", err)
+	}
+
+	return resourceSecurityGroupRead(ctx, d, meta)
 }
 
 func resourceSecurityGroupDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
@@ -118,4 +124,11 @@ func resourceSecurityGroupDelete(ctx context.Context, d *schema.ResourceData, me
 	}
 
 	return nil
+}
+
+func mapResourceDataToSecurityGroup(d *schema.ResourceData) *models.SecurityGroup {
+	return &models.SecurityGroup{
+		DisplayName: d.Get("display_name").(string),
+		Members:     expandSecurityGroupMembers(d.Get("members").(*schema.Set).List()),
+	}
 }

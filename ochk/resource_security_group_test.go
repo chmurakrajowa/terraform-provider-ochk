@@ -12,8 +12,8 @@ import (
 func TestAccSecurityGroupResource_create(t *testing.T) {
 	resourceName := "ochk_security_group.one_member"
 	displayName := generateRandName()
+	displayNameUpdated := displayName + "updated"
 
-	//TODO zbyt wiele razy jest wołany POST /vidm/token HTTP/1.1, coś jest nie tak
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
@@ -24,6 +24,12 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 					resource.TestCheckResourceAttrPair(resourceName, "members.0.id", "data.ochk_virtual_machine.default", "id"),
 					resource.TestCheckResourceAttr(resourceName, "members.0.type", "VIRTUAL_MACHINE"),
 					resource.TestCheckResourceAttrSet(resourceName, "members.0.display_name"),
+				),
+			},
+			{
+				Config: testAccSecurityGroupResourceConfig(displayNameUpdated),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr(resourceName, "display_name", displayNameUpdated),
 				),
 			},
 		},
