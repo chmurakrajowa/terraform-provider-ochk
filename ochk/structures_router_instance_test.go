@@ -46,7 +46,7 @@ func TestFlattenExpandRouterInstanceFromIDs(t *testing.T) {
 			onlyTestFlatten: true,
 		},
 
-		// multile routers
+		// multiple routers
 		{
 			expanded: []*models.RouterInstance{
 				{

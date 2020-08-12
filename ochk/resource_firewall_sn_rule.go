@@ -189,7 +189,7 @@ func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 	rule := mapResourceDataToGFWRule(d)
 	rule.RuleID = d.Id()
 
-	_, err := proxy.Modify(ctx, gatewayPolicyID, rule)
+	_, err := proxy.Update(ctx, gatewayPolicyID, rule)
 	if err != nil {
 		return diag.Errorf("error while modifying firewall SN rule: %+v", err)
 	}

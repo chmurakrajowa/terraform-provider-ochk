@@ -39,7 +39,7 @@ func (p *FirewallSNRulesProxy) Create(ctx context.Context, gatewayPolicyID strin
 	return put.Payload.GfwRule, nil
 }
 
-func (p *FirewallSNRulesProxy) Modify(ctx context.Context, gatewayPolicyID string, rule *models.GFWRule) (*models.GFWRule, error) {
+func (p *FirewallSNRulesProxy) Update(ctx context.Context, gatewayPolicyID string, rule *models.GFWRule) (*models.GFWRule, error) {
 	if err := rule.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating firewall SN rule struct: %w", err)
 	}
