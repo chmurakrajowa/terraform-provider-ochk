@@ -31,6 +31,7 @@ func resourceFirewallSNRule() *schema.Resource {
 			"gateway_policy_id": {
 				Type:     schema.TypeString,
 				Required: true,
+				ForceNew: true,
 			},
 			"display_name": {
 				Type:     schema.TypeString,
@@ -197,7 +198,6 @@ func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GFWRule {
-	//TODO verify if default values computed by backend are resend and not updated by empty values
 	rule := &models.GFWRule{
 		DisplayName: d.Get("display_name").(string),
 		Action:      d.Get("action").(string),
