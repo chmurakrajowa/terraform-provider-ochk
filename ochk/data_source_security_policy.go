@@ -7,8 +7,6 @@ import (
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
 )
 
-//TODO brak testu akceptacyjnego
-//TODO pytanie czy chcemy więcej pól odwzorować czy tyle wystarczy
 func dataSourceSecurityPolicy() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: datSourceSecurityPolicyRead,

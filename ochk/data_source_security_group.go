@@ -7,7 +7,6 @@ import (
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
 )
 
-//TODO brak testu akceptacyjnego
 func dataSourceSecurityGroup() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: datSourceSecurityGroupRead,
