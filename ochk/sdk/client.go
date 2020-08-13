@@ -21,6 +21,7 @@ type Client struct {
 	FirewallSNRules FirewallSNRulesProxy
 	Services        ServicesProxy
 	Routers         RoutersProxy
+	VirtualMachines VirtualMachinesProxy
 }
 
 func NewClient(ctx context.Context, host string, tenant string, username string, password string, insecure bool, debugLogFile string) (*Client, error) {
@@ -103,6 +104,10 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		Routers: RoutersProxy{
 			httpClient: httpClient,
 			service:    authClient.Routers,
+		},
+		VirtualMachines: VirtualMachinesProxy{
+			httpClient: httpClient,
+			service:    authClient.VirtualMachines,
 		},
 	}, nil
 }

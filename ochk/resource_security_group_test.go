@@ -21,7 +21,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 				Config: testAccSecurityGroupResourceConfig(displayName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", displayName),
-					resource.TestCheckResourceAttr(resourceName, "members.0.id", "e1e2f617-014c-4119-bac8-49fa4a93db47"),
+					resource.TestCheckResourceAttrPair(resourceName, "members.0.id", "data.ochk_virtual_machine.default", "id"),
 					resource.TestCheckResourceAttr(resourceName, "members.0.type", "VIRTUAL_MACHINE"),
 					resource.TestCheckResourceAttrSet(resourceName, "members.0.display_name"),
 				),
@@ -49,15 +49,18 @@ func testAccSecurityGroupResourceNotExists(displayName string) resource.TestChec
 }
 
 func testAccSecurityGroupResourceConfig(name string) string {
-	// TODO config should refer to vm from datasource
 	return fmt.Sprintf(`
+data "ochk_virtual_machine" "default" {
+  display_name = %[2]q
+}
+
 resource "ochk_security_group" "one_member" {
   display_name = %[1]q
 
   members {
-    id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
+    id = data.ochk_virtual_machine.default.id
     type = "VIRTUAL_MACHINE"
   }
 }
-`, name)
+`, name, testDataVirtualMachine1DisplayName)
 }
