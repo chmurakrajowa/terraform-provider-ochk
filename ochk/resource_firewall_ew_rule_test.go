@@ -170,11 +170,15 @@ data "ochk_service" "http" {
   display_name = "http"
 }
 
+data "ochk_virtual_machine" "default" {
+	display_name = %[7]q
+}
+
 resource "ochk_security_group" "source" {
   display_name = %[1]q
 
   members {
-    id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
+    id = data.ochk_virtual_machine.default.id
     type = "VIRTUAL_MACHINE"
   }
 }
@@ -183,7 +187,7 @@ resource "ochk_security_group" "destination" {
   display_name = %[2]q
   
   members {
-    id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
+    id = data.ochk_virtual_machine.default.id
     type = "VIRTUAL_MACHINE"
   }
 }
@@ -200,7 +204,7 @@ resource "ochk_firewall_ew_rule" "no_position" {
   ip_protocol = %[5]q
   direction = %[6]q
 }
-`, source, destination, displayName, action, ipProtocol, direction)
+`, source, destination, displayName, action, ipProtocol, direction, testDataVirtualMachine1DisplayName)
 }
 
 func testAccFirewallEWRuleResourceConfigWithOrder(displayNameBefore string, displayNameMiddle string, displayNameAfter string) string {
@@ -216,11 +220,15 @@ data "ochk_service" "http" {
   display_name = "http"
 }
 
+data "ochk_virtual_machine" "default" {
+	display_name = %[6]q
+}
+
 resource "ochk_security_group" "source-before" {
   display_name = "%[1]s-before"
 
   members {
-    id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
+    id = data.ochk_virtual_machine.default.id
     type = "VIRTUAL_MACHINE"
   }
 }
@@ -229,7 +237,7 @@ resource "ochk_security_group" "source-middle" {
   display_name = "%[1]s-middle"
 
   members {
-    id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
+    id = data.ochk_virtual_machine.default.id
     type = "VIRTUAL_MACHINE"
   }
 }
@@ -237,7 +245,7 @@ resource "ochk_security_group" "source-after" {
   display_name = "%[1]s-after"
 
   members {
-    id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
+    id = data.ochk_virtual_machine.default.id
     type = "VIRTUAL_MACHINE"
   }
 }
@@ -246,7 +254,7 @@ resource "ochk_security_group" "destination-before" {
   display_name = "%[2]s-before"
   
   members {
-    id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
+    id = data.ochk_virtual_machine.default.id
     type = "VIRTUAL_MACHINE"
   }
 }
@@ -255,7 +263,7 @@ resource "ochk_security_group" "destination-middle" {
   display_name = "%[2]s-middle"
   
   members {
-    id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
+    id = data.ochk_virtual_machine.default.id
     type = "VIRTUAL_MACHINE"
   }
 }
@@ -264,7 +272,7 @@ resource "ochk_security_group" "destination-after" {
   display_name = "%[2]s-after"
   
   members {
-    id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
+    id = data.ochk_virtual_machine.default.id
     type = "VIRTUAL_MACHINE"
   }
 }
@@ -313,7 +321,7 @@ resource "ochk_firewall_ew_rule" "after" {
 	ignore_changes = [position]
   }
 }
-`, source, destination, displayNameMiddle, displayNameBefore, displayNameAfter)
+`, source, destination, displayNameMiddle, displayNameBefore, displayNameAfter, testDataVirtualMachine1DisplayName)
 }
 
 func testAccFirewallEWRuleResourceDoesntExist(displayName string) resource.TestCheckFunc {

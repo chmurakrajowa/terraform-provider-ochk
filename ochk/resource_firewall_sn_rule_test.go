@@ -86,11 +86,15 @@ data "ochk_service" "http" {
   display_name = "http"
 }
 
+data "ochk_virtual_machine" "default" {
+	display_name = %[4]q
+}
+
 resource "ochk_security_group" "source" {
   display_name = %[2]q
 
   members {
-    id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
+    id = data.ochk_virtual_machine.default.id
     type = "VIRTUAL_MACHINE"
   }
 }
@@ -99,11 +103,11 @@ resource "ochk_security_group" "destination" {
   display_name = %[3]q
   
   members {
-    id = "e1e2f617-014c-4119-bac8-49fa4a93db47"
+    id = data.ochk_virtual_machine.default.id
     type = "VIRTUAL_MACHINE"
   }
 }
-`, router, source, destination)
+`, router, source, destination, testDataVirtualMachine1DisplayName)
 }
 
 func testAccFirewallSNRuleResourceConfigNoPosition(displayName string) string {
