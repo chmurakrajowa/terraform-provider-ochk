@@ -3,10 +3,7 @@ package ochk
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"testing"
-	"text/template"
 )
-
-var virtualMachineDataSourceConfigTemplate *template.Template
 
 type VirtualMachineDataSourceTestData struct {
 	ResourceName string
@@ -14,23 +11,19 @@ type VirtualMachineDataSourceTestData struct {
 }
 
 func (c *VirtualMachineDataSourceTestData) ToString() string {
-	return executeTemplateToString(virtualMachineDataSourceConfigTemplate, c)
+	return executeTemplateToString(`
+data "ochk_virtual_machine" "{{ .ResourceName}}" {
+  display_name = "{{ .DisplayName}}"
+}
+`, c)
 }
 
 func (c *VirtualMachineDataSourceTestData) FullResourceName() string {
 	return "data.ochk_virtual_machine." + c.ResourceName
 }
 
-func init() {
-	virtualMachineDataSourceConfigTemplate = createNewTemplate("VirtualMachineDataSourceTemplate", `
-data "ochk_virtual_machine" "{{ .ResourceName}}" {
-  display_name = "{{ .DisplayName}}"
-}
-`)
-}
-
 func TestAccVirtualMachineDataSource_read(t *testing.T) {
-	virtualMachine := VirtualMachineDataSourceTestData{
+	virtualMachine := &VirtualMachineDataSourceTestData{
 		ResourceName: "default",
 		DisplayName:  testDataVirtualMachine1DisplayName,
 	}

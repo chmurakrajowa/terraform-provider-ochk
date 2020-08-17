@@ -10,23 +10,14 @@ const (
 	testDataIPSet1DisplayName          = "googledns"
 )
 
-type ConfigProvider interface {
-	ToString() string
-	FullResourceName() string
-}
-
-func createNewTemplate(name string, templateString string) *template.Template {
-	parsedTemplate, err := template.New(name).Parse(templateString)
+func executeTemplateToString(templateString string, data interface{}) string {
+	parsedTemplate, err := template.New("template_name").Parse(templateString)
 	if err != nil {
 		panic(err)
 	}
 
-	return parsedTemplate
-}
-
-func executeTemplateToString(template *template.Template, data interface{}) string {
 	var tpl bytes.Buffer
-	if err := template.Execute(&tpl, data); err != nil {
+	if err := parsedTemplate.Execute(&tpl, data); err != nil {
 		panic(err)
 	}
 

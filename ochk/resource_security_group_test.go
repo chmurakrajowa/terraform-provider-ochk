@@ -7,10 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
 	"testing"
-	"text/template"
 )
-
-var securityGroupConfigTemplate *template.Template
 
 type SecurityGroupTestData struct {
 	ResourceName string
@@ -24,15 +21,7 @@ type SecurityGroupMemberTestData struct {
 }
 
 func (c *SecurityGroupTestData) ToString() string {
-	return executeTemplateToString(securityGroupConfigTemplate, c)
-}
-
-func (c *SecurityGroupTestData) FullResourceName() string {
-	return "ochk_security_group." + c.ResourceName
-}
-
-func init() {
-	securityGroupConfigTemplate = createNewTemplate("SecurityGroupConfigTemplate", `
+	return executeTemplateToString(`
 resource "ochk_security_group" "{{ .ResourceName}}" {
   display_name = "{{ .DisplayName}}"
 
@@ -43,12 +32,21 @@ resource "ochk_security_group" "{{ .ResourceName}}" {
   }
   {{end}}
 }
-`)
+`, c)
+}
+
+func (c *SecurityGroupTestData) FullResourceName() string {
+	return "ochk_security_group." + c.ResourceName
 }
 
 func TestAccSecurityGroupResource_create(t *testing.T) {
 	virtualMachine := VirtualMachineDataSourceTestData{
 		ResourceName: "default",
+		DisplayName:  testDataVirtualMachine1DisplayName,
+	}
+
+	virtualMachine2 := VirtualMachineDataSourceTestData{
+		ResourceName: "default2",
 		DisplayName:  testDataVirtualMachine1DisplayName,
 	}
 
@@ -63,25 +61,41 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 		},
 	}
 
+	configOneMember := virtualMachine.ToString() + securityGroup.ToString()
+
+	securityGroupUpdated := securityGroup
+	securityGroupUpdated.DisplayName += "-updated"
+	configUpdated := virtualMachine.ToString() + securityGroupUpdated.ToString()
+
+	securityGroupTwoMembers := securityGroupUpdated
+	securityGroupTwoMembers.Members = append(securityGroup.Members, SecurityGroupMemberTestData{
+		ID:   virtualMachine2.FullResourceName() + ".id",
+		Type: "VIRTUAL_MACHINE",
+	})
+	configTwoMembers := virtualMachine.ToString() + virtualMachine2.ToString() + securityGroupUpdated.ToString()
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: securityGroup.ToString() + virtualMachine.ToString(),
+				Config: configOneMember,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(securityGroup.FullResourceName(), "display_name", securityGroup.DisplayName),
 					resource.TestCheckResourceAttrPair(securityGroup.FullResourceName(), "members.0.id", virtualMachine.FullResourceName(), "id"),
-					resource.TestCheckResourceAttr(securityGroup.FullResourceName(), "members.0.type",  securityGroup.Members[0].Type),
+					resource.TestCheckResourceAttr(securityGroup.FullResourceName(), "members.0.type", securityGroup.Members[0].Type),
 					resource.TestCheckResourceAttrSet(securityGroup.FullResourceName(), "members.0.display_name"),
 				),
 			},
 			{
-				PreConfig: func() {
-					securityGroup.DisplayName += "updated"
-				},
-				Config: securityGroup.ToString() + virtualMachine.ToString(),
+				Config: configUpdated,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(securityGroup.FullResourceName(), "display_name", securityGroup.DisplayName),
+					resource.TestCheckResourceAttr(securityGroup.FullResourceName(), "display_name", securityGroupUpdated.DisplayName),
+				),
+			},
+			{
+				Config: configTwoMembers,
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr(securityGroup.FullResourceName(), "display_name", securityGroupTwoMembers.DisplayName),
 				),
 			},
 		},
