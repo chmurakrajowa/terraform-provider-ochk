@@ -7,33 +7,85 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
 	"testing"
+	"text/template"
 )
 
+var securityGroupConfigTemplate *template.Template
+
+type SecurityGroupTestData struct {
+	ResourceName string
+	DisplayName  string
+	Members      []SecurityGroupMemberTestData
+}
+
+type SecurityGroupMemberTestData struct {
+	ID   string
+	Type string
+}
+
+func (c *SecurityGroupTestData) ToString() string {
+	return executeTemplateToString(securityGroupConfigTemplate, c)
+}
+
+func (c *SecurityGroupTestData) FullResourceName() string {
+	return "ochk_security_group." + c.ResourceName
+}
+
+func init() {
+	securityGroupConfigTemplate = createNewTemplate("SecurityGroupConfigTemplate", `
+resource "ochk_security_group" "{{ .ResourceName}}" {
+  display_name = "{{ .DisplayName}}"
+
+  {{range $member := .Members}}
+  members {
+    id   = {{ $member.ID }}
+    type = "{{ $member.Type }}"
+  }
+  {{end}}
+}
+`)
+}
+
 func TestAccSecurityGroupResource_create(t *testing.T) {
-	resourceName := "ochk_security_group.one_member"
-	displayName := generateRandName()
-	displayNameUpdated := displayName + "updated"
+	virtualMachine := VirtualMachineDataSourceTestData{
+		ResourceName: "default",
+		DisplayName:  testDataVirtualMachine1DisplayName,
+	}
+
+	securityGroup := SecurityGroupTestData{
+		ResourceName: "one_member",
+		DisplayName:  generateRandName(),
+		Members: []SecurityGroupMemberTestData{
+			{
+				ID:   virtualMachine.FullResourceName() + ".id",
+				Type: "VIRTUAL_MACHINE",
+			},
+		},
+	}
 
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSecurityGroupResourceConfig(displayName),
+				Config: securityGroup.ToString() + virtualMachine.ToString(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "display_name", displayName),
-					resource.TestCheckResourceAttrPair(resourceName, "members.0.id", "data.ochk_virtual_machine.default", "id"),
-					resource.TestCheckResourceAttr(resourceName, "members.0.type", "VIRTUAL_MACHINE"),
-					resource.TestCheckResourceAttrSet(resourceName, "members.0.display_name"),
+					resource.TestCheckResourceAttr(securityGroup.FullResourceName(), "display_name", securityGroup.DisplayName),
+					resource.TestCheckResourceAttrPair(securityGroup.FullResourceName(), "members.0.id", virtualMachine.FullResourceName(), "id"),
+					resource.TestCheckResourceAttr(securityGroup.FullResourceName(), "members.0.type",  securityGroup.Members[0].Type),
+					resource.TestCheckResourceAttrSet(securityGroup.FullResourceName(), "members.0.display_name"),
 				),
 			},
 			{
-				Config: testAccSecurityGroupResourceConfig(displayNameUpdated),
+				PreConfig: func() {
+					securityGroup.DisplayName += "updated"
+				},
+				Config: securityGroup.ToString() + virtualMachine.ToString(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "display_name", displayNameUpdated),
+					resource.TestCheckResourceAttr(securityGroup.FullResourceName(), "display_name", securityGroup.DisplayName),
 				),
 			},
 		},
-		CheckDestroy: testAccSecurityGroupResourceNotExists(displayName),
+		CheckDestroy: testAccSecurityGroupResourceNotExists(securityGroup.DisplayName),
 	})
 }
 
@@ -52,21 +104,4 @@ func testAccSecurityGroupResourceNotExists(displayName string) resource.TestChec
 
 		return nil
 	}
-}
-
-func testAccSecurityGroupResourceConfig(name string) string {
-	return fmt.Sprintf(`
-data "ochk_virtual_machine" "default" {
-  display_name = %[2]q
-}
-
-resource "ochk_security_group" "one_member" {
-  display_name = %[1]q
-
-  members {
-    id = data.ochk_virtual_machine.default.id
-    type = "VIRTUAL_MACHINE"
-  }
-}
-`, name, testDataVirtualMachine1DisplayName)
 }
