@@ -22,6 +22,7 @@ type Client struct {
 	Services        ServicesProxy
 	Routers         RoutersProxy
 	VirtualMachines VirtualMachinesProxy
+	IPSets          IPSetsProxy
 }
 
 func NewClient(ctx context.Context, host string, tenant string, username string, password string, insecure bool, debugLogFile string) (*Client, error) {
@@ -108,6 +109,10 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		VirtualMachines: VirtualMachinesProxy{
 			httpClient: httpClient,
 			service:    authClient.VirtualMachines,
+		},
+		IPSets: IPSetsProxy{
+			httpClient: httpClient,
+			service:    authClient.IPSets,
 		},
 	}, nil
 }

@@ -35,10 +35,6 @@ func expandSecurityGroupFromIDs(in []interface{}) []*models.SecurityGroup {
 }
 
 func flattenSecurityGroupMembers(in []*models.SecurityGroupMember) *schema.Set {
-	if len(in) == 0 {
-		return nil
-	}
-
 	out := &schema.Set{
 		F: securityGroupMembersHash,
 	}

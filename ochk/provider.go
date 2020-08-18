@@ -57,6 +57,7 @@ func Provider() *schema.Provider {
 			"ochk_service":         dataSourceService(),
 			"ochk_router":          dataSourceRouter(),
 			"ochk_virtual_machine": dataSourceVirtualMachine(),
+			"ochk_ip_set":          dataSourceIPSet(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"ochk_security_group":   resourceSecurityGroup(),

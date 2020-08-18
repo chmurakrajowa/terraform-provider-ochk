@@ -25,20 +25,20 @@ func datSourceSecurityPolicyRead(ctx context.Context, d *schema.ResourceData, me
 
 	displayName := d.Get("display_name").(string)
 
-	services, err := proxy.ListByDisplayName(ctx, displayName)
+	securityPolicies, err := proxy.ListByDisplayName(ctx, displayName)
 	if err != nil {
 		return diag.Errorf("error while listing security policies: %+v", err)
 	}
 
-	if len(services) < 1 {
+	if len(securityPolicies) < 1 {
 		return diag.Errorf("no security policy found for display_name: %s", displayName)
 	}
 
-	if len(services) > 1 {
+	if len(securityPolicies) > 1 {
 		return diag.Errorf("more than one security policy with display_name: %s found!", displayName)
 	}
 
-	d.SetId(services[0].SecurityPolicyID)
+	d.SetId(securityPolicies[0].SecurityPolicyID)
 
 	return nil
 }

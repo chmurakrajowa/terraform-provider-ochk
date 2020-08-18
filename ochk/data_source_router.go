@@ -25,20 +25,20 @@ func dataSourceRouterRead(ctx context.Context, d *schema.ResourceData, meta inte
 
 	displayName := d.Get("display_name").(string)
 
-	services, err := proxy.ListByDisplayName(ctx, displayName)
+	routers, err := proxy.ListByDisplayName(ctx, displayName)
 	if err != nil {
 		return diag.Errorf("error while listing routers: %+v", err)
 	}
 
-	if len(services) < 1 {
+	if len(routers) < 1 {
 		return diag.Errorf("no router found for display_name: %s", displayName)
 	}
 
-	if len(services) > 1 {
+	if len(routers) > 1 {
 		return diag.Errorf("more than one router with display_name: %s found!", displayName)
 	}
 
-	d.SetId(services[0].RouterID)
+	d.SetId(routers[0].RouterID)
 
 	return nil
 }

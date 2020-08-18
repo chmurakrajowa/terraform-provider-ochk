@@ -12,6 +12,13 @@ func TestFlattenExpandSecurityGroupMembers(t *testing.T) {
 		expanded  []*models.SecurityGroupMember
 		flattened []map[string]interface{}
 	}{
+
+		// nil values
+		{
+			expanded:  nil,
+			flattened: nil,
+		},
+
 		// include display_name
 		{
 			expanded: []*models.SecurityGroupMember{
