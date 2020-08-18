@@ -25,20 +25,20 @@ func dataSourceGatewayPolicyRead(ctx context.Context, d *schema.ResourceData, me
 
 	displayName := d.Get("display_name").(string)
 
-	services, err := proxy.ListByDisplayName(ctx, displayName)
+	gatewayPolicies, err := proxy.ListByDisplayName(ctx, displayName)
 	if err != nil {
 		return diag.Errorf("error while listing gateway policies: %+v", err)
 	}
 
-	if len(services) < 1 {
+	if len(gatewayPolicies) < 1 {
 		return diag.Errorf("no gateway policy found for display_name: %s", displayName)
 	}
 
-	if len(services) > 1 {
+	if len(gatewayPolicies) > 1 {
 		return diag.Errorf("more than one gateway policy with display_name: %s found!", displayName)
 	}
 
-	d.SetId(services[0].GatewayPolicyID)
+	d.SetId(gatewayPolicies[0].GatewayPolicyID)
 
 	return nil
 }
