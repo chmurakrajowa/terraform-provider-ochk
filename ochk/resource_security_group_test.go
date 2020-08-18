@@ -40,13 +40,9 @@ func (c *SecurityGroupTestData) FullResourceName() string {
 }
 
 func TestAccSecurityGroupResource_create(t *testing.T) {
+	/* Security group with one member */
 	virtualMachine := VirtualMachineDataSourceTestData{
 		ResourceName: "default",
-		DisplayName:  testDataVirtualMachine1DisplayName,
-	}
-
-	virtualMachine2 := VirtualMachineDataSourceTestData{
-		ResourceName: "default2",
 		DisplayName:  testDataVirtualMachine1DisplayName,
 	}
 
@@ -60,46 +56,58 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 			},
 		},
 	}
-
 	configOneMember := virtualMachine.ToString() + securityGroup.ToString()
 
+	/* Security group with one member with updated display_name */
 	securityGroupUpdated := securityGroup
 	securityGroupUpdated.DisplayName += "-updated"
-	configUpdated := virtualMachine.ToString() + securityGroupUpdated.ToString()
+	configOneMemberUpdated := virtualMachine.ToString() + securityGroupUpdated.ToString()
 
+	/* Security group with two members and updated display_name */
 	securityGroupTwoMembers := securityGroupUpdated
-	securityGroupTwoMembers.Members = append(securityGroup.Members, SecurityGroupMemberTestData{
+	virtualMachine2 := VirtualMachineDataSourceTestData{
+		ResourceName: "default2",
+		DisplayName:  testDataVirtualMachine1DisplayName,
+	}
+	securityGroupTwoMembers.Members = append(securityGroupTwoMembers.Members, SecurityGroupMemberTestData{
 		ID:   virtualMachine2.FullResourceName() + ".id",
 		Type: "VIRTUAL_MACHINE",
 	})
-	configTwoMembers := virtualMachine.ToString() + virtualMachine2.ToString() + securityGroupUpdated.ToString()
+	configTwoMembers := securityGroupTwoMembers.ToString() + virtualMachine.ToString() + virtualMachine2.ToString()
 
+	securityGroupResourceName := securityGroup.FullResourceName()
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: configOneMember,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(securityGroup.FullResourceName(), "display_name", securityGroup.DisplayName),
-					resource.TestCheckResourceAttrPair(securityGroup.FullResourceName(), "members.0.id", virtualMachine.FullResourceName(), "id"),
-					resource.TestCheckResourceAttr(securityGroup.FullResourceName(), "members.0.type", securityGroup.Members[0].Type),
-					resource.TestCheckResourceAttrSet(securityGroup.FullResourceName(), "members.0.display_name"),
+					resource.TestCheckResourceAttr(securityGroupResourceName, "display_name", securityGroup.DisplayName),
+					resource.TestCheckResourceAttrPair(securityGroupResourceName, "members.0.id", virtualMachine.FullResourceName(), "id"),
+					resource.TestCheckResourceAttr(securityGroupResourceName, "members.0.type", securityGroup.Members[0].Type),
+					resource.TestCheckResourceAttrSet(securityGroupResourceName, "members.0.display_name"),
 				),
 			},
 			{
-				Config: configUpdated,
+				Config: configOneMemberUpdated,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(securityGroup.FullResourceName(), "display_name", securityGroupUpdated.DisplayName),
+					resource.TestCheckResourceAttr(securityGroupResourceName, "display_name", securityGroupUpdated.DisplayName),
 				),
 			},
 			{
 				Config: configTwoMembers,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(securityGroup.FullResourceName(), "display_name", securityGroupTwoMembers.DisplayName),
+					resource.TestCheckResourceAttr(securityGroupResourceName, "display_name", securityGroupTwoMembers.DisplayName),
+					resource.TestCheckResourceAttrPair(securityGroupResourceName, "members.0.id", virtualMachine.FullResourceName(), "id"),
+					resource.TestCheckResourceAttr(securityGroupResourceName, "members.0.type", securityGroupTwoMembers.Members[0].Type),
+					resource.TestCheckResourceAttrSet(securityGroupResourceName, "members.0.display_name"),
+					resource.TestCheckResourceAttrPair(securityGroupResourceName, "members.1.id", virtualMachine2.FullResourceName(), "id"),
+					resource.TestCheckResourceAttr(securityGroupResourceName, "members.1.type", securityGroupTwoMembers.Members[1].Type),
+					resource.TestCheckResourceAttrSet(securityGroupResourceName, "members.1.display_name"),
 				),
 			},
 		},
-		CheckDestroy: testAccSecurityGroupResourceNotExists(securityGroup.DisplayName),
+		CheckDestroy: testAccSecurityGroupResourceNotExists(securityGroupTwoMembers.DisplayName),
 	})
 }
 
