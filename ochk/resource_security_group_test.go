@@ -76,7 +76,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 	configTwoMembers := securityGroupTwoMembers.ToString() + virtualMachine.ToString() + virtualMachine2.ToString()
 
 	securityGroupResourceName := securityGroup.FullResourceName()
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{

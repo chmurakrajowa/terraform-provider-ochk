@@ -28,7 +28,7 @@ func TestAccFirewallSNRuleResource_noPosition(t *testing.T) {
 	directionUpdated := "OUT"
 	ipProtocolUpdated := "IPV4"
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{

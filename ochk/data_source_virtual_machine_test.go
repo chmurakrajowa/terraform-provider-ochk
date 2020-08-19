@@ -28,7 +28,7 @@ func TestAccVirtualMachineDataSource_read(t *testing.T) {
 		DisplayName:  testDataVirtualMachine1DisplayName,
 	}
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{

@@ -9,7 +9,7 @@ import (
 func TestAccIPSetDataSource_read(t *testing.T) {
 	resourceName := "data.ochk_ip_set.example"
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{

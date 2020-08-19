@@ -9,7 +9,7 @@ import (
 func TestAccServiceDataSource_read(t *testing.T) {
 	resourceName := "data.ochk_service.http"
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{

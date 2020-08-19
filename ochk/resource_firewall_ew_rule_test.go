@@ -25,7 +25,7 @@ func TestAccFirewallEWRuleResource_noPosition(t *testing.T) {
 	source := generateRandName()
 	destination := generateRandName()
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
@@ -59,7 +59,7 @@ func TestAccFirewallEWRuleResource_withPositions(t *testing.T) {
 	displayNameBefore := randDisplayName + "-before"
 	displayNameAfter := randDisplayName + "-after"
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{

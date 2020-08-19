@@ -10,7 +10,7 @@ func TestAccGatewayPolicyDataSource_read(t *testing.T) {
 	resourceName := "data.ochk_gateway_policy.default"
 	displayName := "T1"
 
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
