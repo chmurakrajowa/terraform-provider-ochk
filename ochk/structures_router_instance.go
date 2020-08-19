@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
 func flattenRouterInstancesFromIDs(m []*models.RouterInstance) *schema.Set {

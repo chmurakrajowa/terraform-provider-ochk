@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-openapi/strfmt"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_e_w"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_e_w"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"net/http"
 )
 

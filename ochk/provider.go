@@ -5,7 +5,7 @@ import (
 	"github.com/hashicorp/go-cty/cty"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 )
 
 func Provider() *schema.Provider {

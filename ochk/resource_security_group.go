@@ -2,8 +2,8 @@ package ochk
 
 import (
 	"context"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"

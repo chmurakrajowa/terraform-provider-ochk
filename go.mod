@@ -1,4 +1,4 @@
-module github.com/ochk/terraform-provider-ochk
+module github.com/chmurakrajowa/terraform-provider-ochk
 
 go 1.13
 

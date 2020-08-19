@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/routers"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/routers"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"net/http"
 )
 

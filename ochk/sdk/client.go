@@ -6,9 +6,9 @@ import (
 	"fmt"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client"
-	vidmcontroller "github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/client/v_id_m"
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client"
+	vidmcontroller "github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/v_id_m"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"net/http"
 )
 
