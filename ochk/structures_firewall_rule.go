@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/ochk/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
 func flattenFirewallRulePosition(in *models.Position) []map[string]interface{} {

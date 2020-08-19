@@ -45,6 +45,5 @@ data "ochk_security_group" "one_member" {
   display_name = ochk_security_group.one_member.display_name
   depends_on = [ochk_security_group.one_member]
 }
-
 `, displayName, testDataVirtualMachine1DisplayName)
 }
