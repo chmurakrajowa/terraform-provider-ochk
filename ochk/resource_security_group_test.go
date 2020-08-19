@@ -43,7 +43,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 	/* Security group with one member */
 	virtualMachine := VirtualMachineDataSourceTestData{
 		ResourceName: "default",
-		DisplayName:  testDataVirtualMachine1DisplayName,
+		DisplayName:  "devel0000000344",
 	}
 
 	securityGroup := SecurityGroupTestData{
@@ -98,6 +98,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 				Config: configTwoMembers,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(securityGroupResourceName, "display_name", securityGroupTwoMembers.DisplayName),
+					//TODO this relies on certain ordering in backend, should be fixed to any ordering
 					resource.TestCheckResourceAttrPair(securityGroupResourceName, "members.0.id", virtualMachine.FullResourceName(), "id"),
 					resource.TestCheckResourceAttr(securityGroupResourceName, "members.0.type", securityGroupTwoMembers.Members[0].Type),
 					resource.TestCheckResourceAttrSet(securityGroupResourceName, "members.0.display_name"),
