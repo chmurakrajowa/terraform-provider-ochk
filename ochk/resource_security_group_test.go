@@ -3,9 +3,9 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"testing"
 )
 

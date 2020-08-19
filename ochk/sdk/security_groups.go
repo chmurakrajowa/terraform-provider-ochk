@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/go-openapi/strfmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/security_groups"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"net/http"
 )
 
