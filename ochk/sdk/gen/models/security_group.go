@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// SecurityGroup security group
+// SecurityGroup SecurityGroup
 //
 // swagger:model SecurityGroup
 type SecurityGroup struct {
@@ -24,7 +24,7 @@ type SecurityGroup struct {
 
 	// creation date
 	// Format: date-time
-	CreationDate strfmt.DateTime `json:"creationDate,omitempty"`
+	CreationDate *strfmt.DateTime `json:"creationDate,omitempty"`
 
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
@@ -37,7 +37,7 @@ type SecurityGroup struct {
 
 	// modification date
 	// Format: date-time
-	ModificationDate strfmt.DateTime `json:"modificationDate,omitempty"`
+	ModificationDate *strfmt.DateTime `json:"modificationDate,omitempty"`
 
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`

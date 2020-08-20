@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// IPSetAddress IP set address
+// IPSetAddress IPSetAddress
 //
 // swagger:model IPSetAddress
 type IPSetAddress struct {

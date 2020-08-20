@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// UpdateSecurityGroupResponse update security group response
+// UpdateSecurityGroupResponse UpdateSecurityGroupResponse
 //
 // swagger:model UpdateSecurityGroupResponse
 type UpdateSecurityGroupResponse struct {
@@ -31,7 +31,7 @@ type UpdateSecurityGroupResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
 // Validate validates this update security group response

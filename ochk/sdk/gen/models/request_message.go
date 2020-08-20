@@ -12,14 +12,14 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// RequestMessage request message
+// RequestMessage RequestMessage
 //
 // swagger:model RequestMessage
 type RequestMessage struct {
 
 	// message date
 	// Format: date-time
-	MessageDate strfmt.DateTime `json:"messageDate,omitempty"`
+	MessageDate *strfmt.DateTime `json:"messageDate,omitempty"`
 
 	// message value
 	MessageValue string `json:"messageValue,omitempty"`

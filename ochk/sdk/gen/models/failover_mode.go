@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// FailoverMode failover mode
+// FailoverMode FailoverMode
 //
 // swagger:model FailoverMode
 type FailoverMode struct {

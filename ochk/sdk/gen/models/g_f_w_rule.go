@@ -15,13 +15,13 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// GFWRule g f w rule
+// GFWRule GFWRule
 //
 // swagger:model GFWRule
 type GFWRule struct {
 
 	// action
-	// Enum: [ALLOW REJECT DROP]
+	// Enum: [ALLOW DROP REJECT]
 	Action string `json:"action,omitempty"`
 
 	// created by
@@ -29,7 +29,7 @@ type GFWRule struct {
 
 	// creation date
 	// Format: date-time
-	CreationDate strfmt.DateTime `json:"creationDate,omitempty"`
+	CreationDate *strfmt.DateTime `json:"creationDate,omitempty"`
 
 	// default services
 	DefaultServices []*ServiceInstance `json:"defaultServices"`
@@ -38,7 +38,7 @@ type GFWRule struct {
 	Destination []*SecurityGroup `json:"destination"`
 
 	// direction
-	// Enum: [IN_OUT IN OUT]
+	// Enum: [IN IN_OUT OUT]
 	Direction string `json:"direction,omitempty"`
 
 	// disabled
@@ -48,12 +48,12 @@ type GFWRule struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// ip protocol
-	// Enum: [IPV4_IPV6 IPV4 IPV6]
+	// Enum: [IPV4 IPV4_IPV6 IPV6]
 	IPProtocol string `json:"ipProtocol,omitempty"`
 
 	// modification date
 	// Format: date-time
-	ModificationDate strfmt.DateTime `json:"modificationDate,omitempty"`
+	ModificationDate *strfmt.DateTime `json:"modificationDate,omitempty"`
 
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`
@@ -125,7 +125,7 @@ var gFWRuleTypeActionPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["ALLOW","REJECT","DROP"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["ALLOW","DROP","REJECT"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -138,11 +138,11 @@ const (
 	// GFWRuleActionALLOW captures enum value "ALLOW"
 	GFWRuleActionALLOW string = "ALLOW"
 
-	// GFWRuleActionREJECT captures enum value "REJECT"
-	GFWRuleActionREJECT string = "REJECT"
-
 	// GFWRuleActionDROP captures enum value "DROP"
 	GFWRuleActionDROP string = "DROP"
+
+	// GFWRuleActionREJECT captures enum value "REJECT"
+	GFWRuleActionREJECT string = "REJECT"
 )
 
 // prop value enum
@@ -234,7 +234,7 @@ var gFWRuleTypeDirectionPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["IN_OUT","IN","OUT"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["IN","IN_OUT","OUT"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -244,11 +244,11 @@ func init() {
 
 const (
 
-	// GFWRuleDirectionINOUT captures enum value "IN_OUT"
-	GFWRuleDirectionINOUT string = "IN_OUT"
-
 	// GFWRuleDirectionIN captures enum value "IN"
 	GFWRuleDirectionIN string = "IN"
+
+	// GFWRuleDirectionINOUT captures enum value "IN_OUT"
+	GFWRuleDirectionINOUT string = "IN_OUT"
 
 	// GFWRuleDirectionOUT captures enum value "OUT"
 	GFWRuleDirectionOUT string = "OUT"
@@ -280,7 +280,7 @@ var gFWRuleTypeIPProtocolPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["IPV4_IPV6","IPV4","IPV6"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["IPV4","IPV4_IPV6","IPV6"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -290,11 +290,11 @@ func init() {
 
 const (
 
-	// GFWRuleIPProtocolIPV4IPV6 captures enum value "IPV4_IPV6"
-	GFWRuleIPProtocolIPV4IPV6 string = "IPV4_IPV6"
-
 	// GFWRuleIPProtocolIPV4 captures enum value "IPV4"
 	GFWRuleIPProtocolIPV4 string = "IPV4"
+
+	// GFWRuleIPProtocolIPV4IPV6 captures enum value "IPV4_IPV6"
+	GFWRuleIPProtocolIPV4IPV6 string = "IPV4_IPV6"
 
 	// GFWRuleIPProtocolIPV6 captures enum value "IPV6"
 	GFWRuleIPProtocolIPV6 string = "IPV6"

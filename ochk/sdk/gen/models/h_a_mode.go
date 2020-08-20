@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// HAMode h a mode
+// HAMode HAMode
 //
 // swagger:model HAMode
 type HAMode struct {

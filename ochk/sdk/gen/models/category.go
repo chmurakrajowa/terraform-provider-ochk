@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// Category category
+// Category Category
 //
 // swagger:model Category
 type Category struct {

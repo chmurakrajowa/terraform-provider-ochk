@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// ContextProfileListResponse context profile list response
+// ContextProfileListResponse ContextProfileListResponse
 //
 // swagger:model ContextProfileListResponse
 type ContextProfileListResponse struct {
@@ -30,7 +30,7 @@ type ContextProfileListResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
 // Validate validates this context profile list response

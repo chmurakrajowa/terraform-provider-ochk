@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// GFWRuleGetResponse g f w rule get response
+// GFWRuleGetResponse GFWRuleGetResponse
 //
 // swagger:model GFWRuleGetResponse
 type GFWRuleGetResponse struct {
@@ -28,7 +28,7 @@ type GFWRuleGetResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
 // Validate validates this g f w rule get response

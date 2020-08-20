@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// DeleteGFWRuleResponse delete g f w rule response
+// DeleteGFWRuleResponse DeleteGFWRuleResponse
 //
 // swagger:model DeleteGFWRuleResponse
 type DeleteGFWRuleResponse struct {
@@ -28,7 +28,7 @@ type DeleteGFWRuleResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
 // Validate validates this delete g f w rule response

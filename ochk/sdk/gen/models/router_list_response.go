@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// RouterListResponse router list response
+// RouterListResponse RouterListResponse
 //
 // swagger:model RouterListResponse
 type RouterListResponse struct {
@@ -30,7 +30,7 @@ type RouterListResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
 // Validate validates this router list response

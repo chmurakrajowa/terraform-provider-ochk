@@ -15,14 +15,14 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// RequestInstance request instance
+// RequestInstance RequestInstance
 //
 // swagger:model RequestInstance
 type RequestInstance struct {
 
 	// end date
 	// Format: date-time
-	EndDate strfmt.DateTime `json:"endDate,omitempty"`
+	EndDate *strfmt.DateTime `json:"endDate,omitempty"`
 
 	// request body
 	RequestBody string `json:"requestBody,omitempty"`
@@ -34,15 +34,15 @@ type RequestInstance struct {
 	RequestMessageList []*RequestMessage `json:"requestMessageList"`
 
 	// request phase
-	// Enum: [NEW PROCESSING FINISHED CANCELLED TIMEOUT]
+	// Enum: [CANCELLED FINISHED NEW PROCESSING TIMEOUT]
 	RequestPhase string `json:"requestPhase,omitempty"`
 
 	// request status
-	// Enum: [SUCCESS FAILED]
+	// Enum: [FAILED SUCCESS]
 	RequestStatus string `json:"requestStatus,omitempty"`
 
 	// request type
-	// Enum: [SECURITY_GROUP_CREATE SECURITY_GROUP_DELETE FIREWALL_DFW_RULE_CREATE FIREWALL_DFW_RULE_DELETE FIREWALL_GFW_RULE_CREATE FIREWALL_GFW_RULE_DELETE SECURITY_GROUP_UPDATE FIREWALL_DFW_RULE_UPDATE FIREWALL_GFW_RULE_UPDATE]
+	// Enum: [FIREWALL_DFW_RULE_CREATE FIREWALL_DFW_RULE_DELETE FIREWALL_DFW_RULE_UPDATE FIREWALL_GFW_RULE_CREATE FIREWALL_GFW_RULE_DELETE FIREWALL_GFW_RULE_UPDATE SECURITY_GROUP_CREATE SECURITY_GROUP_DELETE SECURITY_GROUP_UPDATE]
 	RequestType string `json:"requestType,omitempty"`
 
 	// requestor
@@ -53,7 +53,7 @@ type RequestInstance struct {
 
 	// start date
 	// Format: date-time
-	StartDate strfmt.DateTime `json:"startDate,omitempty"`
+	StartDate *strfmt.DateTime `json:"startDate,omitempty"`
 }
 
 // Validate validates this request instance
@@ -132,7 +132,7 @@ var requestInstanceTypeRequestPhasePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["NEW","PROCESSING","FINISHED","CANCELLED","TIMEOUT"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["CANCELLED","FINISHED","NEW","PROCESSING","TIMEOUT"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -142,17 +142,17 @@ func init() {
 
 const (
 
+	// RequestInstanceRequestPhaseCANCELLED captures enum value "CANCELLED"
+	RequestInstanceRequestPhaseCANCELLED string = "CANCELLED"
+
+	// RequestInstanceRequestPhaseFINISHED captures enum value "FINISHED"
+	RequestInstanceRequestPhaseFINISHED string = "FINISHED"
+
 	// RequestInstanceRequestPhaseNEW captures enum value "NEW"
 	RequestInstanceRequestPhaseNEW string = "NEW"
 
 	// RequestInstanceRequestPhasePROCESSING captures enum value "PROCESSING"
 	RequestInstanceRequestPhasePROCESSING string = "PROCESSING"
-
-	// RequestInstanceRequestPhaseFINISHED captures enum value "FINISHED"
-	RequestInstanceRequestPhaseFINISHED string = "FINISHED"
-
-	// RequestInstanceRequestPhaseCANCELLED captures enum value "CANCELLED"
-	RequestInstanceRequestPhaseCANCELLED string = "CANCELLED"
 
 	// RequestInstanceRequestPhaseTIMEOUT captures enum value "TIMEOUT"
 	RequestInstanceRequestPhaseTIMEOUT string = "TIMEOUT"
@@ -184,7 +184,7 @@ var requestInstanceTypeRequestStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["SUCCESS","FAILED"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["FAILED","SUCCESS"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -194,11 +194,11 @@ func init() {
 
 const (
 
-	// RequestInstanceRequestStatusSUCCESS captures enum value "SUCCESS"
-	RequestInstanceRequestStatusSUCCESS string = "SUCCESS"
-
 	// RequestInstanceRequestStatusFAILED captures enum value "FAILED"
 	RequestInstanceRequestStatusFAILED string = "FAILED"
+
+	// RequestInstanceRequestStatusSUCCESS captures enum value "SUCCESS"
+	RequestInstanceRequestStatusSUCCESS string = "SUCCESS"
 )
 
 // prop value enum
@@ -227,7 +227,7 @@ var requestInstanceTypeRequestTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["SECURITY_GROUP_CREATE","SECURITY_GROUP_DELETE","FIREWALL_DFW_RULE_CREATE","FIREWALL_DFW_RULE_DELETE","FIREWALL_GFW_RULE_CREATE","FIREWALL_GFW_RULE_DELETE","SECURITY_GROUP_UPDATE","FIREWALL_DFW_RULE_UPDATE","FIREWALL_GFW_RULE_UPDATE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["FIREWALL_DFW_RULE_CREATE","FIREWALL_DFW_RULE_DELETE","FIREWALL_DFW_RULE_UPDATE","FIREWALL_GFW_RULE_CREATE","FIREWALL_GFW_RULE_DELETE","FIREWALL_GFW_RULE_UPDATE","SECURITY_GROUP_CREATE","SECURITY_GROUP_DELETE","SECURITY_GROUP_UPDATE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -237,17 +237,14 @@ func init() {
 
 const (
 
-	// RequestInstanceRequestTypeSECURITYGROUPCREATE captures enum value "SECURITY_GROUP_CREATE"
-	RequestInstanceRequestTypeSECURITYGROUPCREATE string = "SECURITY_GROUP_CREATE"
-
-	// RequestInstanceRequestTypeSECURITYGROUPDELETE captures enum value "SECURITY_GROUP_DELETE"
-	RequestInstanceRequestTypeSECURITYGROUPDELETE string = "SECURITY_GROUP_DELETE"
-
 	// RequestInstanceRequestTypeFIREWALLDFWRULECREATE captures enum value "FIREWALL_DFW_RULE_CREATE"
 	RequestInstanceRequestTypeFIREWALLDFWRULECREATE string = "FIREWALL_DFW_RULE_CREATE"
 
 	// RequestInstanceRequestTypeFIREWALLDFWRULEDELETE captures enum value "FIREWALL_DFW_RULE_DELETE"
 	RequestInstanceRequestTypeFIREWALLDFWRULEDELETE string = "FIREWALL_DFW_RULE_DELETE"
+
+	// RequestInstanceRequestTypeFIREWALLDFWRULEUPDATE captures enum value "FIREWALL_DFW_RULE_UPDATE"
+	RequestInstanceRequestTypeFIREWALLDFWRULEUPDATE string = "FIREWALL_DFW_RULE_UPDATE"
 
 	// RequestInstanceRequestTypeFIREWALLGFWRULECREATE captures enum value "FIREWALL_GFW_RULE_CREATE"
 	RequestInstanceRequestTypeFIREWALLGFWRULECREATE string = "FIREWALL_GFW_RULE_CREATE"
@@ -255,14 +252,17 @@ const (
 	// RequestInstanceRequestTypeFIREWALLGFWRULEDELETE captures enum value "FIREWALL_GFW_RULE_DELETE"
 	RequestInstanceRequestTypeFIREWALLGFWRULEDELETE string = "FIREWALL_GFW_RULE_DELETE"
 
-	// RequestInstanceRequestTypeSECURITYGROUPUPDATE captures enum value "SECURITY_GROUP_UPDATE"
-	RequestInstanceRequestTypeSECURITYGROUPUPDATE string = "SECURITY_GROUP_UPDATE"
-
-	// RequestInstanceRequestTypeFIREWALLDFWRULEUPDATE captures enum value "FIREWALL_DFW_RULE_UPDATE"
-	RequestInstanceRequestTypeFIREWALLDFWRULEUPDATE string = "FIREWALL_DFW_RULE_UPDATE"
-
 	// RequestInstanceRequestTypeFIREWALLGFWRULEUPDATE captures enum value "FIREWALL_GFW_RULE_UPDATE"
 	RequestInstanceRequestTypeFIREWALLGFWRULEUPDATE string = "FIREWALL_GFW_RULE_UPDATE"
+
+	// RequestInstanceRequestTypeSECURITYGROUPCREATE captures enum value "SECURITY_GROUP_CREATE"
+	RequestInstanceRequestTypeSECURITYGROUPCREATE string = "SECURITY_GROUP_CREATE"
+
+	// RequestInstanceRequestTypeSECURITYGROUPDELETE captures enum value "SECURITY_GROUP_DELETE"
+	RequestInstanceRequestTypeSECURITYGROUPDELETE string = "SECURITY_GROUP_DELETE"
+
+	// RequestInstanceRequestTypeSECURITYGROUPUPDATE captures enum value "SECURITY_GROUP_UPDATE"
+	RequestInstanceRequestTypeSECURITYGROUPUPDATE string = "SECURITY_GROUP_UPDATE"
 )
 
 // prop value enum

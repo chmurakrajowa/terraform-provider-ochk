@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// NetworkInterfaceInstance network interface instance
+// NetworkInterfaceInstance NetworkInterfaceInstance
 //
 // swagger:model NetworkInterfaceInstance
 type NetworkInterfaceInstance struct {

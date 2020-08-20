@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// VirtualMachineGetResponse virtual machine get response
+// VirtualMachineGetResponse VirtualMachineGetResponse
 //
 // swagger:model VirtualMachineGetResponse
 type VirtualMachineGetResponse struct {
@@ -25,7 +25,7 @@ type VirtualMachineGetResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 
 	// virtual machine
 	VirtualMachine *VirtualMachine `json:"virtualMachine,omitempty"`

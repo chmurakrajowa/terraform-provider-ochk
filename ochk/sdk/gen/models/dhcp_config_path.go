@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// DhcpConfigPath dhcp config path
+// DhcpConfigPath DhcpConfigPath
 //
 // swagger:model DhcpConfigPath
 type DhcpConfigPath struct {

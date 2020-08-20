@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// ConnectivityStrategy connectivity strategy
+// ConnectivityStrategy ConnectivityStrategy
 //
 // swagger:model ConnectivityStrategy
 type ConnectivityStrategy struct {

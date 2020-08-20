@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// Protection protection
+// Protection Protection
 //
 // swagger:model Protection
 type Protection struct {

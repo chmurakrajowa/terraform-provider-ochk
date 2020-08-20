@@ -15,7 +15,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// RouterInstance router instance
+// RouterInstance RouterInstance
 //
 // swagger:model RouterInstance
 type RouterInstance struct {
@@ -25,7 +25,7 @@ type RouterInstance struct {
 
 	// creation date
 	// Format: date-time
-	CreationDate strfmt.DateTime `json:"creationDate,omitempty"`
+	CreationDate *strfmt.DateTime `json:"creationDate,omitempty"`
 
 	// default rule logging
 	DefaultRuleLogging bool `json:"defaultRuleLogging,omitempty"`
@@ -56,7 +56,7 @@ type RouterInstance struct {
 
 	// modification date
 	// Format: date-time
-	ModificationDate strfmt.DateTime `json:"modificationDate,omitempty"`
+	ModificationDate *strfmt.DateTime `json:"modificationDate,omitempty"`
 
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`

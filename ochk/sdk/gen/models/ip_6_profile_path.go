@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// IP6ProfilePath IP 6 profile path
+// IP6ProfilePath IP6ProfilePath
 //
 // swagger:model IP6ProfilePath
 type IP6ProfilePath struct {

@@ -13,7 +13,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// ContextProfileInstance context profile instance
+// ContextProfileInstance ContextProfileInstance
 //
 // swagger:model ContextProfileInstance
 type ContextProfileInstance struct {

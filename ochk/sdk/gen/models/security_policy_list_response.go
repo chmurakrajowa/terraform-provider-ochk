@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// SecurityPolicyListResponse security policy list response
+// SecurityPolicyListResponse SecurityPolicyListResponse
 //
 // swagger:model SecurityPolicyListResponse
 type SecurityPolicyListResponse struct {
@@ -30,7 +30,7 @@ type SecurityPolicyListResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
 // Validate validates this security policy list response

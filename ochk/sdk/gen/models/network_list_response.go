@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// NetworkListResponse network list response
+// NetworkListResponse NetworkListResponse
 //
 // swagger:model NetworkListResponse
 type NetworkListResponse struct {
@@ -30,7 +30,7 @@ type NetworkListResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
 // Validate validates this network list response
