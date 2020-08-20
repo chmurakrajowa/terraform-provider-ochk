@@ -21,3 +21,4 @@ terraform.tfplan
 terraform.tfstate
 terraform.tfstate.backup
 *.log
+dist
