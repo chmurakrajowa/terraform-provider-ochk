@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// ServiceListResponse service list response
+// ServiceListResponse ServiceListResponse
 //
 // swagger:model ServiceListResponse
 type ServiceListResponse struct {
@@ -30,7 +30,7 @@ type ServiceListResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
 // Validate validates this service list response

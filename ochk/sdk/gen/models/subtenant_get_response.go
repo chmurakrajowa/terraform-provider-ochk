@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// SubtenantGetResponse subtenant get response
+// SubtenantGetResponse SubtenantGetResponse
 //
 // swagger:model SubtenantGetResponse
 type SubtenantGetResponse struct {
@@ -28,7 +28,7 @@ type SubtenantGetResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
 // Validate validates this subtenant get response

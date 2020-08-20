@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// LogicalPortGetResponse logical port get response
+// LogicalPortGetResponse LogicalPortGetResponse
 //
 // swagger:model LogicalPortGetResponse
 type LogicalPortGetResponse struct {
@@ -28,7 +28,7 @@ type LogicalPortGetResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
 // Validate validates this logical port get response

@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// ResourceType resource type
+// ResourceType ResourceType
 //
 // swagger:model ResourceType
 type ResourceType struct {

@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// SubtenantInstance subtenant instance
+// SubtenantInstance SubtenantInstance
 //
 // swagger:model SubtenantInstance
 type SubtenantInstance struct {

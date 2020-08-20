@@ -15,13 +15,13 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// DFWRule d f w rule
+// DFWRule DFWRule
 //
 // swagger:model DFWRule
 type DFWRule struct {
 
 	// action
-	// Enum: [ALLOW REJECT DROP]
+	// Enum: [ALLOW DROP REJECT]
 	Action string `json:"action,omitempty"`
 
 	// created by
@@ -29,7 +29,7 @@ type DFWRule struct {
 
 	// creation date
 	// Format: date-time
-	CreationDate strfmt.DateTime `json:"creationDate,omitempty"`
+	CreationDate *strfmt.DateTime `json:"creationDate,omitempty"`
 
 	// default services
 	DefaultServices []*ServiceInstance `json:"defaultServices"`
@@ -38,7 +38,7 @@ type DFWRule struct {
 	Destination []*SecurityGroup `json:"destination"`
 
 	// direction
-	// Enum: [IN_OUT IN OUT]
+	// Enum: [IN IN_OUT OUT]
 	Direction string `json:"direction,omitempty"`
 
 	// disabled
@@ -48,12 +48,12 @@ type DFWRule struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// ip protocol
-	// Enum: [IPV4_IPV6 IPV4 IPV6]
+	// Enum: [IPV4 IPV4_IPV6 IPV6]
 	IPProtocol string `json:"ipProtocol,omitempty"`
 
 	// modification date
 	// Format: date-time
-	ModificationDate strfmt.DateTime `json:"modificationDate,omitempty"`
+	ModificationDate *strfmt.DateTime `json:"modificationDate,omitempty"`
 
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`
@@ -125,7 +125,7 @@ var dFWRuleTypeActionPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["ALLOW","REJECT","DROP"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["ALLOW","DROP","REJECT"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -138,11 +138,11 @@ const (
 	// DFWRuleActionALLOW captures enum value "ALLOW"
 	DFWRuleActionALLOW string = "ALLOW"
 
-	// DFWRuleActionREJECT captures enum value "REJECT"
-	DFWRuleActionREJECT string = "REJECT"
-
 	// DFWRuleActionDROP captures enum value "DROP"
 	DFWRuleActionDROP string = "DROP"
+
+	// DFWRuleActionREJECT captures enum value "REJECT"
+	DFWRuleActionREJECT string = "REJECT"
 )
 
 // prop value enum
@@ -234,7 +234,7 @@ var dFWRuleTypeDirectionPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["IN_OUT","IN","OUT"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["IN","IN_OUT","OUT"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -244,11 +244,11 @@ func init() {
 
 const (
 
-	// DFWRuleDirectionINOUT captures enum value "IN_OUT"
-	DFWRuleDirectionINOUT string = "IN_OUT"
-
 	// DFWRuleDirectionIN captures enum value "IN"
 	DFWRuleDirectionIN string = "IN"
+
+	// DFWRuleDirectionINOUT captures enum value "IN_OUT"
+	DFWRuleDirectionINOUT string = "IN_OUT"
 
 	// DFWRuleDirectionOUT captures enum value "OUT"
 	DFWRuleDirectionOUT string = "OUT"
@@ -280,7 +280,7 @@ var dFWRuleTypeIPProtocolPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["IPV4_IPV6","IPV4","IPV6"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["IPV4","IPV4_IPV6","IPV6"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -290,11 +290,11 @@ func init() {
 
 const (
 
-	// DFWRuleIPProtocolIPV4IPV6 captures enum value "IPV4_IPV6"
-	DFWRuleIPProtocolIPV4IPV6 string = "IPV4_IPV6"
-
 	// DFWRuleIPProtocolIPV4 captures enum value "IPV4"
 	DFWRuleIPProtocolIPV4 string = "IPV4"
+
+	// DFWRuleIPProtocolIPV4IPV6 captures enum value "IPV4_IPV6"
+	DFWRuleIPProtocolIPV4IPV6 string = "IPV4_IPV6"
 
 	// DFWRuleIPProtocolIPV6 captures enum value "IPV6"
 	DFWRuleIPProtocolIPV6 string = "IPV6"

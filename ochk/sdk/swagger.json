@@ -15,6 +15,18 @@
   "basePath": "/",
   "tags": [
     {
+      "name": "Context profiles",
+      "description": "Context Profile Controller"
+    },
+    {
+      "name": "Default services",
+      "description": "Service Controller"
+    },
+    {
+      "name": "Firewall rules E-W",
+      "description": "DFW Rule Controller"
+    },
+    {
       "name": "Firewall rules S-N",
       "description": "GFW Rule Controller"
     },
@@ -27,44 +39,36 @@
       "description": "IP Set Controller"
     },
     {
-      "name": "Virtual machines",
-      "description": "Vcs Virtual Machine Controller"
-    },
-    {
-      "name": "Context profiles",
-      "description": "Context Profile Controller"
-    },
-    {
       "name": "Logical ports",
       "description": "Logical Port Controller"
-    },
-    {
-      "name": "Default services",
-      "description": "Service Controller"
-    },
-    {
-      "name": "Security groups",
-      "description": "Security Group Controller"
-    },
-    {
-      "name": "Subtenants",
-      "description": "Subtenant Controller"
     },
     {
       "name": "Networks",
       "description": "Vcs Network Controller"
     },
     {
-      "name": "Firewall rules E-W",
-      "description": "DFW Rule Controller"
+      "name": "Reservations",
+      "description": "Reservations Controller"
     },
     {
       "name": "Routers",
       "description": "Router Controller"
     },
     {
+      "name": "Security groups",
+      "description": "Security Group Controller"
+    },
+    {
       "name": "Security policies",
       "description": "Security Policy Controller"
+    },
+    {
+      "name": "Subtenants",
+      "description": "Subtenant Controller"
+    },
+    {
+      "name": "Virtual machines",
+      "description": "Vcs Virtual Machine Controller"
     },
     {
       "name": "vIDM",
@@ -80,9 +84,6 @@
         "summary": "List",
         "description": "List context profiles from NSX-T",
         "operationId": "ContextProfileListUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -116,9 +117,6 @@
         "summary": "List",
         "description": "List default services from NSX-T",
         "operationId": "ServiceListUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -152,9 +150,6 @@
         "summary": "Get",
         "description": "Get default service from NSX-T",
         "operationId": "ServiceGetUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -191,9 +186,6 @@
         "summary": "List",
         "description": "List gateway policies from NSX-T",
         "operationId": "GatewayPolicyListUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -227,9 +219,6 @@
         "summary": "Get",
         "description": "Get gateway policies from NSX-T",
         "operationId": "GatewayPolicyGetUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -266,25 +255,22 @@
         "summary": "List",
         "description": "List firewall rules (south-north) from NSX-T",
         "operationId": "GFWRuleListUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "gatewayPolicyId",
-            "in": "path",
-            "description": "gatewayPolicyId",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "displayName",
             "in": "query",
             "description": "displayName",
             "required": false,
+            "type": "string"
+          },
+          {
+            "name": "gatewayPolicyId",
+            "in": "path",
+            "description": "gatewayPolicyId",
+            "required": true,
             "type": "string"
           }
         ],
@@ -360,9 +346,6 @@
         "summary": "Get",
         "description": "Get firewall rule (south-north) from NSX-T",
         "operationId": "GFWRuleGetUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -419,13 +402,6 @@
             "type": "string"
           },
           {
-            "name": "ruleId",
-            "in": "path",
-            "description": "ruleId",
-            "required": true,
-            "type": "string"
-          },
-          {
             "in": "body",
             "name": "gfwRule",
             "description": "gfwRule",
@@ -433,6 +409,13 @@
             "schema": {
               "$ref": "#/definitions/GFWRule"
             }
+          },
+          {
+            "name": "ruleId",
+            "in": "path",
+            "description": "ruleId",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -454,9 +437,6 @@
         "summary": "Delete",
         "description": "Delete firewall rule (south-north) from NSX-T",
         "operationId": "GFWRuleDeleteUsingDELETE",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -497,9 +477,6 @@
         "summary": "List",
         "description": "List security policies from NSX-T",
         "operationId": "SecurityPolicyListUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -533,9 +510,6 @@
         "summary": "Get",
         "description": "Get security policy from NSX-T",
         "operationId": "SecurityPolicyGetUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -572,25 +546,22 @@
         "summary": "List",
         "description": "List firewall rules (east-west) from NSX-T",
         "operationId": "DFWRuleListUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "securityPolicyId",
-            "in": "path",
-            "description": "securityPolicyId",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "displayName",
             "in": "query",
             "description": "displayName",
             "required": false,
+            "type": "string"
+          },
+          {
+            "name": "securityPolicyId",
+            "in": "path",
+            "description": "securityPolicyId",
+            "required": true,
             "type": "string"
           }
         ],
@@ -623,13 +594,6 @@
         ],
         "parameters": [
           {
-            "name": "securityPolicyId",
-            "in": "path",
-            "description": "securityPolicyId",
-            "required": true,
-            "type": "string"
-          },
-          {
             "in": "body",
             "name": "dfwRule",
             "description": "dfwRule",
@@ -637,6 +601,13 @@
             "schema": {
               "$ref": "#/definitions/DFWRule"
             }
+          },
+          {
+            "name": "securityPolicyId",
+            "in": "path",
+            "description": "securityPolicyId",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -666,24 +637,21 @@
         "summary": "Get",
         "description": "Get firewall rule (east-west) from NSX-T",
         "operationId": "DFWRuleGetUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "securityPolicyId",
+            "name": "ruleId",
             "in": "path",
-            "description": "securityPolicyId",
+            "description": "ruleId",
             "required": true,
             "type": "string"
           },
           {
-            "name": "ruleId",
+            "name": "securityPolicyId",
             "in": "path",
-            "description": "ruleId",
+            "description": "securityPolicyId",
             "required": true,
             "type": "string"
           }
@@ -718,11 +686,13 @@
         ],
         "parameters": [
           {
-            "name": "securityPolicyId",
-            "in": "path",
-            "description": "securityPolicyId",
+            "in": "body",
+            "name": "dfwRule",
+            "description": "dfwRule",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/DFWRule"
+            }
           },
           {
             "name": "ruleId",
@@ -732,13 +702,11 @@
             "type": "string"
           },
           {
-            "in": "body",
-            "name": "dfwRule",
-            "description": "dfwRule",
+            "name": "securityPolicyId",
+            "in": "path",
+            "description": "securityPolicyId",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/DFWRule"
-            }
+            "type": "string"
           }
         ],
         "responses": {
@@ -760,24 +728,21 @@
         "summary": "Delete",
         "description": "Delete firewall rule (east-west) from NSX-T",
         "operationId": "DFWRuleDeleteUsingDELETE",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "securityPolicyId",
+            "name": "ruleId",
             "in": "path",
-            "description": "securityPolicyId",
+            "description": "ruleId",
             "required": true,
             "type": "string"
           },
           {
-            "name": "ruleId",
+            "name": "securityPolicyId",
             "in": "path",
-            "description": "ruleId",
+            "description": "securityPolicyId",
             "required": true,
             "type": "string"
           }
@@ -803,9 +768,6 @@
         "summary": "List",
         "description": "List IPSets from NSX-T",
         "operationId": "IPSetListUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -839,9 +801,6 @@
         "summary": "Get",
         "description": "Get IPSet from NSX-T",
         "operationId": "IPSetGetUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -878,9 +837,6 @@
         "summary": "List",
         "description": "List logical ports from NSX-T",
         "operationId": "LogicalPortListUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -914,9 +870,6 @@
         "summary": "Get",
         "description": "Get logical port from NSX-T",
         "operationId": "LogicalPortGetUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -953,9 +906,6 @@
         "summary": "List",
         "description": "List routers T0/T1 from NSX-T",
         "operationId": "RouterListUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -989,9 +939,6 @@
         "summary": "Get",
         "description": "Get router from NSX-T",
         "operationId": "RouterGetUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -1028,9 +975,6 @@
         "summary": "List",
         "description": "List security groups from NSX-T",
         "operationId": "SecurityGroupListUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -1106,9 +1050,6 @@
         "summary": "Get",
         "description": "Get security group from NSX-T",
         "operationId": "SecurityGroupGetUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -1186,9 +1127,6 @@
         "summary": "Delete",
         "description": "Delete security group from NSX-T",
         "operationId": "SecurityGroupDeleteUsingDELETE",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -1222,9 +1160,6 @@
         "summary": "List virtual machines",
         "description": "List virtual machines from NSX-T level",
         "operationId": "VirtualMachineListUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -1258,9 +1193,6 @@
         "summary": "Get",
         "description": "Get virtual machine from NSX-T",
         "operationId": "VirtualMachineGetUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -1297,9 +1229,6 @@
         "summary": "List",
         "description": "List subtenants",
         "operationId": "SubtenantListUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -1324,9 +1253,6 @@
         "summary": "Get",
         "description": "Get subtenant from NSX-T",
         "operationId": "SubtenantGetUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -1355,6 +1281,82 @@
         }
       }
     },
+    "/subtenants/{subtenantId}/reservations": {
+      "get": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "List",
+        "description": "List reservations",
+        "operationId": "ReservationListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ReservationListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/subtenants/{subtenantId}/reservations/{reservationId}": {
+      "get": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Get",
+        "description": "Get reservation",
+        "operationId": "ReservationGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "reservationId",
+            "in": "path",
+            "description": "reservationId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ReservationGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
     "/vcs/networks": {
       "get": {
         "tags": [
@@ -1363,9 +1365,6 @@
         "summary": "List",
         "description": "List vSphere vCenter networks",
         "operationId": "VcsVirtualMachineListUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -1390,9 +1389,6 @@
         "summary": "Get",
         "description": "Get vSphere vCenter networks",
         "operationId": "VcsVirtualMachineGroupGetUsingGET",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -1429,9 +1425,6 @@
         "summary": "List",
         "description": "List vSphere vCenter virtual machines",
         "operationId": "VcsVirtualMachineListUsingGET_1",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -1456,9 +1449,6 @@
         "summary": "Get",
         "description": "Get vSphere vCenter virtual machine",
         "operationId": "VcsVirtualMachineGroupGetUsingGET_1",
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -1558,7 +1548,8 @@
             "$ref": "#/definitions/SubAttributeInstance"
           }
         }
-      }
+      },
+      "title": "AttributeInstance"
     },
     "AttributeValueInstance": {
       "type": "object",
@@ -1570,7 +1561,8 @@
           "type": "integer",
           "format": "int32"
         }
-      }
+      },
+      "title": "AttributeValueInstance"
     },
     "Category": {
       "type": "object",
@@ -1582,7 +1574,8 @@
           "type": "integer",
           "format": "int32"
         }
-      }
+      },
+      "title": "Category"
     },
     "ConnectivityStrategy": {
       "type": "object",
@@ -1594,7 +1587,8 @@
           "type": "integer",
           "format": "int32"
         }
-      }
+      },
+      "title": "ConnectivityStrategy"
     },
     "ContextProfileInstance": {
       "type": "object",
@@ -1617,7 +1611,8 @@
         "resourceType": {
           "$ref": "#/definitions/ResourceType"
         }
-      }
+      },
+      "title": "ContextProfileInstance"
     },
     "ContextProfileListResponse": {
       "type": "object",
@@ -1636,9 +1631,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "ContextProfileListResponse"
     },
     "CreateDFWRuleResponse": {
       "type": "object",
@@ -1657,9 +1654,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "CreateDFWRuleResponse"
     },
     "CreateGFWRuleResponse": {
       "type": "object",
@@ -1678,9 +1677,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "CreateGFWRuleResponse"
     },
     "CreateSecurityGroupResponse": {
       "type": "object",
@@ -1699,9 +1700,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "CreateSecurityGroupResponse"
     },
     "DFWRule": {
       "type": "object",
@@ -1710,8 +1713,8 @@
           "type": "string",
           "enum": [
             "ALLOW",
-            "REJECT",
-            "DROP"
+            "DROP",
+            "REJECT"
           ]
         },
         "createdBy": {
@@ -1719,7 +1722,8 @@
         },
         "creationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "defaultServices": {
           "type": "array",
@@ -1736,8 +1740,8 @@
         "direction": {
           "type": "string",
           "enum": [
-            "IN_OUT",
             "IN",
+            "IN_OUT",
             "OUT"
           ]
         },
@@ -1750,14 +1754,15 @@
         "ipProtocol": {
           "type": "string",
           "enum": [
-            "IPV4_IPV6",
             "IPV4",
+            "IPV4_IPV6",
             "IPV6"
           ]
         },
         "modificationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "modifiedBy": {
           "type": "string"
@@ -1780,7 +1785,8 @@
             "$ref": "#/definitions/SecurityGroup"
           }
         }
-      }
+      },
+      "title": "DFWRule"
     },
     "DFWRuleGetResponse": {
       "type": "object",
@@ -1796,9 +1802,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "DFWRuleGetResponse"
     },
     "DFWRuleListResponse": {
       "type": "object",
@@ -1817,9 +1825,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "DFWRuleListResponse"
     },
     "DeleteDFWRuleResponse": {
       "type": "object",
@@ -1835,9 +1845,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "DeleteDFWRuleResponse"
     },
     "DeleteGFWRuleResponse": {
       "type": "object",
@@ -1853,9 +1865,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "DeleteGFWRuleResponse"
     },
     "DeleteSecurityGroupResponse": {
       "type": "object",
@@ -1871,9 +1885,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "DeleteSecurityGroupResponse"
     },
     "DhcpConfigPath": {
       "type": "object",
@@ -1885,7 +1901,8 @@
           "type": "integer",
           "format": "int32"
         }
-      }
+      },
+      "title": "DhcpConfigPath"
     },
     "FailoverMode": {
       "type": "object",
@@ -1897,7 +1914,8 @@
           "type": "integer",
           "format": "int32"
         }
-      }
+      },
+      "title": "FailoverMode"
     },
     "GFWRule": {
       "type": "object",
@@ -1906,8 +1924,8 @@
           "type": "string",
           "enum": [
             "ALLOW",
-            "REJECT",
-            "DROP"
+            "DROP",
+            "REJECT"
           ]
         },
         "createdBy": {
@@ -1915,7 +1933,8 @@
         },
         "creationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "defaultServices": {
           "type": "array",
@@ -1932,8 +1951,8 @@
         "direction": {
           "type": "string",
           "enum": [
-            "IN_OUT",
             "IN",
+            "IN_OUT",
             "OUT"
           ]
         },
@@ -1946,14 +1965,15 @@
         "ipProtocol": {
           "type": "string",
           "enum": [
-            "IPV4_IPV6",
             "IPV4",
+            "IPV4_IPV6",
             "IPV6"
           ]
         },
         "modificationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "modifiedBy": {
           "type": "string"
@@ -1976,7 +1996,8 @@
             "$ref": "#/definitions/SecurityGroup"
           }
         }
-      }
+      },
+      "title": "GFWRule"
     },
     "GFWRuleGetResponse": {
       "type": "object",
@@ -1992,9 +2013,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "GFWRuleGetResponse"
     },
     "GFWRuleListResponse": {
       "type": "object",
@@ -2013,9 +2036,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "GFWRuleListResponse"
     },
     "GatewayPolicy": {
       "type": "object",
@@ -2025,7 +2050,8 @@
         },
         "creationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "displayName": {
           "type": "string"
@@ -2035,12 +2061,14 @@
         },
         "modificationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "modifiedBy": {
           "type": "string"
         }
-      }
+      },
+      "title": "GatewayPolicy"
     },
     "GatewayPolicyGetResponse": {
       "type": "object",
@@ -2056,9 +2084,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "GatewayPolicyGetResponse"
     },
     "GatewayPolicyListResponse": {
       "type": "object",
@@ -2077,9 +2107,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "GatewayPolicyListResponse"
     },
     "HAMode": {
       "type": "object",
@@ -2091,7 +2123,8 @@
           "type": "integer",
           "format": "int32"
         }
-      }
+      },
+      "title": "HAMode"
     },
     "IP6ProfilePath": {
       "type": "object",
@@ -2103,7 +2136,8 @@
           "type": "integer",
           "format": "int32"
         }
-      }
+      },
+      "title": "IP6ProfilePath"
     },
     "IPSet": {
       "type": "object",
@@ -2113,7 +2147,8 @@
         },
         "creationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "displayName": {
           "type": "string"
@@ -2129,12 +2164,14 @@
         },
         "modificationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "modifiedBy": {
           "type": "string"
         }
-      }
+      },
+      "title": "IPSet"
     },
     "IPSetAddress": {
       "type": "object",
@@ -2146,7 +2183,8 @@
           "type": "integer",
           "format": "int32"
         }
-      }
+      },
+      "title": "IPSetAddress"
     },
     "IPSetGetResponse": {
       "type": "object",
@@ -2162,9 +2200,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "IPSetGetResponse"
     },
     "IPSetListResponse": {
       "type": "object",
@@ -2183,9 +2223,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "IPSetListResponse"
     },
     "InternalTransitSubnet": {
       "type": "object",
@@ -2197,7 +2239,8 @@
           "type": "integer",
           "format": "int32"
         }
-      }
+      },
+      "title": "InternalTransitSubnet"
     },
     "LogicalPort": {
       "type": "object",
@@ -2208,7 +2251,8 @@
         "logicalPortId": {
           "type": "string"
         }
-      }
+      },
+      "title": "LogicalPort"
     },
     "LogicalPortGetResponse": {
       "type": "object",
@@ -2224,9 +2268,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "LogicalPortGetResponse"
     },
     "LogicalPortListResponse": {
       "type": "object",
@@ -2245,9 +2291,26 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "LogicalPortListResponse"
+    },
+    "NetworkAdapter": {
+      "type": "object",
+      "properties": {
+        "externalId": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "networkAdapterId": {
+          "type": "string"
+        }
+      },
+      "title": "NetworkAdapter"
     },
     "NetworkGetResponse": {
       "type": "object",
@@ -2263,9 +2326,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "NetworkGetResponse"
     },
     "NetworkInstance": {
       "type": "object",
@@ -2275,11 +2340,13 @@
         },
         "creationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "modificationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "modifiedBy": {
           "type": "string"
@@ -2293,13 +2360,14 @@
         "networkType": {
           "type": "string",
           "enum": [
-            "STANDARD_PORTGROUP",
             "DISTRIBUTED_PORTGROUP",
             "HOST_DEVICE",
-            "OPAQUE_NETWORK"
+            "OPAQUE_NETWORK",
+            "STANDARD_PORTGROUP"
           ]
         }
-      }
+      },
+      "title": "NetworkInstance"
     },
     "NetworkInterfaceInstance": {
       "type": "object",
@@ -2358,7 +2426,8 @@
         "wakeOnLanEnabled": {
           "type": "boolean"
         }
-      }
+      },
+      "title": "NetworkInterfaceInstance"
     },
     "NetworkListResponse": {
       "type": "object",
@@ -2377,9 +2446,26 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "NetworkListResponse"
+    },
+    "NetworkProfile": {
+      "type": "object",
+      "properties": {
+        "externalId": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "networkProfileId": {
+          "type": "string"
+        }
+      },
+      "title": "NetworkProfile"
     },
     "Position": {
       "type": "object",
@@ -2387,16 +2473,17 @@
         "reviseOperation": {
           "type": "string",
           "enum": [
-            "TOP",
-            "BOTTOM",
+            "AFTER",
             "BEFORE",
-            "AFTER"
+            "BOTTOM",
+            "TOP"
           ]
         },
         "ruleId": {
           "type": "string"
         }
-      }
+      },
+      "title": "Position"
     },
     "Protection": {
       "type": "object",
@@ -2408,14 +2495,16 @@
           "type": "integer",
           "format": "int32"
         }
-      }
+      },
+      "title": "Protection"
     },
     "RequestInstance": {
       "type": "object",
       "properties": {
         "endDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "requestBody": {
           "type": "string"
@@ -2432,32 +2521,32 @@
         "requestPhase": {
           "type": "string",
           "enum": [
+            "CANCELLED",
+            "FINISHED",
             "NEW",
             "PROCESSING",
-            "FINISHED",
-            "CANCELLED",
             "TIMEOUT"
           ]
         },
         "requestStatus": {
           "type": "string",
           "enum": [
-            "SUCCESS",
-            "FAILED"
+            "FAILED",
+            "SUCCESS"
           ]
         },
         "requestType": {
           "type": "string",
           "enum": [
-            "SECURITY_GROUP_CREATE",
-            "SECURITY_GROUP_DELETE",
             "FIREWALL_DFW_RULE_CREATE",
             "FIREWALL_DFW_RULE_DELETE",
+            "FIREWALL_DFW_RULE_UPDATE",
             "FIREWALL_GFW_RULE_CREATE",
             "FIREWALL_GFW_RULE_DELETE",
-            "SECURITY_GROUP_UPDATE",
-            "FIREWALL_DFW_RULE_UPDATE",
-            "FIREWALL_GFW_RULE_UPDATE"
+            "FIREWALL_GFW_RULE_UPDATE",
+            "SECURITY_GROUP_CREATE",
+            "SECURITY_GROUP_DELETE",
+            "SECURITY_GROUP_UPDATE"
           ]
         },
         "requestor": {
@@ -2468,21 +2557,126 @@
         },
         "startDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "RequestInstance"
     },
     "RequestMessage": {
       "type": "object",
       "properties": {
         "messageDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "messageValue": {
           "type": "string"
         }
-      }
+      },
+      "title": "RequestMessage"
+    },
+    "ReservationGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "reservationInstance": {
+          "$ref": "#/definitions/ReservationInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "ReservationGetResponse"
+    },
+    "ReservationInstance": {
+      "type": "object",
+      "properties": {
+        "createdDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "externalId": {
+          "type": "string"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "networkInstances": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NetworkInstance"
+          }
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "reservationId": {
+          "type": "string"
+        },
+        "reservationType": {
+          "$ref": "#/definitions/ReservationType"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "ReservationInstance"
+    },
+    "ReservationListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "reservationInstanceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReservationInstance"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "ReservationListResponse"
+    },
+    "ReservationType": {
+      "type": "object",
+      "properties": {
+        "reservationTypeId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "reservationTypeName": {
+          "type": "string"
+        }
+      },
+      "title": "ReservationType"
     },
     "ResourceType": {
       "type": "object",
@@ -2494,7 +2688,8 @@
         "resourceTypeName": {
           "type": "string"
         }
-      }
+      },
+      "title": "ResourceType"
     },
     "RouterGetResponse": {
       "type": "object",
@@ -2510,9 +2705,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "RouterGetResponse"
     },
     "RouterInstance": {
       "type": "object",
@@ -2522,7 +2719,8 @@
         },
         "creationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "defaultRuleLogging": {
           "type": "boolean"
@@ -2562,7 +2760,8 @@
         },
         "modificationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "modifiedBy": {
           "type": "string"
@@ -2593,7 +2792,8 @@
             "$ref": "#/definitions/TransitSubnet"
           }
         }
-      }
+      },
+      "title": "RouterInstance"
     },
     "RouterListResponse": {
       "type": "object",
@@ -2612,9 +2812,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "RouterListResponse"
     },
     "SecurityGroup": {
       "type": "object",
@@ -2624,7 +2826,8 @@
         },
         "creationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "displayName": {
           "type": "string"
@@ -2640,12 +2843,14 @@
         },
         "modificationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "modifiedBy": {
           "type": "string"
         }
-      }
+      },
+      "title": "SecurityGroup"
     },
     "SecurityGroupGetResponse": {
       "type": "object",
@@ -2661,9 +2866,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "SecurityGroupGetResponse"
     },
     "SecurityGroupListResponse": {
       "type": "object",
@@ -2682,9 +2889,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "SecurityGroupListResponse"
     },
     "SecurityGroupMember": {
       "type": "object",
@@ -2703,7 +2912,8 @@
             "VIRTUAL_MACHINE"
           ]
         }
-      }
+      },
+      "title": "SecurityGroupMember"
     },
     "SecurityPolicy": {
       "type": "object",
@@ -2719,14 +2929,16 @@
         },
         "creationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "displayName": {
           "type": "string"
         },
         "modificationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "modifiedBy": {
           "type": "string"
@@ -2749,7 +2961,8 @@
         "tcpStrict": {
           "type": "boolean"
         }
-      }
+      },
+      "title": "SecurityPolicy"
     },
     "SecurityPolicyGetResponse": {
       "type": "object",
@@ -2765,9 +2978,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "SecurityPolicyGetResponse"
     },
     "SecurityPolicyListResponse": {
       "type": "object",
@@ -2786,9 +3001,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "SecurityPolicyListResponse"
     },
     "ServiceGetResponse": {
       "type": "object",
@@ -2804,9 +3021,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "ServiceGetResponse"
     },
     "ServiceInstance": {
       "type": "object",
@@ -2816,14 +3035,16 @@
         },
         "creationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "displayName": {
           "type": "string"
         },
         "modificationDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "modifiedBy": {
           "type": "string"
@@ -2831,7 +3052,8 @@
         "serviceId": {
           "type": "string"
         }
-      }
+      },
+      "title": "ServiceInstance"
     },
     "ServiceListResponse": {
       "type": "object",
@@ -2850,9 +3072,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "ServiceListResponse"
     },
     "SubAttributeInstance": {
       "type": "object",
@@ -2873,7 +3097,8 @@
             "$ref": "#/definitions/SubAttributeValueInstance"
           }
         }
-      }
+      },
+      "title": "SubAttributeInstance"
     },
     "SubAttributeValueInstance": {
       "type": "object",
@@ -2885,7 +3110,8 @@
           "type": "integer",
           "format": "int32"
         }
-      }
+      },
+      "title": "SubAttributeValueInstance"
     },
     "SubtenantGetResponse": {
       "type": "object",
@@ -2901,9 +3127,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "SubtenantGetResponse"
     },
     "SubtenantInstance": {
       "type": "object",
@@ -2917,7 +3145,8 @@
         "subtenantId": {
           "type": "string"
         }
-      }
+      },
+      "title": "SubtenantInstance"
     },
     "SubtenantListResponse": {
       "type": "object",
@@ -2936,9 +3165,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "SubtenantListResponse"
     },
     "TagInstance": {
       "type": "object",
@@ -2953,7 +3184,8 @@
         "value": {
           "type": "string"
         }
-      }
+      },
+      "title": "TagInstance"
     },
     "TransitSubnet": {
       "type": "object",
@@ -2965,7 +3197,8 @@
           "type": "integer",
           "format": "int32"
         }
-      }
+      },
+      "title": "TransitSubnet"
     },
     "UpdateDFWRuleResponse": {
       "type": "object",
@@ -2984,9 +3217,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "UpdateDFWRuleResponse"
     },
     "UpdateGFWRuleResponse": {
       "type": "object",
@@ -3005,9 +3240,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "UpdateGFWRuleResponse"
     },
     "UpdateSecurityGroupResponse": {
       "type": "object",
@@ -3026,9 +3263,11 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         }
-      }
+      },
+      "title": "UpdateSecurityGroupResponse"
     },
     "VIDMTokenRequest": {
       "type": "object",
@@ -3042,7 +3281,8 @@
         "username": {
           "type": "string"
         }
-      }
+      },
+      "title": "VIDMTokenRequest"
     },
     "VIDMTokenResponse": {
       "type": "object",
@@ -3055,12 +3295,14 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "token": {
           "type": "string"
         }
-      }
+      },
+      "title": "VIDMTokenResponse"
     },
     "VirtualMachine": {
       "type": "object",
@@ -3074,7 +3316,8 @@
         "virtualMachineId": {
           "type": "string"
         }
-      }
+      },
+      "title": "VirtualMachine"
     },
     "VirtualMachineGetResponse": {
       "type": "object",
@@ -3087,12 +3330,14 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "virtualMachine": {
           "$ref": "#/definitions/VirtualMachine"
         }
-      }
+      },
+      "title": "VirtualMachineGetResponse"
     },
     "VirtualMachineInstance": {
       "type": "object",
@@ -3114,8 +3359,8 @@
         "powerState": {
           "type": "string",
           "enum": [
-            "POWERED_ON",
             "POWERED_OFF",
+            "POWERED_ON",
             "SUSPENDED"
           ]
         },
@@ -3125,7 +3370,8 @@
         "virtualMachineName": {
           "type": "string"
         }
-      }
+      },
+      "title": "VirtualMachineInstance"
     },
     "VirtualMachineListResponse": {
       "type": "object",
@@ -3138,7 +3384,8 @@
         },
         "timestamp": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "x-nullable": true
         },
         "virtualMachineCollection": {
           "type": "array",
@@ -3146,7 +3393,8 @@
             "$ref": "#/definitions/VirtualMachine"
           }
         }
-      }
+      },
+      "title": "VirtualMachineListResponse"
     }
   }
 }

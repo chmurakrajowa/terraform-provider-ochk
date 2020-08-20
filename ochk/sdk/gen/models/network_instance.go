@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// NetworkInstance network instance
+// NetworkInstance NetworkInstance
 //
 // swagger:model NetworkInstance
 type NetworkInstance struct {
@@ -24,11 +24,11 @@ type NetworkInstance struct {
 
 	// creation date
 	// Format: date-time
-	CreationDate strfmt.DateTime `json:"creationDate,omitempty"`
+	CreationDate *strfmt.DateTime `json:"creationDate,omitempty"`
 
 	// modification date
 	// Format: date-time
-	ModificationDate strfmt.DateTime `json:"modificationDate,omitempty"`
+	ModificationDate *strfmt.DateTime `json:"modificationDate,omitempty"`
 
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`
@@ -40,7 +40,7 @@ type NetworkInstance struct {
 	NetworkID string `json:"networkId,omitempty"`
 
 	// network type
-	// Enum: [STANDARD_PORTGROUP DISTRIBUTED_PORTGROUP HOST_DEVICE OPAQUE_NETWORK]
+	// Enum: [DISTRIBUTED_PORTGROUP HOST_DEVICE OPAQUE_NETWORK STANDARD_PORTGROUP]
 	NetworkType string `json:"networkType,omitempty"`
 }
 
@@ -96,7 +96,7 @@ var networkInstanceTypeNetworkTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["STANDARD_PORTGROUP","DISTRIBUTED_PORTGROUP","HOST_DEVICE","OPAQUE_NETWORK"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["DISTRIBUTED_PORTGROUP","HOST_DEVICE","OPAQUE_NETWORK","STANDARD_PORTGROUP"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -106,9 +106,6 @@ func init() {
 
 const (
 
-	// NetworkInstanceNetworkTypeSTANDARDPORTGROUP captures enum value "STANDARD_PORTGROUP"
-	NetworkInstanceNetworkTypeSTANDARDPORTGROUP string = "STANDARD_PORTGROUP"
-
 	// NetworkInstanceNetworkTypeDISTRIBUTEDPORTGROUP captures enum value "DISTRIBUTED_PORTGROUP"
 	NetworkInstanceNetworkTypeDISTRIBUTEDPORTGROUP string = "DISTRIBUTED_PORTGROUP"
 
@@ -117,6 +114,9 @@ const (
 
 	// NetworkInstanceNetworkTypeOPAQUENETWORK captures enum value "OPAQUE_NETWORK"
 	NetworkInstanceNetworkTypeOPAQUENETWORK string = "OPAQUE_NETWORK"
+
+	// NetworkInstanceNetworkTypeSTANDARDPORTGROUP captures enum value "STANDARD_PORTGROUP"
+	NetworkInstanceNetworkTypeSTANDARDPORTGROUP string = "STANDARD_PORTGROUP"
 )
 
 // prop value enum

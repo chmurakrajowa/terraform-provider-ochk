@@ -13,7 +13,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// SubAttributeInstance sub attribute instance
+// SubAttributeInstance SubAttributeInstance
 //
 // swagger:model SubAttributeInstance
 type SubAttributeInstance struct {

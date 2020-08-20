@@ -18,6 +18,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_sets"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/logical_ports"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/networks"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/reservations"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/routers"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/security_groups"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/security_policies"
@@ -76,6 +77,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.IPSets = ip_sets.New(transport, formats)
 	cli.LogicalPorts = logical_ports.New(transport, formats)
 	cli.Networks = networks.New(transport, formats)
+	cli.Reservations = reservations.New(transport, formats)
 	cli.Routers = routers.New(transport, formats)
 	cli.SecurityGroups = security_groups.New(transport, formats)
 	cli.SecurityPolicies = security_policies.New(transport, formats)
@@ -142,6 +144,8 @@ type Ochk struct {
 
 	Networks networks.ClientService
 
+	Reservations reservations.ClientService
+
 	Routers routers.ClientService
 
 	SecurityGroups security_groups.ClientService
@@ -168,6 +172,7 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.IPSets.SetTransport(transport)
 	c.LogicalPorts.SetTransport(transport)
 	c.Networks.SetTransport(transport)
+	c.Reservations.SetTransport(transport)
 	c.Routers.SetTransport(transport)
 	c.SecurityGroups.SetTransport(transport)
 	c.SecurityPolicies.SetTransport(transport)

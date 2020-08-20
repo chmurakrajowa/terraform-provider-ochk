@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// AttributeValueInstance attribute value instance
+// AttributeValueInstance AttributeValueInstance
 //
 // swagger:model AttributeValueInstance
 type AttributeValueInstance struct {

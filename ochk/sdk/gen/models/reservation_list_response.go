@@ -14,16 +14,16 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// SecurityGroupListResponse SecurityGroupListResponse
+// ReservationListResponse ReservationListResponse
 //
-// swagger:model SecurityGroupListResponse
-type SecurityGroupListResponse struct {
+// swagger:model ReservationListResponse
+type ReservationListResponse struct {
 
 	// messages
 	Messages string `json:"messages,omitempty"`
 
-	// security group collection
-	SecurityGroupCollection []*SecurityGroup `json:"securityGroupCollection"`
+	// reservation instance collection
+	ReservationInstanceCollection []*ReservationInstance `json:"reservationInstanceCollection"`
 
 	// success
 	Success bool `json:"success,omitempty"`
@@ -33,11 +33,11 @@ type SecurityGroupListResponse struct {
 	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
-// Validate validates this security group list response
-func (m *SecurityGroupListResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this reservation list response
+func (m *ReservationListResponse) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateSecurityGroupCollection(formats); err != nil {
+	if err := m.validateReservationInstanceCollection(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -51,21 +51,21 @@ func (m *SecurityGroupListResponse) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *SecurityGroupListResponse) validateSecurityGroupCollection(formats strfmt.Registry) error {
+func (m *ReservationListResponse) validateReservationInstanceCollection(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.SecurityGroupCollection) { // not required
+	if swag.IsZero(m.ReservationInstanceCollection) { // not required
 		return nil
 	}
 
-	for i := 0; i < len(m.SecurityGroupCollection); i++ {
-		if swag.IsZero(m.SecurityGroupCollection[i]) { // not required
+	for i := 0; i < len(m.ReservationInstanceCollection); i++ {
+		if swag.IsZero(m.ReservationInstanceCollection[i]) { // not required
 			continue
 		}
 
-		if m.SecurityGroupCollection[i] != nil {
-			if err := m.SecurityGroupCollection[i].Validate(formats); err != nil {
+		if m.ReservationInstanceCollection[i] != nil {
+			if err := m.ReservationInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("securityGroupCollection" + "." + strconv.Itoa(i))
+					return ve.ValidateName("reservationInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -76,7 +76,7 @@ func (m *SecurityGroupListResponse) validateSecurityGroupCollection(formats strf
 	return nil
 }
 
-func (m *SecurityGroupListResponse) validateTimestamp(formats strfmt.Registry) error {
+func (m *ReservationListResponse) validateTimestamp(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
@@ -90,7 +90,7 @@ func (m *SecurityGroupListResponse) validateTimestamp(formats strfmt.Registry) e
 }
 
 // MarshalBinary interface implementation
-func (m *SecurityGroupListResponse) MarshalBinary() ([]byte, error) {
+func (m *ReservationListResponse) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -98,8 +98,8 @@ func (m *SecurityGroupListResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *SecurityGroupListResponse) UnmarshalBinary(b []byte) error {
-	var res SecurityGroupListResponse
+func (m *ReservationListResponse) UnmarshalBinary(b []byte) error {
+	var res ReservationListResponse
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

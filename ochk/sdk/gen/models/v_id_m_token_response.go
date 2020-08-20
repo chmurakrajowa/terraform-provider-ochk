@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// VIDMTokenResponse v ID m token response
+// VIDMTokenResponse VIDMTokenResponse
 //
 // swagger:model VIDMTokenResponse
 type VIDMTokenResponse struct {
@@ -25,7 +25,7 @@ type VIDMTokenResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 
 	// token
 	Token string `json:"token,omitempty"`

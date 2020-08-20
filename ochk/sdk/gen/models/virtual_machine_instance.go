@@ -15,7 +15,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// VirtualMachineInstance virtual machine instance
+// VirtualMachineInstance VirtualMachineInstance
 //
 // swagger:model VirtualMachineInstance
 type VirtualMachineInstance struct {
@@ -30,7 +30,7 @@ type VirtualMachineInstance struct {
 	NetworkInterfaceInstanceCollection []*NetworkInterfaceInstance `json:"networkInterfaceInstanceCollection"`
 
 	// power state
-	// Enum: [POWERED_ON POWERED_OFF SUSPENDED]
+	// Enum: [POWERED_OFF POWERED_ON SUSPENDED]
 	PowerState string `json:"powerState,omitempty"`
 
 	// virtual machine Id
@@ -87,7 +87,7 @@ var virtualMachineInstanceTypePowerStatePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["POWERED_ON","POWERED_OFF","SUSPENDED"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["POWERED_OFF","POWERED_ON","SUSPENDED"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -97,11 +97,11 @@ func init() {
 
 const (
 
-	// VirtualMachineInstancePowerStatePOWEREDON captures enum value "POWERED_ON"
-	VirtualMachineInstancePowerStatePOWEREDON string = "POWERED_ON"
-
 	// VirtualMachineInstancePowerStatePOWEREDOFF captures enum value "POWERED_OFF"
 	VirtualMachineInstancePowerStatePOWEREDOFF string = "POWERED_OFF"
+
+	// VirtualMachineInstancePowerStatePOWEREDON captures enum value "POWERED_ON"
+	VirtualMachineInstancePowerStatePOWEREDON string = "POWERED_ON"
 
 	// VirtualMachineInstancePowerStateSUSPENDED captures enum value "SUSPENDED"
 	VirtualMachineInstancePowerStateSUSPENDED string = "SUSPENDED"

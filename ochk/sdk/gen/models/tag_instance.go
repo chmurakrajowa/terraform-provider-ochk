@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// TagInstance tag instance
+// TagInstance TagInstance
 //
 // swagger:model TagInstance
 type TagInstance struct {

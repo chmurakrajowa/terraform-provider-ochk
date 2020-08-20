@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// DeleteSecurityGroupResponse delete security group response
+// DeleteSecurityGroupResponse DeleteSecurityGroupResponse
 //
 // swagger:model DeleteSecurityGroupResponse
 type DeleteSecurityGroupResponse struct {
@@ -28,7 +28,7 @@ type DeleteSecurityGroupResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
 // Validate validates this delete security group response

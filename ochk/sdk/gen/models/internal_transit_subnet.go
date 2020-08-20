@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// InternalTransitSubnet internal transit subnet
+// InternalTransitSubnet InternalTransitSubnet
 //
 // swagger:model InternalTransitSubnet
 type InternalTransitSubnet struct {

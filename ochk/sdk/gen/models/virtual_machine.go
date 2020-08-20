@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// VirtualMachine virtual machine
+// VirtualMachine VirtualMachine
 //
 // swagger:model VirtualMachine
 type VirtualMachine struct {

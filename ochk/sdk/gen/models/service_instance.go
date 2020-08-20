@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// ServiceInstance service instance
+// ServiceInstance ServiceInstance
 //
 // swagger:model ServiceInstance
 type ServiceInstance struct {
@@ -22,14 +22,14 @@ type ServiceInstance struct {
 
 	// creation date
 	// Format: date-time
-	CreationDate strfmt.DateTime `json:"creationDate,omitempty"`
+	CreationDate *strfmt.DateTime `json:"creationDate,omitempty"`
 
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
 
 	// modification date
 	// Format: date-time
-	ModificationDate strfmt.DateTime `json:"modificationDate,omitempty"`
+	ModificationDate *strfmt.DateTime `json:"modificationDate,omitempty"`
 
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`

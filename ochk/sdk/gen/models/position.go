@@ -14,13 +14,13 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// Position position
+// Position Position
 //
 // swagger:model Position
 type Position struct {
 
 	// revise operation
-	// Enum: [TOP BOTTOM BEFORE AFTER]
+	// Enum: [AFTER BEFORE BOTTOM TOP]
 	ReviseOperation string `json:"reviseOperation,omitempty"`
 
 	// rule Id
@@ -45,7 +45,7 @@ var positionTypeReviseOperationPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["TOP","BOTTOM","BEFORE","AFTER"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["AFTER","BEFORE","BOTTOM","TOP"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -55,17 +55,17 @@ func init() {
 
 const (
 
-	// PositionReviseOperationTOP captures enum value "TOP"
-	PositionReviseOperationTOP string = "TOP"
-
-	// PositionReviseOperationBOTTOM captures enum value "BOTTOM"
-	PositionReviseOperationBOTTOM string = "BOTTOM"
+	// PositionReviseOperationAFTER captures enum value "AFTER"
+	PositionReviseOperationAFTER string = "AFTER"
 
 	// PositionReviseOperationBEFORE captures enum value "BEFORE"
 	PositionReviseOperationBEFORE string = "BEFORE"
 
-	// PositionReviseOperationAFTER captures enum value "AFTER"
-	PositionReviseOperationAFTER string = "AFTER"
+	// PositionReviseOperationBOTTOM captures enum value "BOTTOM"
+	PositionReviseOperationBOTTOM string = "BOTTOM"
+
+	// PositionReviseOperationTOP captures enum value "TOP"
+	PositionReviseOperationTOP string = "TOP"
 )
 
 // prop value enum

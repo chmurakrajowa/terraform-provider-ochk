@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// LogicalPort logical port
+// LogicalPort LogicalPort
 //
 // swagger:model LogicalPort
 type LogicalPort struct {

@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// IPSetGetResponse IP set get response
+// IPSetGetResponse IPSetGetResponse
 //
 // swagger:model IPSetGetResponse
 type IPSetGetResponse struct {
@@ -28,7 +28,7 @@ type IPSetGetResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
 // Validate validates this IP set get response

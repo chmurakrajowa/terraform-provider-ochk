@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// SecurityPolicy security policy
+// SecurityPolicy SecurityPolicy
 //
 // swagger:model SecurityPolicy
 type SecurityPolicy struct {
@@ -30,14 +30,14 @@ type SecurityPolicy struct {
 
 	// creation date
 	// Format: date-time
-	CreationDate strfmt.DateTime `json:"creationDate,omitempty"`
+	CreationDate *strfmt.DateTime `json:"creationDate,omitempty"`
 
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
 
 	// modification date
 	// Format: date-time
-	ModificationDate strfmt.DateTime `json:"modificationDate,omitempty"`
+	ModificationDate *strfmt.DateTime `json:"modificationDate,omitempty"`
 
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`

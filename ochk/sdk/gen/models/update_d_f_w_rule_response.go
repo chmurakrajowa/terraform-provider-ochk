@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// UpdateDFWRuleResponse update d f w rule response
+// UpdateDFWRuleResponse UpdateDFWRuleResponse
 //
 // swagger:model UpdateDFWRuleResponse
 type UpdateDFWRuleResponse struct {
@@ -31,7 +31,7 @@ type UpdateDFWRuleResponse struct {
 
 	// timestamp
 	// Format: date-time
-	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
+	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
 // Validate validates this update d f w rule response

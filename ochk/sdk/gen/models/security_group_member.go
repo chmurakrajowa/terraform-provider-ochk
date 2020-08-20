@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// SecurityGroupMember security group member
+// SecurityGroupMember SecurityGroupMember
 //
 // swagger:model SecurityGroupMember
 type SecurityGroupMember struct {

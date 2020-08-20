@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// VIDMTokenRequest v ID m token request
+// VIDMTokenRequest VIDMTokenRequest
 //
 // swagger:model VIDMTokenRequest
 type VIDMTokenRequest struct {
