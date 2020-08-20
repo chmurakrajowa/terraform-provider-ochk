@@ -16,6 +16,10 @@ func TestAccSecurityPolicyDataSource_read(t *testing.T) {
 				Config: testAccSecurityPolicyDataSourceConfig("devel"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", "devel"),
+					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
+					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
+					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
+					resource.TestCheckResourceAttrSet(resourceName, "modified_at"),
 				),
 			},
 		},

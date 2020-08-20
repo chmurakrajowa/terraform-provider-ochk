@@ -16,6 +16,22 @@ func dataSourceSecurityGroup() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"created_by": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"created_at": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"modified_by": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"modified_at": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"members": {
 				Type:     schema.TypeSet,
 				Computed: true,
@@ -59,6 +75,22 @@ func datSourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, met
 	}
 
 	d.SetId(securityGroups[0].ID)
+
+	if err := d.Set("created_by", securityGroups[0].CreatedBy); err != nil {
+		return diag.Errorf("error setting created_by: %+v", err)
+	}
+
+	if err := d.Set("created_at", securityGroups[0].CreationDate.String()); err != nil {
+		return diag.Errorf("error setting created_at: %+v", err)
+	}
+
+	if err := d.Set("modified_by", securityGroups[0].ModifiedBy); err != nil {
+		return diag.Errorf("error setting modified_by: %+v", err)
+	}
+
+	if err := d.Set("modified_at", securityGroups[0].ModificationDate.String()); err != nil {
+		return diag.Errorf("error setting modified_at: %+v", err)
+	}
 
 	if err := d.Set("members", flattenSecurityGroupMembers(securityGroups[0].Members)); err != nil {
 		return diag.Errorf("error setting members: %+v", err)

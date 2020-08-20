@@ -16,6 +16,10 @@ func TestAccIPSetDataSource_read(t *testing.T) {
 				Config: testAccIPSetDataSourceConfig(testDataIPSet1DisplayName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", testDataIPSet1DisplayName),
+					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
+					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
+					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
+					resource.TestCheckResourceAttrSet(resourceName, "modified_at"),
 					resource.TestCheckResourceAttr(resourceName, "addresses.0.address", "8.8.8.8/24"),
 				),
 			},

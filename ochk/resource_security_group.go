@@ -53,6 +53,22 @@ func resourceSecurityGroup() *schema.Resource {
 					},
 				},
 			},
+			"created_by": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"created_at": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"modified_by": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"modified_at": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -91,6 +107,22 @@ func resourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta
 
 	if err := d.Set("members", flattenSecurityGroupMembers(securityGroup.Members)); err != nil {
 		return diag.Errorf("error setting members: %+v", err)
+	}
+
+	if err := d.Set("created_by", securityGroup.CreatedBy); err != nil {
+		return diag.Errorf("error setting created_by: %+v", err)
+	}
+
+	if err := d.Set("created_at", securityGroup.CreationDate.String()); err != nil {
+		return diag.Errorf("error setting created_at: %+v", err)
+	}
+
+	if err := d.Set("modified_by", securityGroup.ModifiedBy); err != nil {
+		return diag.Errorf("error setting modified_by: %+v", err)
+	}
+
+	if err := d.Set("modified_at", securityGroup.ModificationDate.String()); err != nil {
+		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
 	return nil

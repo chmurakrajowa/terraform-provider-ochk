@@ -35,6 +35,7 @@ func TestAccVirtualMachineDataSource_read(t *testing.T) {
 				Config: virtualMachine.ToString(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(virtualMachine.FullResourceName(), "display_name", virtualMachine.DisplayName),
+					resource.TestCheckResourceAttrSet(virtualMachine.FullResourceName(), "host_id"),
 				),
 			},
 		},

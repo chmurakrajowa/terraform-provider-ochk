@@ -86,6 +86,10 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 					resource.TestCheckResourceAttrPair(securityGroupResourceName, "members.0.id", virtualMachine.FullResourceName(), "id"),
 					resource.TestCheckResourceAttr(securityGroupResourceName, "members.0.type", securityGroup.Members[0].Type),
 					resource.TestCheckResourceAttrSet(securityGroupResourceName, "members.0.display_name"),
+					resource.TestCheckResourceAttrSet(securityGroupResourceName, "created_by"),
+					resource.TestCheckResourceAttrSet(securityGroupResourceName, "created_at"),
+					resource.TestCheckResourceAttrSet(securityGroupResourceName, "modified_by"),
+					resource.TestCheckResourceAttrSet(securityGroupResourceName, "modified_at"),
 				),
 			},
 			{

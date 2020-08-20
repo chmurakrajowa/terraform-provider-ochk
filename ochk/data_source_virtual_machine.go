@@ -16,6 +16,10 @@ func dataSourceVirtualMachine() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"host_id": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -39,6 +43,10 @@ func dataSourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, m
 	}
 
 	d.SetId(virtualMachines[0].VirtualMachineID)
+
+	if err := d.Set("host_id", virtualMachines[0].HostID); err != nil {
+		return diag.Errorf("error setting host_id: %+v", err)
+	}
 
 	return nil
 }
