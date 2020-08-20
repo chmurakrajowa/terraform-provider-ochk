@@ -17,6 +17,10 @@ func TestAccGatewayPolicyDataSource_read(t *testing.T) {
 				Config: testAccGatewayPolicyDataSourceConfig(displayName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", displayName),
+					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
+					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
+					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
+					resource.TestCheckResourceAttrSet(resourceName, "modified_at"),
 				),
 			},
 		},

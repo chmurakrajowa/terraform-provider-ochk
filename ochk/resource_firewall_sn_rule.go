@@ -98,6 +98,22 @@ func resourceFirewallSNRule() *schema.Resource {
 					},
 				},
 			},
+			"created_by": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"created_at": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"modified_by": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"modified_at": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -172,6 +188,22 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 
 	if err := d.Set("scope", flattenRouterInstancesFromIDs(firewallSNRule.Scope)); err != nil {
 		return diag.Errorf("error setting scope: %+v", err)
+	}
+
+	if err := d.Set("created_by", firewallSNRule.CreatedBy); err != nil {
+		return diag.Errorf("error setting created_by: %+v", err)
+	}
+
+	if err := d.Set("created_at", firewallSNRule.CreationDate.String()); err != nil {
+		return diag.Errorf("error setting created_at: %+v", err)
+	}
+
+	if err := d.Set("modified_by", firewallSNRule.ModifiedBy); err != nil {
+		return diag.Errorf("error setting modified_by: %+v", err)
+	}
+
+	if err := d.Set("modified_at", firewallSNRule.ModificationDate.String()); err != nil {
+		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
 	return nil

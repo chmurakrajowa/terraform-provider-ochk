@@ -36,6 +36,10 @@ func TestAccFirewallEWRuleResource_noPosition(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "direction", direction),
 					resource.TestCheckResourceAttr(resourceName, "ip_protocol", ipProtocol),
 					resource.TestCheckNoResourceAttr(resourceName, "position"),
+					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
+					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
+					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
+					resource.TestCheckResourceAttrSet(resourceName, "modified_at"),
 				),
 			},
 			{

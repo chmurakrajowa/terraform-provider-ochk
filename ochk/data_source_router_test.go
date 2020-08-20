@@ -16,6 +16,11 @@ func TestAccRouterDataSource_read(t *testing.T) {
 				Config: testAccRouterDataSourceConfig("T1"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", "T1"),
+					resource.TestCheckResourceAttrSet(resourceName, "router_type"),
+					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
+					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
+					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
+					resource.TestCheckResourceAttrSet(resourceName, "modified_at"),
 				),
 			},
 		},

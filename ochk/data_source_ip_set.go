@@ -16,6 +16,22 @@ func dataSourceIPSet() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"created_by": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"created_at": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"modified_by": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"modified_at": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"addresses": {
 				Type:     schema.TypeSet,
 				Computed: true,
@@ -55,6 +71,22 @@ func dataSourceIPSetRead(ctx context.Context, d *schema.ResourceData, meta inter
 	}
 
 	d.SetId(ipSets[0].IPSetID)
+
+	if err := d.Set("created_by", ipSets[0].CreatedBy); err != nil {
+		return diag.Errorf("error setting created_by: %+v", err)
+	}
+
+	if err := d.Set("created_at", ipSets[0].CreationDate.String()); err != nil {
+		return diag.Errorf("error setting created_at: %+v", err)
+	}
+
+	if err := d.Set("modified_by", ipSets[0].ModifiedBy); err != nil {
+		return diag.Errorf("error setting modified_by: %+v", err)
+	}
+
+	if err := d.Set("modified_at", ipSets[0].ModificationDate.String()); err != nil {
+		return diag.Errorf("error setting modified_at: %+v", err)
+	}
 
 	if err := d.Set("addresses", flattenIPSetAddresses(ipSets[0].IPSetAddresses)); err != nil {
 		return diag.Errorf("error setting addresses: %+v", err)

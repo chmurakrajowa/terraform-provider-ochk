@@ -16,6 +16,22 @@ func dataSourceGatewayPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"created_by": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"created_at": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"modified_by": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"modified_at": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -39,6 +55,22 @@ func dataSourceGatewayPolicyRead(ctx context.Context, d *schema.ResourceData, me
 	}
 
 	d.SetId(gatewayPolicies[0].GatewayPolicyID)
+
+	if err := d.Set("created_by", gatewayPolicies[0].CreatedBy); err != nil {
+		return diag.Errorf("error setting created_by: %+v", err)
+	}
+
+	if err := d.Set("created_at", gatewayPolicies[0].CreationDate.String()); err != nil {
+		return diag.Errorf("error setting created_at: %+v", err)
+	}
+
+	if err := d.Set("modified_by", gatewayPolicies[0].ModifiedBy); err != nil {
+		return diag.Errorf("error setting modified_by: %+v", err)
+	}
+
+	if err := d.Set("modified_at", gatewayPolicies[0].ModificationDate.String()); err != nil {
+		return diag.Errorf("error setting modified_at: %+v", err)
+	}
 
 	return nil
 }

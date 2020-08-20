@@ -16,6 +16,22 @@ func dataSourceService() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"created_by": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"created_at": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"modified_by": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"modified_at": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -39,6 +55,22 @@ func datSourceServiceRead(ctx context.Context, d *schema.ResourceData, meta inte
 	}
 
 	d.SetId(services[0].ServiceID)
+
+	if err := d.Set("created_by", services[0].CreatedBy); err != nil {
+		return diag.Errorf("error setting created_by: %+v", err)
+	}
+
+	if err := d.Set("created_at", services[0].CreationDate.String()); err != nil {
+		return diag.Errorf("error setting created_at: %+v", err)
+	}
+
+	if err := d.Set("modified_by", services[0].ModifiedBy); err != nil {
+		return diag.Errorf("error setting modified_by: %+v", err)
+	}
+
+	if err := d.Set("modified_at", services[0].ModificationDate.String()); err != nil {
+		return diag.Errorf("error setting modified_at: %+v", err)
+	}
 
 	return nil
 }

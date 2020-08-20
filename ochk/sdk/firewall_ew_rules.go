@@ -15,7 +15,6 @@ type FirewallEWRulesProxy struct {
 	service    firewall_rules_e_w.ClientService
 }
 
-//TODO przy create wysyłane są też daty, które powinny być opcjonalne i wyliczone po stronie backendu
 func (p *FirewallEWRulesProxy) Create(ctx context.Context, securityPolicyID string, rule *models.DFWRule) (*models.DFWRule, error) {
 	if err := rule.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating firewall EW rule struct: %w", err)

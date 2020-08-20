@@ -75,6 +75,7 @@ func resourceFirewallEWRule() *schema.Resource {
 				Type:     schema.TypeList,
 				MaxItems: 1,
 				Optional: true,
+				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"rule_id": {
@@ -87,6 +88,22 @@ func resourceFirewallEWRule() *schema.Resource {
 						},
 					},
 				},
+			},
+			"created_by": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"created_at": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"modified_by": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"modified_at": {
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 		},
 	}
@@ -186,6 +203,22 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 
 	if err := d.Set("position", flattenFirewallRulePosition(firewallEWRule.Position)); err != nil {
 		return diag.Errorf("error setting position: %+v", err)
+	}
+
+	if err := d.Set("created_by", firewallEWRule.CreatedBy); err != nil {
+		return diag.Errorf("error setting created_by: %+v", err)
+	}
+
+	if err := d.Set("created_at", firewallEWRule.CreationDate.String()); err != nil {
+		return diag.Errorf("error setting created_at: %+v", err)
+	}
+
+	if err := d.Set("modified_by", firewallEWRule.ModifiedBy); err != nil {
+		return diag.Errorf("error setting modified_by: %+v", err)
+	}
+
+	if err := d.Set("modified_at", firewallEWRule.ModificationDate.String()); err != nil {
+		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
 	return nil

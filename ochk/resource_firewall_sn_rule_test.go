@@ -44,6 +44,10 @@ func TestAccFirewallSNRuleResource_noPosition(t *testing.T) {
 					resource.TestCheckResourceAttrPair(resourceName, "services.0", dataSourceService, "id"),
 					resource.TestCheckResourceAttrPair(resourceName, "scope.0", dataSourceRouter, "id"),
 					resource.TestCheckNoResourceAttr(resourceName, "position"),
+					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
+					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
+					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
+					resource.TestCheckResourceAttrSet(resourceName, "modified_at"),
 				),
 			},
 			{
