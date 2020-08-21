@@ -20,5 +20,7 @@ terraform.tfvars
 terraform.tfplan
 terraform.tfstate
 terraform.tfstate.backup
+terraform.d
+.terraform.tfstate.lock.info
 *.log
 dist
