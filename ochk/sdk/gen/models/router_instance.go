@@ -7,7 +7,6 @@ package models
 
 import (
 	"encoding/json"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -27,32 +26,8 @@ type RouterInstance struct {
 	// Format: date-time
 	CreationDate *strfmt.DateTime `json:"creationDate,omitempty"`
 
-	// default rule logging
-	DefaultRuleLogging bool `json:"defaultRuleLogging,omitempty"`
-
-	// dhcp config path list
-	DhcpConfigPathList []*DhcpConfigPath `json:"dhcpConfigPathList"`
-
-	// disable firewall
-	DisableFirewall bool `json:"disableFirewall,omitempty"`
-
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
-
-	// failover mode
-	FailoverMode *FailoverMode `json:"failoverMode,omitempty"`
-
-	// force with listing
-	ForceWithListing bool `json:"forceWithListing,omitempty"`
-
-	// ha mode
-	HaMode *HAMode `json:"haMode,omitempty"`
-
-	// internal transit subnet list
-	InternalTransitSubnetList []*InternalTransitSubnet `json:"internalTransitSubnetList"`
-
-	// ip6 profile path list
-	Ip6ProfilePathList []*IP6ProfilePath `json:"ip6ProfilePathList"`
 
 	// modification date
 	// Format: date-time
@@ -61,24 +36,12 @@ type RouterInstance struct {
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`
 
-	// protection
-	Protection *Protection `json:"protection,omitempty"`
-
-	// resource type
-	ResourceType *ResourceType `json:"resourceType,omitempty"`
-
-	// revision
-	Revision int64 `json:"revision,omitempty"`
-
 	// router Id
 	RouterID string `json:"routerId,omitempty"`
 
 	// router type
 	// Enum: [TIER0 TIER1]
 	RouterType string `json:"routerType,omitempty"`
-
-	// transit subnet list
-	TransitSubnetList []*TransitSubnet `json:"transitSubnetList"`
 }
 
 // Validate validates this router instance
@@ -89,43 +52,11 @@ func (m *RouterInstance) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateDhcpConfigPathList(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateFailoverMode(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateHaMode(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateInternalTransitSubnetList(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateIp6ProfilePathList(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateModificationDate(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateProtection(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateResourceType(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateRouterType(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateTransitSubnetList(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -148,117 +79,6 @@ func (m *RouterInstance) validateCreationDate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *RouterInstance) validateDhcpConfigPathList(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.DhcpConfigPathList) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.DhcpConfigPathList); i++ {
-		if swag.IsZero(m.DhcpConfigPathList[i]) { // not required
-			continue
-		}
-
-		if m.DhcpConfigPathList[i] != nil {
-			if err := m.DhcpConfigPathList[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("dhcpConfigPathList" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *RouterInstance) validateFailoverMode(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.FailoverMode) { // not required
-		return nil
-	}
-
-	if m.FailoverMode != nil {
-		if err := m.FailoverMode.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("failoverMode")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *RouterInstance) validateHaMode(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.HaMode) { // not required
-		return nil
-	}
-
-	if m.HaMode != nil {
-		if err := m.HaMode.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("haMode")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *RouterInstance) validateInternalTransitSubnetList(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.InternalTransitSubnetList) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.InternalTransitSubnetList); i++ {
-		if swag.IsZero(m.InternalTransitSubnetList[i]) { // not required
-			continue
-		}
-
-		if m.InternalTransitSubnetList[i] != nil {
-			if err := m.InternalTransitSubnetList[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("internalTransitSubnetList" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *RouterInstance) validateIp6ProfilePathList(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Ip6ProfilePathList) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Ip6ProfilePathList); i++ {
-		if swag.IsZero(m.Ip6ProfilePathList[i]) { // not required
-			continue
-		}
-
-		if m.Ip6ProfilePathList[i] != nil {
-			if err := m.Ip6ProfilePathList[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("ip6ProfilePathList" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 func (m *RouterInstance) validateModificationDate(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.ModificationDate) { // not required
@@ -267,42 +87,6 @@ func (m *RouterInstance) validateModificationDate(formats strfmt.Registry) error
 
 	if err := validate.FormatOf("modificationDate", "body", "date-time", m.ModificationDate.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-func (m *RouterInstance) validateProtection(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Protection) { // not required
-		return nil
-	}
-
-	if m.Protection != nil {
-		if err := m.Protection.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("protection")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *RouterInstance) validateResourceType(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ResourceType) { // not required
-		return nil
-	}
-
-	if m.ResourceType != nil {
-		if err := m.ResourceType.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("resourceType")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -346,31 +130,6 @@ func (m *RouterInstance) validateRouterType(formats strfmt.Registry) error {
 	// value enum
 	if err := m.validateRouterTypeEnum("routerType", "body", m.RouterType); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-func (m *RouterInstance) validateTransitSubnetList(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.TransitSubnetList) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.TransitSubnetList); i++ {
-		if swag.IsZero(m.TransitSubnetList[i]) { // not required
-			continue
-		}
-
-		if m.TransitSubnetList[i] != nil {
-			if err := m.TransitSubnetList[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("transitSubnetList" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

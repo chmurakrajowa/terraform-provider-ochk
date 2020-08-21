@@ -27,11 +27,91 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	RouterCreateUsingPUT(params *RouterCreateUsingPUTParams) (*RouterCreateUsingPUTOK, *RouterCreateUsingPUTCreated, error)
+
+	RouterDeleteUsingDELETE(params *RouterDeleteUsingDELETEParams) (*RouterDeleteUsingDELETEOK, *RouterDeleteUsingDELETECreated, error)
+
 	RouterGetUsingGET(params *RouterGetUsingGETParams) (*RouterGetUsingGETOK, error)
 
 	RouterListUsingGET(params *RouterListUsingGETParams) (*RouterListUsingGETOK, error)
 
+	RouterUpdateUsingPUT(params *RouterUpdateUsingPUTParams) (*RouterUpdateUsingPUTOK, *RouterUpdateUsingPUTCreated, error)
+
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  RouterCreateUsingPUT creates
+
+  Create router T1 in NSX-T
+*/
+func (a *Client) RouterCreateUsingPUT(params *RouterCreateUsingPUTParams) (*RouterCreateUsingPUTOK, *RouterCreateUsingPUTCreated, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewRouterCreateUsingPUTParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "RouterCreateUsingPUT",
+		Method:             "PUT",
+		PathPattern:        "/network/routers",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &RouterCreateUsingPUTReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *RouterCreateUsingPUTOK:
+		return value, nil, nil
+	case *RouterCreateUsingPUTCreated:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for routers: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  RouterDeleteUsingDELETE deletes
+
+  Delete router T1 from NSX-T
+*/
+func (a *Client) RouterDeleteUsingDELETE(params *RouterDeleteUsingDELETEParams) (*RouterDeleteUsingDELETEOK, *RouterDeleteUsingDELETECreated, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewRouterDeleteUsingDELETEParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "RouterDeleteUsingDELETE",
+		Method:             "DELETE",
+		PathPattern:        "/network/routers/{routerId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &RouterDeleteUsingDELETEReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *RouterDeleteUsingDELETEOK:
+		return value, nil, nil
+	case *RouterDeleteUsingDELETECreated:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for routers: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -103,6 +183,43 @@ func (a *Client) RouterListUsingGET(params *RouterListUsingGETParams) (*RouterLi
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for RouterListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  RouterUpdateUsingPUT updates
+
+  Update router T1 from NSX-T
+*/
+func (a *Client) RouterUpdateUsingPUT(params *RouterUpdateUsingPUTParams) (*RouterUpdateUsingPUTOK, *RouterUpdateUsingPUTCreated, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewRouterUpdateUsingPUTParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "RouterUpdateUsingPUT",
+		Method:             "PUT",
+		PathPattern:        "/network/routers/{routerId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &RouterUpdateUsingPUTReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *RouterUpdateUsingPUTOK:
+		return value, nil, nil
+	case *RouterUpdateUsingPUTCreated:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for routers: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

@@ -929,6 +929,48 @@
             "description": "Bad request, error occurred. For more details see log messages."
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Routers"
+        ],
+        "summary": "Create",
+        "description": "Create router T1 in NSX-T",
+        "operationId": "RouterCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "routerInstance",
+            "description": "routerInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RouterInstance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateRouterResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateRouterResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
       }
     },
     "/network/routers/{routerId}": {
@@ -963,6 +1005,92 @@
           },
           "404": {
             "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Routers"
+        ],
+        "summary": "Update",
+        "description": "Update router T1 from NSX-T",
+        "operationId": "RouterUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "routerId",
+            "in": "path",
+            "description": "routerId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "routerInstance",
+            "description": "routerInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RouterInstance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateRouterResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/UpdateRouterResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Routers"
+        ],
+        "summary": "Delete",
+        "description": "Delete router T1 from NSX-T",
+        "operationId": "RouterDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "routerId",
+            "in": "path",
+            "description": "routerId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteRouterResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been deleted",
+            "schema": {
+              "$ref": "#/definitions/DeleteRouterResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
@@ -1683,6 +1811,32 @@
       },
       "title": "CreateGFWRuleResponse"
     },
+    "CreateRouterResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "routerId": {
+          "type": "string"
+        },
+        "routerInstance": {
+          "$ref": "#/definitions/RouterInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "CreateRouterResponse"
+    },
     "CreateSecurityGroupResponse": {
       "type": "object",
       "properties": {
@@ -1871,6 +2025,32 @@
       },
       "title": "DeleteGFWRuleResponse"
     },
+    "DeleteRouterResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "routerInstance": {
+          "$ref": "#/definitions/RouterInstance"
+        },
+        "status": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeleteRouterResponse"
+    },
     "DeleteSecurityGroupResponse": {
       "type": "object",
       "properties": {
@@ -1890,32 +2070,6 @@
         }
       },
       "title": "DeleteSecurityGroupResponse"
-    },
-    "DhcpConfigPath": {
-      "type": "object",
-      "properties": {
-        "dhcpConfigPath": {
-          "type": "string"
-        },
-        "dhcpConfigPathId": {
-          "type": "integer",
-          "format": "int32"
-        }
-      },
-      "title": "DhcpConfigPath"
-    },
-    "FailoverMode": {
-      "type": "object",
-      "properties": {
-        "failoverMode": {
-          "type": "string"
-        },
-        "failoverModeId": {
-          "type": "integer",
-          "format": "int32"
-        }
-      },
-      "title": "FailoverMode"
     },
     "GFWRule": {
       "type": "object",
@@ -2113,32 +2267,6 @@
       },
       "title": "GatewayPolicyListResponse"
     },
-    "HAMode": {
-      "type": "object",
-      "properties": {
-        "haMode": {
-          "type": "string"
-        },
-        "haModeId": {
-          "type": "integer",
-          "format": "int32"
-        }
-      },
-      "title": "HAMode"
-    },
-    "IP6ProfilePath": {
-      "type": "object",
-      "properties": {
-        "ip6ProfilePath": {
-          "type": "string"
-        },
-        "ip6ProfilePathId": {
-          "type": "integer",
-          "format": "int32"
-        }
-      },
-      "title": "IP6ProfilePath"
-    },
     "IPSet": {
       "type": "object",
       "properties": {
@@ -2228,19 +2356,6 @@
         }
       },
       "title": "IPSetListResponse"
-    },
-    "InternalTransitSubnet": {
-      "type": "object",
-      "properties": {
-        "internalTransitSubnet": {
-          "type": "string"
-        },
-        "internalTransitSubnetId": {
-          "type": "integer",
-          "format": "int32"
-        }
-      },
-      "title": "InternalTransitSubnet"
     },
     "LogicalPort": {
       "type": "object",
@@ -2485,19 +2600,6 @@
       },
       "title": "Position"
     },
-    "Protection": {
-      "type": "object",
-      "properties": {
-        "protection": {
-          "type": "string"
-        },
-        "protectionId": {
-          "type": "integer",
-          "format": "int32"
-        }
-      },
-      "title": "Protection"
-    },
     "RequestInstance": {
       "type": "object",
       "properties": {
@@ -2544,6 +2646,9 @@
             "FIREWALL_GFW_RULE_CREATE",
             "FIREWALL_GFW_RULE_DELETE",
             "FIREWALL_GFW_RULE_UPDATE",
+            "ROUTER_CREATE",
+            "ROUTER_DELETE",
+            "ROUTER_UPDATE",
             "SECURITY_GROUP_CREATE",
             "SECURITY_GROUP_DELETE",
             "SECURITY_GROUP_UPDATE"
@@ -2722,41 +2827,8 @@
           "format": "date-time",
           "x-nullable": true
         },
-        "defaultRuleLogging": {
-          "type": "boolean"
-        },
-        "dhcpConfigPathList": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DhcpConfigPath"
-          }
-        },
-        "disableFirewall": {
-          "type": "boolean"
-        },
         "displayName": {
           "type": "string"
-        },
-        "failoverMode": {
-          "$ref": "#/definitions/FailoverMode"
-        },
-        "forceWithListing": {
-          "type": "boolean"
-        },
-        "haMode": {
-          "$ref": "#/definitions/HAMode"
-        },
-        "internalTransitSubnetList": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/InternalTransitSubnet"
-          }
-        },
-        "ip6ProfilePathList": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/IP6ProfilePath"
-          }
         },
         "modificationDate": {
           "type": "string",
@@ -2765,16 +2837,6 @@
         },
         "modifiedBy": {
           "type": "string"
-        },
-        "protection": {
-          "$ref": "#/definitions/Protection"
-        },
-        "resourceType": {
-          "$ref": "#/definitions/ResourceType"
-        },
-        "revision": {
-          "type": "integer",
-          "format": "int64"
         },
         "routerId": {
           "type": "string"
@@ -2785,12 +2847,6 @@
             "TIER0",
             "TIER1"
           ]
-        },
-        "transitSubnetList": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TransitSubnet"
-          }
         }
       },
       "title": "RouterInstance"
@@ -3187,19 +3243,6 @@
       },
       "title": "TagInstance"
     },
-    "TransitSubnet": {
-      "type": "object",
-      "properties": {
-        "transitSubnet": {
-          "type": "string"
-        },
-        "transitSubnetId": {
-          "type": "integer",
-          "format": "int32"
-        }
-      },
-      "title": "TransitSubnet"
-    },
     "UpdateDFWRuleResponse": {
       "type": "object",
       "properties": {
@@ -3245,6 +3288,29 @@
         }
       },
       "title": "UpdateGFWRuleResponse"
+    },
+    "UpdateRouterResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "routerInstance": {
+          "$ref": "#/definitions/RouterInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "UpdateRouterResponse"
     },
     "UpdateSecurityGroupResponse": {
       "type": "object",
