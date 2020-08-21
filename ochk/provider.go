@@ -63,6 +63,7 @@ func Provider() *schema.Provider {
 			"ochk_security_group":   resourceSecurityGroup(),
 			"ochk_firewall_ew_rule": resourceFirewallEWRule(),
 			"ochk_firewall_sn_rule": resourceFirewallSNRule(),
+			"ochk_router":           resourceRouter(),
 		},
 		ConfigureContextFunc: func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 			client, err := sdk.NewClient(

@@ -105,8 +105,7 @@ func (p *FirewallSNRulesProxy) ListByDisplayName(ctx context.Context, gatewayPol
 }
 
 func (p *FirewallSNRulesProxy) Exists(ctx context.Context, gatewayPolicyID string, ruleID string) (bool, error) {
-	_, err := p.Read(ctx, gatewayPolicyID, ruleID)
-	if err != nil {
+	if _, err := p.Read(ctx, gatewayPolicyID, ruleID); err != nil {
 		if IsNotFoundError(err) {
 			return false, nil
 		}

@@ -273,7 +273,7 @@ func resourceFirewallSNRuleDelete(ctx context.Context, d *schema.ResourceData, m
 			return diag.Errorf("firewall SN rule with id %s not found: %+v", d.Id(), err)
 		}
 
-		return diag.Errorf("error while reading deleting firewall SN rule: %+v", err)
+		return diag.Errorf("error while deleting firewall SN rule: %+v", err)
 	}
 
 	return nil

@@ -124,8 +124,7 @@ func (p *FirewallEWRulesProxy) List(ctx context.Context, securityPolicyID string
 }
 
 func (p *FirewallEWRulesProxy) Exists(ctx context.Context, securityPolicyID string, ruleID string) (bool, error) {
-	_, err := p.Read(ctx, securityPolicyID, ruleID)
-	if err != nil {
+	if _, err := p.Read(ctx, securityPolicyID, ruleID); err != nil {
 		if IsNotFoundError(err) {
 			return false, nil
 		}
