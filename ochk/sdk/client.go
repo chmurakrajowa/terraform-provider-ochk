@@ -9,7 +9,10 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+	"log"
 	"net/http"
+	"sync"
+	"time"
 )
 
 type Client struct {
@@ -25,7 +28,16 @@ type Client struct {
 	IPSets          IPSetsProxy
 }
 
+var clientMutex sync.Mutex
+
 func NewClient(ctx context.Context, host string, tenant string, username string, password string, insecure bool, debugLogFile string) (*Client, error) {
+	clientMutex.Lock()
+	defer clientMutex.Unlock()
+
+	if c := getClientFromCache(host, tenant, username, insecure, debugLogFile); c != nil {
+		return c, nil
+	}
+
 	var logger *FileLogger
 	if debugLogFile != "" {
 		logger = NewFileLogger(debugLogFile)
@@ -76,7 +88,7 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 
 	authClient := client.New(apiClientAuthTransport, strfmt.Default)
 
-	return &Client{
+	c := &Client{
 		logger: logger,
 		SecurityGroups: SecurityGroupsProxy{
 			httpClient: httpClient,
@@ -114,7 +126,47 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 			httpClient: httpClient,
 			service:    authClient.IPSets,
 		},
-	}, nil
+	}
+
+	cacheClient(c, host, tenant, username, insecure, debugLogFile)
+
+	return c, nil
+}
+
+type cachedClient struct {
+	c *Client
+	cacheTime time.Time
+}
+
+var clientCacheLifetime = time.Minute * 5
+var clientCache = map[string]cachedClient{}
+
+func clientCacheKey(host string, tenant string, username string, insecure bool, file string) string {
+	return fmt.Sprintf("%s_%s_%s_%t_%s", host, tenant, username, insecure, file)
+}
+
+func getClientFromCache(host string, tenant string, username string, insecure bool, file string) *Client {
+	key := clientCacheKey(host, tenant, username, insecure, file)
+	if clientFromCache, ok := clientCache[key]; ok {
+		if time.Since(clientFromCache.cacheTime) > clientCacheLifetime {
+			log.Printf("Evicting expired client from cache by key: %s", key)
+			return nil
+		}
+
+		log.Printf("Returning client from cache by key: %s", key)
+		return clientFromCache.c
+	}
+
+	return nil
+}
+
+func cacheClient(c *Client, host string, tenant string, username string, insecure bool, debugLogFile string) {
+	key := clientCacheKey(host, tenant, username, insecure, debugLogFile)
+	log.Printf("Putting client into cache by key: %s", key)
+	clientCache[key] = cachedClient{
+		c:         c,
+		cacheTime: time.Now(),
+	}
 }
 
 func mapToSchemes(insecure bool) []string {
