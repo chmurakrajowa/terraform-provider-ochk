@@ -1,9 +1,13 @@
 #!/bin/bash
 
-set -ex
+set -e
 
-echo "Install golangci-lint"
-go install github.com/golangci/golangci-lint/cmd/golangci-lint
+LINT_BIN="$(go env GOPATH)/bin/golangci-lint"
+
+if [[ ! -f ${LINT_BIN} ]]; then
+  echo "Install golangci-lint"
+  go install github.com/golangci/golangci-lint/cmd/golangci-lint
+fi
 
 echo "Run golangci-lint"
-$(go env GOPATH)/bin/golangci-lint run ./ochk/... -v
+${LINT_BIN} run ./ochk/... -v
