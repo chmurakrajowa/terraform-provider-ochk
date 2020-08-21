@@ -11,6 +11,9 @@ testacc:
 lint:
 	tools/lint.sh
 
+swagger-update:
+	tools/swagger_update.sh
+
 swagger:
 	tools/swagger_gen.sh
 
