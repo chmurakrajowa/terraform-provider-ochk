@@ -152,7 +152,7 @@ func resourceSecurityGroupDelete(ctx context.Context, d *schema.ResourceData, me
 			return diag.Errorf("security group with id %s not found: %+v", d.Id(), err)
 		}
 
-		return diag.Errorf("error while reading deleting group: %+v", err)
+		return diag.Errorf("error while deleting group: %+v", err)
 	}
 
 	return nil

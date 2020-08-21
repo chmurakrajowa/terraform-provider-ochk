@@ -106,8 +106,7 @@ func (p *SecurityGroupsProxy) ListByDisplayName(ctx context.Context, displayName
 }
 
 func (p *SecurityGroupsProxy) Exists(ctx context.Context, securityGroupID string) (bool, error) {
-	_, err := p.Read(ctx, securityGroupID)
-	if err != nil {
+	if _, err := p.Read(ctx, securityGroupID); err != nil {
 		if IsNotFoundError(err) {
 			return false, nil
 		}
