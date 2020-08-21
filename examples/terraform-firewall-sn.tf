@@ -1,5 +1,6 @@
 data "ochk_gateway_policy" "T1" {
   display_name = ochk_router.T1.display_name
+  depends_on = [ochk_router.T1]
 }
 
 resource "ochk_firewall_sn_rule" "fw-sn-1" {

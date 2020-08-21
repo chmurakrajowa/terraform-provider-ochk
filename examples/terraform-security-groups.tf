@@ -11,11 +11,19 @@ resource "ochk_security_group" "ipset" {
   }
 }
 
+data "ochk_virtual_machine" "vm1" {
+  display_name = "devel0000000343"
+}
+
+data "ochk_virtual_machine" "vm2" {
+  display_name = "devel0000000350"
+}
+
 resource "ochk_security_group" "vm" {
   display_name = "tf-${var.demo-id}-vm"
 
   members {
-    id = "fa6457e3-aea9-4ef1-8450-de1ce676b6b9"
+    id = data.ochk_virtual_machine.vm1.id
     type = "VIRTUAL_MACHINE"
   }
 
@@ -28,7 +36,7 @@ resource "ochk_security_group" "vm_ipset" {
   display_name = "tf-${var.demo-id}-vm-ipset"
 
   members {
-    id = "41a4a906-b635-4524-9283-fd4997ee7b62"
+    id = data.ochk_virtual_machine.vm2.id
     type = "VIRTUAL_MACHINE"
   }
 
