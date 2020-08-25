@@ -4,7 +4,7 @@ page_title: "Security Group Data Source"
 
 # Security Group Data Source
 
-Data Source for security groups. 
+Data Source for reading security groups by display name. 
 
 ## Example Usage
 
