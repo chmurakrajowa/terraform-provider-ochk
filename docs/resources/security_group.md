@@ -24,6 +24,31 @@ resource "ochk_security_group" "vm_ipset" {
 }
 ```
 
+It is not recommended to directly use resource identifiers. To avoid that prefer to use data sources:
+```hcl
+data "ochk_virtual_machine" "vm" {
+  display_name = "devel0000001157"
+}
+
+data "ochk_ip_set" "google" {
+  display_name = "googledns"
+}
+
+resource "ochk_security_group" "google_dns_sg" {
+  display_name = "tf-sg-google-dns"
+
+  members {
+    id = data.ochk_virtual_machine.vm.id
+    type = "VIRTUAL_MACHINE"
+  }
+
+  members {
+    id = data.ochk_ip_set.google.id
+    type = "IPSET"
+  }
+}
+```
+
 ## Argument Reference
 
 The following arguments are supported:
