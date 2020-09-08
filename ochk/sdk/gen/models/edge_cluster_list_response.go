@@ -6,22 +6,24 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-// NetworkGetResponse NetworkGetResponse
+// EdgeClusterListResponse EdgeClusterListResponse
 //
-// swagger:model NetworkGetResponse
-type NetworkGetResponse struct {
+// swagger:model EdgeClusterListResponse
+type EdgeClusterListResponse struct {
+
+	// edge cluster collection
+	EdgeClusterCollection []*EdgeClusterInstance `json:"edgeClusterCollection"`
 
 	// messages
 	Messages string `json:"messages,omitempty"`
-
-	// network instance
-	NetworkInstance *VCSNetworkInstance `json:"networkInstance,omitempty"`
 
 	// success
 	Success bool `json:"success,omitempty"`
@@ -31,11 +33,11 @@ type NetworkGetResponse struct {
 	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
-// Validate validates this network get response
-func (m *NetworkGetResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this edge cluster list response
+func (m *EdgeClusterListResponse) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateNetworkInstance(formats); err != nil {
+	if err := m.validateEdgeClusterCollection(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -49,25 +51,32 @@ func (m *NetworkGetResponse) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *NetworkGetResponse) validateNetworkInstance(formats strfmt.Registry) error {
+func (m *EdgeClusterListResponse) validateEdgeClusterCollection(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.NetworkInstance) { // not required
+	if swag.IsZero(m.EdgeClusterCollection) { // not required
 		return nil
 	}
 
-	if m.NetworkInstance != nil {
-		if err := m.NetworkInstance.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("networkInstance")
-			}
-			return err
+	for i := 0; i < len(m.EdgeClusterCollection); i++ {
+		if swag.IsZero(m.EdgeClusterCollection[i]) { // not required
+			continue
 		}
+
+		if m.EdgeClusterCollection[i] != nil {
+			if err := m.EdgeClusterCollection[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("edgeClusterCollection" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
 }
 
-func (m *NetworkGetResponse) validateTimestamp(formats strfmt.Registry) error {
+func (m *EdgeClusterListResponse) validateTimestamp(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
@@ -81,7 +90,7 @@ func (m *NetworkGetResponse) validateTimestamp(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *NetworkGetResponse) MarshalBinary() ([]byte, error) {
+func (m *EdgeClusterListResponse) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -89,8 +98,8 @@ func (m *NetworkGetResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *NetworkGetResponse) UnmarshalBinary(b []byte) error {
-	var res NetworkGetResponse
+func (m *EdgeClusterListResponse) UnmarshalBinary(b []byte) error {
+	var res EdgeClusterListResponse
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

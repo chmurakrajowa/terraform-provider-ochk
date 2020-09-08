@@ -6,12 +6,9 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"encoding/json"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // NetworkInstance NetworkInstance
@@ -19,44 +16,25 @@ import (
 // swagger:model NetworkInstance
 type NetworkInstance struct {
 
-	// created by
-	CreatedBy string `json:"createdBy,omitempty"`
+	// network adapter
+	NetworkAdapter *NetworkAdapter `json:"networkAdapter,omitempty"`
 
-	// creation date
-	// Format: date-time
-	CreationDate *strfmt.DateTime `json:"creationDate,omitempty"`
+	// network instance Id
+	NetworkInstanceID string `json:"networkInstanceId,omitempty"`
 
-	// modification date
-	// Format: date-time
-	ModificationDate *strfmt.DateTime `json:"modificationDate,omitempty"`
-
-	// modified by
-	ModifiedBy string `json:"modifiedBy,omitempty"`
-
-	// name
-	Name string `json:"name,omitempty"`
-
-	// network Id
-	NetworkID string `json:"networkId,omitempty"`
-
-	// network type
-	// Enum: [DISTRIBUTED_PORTGROUP HOST_DEVICE OPAQUE_NETWORK STANDARD_PORTGROUP]
-	NetworkType string `json:"networkType,omitempty"`
+	// network profile
+	NetworkProfile *NetworkProfile `json:"networkProfile,omitempty"`
 }
 
 // Validate validates this network instance
 func (m *NetworkInstance) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateCreationDate(formats); err != nil {
+	if err := m.validateNetworkAdapter(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateModificationDate(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateNetworkType(formats); err != nil {
+	if err := m.validateNetworkProfile(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -66,76 +44,37 @@ func (m *NetworkInstance) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *NetworkInstance) validateCreationDate(formats strfmt.Registry) error {
+func (m *NetworkInstance) validateNetworkAdapter(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.CreationDate) { // not required
+	if swag.IsZero(m.NetworkAdapter) { // not required
 		return nil
 	}
 
-	if err := validate.FormatOf("creationDate", "body", "date-time", m.CreationDate.String(), formats); err != nil {
-		return err
+	if m.NetworkAdapter != nil {
+		if err := m.NetworkAdapter.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("networkAdapter")
+			}
+			return err
+		}
 	}
 
 	return nil
 }
 
-func (m *NetworkInstance) validateModificationDate(formats strfmt.Registry) error {
+func (m *NetworkInstance) validateNetworkProfile(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.ModificationDate) { // not required
+	if swag.IsZero(m.NetworkProfile) { // not required
 		return nil
 	}
 
-	if err := validate.FormatOf("modificationDate", "body", "date-time", m.ModificationDate.String(), formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-var networkInstanceTypeNetworkTypePropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["DISTRIBUTED_PORTGROUP","HOST_DEVICE","OPAQUE_NETWORK","STANDARD_PORTGROUP"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		networkInstanceTypeNetworkTypePropEnum = append(networkInstanceTypeNetworkTypePropEnum, v)
-	}
-}
-
-const (
-
-	// NetworkInstanceNetworkTypeDISTRIBUTEDPORTGROUP captures enum value "DISTRIBUTED_PORTGROUP"
-	NetworkInstanceNetworkTypeDISTRIBUTEDPORTGROUP string = "DISTRIBUTED_PORTGROUP"
-
-	// NetworkInstanceNetworkTypeHOSTDEVICE captures enum value "HOST_DEVICE"
-	NetworkInstanceNetworkTypeHOSTDEVICE string = "HOST_DEVICE"
-
-	// NetworkInstanceNetworkTypeOPAQUENETWORK captures enum value "OPAQUE_NETWORK"
-	NetworkInstanceNetworkTypeOPAQUENETWORK string = "OPAQUE_NETWORK"
-
-	// NetworkInstanceNetworkTypeSTANDARDPORTGROUP captures enum value "STANDARD_PORTGROUP"
-	NetworkInstanceNetworkTypeSTANDARDPORTGROUP string = "STANDARD_PORTGROUP"
-)
-
-// prop value enum
-func (m *NetworkInstance) validateNetworkTypeEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, networkInstanceTypeNetworkTypePropEnum, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (m *NetworkInstance) validateNetworkType(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.NetworkType) { // not required
-		return nil
-	}
-
-	// value enum
-	if err := m.validateNetworkTypeEnum("networkType", "body", m.NetworkType); err != nil {
-		return err
+	if m.NetworkProfile != nil {
+		if err := m.NetworkProfile.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("networkProfile")
+			}
+			return err
+		}
 	}
 
 	return nil

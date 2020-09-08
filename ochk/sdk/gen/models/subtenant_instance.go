@@ -6,6 +6,9 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -18,15 +21,93 @@ type SubtenantInstance struct {
 	// description
 	Description string `json:"description,omitempty"`
 
+	// email
+	Email string `json:"email,omitempty"`
+
+	// memory reserved size m b
+	MemoryReservedSizeMB int64 `json:"memoryReservedSizeMB,omitempty"`
+
 	// name
 	Name string `json:"name,omitempty"`
 
+	// networks
+	Networks []*VCSNetworkInstance `json:"networks"`
+
+	// storage reserved size g b
+	StorageReservedSizeGB int64 `json:"storageReservedSizeGB,omitempty"`
+
 	// subtenant Id
 	SubtenantID string `json:"subtenantId,omitempty"`
+
+	// users
+	Users []*UserInstance `json:"users"`
 }
 
 // Validate validates this subtenant instance
 func (m *SubtenantInstance) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateNetworks(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateUsers(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *SubtenantInstance) validateNetworks(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Networks) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Networks); i++ {
+		if swag.IsZero(m.Networks[i]) { // not required
+			continue
+		}
+
+		if m.Networks[i] != nil {
+			if err := m.Networks[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("networks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *SubtenantInstance) validateUsers(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Users) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Users); i++ {
+		if swag.IsZero(m.Users[i]) { // not required
+			continue
+		}
+
+		if m.Users[i] != nil {
+			if err := m.Users[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("users" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 

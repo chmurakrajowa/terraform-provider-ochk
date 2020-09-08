@@ -19,7 +19,7 @@ import (
 // NewSubtenantListUsingGETParams creates a new SubtenantListUsingGETParams object
 // with the default values initialized.
 func NewSubtenantListUsingGETParams() *SubtenantListUsingGETParams {
-
+	var ()
 	return &SubtenantListUsingGETParams{
 
 		timeout: cr.DefaultTimeout,
@@ -29,7 +29,7 @@ func NewSubtenantListUsingGETParams() *SubtenantListUsingGETParams {
 // NewSubtenantListUsingGETParamsWithTimeout creates a new SubtenantListUsingGETParams object
 // with the default values initialized, and the ability to set a timeout on a request
 func NewSubtenantListUsingGETParamsWithTimeout(timeout time.Duration) *SubtenantListUsingGETParams {
-
+	var ()
 	return &SubtenantListUsingGETParams{
 
 		timeout: timeout,
@@ -39,7 +39,7 @@ func NewSubtenantListUsingGETParamsWithTimeout(timeout time.Duration) *Subtenant
 // NewSubtenantListUsingGETParamsWithContext creates a new SubtenantListUsingGETParams object
 // with the default values initialized, and the ability to set a context for a request
 func NewSubtenantListUsingGETParamsWithContext(ctx context.Context) *SubtenantListUsingGETParams {
-
+	var ()
 	return &SubtenantListUsingGETParams{
 
 		Context: ctx,
@@ -49,7 +49,7 @@ func NewSubtenantListUsingGETParamsWithContext(ctx context.Context) *SubtenantLi
 // NewSubtenantListUsingGETParamsWithHTTPClient creates a new SubtenantListUsingGETParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewSubtenantListUsingGETParamsWithHTTPClient(client *http.Client) *SubtenantListUsingGETParams {
-
+	var ()
 	return &SubtenantListUsingGETParams{
 		HTTPClient: client,
 	}
@@ -59,6 +59,13 @@ func NewSubtenantListUsingGETParamsWithHTTPClient(client *http.Client) *Subtenan
 for the subtenant list using g e t operation typically these are written to a http.Request
 */
 type SubtenantListUsingGETParams struct {
+
+	/*Name
+	  name
+
+	*/
+	Name *string
+
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -97,6 +104,17 @@ func (o *SubtenantListUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithName adds the name to the subtenant list using g e t params
+func (o *SubtenantListUsingGETParams) WithName(name *string) *SubtenantListUsingGETParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the subtenant list using g e t params
+func (o *SubtenantListUsingGETParams) SetName(name *string) {
+	o.Name = name
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *SubtenantListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -104,6 +122,22 @@ func (o *SubtenantListUsingGETParams) WriteToRequest(r runtime.ClientRequest, re
 		return err
 	}
 	var res []error
+
+	if o.Name != nil {
+
+		// query param name
+		var qrName string
+		if o.Name != nil {
+			qrName = *o.Name
+		}
+		qName := qrName
+		if qName != "" {
+			if err := r.SetQueryParam("name", qName); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
