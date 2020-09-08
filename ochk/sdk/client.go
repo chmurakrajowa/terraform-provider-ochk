@@ -27,6 +27,7 @@ type Client struct {
 	VirtualMachines VirtualMachinesProxy
 	IPSets          IPSetsProxy
 	LogicalPorts    LogicalPortsProxy
+	Users           UsersProxy
 }
 
 var clientMutex sync.Mutex
@@ -130,6 +131,10 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		LogicalPorts: LogicalPortsProxy{
 			httpClient: httpClient,
 			service:    authClient.LogicalPorts,
+		},
+		Users: UsersProxy{
+			httpClient: httpClient,
+			service:    authClient.Users,
 		},
 	}
 
