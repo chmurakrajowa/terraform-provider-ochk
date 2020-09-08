@@ -20,7 +20,7 @@ func TestAccIPSetDataSource_read(t *testing.T) {
 					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_at"),
-					resource.TestCheckResourceAttr(resourceName, "addresses.0.address", "8.8.8.8/24"),
+					resource.TestCheckResourceAttr(resourceName, "addresses.0.address", "10.10.10.1"),
 				),
 			},
 		},

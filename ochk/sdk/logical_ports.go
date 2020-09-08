@@ -39,13 +39,13 @@ func (p *LogicalPortsProxy) Read(ctx context.Context, ipSetID string) (*models.L
 }
 
 func (p *LogicalPortsProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.LogicalPort, error) {
-	params := &logical_ports.LogicalPortListUsingGETParams{
+	params := &logical_ports.LogicalPortListUsingGET1Params{
 		DisplayName: &displayName,
 		Context:     ctx,
 		HTTPClient:  p.httpClient,
 	}
 
-	response, err := p.service.LogicalPortListUsingGET(params)
+	response, err := p.service.LogicalPortListUsingGET1(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while listing logical ports by display name %s: %w", displayName, err)
 	}
