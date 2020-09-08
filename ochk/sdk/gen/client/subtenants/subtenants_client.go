@@ -27,11 +27,90 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	SecurityGroupDeleteUsingDELETE1(params *SecurityGroupDeleteUsingDELETE1Params) (*SecurityGroupDeleteUsingDELETE1OK, error)
+
+	SubtenantCreateUsingPUT(params *SubtenantCreateUsingPUTParams) (*SubtenantCreateUsingPUTOK, *SubtenantCreateUsingPUTCreated, error)
+
 	SubtenantGetUsingGET(params *SubtenantGetUsingGETParams) (*SubtenantGetUsingGETOK, error)
 
 	SubtenantListUsingGET(params *SubtenantListUsingGETParams) (*SubtenantListUsingGETOK, error)
 
+	SubtenantUpdateUsingPUT(params *SubtenantUpdateUsingPUTParams) (*SubtenantUpdateUsingPUTOK, error)
+
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+  SecurityGroupDeleteUsingDELETE1 deletes
+
+  Delete subtenant
+*/
+func (a *Client) SecurityGroupDeleteUsingDELETE1(params *SecurityGroupDeleteUsingDELETE1Params) (*SecurityGroupDeleteUsingDELETE1OK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewSecurityGroupDeleteUsingDELETE1Params()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "SecurityGroupDeleteUsingDELETE_1",
+		Method:             "DELETE",
+		PathPattern:        "/subtenants/{subtenantId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &SecurityGroupDeleteUsingDELETE1Reader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*SecurityGroupDeleteUsingDELETE1OK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for SecurityGroupDeleteUsingDELETE_1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  SubtenantCreateUsingPUT creates
+
+  Create subtenant (business group)
+*/
+func (a *Client) SubtenantCreateUsingPUT(params *SubtenantCreateUsingPUTParams) (*SubtenantCreateUsingPUTOK, *SubtenantCreateUsingPUTCreated, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewSubtenantCreateUsingPUTParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "SubtenantCreateUsingPUT",
+		Method:             "PUT",
+		PathPattern:        "/subtenants",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &SubtenantCreateUsingPUTReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *SubtenantCreateUsingPUTOK:
+		return value, nil, nil
+	case *SubtenantCreateUsingPUTCreated:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for subtenants: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
@@ -103,6 +182,42 @@ func (a *Client) SubtenantListUsingGET(params *SubtenantListUsingGETParams) (*Su
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for SubtenantListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  SubtenantUpdateUsingPUT updates
+
+  Update subtenant
+*/
+func (a *Client) SubtenantUpdateUsingPUT(params *SubtenantUpdateUsingPUTParams) (*SubtenantUpdateUsingPUTOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewSubtenantUpdateUsingPUTParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "SubtenantUpdateUsingPUT",
+		Method:             "PUT",
+		PathPattern:        "/subtenants/{subtenantId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &SubtenantUpdateUsingPUTReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*SubtenantUpdateUsingPUTOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for SubtenantUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

@@ -23,7 +23,7 @@ type NetworkListResponse struct {
 	Messages string `json:"messages,omitempty"`
 
 	// network instance collection
-	NetworkInstanceCollection []*NetworkInstance `json:"networkInstanceCollection"`
+	NetworkInstanceCollection []*VCSNetworkInstance `json:"networkInstanceCollection"`
 
 	// success
 	Success bool `json:"success,omitempty"`

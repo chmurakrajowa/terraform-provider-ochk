@@ -23,6 +23,10 @@
       "description": "Service Controller"
     },
     {
+      "name": "Edge Clusters",
+      "description": "Edge Cluster Controller"
+    },
+    {
       "name": "Firewall rules E-W",
       "description": "DFW Rule Controller"
     },
@@ -47,10 +51,6 @@
       "description": "Vcs Network Controller"
     },
     {
-      "name": "Reservations",
-      "description": "Reservations Controller"
-    },
-    {
       "name": "Routers",
       "description": "Router Controller"
     },
@@ -67,8 +67,24 @@
       "description": "Subtenant Controller"
     },
     {
+      "name": "Subtenants/Networks",
+      "description": "Subtenant Network Controller"
+    },
+    {
+      "name": "Subtenants/Reservations",
+      "description": "Reservations Controller"
+    },
+    {
       "name": "Virtual machines",
       "description": "Vcs Virtual Machine Controller"
+    },
+    {
+      "name": "identity/principals",
+      "description": "Principal Controller"
+    },
+    {
+      "name": "identity/users",
+      "description": "Users Controller"
     },
     {
       "name": "vIDM",
@@ -76,6 +92,43 @@
     }
   ],
   "paths": {
+    "/identity/principals/{principalId}": {
+      "get": {
+        "tags": [
+          "identity/principals"
+        ],
+        "summary": "Get",
+        "description": "Get principal",
+        "operationId": "PrincipalGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "principalId",
+            "in": "path",
+            "description": "principalId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PrincipalGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
     "/network/context-profiles": {
       "get": {
         "tags": [
@@ -167,6 +220,75 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/ServiceGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/network/edge-clusters": {
+      "get": {
+        "tags": [
+          "Edge Clusters"
+        ],
+        "summary": "List",
+        "description": "List edge clusters from NSX-T",
+        "operationId": "LogicalPortListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/EdgeClusterListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/network/edge-clusters/{edgeClusterId}": {
+      "get": {
+        "tags": [
+          "Edge Clusters"
+        ],
+        "summary": "Get",
+        "description": "Get edge cluster from NSX-T",
+        "operationId": "EdgeClusterGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "edgeClusterId",
+            "in": "path",
+            "description": "edgeClusterId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/EdgeClusterGetResponse"
             }
           },
           "400": {
@@ -836,7 +958,7 @@
         ],
         "summary": "List",
         "description": "List logical ports from NSX-T",
-        "operationId": "LogicalPortListUsingGET",
+        "operationId": "LogicalPortListUsingGET_1",
         "produces": [
           "application/json"
         ],
@@ -1360,11 +1482,62 @@
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name",
+            "required": false,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/SubtenantListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Subtenants"
+        ],
+        "summary": "Create",
+        "description": "Create subtenant (business group)",
+        "operationId": "SubtenantCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "subtenantInstance",
+            "description": "subtenantInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SubtenantInstance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SubtenantCreateResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/SubtenantCreateResponse"
             }
           },
           "400": {
@@ -1407,12 +1580,162 @@
             "description": "Entity not found."
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Subtenants"
+        ],
+        "summary": "Update",
+        "description": "Update subtenant",
+        "operationId": "SubtenantUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "subtenantInstance",
+            "description": "subtenantInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SubtenantInstance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SubtenantUpdateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Subtenants"
+        ],
+        "summary": "Delete",
+        "description": "Delete subtenant",
+        "operationId": "SecurityGroupDeleteUsingDELETE_1",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SubtenantDeleteResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/subtenants/{subtenantId}/networks": {
+      "get": {
+        "tags": [
+          "Subtenants/Networks"
+        ],
+        "summary": "List",
+        "description": "List network in subtenant",
+        "operationId": "NetworkListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/NetworkListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/subtenants/{subtenantId}/networks/{networkId}": {
+      "get": {
+        "tags": [
+          "Subtenants/Networks"
+        ],
+        "summary": "Get",
+        "description": "Get network for subtenant",
+        "operationId": "NetworkGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "networkId",
+            "in": "path",
+            "description": "networkId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/NetworkGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
       }
     },
     "/subtenants/{subtenantId}/reservations": {
       "get": {
         "tags": [
-          "Reservations"
+          "Subtenants/Reservations"
         ],
         "summary": "List",
         "description": "List reservations",
@@ -1445,7 +1768,7 @@
     "/subtenants/{subtenantId}/reservations/{reservationId}": {
       "get": {
         "tags": [
-          "Reservations"
+          "Subtenants/Reservations"
         ],
         "summary": "Get",
         "description": "Get reservation",
@@ -1474,6 +1797,75 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/ReservationGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "identity/users"
+        ],
+        "summary": "List",
+        "description": "List users from vra/core",
+        "operationId": "UserListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "query",
+            "description": "userName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": [
+          "identity/users"
+        ],
+        "summary": "Get",
+        "description": "Get user",
+        "operationId": "UserGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "userId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserGetResponse"
             }
           },
           "400": {
@@ -1691,32 +2083,6 @@
         }
       },
       "title": "AttributeValueInstance"
-    },
-    "Category": {
-      "type": "object",
-      "properties": {
-        "category": {
-          "type": "string"
-        },
-        "categoryId": {
-          "type": "integer",
-          "format": "int32"
-        }
-      },
-      "title": "Category"
-    },
-    "ConnectivityStrategy": {
-      "type": "object",
-      "properties": {
-        "connectivityStrategy": {
-          "type": "string"
-        },
-        "connectivityStrategyId": {
-          "type": "integer",
-          "format": "int32"
-        }
-      },
-      "title": "ConnectivityStrategy"
     },
     "ContextProfileInstance": {
       "type": "object",
@@ -2070,6 +2436,64 @@
         }
       },
       "title": "DeleteSecurityGroupResponse"
+    },
+    "EdgeClusterGetResponse": {
+      "type": "object",
+      "properties": {
+        "edgeClusterInstance": {
+          "$ref": "#/definitions/EdgeClusterInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "EdgeClusterGetResponse"
+    },
+    "EdgeClusterInstance": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "edgeClusterId": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      },
+      "title": "EdgeClusterInstance"
+    },
+    "EdgeClusterListResponse": {
+      "type": "object",
+      "properties": {
+        "edgeClusterCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EdgeClusterInstance"
+          }
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "EdgeClusterListResponse"
     },
     "GFWRule": {
       "type": "object",
@@ -2434,7 +2858,7 @@
           "type": "string"
         },
         "networkInstance": {
-          "$ref": "#/definitions/NetworkInstance"
+          "$ref": "#/definitions/VCSNetworkInstance"
         },
         "success": {
           "type": "boolean"
@@ -2450,36 +2874,14 @@
     "NetworkInstance": {
       "type": "object",
       "properties": {
-        "createdBy": {
+        "networkAdapter": {
+          "$ref": "#/definitions/NetworkAdapter"
+        },
+        "networkInstanceId": {
           "type": "string"
         },
-        "creationDate": {
-          "type": "string",
-          "format": "date-time",
-          "x-nullable": true
-        },
-        "modificationDate": {
-          "type": "string",
-          "format": "date-time",
-          "x-nullable": true
-        },
-        "modifiedBy": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "networkId": {
-          "type": "string"
-        },
-        "networkType": {
-          "type": "string",
-          "enum": [
-            "DISTRIBUTED_PORTGROUP",
-            "HOST_DEVICE",
-            "OPAQUE_NETWORK",
-            "STANDARD_PORTGROUP"
-          ]
+        "networkProfile": {
+          "$ref": "#/definitions/NetworkProfile"
         }
       },
       "title": "NetworkInstance"
@@ -2505,7 +2907,7 @@
           "type": "string"
         },
         "networkInstance": {
-          "$ref": "#/definitions/NetworkInstance"
+          "$ref": "#/definitions/VCSNetworkInstance"
         },
         "networkInterfaceId": {
           "type": "string"
@@ -2553,7 +2955,7 @@
         "networkInstanceCollection": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/NetworkInstance"
+            "$ref": "#/definitions/VCSNetworkInstance"
           }
         },
         "success": {
@@ -2599,6 +3001,51 @@
         }
       },
       "title": "Position"
+    },
+    "PrincipalGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "principalId": {
+          "$ref": "#/definitions/PrincipalId"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "PrincipalGetResponse"
+    },
+    "PrincipalId": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "principalType": {
+          "type": "string",
+          "enum": [
+            "CUSTOM_GROUP",
+            "GROUP",
+            "SSO_GROUP",
+            "USER"
+          ]
+        }
+      },
+      "title": "PrincipalId"
     },
     "RequestInstance": {
       "type": "object",
@@ -2651,7 +3098,10 @@
             "ROUTER_UPDATE",
             "SECURITY_GROUP_CREATE",
             "SECURITY_GROUP_DELETE",
-            "SECURITY_GROUP_UPDATE"
+            "SECURITY_GROUP_UPDATE",
+            "SUBTENANT_CREATE",
+            "SUBTENANT_DELETE",
+            "SUBTENANT_UPDATE"
           ]
         },
         "requestor": {
@@ -2974,12 +3424,6 @@
     "SecurityPolicy": {
       "type": "object",
       "properties": {
-        "category": {
-          "$ref": "#/definitions/Category"
-        },
-        "connectivityStrategy": {
-          "$ref": "#/definitions/ConnectivityStrategy"
-        },
         "createdBy": {
           "type": "string"
         },
@@ -2999,23 +3443,8 @@
         "modifiedBy": {
           "type": "string"
         },
-        "resourceType": {
-          "$ref": "#/definitions/ResourceType"
-        },
         "securityPolicyId": {
           "type": "string"
-        },
-        "stateful": {
-          "type": "boolean"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TagInstance"
-          }
-        },
-        "tcpStrict": {
-          "type": "boolean"
         }
       },
       "title": "SecurityPolicy"
@@ -3169,6 +3598,49 @@
       },
       "title": "SubAttributeValueInstance"
     },
+    "SubtenantCreateResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "subtenantInstance": {
+          "$ref": "#/definitions/SubtenantInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "SubtenantCreateResponse"
+    },
+    "SubtenantDeleteResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "SubtenantDeleteResponse"
+    },
     "SubtenantGetResponse": {
       "type": "object",
       "properties": {
@@ -3195,11 +3667,34 @@
         "description": {
           "type": "string"
         },
+        "email": {
+          "type": "string"
+        },
+        "memoryReservedSizeMB": {
+          "type": "integer",
+          "format": "int64"
+        },
         "name": {
           "type": "string"
         },
+        "networks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VCSNetworkInstance"
+          }
+        },
+        "storageReservedSizeGB": {
+          "type": "integer",
+          "format": "int64"
+        },
         "subtenantId": {
           "type": "string"
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserInstance"
+          }
         }
       },
       "title": "SubtenantInstance"
@@ -3227,21 +3722,28 @@
       },
       "title": "SubtenantListResponse"
     },
-    "TagInstance": {
+    "SubtenantUpdateResponse": {
       "type": "object",
       "properties": {
-        "scope": {
+        "messages": {
           "type": "string"
         },
-        "tagId": {
-          "type": "integer",
-          "format": "int32"
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
         },
-        "value": {
-          "type": "string"
+        "subtenantInstance": {
+          "$ref": "#/definitions/SubtenantInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
         }
       },
-      "title": "TagInstance"
+      "title": "SubtenantUpdateResponse"
     },
     "UpdateDFWRuleResponse": {
       "type": "object",
@@ -3334,6 +3836,126 @@
         }
       },
       "title": "UpdateSecurityGroupResponse"
+    },
+    "UserGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "userInstance": {
+          "$ref": "#/definitions/UserInstance"
+        }
+      },
+      "title": "UserGetResponse"
+    },
+    "UserInstance": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "emailAddress": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "locked": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "principalId": {
+          "$ref": "#/definitions/PrincipalId"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "userPrincipalName": {
+          "type": "string"
+        }
+      },
+      "title": "UserInstance"
+    },
+    "UserListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "userInstanceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserInstance"
+          }
+        }
+      },
+      "title": "UserListResponse"
+    },
+    "VCSNetworkInstance": {
+      "type": "object",
+      "properties": {
+        "createdBy": {
+          "type": "string"
+        },
+        "creationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "modificationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "modifiedBy": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "network": {
+          "type": "string"
+        },
+        "networkId": {
+          "type": "string"
+        },
+        "networkType": {
+          "type": "string",
+          "enum": [
+            "DISTRIBUTED_PORTGROUP",
+            "HOST_DEVICE",
+            "OPAQUE_NETWORK",
+            "OpaqueNetwork",
+            "STANDARD_PORTGROUP"
+          ]
+        }
+      },
+      "title": "VCSNetworkInstance"
     },
     "VIDMTokenRequest": {
       "type": "object",

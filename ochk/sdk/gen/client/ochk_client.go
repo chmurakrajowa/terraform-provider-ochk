@@ -12,17 +12,20 @@ import (
 
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/context_profiles"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/default_services"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/edge_clusters"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_e_w"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_s_n"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/gateway_policies"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_sets"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/logical_ports"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/networks"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/principals"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/reservations"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/routers"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/security_groups"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/security_policies"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/subtenants"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/users"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/v_id_m"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machines"
 )
@@ -71,17 +74,20 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.Transport = transport
 	cli.ContextProfiles = context_profiles.New(transport, formats)
 	cli.DefaultServices = default_services.New(transport, formats)
+	cli.EdgeClusters = edge_clusters.New(transport, formats)
 	cli.FirewallRulesew = firewall_rules_e_w.New(transport, formats)
 	cli.FirewallRulessn = firewall_rules_s_n.New(transport, formats)
 	cli.GatewayPolicies = gateway_policies.New(transport, formats)
 	cli.IPSets = ip_sets.New(transport, formats)
 	cli.LogicalPorts = logical_ports.New(transport, formats)
 	cli.Networks = networks.New(transport, formats)
+	cli.Principals = principals.New(transport, formats)
 	cli.Reservations = reservations.New(transport, formats)
 	cli.Routers = routers.New(transport, formats)
 	cli.SecurityGroups = security_groups.New(transport, formats)
 	cli.SecurityPolicies = security_policies.New(transport, formats)
 	cli.Subtenants = subtenants.New(transport, formats)
+	cli.Users = users.New(transport, formats)
 	cli.VIDm = v_id_m.New(transport, formats)
 	cli.VirtualMachines = virtual_machines.New(transport, formats)
 	return cli
@@ -132,6 +138,8 @@ type Ochk struct {
 
 	DefaultServices default_services.ClientService
 
+	EdgeClusters edge_clusters.ClientService
+
 	FirewallRulesew firewall_rules_e_w.ClientService
 
 	FirewallRulessn firewall_rules_s_n.ClientService
@@ -144,6 +152,8 @@ type Ochk struct {
 
 	Networks networks.ClientService
 
+	Principals principals.ClientService
+
 	Reservations reservations.ClientService
 
 	Routers routers.ClientService
@@ -153,6 +163,8 @@ type Ochk struct {
 	SecurityPolicies security_policies.ClientService
 
 	Subtenants subtenants.ClientService
+
+	Users users.ClientService
 
 	VIDm v_id_m.ClientService
 
@@ -166,17 +178,20 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 	c.ContextProfiles.SetTransport(transport)
 	c.DefaultServices.SetTransport(transport)
+	c.EdgeClusters.SetTransport(transport)
 	c.FirewallRulesew.SetTransport(transport)
 	c.FirewallRulessn.SetTransport(transport)
 	c.GatewayPolicies.SetTransport(transport)
 	c.IPSets.SetTransport(transport)
 	c.LogicalPorts.SetTransport(transport)
 	c.Networks.SetTransport(transport)
+	c.Principals.SetTransport(transport)
 	c.Reservations.SetTransport(transport)
 	c.Routers.SetTransport(transport)
 	c.SecurityGroups.SetTransport(transport)
 	c.SecurityPolicies.SetTransport(transport)
 	c.Subtenants.SetTransport(transport)
+	c.Users.SetTransport(transport)
 	c.VIDm.SetTransport(transport)
 	c.VirtualMachines.SetTransport(transport)
 }

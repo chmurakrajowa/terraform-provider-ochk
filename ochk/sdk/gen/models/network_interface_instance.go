@@ -33,7 +33,7 @@ type NetworkInterfaceInstance struct {
 	NetworkExternalID string `json:"networkExternalId,omitempty"`
 
 	// network instance
-	NetworkInstance *NetworkInstance `json:"networkInstance,omitempty"`
+	NetworkInstance *VCSNetworkInstance `json:"networkInstance,omitempty"`
 
 	// network interface Id
 	NetworkInterfaceID string `json:"networkInterfaceId,omitempty"`
