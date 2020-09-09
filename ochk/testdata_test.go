@@ -2,6 +2,10 @@ package ochk
 
 import (
 	"bytes"
+	"fmt"
+	"github.com/stretchr/testify/assert"
+	"strings"
+	"testing"
 	"text/template"
 )
 
@@ -11,8 +15,12 @@ const (
 	testDataLogicalPort1DisplayName    = "f766455e-22a7-a2de-35f5-b8599f064a08/devel0000000639.vmx@a596ebcb-a875-4188-8ec5-0a84bfbf1e11"
 )
 
+var templateFuncMap = map[string]interface{}{
+	"StringsToTFList": stringsToTFList,
+}
+
 func executeTemplateToString(templateString string, data interface{}) string {
-	parsedTemplate, err := template.New("template_name").Parse(templateString)
+	parsedTemplate, err := template.New("template_name").Funcs(templateFuncMap).Parse(templateString)
 	if err != nil {
 		panic(err)
 	}
@@ -23,4 +31,35 @@ func executeTemplateToString(templateString string, data interface{}) string {
 	}
 
 	return tpl.String()
+}
+
+func stringsToTFList(list []string) string {
+	builder := strings.Builder{}
+	builder.WriteString("[")
+	for i := 0; i < len(list); i++ {
+		builder.WriteString(fmt.Sprintf("%q", list[i]))
+		if i < len(list)-1 {
+			builder.WriteString(", ")
+		}
+	}
+	builder.WriteString("]")
+
+	return builder.String()
+}
+
+func TestArrayOfStringToTFList(t *testing.T) {
+	assert.Equal(t, `["a", "b", "c"]`, stringsToTFList([]string{"a", "b", "c"}))
+	assert.Equal(t, `["a"]`, stringsToTFList([]string{"a"}))
+	assert.Equal(t, `["123456780"]`, stringsToTFList([]string{"123456780"}))
+	assert.Equal(t, `["", ""]`, stringsToTFList([]string{"", ""}))
+	assert.Equal(t, `[]`, stringsToTFList(nil))
+}
+
+func TestExecuteTemplateWithFuncs(t *testing.T) {
+	type tmplData struct {
+		Strings []string
+	}
+
+	assert.Equal(t, `strings = ["a", "b", "c"]`, executeTemplateToString(`strings = {{ StringsToTFList .Strings }}`, tmplData{Strings: []string{"a", "b", "c"}}))
+	assert.Equal(t, `strings = []`, executeTemplateToString(`strings = {{ StringsToTFList .Strings }}`, tmplData{Strings: nil}))
 }
