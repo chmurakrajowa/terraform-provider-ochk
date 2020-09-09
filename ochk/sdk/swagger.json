@@ -51,6 +51,14 @@
       "description": "Vcs Network Controller"
     },
     {
+      "name": "Requests",
+      "description": "Request Controller"
+    },
+    {
+      "name": "Resource pools",
+      "description": "Resource Pool Controller"
+    },
+    {
       "name": "Routers",
       "description": "Router Controller"
     },
@@ -89,6 +97,10 @@
     {
       "name": "vIDM",
       "description": "VIDM Controller"
+    },
+    {
+      "name": "virtualNetworks",
+      "description": "Virtual Network Controller"
     }
   ],
   "paths": {
@@ -1471,6 +1483,242 @@
         }
       }
     },
+    "/networks": {
+      "get": {
+        "tags": [
+          "virtualNetworks"
+        ],
+        "summary": "List",
+        "description": "List virtual network",
+        "operationId": "VirtualNetworkListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VirtualNetworkListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "virtualNetworks"
+        ],
+        "summary": "Create",
+        "description": "Create virtual network",
+        "operationId": "VirtualNetworkCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "virtualNetworkInstance",
+            "description": "virtualNetworkInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VirtualNetworkInstance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VirtualNetworkCreateResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/VirtualNetworkCreateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/networks/{virtualNetworkId}": {
+      "get": {
+        "tags": [
+          "virtualNetworks"
+        ],
+        "summary": "Get",
+        "description": "Get virtual network",
+        "operationId": "VirtualNetworkGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "virtualNetworkId",
+            "in": "path",
+            "description": "virtualNetworkId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VirtualNetworkGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "virtualNetworks"
+        ],
+        "summary": "Update",
+        "description": "Update virtual network",
+        "operationId": "VirtualNetworkUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "virtualNetworkId",
+            "in": "path",
+            "description": "virtualNetworkId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "virtualNetworkInstance",
+            "description": "virtualNetworkInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VirtualNetworkInstance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VirtualNetworkUpdateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "virtualNetworks"
+        ],
+        "summary": "Delete",
+        "description": "Delete virtual network",
+        "operationId": "VirtualNetworkDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "virtualNetworkId",
+            "in": "path",
+            "description": "virtualNetworkId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VirtualNetworkDeleteResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/request/": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "List",
+        "description": "List IaaS requests.",
+        "operationId": "RequestListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RequestInstanceListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/request/{requestId}": {
+      "get": {
+        "tags": [
+          "Requests"
+        ],
+        "summary": "Get",
+        "description": "Get IaaS requests.",
+        "operationId": "RequestGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "description": "requestId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RequestInstanceGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
     "/subtenants": {
       "get": {
         "tags": [
@@ -1630,7 +1878,7 @@
         ],
         "summary": "Delete",
         "description": "Delete subtenant",
-        "operationId": "SecurityGroupDeleteUsingDELETE_1",
+        "operationId": "SubtenantDeleteUsingDELETE",
         "produces": [
           "application/json"
         ],
@@ -1888,6 +2136,15 @@
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name",
+            "required": false,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1926,6 +2183,75 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/NetworkGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/vcs/resourcepools": {
+      "get": {
+        "tags": [
+          "Resource pools"
+        ],
+        "summary": "List",
+        "description": "List resource pools",
+        "operationId": "LogicalPortListUsingGET_2",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "resourcePoolName",
+            "in": "query",
+            "description": "resourcePoolName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VcsResourcePoolsListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/vcs/resourcepools/{resourcePoolId}": {
+      "get": {
+        "tags": [
+          "Resource pools"
+        ],
+        "summary": "Get",
+        "description": "Get resource pools",
+        "operationId": "VcsResourcePoolsGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "resourcePoolId",
+            "in": "path",
+            "description": "resourcePoolId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VcsResourcePoolsGetResponse"
             }
           },
           "400": {
@@ -2857,9 +3183,6 @@
         "messages": {
           "type": "string"
         },
-        "networkInstance": {
-          "$ref": "#/definitions/VCSNetworkInstance"
-        },
         "success": {
           "type": "boolean"
         },
@@ -2867,6 +3190,9 @@
           "type": "string",
           "format": "date-time",
           "x-nullable": true
+        },
+        "vcsNetworkInstance": {
+          "$ref": "#/definitions/VCSNetworkInstance"
         }
       },
       "title": "NetworkGetResponse"
@@ -2952,12 +3278,6 @@
         "messages": {
           "type": "string"
         },
-        "networkInstanceCollection": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/VCSNetworkInstance"
-          }
-        },
         "success": {
           "type": "boolean"
         },
@@ -2965,6 +3285,12 @@
           "type": "string",
           "format": "date-time",
           "x-nullable": true
+        },
+        "vcsNetworkInstanceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VCSNetworkInstance"
+          }
         }
       },
       "title": "NetworkListResponse"
@@ -3074,6 +3400,7 @@
             "FINISHED",
             "NEW",
             "PROCESSING",
+            "QUEUEING",
             "TIMEOUT"
           ]
         },
@@ -3093,6 +3420,9 @@
             "FIREWALL_GFW_RULE_CREATE",
             "FIREWALL_GFW_RULE_DELETE",
             "FIREWALL_GFW_RULE_UPDATE",
+            "NETWORK_CREATE",
+            "NETWORK_DELETE",
+            "NETWORK_UPDATE",
             "ROUTER_CREATE",
             "ROUTER_DELETE",
             "ROUTER_UPDATE",
@@ -3110,6 +3440,9 @@
         "requestorId": {
           "type": "string"
         },
+        "resourceId": {
+          "type": "string"
+        },
         "startDate": {
           "type": "string",
           "format": "date-time",
@@ -3117,6 +3450,49 @@
         }
       },
       "title": "RequestInstance"
+    },
+    "RequestInstanceGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "RequestInstanceGetResponse"
+    },
+    "RequestInstanceListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstanceList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RequestInstance"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "RequestInstanceListResponse"
     },
     "RequestMessage": {
       "type": "object",
@@ -3491,6 +3867,27 @@
         }
       },
       "title": "SecurityPolicyListResponse"
+    },
+    "SegmentSubnetInstance": {
+      "type": "object",
+      "properties": {
+        "dhcpRanges": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "gatewayAddressCIDR": {
+          "type": "string"
+        },
+        "networkCIDR": {
+          "type": "string"
+        },
+        "segmentSubnetId": {
+          "type": "string"
+        }
+      },
+      "title": "SegmentSubnetInstance"
     },
     "ServiceGetResponse": {
       "type": "object",
@@ -3992,6 +4389,145 @@
       },
       "title": "VIDMTokenResponse"
     },
+    "VcsResourcePools": {
+      "type": "object",
+      "properties": {
+        "configCpuAllocationExpandableReservation": {
+          "type": "boolean"
+        },
+        "configCpuAllocationLimit": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "configCpuAllocationOverheadLimit": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "configCpuAllocationReservation": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "configMemoryAllocationExpandableReservation": {
+          "type": "boolean"
+        },
+        "configMemoryAllocationLimit": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "configMemoryAllocationOverheadLimit": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "configMemoryAllocationReservation": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "externalId": {
+          "type": "string"
+        },
+        "resourcePoolId": {
+          "type": "string"
+        },
+        "resourcePoolName": {
+          "type": "string"
+        },
+        "runtimeCpuMaxUsage": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "runtimeCpuOverallUsage": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "runtimeCpuReservationUsed": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "runtimeCpuReservationUsedForVm": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "runtimeCpuUnreservedForPool": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "runtimeCpuUnreservedForVm": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "runtimeMemoryMaxUsage": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "runtimeMemoryOverallUsage": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "runtimeMemoryReservationUsed": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "runtimeMemoryReservationUsedForVm": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "runtimeMemoryUnreservedForPool": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "runtimeMemoryUnreservedForVm": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "vraId": {
+          "type": "string"
+        }
+      },
+      "title": "VcsResourcePools"
+    },
+    "VcsResourcePoolsGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "vcsResourcePoolInstance": {
+          "$ref": "#/definitions/VcsResourcePools"
+        }
+      },
+      "title": "VcsResourcePoolsGetResponse"
+    },
+    "VcsResourcePoolsListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "vcsResourcePoolInstanceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VcsResourcePools"
+          }
+        }
+      },
+      "title": "VcsResourcePoolsListResponse"
+    },
     "VirtualMachine": {
       "type": "object",
       "properties": {
@@ -4049,7 +4585,10 @@
           "enum": [
             "POWERED_OFF",
             "POWERED_ON",
-            "SUSPENDED"
+            "SUSPENDED",
+            "poweredOff",
+            "poweredOn",
+            "suspended"
           ]
         },
         "virtualMachineId": {
@@ -4083,6 +4622,182 @@
         }
       },
       "title": "VirtualMachineListResponse"
+    },
+    "VirtualNetworkCreateResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "virtualNetworkInstance": {
+          "$ref": "#/definitions/VirtualNetworkInstance"
+        }
+      },
+      "title": "VirtualNetworkCreateResponse"
+    },
+    "VirtualNetworkDeleteResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "virtualNetworkInstance": {
+          "$ref": "#/definitions/VirtualNetworkInstance"
+        }
+      },
+      "title": "VirtualNetworkDeleteResponse"
+    },
+    "VirtualNetworkGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "virtualNetworkInstance": {
+          "$ref": "#/definitions/VirtualNetworkInstance"
+        }
+      },
+      "title": "VirtualNetworkGetResponse"
+    },
+    "VirtualNetworkInstance": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "dnsSearchSuffix": {
+          "type": "string"
+        },
+        "dnsSuffix": {
+          "type": "string"
+        },
+        "gatewayAddress": {
+          "type": "string"
+        },
+        "ipamEnabled": {
+          "type": "boolean"
+        },
+        "networkAdapterId": {
+          "type": "string"
+        },
+        "networkProfileId": {
+          "type": "string"
+        },
+        "primaryDnsAddress": {
+          "type": "string"
+        },
+        "primaryWinsAddress": {
+          "type": "string"
+        },
+        "routerRefId": {
+          "type": "string"
+        },
+        "secondaryDnsAddress": {
+          "type": "string"
+        },
+        "secondaryWinsAddress": {
+          "type": "string"
+        },
+        "segmentId": {
+          "type": "string"
+        },
+        "subnet": {
+          "$ref": "#/definitions/SegmentSubnetInstance"
+        },
+        "subnetMask": {
+          "type": "string"
+        },
+        "subtenantRefIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "vcsNetworkId": {
+          "type": "string"
+        },
+        "virtualNetworkId": {
+          "type": "string"
+        }
+      },
+      "title": "VirtualNetworkInstance"
+    },
+    "VirtualNetworkListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "virtualNetworkInstanceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VirtualNetworkInstance"
+          }
+        }
+      },
+      "title": "VirtualNetworkListResponse"
+    },
+    "VirtualNetworkUpdateResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "virtualNetworkInstance": {
+          "$ref": "#/definitions/VirtualNetworkInstance"
+        }
+      },
+      "title": "VirtualNetworkUpdateResponse"
     }
   }
 }

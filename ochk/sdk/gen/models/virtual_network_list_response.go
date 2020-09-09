@@ -14,10 +14,10 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// NetworkListResponse NetworkListResponse
+// VirtualNetworkListResponse VirtualNetworkListResponse
 //
-// swagger:model NetworkListResponse
-type NetworkListResponse struct {
+// swagger:model VirtualNetworkListResponse
+type VirtualNetworkListResponse struct {
 
 	// messages
 	Messages string `json:"messages,omitempty"`
@@ -29,19 +29,19 @@ type NetworkListResponse struct {
 	// Format: date-time
 	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 
-	// vcs network instance collection
-	VcsNetworkInstanceCollection []*VCSNetworkInstance `json:"vcsNetworkInstanceCollection"`
+	// virtual network instance collection
+	VirtualNetworkInstanceCollection []*VirtualNetworkInstance `json:"virtualNetworkInstanceCollection"`
 }
 
-// Validate validates this network list response
-func (m *NetworkListResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this virtual network list response
+func (m *VirtualNetworkListResponse) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateTimestamp(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateVcsNetworkInstanceCollection(formats); err != nil {
+	if err := m.validateVirtualNetworkInstanceCollection(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -51,7 +51,7 @@ func (m *NetworkListResponse) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *NetworkListResponse) validateTimestamp(formats strfmt.Registry) error {
+func (m *VirtualNetworkListResponse) validateTimestamp(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
@@ -64,21 +64,21 @@ func (m *NetworkListResponse) validateTimestamp(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *NetworkListResponse) validateVcsNetworkInstanceCollection(formats strfmt.Registry) error {
+func (m *VirtualNetworkListResponse) validateVirtualNetworkInstanceCollection(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.VcsNetworkInstanceCollection) { // not required
+	if swag.IsZero(m.VirtualNetworkInstanceCollection) { // not required
 		return nil
 	}
 
-	for i := 0; i < len(m.VcsNetworkInstanceCollection); i++ {
-		if swag.IsZero(m.VcsNetworkInstanceCollection[i]) { // not required
+	for i := 0; i < len(m.VirtualNetworkInstanceCollection); i++ {
+		if swag.IsZero(m.VirtualNetworkInstanceCollection[i]) { // not required
 			continue
 		}
 
-		if m.VcsNetworkInstanceCollection[i] != nil {
-			if err := m.VcsNetworkInstanceCollection[i].Validate(formats); err != nil {
+		if m.VirtualNetworkInstanceCollection[i] != nil {
+			if err := m.VirtualNetworkInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("vcsNetworkInstanceCollection" + "." + strconv.Itoa(i))
+					return ve.ValidateName("virtualNetworkInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -90,7 +90,7 @@ func (m *NetworkListResponse) validateVcsNetworkInstanceCollection(formats strfm
 }
 
 // MarshalBinary interface implementation
-func (m *NetworkListResponse) MarshalBinary() ([]byte, error) {
+func (m *VirtualNetworkListResponse) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -98,8 +98,8 @@ func (m *NetworkListResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *NetworkListResponse) UnmarshalBinary(b []byte) error {
-	var res NetworkListResponse
+func (m *VirtualNetworkListResponse) UnmarshalBinary(b []byte) error {
+	var res VirtualNetworkListResponse
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

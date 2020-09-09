@@ -34,7 +34,7 @@ type RequestInstance struct {
 	RequestMessageList []*RequestMessage `json:"requestMessageList"`
 
 	// request phase
-	// Enum: [CANCELLED FINISHED NEW PROCESSING TIMEOUT]
+	// Enum: [CANCELLED FINISHED NEW PROCESSING QUEUEING TIMEOUT]
 	RequestPhase string `json:"requestPhase,omitempty"`
 
 	// request status
@@ -42,7 +42,7 @@ type RequestInstance struct {
 	RequestStatus string `json:"requestStatus,omitempty"`
 
 	// request type
-	// Enum: [FIREWALL_DFW_RULE_CREATE FIREWALL_DFW_RULE_DELETE FIREWALL_DFW_RULE_UPDATE FIREWALL_GFW_RULE_CREATE FIREWALL_GFW_RULE_DELETE FIREWALL_GFW_RULE_UPDATE ROUTER_CREATE ROUTER_DELETE ROUTER_UPDATE SECURITY_GROUP_CREATE SECURITY_GROUP_DELETE SECURITY_GROUP_UPDATE SUBTENANT_CREATE SUBTENANT_DELETE SUBTENANT_UPDATE]
+	// Enum: [FIREWALL_DFW_RULE_CREATE FIREWALL_DFW_RULE_DELETE FIREWALL_DFW_RULE_UPDATE FIREWALL_GFW_RULE_CREATE FIREWALL_GFW_RULE_DELETE FIREWALL_GFW_RULE_UPDATE NETWORK_CREATE NETWORK_DELETE NETWORK_UPDATE ROUTER_CREATE ROUTER_DELETE ROUTER_UPDATE SECURITY_GROUP_CREATE SECURITY_GROUP_DELETE SECURITY_GROUP_UPDATE SUBTENANT_CREATE SUBTENANT_DELETE SUBTENANT_UPDATE]
 	RequestType string `json:"requestType,omitempty"`
 
 	// requestor
@@ -50,6 +50,9 @@ type RequestInstance struct {
 
 	// requestor Id
 	RequestorID string `json:"requestorId,omitempty"`
+
+	// resource Id
+	ResourceID string `json:"resourceId,omitempty"`
 
 	// start date
 	// Format: date-time
@@ -132,7 +135,7 @@ var requestInstanceTypeRequestPhasePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["CANCELLED","FINISHED","NEW","PROCESSING","TIMEOUT"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["CANCELLED","FINISHED","NEW","PROCESSING","QUEUEING","TIMEOUT"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -153,6 +156,9 @@ const (
 
 	// RequestInstanceRequestPhasePROCESSING captures enum value "PROCESSING"
 	RequestInstanceRequestPhasePROCESSING string = "PROCESSING"
+
+	// RequestInstanceRequestPhaseQUEUEING captures enum value "QUEUEING"
+	RequestInstanceRequestPhaseQUEUEING string = "QUEUEING"
 
 	// RequestInstanceRequestPhaseTIMEOUT captures enum value "TIMEOUT"
 	RequestInstanceRequestPhaseTIMEOUT string = "TIMEOUT"
@@ -227,7 +233,7 @@ var requestInstanceTypeRequestTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["FIREWALL_DFW_RULE_CREATE","FIREWALL_DFW_RULE_DELETE","FIREWALL_DFW_RULE_UPDATE","FIREWALL_GFW_RULE_CREATE","FIREWALL_GFW_RULE_DELETE","FIREWALL_GFW_RULE_UPDATE","ROUTER_CREATE","ROUTER_DELETE","ROUTER_UPDATE","SECURITY_GROUP_CREATE","SECURITY_GROUP_DELETE","SECURITY_GROUP_UPDATE","SUBTENANT_CREATE","SUBTENANT_DELETE","SUBTENANT_UPDATE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["FIREWALL_DFW_RULE_CREATE","FIREWALL_DFW_RULE_DELETE","FIREWALL_DFW_RULE_UPDATE","FIREWALL_GFW_RULE_CREATE","FIREWALL_GFW_RULE_DELETE","FIREWALL_GFW_RULE_UPDATE","NETWORK_CREATE","NETWORK_DELETE","NETWORK_UPDATE","ROUTER_CREATE","ROUTER_DELETE","ROUTER_UPDATE","SECURITY_GROUP_CREATE","SECURITY_GROUP_DELETE","SECURITY_GROUP_UPDATE","SUBTENANT_CREATE","SUBTENANT_DELETE","SUBTENANT_UPDATE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -254,6 +260,15 @@ const (
 
 	// RequestInstanceRequestTypeFIREWALLGFWRULEUPDATE captures enum value "FIREWALL_GFW_RULE_UPDATE"
 	RequestInstanceRequestTypeFIREWALLGFWRULEUPDATE string = "FIREWALL_GFW_RULE_UPDATE"
+
+	// RequestInstanceRequestTypeNETWORKCREATE captures enum value "NETWORK_CREATE"
+	RequestInstanceRequestTypeNETWORKCREATE string = "NETWORK_CREATE"
+
+	// RequestInstanceRequestTypeNETWORKDELETE captures enum value "NETWORK_DELETE"
+	RequestInstanceRequestTypeNETWORKDELETE string = "NETWORK_DELETE"
+
+	// RequestInstanceRequestTypeNETWORKUPDATE captures enum value "NETWORK_UPDATE"
+	RequestInstanceRequestTypeNETWORKUPDATE string = "NETWORK_UPDATE"
 
 	// RequestInstanceRequestTypeROUTERCREATE captures enum value "ROUTER_CREATE"
 	RequestInstanceRequestTypeROUTERCREATE string = "ROUTER_CREATE"

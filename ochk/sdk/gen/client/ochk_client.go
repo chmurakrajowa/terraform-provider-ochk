@@ -20,7 +20,9 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/logical_ports"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/networks"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/principals"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/requests"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/reservations"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/resource_pools"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/routers"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/security_groups"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/security_policies"
@@ -28,6 +30,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/users"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/v_id_m"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machines"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/virtual_networks"
 )
 
 // Default ochk HTTP client.
@@ -82,7 +85,9 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.LogicalPorts = logical_ports.New(transport, formats)
 	cli.Networks = networks.New(transport, formats)
 	cli.Principals = principals.New(transport, formats)
+	cli.Requests = requests.New(transport, formats)
 	cli.Reservations = reservations.New(transport, formats)
+	cli.ResourcePools = resource_pools.New(transport, formats)
 	cli.Routers = routers.New(transport, formats)
 	cli.SecurityGroups = security_groups.New(transport, formats)
 	cli.SecurityPolicies = security_policies.New(transport, formats)
@@ -90,6 +95,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.Users = users.New(transport, formats)
 	cli.VIDm = v_id_m.New(transport, formats)
 	cli.VirtualMachines = virtual_machines.New(transport, formats)
+	cli.VirtualNetworks = virtual_networks.New(transport, formats)
 	return cli
 }
 
@@ -154,7 +160,11 @@ type Ochk struct {
 
 	Principals principals.ClientService
 
+	Requests requests.ClientService
+
 	Reservations reservations.ClientService
+
+	ResourcePools resource_pools.ClientService
 
 	Routers routers.ClientService
 
@@ -169,6 +179,8 @@ type Ochk struct {
 	VIDm v_id_m.ClientService
 
 	VirtualMachines virtual_machines.ClientService
+
+	VirtualNetworks virtual_networks.ClientService
 
 	Transport runtime.ClientTransport
 }
@@ -186,7 +198,9 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.LogicalPorts.SetTransport(transport)
 	c.Networks.SetTransport(transport)
 	c.Principals.SetTransport(transport)
+	c.Requests.SetTransport(transport)
 	c.Reservations.SetTransport(transport)
+	c.ResourcePools.SetTransport(transport)
 	c.Routers.SetTransport(transport)
 	c.SecurityGroups.SetTransport(transport)
 	c.SecurityPolicies.SetTransport(transport)
@@ -194,4 +208,5 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.Users.SetTransport(transport)
 	c.VIDm.SetTransport(transport)
 	c.VirtualMachines.SetTransport(transport)
+	c.VirtualNetworks.SetTransport(transport)
 }

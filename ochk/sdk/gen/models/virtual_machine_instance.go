@@ -30,7 +30,7 @@ type VirtualMachineInstance struct {
 	NetworkInterfaceInstanceCollection []*NetworkInterfaceInstance `json:"networkInterfaceInstanceCollection"`
 
 	// power state
-	// Enum: [POWERED_OFF POWERED_ON SUSPENDED]
+	// Enum: [POWERED_OFF POWERED_ON SUSPENDED poweredOff poweredOn suspended]
 	PowerState string `json:"powerState,omitempty"`
 
 	// virtual machine Id
@@ -87,7 +87,7 @@ var virtualMachineInstanceTypePowerStatePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["POWERED_OFF","POWERED_ON","SUSPENDED"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["POWERED_OFF","POWERED_ON","SUSPENDED","poweredOff","poweredOn","suspended"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -105,6 +105,15 @@ const (
 
 	// VirtualMachineInstancePowerStateSUSPENDED captures enum value "SUSPENDED"
 	VirtualMachineInstancePowerStateSUSPENDED string = "SUSPENDED"
+
+	// VirtualMachineInstancePowerStatePoweredOff captures enum value "poweredOff"
+	VirtualMachineInstancePowerStatePoweredOff string = "poweredOff"
+
+	// VirtualMachineInstancePowerStatePoweredOn captures enum value "poweredOn"
+	VirtualMachineInstancePowerStatePoweredOn string = "poweredOn"
+
+	// VirtualMachineInstancePowerStateSuspended captures enum value "suspended"
+	VirtualMachineInstancePowerStateSuspended string = "suspended"
 )
 
 // prop value enum

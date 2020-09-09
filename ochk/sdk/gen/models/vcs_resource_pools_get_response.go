@@ -12,10 +12,10 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// NetworkGetResponse NetworkGetResponse
+// VcsResourcePoolsGetResponse VcsResourcePoolsGetResponse
 //
-// swagger:model NetworkGetResponse
-type NetworkGetResponse struct {
+// swagger:model VcsResourcePoolsGetResponse
+type VcsResourcePoolsGetResponse struct {
 
 	// messages
 	Messages string `json:"messages,omitempty"`
@@ -27,19 +27,19 @@ type NetworkGetResponse struct {
 	// Format: date-time
 	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 
-	// vcs network instance
-	VcsNetworkInstance *VCSNetworkInstance `json:"vcsNetworkInstance,omitempty"`
+	// vcs resource pool instance
+	VcsResourcePoolInstance *VcsResourcePools `json:"vcsResourcePoolInstance,omitempty"`
 }
 
-// Validate validates this network get response
-func (m *NetworkGetResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this vcs resource pools get response
+func (m *VcsResourcePoolsGetResponse) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateTimestamp(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateVcsNetworkInstance(formats); err != nil {
+	if err := m.validateVcsResourcePoolInstance(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -49,7 +49,7 @@ func (m *NetworkGetResponse) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *NetworkGetResponse) validateTimestamp(formats strfmt.Registry) error {
+func (m *VcsResourcePoolsGetResponse) validateTimestamp(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
@@ -62,16 +62,16 @@ func (m *NetworkGetResponse) validateTimestamp(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *NetworkGetResponse) validateVcsNetworkInstance(formats strfmt.Registry) error {
+func (m *VcsResourcePoolsGetResponse) validateVcsResourcePoolInstance(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.VcsNetworkInstance) { // not required
+	if swag.IsZero(m.VcsResourcePoolInstance) { // not required
 		return nil
 	}
 
-	if m.VcsNetworkInstance != nil {
-		if err := m.VcsNetworkInstance.Validate(formats); err != nil {
+	if m.VcsResourcePoolInstance != nil {
+		if err := m.VcsResourcePoolInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("vcsNetworkInstance")
+				return ve.ValidateName("vcsResourcePoolInstance")
 			}
 			return err
 		}
@@ -81,7 +81,7 @@ func (m *NetworkGetResponse) validateVcsNetworkInstance(formats strfmt.Registry)
 }
 
 // MarshalBinary interface implementation
-func (m *NetworkGetResponse) MarshalBinary() ([]byte, error) {
+func (m *VcsResourcePoolsGetResponse) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -89,8 +89,8 @@ func (m *NetworkGetResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *NetworkGetResponse) UnmarshalBinary(b []byte) error {
-	var res NetworkGetResponse
+func (m *VcsResourcePoolsGetResponse) UnmarshalBinary(b []byte) error {
+	var res VcsResourcePoolsGetResponse
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
