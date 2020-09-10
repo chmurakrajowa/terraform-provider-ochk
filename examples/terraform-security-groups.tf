@@ -2,7 +2,7 @@ resource "ochk_security_group" "ipset" {
   display_name = "tf-${var.demo-id}-ipset"
 
   members {
-    id = "48c33c78-532b-489f-8750-a167a501c6d2"
+    id = data.ochk_ip_set.ipset1.id
     type = "IPSET"
   }
 
@@ -41,7 +41,7 @@ resource "ochk_security_group" "vm_ipset" {
   }
 
   members {
-    id = "0098bcc2-1b57-462f-a329-d3a935f37f45"
+    id = data.ochk_ip_set.ipset2.id
     type = "IPSET"
   }
 
