@@ -43,21 +43,31 @@ func (c *SubtenantTestData) FullResourceName() string {
 }
 
 func TestAccSubtenantResource_create(t *testing.T) {
+	network1 := NetworkDataSourceTestData{
+		ResourceName: "network1",
+		Name:         testDataNetwork1Name,
+	}
+
 	subtenant := SubtenantTestData{
 		ResourceName:          "default",
 		Description:           "tf-test-description",
 		Email:                 "test@example.com",
 		MemoryReservedSizeMB:  24000,
 		Name:                  "tf-test-name-" + generateRandName(),
-		NetworkIDs:            []string{"258313ca-365e-4f5c-8510-4a42f6595651"},
+		NetworkIDs:            []string{network1.FullResourceName() + ".id"},
 		StorageReservedSizeGB: 150,
 		UserIDs:               []string{"bf5e40c6-191c-40f5-b4d1-9332a9e4ed48"},
+	}
+
+	network2 := NetworkDataSourceTestData{
+		ResourceName: "network1",
+		Name:         testDataNetwork2Name,
 	}
 
 	subtenantUpdated := subtenant
 	subtenantUpdated.MemoryReservedSizeMB = 30000
 	subtenantUpdated.StorageReservedSizeGB = 200
-	subtenantUpdated.NetworkIDs = []string{"bd814070-18f3-4182-b2af-edaa72a50fee"}
+	subtenantUpdated.NetworkIDs = []string{network2.FullResourceName() + ".id"}
 	subtenantUpdated.UserIDs = []string{"dbeb5be9-71ff-4d34-b64d-6e0fced6ed52"}
 	subtenantUpdated.Email = "email.updated@example.com"
 	subtenantUpdated.Description += "- updated"

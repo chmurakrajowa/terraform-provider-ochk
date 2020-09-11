@@ -11,6 +11,8 @@ import (
 
 const (
 	testDataVirtualMachine1DisplayName = "devel0000001157"
+	testDataNetwork1Name               = "vtest8"
+	testDataNetwork2Name               = "vtest7"
 	testDataIPSet1DisplayName          = "ochk1"
 	testDataLogicalPort1DisplayName    = "f766455e-22a7-a2de-35f5-b8599f064a08/devel0000000639.vmx@a596ebcb-a875-4188-8ec5-0a84bfbf1e11"
 )
