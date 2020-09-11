@@ -14,6 +14,7 @@ type VirtualNetworkTestData struct {
 	ResourceName string
 	DisplayName  string
 	IpamEnabled  bool
+	Subtenants   []string
 }
 
 func (c *VirtualNetworkTestData) ToString() string {
@@ -21,6 +22,7 @@ func (c *VirtualNetworkTestData) ToString() string {
 resource "ochk_virtual_network" "{{ .ResourceName}}" {
 	display_name = "{{.DisplayName}}"
 	ipam_enabled = {{.IpamEnabled}}
+	subtenants = {{ StringsToTFList .Subtenants}}
 }
 `, c)
 }
@@ -30,12 +32,18 @@ func (c *VirtualNetworkTestData) FullResourceName() string {
 }
 
 func TestAccVirtualNetworkResource_create(t *testing.T) {
+	subtenant1 := SubtenantDataSourceTestData{
+		ResourceName: "subtenant1",
+		Name:         testDataSubtenant1Name,
+	}
+
 	virtualNetwork := VirtualNetworkTestData{
 		ResourceName: "default",
 		DisplayName:  "my-display-name",
+		Subtenants:   []string{subtenant1.FullResourceName() + ".id"},
 	}
 
-	configInitial := virtualNetwork.ToString()
+	configInitial := subtenant1.ToString() + virtualNetwork.ToString()
 
 	resourceName := virtualNetwork.FullResourceName()
 	resource.ParallelTest(t, resource.TestCase{

@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	VirtualNetworkRetryTimeout = 5 * time.Minute
+	VirtualNetworkRetryTimeout = 15 * time.Minute
 )
 
 func resourceVirtualNetwork() *schema.Resource {
@@ -37,6 +37,12 @@ func resourceVirtualNetwork() *schema.Resource {
 				Type:     schema.TypeBool,
 				Optional: true,
 				Default:  false,
+			},
+			"subtenants": {
+				Type:     schema.TypeSet,
+				Required: true,
+				Elem:     &schema.Schema{Type: schema.TypeString},
+				MinItems: 1,
 			},
 		},
 	}
@@ -83,6 +89,11 @@ func resourceVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting ipam_enabled: %+v", err)
 	}
 
+	//FIXME wrong assignment
+	if err := d.Set("subtenants", virtualNetwork.SubtenantRefIds); err != nil {
+		return diag.Errorf("error setting subtenants: %+v", err)
+	}
+
 	return nil
 }
 
@@ -119,6 +130,8 @@ func resourceVirtualNetworkDelete(ctx context.Context, d *schema.ResourceData, m
 func mapResourceDataToVirtualNetwork(d *schema.ResourceData) *models.VirtualNetworkInstance {
 	virtualNetworkInstance := models.VirtualNetworkInstance{
 		DisplayName: d.Get("display_name").(string),
+		//FIXME should not be UUID
+		SubtenantRefIds: mapInterfaceSliceToUUIDSlice(d.Get("subtenants").(*schema.Set).List()),
 	}
 
 	if ipamEnabled, ok := d.GetOk("ipam_enabled"); ok && ipamEnabled.(bool) {
