@@ -29,7 +29,7 @@ func dataSourceNetwork() *schema.Resource {
 }
 
 func dataSourceNetworkRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	proxy := meta.(*sdk.Client).NetworksProxy
+	proxy := meta.(*sdk.Client).Networks
 
 	name := d.Get("name").(string)
 

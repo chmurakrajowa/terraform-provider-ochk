@@ -43,7 +43,7 @@ type VCSNetworkInstance struct {
 	NetworkID string `json:"networkId,omitempty"`
 
 	// network type
-	// Enum: [DISTRIBUTED_PORTGROUP HOST_DEVICE OPAQUE_NETWORK OpaqueNetwork STANDARD_PORTGROUP]
+	// Enum: [OpaqueNetwork]
 	NetworkType string `json:"networkType,omitempty"`
 }
 
@@ -99,7 +99,7 @@ var vCSNetworkInstanceTypeNetworkTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["DISTRIBUTED_PORTGROUP","HOST_DEVICE","OPAQUE_NETWORK","OpaqueNetwork","STANDARD_PORTGROUP"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["OpaqueNetwork"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -109,20 +109,8 @@ func init() {
 
 const (
 
-	// VCSNetworkInstanceNetworkTypeDISTRIBUTEDPORTGROUP captures enum value "DISTRIBUTED_PORTGROUP"
-	VCSNetworkInstanceNetworkTypeDISTRIBUTEDPORTGROUP string = "DISTRIBUTED_PORTGROUP"
-
-	// VCSNetworkInstanceNetworkTypeHOSTDEVICE captures enum value "HOST_DEVICE"
-	VCSNetworkInstanceNetworkTypeHOSTDEVICE string = "HOST_DEVICE"
-
-	// VCSNetworkInstanceNetworkTypeOPAQUENETWORK captures enum value "OPAQUE_NETWORK"
-	VCSNetworkInstanceNetworkTypeOPAQUENETWORK string = "OPAQUE_NETWORK"
-
 	// VCSNetworkInstanceNetworkTypeOpaqueNetwork captures enum value "OpaqueNetwork"
 	VCSNetworkInstanceNetworkTypeOpaqueNetwork string = "OpaqueNetwork"
-
-	// VCSNetworkInstanceNetworkTypeSTANDARDPORTGROUP captures enum value "STANDARD_PORTGROUP"
-	VCSNetworkInstanceNetworkTypeSTANDARDPORTGROUP string = "STANDARD_PORTGROUP"
 )
 
 // prop value enum

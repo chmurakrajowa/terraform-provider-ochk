@@ -1494,6 +1494,15 @@
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -4344,11 +4353,7 @@
         "networkType": {
           "type": "string",
           "enum": [
-            "DISTRIBUTED_PORTGROUP",
-            "HOST_DEVICE",
-            "OPAQUE_NETWORK",
-            "OpaqueNetwork",
-            "STANDARD_PORTGROUP"
+            "OpaqueNetwork"
           ]
         }
       },

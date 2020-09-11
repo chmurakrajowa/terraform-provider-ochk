@@ -139,6 +139,7 @@ func resourceSubtenantUpdate(ctx context.Context, d *schema.ResourceData, meta i
 	proxy := meta.(*sdk.Client).Subtenants
 
 	subtenant := mapResourceDataToSubtenant(d)
+	subtenant.SubtenantID = d.Id()
 
 	_, err := proxy.Update(ctx, subtenant)
 	if err != nil {
@@ -172,7 +173,6 @@ func mapResourceDataToSubtenant(d *schema.ResourceData) *models.SubtenantInstanc
 		Name:                  d.Get("name").(string),
 		Networks:              expandVCSNetworkInstancesFromIDs(d.Get("networks").(*schema.Set).List()),
 		StorageReservedSizeGB: int64(d.Get("storage_reserved_size_gb").(int)),
-		SubtenantID:           d.Id(),
 		Users:                 expandUserInstancesFromIDs(d.Get("users").(*schema.Set).List()),
 	}
 }

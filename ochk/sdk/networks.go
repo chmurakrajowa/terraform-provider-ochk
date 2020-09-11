@@ -14,9 +14,9 @@ type NetworksProxy struct {
 	service    networks.ClientService
 }
 
-func (p *NetworksProxy) Read(ctx context.Context, NetworkID string) (*models.VCSNetworkInstance, error) {
+func (p *NetworksProxy) Read(ctx context.Context, networkID string) (*models.VCSNetworkInstance, error) {
 	params := &networks.VcsVirtualMachineGroupGetUsingGETParams{
-		NetworkID:  NetworkID,
+		NetworkID:  networkID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}

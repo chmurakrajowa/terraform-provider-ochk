@@ -114,35 +114,7 @@ func resourceFirewallEWRuleCreate(ctx context.Context, d *schema.ResourceData, m
 
 	securityPolicyID := d.Get("security_policy_id").(string)
 
-	firewallEWRule := &models.DFWRule{
-		DisplayName: d.Get("display_name").(string),
-		Action:      d.Get("action").(string),
-		Direction:   d.Get("direction").(string),
-	}
-
-	if disabled, ok := d.GetOk("disabled"); ok && disabled.(bool) {
-		firewallEWRule.Disabled = true
-	}
-
-	if ipProtocol, ok := d.GetOk("ip_protocol"); ok {
-		firewallEWRule.IPProtocol = ipProtocol.(string)
-	}
-
-	if services, ok := d.GetOk("services"); ok {
-		firewallEWRule.DefaultServices = expandServicesFromIDs(services.(*schema.Set).List())
-	}
-
-	if source, ok := d.GetOk("source"); ok {
-		firewallEWRule.Source = expandSecurityGroupFromIDs(source.(*schema.Set).List())
-	}
-
-	if destination, ok := d.GetOk("destination"); ok {
-		firewallEWRule.Destination = expandSecurityGroupFromIDs(destination.(*schema.Set).List())
-	}
-
-	if position, ok := d.GetOk("position"); ok {
-		firewallEWRule.Position = expandFirewallRulePosition(position.([]interface{}))
-	}
+	firewallEWRule := mapResourceDataToEWRule(d)
 
 	created, err := proxy.Create(ctx, securityPolicyID, firewallEWRule)
 	if err != nil {
@@ -233,17 +205,8 @@ func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 
 	securityPolicyID := d.Get("security_policy_id").(string)
 
-	firewallEWRule := &models.DFWRule{
-		RuleID:          d.Id(),
-		Action:          d.Get("action").(string),
-		DefaultServices: expandServicesFromIDs(d.Get("services").(*schema.Set).List()),
-		Destination:     expandSecurityGroupFromIDs(d.Get("destination").(*schema.Set).List()),
-		Direction:       d.Get("direction").(string),
-		Disabled:        d.Get("disabled").(bool),
-		DisplayName:     d.Get("display_name").(string),
-		IPProtocol:      d.Get("ip_protocol").(string),
-		Source:          expandSecurityGroupFromIDs(d.Get("source").(*schema.Set).List()),
-	}
+	firewallEWRule := mapResourceDataToEWRule(d)
+	firewallEWRule.RuleID = d.Id()
 
 	_, err := proxy.Update(ctx, securityPolicyID, firewallEWRule)
 	if err != nil {
@@ -251,6 +214,40 @@ func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 	}
 
 	return resourceFirewallEWRuleRead(ctx, d, meta)
+}
+
+func mapResourceDataToEWRule(d *schema.ResourceData) *models.DFWRule {
+	rule := &models.DFWRule{
+		DisplayName: d.Get("display_name").(string),
+		Action:      d.Get("action").(string),
+		Direction:   d.Get("direction").(string),
+	}
+
+	if disabled, ok := d.GetOk("disabled"); ok && disabled.(bool) {
+		rule.Disabled = true
+	}
+
+	if ipProtocol, ok := d.GetOk("ip_protocol"); ok {
+		rule.IPProtocol = ipProtocol.(string)
+	}
+
+	if services, ok := d.GetOk("services"); ok {
+		rule.DefaultServices = expandServicesFromIDs(services.(*schema.Set).List())
+	}
+
+	if source, ok := d.GetOk("source"); ok {
+		rule.Source = expandSecurityGroupFromIDs(source.(*schema.Set).List())
+	}
+
+	if destination, ok := d.GetOk("destination"); ok {
+		rule.Destination = expandSecurityGroupFromIDs(destination.(*schema.Set).List())
+	}
+
+	if position, ok := d.GetOk("position"); ok {
+		rule.Position = expandFirewallRulePosition(position.([]interface{}))
+	}
+
+	return rule
 }
 
 func resourceFirewallEWRuleDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
