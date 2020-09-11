@@ -1,22 +1,42 @@
 package ochk
 
 import (
-	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"testing"
 )
 
+type UserDataSourceTestData struct {
+	ResourceName string
+	Name         string
+}
+
+func (c *UserDataSourceTestData) ToString() string {
+	return executeTemplateToString(`
+data "ochk_user" "{{ .ResourceName}}" {
+  name = "{{ .Name}}"
+}
+`, c)
+}
+
+func (c *UserDataSourceTestData) FullResourceName() string {
+	return "data.ochk_user." + c.ResourceName
+}
+
 func TestAccUserDataSource_read(t *testing.T) {
-	resourceName := "data.ochk_user.default"
-	userName := "devel-jpuser"
+	user := UserDataSourceTestData{
+		ResourceName: "default",
+		Name:         testDataUser1Name,
+	}
+
+	resourceName := user.FullResourceName()
 
 	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccUserDataSourceConfig(userName),
+				Config: user.ToString(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "name", userName),
+					resource.TestCheckResourceAttr(resourceName, "name", user.Name),
 					resource.TestCheckResourceAttr(resourceName, "email_address", "test@ochk.pl"),
 					resource.TestCheckResourceAttr(resourceName, "description", ""),
 					resource.TestCheckResourceAttr(resourceName, "first_name", "Test"),
@@ -32,12 +52,4 @@ func TestAccUserDataSource_read(t *testing.T) {
 			},
 		},
 	})
-}
-
-func testAccUserDataSourceConfig(displayName string) string {
-	return fmt.Sprintf(`
-data "ochk_user" "default" {
-  name = %[1]q
-}
-`, displayName)
 }
