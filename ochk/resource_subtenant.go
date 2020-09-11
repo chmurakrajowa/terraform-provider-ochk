@@ -2,6 +2,7 @@ package ochk
 
 import (
 	"context"
+	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"time"
@@ -95,26 +96,40 @@ func resourceSubtenantRead(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.Errorf("error while reading subtenant: %+v", err)
 	}
 
+	if err := mapSubtenantToResourceData(d, subtenant); err != nil {
+		return diag.Errorf("error while mapping subtenant to resource data: %+v", err)
+	}
+
+	return nil
+}
+
+func mapSubtenantToResourceData(d *schema.ResourceData, subtenant *models.SubtenantInstance) error {
 	if err := d.Set("name", subtenant.Name); err != nil {
-		return diag.Errorf("error setting name: %+v", err)
+		return fmt.Errorf("error setting name: %w", err)
 	}
+
 	if err := d.Set("email", subtenant.Email); err != nil {
-		return diag.Errorf("error setting email: %+v", err)
+		return fmt.Errorf("error setting email: %w", err)
 	}
+
 	if err := d.Set("description", subtenant.Description); err != nil {
-		return diag.Errorf("error setting description: %+v", err)
+		return fmt.Errorf("error setting description: %w", err)
 	}
+
 	if err := d.Set("memory_reserved_size_mb", subtenant.MemoryReservedSizeMB); err != nil {
-		return diag.Errorf("error setting memory_reserved_size_mb: %+v", err)
+		return fmt.Errorf("error setting memory_reserved_size_mb: %w", err)
 	}
+
 	if err := d.Set("storage_reserved_size_gb", subtenant.StorageReservedSizeGB); err != nil {
-		return diag.Errorf("error setting storage_reserved_size_gb: %+v", err)
+		return fmt.Errorf("error setting storage_reserved_size_gb: %w", err)
 	}
+
 	if err := d.Set("users", flattenUserInstancesFromIDs(subtenant.Users)); err != nil {
-		return diag.Errorf("error setting users: %+v", err)
+		return fmt.Errorf("error setting users: %w", err)
 	}
+
 	if err := d.Set("networks", flattenVCSNetworkInstancesFromIDs(subtenant.Networks)); err != nil {
-		return diag.Errorf("error setting networks: %+v", err)
+		return fmt.Errorf("error setting networks: %w", err)
 	}
 
 	return nil

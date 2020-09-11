@@ -86,7 +86,7 @@ func (p *SubtenantsProxy) Read(ctx context.Context, subtenantID string) (*models
 	return response.Payload.SubtenantInstance, nil
 }
 
-func (p *SubtenantsProxy) ListByDisplayName(ctx context.Context, name string) ([]*models.SubtenantInstance, error) {
+func (p *SubtenantsProxy) ListByName(ctx context.Context, name string) ([]*models.SubtenantInstance, error) {
 	params := &subtenants.SubtenantListUsingGETParams{
 		Name:       &name,
 		Context:    ctx,
