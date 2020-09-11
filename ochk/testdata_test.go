@@ -10,7 +10,10 @@ import (
 )
 
 const (
+	testDataUser1Name                  = "devel-jpuser"
 	testDataVirtualMachine1DisplayName = "devel0000001157"
+	testDataNetwork1Name               = "vtest8"
+	testDataNetwork2Name               = "vtest7"
 	testDataIPSet1DisplayName          = "ochk1"
 	testDataLogicalPort1DisplayName    = "f766455e-22a7-a2de-35f5-b8599f064a08/devel0000000639.vmx@a596ebcb-a875-4188-8ec5-0a84bfbf1e11"
 )
@@ -37,7 +40,14 @@ func stringsToTFList(list []string) string {
 	builder := strings.Builder{}
 	builder.WriteString("[")
 	for i := 0; i < len(list); i++ {
-		builder.WriteString(fmt.Sprintf("%q", list[i]))
+		item := list[i]
+
+		if isTerraformResourceName(item) {
+			builder.WriteString(item)
+		} else {
+			builder.WriteString(fmt.Sprintf("%q", item))
+		}
+
 		if i < len(list)-1 {
 			builder.WriteString(", ")
 		}
@@ -45,6 +55,10 @@ func stringsToTFList(list []string) string {
 	builder.WriteString("]")
 
 	return builder.String()
+}
+
+func isTerraformResourceName(item string) bool {
+	return strings.HasPrefix(item, "ochk_") || strings.HasPrefix(item, "data.ochk_")
 }
 
 func TestArrayOfStringToTFList(t *testing.T) {

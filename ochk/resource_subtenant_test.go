@@ -43,31 +43,55 @@ func (c *SubtenantTestData) FullResourceName() string {
 }
 
 func TestAccSubtenantResource_create(t *testing.T) {
+	network1 := NetworkDataSourceTestData{
+		ResourceName: "network1",
+		Name:         testDataNetwork1Name,
+	}
+
+	user1 := UserDataSourceTestData{
+		ResourceName: "user1",
+		Name:         "devel-dstawicki",
+	}
+
 	subtenant := SubtenantTestData{
 		ResourceName:          "default",
 		Description:           "tf-test-description",
 		Email:                 "test@example.com",
 		MemoryReservedSizeMB:  24000,
 		Name:                  "tf-test-name-" + generateRandName(),
-		NetworkIDs:            []string{"258313ca-365e-4f5c-8510-4a42f6595651"},
+		NetworkIDs:            []string{network1.FullResourceName() + ".id"},
 		StorageReservedSizeGB: 150,
-		UserIDs:               []string{"bf5e40c6-191c-40f5-b4d1-9332a9e4ed48"},
+		UserIDs:               []string{user1.FullResourceName() + ".id"},
+	}
+
+	configInitial := user1.ToString() + network1.ToString() + subtenant.ToString()
+
+	network2 := NetworkDataSourceTestData{
+		ResourceName: "network2",
+		Name:         testDataNetwork2Name,
+	}
+
+	user2 := UserDataSourceTestData{
+		ResourceName: "user2",
+		Name:         "devel-firstuserpb1",
 	}
 
 	subtenantUpdated := subtenant
 	subtenantUpdated.MemoryReservedSizeMB = 30000
 	subtenantUpdated.StorageReservedSizeGB = 200
-	subtenantUpdated.NetworkIDs = []string{"bd814070-18f3-4182-b2af-edaa72a50fee"}
-	subtenantUpdated.UserIDs = []string{"dbeb5be9-71ff-4d34-b64d-6e0fced6ed52"}
+	subtenantUpdated.NetworkIDs = []string{network2.FullResourceName() + ".id"}
+	subtenantUpdated.UserIDs = []string{user2.FullResourceName() + ".id"}
 	subtenantUpdated.Email = "email.updated@example.com"
 	subtenantUpdated.Description += "- updated"
 
+	configUpdated := user2.ToString() + network2.ToString() + subtenantUpdated.ToString()
+
 	subtenantResourceName := subtenant.FullResourceName()
-	resource.Test(t, resource.TestCase{
+	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: subtenant.ToString(),
+				Config: configInitial,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(subtenantResourceName, "name", subtenant.Name),
 					//FIXME waiting for backend fix
@@ -75,12 +99,12 @@ func TestAccSubtenantResource_create(t *testing.T) {
 					resource.TestCheckResourceAttr(subtenantResourceName, "email", subtenant.Email),
 					resource.TestCheckResourceAttr(subtenantResourceName, "memory_reserved_size_mb", fmt.Sprintf("%d", subtenant.MemoryReservedSizeMB)),
 					resource.TestCheckResourceAttr(subtenantResourceName, "storage_reserved_size_gb", fmt.Sprintf("%d", subtenant.StorageReservedSizeGB)),
-					resource.TestCheckResourceAttr(subtenantResourceName, "users.0", subtenant.UserIDs[0]),
-					resource.TestCheckResourceAttr(subtenantResourceName, "networks.0", subtenant.NetworkIDs[0]),
+					resource.TestCheckResourceAttrPair(subtenantResourceName, "users.0", user1.FullResourceName(), "id"),
+					resource.TestCheckResourceAttrPair(subtenantResourceName, "networks.0", network1.FullResourceName(), "id"),
 				),
 			},
 			{
-				Config: subtenantUpdated.ToString(),
+				Config: configUpdated,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(subtenantResourceName, "name", subtenantUpdated.Name),
 					//FIXME waiting for backend fix
@@ -88,8 +112,8 @@ func TestAccSubtenantResource_create(t *testing.T) {
 					resource.TestCheckResourceAttr(subtenantResourceName, "email", subtenantUpdated.Email),
 					resource.TestCheckResourceAttr(subtenantResourceName, "memory_reserved_size_mb", fmt.Sprintf("%d", subtenantUpdated.MemoryReservedSizeMB)),
 					resource.TestCheckResourceAttr(subtenantResourceName, "storage_reserved_size_gb", fmt.Sprintf("%d", subtenantUpdated.StorageReservedSizeGB)),
-					resource.TestCheckResourceAttr(subtenantResourceName, "users.0", subtenantUpdated.UserIDs[0]),
-					resource.TestCheckResourceAttr(subtenantResourceName, "networks.0", subtenantUpdated.NetworkIDs[0]),
+					resource.TestCheckResourceAttrPair(subtenantResourceName, "users.0", user2.FullResourceName(), "id"),
+					resource.TestCheckResourceAttrPair(subtenantResourceName, "networks.0", network2.FullResourceName(), "id"),
 				),
 			},
 		},
