@@ -125,7 +125,7 @@ func testAccSubtenantResourceNotExists(name string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		proxy := testAccProvider.Meta().(*sdk.Client).Subtenants
 
-		subtenants, err := proxy.ListByDisplayName(context.Background(), name)
+		subtenants, err := proxy.ListByName(context.Background(), name)
 		if err != nil {
 			return err
 		}
