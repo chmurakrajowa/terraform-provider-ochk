@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	VirtualNetworkRetryTimeout = 15 * time.Minute
+	VirtualNetworkRetryTimeout = 20 * time.Minute
 )
 
 func resourceVirtualNetwork() *schema.Resource {
