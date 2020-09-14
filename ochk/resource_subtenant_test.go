@@ -58,7 +58,7 @@ func TestAccSubtenantResource_create(t *testing.T) {
 		Description:           "tf-test-description",
 		Email:                 "test@example.com",
 		MemoryReservedSizeMB:  24000,
-		Name:                  "tf-test-name-" + generateRandName(),
+		Name:                  generateRandName(),
 		NetworkIDs:            []string{network1.FullResourceName() + ".id"},
 		StorageReservedSizeGB: 150,
 		UserIDs:               []string{user1.FullResourceName() + ".id"},
@@ -76,6 +76,7 @@ func TestAccSubtenantResource_create(t *testing.T) {
 		Name:         "devel-firstuserpb1",
 	}
 
+	//FIXME missing test for update, this one forces recreate only
 	subtenantUpdated := subtenant
 	subtenantUpdated.MemoryReservedSizeMB = 30000
 	subtenantUpdated.StorageReservedSizeGB = 200
