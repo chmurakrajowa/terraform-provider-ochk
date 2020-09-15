@@ -89,8 +89,9 @@ func resourceSubtenantRead(ctx context.Context, d *schema.ResourceData, meta int
 	subtenant, err := proxy.Read(ctx, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
+			id := d.Id()
 			d.SetId("")
-			return diag.Errorf("subtenant with id %s not found: %+v", d.Id(), err)
+			return diag.Errorf("subtenant with id %s not found: %+v", id, err)
 		}
 
 		return diag.Errorf("error while reading subtenant: %+v", err)
@@ -155,8 +156,9 @@ func resourceSubtenantDelete(ctx context.Context, d *schema.ResourceData, meta i
 	err := proxy.Delete(ctx, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
+			id := d.Id()
 			d.SetId("")
-			return diag.Errorf("subtenant with id %s not found: %+v", d.Id(), err)
+			return diag.Errorf("subtenant with id %s not found: %+v", id, err)
 		}
 
 		return diag.Errorf("error while deleting subtenant: %+v", err)

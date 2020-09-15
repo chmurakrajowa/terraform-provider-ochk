@@ -245,6 +245,7 @@ resource "ochk_security_group" "source-middle" {
     type = "VIRTUAL_MACHINE"
   }
 }
+
 resource "ochk_security_group" "source-after" {
   display_name = "%[1]s-after"
 

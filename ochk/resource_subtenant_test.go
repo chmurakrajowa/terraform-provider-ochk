@@ -59,9 +59,9 @@ func TestAccSubtenantResource_create(t *testing.T) {
 		Email:                 "test@example.com",
 		MemoryReservedSizeMB:  24000,
 		Name:                  generateRandName(),
-		NetworkIDs:            []string{network1.FullResourceName() + ".id"},
+		NetworkIDs:            []string{testDataResourceID(&network1)},
 		StorageReservedSizeGB: 150,
-		UserIDs:               []string{user1.FullResourceName() + ".id"},
+		UserIDs:               []string{testDataResourceID(&user1)},
 	}
 
 	configInitial := user1.ToString() + network1.ToString() + subtenant.ToString()
@@ -80,8 +80,8 @@ func TestAccSubtenantResource_create(t *testing.T) {
 	subtenantUpdated := subtenant
 	subtenantUpdated.MemoryReservedSizeMB = 30000
 	subtenantUpdated.StorageReservedSizeGB = 200
-	subtenantUpdated.NetworkIDs = []string{network2.FullResourceName() + ".id"}
-	subtenantUpdated.UserIDs = []string{user2.FullResourceName() + ".id"}
+	subtenantUpdated.NetworkIDs = []string{testDataResourceID(&network2)}
+	subtenantUpdated.UserIDs = []string{testDataResourceID(&user2)}
 	subtenantUpdated.Email = "email.updated@example.com"
 	subtenantUpdated.Description += "- updated"
 

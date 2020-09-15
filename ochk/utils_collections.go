@@ -1,6 +1,9 @@
 package ochk
 
-import "github.com/go-openapi/strfmt"
+import (
+	"github.com/go-openapi/strfmt"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
 
 func mapSliceToInterfaceSlice(in []map[string]interface{}) []interface{} {
 	if in == nil {
@@ -48,6 +51,13 @@ func mapInterfaceSliceToUUIDSlice(in []interface{}) []strfmt.UUID {
 	}
 
 	return output
+}
+
+func transformSetToStringSlice(set *schema.Set) []string {
+	list := set.List()
+	return transformToStringSlice(len(list), func(idx int) string {
+		return list[idx].(string)
+	})
 }
 
 func transformToStringSlice(size int, mapFunc func(idx int) string) []string {

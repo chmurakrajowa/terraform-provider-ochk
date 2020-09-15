@@ -77,8 +77,9 @@ func resourceRouterRead(ctx context.Context, d *schema.ResourceData, meta interf
 	Router, err := proxy.Read(ctx, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
+			id := d.Id()
 			d.SetId("")
-			return diag.Errorf("router with id %s not found: %+v", d.Id(), err)
+			return diag.Errorf("router with id %s not found: %+v", id, err)
 		}
 
 		return diag.Errorf("error while reading router: %+v", err)
@@ -127,8 +128,9 @@ func resourceRouterDelete(ctx context.Context, d *schema.ResourceData, meta inte
 	err := proxy.Delete(ctx, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
+			id := d.Id()
 			d.SetId("")
-			return diag.Errorf("router with id %s not found: %+v", d.Id(), err)
+			return diag.Errorf("router with id %s not found: %+v", id, err)
 		}
 
 		return diag.Errorf("error while deleting router: %+v", err)

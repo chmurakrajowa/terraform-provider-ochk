@@ -51,7 +51,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 		DisplayName:  generateRandName(),
 		Members: []SecurityGroupMemberTestData{
 			{
-				ID:   virtualMachine.FullResourceName() + ".id",
+				ID:   testDataResourceID(&virtualMachine),
 				Type: "VIRTUAL_MACHINE",
 			},
 		},
@@ -70,7 +70,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 		DisplayName:  testDataVirtualMachine1DisplayName,
 	}
 	securityGroupTwoMembers.Members = append(securityGroupTwoMembers.Members, SecurityGroupMemberTestData{
-		ID:   virtualMachine2.FullResourceName() + ".id",
+		ID:   testDataResourceID(&virtualMachine2),
 		Type: "VIRTUAL_MACHINE",
 	})
 	configTwoMembers := securityGroupTwoMembers.ToString() + virtualMachine.ToString() + virtualMachine2.ToString()

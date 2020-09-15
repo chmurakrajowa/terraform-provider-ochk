@@ -143,8 +143,9 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 	firewallSNRule, err := proxy.Read(ctx, gatewayPolicyID, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
+			id := d.Id()
 			d.SetId("")
-			return diag.Errorf("firewall SN rule with id %s not found: %+v", d.Id(), err)
+			return diag.Errorf("firewall SN rule with id %s not found: %+v", id, err)
 		}
 
 		return diag.Errorf("error while reading firewall SN rule: %+v", err)
@@ -269,8 +270,9 @@ func resourceFirewallSNRuleDelete(ctx context.Context, d *schema.ResourceData, m
 	err := proxy.Delete(ctx, gatewayPolicyID, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
+			id := d.Id()
 			d.SetId("")
-			return diag.Errorf("firewall SN rule with id %s not found: %+v", d.Id(), err)
+			return diag.Errorf("firewall SN rule with id %s not found: %+v", id, err)
 		}
 
 		return diag.Errorf("error while deleting firewall SN rule: %+v", err)

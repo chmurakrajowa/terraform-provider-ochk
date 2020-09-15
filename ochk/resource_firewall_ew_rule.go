@@ -134,8 +134,9 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 	firewallEWRule, err := proxy.Read(ctx, securityPolicyID, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
+			id := d.Id()
 			d.SetId("")
-			return diag.Errorf("firewall EW rule with id %s not found: %+v", d.Id(), err)
+			return diag.Errorf("firewall EW rule with id %s not found: %+v", id, err)
 		}
 
 		return diag.Errorf("error while reading firewall EW rule: %+v", err)
@@ -258,8 +259,9 @@ func resourceFirewallEWRuleDelete(ctx context.Context, d *schema.ResourceData, m
 	err := proxy.Delete(ctx, securityPolicyID, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
+			id := d.Id()
 			d.SetId("")
-			return diag.Errorf("firewall EW rule with id %s not found: %+v", d.Id(), err)
+			return diag.Errorf("firewall EW rule with id %s not found: %+v", id, err)
 		}
 
 		return diag.Errorf("error while deleting firewall EW rule: %+v", err)

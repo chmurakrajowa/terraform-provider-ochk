@@ -16,7 +16,7 @@ type VirtualNetworksProxy struct {
 	service    virtual_networks.ClientService
 }
 
-func (p *VirtualNetworksProxy) Create(ctx context.Context, virtualNetwork *models.VirtualNetworkInstance, timeout time.Duration, ) (*models.RequestInstance, error) {
+func (p *VirtualNetworksProxy) Create(ctx context.Context, virtualNetwork *models.VirtualNetworkInstance, timeout time.Duration) (*models.RequestInstance, error) {
 	if err := virtualNetwork.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating virtual network struct: %w", err)
 	}
