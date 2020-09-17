@@ -106,7 +106,7 @@ func (p *VirtualNetworksProxy) ListByDisplayName(ctx context.Context, displayNam
 	return response.Payload.VirtualNetworkInstanceCollection, nil
 }
 
-func (p *VirtualNetworksProxy) Delete(ctx context.Context, virtualNetworkID string) error {
+func (p *VirtualNetworksProxy) Delete(ctx context.Context, virtualNetworkID string) (*models.RequestInstance, error) {
 	params := &virtual_networks.VirtualNetworkDeleteUsingDELETEParams{
 		VirtualNetworkID: virtualNetworkID,
 		Context:          ctx,
@@ -117,15 +117,15 @@ func (p *VirtualNetworksProxy) Delete(ctx context.Context, virtualNetworkID stri
 	if err != nil {
 		var badRequest *virtual_networks.VirtualNetworkDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {
-			return &NotFoundError{Err: err}
+			return nil, &NotFoundError{Err: err}
 		}
 
-		return fmt.Errorf("error while deleting virtual network: %w", err)
+		return nil, fmt.Errorf("error while deleting virtual network: %w", err)
 	}
 
 	if !response.Payload.Success {
-		return fmt.Errorf("deleting virtual network failed: %s", response.Payload.Messages)
+		return nil, fmt.Errorf("deleting virtual network failed: %s", response.Payload.Messages)
 	}
 
-	return nil
+	return response.Payload.RequestInstance, nil
 }

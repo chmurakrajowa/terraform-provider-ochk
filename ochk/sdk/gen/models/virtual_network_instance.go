@@ -6,12 +6,9 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"strconv"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // VirtualNetworkInstance VirtualNetworkInstance
@@ -34,12 +31,6 @@ type VirtualNetworkInstance struct {
 	// ipam enabled
 	IpamEnabled bool `json:"ipamEnabled,omitempty"`
 
-	// network adapter Id
-	NetworkAdapterID string `json:"networkAdapterId,omitempty"`
-
-	// network profile Id
-	NetworkProfileID string `json:"networkProfileId,omitempty"`
-
 	// primary Dns address
 	PrimaryDNSAddress string `json:"primaryDnsAddress,omitempty"`
 
@@ -55,9 +46,6 @@ type VirtualNetworkInstance struct {
 	// secondary wins address
 	SecondaryWinsAddress string `json:"secondaryWinsAddress,omitempty"`
 
-	// segment Id
-	SegmentID string `json:"segmentId,omitempty"`
-
 	// subnet
 	Subnet *SegmentSubnetInstance `json:"subnet,omitempty"`
 
@@ -65,10 +53,7 @@ type VirtualNetworkInstance struct {
 	SubnetMask string `json:"subnetMask,omitempty"`
 
 	// subtenant ref ids
-	SubtenantRefIds []strfmt.UUID `json:"subtenantRefIds"`
-
-	// vcs network Id
-	VcsNetworkID string `json:"vcsNetworkId,omitempty"`
+	SubtenantRefIds []string `json:"subtenantRefIds"`
 
 	// virtual network Id
 	VirtualNetworkID string `json:"virtualNetworkId,omitempty"`
@@ -79,10 +64,6 @@ func (m *VirtualNetworkInstance) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateSubnet(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateSubtenantRefIds(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -105,23 +86,6 @@ func (m *VirtualNetworkInstance) validateSubnet(formats strfmt.Registry) error {
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *VirtualNetworkInstance) validateSubtenantRefIds(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.SubtenantRefIds) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.SubtenantRefIds); i++ {
-
-		if err := validate.FormatOf("subtenantRefIds"+"."+strconv.Itoa(i), "body", "uuid", m.SubtenantRefIds[i].String(), formats); err != nil {
-			return err
-		}
-
 	}
 
 	return nil

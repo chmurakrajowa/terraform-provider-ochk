@@ -76,16 +76,19 @@ func TestAccSubtenantResource_create(t *testing.T) {
 		Name:         "devel-firstuserpb1",
 	}
 
-	//FIXME missing test for update, this one forces recreate only
 	subtenantUpdated := subtenant
 	subtenantUpdated.MemoryReservedSizeMB = 30000
 	subtenantUpdated.StorageReservedSizeGB = 200
 	subtenantUpdated.NetworkIDs = []string{testDataResourceID(&network2)}
-	subtenantUpdated.UserIDs = []string{testDataResourceID(&user2)}
-	subtenantUpdated.Email = "email.updated@example.com"
 	subtenantUpdated.Description += "- updated"
 
-	configUpdated := user2.ToString() + network2.ToString() + subtenantUpdated.ToString()
+	configUpdated := user1.ToString() + network1.ToString() + user2.ToString() + network2.ToString() + subtenantUpdated.ToString()
+
+	subtenantUpdatedWithRecreate := subtenantUpdated
+	subtenantUpdatedWithRecreate.UserIDs = []string{testDataResourceID(&user2)}
+	subtenantUpdatedWithRecreate.Email = "email.updated@example.com"
+
+	configUpdatedWithRecreate := user1.ToString() + network1.ToString() + user2.ToString() + network2.ToString() + subtenantUpdatedWithRecreate.ToString()
 
 	subtenantResourceName := subtenant.FullResourceName()
 	resource.ParallelTest(t, resource.TestCase{
@@ -108,11 +111,22 @@ func TestAccSubtenantResource_create(t *testing.T) {
 				Config: configUpdated,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(subtenantResourceName, "name", subtenantUpdated.Name),
-					//FIXME waiting for backend fix
 					//resource.TestCheckResourceAttr(subtenantResourceName, "description", subtenantUpdated.Description),
 					resource.TestCheckResourceAttr(subtenantResourceName, "email", subtenantUpdated.Email),
 					resource.TestCheckResourceAttr(subtenantResourceName, "memory_reserved_size_mb", fmt.Sprintf("%d", subtenantUpdated.MemoryReservedSizeMB)),
 					resource.TestCheckResourceAttr(subtenantResourceName, "storage_reserved_size_gb", fmt.Sprintf("%d", subtenantUpdated.StorageReservedSizeGB)),
+					resource.TestCheckResourceAttrPair(subtenantResourceName, "users.0", user1.FullResourceName(), "id"),
+					resource.TestCheckResourceAttrPair(subtenantResourceName, "networks.0", network2.FullResourceName(), "id"),
+				),
+			},
+			{
+				Config: configUpdatedWithRecreate,
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr(subtenantResourceName, "name", subtenantUpdatedWithRecreate.Name),
+					//resource.TestCheckResourceAttr(subtenantResourceName, "description", subtenantUpdated.Description),
+					resource.TestCheckResourceAttr(subtenantResourceName, "email", subtenantUpdatedWithRecreate.Email),
+					resource.TestCheckResourceAttr(subtenantResourceName, "memory_reserved_size_mb", fmt.Sprintf("%d", subtenantUpdatedWithRecreate.MemoryReservedSizeMB)),
+					resource.TestCheckResourceAttr(subtenantResourceName, "storage_reserved_size_gb", fmt.Sprintf("%d", subtenantUpdatedWithRecreate.StorageReservedSizeGB)),
 					resource.TestCheckResourceAttrPair(subtenantResourceName, "users.0", user2.FullResourceName(), "id"),
 					resource.TestCheckResourceAttrPair(subtenantResourceName, "networks.0", network2.FullResourceName(), "id"),
 				),

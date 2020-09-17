@@ -24,7 +24,6 @@ type VirtualNetworkTestData struct {
 	SecondaryDNSAddress      string
 	SecondaryWinsAddress     string
 	SubnetMask               string
-	SubnetDhcpRanges         []string
 	SubnetGatewayAddressCidr string
 	SubnetNetworkCidr        string
 }
@@ -39,10 +38,9 @@ resource "ochk_virtual_network" "{{ .ResourceName}}" {
 	dns_suffix = "{{ .DNSSuffix }}"
 	primary_dns_address = "{{ .PrimaryDNSAddress }}"
 	primary_wins_address = "{{ .PrimaryWinsAddress }}"
-	router = "{{ .RouterRefID }}"
+	router = {{ StringTFValue .RouterRefID }}
 	secondary_dns_address = "{{ .SecondaryDNSAddress }}"
 	secondary_wins_address = "{{ .SecondaryWinsAddress }}"
-	subnet_dhcp_ranges = {{ StringsToTFList .SubnetDhcpRanges }}
 	subnet_network_cidr = "{{ .SubnetNetworkCidr }}"
 }
 `, c)
@@ -86,7 +84,7 @@ func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
 func TestAccVirtualNetworkResource_createWithIpamAndSubnet(t *testing.T) {
 	subtenant1 := SubtenantDataSourceTestData{
 		ResourceName: "subtenant1",
-		Name:         testDataSubtenant1Name,
+		Name:         testDataSubtenant2Name,
 	}
 
 	virtualNetwork := VirtualNetworkTestData{
@@ -134,12 +132,12 @@ func TestAccVirtualNetworkResource_createWithIpamAndSubnet(t *testing.T) {
 func TestAccVirtualNetworkResource_createAndUpdateWithIpamSubnetRouter(t *testing.T) {
 	subtenant1 := SubtenantDataSourceTestData{
 		ResourceName: "subtenant1",
-		Name:         testDataSubtenant1Name,
+		Name:         testDataSubtenant3Name,
 	}
 
 	subtenant2 := SubtenantDataSourceTestData{
 		ResourceName: "subtenant2",
-		Name:         testDataSubtenant1Name,
+		Name:         testDataSubtenant4Name,
 	}
 
 	router1 := RouterTestData{
@@ -164,16 +162,16 @@ func TestAccVirtualNetworkResource_createAndUpdateWithIpamSubnetRouter(t *testin
 		PrimaryWinsAddress:   "192.168.1.3",
 		SecondaryWinsAddress: "192.168.1.3",
 		SubnetNetworkCidr:    "10.16.1.0/24",
-		RouterRefID:          router1.FullResourceName(),
+		RouterRefID:          testDataResourceID(&router1),
 	}
 
-	configInitial := subtenant1.ToString() + router1.ToString() + virtualNetwork.ToString()
+	configInitial := subtenant1.ToString() + subtenant2.ToString() + router1.ToString() + virtualNetwork.ToString()
 
 	virtualNetworkUpdated := virtualNetwork
-	virtualNetworkUpdated.Subtenants = []string{subtenant1.FullResourceName(), subtenant2.FullResourceName()}
-	virtualNetworkUpdated.RouterRefID = router2.FullResourceName()
+	virtualNetworkUpdated.Subtenants = []string{testDataResourceID(&subtenant2)}
+	virtualNetworkUpdated.RouterRefID = testDataResourceID(&router2)
 
-	configUpdated := subtenant2.ToString() + router2.ToString() + virtualNetworkUpdated.ToString()
+	configUpdated := subtenant1.ToString() + subtenant2.ToString() + router1.ToString() + router2.ToString() + virtualNetworkUpdated.ToString()
 
 	resourceName := virtualNetwork.FullResourceName()
 

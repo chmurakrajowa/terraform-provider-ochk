@@ -6,6 +6,8 @@ page_title: "Virtual network Resource"
 
 Resource for managing virtual networks (vNets). 
 
+Warning: provisioning of virtual networks can take up to 15 minutes. 
+
 ## Example Usage
 
 ### Minimal example
@@ -57,15 +59,11 @@ The following arguments are supported:
 * `ipam_enabled` - (Optional) True for enabling IPAM. Defaults to `false`. Updates to this attribute forces recreate.
 * `dns_search_suffix` - (Optional). DNS search suffix. Updates to this attribute forces recreate.
 * `dns_suffix` - (Optional). DNS suffix. Updates to this attribute forces recreate.
-* `gateway_address` - (Optional). Gateway address. Updates to this attribute forces recreate.
-* `primary_dns_address` - ()Optional. Primary DNS address. Updates to this attribute forces recreate.
+* `primary_dns_address` - (Optional). Primary DNS address. Updates to this attribute forces recreate.
 * `secondary_dns_address` - (Optional). Secondary DNS address. Updates to this attribute forces recreate.
 * `primary_wins_address` - (Optional). Primary WINS address. Updates to this attribute forces recreate.
 * `secondary_wins_address` - (Optional). Secondary WINS address. Updates to this attribute forces recreate.
 * `subnet_mask` - (Optional). Subnet mask. Updates to this attribute forces recreate.
-* `subnet_network_cidr` - (Optional). CIDR of subnet network. Updates to this attribute forces recreate.
-* `subnet_dhcp_ranges` - (Optional). List of DHCP ranges in subnet. Updates to this attribute forces recreate.
-* `subnet_gateway_address_cidr` - (Optional). CIDR of gateway address in subnet. Updates to this attribute forces recreate.
 
 ## Attribute Reference
 

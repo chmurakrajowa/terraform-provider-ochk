@@ -77,13 +77,6 @@ func resourceVirtualNetwork() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"subnet_dhcp_ranges": {
-				Type:     schema.TypeSet,
-				Optional: true,
-				MinItems: 0,
-				Elem:     &schema.Schema{Type: schema.TypeString},
-				ForceNew: true,
-			},
 			"subnet_gateway_address_cidr": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -176,9 +169,6 @@ func resourceVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting router: %+v", err)
 	}
 	if virtualNetwork.Subnet != nil {
-		if err := d.Set("subnet_dhcp_ranges", flattenStringSlice(virtualNetwork.Subnet.DhcpRanges)); err != nil {
-			return diag.Errorf("error setting subnet_dhcp_ranges: %+v", err)
-		}
 		if err := d.Set("subnet_gateway_address_cidr", virtualNetwork.Subnet.GatewayAddressCIDR); err != nil {
 			return diag.Errorf("error setting subnet_gateway_address_cidr: %+v", err)
 		}
@@ -187,7 +177,7 @@ func resourceVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, met
 		}
 	}
 
-	if err := d.Set("subtenants", flattenUUIDs(virtualNetwork.SubtenantRefIds)); err != nil {
+	if err := d.Set("subtenants", flattenStringSlice(virtualNetwork.SubtenantRefIds)); err != nil {
 		return diag.Errorf("error setting subtenants: %+v", err)
 	}
 
@@ -195,23 +185,30 @@ func resourceVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, met
 }
 
 func resourceVirtualNetworkUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	proxy := meta.(*sdk.Client).VirtualNetworks
+	sdkClient := meta.(*sdk.Client)
 
 	virtualNetwork := mapResourceDataToVirtualNetwork(d)
 	virtualNetwork.VirtualNetworkID = d.Id()
 
-	_, err := proxy.Update(ctx, virtualNetwork)
+	request, err := sdkClient.VirtualNetworks.Update(ctx, virtualNetwork)
 	if err != nil {
 		return diag.Errorf("error while modifying virtual network: %+v", err)
 	}
+
+	err, resourceID := sdkClient.Requests.FetchResourceID(ctx, d.Timeout(schema.TimeoutCreate), request)
+	if err != nil {
+		return diag.Errorf("error while fetching virtual network request state: %+v", err)
+	}
+
+	d.SetId(resourceID)
 
 	return resourceVirtualNetworkRead(ctx, d, meta)
 }
 
 func resourceVirtualNetworkDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	proxy := meta.(*sdk.Client).VirtualNetworks
+	sdkClient := meta.(*sdk.Client)
 
-	err := proxy.Delete(ctx, d.Id())
+	request, err := sdkClient.VirtualNetworks.Delete(ctx, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -220,6 +217,11 @@ func resourceVirtualNetworkDelete(ctx context.Context, d *schema.ResourceData, m
 		}
 
 		return diag.Errorf("error while deleting virtual network: %+v", err)
+	}
+
+	err, _ = sdkClient.Requests.FetchResourceID(ctx, d.Timeout(schema.TimeoutCreate), request)
+	if err != nil {
+		return diag.Errorf("error while fetching virtual network request state: %+v", err)
 	}
 
 	return nil
@@ -238,20 +240,15 @@ func mapResourceDataToVirtualNetwork(d *schema.ResourceData) *models.VirtualNetw
 		SecondaryDNSAddress:  d.Get("secondary_dns_address").(string),
 		SecondaryWinsAddress: d.Get("secondary_wins_address").(string),
 		SubnetMask:           d.Get("subnet_mask").(string),
-		//FIXME should not be UUID
-		SubtenantRefIds:  mapInterfaceSliceToUUIDSlice(d.Get("subtenants").(*schema.Set).List()),
-		VirtualNetworkID: d.Id(),
+		SubtenantRefIds:      transformSetToStringSlice(d.Get("subtenants").(*schema.Set)),
+		VirtualNetworkID:     d.Id(),
 	}
 
-	subnetDhcpRanges, subnetDhcpRangesOk := d.GetOk("subnet_dhcp_ranges")
 	subnetGatewayAddressCidr, subnetGatewayAddressCidrOk := d.GetOk("subnet_gateway_address_cidr")
 	subnetNetworkCidr, subnetNetworkCidrOk := d.GetOk("subnet_network_cidr")
-	if subnetDhcpRangesOk || subnetGatewayAddressCidrOk || subnetNetworkCidrOk {
+	if subnetGatewayAddressCidrOk || subnetNetworkCidrOk {
 		virtualNetworkInstance.Subnet = &models.SegmentSubnetInstance{}
 
-		if subnetDhcpRangesOk {
-			virtualNetworkInstance.Subnet.DhcpRanges = transformSetToStringSlice(subnetDhcpRanges.(*schema.Set))
-		}
 		if subnetGatewayAddressCidrOk {
 			virtualNetworkInstance.Subnet.GatewayAddressCIDR = subnetGatewayAddressCidr.(string)
 		}
