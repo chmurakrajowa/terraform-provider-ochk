@@ -18,6 +18,8 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/gateway_policies"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_sets"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/logical_ports"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/networkadapters"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/networkprofiles"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/networks"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/principals"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/requests"
@@ -83,6 +85,8 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.GatewayPolicies = gateway_policies.New(transport, formats)
 	cli.IPSets = ip_sets.New(transport, formats)
 	cli.LogicalPorts = logical_ports.New(transport, formats)
+	cli.Networkadapters = networkadapters.New(transport, formats)
+	cli.Networkprofiles = networkprofiles.New(transport, formats)
 	cli.Networks = networks.New(transport, formats)
 	cli.Principals = principals.New(transport, formats)
 	cli.Requests = requests.New(transport, formats)
@@ -156,6 +160,10 @@ type Ochk struct {
 
 	LogicalPorts logical_ports.ClientService
 
+	Networkadapters networkadapters.ClientService
+
+	Networkprofiles networkprofiles.ClientService
+
 	Networks networks.ClientService
 
 	Principals principals.ClientService
@@ -196,6 +204,8 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.GatewayPolicies.SetTransport(transport)
 	c.IPSets.SetTransport(transport)
 	c.LogicalPorts.SetTransport(transport)
+	c.Networkadapters.SetTransport(transport)
+	c.Networkprofiles.SetTransport(transport)
 	c.Networks.SetTransport(transport)
 	c.Principals.SetTransport(transport)
 	c.Requests.SetTransport(transport)

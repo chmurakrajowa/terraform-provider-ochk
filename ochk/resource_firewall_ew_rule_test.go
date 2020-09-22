@@ -12,6 +12,8 @@ import (
 )
 
 func TestAccFirewallEWRuleResource_noPosition(t *testing.T) {
+	// TODO unskip when fixed fw ordering in backend
+	t.Skip("Skipped due to parallel execution issues")
 	resourceName := "ochk_firewall_ew_rule.no_position"
 	displayName := generateRandName()
 	displayNameUpdated := displayName + "-updated"
@@ -245,6 +247,7 @@ resource "ochk_security_group" "source-middle" {
     type = "VIRTUAL_MACHINE"
   }
 }
+
 resource "ochk_security_group" "source-after" {
   display_name = "%[1]s-after"
 

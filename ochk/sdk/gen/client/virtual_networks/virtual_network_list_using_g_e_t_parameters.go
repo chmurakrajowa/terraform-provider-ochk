@@ -19,7 +19,7 @@ import (
 // NewVirtualNetworkListUsingGETParams creates a new VirtualNetworkListUsingGETParams object
 // with the default values initialized.
 func NewVirtualNetworkListUsingGETParams() *VirtualNetworkListUsingGETParams {
-
+	var ()
 	return &VirtualNetworkListUsingGETParams{
 
 		timeout: cr.DefaultTimeout,
@@ -29,7 +29,7 @@ func NewVirtualNetworkListUsingGETParams() *VirtualNetworkListUsingGETParams {
 // NewVirtualNetworkListUsingGETParamsWithTimeout creates a new VirtualNetworkListUsingGETParams object
 // with the default values initialized, and the ability to set a timeout on a request
 func NewVirtualNetworkListUsingGETParamsWithTimeout(timeout time.Duration) *VirtualNetworkListUsingGETParams {
-
+	var ()
 	return &VirtualNetworkListUsingGETParams{
 
 		timeout: timeout,
@@ -39,7 +39,7 @@ func NewVirtualNetworkListUsingGETParamsWithTimeout(timeout time.Duration) *Virt
 // NewVirtualNetworkListUsingGETParamsWithContext creates a new VirtualNetworkListUsingGETParams object
 // with the default values initialized, and the ability to set a context for a request
 func NewVirtualNetworkListUsingGETParamsWithContext(ctx context.Context) *VirtualNetworkListUsingGETParams {
-
+	var ()
 	return &VirtualNetworkListUsingGETParams{
 
 		Context: ctx,
@@ -49,7 +49,7 @@ func NewVirtualNetworkListUsingGETParamsWithContext(ctx context.Context) *Virtua
 // NewVirtualNetworkListUsingGETParamsWithHTTPClient creates a new VirtualNetworkListUsingGETParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewVirtualNetworkListUsingGETParamsWithHTTPClient(client *http.Client) *VirtualNetworkListUsingGETParams {
-
+	var ()
 	return &VirtualNetworkListUsingGETParams{
 		HTTPClient: client,
 	}
@@ -59,6 +59,13 @@ func NewVirtualNetworkListUsingGETParamsWithHTTPClient(client *http.Client) *Vir
 for the virtual network list using g e t operation typically these are written to a http.Request
 */
 type VirtualNetworkListUsingGETParams struct {
+
+	/*DisplayName
+	  displayName
+
+	*/
+	DisplayName *string
+
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -97,6 +104,17 @@ func (o *VirtualNetworkListUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithDisplayName adds the displayName to the virtual network list using g e t params
+func (o *VirtualNetworkListUsingGETParams) WithDisplayName(displayName *string) *VirtualNetworkListUsingGETParams {
+	o.SetDisplayName(displayName)
+	return o
+}
+
+// SetDisplayName adds the displayName to the virtual network list using g e t params
+func (o *VirtualNetworkListUsingGETParams) SetDisplayName(displayName *string) {
+	o.DisplayName = displayName
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *VirtualNetworkListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -104,6 +122,22 @@ func (o *VirtualNetworkListUsingGETParams) WriteToRequest(r runtime.ClientReques
 		return err
 	}
 	var res []error
+
+	if o.DisplayName != nil {
+
+		// query param displayName
+		var qrDisplayName string
+		if o.DisplayName != nil {
+			qrDisplayName = *o.DisplayName
+		}
+		qDisplayName := qrDisplayName
+		if qDisplayName != "" {
+			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

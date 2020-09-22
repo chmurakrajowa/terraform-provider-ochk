@@ -14,13 +14,25 @@ const (
 	testDataLogicalPort1DisplayName    = "f766455e-22a7-a2de-35f5-b8599f064a08/devel0000000639.vmx@a596ebcb-a875-4188-8ec5-0a84bfbf1e11"
 	testDataNetwork1Name               = "vtest8"
 	testDataNetwork2Name               = "vtest7"
-	testDataSubtenant1Name             = "acmpt_107"
+	testDataSubtenant1Name             = "tf-acc_test-9j97besn"
+	testDataSubtenant2Name             = "tf-acc_test-0yawdijz"
+	testDataSubtenant3Name             = "tf-test-name-tf-acc_test-amwyi09b"
+	testDataSubtenant4Name             = "tf-test-name-tf-acc_test-03w1wt34"
 	testDataUser1Name                  = "devel-jpuser"
 	testDataVirtualMachine1DisplayName = "devel0000001157"
 )
 
 var templateFuncMap = map[string]interface{}{
 	"StringsToTFList": stringsToTFList,
+	"StringTFValue":   stringTFValue,
+}
+
+type TestData interface {
+	FullResourceName() string
+}
+
+func testDataResourceID(td TestData) string {
+	return td.FullResourceName() + ".id"
 }
 
 func executeTemplateToString(templateString string, data interface{}) string {
@@ -35,6 +47,14 @@ func executeTemplateToString(templateString string, data interface{}) string {
 	}
 
 	return tpl.String()
+}
+
+func stringTFValue(value string) string {
+	if isTerraformResourceName(value) {
+		return value
+	}
+
+	return fmt.Sprintf("%q", value)
 }
 
 func stringsToTFList(list []string) string {

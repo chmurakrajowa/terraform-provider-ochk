@@ -15,6 +15,14 @@
   "basePath": "/",
   "tags": [
     {
+      "name": "/vra/networkadapters",
+      "description": "Network Adapter Controller"
+    },
+    {
+      "name": "/vra/networkprofiles",
+      "description": "Network Profile Controller"
+    },
+    {
       "name": "Context profiles",
       "description": "Context Profile Controller"
     },
@@ -1494,6 +1502,15 @@
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2360,6 +2377,144 @@
           }
         }
       }
+    },
+    "/vra/networkadapters": {
+      "get": {
+        "tags": [
+          "/vra/networkadapters"
+        ],
+        "summary": "List",
+        "description": "List network adapter",
+        "operationId": "NetworkAdapterListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/NetworkAdapterListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/vra/networkadapters/{networkAdapterId}": {
+      "get": {
+        "tags": [
+          "/vra/networkadapters"
+        ],
+        "summary": "Get",
+        "description": "Get network adapter",
+        "operationId": "NetworkAdapterGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "networkAdapterId",
+            "in": "path",
+            "description": "networkAdapterId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/NetworkAdapterGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/vra/networkprofiles": {
+      "get": {
+        "tags": [
+          "/vra/networkprofiles"
+        ],
+        "summary": "List",
+        "description": "List network profile",
+        "operationId": "NetworkProfileListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/NetworkProfileListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/vra/networkprofiles/{networkProfileId}": {
+      "get": {
+        "tags": [
+          "/vra/networkprofiles"
+        ],
+        "summary": "Get",
+        "description": "Get network profile",
+        "operationId": "NetworkProfileGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "networkProfileId",
+            "in": "path",
+            "description": "networkProfileId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/NetworkProfileGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -3177,6 +3332,64 @@
       },
       "title": "NetworkAdapter"
     },
+    "NetworkAdapterGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "networkAdapter": {
+          "$ref": "#/definitions/NetworkAdapterInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "NetworkAdapterGetResponse"
+    },
+    "NetworkAdapterInstance": {
+      "type": "object",
+      "properties": {
+        "externalId": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "networkAdapterId": {
+          "type": "string"
+        }
+      },
+      "title": "NetworkAdapterInstance"
+    },
+    "NetworkAdapterListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "networkAdapterList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NetworkAdapterInstance"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "NetworkAdapterListResponse"
+    },
     "NetworkGetResponse": {
       "type": "object",
       "properties": {
@@ -3309,6 +3522,126 @@
         }
       },
       "title": "NetworkProfile"
+    },
+    "NetworkProfileGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "networkProfile": {
+          "$ref": "#/definitions/NetworkProfileInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "NetworkProfileGetResponse"
+    },
+    "NetworkProfileInstance": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "createdDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "definedRanges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StaticIPv4Range"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "dnsSearchSuffix": {
+          "type": "string"
+        },
+        "dnsSuffix": {
+          "type": "string"
+        },
+        "gatewayAddress": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "isHidden": {
+          "type": "boolean"
+        },
+        "label": {
+          "type": "string"
+        },
+        "lastModifiedDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "name": {
+          "type": "string"
+        },
+        "networkProfileId": {
+          "type": "string"
+        },
+        "primaryDnsAddress": {
+          "type": "string"
+        },
+        "primaryWinsAddress": {
+          "type": "string"
+        },
+        "profileType": {
+          "type": "string",
+          "enum": [
+            "EXTERNAL",
+            "NAT",
+            "PRIVATE",
+            "ROUTED"
+          ]
+        },
+        "secondaryDnsAddress": {
+          "type": "string"
+        },
+        "secondaryWinsAddress": {
+          "type": "string"
+        },
+        "subnetMask": {
+          "type": "string"
+        },
+        "tenantId": {
+          "type": "string"
+        }
+      },
+      "title": "NetworkProfileInstance"
+    },
+    "NetworkProfileListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "networkProfileList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NetworkProfileInstance"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "NetworkProfileListResponse"
     },
     "Position": {
       "type": "object",
@@ -3960,6 +4293,125 @@
       },
       "title": "ServiceListResponse"
     },
+    "StaticIPv4Address": {
+      "type": "object",
+      "properties": {
+        "IPSortValue": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "IPv4Address": {
+          "type": "string"
+        },
+        "createdDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "description": {
+          "type": "string"
+        },
+        "externalReferenceId": {
+          "type": "string"
+        },
+        "externalReferenceName": {
+          "type": "string"
+        },
+        "hostName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "lastModifiedDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "networkInterfaceCardOffset": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ALLOCATED",
+            "DESTROYED",
+            "EXPIRED",
+            "UNALLOCATED"
+          ]
+        },
+        "stateValue": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "staticIPv4AddressId": {
+          "type": "string"
+        },
+        "virtualMachineId": {
+          "type": "string"
+        },
+        "virtualMachineName": {
+          "type": "string"
+        }
+      },
+      "title": "StaticIPv4Address"
+    },
+    "StaticIPv4Range": {
+      "type": "object",
+      "properties": {
+        "beginIPv4Address": {
+          "type": "string"
+        },
+        "createdDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "definedAddresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StaticIPv4Address"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "endIPv4Address": {
+          "type": "string"
+        },
+        "externalExternalId": {
+          "type": "string"
+        },
+        "gateway": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "lastModifiedDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "name": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ALLOCATED",
+            "DESTROYED",
+            "EXPIRED",
+            "UNALLOCATED"
+          ]
+        },
+        "staticIPv4RangeId": {
+          "type": "string"
+        }
+      },
+      "title": "StaticIPv4Range"
+    },
     "SubAttributeInstance": {
       "type": "object",
       "properties": {
@@ -4344,11 +4796,7 @@
         "networkType": {
           "type": "string",
           "enum": [
-            "DISTRIBUTED_PORTGROUP",
-            "HOST_DEVICE",
-            "OPAQUE_NETWORK",
-            "OpaqueNetwork",
-            "STANDARD_PORTGROUP"
+            "OpaqueNetwork"
           ]
         }
       },
@@ -4707,12 +5155,6 @@
         "ipamEnabled": {
           "type": "boolean"
         },
-        "networkAdapterId": {
-          "type": "string"
-        },
-        "networkProfileId": {
-          "type": "string"
-        },
         "primaryDnsAddress": {
           "type": "string"
         },
@@ -4728,9 +5170,6 @@
         "secondaryWinsAddress": {
           "type": "string"
         },
-        "segmentId": {
-          "type": "string"
-        },
         "subnet": {
           "$ref": "#/definitions/SegmentSubnetInstance"
         },
@@ -4740,12 +5179,8 @@
         "subtenantRefIds": {
           "type": "array",
           "items": {
-            "type": "string",
-            "format": "uuid"
+            "type": "string"
           }
-        },
-        "vcsNetworkId": {
-          "type": "string"
         },
         "virtualNetworkId": {
           "type": "string"

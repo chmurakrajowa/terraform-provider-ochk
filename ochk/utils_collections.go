@@ -1,5 +1,9 @@
 package ochk
 
+import (
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
+
 func mapSliceToInterfaceSlice(in []map[string]interface{}) []interface{} {
 	if in == nil {
 		return nil
@@ -33,6 +37,13 @@ func mapToMapSlice(in map[string]interface{}) []map[string]interface{} {
 	output = append(output, in)
 
 	return output
+}
+
+func transformSetToStringSlice(set *schema.Set) []string {
+	list := set.List()
+	return transformToStringSlice(len(list), func(idx int) string {
+		return list[idx].(string)
+	})
 }
 
 func transformToStringSlice(size int, mapFunc func(idx int) string) []string {

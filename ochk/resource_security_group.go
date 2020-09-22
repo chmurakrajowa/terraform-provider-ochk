@@ -94,8 +94,9 @@ func resourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta
 	securityGroup, err := proxy.Read(ctx, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
+			id := d.Id()
 			d.SetId("")
-			return diag.Errorf("security group with id %s not found: %+v", d.Id(), err)
+			return diag.Errorf("security group with id %s not found: %+v", id, err)
 		}
 
 		return diag.Errorf("error while reading security group: %+v", err)
@@ -148,8 +149,9 @@ func resourceSecurityGroupDelete(ctx context.Context, d *schema.ResourceData, me
 	err := proxy.Delete(ctx, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
+			id := d.Id()
 			d.SetId("")
-			return diag.Errorf("security group with id %s not found: %+v", d.Id(), err)
+			return diag.Errorf("security group with id %s not found: %+v", id, err)
 		}
 
 		return diag.Errorf("error while deleting group: %+v", err)

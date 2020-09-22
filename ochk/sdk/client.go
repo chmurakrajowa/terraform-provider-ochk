@@ -17,19 +17,21 @@ import (
 
 type Client struct {
 	logger          *FileLogger
-	SecurityGroups  SecurityGroupsProxy
-	SecurityPolicy  SecurityPolicyProxy
-	GatewayPolicy   GatewayPolicyProxy
 	FirewallEWRules FirewallEWRulesProxy
 	FirewallSNRules FirewallSNRulesProxy
-	Services        ServicesProxy
-	Routers         RoutersProxy
-	VirtualMachines VirtualMachinesProxy
+	GatewayPolicy   GatewayPolicyProxy
 	IPSets          IPSetsProxy
 	LogicalPorts    LogicalPortsProxy
-	Users           UsersProxy
+	Networks        NetworksProxy
+	Requests        RequestsProxy
+	Routers         RoutersProxy
+	SecurityGroups  SecurityGroupsProxy
+	SecurityPolicy  SecurityPolicyProxy
+	Services        ServicesProxy
 	Subtenants      SubtenantsProxy
-	NetworksProxy   NetworksProxy
+	Users           UsersProxy
+	VirtualMachines VirtualMachinesProxy
+	VirtualNetworks VirtualNetworksProxy
 }
 
 var clientMutex sync.Mutex
@@ -142,9 +144,17 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 			httpClient: httpClient,
 			service:    authClient.Subtenants,
 		},
-		NetworksProxy: NetworksProxy{
+		Networks: NetworksProxy{
 			httpClient: httpClient,
 			service:    authClient.Networks,
+		},
+		VirtualNetworks: VirtualNetworksProxy{
+			httpClient: httpClient,
+			service:    authClient.VirtualNetworks,
+		},
+		Requests: RequestsProxy{
+			httpClient: httpClient,
+			service:    authClient.Requests,
 		},
 	}
 
