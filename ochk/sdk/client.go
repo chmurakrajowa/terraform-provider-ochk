@@ -63,6 +63,7 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 	apiClientTransport.Transport = &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
+	apiClientTransport.SetLogger(logger)
 
 	ochkClient := client.New(apiClientTransport, strfmt.Default)
 
