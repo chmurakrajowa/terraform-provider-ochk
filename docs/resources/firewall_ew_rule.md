@@ -40,7 +40,7 @@ resource "ochk_firewall_ew_rule" "fw-ew2" {
 The following arguments are supported:
 
 * `security_policy_id` - (Required) Identifier of security policy.
-* `display_name` - (Required) Name the Firewall EW Rule.
+* `display_name` - (Required) The Firewall EW Rule name.
 * `action` - (Optional) Action to control the traffic between the source and the target. It is possible to open the traffic between the source and target with the ALLOW rule, cut the traffic between the source and target with the DROP rule, and reject the connection between the source and target with the REJECT rule. Allowed values: `ALLOW`, `DROP`, `REJECT`. Default value: `ALLOW`.
 * `direction` - (Optional) The traffic direction that the firewall rule applies to. Allowed values: `IN`, `IN_OUT`, `OUT`. Default value: `IN_OUT`.
 * `disabled` - (Optional) Sets this rule to be disabled. Default: false
