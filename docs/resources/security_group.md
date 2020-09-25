@@ -4,7 +4,7 @@ page_title: "Security Group Resource"
 
 # Security Group Resource
 
-Resource for managing security groups. 
+Resource for managing security groups to provide a modular way to define and compose firewall rules. Security groups can contains virtual machines, ipsets, logical ports which can be assigned as the source or target in the firewall rule to control the restrict of incoming and outgoing network traffic.
 
 ## Example Usage
 
@@ -53,12 +53,12 @@ resource "ochk_security_group" "google_dns_sg" {
 
 The following arguments are supported:
 
-* `display_name` - (Required) Display name.
-* `members` - (Required) Members of security group. 
+* `display_name` - (Required) Security group name
+* `members` - (Required) Members that are assigned to the same security group. 
   Each entry must have the following values:
   
-  * **type**: type of security group member, allowed values: IPSET, VIRTUAL_MACHINE, LOGICAL_PORT.
-  * **id**: resource identifier
+  * **type**: type of security group member. Allowed values: IPSET, VIRTUAL_MACHINE, LOGICAL_PORT.
+  * **id**: resource identifier depending on the security group type selection
   
 ## Attribute Reference
 
