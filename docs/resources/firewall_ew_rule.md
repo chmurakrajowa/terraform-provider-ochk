@@ -59,5 +59,6 @@ The following attributes are exported in addition to above arguments:
  * `created_at` - When this resource was created.
  * `modified_by` - Who last modified this resource. 
  * `modified_at` - When last modification occurred.
+ *
 
  
