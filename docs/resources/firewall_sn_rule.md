@@ -42,7 +42,7 @@ The following arguments are supported:
 
 * `gateway_policy_id` - (Required) Identifier of gateway policy referencing T1 router. Use `ochk_gateway_policy` for finding gateway policy id. Updates to this attribute forces recreate.
 * `scope` - (Required) Scope of this rule. Currently, this needs to be set to id of T1 router referenced in `gateway_policy_id`. Use `ochk_router` with display name the same as in `gateway_policy_id` for finding router identifier for scope. Updates to this attribute forces recreate. 
-* `display_name` - (Required) Name the Firewall SN Rule.
+* `display_name` - (Required) The Firewall SN Rule name.
 * `action` - Optional) Action to control the traffic between the source and the target. It is possible to open the traffic between the source and target with the ALLOW rule, cut the traffic between the source and target with the DROP rule, and reject the connection between the source and target with the REJECT rule. Allowed values: `ALLOW`, `DROP`, `REJECT`. Default value: `ALLOW`.
 * `direction` - (Optional) The traffic direction that the firewall rule applies to. Allowed values: `IN`, `IN_OUT`, `OUT`. Default value: `IN_OUT`.
 * `disabled` - (Optional) Sets this rule to be disabled. Default: false
