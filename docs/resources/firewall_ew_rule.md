@@ -42,10 +42,10 @@ The following arguments are supported:
 * `security_policy_id` - (Required) Identifier of security policy.
 * `display_name` - (Required) Name the Firewall EW Rule.
 * `action` - (Optional) Action to control the traffic between the source and the target. It is possible to open the traffic between the source and target with the ALLOW rule, cut the traffic between the source and target with the DROP rule, and reject the connection between the source and target with the REJECT rule. Allowed values: `ALLOW`, `DROP`, `REJECT`. Default value: `ALLOW`.
-* `direction` - (Optional) The traffic direction that the firewall rule will apply to. Allowed values: `IN`, `IN_OUT`, `OUT`. Default value: `IN_OUT`.
+* `direction` - (Optional) The traffic direction that the firewall rule applies to. Allowed values: `IN`, `IN_OUT`, `OUT`. Default value: `IN_OUT`.
 * `disabled` - (Optional) Sets this rule to be disabled. Default: false
 * `ip_protocol` - (Optional) The transport protocol used for the connection. Allowed values: `IPV4`, `IPV6`, `IPV4_IPV6`. Default value: `IPV4_IPV6`.
-* `services` - (Optional) Identifier of service. Use `ochk_service` data source for finding service id. 
+* `services` - (Optional) Identifier of the type of traffic to which a firewall rule applies. Use `ochk_service` data source for finding service id. 
 * `source` - (Optional) Identifier of source. The source in a rule can be a previously created security group. Use ochk_security_group data source for finding security group id. One of source or destination identifiers are required. 
 * `destination` - (Optional) Identifier of destination that will to be used as match criteria for outgoing traffic. The destination in a rule can be a previously created security group. Use ochk_security_group data source for finding security group id. One of source or destination identifiers are required. 
 * `position` - (Optional) Ordering of this rule with respect to other rules. The firewall rules are processed in a set order-from top to bottom. So rule placement is important. Updates to this attribute forces recreate.
