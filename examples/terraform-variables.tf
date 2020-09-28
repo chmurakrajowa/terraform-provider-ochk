@@ -1,5 +1,5 @@
 variable "demo-id" {
-  default = "demo-10.09-1"
+  default = "demo2509"
 }
 
 variable "host" {
