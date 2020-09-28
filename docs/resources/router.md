@@ -4,7 +4,7 @@ page_title: "Router Resource"
 
 # Router Resource
 
-Resource for managing T1 Routers. 
+Resource for managing Tier-1 logical router to reproduce routing functionality in a virtual environment. 
 
 ## Example Usage
 
@@ -18,7 +18,7 @@ resource "ochk_router" "router" {
 
 The following arguments are supported:
 
-* `display_name` - (Required) Display name.
+* `display_name` - (Required) The tier-1 router name.
 
 ## Attribute Reference
 
