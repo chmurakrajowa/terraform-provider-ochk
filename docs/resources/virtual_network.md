@@ -4,7 +4,7 @@ page_title: "Virtual network Resource"
 
 # Virtual network Resource
 
-Resource for managing virtual networks (vNets). 
+Resource for managing virtual networks (vNets) to enables communication between multiple virtual machines. At onboarding, the client declares the range of IP addressing that will be used to create the separate subnets. The new subnet must be within the range of available scopes, otherwise an error will be displayed and such vNet will not be created.
 
 Warning: provisioning of virtual networks can take up to 15 minutes. 
 
@@ -53,17 +53,17 @@ resource "ochk_virtual_network" "{{ .ResourceName}}" {
 
 The following arguments are supported:
 
-* `display_name` - (Required). Updates to this attribute forces recreate.
-* `subtenants` - (Required) List of subtenants identifiers. Use `ochk_subtenant` data source to find identifiers by name. 
-* `router` - (Optional). Router id attached to this network. Use `ochk_router` data source to get id by display name.
-* `ipam_enabled` - (Optional) True for enabling IPAM. Defaults to `false`. Updates to this attribute forces recreate.
-* `dns_search_suffix` - (Optional). DNS search suffix. Updates to this attribute forces recreate.
-* `dns_suffix` - (Optional). DNS suffix. Updates to this attribute forces recreate.
-* `primary_dns_address` - (Optional). Primary DNS address. Updates to this attribute forces recreate.
-* `secondary_dns_address` - (Optional). Secondary DNS address. Updates to this attribute forces recreate.
-* `primary_wins_address` - (Optional). Primary WINS address. Updates to this attribute forces recreate.
-* `secondary_wins_address` - (Optional). Secondary WINS address. Updates to this attribute forces recreate.
-* `subnet_mask` - (Optional). Subnet mask. Updates to this attribute forces recreate.
+* `display_name` - (Required) Vitual network name. Updates to this attribute forces recreate.
+* `subtenants` - (Required) List of subtenants identifiers in which virtual network will be available. Use `ochk_subtenant` data source to find identifiers by name. 
+* `router` - (Optional) Router id attached to this network. Use `ochk_router` data source to get id by display name.
+* `ipam_enabled` - (Optional) The IP address management (IPAM) to discover IP address and Domain Name System (DNS) servers on the network and manage them. True for enabling IPAM. Defaults to `false`. Updates to this attribute forces recreate.
+* `dns_suffix` - (Optional) The custom Domain Name System (DNS) suffix which should have your assigned domain name. Updates to this attribute forces recreate.
+* `dns_search_suffix` - (Optional) Domain Name System (DNS) suffix for search domain. Updates to this attribute forces recreate.
+* `primary_dns_address` - (Optional) Primary Domain Name System (DNS) server IP address. Updates to this attribute forces recreate.
+* `secondary_dns_address` - (Optional) Secondary Domain Name System (DNS) server IP address. Updates to this attribute forces recreate.
+* `primary_wins_address` - (Optional) Primary Windows Internet Name Service (WINS) address. Updates to this attribute forces recreate.
+* `secondary_wins_address` - (Optional) Secondary Windows Internet Name Service (WINS) address. Updates to this attribute forces recreate.
+* `subnet_mask` - (Optional) Subnet mask used to divide the IP address into network and host addresses. Updates to this attribute forces recreate.
 
 ## Attribute Reference
 
