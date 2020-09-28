@@ -4,8 +4,8 @@ page_title: "IP Set Data Source"
 
 # IP Set Data Source
 
-Data Source for reading IP Sets by display name. 
 IP Set is a part of security group to group the IP addresses and after that can be used as sources and destinations in firewall rules. An IP Set can contain a combination of individual IP addresses, IP ranges, and subnets. 
+This Data Source is used for reading IP Sets by display name. 
 
 ## Example Usage
 
