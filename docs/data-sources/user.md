@@ -23,16 +23,16 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported:
- * `name` - name of a user. 
- * `email_address` - email address. 
- * `description` - description.
- * `first_name` - first name. 
- * `last_name` - last name. 
- * `disabled` - true if user is disabled. 
- * `locked` - true if user is locked. 
- * `user_principal_name` - principal name. 
- * `principal_id` - principal identified. 
- * `principal_name` - principal name. 
+ * `name` - User name. 
+ * `email_address` - The user's e-mail address. 
+ * `description` - Short description.
+ * `first_name` - The user's first name. 
+ * `last_name` - The user's last name. 
+ * `disabled` - Disabled user account: true if user is disabled. 
+ * `locked` - Locked user account: true if user is locked. User account can be locked after a certain number of invalid login attempts. 
+ * `user_principal_name` - User principal name. 
+ * `principal_id` - Principal identified. 
+ * `principal_name` - Principal name. 
  * `principal_domain` - principal domain, possible values: CUSTOM_GROUP, GROUP, SSO_GROUP, USER. 
   
     
