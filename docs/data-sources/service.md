@@ -4,7 +4,7 @@ page_title: "Service Data Source"
 
 # Service Data Source
 
-Data Source for services. 
+Data Source for getting services by display name.
 
 ## Example Usage
 
@@ -23,6 +23,6 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported:
- * `display_name` - Display name. 
+ * `display_name` - Service name. 
     
  
