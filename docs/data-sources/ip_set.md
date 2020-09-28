@@ -28,9 +28,9 @@ The following attributes are exported:
  * `addresses` - List of IP addresses that IP Set contains. Each entry has following values:
    * **address**: address, e.g. `10.10.1.1/24`, `10.10.1.1`, `10.10.1.1-10.10.1.10  `
    * **id**: address identifier
- * `created_by` - Who created this resource.
- * `created_at` - When this resource was created.
- * `modified_by` - Who last modified this resource. 
+ * `created_by` - Who created this data source.
+ * `created_at` - When this data source was created.
+ * `modified_by` - Who last modified this data source. 
  * `modified_at` - When last modification occurred. 
      
  
