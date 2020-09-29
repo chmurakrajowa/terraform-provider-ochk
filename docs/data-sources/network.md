@@ -4,7 +4,7 @@ page_title: "Network Data Source"
 
 # Network Data Source
 
-Data Source for network. 
+Data Source for getting network by name.
 
 ## Example Usage
 
@@ -23,9 +23,10 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported:
- * `name` - network name.
- * `network` - network value.
- * `network_type` - network type.
+The following attributes are exported:
+ * `name` - Name of the network.
+ * `network` - Identifier of the network
+ * `network_type` - The type (STANDARD_PORTGROUP, DISTRIBUTED_PORTGROUP, OPAQUE_NETWORK) of a server network
  
     
  
