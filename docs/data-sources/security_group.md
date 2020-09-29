@@ -23,10 +23,9 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported:
- * `display_name` - Display name. 
- * `members` - Members of security group. 
+ * `display_name` - Security group name. 
+ * `members` - Members that are assigned to the security group.
    Each entry has following values:
     * **type**: type of security group member, values: IPSET, VIRTUAL_MACHINE, LOGICAL_PORT
-    * **id**: resource identifier
-    
+    * **id**: resource identifier depending on the security group type selection
  
