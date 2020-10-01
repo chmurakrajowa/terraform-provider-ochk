@@ -18,7 +18,7 @@ resource "ochk_router" "router" {
 
 The following arguments are supported:
 
-* `display_name` - (Required) The tier-1 router name.
+* `display_name` - (Required) The Tier-1 router name.
 
 ## Attribute Reference
 
