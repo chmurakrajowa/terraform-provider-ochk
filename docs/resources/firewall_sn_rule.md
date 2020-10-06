@@ -4,7 +4,7 @@ page_title: "Firewall SN Rule Resource"
 
 # Firewall SN Rule Resource
 
-Resource for managing firewall SW Rules to control incoming and outgoing network traffic between virtual machines. The rules can allow traffic (ALLOW rule), cut a connection (DROP rule) or drop the connection (REJECT rule).
+Resource for managing firewall SN Rules to control incoming and outgoing network traffic between virtual machines. The rules can allow traffic (ALLOW rule), cut a connection (DROP rule) or drop the connection (REJECT rule).
 
 ## Example Usage
 
