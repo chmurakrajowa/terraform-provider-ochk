@@ -23,10 +23,9 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported:
-The following attributes are exported:
  * `name` - Name of the network.
- * `network` - Identifier of the network
- * `network_type` - The type (STANDARD_PORTGROUP, DISTRIBUTED_PORTGROUP, OPAQUE_NETWORK) of a server network
+ * `network` - Identifier of the network.
+ * `network_type` - The type (STANDARD_PORTGROUP, DISTRIBUTED_PORTGROUP, OPAQUE_NETWORK) of a server network.
  
     
  
