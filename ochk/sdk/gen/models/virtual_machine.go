@@ -21,8 +21,8 @@ type VirtualMachine struct {
 	// host Id
 	HostID string `json:"hostId,omitempty"`
 
-	// virtual machine Id
-	VirtualMachineID string `json:"virtualMachineId,omitempty"`
+	// id
+	ID string `json:"id,omitempty"`
 }
 
 // Validate validates this virtual machine

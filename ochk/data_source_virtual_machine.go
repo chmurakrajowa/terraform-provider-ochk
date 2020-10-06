@@ -42,7 +42,7 @@ func dataSourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("more than one virtual machine with display_name: %s found!", displayName)
 	}
 
-	d.SetId(virtualMachines[0].VirtualMachineID)
+	d.SetId(virtualMachines[0].ID)
 
 	if err := d.Set("host_id", virtualMachines[0].HostID); err != nil {
 		return diag.Errorf("error setting host_id: %+v", err)

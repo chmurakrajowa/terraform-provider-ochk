@@ -3268,7 +3268,7 @@
         "displayName": {
           "type": "string"
         },
-        "logicalPortId": {
+        "id": {
           "type": "string"
         }
       },
@@ -4985,7 +4985,7 @@
         "hostId": {
           "type": "string"
         },
-        "virtualMachineId": {
+        "id": {
           "type": "string"
         }
       },
