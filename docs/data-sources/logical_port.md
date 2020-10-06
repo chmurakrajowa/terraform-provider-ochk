@@ -23,6 +23,6 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported:
- * `display_name` - Display name. 
+ * `display_name` - Name of logical port. 
     
  

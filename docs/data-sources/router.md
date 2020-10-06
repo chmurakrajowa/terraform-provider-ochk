@@ -4,7 +4,7 @@ page_title: "Router Data Source"
 
 # Router Data Source
 
-Data Source for getting T1 routers by display name. 
+Data Source for getting logical routers by display name. 
 
 ## Example Usage
 
@@ -23,11 +23,11 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported:
- * `display_name` - Display name. 
- * `type` - type of the router 
- * `created_by` - Who created this resource.
- * `created_at` - When this resource was created.
- * `modified_by` - Who last modified this resource. 
+ * `display_name` - Logical router name. 
+ * `type` - Type of the logical router e.g. TIER0, TIER1
+ * `created_by` - Who created this data source.
+ * `created_at` - When this data source was created.
+ * `modified_by` - Who last modified this data source. 
  * `modified_at` - When last modification occurred. 
     
  

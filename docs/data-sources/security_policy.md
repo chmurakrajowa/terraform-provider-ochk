@@ -4,7 +4,7 @@ page_title: "Security Policy Data Source"
 
 # Security Policy Data Source
 
-Data Source for security policies. 
+Data Source for getting security policies by display name.  
 
 ## Example Usage
 
@@ -23,9 +23,9 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported:
- * `display_name` - Display name. 
- * `created_by` - Who created this resource.
- * `created_at` - When this resource was created.
- * `modified_by` - Who last modified this resource. 
+ * `display_name` - Security policy name. 
+ * `created_by` - Who created this data source.
+ * `created_at` - When this data source was created.
+ * `modified_by` - Who last modified this data source. 
  * `modified_at` - When last modification occurred.     
  
