@@ -2,11 +2,13 @@ package ochk
 
 import (
 	"context"
+	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -26,7 +28,48 @@ func resourceVirtualNetwork() *schema.Resource {
 			Update: schema.DefaultTimeout(VirtualNetworkRetryTimeout),
 			Delete: schema.DefaultTimeout(VirtualNetworkRetryTimeout),
 		},
-
+		CustomizeDiff: customdiff.IfValue("ipam_enabled",
+			func(ctx context.Context, value, meta interface{}) bool {
+				return !value.(bool)
+			},
+			customdiff.All(
+				customdiff.ValidateValue("primary_dns_address", func(ctx context.Context, value, meta interface{}) error {
+					if val := value.(string); val != "" {
+						return fmt.Errorf("cannot provide primary_dns_address value when ipam_enabled = false")
+					}
+					return nil
+				}),
+				customdiff.ValidateValue("secondary_dns_address", func(ctx context.Context, value, meta interface{}) error {
+					if val := value.(string); val != "" {
+						return fmt.Errorf("cannot provide secondary_dns_address value when ipam_enabled = false")
+					}
+					return nil
+				}),
+				customdiff.ValidateValue("dns_suffix", func(ctx context.Context, value, meta interface{}) error {
+					if val := value.(string); val != "" {
+						return fmt.Errorf("cannot provide dns_suffix value when ipam_enabled = false")
+					}
+					return nil
+				}),
+				customdiff.ValidateValue("dns_search_suffix", func(ctx context.Context, value, meta interface{}) error {
+					if val := value.(string); val != "" {
+						return fmt.Errorf("cannot provide dns_search_suffix value when ipam_enabled = false")
+					}
+					return nil
+				}),
+				customdiff.ValidateValue("primary_wins_address", func(ctx context.Context, value, meta interface{}) error {
+					if val := value.(string); val != "" {
+						return fmt.Errorf("cannot provide primary_wins_address value when ipam_enabled = false")
+					}
+					return nil
+				}),
+				customdiff.ValidateValue("secondary_wins_address", func(ctx context.Context, value, meta interface{}) error {
+					if val := value.(string); val != "" {
+						return fmt.Errorf("cannot provide secondary_wins_address value when ipam_enabled = false")
+					}
+					return nil
+				}),
+			)),
 		Schema: map[string]*schema.Schema{
 			"display_name": {
 				Type:     schema.TypeString,
