@@ -4,7 +4,7 @@ page_title: "Virtual network Resource"
 
 # Virtual network Resource
 
-Resource for managing virtual networks (vNets) to enables communication between multiple virtual machines. In the onboarding process, the client declares the range of IP addressing that will be used to create the separate subnets. The new subnet must be within the range of available scopes, otherwise an error will be displayed and such vNet will not be created.
+Resource for managing virtual networks (vNets) to enable communication between multiple virtual machines. In the onboarding process, the client declares the range of IP addresses that will be used to create the separate subnets. The new subnet must be within the range of available scopes, otherwise an error will be displayed and such vNet will not be created.
 
 Warning: provisioning of virtual networks can take up to 15 minutes. 
 
