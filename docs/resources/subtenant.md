@@ -39,7 +39,7 @@ The following arguments are supported:
 * `memory_reserved_size_mb` - (Required) Memory reservation size in megabytes. Should be greater than 10000 MB (10GB).
 * `storage_reserved_size_gb` - (Required) Storage reservation size in gigabytes. Should be greater than 100 GB.
 * `users` - (Required) List of user identifiers. After creating a subtenant, these users will be automatically added to the permission group: Permissions Manager. Use `ochk_user` data source for finding identifiers by name. Updates to this attribute forces recreate.
-* `networks` - (Required) List of network identifiers. Selected network will be assigned to the appropriate subtenant reservations. The group will get there own range of IP addresses on the network that is allocated to her. 
+* `networks` - (Required) List of network identifiers. Selected network will be assigned to the appropriate subtenant reservations. The group will get their own range of IP addresses on the network that is allocated to her. 
   
 ## Attribute Reference
 
