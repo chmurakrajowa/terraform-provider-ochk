@@ -38,7 +38,7 @@ func dataSourceLogicalPortRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("more than one logical port with display_name: %s found!", displayName)
 	}
 
-	d.SetId(logicalPorts[0].LogicalPortID)
+	d.SetId(logicalPorts[0].ID)
 
 	return nil
 }

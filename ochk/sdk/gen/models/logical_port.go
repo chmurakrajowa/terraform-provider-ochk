@@ -18,8 +18,8 @@ type LogicalPort struct {
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
 
-	// logical port Id
-	LogicalPortID string `json:"logicalPortId,omitempty"`
+	// id
+	ID string `json:"id,omitempty"`
 }
 
 // Validate validates this logical port
