@@ -9,5 +9,6 @@ if [[ ! -f ${LINT_BIN} ]]; then
   go install github.com/golangci/golangci-lint/cmd/golangci-lint
 fi
 
+${LINT_BIN} --version
 echo "Run golangci-lint"
 ${LINT_BIN} run ./ochk/... -v
