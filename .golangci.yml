@@ -24,7 +24,7 @@ linters:
     - staticcheck
     - structcheck
     - unconvert
-    - unused
+#    - unused
     - unparam
     - varcheck
     - vet
