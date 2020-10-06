@@ -28,7 +28,7 @@ The following attributes are exported:
 * `description` - The short description of the subtenant
 * `memory_reserved_size_mb` - Memory reservation size in megabytes.
 * `storage_reserved_size_gb` - Storage reservation size in gigabytes.
-* `users` - List of user identifiers assigned to the subtenat.
+* `users` - List of user identifiers assigned to the subtenant.
 * `networks` - List of network identifiers assigned to the appropriate subtenant 
   
     
