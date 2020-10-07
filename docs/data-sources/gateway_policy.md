@@ -23,9 +23,9 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported:
- * `display_name` - Geteway Policy display name. 
- * `created_by` - Who created this data source.
- * `created_at` - When this data source was created.
- * `modified_by` - Who last modified this data source. 
+ * `display_name` - Gateway Policy display name. 
+ * `created_by` - Who created this resource.
+ * `created_at` - When this resource was created.
+ * `modified_by` - Who last modified this resource. 
  * `modified_at` - When last modification occurred.   
  
