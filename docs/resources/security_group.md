@@ -57,7 +57,7 @@ The following arguments are supported:
 * `members` - (Required) Members that are assigned to the same security group. 
   Each entry must have the following values:
   
-  * **type**: type of security group member. Allowed values: IPSET, VIRTUAL_MACHINE, LOGICAL_PORT.
+  * **type**: type of security group member. Allowed values: IPCOLLECTION, IPSET, VIRTUAL_MACHINE, LOGICAL_PORT.
   * **id**: resource identifier depending on the security group type selection.
   
 ## Attribute Reference

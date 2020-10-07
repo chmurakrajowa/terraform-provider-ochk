@@ -15,9 +15,9 @@ type IPCollectionsProxy struct {
 	service    ip_collection.ClientService
 }
 
-func (p *IPCollectionsProxy) Read(ctx context.Context, ipSetID string) (*models.IPCollection, error) {
+func (p *IPCollectionsProxy) Read(ctx context.Context, ipCollectionID string) (*models.IPCollection, error) {
 	params := &ip_collection.IPCollectionGetUsingGETParams{
-		IPCollectionID: ipSetID,
+		IPCollectionID: ipCollectionID,
 		Context:        ctx,
 		HTTPClient:     p.httpClient,
 	}
