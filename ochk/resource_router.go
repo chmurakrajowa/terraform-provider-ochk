@@ -86,7 +86,7 @@ func resourceRouterRead(ctx context.Context, d *schema.ResourceData, meta interf
 	}
 
 	if err := d.Set("display_name", Router.DisplayName); err != nil {
-		return diag.Errorf("error setting displayName: %+v", err)
+		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
 	if err := d.Set("created_by", Router.CreatedBy); err != nil {
