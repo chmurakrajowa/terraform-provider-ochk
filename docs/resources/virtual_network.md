@@ -67,6 +67,7 @@ The following arguments are supported:
 
 ## Attribute Reference
 
+The following attributes are exported in addition to above arguments:
 * `gateway_address` - gateway address, set when `subnet_network_cidr` is set.
 * `subnet_mask` - subnet mask, set when `subnet_network_cidr` is set.
 * `subnet_gateway_address_cidr` - subnet gateway address cidr, set when `subnet_network_cidr` is set.  
