@@ -20,6 +20,7 @@ const (
 	testDataSubtenant4Name             = "tf-test-name-tf-acc_test-03w1wt34"
 	testDataUser1Name                  = "devel-jpuser"
 	testDataVirtualMachine1DisplayName = "devel0000001157"
+	testDataIPCollection1DisplayName   = "tf-test-ipcollection"
 )
 
 var templateFuncMap = map[string]interface{}{

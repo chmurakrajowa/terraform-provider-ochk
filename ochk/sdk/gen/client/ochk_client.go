@@ -102,6 +102,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.VIDm = v_id_m.New(transport, formats)
 	cli.VirtualMachines = virtual_machines.New(transport, formats)
 	cli.VirtualNetworks = virtual_networks.New(transport, formats)
+	cli.IPCollection = ip_collection.New(transport, formats)
 	return cli
 }
 

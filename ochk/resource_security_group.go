@@ -103,7 +103,7 @@ func resourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta
 	}
 
 	if err := d.Set("display_name", securityGroup.DisplayName); err != nil {
-		return diag.Errorf("error setting displayName: %+v", err)
+		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
 	if err := d.Set("members", flattenSecurityGroupMembers(securityGroup.Members)); err != nil {
