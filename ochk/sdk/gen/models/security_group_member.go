@@ -26,7 +26,7 @@ type SecurityGroupMember struct {
 	ID string `json:"id,omitempty"`
 
 	// member type
-	// Enum: [IPSET LOGICAL_PORT VIRTUAL_MACHINE]
+	// Enum: [IPCOLLECTION IPSET LOGICAL_PORT VIRTUAL_MACHINE]
 	MemberType string `json:"memberType,omitempty"`
 }
 
@@ -48,7 +48,7 @@ var securityGroupMemberTypeMemberTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["IPSET","LOGICAL_PORT","VIRTUAL_MACHINE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["IPCOLLECTION","IPSET","LOGICAL_PORT","VIRTUAL_MACHINE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -57,6 +57,9 @@ func init() {
 }
 
 const (
+
+	// SecurityGroupMemberMemberTypeIPCOLLECTION captures enum value "IPCOLLECTION"
+	SecurityGroupMemberMemberTypeIPCOLLECTION string = "IPCOLLECTION"
 
 	// SecurityGroupMemberMemberTypeIPSET captures enum value "IPSET"
 	SecurityGroupMemberMemberTypeIPSET string = "IPSET"

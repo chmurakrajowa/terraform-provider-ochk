@@ -103,6 +103,10 @@
       "description": "Users Controller"
     },
     {
+      "name": "ipCollection",
+      "description": "Ip Collection Controller"
+    },
+    {
       "name": "vIDM",
       "description": "VIDM Controller"
     },
@@ -145,6 +149,191 @@
           },
           "404": {
             "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/ipcs": {
+      "get": {
+        "tags": [
+          "ipCollection"
+        ],
+        "summary": "List",
+        "description": "List ip collection",
+        "operationId": "IpCollectionListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/IpCollectionListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ipCollection"
+        ],
+        "summary": "Create",
+        "description": "Create Ip collection",
+        "operationId": "IpCollectionCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ipCollection",
+            "description": "ipCollection",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IpCollection"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/IpCollectionCreateResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/IpCollectionCreateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/ipcs/{ipCollectionId}": {
+      "get": {
+        "tags": [
+          "ipCollection"
+        ],
+        "summary": "Get",
+        "description": "Get ip collection",
+        "operationId": "IpCollectionGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ipCollectionId",
+            "in": "path",
+            "description": "ipCollectionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/IpCollectionResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ipCollection"
+        ],
+        "summary": "Update",
+        "description": "Update ip collection",
+        "operationId": "IpCollectionUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ipCollection",
+            "description": "ipCollection",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IpCollection"
+            }
+          },
+          {
+            "name": "ipCollectionId",
+            "in": "path",
+            "description": "ipCollectionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/IpCollectionUpdateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ipCollection"
+        ],
+        "summary": "Delete",
+        "description": "Delete ip collection",
+        "operationId": "IpCollectionDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ipCollectionId",
+            "in": "path",
+            "description": "ipCollectionId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/IpCollectionDeleteResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
@@ -3262,6 +3451,161 @@
       },
       "title": "IPSetListResponse"
     },
+    "IpCollection": {
+      "type": "object",
+      "properties": {
+        "createdBy": {
+          "type": "string"
+        },
+        "creationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "ipCollectionAddresses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "memberType": {
+          "type": "string",
+          "enum": [
+            "IPCOLLECTION",
+            "IPSET",
+            "LOGICAL_PORT",
+            "VIRTUAL_MACHINE"
+          ]
+        },
+        "modificationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "modifiedBy": {
+          "type": "string"
+        }
+      },
+      "title": "IpCollection"
+    },
+    "IpCollectionCreateResponse": {
+      "type": "object",
+      "properties": {
+        "ipCollection": {
+          "$ref": "#/definitions/IpCollection"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "IpCollectionCreateResponse"
+    },
+    "IpCollectionDeleteResponse": {
+      "type": "object",
+      "properties": {
+        "ipCollection": {
+          "$ref": "#/definitions/IpCollection"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "IpCollectionDeleteResponse"
+    },
+    "IpCollectionListResponse": {
+      "type": "object",
+      "properties": {
+        "ipCollectionSet": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IpCollection"
+          }
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "IpCollectionListResponse"
+    },
+    "IpCollectionResponse": {
+      "type": "object",
+      "properties": {
+        "ipCollection": {
+          "$ref": "#/definitions/IpCollection"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "IpCollectionResponse"
+    },
+    "IpCollectionUpdateResponse": {
+      "type": "object",
+      "properties": {
+        "ipCollection": {
+          "$ref": "#/definitions/IpCollection"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "IpCollectionUpdateResponse"
+    },
     "LogicalPort": {
       "type": "object",
       "properties": {
@@ -3753,6 +4097,9 @@
             "FIREWALL_GFW_RULE_CREATE",
             "FIREWALL_GFW_RULE_DELETE",
             "FIREWALL_GFW_RULE_UPDATE",
+            "IPCOLLECTION_CREATE",
+            "IPCOLLECTION_DELETE",
+            "IPCOLLECTION_UPDATE",
             "NETWORK_CREATE",
             "NETWORK_DELETE",
             "NETWORK_UPDATE",
@@ -4122,6 +4469,7 @@
         "memberType": {
           "type": "string",
           "enum": [
+            "IPCOLLECTION",
             "IPSET",
             "LOGICAL_PORT",
             "VIRTUAL_MACHINE"

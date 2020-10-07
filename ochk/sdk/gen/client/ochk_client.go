@@ -16,6 +16,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_e_w"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_s_n"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/gateway_policies"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_collection"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_sets"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/logical_ports"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/networkadapters"
@@ -83,6 +84,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.FirewallRulesew = firewall_rules_e_w.New(transport, formats)
 	cli.FirewallRulessn = firewall_rules_s_n.New(transport, formats)
 	cli.GatewayPolicies = gateway_policies.New(transport, formats)
+	cli.IPCollection = ip_collection.New(transport, formats)
 	cli.IPSets = ip_sets.New(transport, formats)
 	cli.LogicalPorts = logical_ports.New(transport, formats)
 	cli.Networkadapters = networkadapters.New(transport, formats)
@@ -156,6 +158,8 @@ type Ochk struct {
 
 	GatewayPolicies gateway_policies.ClientService
 
+	IPCollection ip_collection.ClientService
+
 	IPSets ip_sets.ClientService
 
 	LogicalPorts logical_ports.ClientService
@@ -202,6 +206,7 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.FirewallRulesew.SetTransport(transport)
 	c.FirewallRulessn.SetTransport(transport)
 	c.GatewayPolicies.SetTransport(transport)
+	c.IPCollection.SetTransport(transport)
 	c.IPSets.SetTransport(transport)
 	c.LogicalPorts.SetTransport(transport)
 	c.Networkadapters.SetTransport(transport)
