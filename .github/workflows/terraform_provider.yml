@@ -16,51 +16,28 @@ on:
 env:
   GO_VERSION: "1.15"
   GO111MODULE: on
-  TERRAFORM_VERSION: "0.13.0"
+  TERRAFORM_VERSION: "0.13.5"
 
 jobs:
-  go_build:
-    name: go build
+  go_build_test_lint:
+    name: go build, test, lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        continue-on-error: true
-        id: cache-terraform-plugin-dir
-        timeout-minutes: 2
-        with:
-          path: terraform-plugin-dir
-          key: ${{ runner.os }}-terraform-plugin-dir-${{ hashFiles('go.sum') }}-${{ hashFiles('ochk/**') }}
-      - if: steps.cache-terraform-plugin-dir.outputs.cache-hit != 'true' || steps.cache-terraform-plugin-dir.outcome == 'failure'
-        uses: actions/setup-go@v2
-        with:
-          go-version: ${{ env.GO_VERSION }}
-      - if: steps.cache-terraform-plugin-dir.outputs.cache-hit != 'true' || steps.cache-terraform-plugin-dir.outcome == 'failure'
-        name: go env
-        run: |
-          echo "::set-env name=GOCACHE::$(go env GOCACHE)"
-      - if: steps.cache-terraform-plugin-dir.outputs.cache-hit != 'true' || steps.cache-terraform-plugin-dir.outcome == 'failure'
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.GOCACHE }}
-          key: ${{ runner.os }}-GOCACHE-${{ hashFiles('go.sum') }}-${{ hashFiles('ochk/**') }}
-      - if: steps.cache-terraform-plugin-dir.outputs.cache-hit != 'true' || steps.cache-terraform-plugin-dir.outcome == 'failure'
-        uses: actions/cache@v2
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-pkg-mod-${{ hashFiles('go.sum') }}
-      - if: steps.cache-terraform-plugin-dir.outputs.cache-hit != 'true' || steps.cache-terraform-plugin-dir.outcome == 'failure'
-        name: go build
-        run: go build -o terraform-plugin-dir/terraform-provider-ochk_v99.99.99_x4 .
+      - name: build
+        run: go build ./...
+      - name: run tests
+        run: go test ./... -timeout=120s
+      - name: run linter
+        run: ./tools/lint.sh
 
   swagger-gen:
     name: swagger-gen
-    needs: [go_build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: setup go
-        uses: actions/setup-go@v2-beta
+        uses: actions/setup-go@v2.1.3
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Run swagger_gen.sh
@@ -69,54 +46,3 @@ jobs:
         run: |
           git diff --compact-summary --exit-code || \
             (echo; echo "Unexpected difference in directories after swagger generation. Run './tools/swagger_gen.sh' command and commit."; exit 1)
-
-  go_test:
-    name: go test
-    needs: [go_build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-        with:
-          go-version: ${{ env.GO_VERSION }}
-      - name: go env
-        run: |
-          echo "::set-env name=GOCACHE::$(go env GOCACHE)"
-      - uses: actions/cache@v2
-        continue-on-error: true
-        timeout-minutes: 2
-        with:
-          path: ${{ env.GOCACHE }}
-          key: ${{ runner.os }}-GOCACHE-${{ hashFiles('go.sum') }}-${{ hashFiles('ochk/**') }}
-      - uses: actions/cache@v2
-        continue-on-error: true
-        timeout-minutes: 2
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-pkg-mod-${{ hashFiles('go.sum') }}
-      - run: go test ./... -timeout=120s
-
-  golangci-lint:
-    needs: [go_build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-        with:
-          go-version: ${{ env.GO_VERSION }}
-      - name: go env
-        run: |
-          echo "::set-env name=GOCACHE::$(go env GOCACHE)"
-      - uses: actions/cache@v2
-        continue-on-error: true
-        timeout-minutes: 2
-        with:
-          path: ${{ env.GOCACHE }}
-          key: ${{ runner.os }}-GOCACHE-${{ hashFiles('go.sum') }}-${{ hashFiles('ochk/**') }}
-      - uses: actions/cache@v2
-        continue-on-error: true
-        timeout-minutes: 2
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-pkg-mod-${{ hashFiles('go.sum') }}
-      - run: ./tools/lint.sh
