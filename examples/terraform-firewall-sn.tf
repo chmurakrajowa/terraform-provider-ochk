@@ -10,7 +10,7 @@ resource "ochk_firewall_sn_rule" "fw-sn-1" {
 
   services = [data.ochk_service.ssh.id]
 
-  source = [ochk_security_group.vm_ipset.id]
+  source = [ochk_security_group.vm_ipc.id]
   destination = [ochk_security_group.vm.id]
 
   action = "DROP"

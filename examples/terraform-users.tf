@@ -1,7 +1,7 @@
 data "ochk_user" "user1" {
-  name = "devel-jpuser"
+  name = "testy-ctest"
 }
 
 data "ochk_user" "user2" {
-  name = "devel-jluser"
+  name = "testy-cu"
 }

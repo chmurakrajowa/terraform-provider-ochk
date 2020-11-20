@@ -9,7 +9,10 @@ IP Collection is a part of security group to group the IP addresses and after th
 ## Example Usage
 
 ```hcl
-TODO
+resource "ochk_ip_collection" "dns-servers" {
+  display_name = "dns-servers"
+  ip_addresses = ["1.1.1.1", "1.0.0.1", "8.8.8.8"]
+}
 ```
 
 ## Argument Reference
