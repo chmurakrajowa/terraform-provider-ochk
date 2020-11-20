@@ -58,7 +58,7 @@ The following arguments are supported:
   Each entry must have the following values:
   
   * **type**: type of security group member. Allowed values: IPCOLLECTION, IPSET, VIRTUAL_MACHINE, LOGICAL_PORT.
-  * **id**: resource identifier depending on the security group type selection.
+  * **id**: resource identifier depending on the security group type selection. Use data sources `ochk_ip_collection`, `ochk_virtual_machine`, `ochk_logical_port` for getting id by name.
   
 ## Attribute Reference
 

@@ -20,14 +20,14 @@ func (p *FirewallEWRulesProxy) Create(ctx context.Context, securityPolicyID stri
 		return nil, fmt.Errorf("error while validating firewall EW rule struct: %w", err)
 	}
 
-	params := &firewall_rules_e_w.DFWRuleCreateUsingPUTParams{
+	params := &firewall_rules_e_w.DfwRuleCreateUsingPUTParams{
 		SecurityPolicyID: securityPolicyID,
 		DfwRule:          rule,
 		Context:          ctx,
 		HTTPClient:       p.httpClient,
 	}
 
-	_, put, err := p.service.DFWRuleCreateUsingPUT(params)
+	_, put, err := p.service.DfwRuleCreateUsingPUT(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while creating firewall EW rule: %w", err)
 	}
@@ -40,14 +40,14 @@ func (p *FirewallEWRulesProxy) Create(ctx context.Context, securityPolicyID stri
 }
 
 func (p *FirewallEWRulesProxy) Read(ctx context.Context, securityPolicyID string, ruleID string) (*models.DFWRule, error) {
-	params := &firewall_rules_e_w.DFWRuleGetUsingGETParams{
+	params := &firewall_rules_e_w.DfwRuleGetUsingGETParams{
 		RuleID:           ruleID,
 		SecurityPolicyID: securityPolicyID,
 		Context:          ctx,
 		HTTPClient:       p.httpClient,
 	}
 
-	response, err := p.service.DFWRuleGetUsingGET(params)
+	response, err := p.service.DfwRuleGetUsingGET(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while reading firwall EW rule: %w", err)
 	}
@@ -64,7 +64,7 @@ func (p *FirewallEWRulesProxy) Update(ctx context.Context, securityPolicyID stri
 		return nil, fmt.Errorf("error while validating firewall EW rule struct: %w", err)
 	}
 
-	params := &firewall_rules_e_w.DFWRuleUpdateUsingPUTParams{
+	params := &firewall_rules_e_w.DfwRuleUpdateUsingPUTParams{
 		SecurityPolicyID: securityPolicyID,
 		RuleID:           rule.RuleID,
 		DfwRule:          rule,
@@ -72,7 +72,7 @@ func (p *FirewallEWRulesProxy) Update(ctx context.Context, securityPolicyID stri
 		HTTPClient:       p.httpClient,
 	}
 
-	put, err := p.service.DFWRuleUpdateUsingPUT(params)
+	put, err := p.service.DfwRuleUpdateUsingPUT(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while updating firewall EW rule: %w", err)
 	}
@@ -85,14 +85,14 @@ func (p *FirewallEWRulesProxy) Update(ctx context.Context, securityPolicyID stri
 }
 
 func (p *FirewallEWRulesProxy) ListByDisplayName(ctx context.Context, securityPolicyID string, displayName string) ([]*models.DFWRule, error) {
-	params := &firewall_rules_e_w.DFWRuleListUsingGETParams{
+	params := &firewall_rules_e_w.DfwRuleListUsingGETParams{
 		SecurityPolicyID: securityPolicyID,
 		DisplayName:      &displayName,
 		Context:          ctx,
 		HTTPClient:       p.httpClient,
 	}
 
-	response, err := p.service.DFWRuleListUsingGET(params)
+	response, err := p.service.DfwRuleListUsingGET(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while listing firewall EW rule: %w", err)
 	}
@@ -105,13 +105,13 @@ func (p *FirewallEWRulesProxy) ListByDisplayName(ctx context.Context, securityPo
 }
 
 func (p *FirewallEWRulesProxy) List(ctx context.Context, securityPolicyID string) ([]*models.DFWRule, error) {
-	params := &firewall_rules_e_w.DFWRuleListUsingGETParams{
+	params := &firewall_rules_e_w.DfwRuleListUsingGETParams{
 		SecurityPolicyID: securityPolicyID,
 		Context:          ctx,
 		HTTPClient:       p.httpClient,
 	}
 
-	response, err := p.service.DFWRuleListUsingGET(params)
+	response, err := p.service.DfwRuleListUsingGET(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while listing firewall EW rule: %w", err)
 	}
@@ -136,16 +136,16 @@ func (p *FirewallEWRulesProxy) Exists(ctx context.Context, securityPolicyID stri
 }
 
 func (p *FirewallEWRulesProxy) Delete(ctx context.Context, securityPolicyID string, ruleID string) error {
-	params := &firewall_rules_e_w.DFWRuleDeleteUsingDELETEParams{
+	params := &firewall_rules_e_w.DfwRuleDeleteUsingDELETEParams{
 		SecurityPolicyID: securityPolicyID,
 		RuleID:           ruleID,
 		Context:          ctx,
 		HTTPClient:       p.httpClient,
 	}
 
-	response, err := p.service.DFWRuleDeleteUsingDELETE(params)
+	response, err := p.service.DfwRuleDeleteUsingDELETE(params)
 	if err != nil {
-		var badRequest *firewall_rules_e_w.DFWRuleDeleteUsingDELETEBadRequest
+		var badRequest *firewall_rules_e_w.DfwRuleDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}

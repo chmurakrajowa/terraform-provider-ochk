@@ -77,7 +77,7 @@ func dataSourceIPCollectionRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
-	if err := d.Set("addresses", flattenStringSlice(ipCollections[0].IPCollectionAddresses)); err != nil {
+	if err := d.Set("ip_addresses", flattenStringSlice(ipCollections[0].IPCollectionAddresses)); err != nil {
 		return diag.Errorf("error setting addresses: %+v", err)
 	}
 

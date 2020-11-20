@@ -53,7 +53,7 @@ func (c *VirtualNetworkTestData) FullResourceName() string {
 func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
 	subtenant1 := SubtenantDataSourceTestData{
 		ResourceName: "subtenant1",
-		Name:         testDataSubtenant1Name,
+		Name:         testData.Subtenant1Name,
 	}
 
 	virtualNetwork := VirtualNetworkTestData{
@@ -67,6 +67,7 @@ func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
 	resourceName := virtualNetwork.FullResourceName()
 	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
+
 		Steps: []resource.TestStep{
 			{
 				Config: configInitial,
@@ -84,7 +85,7 @@ func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
 func TestAccVirtualNetworkResource_createWithIpamAndSubnet(t *testing.T) {
 	subtenant1 := SubtenantDataSourceTestData{
 		ResourceName: "subtenant1",
-		Name:         testDataSubtenant2Name,
+		Name:         testData.Subtenant2Name,
 	}
 
 	virtualNetwork := VirtualNetworkTestData{
@@ -132,12 +133,12 @@ func TestAccVirtualNetworkResource_createWithIpamAndSubnet(t *testing.T) {
 func TestAccVirtualNetworkResource_createAndUpdateWithIpamSubnetRouter(t *testing.T) {
 	subtenant1 := SubtenantDataSourceTestData{
 		ResourceName: "subtenant1",
-		Name:         testDataSubtenant3Name,
+		Name:         testData.Subtenant3Name,
 	}
 
 	subtenant2 := SubtenantDataSourceTestData{
 		ResourceName: "subtenant2",
-		Name:         testDataSubtenant4Name,
+		Name:         testData.Subtenant4Name,
 	}
 
 	router1 := RouterTestData{

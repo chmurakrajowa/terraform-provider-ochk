@@ -112,14 +112,14 @@ data "ochk_subtenant" "subtenant_for_vm" {
 }
 
 resource "ochk_virtual_network" "default" {
-  display_name = "${var.test-data-prefix}-vnet"
+  display_name = "${var.test-data-prefix}-vnet3"
   subtenants = [
     data.ochk_subtenant.subtenant_for_vm.id
   ]
 }
 
 resource "ochk_virtual_network" "vnet2" {
-  display_name = "${var.test-data-prefix}-vnet2"
+  display_name = "${var.test-data-prefix}-vnet4"
   ipam_enabled = true
   subtenants = [
     data.ochk_subtenant.subtenant_for_vm.id

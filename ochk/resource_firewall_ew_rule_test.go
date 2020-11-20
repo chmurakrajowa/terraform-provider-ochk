@@ -13,6 +13,7 @@ import (
 
 func TestAccFirewallEWRuleResource_noPosition(t *testing.T) {
 	// TODO unskip when fixed fw ordering in backend
+	// TODO handle priority parameter
 	t.Skip("Skipped due to parallel execution issues")
 	resourceName := "ochk_firewall_ew_rule.no_position"
 	displayName := generateRandName()
@@ -210,7 +211,7 @@ resource "ochk_firewall_ew_rule" "no_position" {
   ip_protocol = %[5]q
   direction = %[6]q
 }
-`, source, destination, displayName, action, ipProtocol, direction, testDataVirtualMachine1DisplayName)
+`, source, destination, displayName, action, ipProtocol, direction, testData.LegacyVirtualMachineDisplayName)
 }
 
 func testAccFirewallEWRuleResourceConfigWithOrder(displayNameBefore string, displayNameMiddle string, displayNameAfter string) string {
@@ -328,7 +329,7 @@ resource "ochk_firewall_ew_rule" "after" {
 	ignore_changes = [position]
   }
 }
-`, source, destination, displayNameMiddle, displayNameBefore, displayNameAfter, testDataVirtualMachine1DisplayName)
+`, source, destination, displayNameMiddle, displayNameBefore, displayNameAfter, testData.LegacyVirtualMachineDisplayName)
 }
 
 func testAccFirewallEWRuleResourceDoesntExist(displayName string) resource.TestCheckFunc {

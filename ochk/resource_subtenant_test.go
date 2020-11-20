@@ -45,7 +45,7 @@ func (c *SubtenantTestData) FullResourceName() string {
 func TestAccSubtenantResource_create(t *testing.T) {
 	network1 := NetworkDataSourceTestData{
 		ResourceName: "network1",
-		Name:         testDataNetwork1Name,
+		Name:         testData.Network1Name,
 	}
 
 	user1 := UserDataSourceTestData{
@@ -68,12 +68,12 @@ func TestAccSubtenantResource_create(t *testing.T) {
 
 	network2 := NetworkDataSourceTestData{
 		ResourceName: "network2",
-		Name:         testDataNetwork2Name,
+		Name:         testData.Network2Name,
 	}
 
 	user2 := UserDataSourceTestData{
 		ResourceName: "user2",
-		Name:         "devel-firstuserpb1",
+		Name:         testData.User2Name,
 	}
 
 	subtenantUpdated := subtenant

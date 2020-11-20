@@ -23,27 +23,38 @@ func (c *SubtenantDataSourceTestData) FullResourceName() string {
 }
 
 func TestAccSubtenantDataSource_read(t *testing.T) {
-
 	subtenant := &SubtenantDataSourceTestData{
 		ResourceName: "default",
-		Name:         testDataSubtenant1Name,
+		Name:         testData.Subtenant1Name,
 	}
+
+	user := UserDataSourceTestData{
+		ResourceName: "default",
+		Name:         testData.User1Name,
+	}
+
+	subtenantNetwork := NetworkDataSourceTestData{
+		ResourceName: "default",
+		Name:         testData.SubtenantNetworkName,
+	}
+
+	config := user.ToString() + subtenantNetwork.ToString() + subtenant.ToString()
 
 	resourceName := subtenant.FullResourceName()
 	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: subtenant.ToString(),
+				Config: config,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "name", subtenant.Name),
 					//FIXME waiting for backend fix
 					//resource.TestCheckResourceAttr(resourceName, "description", subtenant.Description),
-					resource.TestCheckResourceAttr(resourceName, "email", "test@example.com"),
+					resource.TestCheckResourceAttr(resourceName, "email", "email1@example.com"),
 					resource.TestCheckResourceAttr(resourceName, "memory_reserved_size_mb", "30000"),
-					resource.TestCheckResourceAttr(resourceName, "storage_reserved_size_gb", "200"),
-					resource.TestCheckResourceAttr(resourceName, "users.0", "bf5e40c6-191c-40f5-b4d1-9332a9e4ed48"),
-					resource.TestCheckResourceAttr(resourceName, "networks.0", "bd814070-18f3-4182-b2af-edaa72a50fee"),
+					resource.TestCheckResourceAttr(resourceName, "storage_reserved_size_gb", "400"),
+					resource.TestCheckResourceAttrPair(resourceName, "users.0", user.FullResourceName(), "id"),
+					resource.TestCheckResourceAttrPair(resourceName, "networks.0", subtenantNetwork.FullResourceName(), "id"),
 				),
 			},
 		},

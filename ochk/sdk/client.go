@@ -33,6 +33,7 @@ type Client struct {
 	VirtualMachines VirtualMachinesProxy
 	VirtualNetworks VirtualNetworksProxy
 	IPCollections   IPCollectionsProxy
+	Deployments     DeploymentsProxy
 }
 
 var clientMutex sync.Mutex
@@ -129,8 +130,9 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 			service:    authClient.Routers,
 		},
 		VirtualMachines: VirtualMachinesProxy{
-			httpClient: httpClient,
-			service:    authClient.VirtualMachines,
+			httpClient:    httpClient,
+			service:       authClient.VirtualMachines,
+			legacyService: authClient.VirtualMachinesnsx,
 		},
 		IPSets: IPSetsProxy{
 			httpClient: httpClient,
@@ -162,7 +164,11 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		},
 		IPCollections: IPCollectionsProxy{
 			httpClient: httpClient,
-			service:    authClient.IPCollection,
+			service:    authClient.IPCollections,
+		},
+		Deployments: DeploymentsProxy{
+			httpClient: httpClient,
+			service:    authClient.Deployments,
 		},
 	}
 

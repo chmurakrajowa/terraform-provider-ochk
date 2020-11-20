@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_collection"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_collections"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
@@ -12,11 +12,11 @@ import (
 
 type IPCollectionsProxy struct {
 	httpClient *http.Client
-	service    ip_collection.ClientService
+	service    ip_collections.ClientService
 }
 
 func (p *IPCollectionsProxy) Read(ctx context.Context, ipCollectionID string) (*models.IPCollection, error) {
-	params := &ip_collection.IPCollectionGetUsingGETParams{
+	params := &ip_collections.IPCollectionGetUsingGETParams{
 		IPCollectionID: ipCollectionID,
 		Context:        ctx,
 		HTTPClient:     p.httpClient,
@@ -24,7 +24,7 @@ func (p *IPCollectionsProxy) Read(ctx context.Context, ipCollectionID string) (*
 
 	response, err := p.service.IPCollectionGetUsingGET(params)
 	if err != nil {
-		var notFound *ip_collection.IPCollectionGetUsingGETNotFound
+		var notFound *ip_collections.IPCollectionGetUsingGETNotFound
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
 		}
@@ -40,7 +40,7 @@ func (p *IPCollectionsProxy) Read(ctx context.Context, ipCollectionID string) (*
 }
 
 func (p *IPCollectionsProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.IPCollection, error) {
-	params := &ip_collection.IPCollectionListUsingGETParams{
+	params := &ip_collections.IPCollectionListUsingGETParams{
 		DisplayName: &displayName,
 		Context:     ctx,
 		HTTPClient:  p.httpClient,
@@ -63,7 +63,7 @@ func (p *IPCollectionsProxy) Create(ctx context.Context, IPCollection *models.IP
 		return nil, fmt.Errorf("error while validating ip collection struct: %w", err)
 	}
 
-	params := &ip_collection.IPCollectionCreateUsingPUTParams{
+	params := &ip_collections.IPCollectionCreateUsingPUTParams{
 		IPCollection: IPCollection,
 		Context:      ctx,
 		HTTPClient:   p.httpClient,
@@ -86,7 +86,7 @@ func (p *IPCollectionsProxy) Update(ctx context.Context, IPCollection *models.IP
 		return nil, fmt.Errorf("error while validating ip collection struct: %w", err)
 	}
 
-	params := &ip_collection.IPCollectionUpdateUsingPUTParams{
+	params := &ip_collections.IPCollectionUpdateUsingPUTParams{
 		IPCollectionID: IPCollection.ID,
 		IPCollection:   IPCollection,
 		Context:        ctx,
@@ -118,7 +118,7 @@ func (p *IPCollectionsProxy) Exists(ctx context.Context, IPCollectionID string) 
 }
 
 func (p *IPCollectionsProxy) Delete(ctx context.Context, IPCollectionID string) error {
-	params := &ip_collection.IPCollectionDeleteUsingDELETEParams{
+	params := &ip_collections.IPCollectionDeleteUsingDELETEParams{
 		IPCollectionID: IPCollectionID,
 		Context:        ctx,
 		HTTPClient:     p.httpClient,
@@ -126,7 +126,7 @@ func (p *IPCollectionsProxy) Delete(ctx context.Context, IPCollectionID string) 
 
 	response, err := p.service.IPCollectionDeleteUsingDELETE(params)
 	if err != nil {
-		var badRequest *ip_collection.IPCollectionDeleteUsingDELETEBadRequest
+		var badRequest *ip_collections.IPCollectionDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}
