@@ -1,77 +1,82 @@
 ---
-page_title: "Virtual network Resource"
+page_title: "Virtual machine Resource"
 ---
 
-# Virtual network Resource
+# Virtual machine Resource
 
-Resource for managing virtual networks (vNets) to enable communication between multiple virtual machines. In the onboarding process, the client declares the range of IP addresses that will be used to create the separate subnets. The new subnet must be within the range of available scopes, otherwise an error will be displayed and such vNet will not be created.
+Resource for provisioning virtual machine that functions as a virtual computer system with its own CPU, memory, network interface, and storage, created on a physical hardware system. 
 
-Warning: provisioning of virtual networks can take up to 15 minutes. 
+Warning: provisioning of virtual machine can take up to 15 minutes. 
 
 ## Example Usage
 
 ### Minimal example
-```hcl
-data "ochk_subtenant" "subtenant" {
-  name = "subtenant"
-}
 
-resource "ochk_virtual_network" "{{ .ResourceName}}" {
-	display_name = "display name"
-	ipam_enabled = false
-	subtenants = ochk_subtenant.subtenant.id
-}
-```
-
-### Example With IPAM, subnet and router
 ```hcl
 
-data "ochk_subtenant" "subtenant" {
-  name = "subtenant"
+data "ochk_deployment" "centos" {
+  display_name = "CentOS 7"
 }
 
-data "ochk_router" "router" {
-  name = "router"
+data "ochk_subtenant" "default" {
+  name = "<subtenant-display-name>"
 }
 
-resource "ochk_virtual_network" "{{ .ResourceName}}" {
-	display_name = "vnet name"
-	ipam_enabled = true
-	subtenants = [ochk_subtenant.subtenant.id]
-	router = ochk_router.router.id
-	dns_search_suffix = "test.lcl,prod.lcl"
-	dns_suffix = "test.lcl"
-	primary_dns_address = "192.168.1.6"
-	secondary_dns_address = "192.168.1.2"
-	primary_wins_address = "192.168.1.3"
-	secondary_wins_address = "192.168.1.3"
-	subnet_network_cidr = "10.16.1.0/24"
+resource "ochk_virtual_network" "default" {
+  display_name = "vnet"
+  subtenants = [
+    data.ochk_subtenant.default.id
+  ]
 }
+
+resource "ochk_virtual_machine" "default" {
+  display_name = "vm"
+  deployment_id = data.ochk_deployment.centos.id
+  initial_password = "<initial-password>"
+
+  power_state = "poweredOn"
+  resource_profile = "SIZE_S"
+  storage_policy = "STANDARD"
+  subtenant_id = data.ochk_subtenant.default.id
+
+  virtual_network_devices {
+    virtual_network_id = ochk_virtual_network.default.id
+  }
+}
+
 ```
 
 ## Argument Reference
 
 The following arguments are supported:
 
-* `display_name` - (Required) Virtual machine's display name.
+* `display_name` - (Required) Specifies display name associated with this virtual machine. 
 * `initial_password` - (Required) Initial password. Cannot be changed after creation.
-* `power_state` - (Required) Power state, values: `poweredOn`, `poweredOff`, `suspended`. 
-* `resource_profile` - (Required) Resource profile, values: `CUSTOM`, `SIZE_L`, `SIZE_M`, `SIZE_S`, `SIZE_XL`, `SIZE_XS`.
-* `storage_policy` - (Required) Storage policy, value: `ENTERPRISE`, `STANDARD`, `UNKNOWN`.
-* `deployment_id` - (Required) Deployment's identifier, use `ochk_deployment` data source for getting identifier by name. 
-* `subtenant_id` - (Required) Subtenants' identifier, use `ochk_subtenant` data source for getting identifier by name.
+* `power_state` - (Required) Power state information for the specified virtual machine. Value is one of: `poweredOn`, `poweredOff`, `suspended`. 
+* `resource_profile` - (Required) The definition of the amount of resources that are allocated to virtual machines , values: 
+  * **`CUSTOM`** - Custom configuration of vCPU and RAM
+  * **`SIZE_XL`** - 16 vCPU, 64 GB RAM 
+  * **`SIZE_L`** - 8 vCPU, 32 GB RAM 
+  * **`SIZE_M`** - 4 vCPU, 16 GB RAM
+  * **`SIZE_S`** - 2 vCPU, 8 GB RAM
+  * **`SIZE_XS`** - 1 vCPU, 4 GB RAM
+* `storage_policy` - (Required) Storage Policy associated with virtual machine. The policies control which type of storage is provided for the virtual machine, how the virtual machine is placed within the storage, and which data services are offered for the virtual machine; values: 
+  * **`ENTERPRISE`** - virtual machine disks are distributed over two Data Centers
+  * **`STANDARD`** - virtual machine disks are located in one Data Center 
+* `deployment_id` - (Required) The unique deployment's identifier, use `ochk_deployment` data source for getting identifier by name. 
+* `subtenant_id` - (Required) Business group's identifier, use `ochk_subtenant` data source for getting identifier by name.
 * `virtual_network_devices` - (Required) List of virtual network devices. Each element must have the following values:
-    * **virtual_network_id** - (Required) Identifier of virtual network. Use `ochk_virtual_network` data source for getting identifier by name.
-* `additional_virtual_disks` - (Optional) List of additional virtual disks. Each element must have the following values: 
-    * **controller_id** - (Required) 
-    * **lun_id** - (Required)
-    * **size_mb** - (Required) Size in megabytes. 
-    * **device_type** - (Required)
+    * **virtual_network_id** - (Required) The unique identifier of virtual network. Virtual network allows the virtual machine to communicate with the rest of your network, host machine, and other virtual machines. Use `ochk_virtual_network` data source for getting identifier by name.
+* `additional_virtual_disks` - (Optional) List of additional virtual disks. Additional disk will be created on the same storage as the virtual machine configuration. Each element must have the following values: 
+    * **controller_id** - (Required) The unique identifier of controller.
+    * **lun_id** - (Required) Number used to identify a logical unit.
+    * **size_mb** - (Required) Size in megabytes of the additional disk. 
+    * **device_type** - (Required) Type of the device.
 * `virtual_disk` - (Optional) Configuration of system disk. Each element must have the following values:
-    * **controller_id** - (Required)
-    * **lun_id** - (Required)
-    * **size_mb** - (Required)
-    * **device_type** - (Required)
+    * **controller_id** - (Required) The unique identifier of controller.
+    * **lun_id** - (Required) Number used to identify a logical unit.
+    * **size_mb** - (Required) Size in megabytes of the virtual disk.
+    * **device_type** - (Required) Type of the device.
 
 ## Attribute Reference
 
