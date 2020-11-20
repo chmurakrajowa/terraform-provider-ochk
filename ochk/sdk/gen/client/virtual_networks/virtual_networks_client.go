@@ -52,7 +52,7 @@ func (a *Client) VirtualNetworkCreateUsingPUT(params *VirtualNetworkCreateUsingP
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "VirtualNetworkCreateUsingPUT",
+		ID:                 "virtualNetworkCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/networks",
 		ProducesMediaTypes: []string{"application/json"},
@@ -89,7 +89,7 @@ func (a *Client) VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsi
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "VirtualNetworkDeleteUsingDELETE",
+		ID:                 "virtualNetworkDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/networks/{virtualNetworkId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -109,7 +109,7 @@ func (a *Client) VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsi
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for VirtualNetworkDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for virtualNetworkDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -125,7 +125,7 @@ func (a *Client) VirtualNetworkGetUsingGET(params *VirtualNetworkGetUsingGETPara
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "VirtualNetworkGetUsingGET",
+		ID:                 "virtualNetworkGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/networks/{virtualNetworkId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -145,7 +145,7 @@ func (a *Client) VirtualNetworkGetUsingGET(params *VirtualNetworkGetUsingGETPara
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for VirtualNetworkGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for virtualNetworkGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -161,7 +161,7 @@ func (a *Client) VirtualNetworkListUsingGET(params *VirtualNetworkListUsingGETPa
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "VirtualNetworkListUsingGET",
+		ID:                 "virtualNetworkListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/networks",
 		ProducesMediaTypes: []string{"application/json"},
@@ -181,7 +181,7 @@ func (a *Client) VirtualNetworkListUsingGET(params *VirtualNetworkListUsingGETPa
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for VirtualNetworkListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for virtualNetworkListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -197,7 +197,7 @@ func (a *Client) VirtualNetworkUpdateUsingPUT(params *VirtualNetworkUpdateUsingP
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "VirtualNetworkUpdateUsingPUT",
+		ID:                 "virtualNetworkUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/networks/{virtualNetworkId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -217,7 +217,7 @@ func (a *Client) VirtualNetworkUpdateUsingPUT(params *VirtualNetworkUpdateUsingP
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for VirtualNetworkUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for virtualNetworkUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

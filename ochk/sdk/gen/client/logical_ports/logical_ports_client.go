@@ -46,7 +46,7 @@ func (a *Client) LogicalPortGetUsingGET(params *LogicalPortGetUsingGETParams) (*
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "LogicalPortGetUsingGET",
+		ID:                 "logicalPortGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/logical-ports/{logicalPortId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -66,7 +66,7 @@ func (a *Client) LogicalPortGetUsingGET(params *LogicalPortGetUsingGETParams) (*
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for LogicalPortGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for logicalPortGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -82,7 +82,7 @@ func (a *Client) LogicalPortListUsingGET1(params *LogicalPortListUsingGET1Params
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "LogicalPortListUsingGET_1",
+		ID:                 "logicalPortListUsingGET_1",
 		Method:             "GET",
 		PathPattern:        "/network/logical-ports",
 		ProducesMediaTypes: []string{"application/json"},
@@ -102,7 +102,7 @@ func (a *Client) LogicalPortListUsingGET1(params *LogicalPortListUsingGET1Params
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for LogicalPortListUsingGET_1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for logicalPortListUsingGET_1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

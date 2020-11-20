@@ -44,7 +44,7 @@ func (a *Client) ContextProfileListUsingGET(params *ContextProfileListUsingGETPa
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ContextProfileListUsingGET",
+		ID:                 "contextProfileListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/context-profiles",
 		ProducesMediaTypes: []string{"application/json"},
@@ -64,7 +64,7 @@ func (a *Client) ContextProfileListUsingGET(params *ContextProfileListUsingGETPa
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ContextProfileListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for contextProfileListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

@@ -46,7 +46,7 @@ func (a *Client) SecurityPolicyGetUsingGET(params *SecurityPolicyGetUsingGETPara
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SecurityPolicyGetUsingGET",
+		ID:                 "securityPolicyGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/firewall/security-policies/{SecurityPolicyId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -66,7 +66,7 @@ func (a *Client) SecurityPolicyGetUsingGET(params *SecurityPolicyGetUsingGETPara
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for SecurityPolicyGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for securityPolicyGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -82,7 +82,7 @@ func (a *Client) SecurityPolicyListUsingGET(params *SecurityPolicyListUsingGETPa
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SecurityPolicyListUsingGET",
+		ID:                 "securityPolicyListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/firewall/security-policies",
 		ProducesMediaTypes: []string{"application/json"},
@@ -102,7 +102,7 @@ func (a *Client) SecurityPolicyListUsingGET(params *SecurityPolicyListUsingGETPa
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for SecurityPolicyListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for securityPolicyListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

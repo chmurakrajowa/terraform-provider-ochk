@@ -61,6 +61,9 @@ type DFWRule struct {
 	// position
 	Position *Position `json:"position,omitempty"`
 
+	// priority
+	Priority int64 `json:"priority,omitempty"`
+
 	// rule Id
 	RuleID string `json:"ruleId,omitempty"`
 

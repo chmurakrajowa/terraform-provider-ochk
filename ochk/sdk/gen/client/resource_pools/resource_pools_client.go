@@ -27,47 +27,11 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	LogicalPortListUsingGET2(params *LogicalPortListUsingGET2Params) (*LogicalPortListUsingGET2OK, error)
-
 	VcsResourcePoolsGetUsingGET(params *VcsResourcePoolsGetUsingGETParams) (*VcsResourcePoolsGetUsingGETOK, error)
 
+	VcsResourcePoolsListUsingGET(params *VcsResourcePoolsListUsingGETParams) (*VcsResourcePoolsListUsingGETOK, error)
+
 	SetTransport(transport runtime.ClientTransport)
-}
-
-/*
-  LogicalPortListUsingGET2 lists
-
-  List resource pools
-*/
-func (a *Client) LogicalPortListUsingGET2(params *LogicalPortListUsingGET2Params) (*LogicalPortListUsingGET2OK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewLogicalPortListUsingGET2Params()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "LogicalPortListUsingGET_2",
-		Method:             "GET",
-		PathPattern:        "/vcs/resourcepools",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
-		Params:             params,
-		Reader:             &LogicalPortListUsingGET2Reader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*LogicalPortListUsingGET2OK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for LogicalPortListUsingGET_2: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
 }
 
 /*
@@ -82,7 +46,7 @@ func (a *Client) VcsResourcePoolsGetUsingGET(params *VcsResourcePoolsGetUsingGET
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "VcsResourcePoolsGetUsingGET",
+		ID:                 "vcsResourcePoolsGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vcs/resourcepools/{resourcePoolId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -102,7 +66,43 @@ func (a *Client) VcsResourcePoolsGetUsingGET(params *VcsResourcePoolsGetUsingGET
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for VcsResourcePoolsGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for vcsResourcePoolsGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  VcsResourcePoolsListUsingGET lists
+
+  List resource pools
+*/
+func (a *Client) VcsResourcePoolsListUsingGET(params *VcsResourcePoolsListUsingGETParams) (*VcsResourcePoolsListUsingGETOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewVcsResourcePoolsListUsingGETParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "vcsResourcePoolsListUsingGET",
+		Method:             "GET",
+		PathPattern:        "/vcs/resourcepools",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &VcsResourcePoolsListUsingGETReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*VcsResourcePoolsListUsingGETOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for vcsResourcePoolsListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

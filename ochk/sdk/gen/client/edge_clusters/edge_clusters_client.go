@@ -46,7 +46,7 @@ func (a *Client) EdgeClusterGetUsingGET(params *EdgeClusterGetUsingGETParams) (*
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "EdgeClusterGetUsingGET",
+		ID:                 "edgeClusterGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/edge-clusters/{edgeClusterId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -66,7 +66,7 @@ func (a *Client) EdgeClusterGetUsingGET(params *EdgeClusterGetUsingGETParams) (*
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for EdgeClusterGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for edgeClusterGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -82,7 +82,7 @@ func (a *Client) LogicalPortListUsingGET(params *LogicalPortListUsingGETParams) 
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "LogicalPortListUsingGET",
+		ID:                 "logicalPortListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/edge-clusters",
 		ProducesMediaTypes: []string{"application/json"},
@@ -102,7 +102,7 @@ func (a *Client) LogicalPortListUsingGET(params *LogicalPortListUsingGETParams) 
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for LogicalPortListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for logicalPortListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

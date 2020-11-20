@@ -11,16 +11,18 @@ import (
 	"github.com/go-openapi/strfmt"
 
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/context_profiles"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/custom_services"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/default_services"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/deployments"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/edge_clusters"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_e_w"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_s_n"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/gateway_policies"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_collection"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_collections"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_sets"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/logical_ports"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/networkadapters"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/networkprofiles"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/network_adapters"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/network_profiles"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/networks"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/principals"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/requests"
@@ -32,7 +34,10 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/subtenants"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/users"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/v_id_m"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machine_overall_reports"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machine_performance_reports"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machines"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machines_n_s_x"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/virtual_networks"
 )
 
@@ -79,16 +84,18 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli := new(Ochk)
 	cli.Transport = transport
 	cli.ContextProfiles = context_profiles.New(transport, formats)
+	cli.CustomServices = custom_services.New(transport, formats)
 	cli.DefaultServices = default_services.New(transport, formats)
+	cli.Deployments = deployments.New(transport, formats)
 	cli.EdgeClusters = edge_clusters.New(transport, formats)
 	cli.FirewallRulesew = firewall_rules_e_w.New(transport, formats)
 	cli.FirewallRulessn = firewall_rules_s_n.New(transport, formats)
 	cli.GatewayPolicies = gateway_policies.New(transport, formats)
-	cli.IPCollection = ip_collection.New(transport, formats)
+	cli.IPCollections = ip_collections.New(transport, formats)
 	cli.IPSets = ip_sets.New(transport, formats)
 	cli.LogicalPorts = logical_ports.New(transport, formats)
-	cli.Networkadapters = networkadapters.New(transport, formats)
-	cli.Networkprofiles = networkprofiles.New(transport, formats)
+	cli.NetworkAdapters = network_adapters.New(transport, formats)
+	cli.NetworkProfiles = network_profiles.New(transport, formats)
 	cli.Networks = networks.New(transport, formats)
 	cli.Principals = principals.New(transport, formats)
 	cli.Requests = requests.New(transport, formats)
@@ -100,7 +107,10 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.Subtenants = subtenants.New(transport, formats)
 	cli.Users = users.New(transport, formats)
 	cli.VIDm = v_id_m.New(transport, formats)
+	cli.VirtualMachineOverallReports = virtual_machine_overall_reports.New(transport, formats)
+	cli.VirtualMachinePerformanceReports = virtual_machine_performance_reports.New(transport, formats)
 	cli.VirtualMachines = virtual_machines.New(transport, formats)
+	cli.VirtualMachinesnsx = virtual_machines_n_s_x.New(transport, formats)
 	cli.VirtualNetworks = virtual_networks.New(transport, formats)
 	return cli
 }
@@ -148,7 +158,11 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 type Ochk struct {
 	ContextProfiles context_profiles.ClientService
 
+	CustomServices custom_services.ClientService
+
 	DefaultServices default_services.ClientService
+
+	Deployments deployments.ClientService
 
 	EdgeClusters edge_clusters.ClientService
 
@@ -158,15 +172,15 @@ type Ochk struct {
 
 	GatewayPolicies gateway_policies.ClientService
 
-	IPCollection ip_collection.ClientService
+	IPCollections ip_collections.ClientService
 
 	IPSets ip_sets.ClientService
 
 	LogicalPorts logical_ports.ClientService
 
-	Networkadapters networkadapters.ClientService
+	NetworkAdapters network_adapters.ClientService
 
-	Networkprofiles networkprofiles.ClientService
+	NetworkProfiles network_profiles.ClientService
 
 	Networks networks.ClientService
 
@@ -190,7 +204,13 @@ type Ochk struct {
 
 	VIDm v_id_m.ClientService
 
+	VirtualMachineOverallReports virtual_machine_overall_reports.ClientService
+
+	VirtualMachinePerformanceReports virtual_machine_performance_reports.ClientService
+
 	VirtualMachines virtual_machines.ClientService
+
+	VirtualMachinesnsx virtual_machines_n_s_x.ClientService
 
 	VirtualNetworks virtual_networks.ClientService
 
@@ -201,16 +221,18 @@ type Ochk struct {
 func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 	c.ContextProfiles.SetTransport(transport)
+	c.CustomServices.SetTransport(transport)
 	c.DefaultServices.SetTransport(transport)
+	c.Deployments.SetTransport(transport)
 	c.EdgeClusters.SetTransport(transport)
 	c.FirewallRulesew.SetTransport(transport)
 	c.FirewallRulessn.SetTransport(transport)
 	c.GatewayPolicies.SetTransport(transport)
-	c.IPCollection.SetTransport(transport)
+	c.IPCollections.SetTransport(transport)
 	c.IPSets.SetTransport(transport)
 	c.LogicalPorts.SetTransport(transport)
-	c.Networkadapters.SetTransport(transport)
-	c.Networkprofiles.SetTransport(transport)
+	c.NetworkAdapters.SetTransport(transport)
+	c.NetworkProfiles.SetTransport(transport)
 	c.Networks.SetTransport(transport)
 	c.Principals.SetTransport(transport)
 	c.Requests.SetTransport(transport)
@@ -222,6 +244,9 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.Subtenants.SetTransport(transport)
 	c.Users.SetTransport(transport)
 	c.VIDm.SetTransport(transport)
+	c.VirtualMachineOverallReports.SetTransport(transport)
+	c.VirtualMachinePerformanceReports.SetTransport(transport)
 	c.VirtualMachines.SetTransport(transport)
+	c.VirtualMachinesnsx.SetTransport(transport)
 	c.VirtualNetworks.SetTransport(transport)
 }

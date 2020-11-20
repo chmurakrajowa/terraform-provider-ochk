@@ -52,7 +52,7 @@ func (a *Client) SubtenantCreateUsingPUT(params *SubtenantCreateUsingPUTParams) 
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SubtenantCreateUsingPUT",
+		ID:                 "subtenantCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/subtenants",
 		ProducesMediaTypes: []string{"application/json"},
@@ -89,7 +89,7 @@ func (a *Client) SubtenantDeleteUsingDELETE(params *SubtenantDeleteUsingDELETEPa
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SubtenantDeleteUsingDELETE",
+		ID:                 "subtenantDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/subtenants/{subtenantId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -109,7 +109,7 @@ func (a *Client) SubtenantDeleteUsingDELETE(params *SubtenantDeleteUsingDELETEPa
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for SubtenantDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for subtenantDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -125,7 +125,7 @@ func (a *Client) SubtenantGetUsingGET(params *SubtenantGetUsingGETParams) (*Subt
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SubtenantGetUsingGET",
+		ID:                 "subtenantGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/subtenants/{subtenantId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -145,7 +145,7 @@ func (a *Client) SubtenantGetUsingGET(params *SubtenantGetUsingGETParams) (*Subt
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for SubtenantGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for subtenantGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -161,7 +161,7 @@ func (a *Client) SubtenantListUsingGET(params *SubtenantListUsingGETParams) (*Su
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SubtenantListUsingGET",
+		ID:                 "subtenantListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/subtenants",
 		ProducesMediaTypes: []string{"application/json"},
@@ -181,7 +181,7 @@ func (a *Client) SubtenantListUsingGET(params *SubtenantListUsingGETParams) (*Su
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for SubtenantListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for subtenantListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -197,7 +197,7 @@ func (a *Client) SubtenantUpdateUsingPUT(params *SubtenantUpdateUsingPUTParams) 
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SubtenantUpdateUsingPUT",
+		ID:                 "subtenantUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/subtenants/{subtenantId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -217,7 +217,7 @@ func (a *Client) SubtenantUpdateUsingPUT(params *SubtenantUpdateUsingPUTParams) 
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for SubtenantUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for subtenantUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

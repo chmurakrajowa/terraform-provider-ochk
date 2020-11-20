@@ -19,7 +19,7 @@ import (
 // NewVcsVirtualMachineListUsingGET1Params creates a new VcsVirtualMachineListUsingGET1Params object
 // with the default values initialized.
 func NewVcsVirtualMachineListUsingGET1Params() *VcsVirtualMachineListUsingGET1Params {
-
+	var ()
 	return &VcsVirtualMachineListUsingGET1Params{
 
 		timeout: cr.DefaultTimeout,
@@ -29,7 +29,7 @@ func NewVcsVirtualMachineListUsingGET1Params() *VcsVirtualMachineListUsingGET1Pa
 // NewVcsVirtualMachineListUsingGET1ParamsWithTimeout creates a new VcsVirtualMachineListUsingGET1Params object
 // with the default values initialized, and the ability to set a timeout on a request
 func NewVcsVirtualMachineListUsingGET1ParamsWithTimeout(timeout time.Duration) *VcsVirtualMachineListUsingGET1Params {
-
+	var ()
 	return &VcsVirtualMachineListUsingGET1Params{
 
 		timeout: timeout,
@@ -39,7 +39,7 @@ func NewVcsVirtualMachineListUsingGET1ParamsWithTimeout(timeout time.Duration) *
 // NewVcsVirtualMachineListUsingGET1ParamsWithContext creates a new VcsVirtualMachineListUsingGET1Params object
 // with the default values initialized, and the ability to set a context for a request
 func NewVcsVirtualMachineListUsingGET1ParamsWithContext(ctx context.Context) *VcsVirtualMachineListUsingGET1Params {
-
+	var ()
 	return &VcsVirtualMachineListUsingGET1Params{
 
 		Context: ctx,
@@ -49,7 +49,7 @@ func NewVcsVirtualMachineListUsingGET1ParamsWithContext(ctx context.Context) *Vc
 // NewVcsVirtualMachineListUsingGET1ParamsWithHTTPClient creates a new VcsVirtualMachineListUsingGET1Params object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewVcsVirtualMachineListUsingGET1ParamsWithHTTPClient(client *http.Client) *VcsVirtualMachineListUsingGET1Params {
-
+	var ()
 	return &VcsVirtualMachineListUsingGET1Params{
 		HTTPClient: client,
 	}
@@ -59,6 +59,13 @@ func NewVcsVirtualMachineListUsingGET1ParamsWithHTTPClient(client *http.Client) 
 for the vcs virtual machine list using g e t 1 operation typically these are written to a http.Request
 */
 type VcsVirtualMachineListUsingGET1Params struct {
+
+	/*DisplayName
+	  displayName
+
+	*/
+	DisplayName *string
+
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -97,6 +104,17 @@ func (o *VcsVirtualMachineListUsingGET1Params) SetHTTPClient(client *http.Client
 	o.HTTPClient = client
 }
 
+// WithDisplayName adds the displayName to the vcs virtual machine list using g e t 1 params
+func (o *VcsVirtualMachineListUsingGET1Params) WithDisplayName(displayName *string) *VcsVirtualMachineListUsingGET1Params {
+	o.SetDisplayName(displayName)
+	return o
+}
+
+// SetDisplayName adds the displayName to the vcs virtual machine list using g e t 1 params
+func (o *VcsVirtualMachineListUsingGET1Params) SetDisplayName(displayName *string) {
+	o.DisplayName = displayName
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *VcsVirtualMachineListUsingGET1Params) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -104,6 +122,22 @@ func (o *VcsVirtualMachineListUsingGET1Params) WriteToRequest(r runtime.ClientRe
 		return err
 	}
 	var res []error
+
+	if o.DisplayName != nil {
+
+		// query param displayName
+		var qrDisplayName string
+		if o.DisplayName != nil {
+			qrDisplayName = *o.DisplayName
+		}
+		qDisplayName := qrDisplayName
+		if qDisplayName != "" {
+			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

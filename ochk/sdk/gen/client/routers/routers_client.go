@@ -52,7 +52,7 @@ func (a *Client) RouterCreateUsingPUT(params *RouterCreateUsingPUTParams) (*Rout
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RouterCreateUsingPUT",
+		ID:                 "routerCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/routers",
 		ProducesMediaTypes: []string{"application/json"},
@@ -89,7 +89,7 @@ func (a *Client) RouterDeleteUsingDELETE(params *RouterDeleteUsingDELETEParams) 
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RouterDeleteUsingDELETE",
+		ID:                 "routerDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/network/routers/{routerId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -126,7 +126,7 @@ func (a *Client) RouterGetUsingGET(params *RouterGetUsingGETParams) (*RouterGetU
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RouterGetUsingGET",
+		ID:                 "routerGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/routers/{routerId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -146,7 +146,7 @@ func (a *Client) RouterGetUsingGET(params *RouterGetUsingGETParams) (*RouterGetU
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for RouterGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for routerGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -162,7 +162,7 @@ func (a *Client) RouterListUsingGET(params *RouterListUsingGETParams) (*RouterLi
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RouterListUsingGET",
+		ID:                 "routerListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/routers",
 		ProducesMediaTypes: []string{"application/json"},
@@ -182,7 +182,7 @@ func (a *Client) RouterListUsingGET(params *RouterListUsingGETParams) (*RouterLi
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for RouterListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for routerListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -198,7 +198,7 @@ func (a *Client) RouterUpdateUsingPUT(params *RouterUpdateUsingPUTParams) (*Rout
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "RouterUpdateUsingPUT",
+		ID:                 "routerUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/routers/{routerId}",
 		ProducesMediaTypes: []string{"application/json"},

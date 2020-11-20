@@ -51,20 +51,20 @@ func NewVcsVirtualMachineListUsingGET1OK() *VcsVirtualMachineListUsingGET1OK {
 OK
 */
 type VcsVirtualMachineListUsingGET1OK struct {
-	Payload *models.VirtualMachineListResponse
+	Payload *models.VcsVirtualMachineListResponse
 }
 
 func (o *VcsVirtualMachineListUsingGET1OK) Error() string {
 	return fmt.Sprintf("[GET /vcs/virtual-machines][%d] vcsVirtualMachineListUsingGET1OK  %+v", 200, o.Payload)
 }
 
-func (o *VcsVirtualMachineListUsingGET1OK) GetPayload() *models.VirtualMachineListResponse {
+func (o *VcsVirtualMachineListUsingGET1OK) GetPayload() *models.VcsVirtualMachineListResponse {
 	return o.Payload
 }
 
 func (o *VcsVirtualMachineListUsingGET1OK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.VirtualMachineListResponse)
+	o.Payload = new(models.VcsVirtualMachineListResponse)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

@@ -56,7 +56,7 @@ func NewIPSetListUsingGETParamsWithHTTPClient(client *http.Client) *IPSetListUsi
 }
 
 /*IPSetListUsingGETParams contains all the parameters to send to the API endpoint
-for the IP set list using g e t operation typically these are written to a http.Request
+for the ip set list using g e t operation typically these are written to a http.Request
 */
 type IPSetListUsingGETParams struct {
 
@@ -71,46 +71,46 @@ type IPSetListUsingGETParams struct {
 	HTTPClient *http.Client
 }
 
-// WithTimeout adds the timeout to the IP set list using g e t params
+// WithTimeout adds the timeout to the ip set list using g e t params
 func (o *IPSetListUsingGETParams) WithTimeout(timeout time.Duration) *IPSetListUsingGETParams {
 	o.SetTimeout(timeout)
 	return o
 }
 
-// SetTimeout adds the timeout to the IP set list using g e t params
+// SetTimeout adds the timeout to the ip set list using g e t params
 func (o *IPSetListUsingGETParams) SetTimeout(timeout time.Duration) {
 	o.timeout = timeout
 }
 
-// WithContext adds the context to the IP set list using g e t params
+// WithContext adds the context to the ip set list using g e t params
 func (o *IPSetListUsingGETParams) WithContext(ctx context.Context) *IPSetListUsingGETParams {
 	o.SetContext(ctx)
 	return o
 }
 
-// SetContext adds the context to the IP set list using g e t params
+// SetContext adds the context to the ip set list using g e t params
 func (o *IPSetListUsingGETParams) SetContext(ctx context.Context) {
 	o.Context = ctx
 }
 
-// WithHTTPClient adds the HTTPClient to the IP set list using g e t params
+// WithHTTPClient adds the HTTPClient to the ip set list using g e t params
 func (o *IPSetListUsingGETParams) WithHTTPClient(client *http.Client) *IPSetListUsingGETParams {
 	o.SetHTTPClient(client)
 	return o
 }
 
-// SetHTTPClient adds the HTTPClient to the IP set list using g e t params
+// SetHTTPClient adds the HTTPClient to the ip set list using g e t params
 func (o *IPSetListUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithDisplayName adds the displayName to the IP set list using g e t params
+// WithDisplayName adds the displayName to the ip set list using g e t params
 func (o *IPSetListUsingGETParams) WithDisplayName(displayName *string) *IPSetListUsingGETParams {
 	o.SetDisplayName(displayName)
 	return o
 }
 
-// SetDisplayName adds the displayName to the IP set list using g e t params
+// SetDisplayName adds the displayName to the ip set list using g e t params
 func (o *IPSetListUsingGETParams) SetDisplayName(displayName *string) {
 	o.DisplayName = displayName
 }

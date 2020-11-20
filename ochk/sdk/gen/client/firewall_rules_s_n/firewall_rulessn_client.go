@@ -27,39 +27,39 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GFWRuleCreateUsingPUT(params *GFWRuleCreateUsingPUTParams) (*GFWRuleCreateUsingPUTOK, *GFWRuleCreateUsingPUTCreated, error)
+	GfwRuleCreateUsingPUT(params *GfwRuleCreateUsingPUTParams) (*GfwRuleCreateUsingPUTOK, *GfwRuleCreateUsingPUTCreated, error)
 
-	GFWRuleDeleteUsingDELETE(params *GFWRuleDeleteUsingDELETEParams) (*GFWRuleDeleteUsingDELETEOK, error)
+	GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams) (*GfwRuleDeleteUsingDELETEOK, error)
 
-	GFWRuleGetUsingGET(params *GFWRuleGetUsingGETParams) (*GFWRuleGetUsingGETOK, error)
+	GfwRuleGetUsingGET(params *GfwRuleGetUsingGETParams) (*GfwRuleGetUsingGETOK, error)
 
-	GFWRuleListUsingGET(params *GFWRuleListUsingGETParams) (*GFWRuleListUsingGETOK, error)
+	GfwRuleListUsingGET(params *GfwRuleListUsingGETParams) (*GfwRuleListUsingGETOK, error)
 
-	GFWRuleUpdateUsingPUT(params *GFWRuleUpdateUsingPUTParams) (*GFWRuleUpdateUsingPUTOK, error)
+	GfwRuleUpdateUsingPUT(params *GfwRuleUpdateUsingPUTParams) (*GfwRuleUpdateUsingPUTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  GFWRuleCreateUsingPUT creates
+  GfwRuleCreateUsingPUT creates
 
   Create firewall rule (south-north) in NSX-T
 */
-func (a *Client) GFWRuleCreateUsingPUT(params *GFWRuleCreateUsingPUTParams) (*GFWRuleCreateUsingPUTOK, *GFWRuleCreateUsingPUTCreated, error) {
+func (a *Client) GfwRuleCreateUsingPUT(params *GfwRuleCreateUsingPUTParams) (*GfwRuleCreateUsingPUTOK, *GfwRuleCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGFWRuleCreateUsingPUTParams()
+		params = NewGfwRuleCreateUsingPUTParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GFWRuleCreateUsingPUT",
+		ID:                 "gfwRuleCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &GFWRuleCreateUsingPUTReader{formats: a.formats},
+		Reader:             &GfwRuleCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -67,9 +67,9 @@ func (a *Client) GFWRuleCreateUsingPUT(params *GFWRuleCreateUsingPUTParams) (*GF
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *GFWRuleCreateUsingPUTOK:
+	case *GfwRuleCreateUsingPUTOK:
 		return value, nil, nil
-	case *GFWRuleCreateUsingPUTCreated:
+	case *GfwRuleCreateUsingPUTCreated:
 		return nil, value, nil
 	}
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
@@ -78,146 +78,146 @@ func (a *Client) GFWRuleCreateUsingPUT(params *GFWRuleCreateUsingPUTParams) (*GF
 }
 
 /*
-  GFWRuleDeleteUsingDELETE deletes
+  GfwRuleDeleteUsingDELETE deletes
 
   Delete firewall rule (south-north) from NSX-T
 */
-func (a *Client) GFWRuleDeleteUsingDELETE(params *GFWRuleDeleteUsingDELETEParams) (*GFWRuleDeleteUsingDELETEOK, error) {
+func (a *Client) GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams) (*GfwRuleDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGFWRuleDeleteUsingDELETEParams()
+		params = NewGfwRuleDeleteUsingDELETEParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GFWRuleDeleteUsingDELETE",
+		ID:                 "gfwRuleDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &GFWRuleDeleteUsingDELETEReader{formats: a.formats},
+		Reader:             &GfwRuleDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*GFWRuleDeleteUsingDELETEOK)
+	success, ok := result.(*GfwRuleDeleteUsingDELETEOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GFWRuleDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for gfwRuleDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
-  GFWRuleGetUsingGET gets
+  GfwRuleGetUsingGET gets
 
   Get firewall rule (south-north) from NSX-T
 */
-func (a *Client) GFWRuleGetUsingGET(params *GFWRuleGetUsingGETParams) (*GFWRuleGetUsingGETOK, error) {
+func (a *Client) GfwRuleGetUsingGET(params *GfwRuleGetUsingGETParams) (*GfwRuleGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGFWRuleGetUsingGETParams()
+		params = NewGfwRuleGetUsingGETParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GFWRuleGetUsingGET",
+		ID:                 "gfwRuleGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &GFWRuleGetUsingGETReader{formats: a.formats},
+		Reader:             &GfwRuleGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*GFWRuleGetUsingGETOK)
+	success, ok := result.(*GfwRuleGetUsingGETOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GFWRuleGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for gfwRuleGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
-  GFWRuleListUsingGET lists
+  GfwRuleListUsingGET lists
 
   List firewall rules (south-north) from NSX-T
 */
-func (a *Client) GFWRuleListUsingGET(params *GFWRuleListUsingGETParams) (*GFWRuleListUsingGETOK, error) {
+func (a *Client) GfwRuleListUsingGET(params *GfwRuleListUsingGETParams) (*GfwRuleListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGFWRuleListUsingGETParams()
+		params = NewGfwRuleListUsingGETParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GFWRuleListUsingGET",
+		ID:                 "gfwRuleListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &GFWRuleListUsingGETReader{formats: a.formats},
+		Reader:             &GfwRuleListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*GFWRuleListUsingGETOK)
+	success, ok := result.(*GfwRuleListUsingGETOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GFWRuleListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for gfwRuleListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
-  GFWRuleUpdateUsingPUT updates
+  GfwRuleUpdateUsingPUT updates
 
   Create firewall rule (south-north) in NSX-T
 */
-func (a *Client) GFWRuleUpdateUsingPUT(params *GFWRuleUpdateUsingPUTParams) (*GFWRuleUpdateUsingPUTOK, error) {
+func (a *Client) GfwRuleUpdateUsingPUT(params *GfwRuleUpdateUsingPUTParams) (*GfwRuleUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGFWRuleUpdateUsingPUTParams()
+		params = NewGfwRuleUpdateUsingPUTParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GFWRuleUpdateUsingPUT",
+		ID:                 "gfwRuleUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &GFWRuleUpdateUsingPUTReader{formats: a.formats},
+		Reader:             &GfwRuleUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*GFWRuleUpdateUsingPUTOK)
+	success, ok := result.(*GfwRuleUpdateUsingPUTOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for GFWRuleUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for gfwRuleUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

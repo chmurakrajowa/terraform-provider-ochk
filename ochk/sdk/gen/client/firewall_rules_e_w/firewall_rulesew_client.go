@@ -27,39 +27,39 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	DFWRuleCreateUsingPUT(params *DFWRuleCreateUsingPUTParams) (*DFWRuleCreateUsingPUTOK, *DFWRuleCreateUsingPUTCreated, error)
+	DfwRuleCreateUsingPUT(params *DfwRuleCreateUsingPUTParams) (*DfwRuleCreateUsingPUTOK, *DfwRuleCreateUsingPUTCreated, error)
 
-	DFWRuleDeleteUsingDELETE(params *DFWRuleDeleteUsingDELETEParams) (*DFWRuleDeleteUsingDELETEOK, error)
+	DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams) (*DfwRuleDeleteUsingDELETEOK, error)
 
-	DFWRuleGetUsingGET(params *DFWRuleGetUsingGETParams) (*DFWRuleGetUsingGETOK, error)
+	DfwRuleGetUsingGET(params *DfwRuleGetUsingGETParams) (*DfwRuleGetUsingGETOK, error)
 
-	DFWRuleListUsingGET(params *DFWRuleListUsingGETParams) (*DFWRuleListUsingGETOK, error)
+	DfwRuleListUsingGET(params *DfwRuleListUsingGETParams) (*DfwRuleListUsingGETOK, error)
 
-	DFWRuleUpdateUsingPUT(params *DFWRuleUpdateUsingPUTParams) (*DFWRuleUpdateUsingPUTOK, error)
+	DfwRuleUpdateUsingPUT(params *DfwRuleUpdateUsingPUTParams) (*DfwRuleUpdateUsingPUTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  DFWRuleCreateUsingPUT creates
+  DfwRuleCreateUsingPUT creates
 
   Create firewall rule (east-west) in NSX-T
 */
-func (a *Client) DFWRuleCreateUsingPUT(params *DFWRuleCreateUsingPUTParams) (*DFWRuleCreateUsingPUTOK, *DFWRuleCreateUsingPUTCreated, error) {
+func (a *Client) DfwRuleCreateUsingPUT(params *DfwRuleCreateUsingPUTParams) (*DfwRuleCreateUsingPUTOK, *DfwRuleCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDFWRuleCreateUsingPUTParams()
+		params = NewDfwRuleCreateUsingPUTParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DFWRuleCreateUsingPUT",
+		ID:                 "dfwRuleCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/firewall/security-policies/{securityPolicyId}/rules/",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &DFWRuleCreateUsingPUTReader{formats: a.formats},
+		Reader:             &DfwRuleCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -67,9 +67,9 @@ func (a *Client) DFWRuleCreateUsingPUT(params *DFWRuleCreateUsingPUTParams) (*DF
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *DFWRuleCreateUsingPUTOK:
+	case *DfwRuleCreateUsingPUTOK:
 		return value, nil, nil
-	case *DFWRuleCreateUsingPUTCreated:
+	case *DfwRuleCreateUsingPUTCreated:
 		return nil, value, nil
 	}
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
@@ -78,146 +78,146 @@ func (a *Client) DFWRuleCreateUsingPUT(params *DFWRuleCreateUsingPUTParams) (*DF
 }
 
 /*
-  DFWRuleDeleteUsingDELETE deletes
+  DfwRuleDeleteUsingDELETE deletes
 
   Delete firewall rule (east-west) from NSX-T
 */
-func (a *Client) DFWRuleDeleteUsingDELETE(params *DFWRuleDeleteUsingDELETEParams) (*DFWRuleDeleteUsingDELETEOK, error) {
+func (a *Client) DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams) (*DfwRuleDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDFWRuleDeleteUsingDELETEParams()
+		params = NewDfwRuleDeleteUsingDELETEParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DFWRuleDeleteUsingDELETE",
+		ID:                 "dfwRuleDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &DFWRuleDeleteUsingDELETEReader{formats: a.formats},
+		Reader:             &DfwRuleDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*DFWRuleDeleteUsingDELETEOK)
+	success, ok := result.(*DfwRuleDeleteUsingDELETEOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for DFWRuleDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for dfwRuleDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
-  DFWRuleGetUsingGET gets
+  DfwRuleGetUsingGET gets
 
   Get firewall rule (east-west) from NSX-T
 */
-func (a *Client) DFWRuleGetUsingGET(params *DFWRuleGetUsingGETParams) (*DFWRuleGetUsingGETOK, error) {
+func (a *Client) DfwRuleGetUsingGET(params *DfwRuleGetUsingGETParams) (*DfwRuleGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDFWRuleGetUsingGETParams()
+		params = NewDfwRuleGetUsingGETParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DFWRuleGetUsingGET",
+		ID:                 "dfwRuleGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &DFWRuleGetUsingGETReader{formats: a.formats},
+		Reader:             &DfwRuleGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*DFWRuleGetUsingGETOK)
+	success, ok := result.(*DfwRuleGetUsingGETOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for DFWRuleGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for dfwRuleGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
-  DFWRuleListUsingGET lists
+  DfwRuleListUsingGET lists
 
   List firewall rules (east-west) from NSX-T
 */
-func (a *Client) DFWRuleListUsingGET(params *DFWRuleListUsingGETParams) (*DFWRuleListUsingGETOK, error) {
+func (a *Client) DfwRuleListUsingGET(params *DfwRuleListUsingGETParams) (*DfwRuleListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDFWRuleListUsingGETParams()
+		params = NewDfwRuleListUsingGETParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DFWRuleListUsingGET",
+		ID:                 "dfwRuleListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/firewall/security-policies/{securityPolicyId}/rules",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &DFWRuleListUsingGETReader{formats: a.formats},
+		Reader:             &DfwRuleListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*DFWRuleListUsingGETOK)
+	success, ok := result.(*DfwRuleListUsingGETOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for DFWRuleListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for dfwRuleListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
-  DFWRuleUpdateUsingPUT updates
+  DfwRuleUpdateUsingPUT updates
 
   Update firewall rule (east-west) in NSX-T
 */
-func (a *Client) DFWRuleUpdateUsingPUT(params *DFWRuleUpdateUsingPUTParams) (*DFWRuleUpdateUsingPUTOK, error) {
+func (a *Client) DfwRuleUpdateUsingPUT(params *DfwRuleUpdateUsingPUTParams) (*DfwRuleUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDFWRuleUpdateUsingPUTParams()
+		params = NewDfwRuleUpdateUsingPUTParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DFWRuleUpdateUsingPUT",
+		ID:                 "dfwRuleUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &DFWRuleUpdateUsingPUTReader{formats: a.formats},
+		Reader:             &DfwRuleUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*DFWRuleUpdateUsingPUTOK)
+	success, ok := result.(*DfwRuleUpdateUsingPUTOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for DFWRuleUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for dfwRuleUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

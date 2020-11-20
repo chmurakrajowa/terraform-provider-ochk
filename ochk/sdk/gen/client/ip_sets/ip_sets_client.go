@@ -46,7 +46,7 @@ func (a *Client) IPSetGetUsingGET(params *IPSetGetUsingGETParams) (*IPSetGetUsin
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "IPSetGetUsingGET",
+		ID:                 "ipSetGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/ipsets/{ipSetId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -66,7 +66,7 @@ func (a *Client) IPSetGetUsingGET(params *IPSetGetUsingGETParams) (*IPSetGetUsin
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for IPSetGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for ipSetGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -82,7 +82,7 @@ func (a *Client) IPSetListUsingGET(params *IPSetListUsingGETParams) (*IPSetListU
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "IPSetListUsingGET",
+		ID:                 "ipSetListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/ipsets",
 		ProducesMediaTypes: []string{"application/json"},
@@ -102,7 +102,7 @@ func (a *Client) IPSetListUsingGET(params *IPSetListUsingGETParams) (*IPSetListU
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for IPSetListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for ipSetListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

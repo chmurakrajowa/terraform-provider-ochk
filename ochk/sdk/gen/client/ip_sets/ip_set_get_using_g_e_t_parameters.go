@@ -56,7 +56,7 @@ func NewIPSetGetUsingGETParamsWithHTTPClient(client *http.Client) *IPSetGetUsing
 }
 
 /*IPSetGetUsingGETParams contains all the parameters to send to the API endpoint
-for the IP set get using g e t operation typically these are written to a http.Request
+for the ip set get using g e t operation typically these are written to a http.Request
 */
 type IPSetGetUsingGETParams struct {
 
@@ -71,46 +71,46 @@ type IPSetGetUsingGETParams struct {
 	HTTPClient *http.Client
 }
 
-// WithTimeout adds the timeout to the IP set get using g e t params
+// WithTimeout adds the timeout to the ip set get using g e t params
 func (o *IPSetGetUsingGETParams) WithTimeout(timeout time.Duration) *IPSetGetUsingGETParams {
 	o.SetTimeout(timeout)
 	return o
 }
 
-// SetTimeout adds the timeout to the IP set get using g e t params
+// SetTimeout adds the timeout to the ip set get using g e t params
 func (o *IPSetGetUsingGETParams) SetTimeout(timeout time.Duration) {
 	o.timeout = timeout
 }
 
-// WithContext adds the context to the IP set get using g e t params
+// WithContext adds the context to the ip set get using g e t params
 func (o *IPSetGetUsingGETParams) WithContext(ctx context.Context) *IPSetGetUsingGETParams {
 	o.SetContext(ctx)
 	return o
 }
 
-// SetContext adds the context to the IP set get using g e t params
+// SetContext adds the context to the ip set get using g e t params
 func (o *IPSetGetUsingGETParams) SetContext(ctx context.Context) {
 	o.Context = ctx
 }
 
-// WithHTTPClient adds the HTTPClient to the IP set get using g e t params
+// WithHTTPClient adds the HTTPClient to the ip set get using g e t params
 func (o *IPSetGetUsingGETParams) WithHTTPClient(client *http.Client) *IPSetGetUsingGETParams {
 	o.SetHTTPClient(client)
 	return o
 }
 
-// SetHTTPClient adds the HTTPClient to the IP set get using g e t params
+// SetHTTPClient adds the HTTPClient to the ip set get using g e t params
 func (o *IPSetGetUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithIPSetID adds the iPSetID to the IP set get using g e t params
+// WithIPSetID adds the iPSetID to the ip set get using g e t params
 func (o *IPSetGetUsingGETParams) WithIPSetID(iPSetID string) *IPSetGetUsingGETParams {
 	o.SetIPSetID(iPSetID)
 	return o
 }
 
-// SetIPSetID adds the ipSetId to the IP set get using g e t params
+// SetIPSetID adds the ipSetId to the ip set get using g e t params
 func (o *IPSetGetUsingGETParams) SetIPSetID(iPSetID string) {
 	o.IPSetID = iPSetID
 }

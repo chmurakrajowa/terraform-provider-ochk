@@ -50,7 +50,7 @@ func (a *Client) NetworkGetUsingGET(params *NetworkGetUsingGETParams) (*NetworkG
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "NetworkGetUsingGET",
+		ID:                 "networkGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/subtenants/{subtenantId}/networks/{networkId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -70,7 +70,7 @@ func (a *Client) NetworkGetUsingGET(params *NetworkGetUsingGETParams) (*NetworkG
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for NetworkGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for networkGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -86,7 +86,7 @@ func (a *Client) NetworkListUsingGET(params *NetworkListUsingGETParams) (*Networ
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "NetworkListUsingGET",
+		ID:                 "networkListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/subtenants/{subtenantId}/networks",
 		ProducesMediaTypes: []string{"application/json"},
@@ -106,7 +106,7 @@ func (a *Client) NetworkListUsingGET(params *NetworkListUsingGETParams) (*Networ
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for NetworkListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for networkListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -122,7 +122,7 @@ func (a *Client) VcsVirtualMachineGroupGetUsingGET(params *VcsVirtualMachineGrou
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "VcsVirtualMachineGroupGetUsingGET",
+		ID:                 "vcsVirtualMachineGroupGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vcs/networks/{networkId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -142,7 +142,7 @@ func (a *Client) VcsVirtualMachineGroupGetUsingGET(params *VcsVirtualMachineGrou
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for VcsVirtualMachineGroupGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineGroupGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -158,7 +158,7 @@ func (a *Client) VcsVirtualMachineListUsingGET(params *VcsVirtualMachineListUsin
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "VcsVirtualMachineListUsingGET",
+		ID:                 "vcsVirtualMachineListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vcs/networks",
 		ProducesMediaTypes: []string{"application/json"},
@@ -178,7 +178,7 @@ func (a *Client) VcsVirtualMachineListUsingGET(params *VcsVirtualMachineListUsin
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for VcsVirtualMachineListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

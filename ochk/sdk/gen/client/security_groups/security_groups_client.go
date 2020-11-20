@@ -52,7 +52,7 @@ func (a *Client) SecurityGroupCreateUsingPUT(params *SecurityGroupCreateUsingPUT
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SecurityGroupCreateUsingPUT",
+		ID:                 "securityGroupCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/security-groups",
 		ProducesMediaTypes: []string{"application/json"},
@@ -89,7 +89,7 @@ func (a *Client) SecurityGroupDeleteUsingDELETE(params *SecurityGroupDeleteUsing
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SecurityGroupDeleteUsingDELETE",
+		ID:                 "securityGroupDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/network/security-groups/{groupId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -109,7 +109,7 @@ func (a *Client) SecurityGroupDeleteUsingDELETE(params *SecurityGroupDeleteUsing
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for SecurityGroupDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for securityGroupDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -125,7 +125,7 @@ func (a *Client) SecurityGroupGetUsingGET(params *SecurityGroupGetUsingGETParams
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SecurityGroupGetUsingGET",
+		ID:                 "securityGroupGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/security-groups/{groupId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -145,7 +145,7 @@ func (a *Client) SecurityGroupGetUsingGET(params *SecurityGroupGetUsingGETParams
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for SecurityGroupGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for securityGroupGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -161,7 +161,7 @@ func (a *Client) SecurityGroupListUsingGET(params *SecurityGroupListUsingGETPara
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SecurityGroupListUsingGET",
+		ID:                 "securityGroupListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/security-groups",
 		ProducesMediaTypes: []string{"application/json"},
@@ -181,7 +181,7 @@ func (a *Client) SecurityGroupListUsingGET(params *SecurityGroupListUsingGETPara
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for SecurityGroupListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for securityGroupListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -197,7 +197,7 @@ func (a *Client) SecurityGroupUpdateUsingPUT(params *SecurityGroupUpdateUsingPUT
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "SecurityGroupUpdateUsingPUT",
+		ID:                 "securityGroupUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/security-groups/{groupId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -217,7 +217,7 @@ func (a *Client) SecurityGroupUpdateUsingPUT(params *SecurityGroupUpdateUsingPUT
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for SecurityGroupUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for securityGroupUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

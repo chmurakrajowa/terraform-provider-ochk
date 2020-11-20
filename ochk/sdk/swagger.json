@@ -15,20 +15,20 @@
   "basePath": "/",
   "tags": [
     {
-      "name": "/vra/networkadapters",
-      "description": "Network Adapter Controller"
-    },
-    {
-      "name": "/vra/networkprofiles",
-      "description": "Network Profile Controller"
-    },
-    {
       "name": "Context profiles",
       "description": "Context Profile Controller"
     },
     {
+      "name": "Custom services",
+      "description": "Custom Service Controller"
+    },
+    {
       "name": "Default services",
       "description": "Service Controller"
+    },
+    {
+      "name": "Deployments",
+      "description": "Deployment Controller"
     },
     {
       "name": "Edge Clusters",
@@ -47,6 +47,10 @@
       "description": "Gateway Policy Controller"
     },
     {
+      "name": "IP Collections",
+      "description": "Ip Collection Controller"
+    },
+    {
       "name": "IPSets",
       "description": "IP Set Controller"
     },
@@ -55,8 +59,20 @@
       "description": "Logical Port Controller"
     },
     {
+      "name": "Network adapters",
+      "description": "Network Adapter Controller"
+    },
+    {
+      "name": "Network profiles",
+      "description": "Network Profile Controller"
+    },
+    {
       "name": "Networks",
       "description": "Vcs Network Controller"
+    },
+    {
+      "name": "Principals",
+      "description": "Principal Controller"
     },
     {
       "name": "Requests",
@@ -91,39 +107,202 @@
       "description": "Reservations Controller"
     },
     {
+      "name": "Users",
+      "description": "Users Controller"
+    },
+    {
+      "name": "Virtual machine overall reports",
+      "description": "Virtual Machine Performance Report Controller"
+    },
+    {
+      "name": "Virtual machine performance reports",
+      "description": "Virtual Machine Overall Report Controller"
+    },
+    {
       "name": "Virtual machines",
       "description": "Vcs Virtual Machine Controller"
     },
     {
-      "name": "identity/principals",
-      "description": "Principal Controller"
+      "name": "Virtual machines (NSX)",
+      "description": "Virtual Machine Controller"
     },
     {
-      "name": "identity/users",
-      "description": "Users Controller"
-    },
-    {
-      "name": "ipCollection",
-      "description": "Ip Collection Controller"
+      "name": "Virtual networks",
+      "description": "Virtual Network Controller"
     },
     {
       "name": "vIDM",
       "description": "VIDM Controller"
-    },
-    {
-      "name": "virtualNetworks",
-      "description": "Virtual Network Controller"
     }
   ],
   "paths": {
+    "/billing/virtual-machine/performance": {
+      "get": {
+        "tags": [
+          "Virtual machine overall reports"
+        ],
+        "summary": "List",
+        "description": "Get virtual machine performance report",
+        "operationId": "virtualMachinePerformanceReportListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "endDate",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "startDate",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VirtualMachinePerformanceReportGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/billing/virtual-machine/summary": {
+      "get": {
+        "tags": [
+          "Virtual machine performance reports"
+        ],
+        "summary": "List",
+        "description": "Get virtual machine overall report",
+        "operationId": "virtualMachineOverallReportGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "endDate",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "startDate",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VirtualMachineSummaryReportGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/deployments": {
+      "get": {
+        "tags": [
+          "Deployments"
+        ],
+        "summary": "List",
+        "description": "List deployments from server",
+        "operationId": "deploymentListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeploymentListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/deployments/{deploymentId}": {
+      "get": {
+        "tags": [
+          "Deployments"
+        ],
+        "summary": "Get",
+        "description": "Get deployment object",
+        "operationId": "deploymentGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "deploymentId",
+            "in": "path",
+            "description": "deploymentId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeploymentGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
     "/identity/principals/{principalId}": {
       "get": {
         "tags": [
-          "identity/principals"
+          "Principals"
         ],
         "summary": "Get",
         "description": "Get principal",
-        "operationId": "PrincipalGetUsingGET",
+        "operationId": "principalGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -156,11 +335,11 @@
     "/ipcs": {
       "get": {
         "tags": [
-          "ipCollection"
+          "IP Collections"
         ],
         "summary": "List",
         "description": "List ip collection",
-        "operationId": "IpCollectionListUsingGET",
+        "operationId": "ipCollectionListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -187,11 +366,11 @@
       },
       "put": {
         "tags": [
-          "ipCollection"
+          "IP Collections"
         ],
         "summary": "Create",
         "description": "Create Ip collection",
-        "operationId": "IpCollectionCreateUsingPUT",
+        "operationId": "ipCollectionCreateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -231,11 +410,11 @@
     "/ipcs/{ipCollectionId}": {
       "get": {
         "tags": [
-          "ipCollection"
+          "IP Collections"
         ],
         "summary": "Get",
         "description": "Get ip collection",
-        "operationId": "IpCollectionGetUsingGET",
+        "operationId": "ipCollectionGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -265,11 +444,11 @@
       },
       "put": {
         "tags": [
-          "ipCollection"
+          "IP Collections"
         ],
         "summary": "Update",
         "description": "Update ip collection",
-        "operationId": "IpCollectionUpdateUsingPUT",
+        "operationId": "ipCollectionUpdateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -308,11 +487,11 @@
       },
       "delete": {
         "tags": [
-          "ipCollection"
+          "IP Collections"
         ],
         "summary": "Delete",
         "description": "Delete ip collection",
-        "operationId": "IpCollectionDeleteUsingDELETE",
+        "operationId": "ipCollectionDeleteUsingDELETE",
         "produces": [
           "application/json"
         ],
@@ -345,7 +524,7 @@
         ],
         "summary": "List",
         "description": "List context profiles from NSX-T",
-        "operationId": "ContextProfileListUsingGET",
+        "operationId": "contextProfileListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -371,6 +550,203 @@
         }
       }
     },
+    "/network/custom-services": {
+      "get": {
+        "tags": [
+          "Custom services"
+        ],
+        "summary": "List",
+        "description": "List custom services from NSX-T",
+        "operationId": "customServiceListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CustomServiceListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Custom services"
+        ],
+        "summary": "Create",
+        "description": "Create custom service in NSX-T",
+        "operationId": "customServiceCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "customServiceInstance",
+            "description": "customServiceInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomServiceInstance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateCustomServiceResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateCustomServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/network/custom-services/{serviceId}": {
+      "get": {
+        "tags": [
+          "Custom services"
+        ],
+        "summary": "Get",
+        "description": "Get custom service from NSX-T",
+        "operationId": "customServiceGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "serviceId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CustomServiceGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Custom services"
+        ],
+        "summary": "Update",
+        "description": "Update custom service from NSX-T",
+        "operationId": "customServiceUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "customServiceInstance",
+            "description": "customServiceInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomServiceInstance"
+            }
+          },
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "serviceId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateCustomServiceResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/UpdateCustomServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Custom services"
+        ],
+        "summary": "Delete",
+        "description": "Delete custom service from NSX-T",
+        "operationId": "customServiceDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "serviceId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteCustomServiceResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been deleted",
+            "schema": {
+              "$ref": "#/definitions/DeleteCustomServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
     "/network/default-services": {
       "get": {
         "tags": [
@@ -378,7 +754,7 @@
         ],
         "summary": "List",
         "description": "List default services from NSX-T",
-        "operationId": "ServiceListUsingGET",
+        "operationId": "serviceListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -411,7 +787,7 @@
         ],
         "summary": "Get",
         "description": "Get default service from NSX-T",
-        "operationId": "ServiceGetUsingGET",
+        "operationId": "serviceGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -447,7 +823,7 @@
         ],
         "summary": "List",
         "description": "List edge clusters from NSX-T",
-        "operationId": "LogicalPortListUsingGET",
+        "operationId": "logicalPortListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -480,7 +856,7 @@
         ],
         "summary": "Get",
         "description": "Get edge cluster from NSX-T",
-        "operationId": "EdgeClusterGetUsingGET",
+        "operationId": "edgeClusterGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -516,7 +892,7 @@
         ],
         "summary": "List",
         "description": "List gateway policies from NSX-T",
-        "operationId": "GatewayPolicyListUsingGET",
+        "operationId": "gatewayPolicyListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -549,7 +925,7 @@
         ],
         "summary": "Get",
         "description": "Get gateway policies from NSX-T",
-        "operationId": "GatewayPolicyGetUsingGET",
+        "operationId": "gatewayPolicyGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -585,7 +961,7 @@
         ],
         "summary": "List",
         "description": "List firewall rules (south-north) from NSX-T",
-        "operationId": "GFWRuleListUsingGET",
+        "operationId": "gfwRuleListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -625,7 +1001,7 @@
         ],
         "summary": "Create",
         "description": "Create firewall rule (south-north) in NSX-T",
-        "operationId": "GFWRuleCreateUsingPUT",
+        "operationId": "gfwRuleCreateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -676,7 +1052,7 @@
         ],
         "summary": "Get",
         "description": "Get firewall rule (south-north) from NSX-T",
-        "operationId": "GFWRuleGetUsingGET",
+        "operationId": "gfwRuleGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -717,7 +1093,7 @@
         ],
         "summary": "Update",
         "description": "Create firewall rule (south-north) in NSX-T",
-        "operationId": "GFWRuleUpdateUsingPUT",
+        "operationId": "gfwRuleUpdateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -767,7 +1143,7 @@
         ],
         "summary": "Delete",
         "description": "Delete firewall rule (south-north) from NSX-T",
-        "operationId": "GFWRuleDeleteUsingDELETE",
+        "operationId": "gfwRuleDeleteUsingDELETE",
         "produces": [
           "application/json"
         ],
@@ -807,7 +1183,7 @@
         ],
         "summary": "List",
         "description": "List security policies from NSX-T",
-        "operationId": "SecurityPolicyListUsingGET",
+        "operationId": "securityPolicyListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -840,7 +1216,7 @@
         ],
         "summary": "Get",
         "description": "Get security policy from NSX-T",
-        "operationId": "SecurityPolicyGetUsingGET",
+        "operationId": "securityPolicyGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -876,7 +1252,7 @@
         ],
         "summary": "List",
         "description": "List firewall rules (east-west) from NSX-T",
-        "operationId": "DFWRuleListUsingGET",
+        "operationId": "dfwRuleListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -916,7 +1292,7 @@
         ],
         "summary": "Create",
         "description": "Create firewall rule (east-west) in NSX-T",
-        "operationId": "DFWRuleCreateUsingPUT",
+        "operationId": "dfwRuleCreateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -967,7 +1343,7 @@
         ],
         "summary": "Get",
         "description": "Get firewall rule (east-west) from NSX-T",
-        "operationId": "DFWRuleGetUsingGET",
+        "operationId": "dfwRuleGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1008,7 +1384,7 @@
         ],
         "summary": "Update",
         "description": "Update firewall rule (east-west) in NSX-T",
-        "operationId": "DFWRuleUpdateUsingPUT",
+        "operationId": "dfwRuleUpdateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -1058,7 +1434,7 @@
         ],
         "summary": "Delete",
         "description": "Delete firewall rule (east-west) from NSX-T",
-        "operationId": "DFWRuleDeleteUsingDELETE",
+        "operationId": "dfwRuleDeleteUsingDELETE",
         "produces": [
           "application/json"
         ],
@@ -1098,7 +1474,7 @@
         ],
         "summary": "List",
         "description": "List IPSets from NSX-T",
-        "operationId": "IPSetListUsingGET",
+        "operationId": "ipSetListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1131,7 +1507,7 @@
         ],
         "summary": "Get",
         "description": "Get IPSet from NSX-T",
-        "operationId": "IPSetGetUsingGET",
+        "operationId": "ipSetGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1167,7 +1543,7 @@
         ],
         "summary": "List",
         "description": "List logical ports from NSX-T",
-        "operationId": "LogicalPortListUsingGET_1",
+        "operationId": "logicalPortListUsingGET_1",
         "produces": [
           "application/json"
         ],
@@ -1200,7 +1576,7 @@
         ],
         "summary": "Get",
         "description": "Get logical port from NSX-T",
-        "operationId": "LogicalPortGetUsingGET",
+        "operationId": "logicalPortGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1236,7 +1612,7 @@
         ],
         "summary": "List",
         "description": "List routers T0/T1 from NSX-T",
-        "operationId": "RouterListUsingGET",
+        "operationId": "routerListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1267,7 +1643,7 @@
         ],
         "summary": "Create",
         "description": "Create router T1 in NSX-T",
-        "operationId": "RouterCreateUsingPUT",
+        "operationId": "routerCreateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -1311,7 +1687,7 @@
         ],
         "summary": "Get",
         "description": "Get router from NSX-T",
-        "operationId": "RouterGetUsingGET",
+        "operationId": "routerGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1345,7 +1721,7 @@
         ],
         "summary": "Update",
         "description": "Update router T1 from NSX-T",
-        "operationId": "RouterUpdateUsingPUT",
+        "operationId": "routerUpdateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -1394,7 +1770,7 @@
         ],
         "summary": "Delete",
         "description": "Delete router T1 from NSX-T",
-        "operationId": "RouterDeleteUsingDELETE",
+        "operationId": "routerDeleteUsingDELETE",
         "produces": [
           "application/json"
         ],
@@ -1433,7 +1809,7 @@
         ],
         "summary": "List",
         "description": "List security groups from NSX-T",
-        "operationId": "SecurityGroupListUsingGET",
+        "operationId": "securityGroupListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1464,7 +1840,7 @@
         ],
         "summary": "Create",
         "description": "Create security group in NSX-T",
-        "operationId": "SecurityGroupCreateUsingPUT",
+        "operationId": "securityGroupCreateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -1508,7 +1884,7 @@
         ],
         "summary": "Get",
         "description": "Get security group from NSX-T",
-        "operationId": "SecurityGroupGetUsingGET",
+        "operationId": "securityGroupGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1542,7 +1918,7 @@
         ],
         "summary": "Update",
         "description": "Update security group from NSX-T",
-        "operationId": "SecurityGroupUpdateUsingPUT",
+        "operationId": "securityGroupUpdateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -1585,7 +1961,7 @@
         ],
         "summary": "Delete",
         "description": "Delete security group from NSX-T",
-        "operationId": "SecurityGroupDeleteUsingDELETE",
+        "operationId": "securityGroupDeleteUsingDELETE",
         "produces": [
           "application/json"
         ],
@@ -1614,11 +1990,11 @@
     "/network/virtual-machines": {
       "get": {
         "tags": [
-          "Virtual machines"
+          "Virtual machines (NSX)"
         ],
         "summary": "List virtual machines",
         "description": "List virtual machines from NSX-T level",
-        "operationId": "VirtualMachineListUsingGET",
+        "operationId": "virtualMachineListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1647,11 +2023,11 @@
     "/network/virtual-machines/{virtualMachineId}": {
       "get": {
         "tags": [
-          "Virtual machines"
+          "Virtual machines (NSX)"
         ],
         "summary": "Get",
         "description": "Get virtual machine from NSX-T",
-        "operationId": "VirtualMachineGetUsingGET",
+        "operationId": "virtualMachineGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1683,11 +2059,11 @@
     "/networks": {
       "get": {
         "tags": [
-          "virtualNetworks"
+          "Virtual networks"
         ],
         "summary": "List",
         "description": "List virtual network",
-        "operationId": "VirtualNetworkListUsingGET",
+        "operationId": "virtualNetworkListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1714,11 +2090,11 @@
       },
       "put": {
         "tags": [
-          "virtualNetworks"
+          "Virtual networks"
         ],
         "summary": "Create",
         "description": "Create virtual network",
-        "operationId": "VirtualNetworkCreateUsingPUT",
+        "operationId": "virtualNetworkCreateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -1758,11 +2134,11 @@
     "/networks/{virtualNetworkId}": {
       "get": {
         "tags": [
-          "virtualNetworks"
+          "Virtual networks"
         ],
         "summary": "Get",
         "description": "Get virtual network",
-        "operationId": "VirtualNetworkGetUsingGET",
+        "operationId": "virtualNetworkGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1792,11 +2168,11 @@
       },
       "put": {
         "tags": [
-          "virtualNetworks"
+          "Virtual networks"
         ],
         "summary": "Update",
         "description": "Update virtual network",
-        "operationId": "VirtualNetworkUpdateUsingPUT",
+        "operationId": "virtualNetworkUpdateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -1835,11 +2211,11 @@
       },
       "delete": {
         "tags": [
-          "virtualNetworks"
+          "Virtual networks"
         ],
         "summary": "Delete",
         "description": "Delete virtual network",
-        "operationId": "VirtualNetworkDeleteUsingDELETE",
+        "operationId": "virtualNetworkDeleteUsingDELETE",
         "produces": [
           "application/json"
         ],
@@ -1872,7 +2248,7 @@
         ],
         "summary": "List",
         "description": "List IaaS requests.",
-        "operationId": "RequestListUsingGET",
+        "operationId": "requestListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1896,7 +2272,7 @@
         ],
         "summary": "Get",
         "description": "Get IaaS requests.",
-        "operationId": "RequestGetUsingGET",
+        "operationId": "requestGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1932,7 +2308,7 @@
         ],
         "summary": "List",
         "description": "List subtenants",
-        "operationId": "SubtenantListUsingGET",
+        "operationId": "subtenantListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -1963,7 +2339,7 @@
         ],
         "summary": "Create",
         "description": "Create subtenant (business group)",
-        "operationId": "SubtenantCreateUsingPUT",
+        "operationId": "subtenantCreateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -2007,7 +2383,7 @@
         ],
         "summary": "Get",
         "description": "Get subtenant from NSX-T",
-        "operationId": "SubtenantGetUsingGET",
+        "operationId": "subtenantGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2041,7 +2417,7 @@
         ],
         "summary": "Update",
         "description": "Update subtenant",
-        "operationId": "SubtenantUpdateUsingPUT",
+        "operationId": "subtenantUpdateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -2084,7 +2460,7 @@
         ],
         "summary": "Delete",
         "description": "Delete subtenant",
-        "operationId": "SubtenantDeleteUsingDELETE",
+        "operationId": "subtenantDeleteUsingDELETE",
         "produces": [
           "application/json"
         ],
@@ -2117,7 +2493,7 @@
         ],
         "summary": "List",
         "description": "List network in subtenant",
-        "operationId": "NetworkListUsingGET",
+        "operationId": "networkListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2150,7 +2526,7 @@
         ],
         "summary": "Get",
         "description": "Get network for subtenant",
-        "operationId": "NetworkGetUsingGET",
+        "operationId": "networkGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2193,7 +2569,7 @@
         ],
         "summary": "List",
         "description": "List reservations",
-        "operationId": "ReservationListUsingGET",
+        "operationId": "reservationListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2226,7 +2602,7 @@
         ],
         "summary": "Get",
         "description": "Get reservation",
-        "operationId": "ReservationGetUsingGET",
+        "operationId": "reservationGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2265,11 +2641,11 @@
     "/users": {
       "get": {
         "tags": [
-          "identity/users"
+          "Users"
         ],
         "summary": "List",
         "description": "List users from vra/core",
-        "operationId": "UserListUsingGET",
+        "operationId": "userListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2298,11 +2674,11 @@
     "/users/{userId}": {
       "get": {
         "tags": [
-          "identity/users"
+          "Users"
         ],
         "summary": "Get",
         "description": "Get user",
-        "operationId": "UserGetUsingGET",
+        "operationId": "userGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2338,7 +2714,7 @@
         ],
         "summary": "List",
         "description": "List vSphere vCenter networks",
-        "operationId": "VcsVirtualMachineListUsingGET",
+        "operationId": "vcsVirtualMachineListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2371,7 +2747,7 @@
         ],
         "summary": "Get",
         "description": "Get vSphere vCenter networks",
-        "operationId": "VcsVirtualMachineGroupGetUsingGET",
+        "operationId": "vcsVirtualMachineGroupGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2407,7 +2783,7 @@
         ],
         "summary": "List",
         "description": "List resource pools",
-        "operationId": "LogicalPortListUsingGET_2",
+        "operationId": "vcsResourcePoolsListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2440,7 +2816,7 @@
         ],
         "summary": "Get",
         "description": "Get resource pools",
-        "operationId": "VcsResourcePoolsGetUsingGET",
+        "operationId": "vcsResourcePoolsGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2476,15 +2852,66 @@
         ],
         "summary": "List",
         "description": "List vSphere vCenter virtual machines",
-        "operationId": "VcsVirtualMachineListUsingGET_1",
+        "operationId": "vcsVirtualMachineListUsingGET_1",
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/VirtualMachineListResponse"
+              "$ref": "#/definitions/VcsVirtualMachineListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Virtual machines"
+        ],
+        "summary": "Create",
+        "description": "Create vSphere vCenter virtual machine",
+        "operationId": "vcsVirtualMachineCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "virtualMachine",
+            "description": "virtualMachine",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VcsVirtualMachineInstance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VcsVirtualMachineCreateResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/VcsVirtualMachineCreateResponse"
             }
           },
           "400": {
@@ -2500,7 +2927,7 @@
         ],
         "summary": "Get",
         "description": "Get vSphere vCenter virtual machine",
-        "operationId": "VcsVirtualMachineGroupGetUsingGET_1",
+        "operationId": "vcsVirtualMachineGroupGetUsingGET_1",
         "produces": [
           "application/json"
         ],
@@ -2517,7 +2944,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/VirtualMachineGetResponse"
+              "$ref": "#/definitions/VcsVirtualMachineGetResponse"
             }
           },
           "400": {
@@ -2525,6 +2952,80 @@
           },
           "404": {
             "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Virtual machines"
+        ],
+        "summary": "Update",
+        "description": "Update vSphere vCenter virtual machine",
+        "operationId": "vcsVirtualMachineUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "virtualMachine",
+            "description": "virtualMachine",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VcsVirtualMachineInstance"
+            }
+          },
+          {
+            "name": "virtualMachineId",
+            "in": "path",
+            "description": "virtualMachineId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VcsVirtualMachineUpdateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Virtual machines"
+        ],
+        "summary": "Delete",
+        "description": "Delete vSphere vCenter virtual machine",
+        "operationId": "vcsVirtualMachineDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "virtualMachineId",
+            "in": "path",
+            "description": "virtualMachineId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VcsVirtualMachineDeleteResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
@@ -2570,11 +3071,11 @@
     "/vra/networkadapters": {
       "get": {
         "tags": [
-          "/vra/networkadapters"
+          "Network adapters"
         ],
         "summary": "List",
         "description": "List network adapter",
-        "operationId": "NetworkAdapterListUsingGET",
+        "operationId": "networkAdapterListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2603,11 +3104,11 @@
     "/vra/networkadapters/{networkAdapterId}": {
       "get": {
         "tags": [
-          "/vra/networkadapters"
+          "Network adapters"
         ],
         "summary": "Get",
         "description": "Get network adapter",
-        "operationId": "NetworkAdapterGetUsingGET",
+        "operationId": "networkAdapterGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2639,11 +3140,11 @@
     "/vra/networkprofiles": {
       "get": {
         "tags": [
-          "/vra/networkprofiles"
+          "Network profiles"
         ],
         "summary": "List",
         "description": "List network profile",
-        "operationId": "NetworkProfileListUsingGET",
+        "operationId": "networkProfileListUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2672,11 +3173,11 @@
     "/vra/networkprofiles/{networkProfileId}": {
       "get": {
         "tags": [
-          "/vra/networkprofiles"
+          "Network profiles"
         ],
         "summary": "Get",
         "description": "Get network profile",
-        "operationId": "NetworkProfileGetUsingGET",
+        "operationId": "networkProfileGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -2801,6 +3302,32 @@
       },
       "title": "ContextProfileListResponse"
     },
+    "CreateCustomServiceResponse": {
+      "type": "object",
+      "properties": {
+        "customServiceId": {
+          "type": "string"
+        },
+        "customServiceInstance": {
+          "$ref": "#/definitions/CustomServiceInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "CreateCustomServiceResponse"
+    },
     "CreateDFWRuleResponse": {
       "type": "object",
       "properties": {
@@ -2896,6 +3423,89 @@
       },
       "title": "CreateSecurityGroupResponse"
     },
+    "CustomServiceGetResponse": {
+      "type": "object",
+      "properties": {
+        "customServiceInstance": {
+          "$ref": "#/definitions/CustomServiceInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "CustomServiceGetResponse"
+    },
+    "CustomServiceInstance": {
+      "type": "object",
+      "properties": {
+        "createdBy": {
+          "type": "string"
+        },
+        "creationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "l4PortSetEntries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/L4PortSetEntry"
+          }
+        },
+        "modificationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "modifiedBy": {
+          "type": "string"
+        },
+        "serviceId": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TagInstance"
+          }
+        }
+      },
+      "title": "CustomServiceInstance"
+    },
+    "CustomServiceListResponse": {
+      "type": "object",
+      "properties": {
+        "customServiceInstanceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomServiceInstance"
+          }
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "CustomServiceListResponse"
+    },
     "DFWRule": {
       "type": "object",
       "properties": {
@@ -2960,6 +3570,10 @@
         "position": {
           "$ref": "#/definitions/Position"
         },
+        "priority": {
+          "type": "integer",
+          "format": "int64"
+        },
         "ruleId": {
           "type": "string"
         },
@@ -3020,6 +3634,32 @@
         }
       },
       "title": "DFWRuleListResponse"
+    },
+    "DeleteCustomServiceResponse": {
+      "type": "object",
+      "properties": {
+        "customServiceInstance": {
+          "$ref": "#/definitions/CustomServiceInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "status": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeleteCustomServiceResponse"
     },
     "DeleteDFWRuleResponse": {
       "type": "object",
@@ -3106,6 +3746,64 @@
         }
       },
       "title": "DeleteSecurityGroupResponse"
+    },
+    "DeploymentGetResponse": {
+      "type": "object",
+      "properties": {
+        "deploymentInstance": {
+          "$ref": "#/definitions/DeploymentInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeploymentGetResponse"
+    },
+    "DeploymentInstance": {
+      "type": "object",
+      "properties": {
+        "deploymentId": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        }
+      },
+      "title": "DeploymentInstance"
+    },
+    "DeploymentListResponse": {
+      "type": "object",
+      "properties": {
+        "deploymentInstanceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeploymentInstance"
+          }
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeploymentListResponse"
     },
     "EdgeClusterGetResponse": {
       "type": "object",
@@ -3228,6 +3926,10 @@
         },
         "position": {
           "$ref": "#/definitions/Position"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int64"
         },
         "ruleId": {
           "type": "string"
@@ -3606,6 +4308,52 @@
       },
       "title": "IpCollectionUpdateResponse"
     },
+    "L4PortSetEntry": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "destinationPorts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "l4PortSetEntryId": {
+          "type": "string"
+        },
+        "l4Protocol": {
+          "type": "string",
+          "enum": [
+            "TCP",
+            "UDP"
+          ]
+        },
+        "parentPath": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "relativePath": {
+          "type": "string"
+        },
+        "resourceType": {
+          "$ref": "#/definitions/ResourceType"
+        },
+        "sourcePorts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "L4PortSetEntry"
+    },
     "LogicalPort": {
       "type": "object",
       "properties": {
@@ -3768,66 +4516,6 @@
         }
       },
       "title": "NetworkInstance"
-    },
-    "NetworkInterfaceInstance": {
-      "type": "object",
-      "properties": {
-        "label": {
-          "type": "string"
-        },
-        "mac": {
-          "type": "string"
-        },
-        "macType": {
-          "type": "string",
-          "enum": [
-            "ASSIGNED",
-            "GENERATED",
-            "MANUAL"
-          ]
-        },
-        "networkExternalId": {
-          "type": "string"
-        },
-        "networkInstance": {
-          "$ref": "#/definitions/VCSNetworkInstance"
-        },
-        "networkInterfaceId": {
-          "type": "string"
-        },
-        "nicState": {
-          "type": "string",
-          "enum": [
-            "CONNECTED",
-            "NOT_CONNECTED",
-            "RECOVERABLE_ERROR",
-            "UNKNOWN",
-            "UNRECOVERABLE_ERROR"
-          ]
-        },
-        "nicType": {
-          "type": "string",
-          "enum": [
-            "E1000",
-            "E1000E",
-            "PCNET32",
-            "VMXNET",
-            "VMXNET2",
-            "VMXNET3"
-          ]
-        },
-        "pciSlotNumber": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "uptCompatibilityEnabled": {
-          "type": "boolean"
-        },
-        "wakeOnLanEnabled": {
-          "type": "boolean"
-        }
-      },
-      "title": "NetworkInterfaceInstance"
     },
     "NetworkListResponse": {
       "type": "object",
@@ -4091,6 +4779,9 @@
         "requestType": {
           "type": "string",
           "enum": [
+            "CUSTOM_SERVICE_CREATE",
+            "CUSTOM_SERVICE_DELETE",
+            "CUSTOM_SERVICE_MODIFY",
             "FIREWALL_DFW_RULE_CREATE",
             "FIREWALL_DFW_RULE_DELETE",
             "FIREWALL_DFW_RULE_UPDATE",
@@ -4111,7 +4802,10 @@
             "SECURITY_GROUP_UPDATE",
             "SUBTENANT_CREATE",
             "SUBTENANT_DELETE",
-            "SUBTENANT_UPDATE"
+            "SUBTENANT_UPDATE",
+            "VIRTUAL_MACHINE_CREATE",
+            "VIRTUAL_MACHINE_DELETE",
+            "VIRTUAL_MACHINE_UPDATE"
           ]
         },
         "requestor": {
@@ -4942,6 +5636,45 @@
       },
       "title": "SubtenantUpdateResponse"
     },
+    "TagInstance": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "type": "string"
+        },
+        "tagId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": "TagInstance"
+    },
+    "UpdateCustomServiceResponse": {
+      "type": "object",
+      "properties": {
+        "customServiceInstance": {
+          "$ref": "#/definitions/CustomServiceInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "UpdateCustomServiceResponse"
+    },
     "UpdateDFWRuleResponse": {
       "type": "object",
       "properties": {
@@ -5324,6 +6057,221 @@
       },
       "title": "VcsResourcePoolsListResponse"
     },
+    "VcsVirtualMachineCreateResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "vcsVirtualMachineInstance": {
+          "$ref": "#/definitions/VcsVirtualMachineInstance"
+        }
+      },
+      "title": "VcsVirtualMachineCreateResponse"
+    },
+    "VcsVirtualMachineDeleteResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "vcsVirtualMachineInstance": {
+          "$ref": "#/definitions/VcsVirtualMachineInstance"
+        }
+      },
+      "title": "VcsVirtualMachineDeleteResponse"
+    },
+    "VcsVirtualMachineGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "vcsVirtualMachineInstance": {
+          "$ref": "#/definitions/VcsVirtualMachineInstance"
+        }
+      },
+      "title": "VcsVirtualMachineGetResponse"
+    },
+    "VcsVirtualMachineInstance": {
+      "type": "object",
+      "properties": {
+        "additionalVirtualDiskDeviceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VirtualDiskDevice"
+          }
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "creationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "deploymentInstance": {
+          "$ref": "#/definitions/DeploymentInstance"
+        },
+        "initialPassword": {
+          "type": "string"
+        },
+        "modificationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "modifiedBy": {
+          "type": "string"
+        },
+        "osVirtualDiskDevice": {
+          "$ref": "#/definitions/VirtualDiskDevice"
+        },
+        "powerState": {
+          "type": "string",
+          "enum": [
+            "poweredOff",
+            "poweredOn",
+            "suspended"
+          ]
+        },
+        "resourceProfile": {
+          "type": "string",
+          "enum": [
+            "CUSTOM",
+            "SIZE_L",
+            "SIZE_M",
+            "SIZE_S",
+            "SIZE_XL",
+            "SIZE_XS"
+          ]
+        },
+        "storagePolicy": {
+          "type": "string",
+          "enum": [
+            "ENTERPRISE",
+            "STANDARD",
+            "UNKNOWN"
+          ]
+        },
+        "subtenantRefId": {
+          "type": "string"
+        },
+        "virtualMachineId": {
+          "type": "string"
+        },
+        "virtualMachineName": {
+          "type": "string"
+        },
+        "virtualNetworkDevices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VirtualNetworkDevice"
+          }
+        }
+      },
+      "title": "VcsVirtualMachineInstance"
+    },
+    "VcsVirtualMachineListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "vcsVirtualMachineInstanceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VcsVirtualMachineInstance"
+          }
+        }
+      },
+      "title": "VcsVirtualMachineListResponse"
+    },
+    "VcsVirtualMachineUpdateResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "vcsVirtualMachineInstance": {
+          "$ref": "#/definitions/VcsVirtualMachineInstance"
+        }
+      },
+      "title": "VcsVirtualMachineUpdateResponse"
+    },
+    "VirtualDiskDevice": {
+      "type": "object",
+      "properties": {
+        "controllerId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "lunId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "sizeMB": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "virtualDiskDeviceType": {
+          "type": "string",
+          "enum": [
+            "SCSI"
+          ]
+        }
+      },
+      "title": "VirtualDiskDevice"
+    },
     "VirtualMachine": {
       "type": "object",
       "properties": {
@@ -5359,43 +6307,6 @@
       },
       "title": "VirtualMachineGetResponse"
     },
-    "VirtualMachineInstance": {
-      "type": "object",
-      "properties": {
-        "cpuCount": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "memorySizeMB": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "networkInterfaceInstanceCollection": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/NetworkInterfaceInstance"
-          }
-        },
-        "powerState": {
-          "type": "string",
-          "enum": [
-            "POWERED_OFF",
-            "POWERED_ON",
-            "SUSPENDED",
-            "poweredOff",
-            "poweredOn",
-            "suspended"
-          ]
-        },
-        "virtualMachineId": {
-          "type": "string"
-        },
-        "virtualMachineName": {
-          "type": "string"
-        }
-      },
-      "title": "VirtualMachineInstance"
-    },
     "VirtualMachineListResponse": {
       "type": "object",
       "properties": {
@@ -5418,6 +6329,133 @@
         }
       },
       "title": "VirtualMachineListResponse"
+    },
+    "VirtualMachineOverallReport": {
+      "type": "object",
+      "properties": {
+        "allocatedStorageGB": {
+          "type": "number",
+          "format": "float"
+        },
+        "allocatedvCPU": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "allocatedvRAM": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "resourceUsageTime": {
+          "type": "string"
+        },
+        "storageTotalUsed": {
+          "type": "number",
+          "format": "float"
+        },
+        "virtualMachineGuest": {
+          "type": "string"
+        },
+        "virtualMachineId": {
+          "type": "string"
+        },
+        "virtualMachineName": {
+          "type": "string"
+        }
+      },
+      "title": "VirtualMachineOverallReport"
+    },
+    "VirtualMachinePerformanceReport": {
+      "type": "object",
+      "properties": {
+        "availabilityPercentage": {
+          "type": "number",
+          "format": "float"
+        },
+        "avgCpuUtilization": {
+          "type": "number",
+          "format": "float"
+        },
+        "avgRamUtilization": {
+          "type": "number",
+          "format": "float"
+        },
+        "avgStorageUtilization": {
+          "type": "number",
+          "format": "float"
+        },
+        "maxCpuUtilization": {
+          "type": "number",
+          "format": "float"
+        },
+        "maxRamUtilization": {
+          "type": "number",
+          "format": "float"
+        },
+        "maxStorageUtilization": {
+          "type": "number",
+          "format": "float"
+        },
+        "storageTotalUsed": {
+          "type": "number",
+          "format": "float"
+        },
+        "virtualMachineGuest": {
+          "type": "string"
+        },
+        "virtualMachineId": {
+          "type": "string"
+        },
+        "virtualMachineName": {
+          "type": "string"
+        }
+      },
+      "title": "VirtualMachinePerformanceReport"
+    },
+    "VirtualMachinePerformanceReportGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "virtualMachinePerformanceReportItemArray": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VirtualMachinePerformanceReport"
+          }
+        }
+      },
+      "title": "VirtualMachinePerformanceReportGetResponse"
+    },
+    "VirtualMachineSummaryReportGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "virtualMachineOverallReportItemArray": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VirtualMachineOverallReport"
+          }
+        }
+      },
+      "title": "VirtualMachineSummaryReportGetResponse"
     },
     "VirtualNetworkCreateResponse": {
       "type": "object",
@@ -5464,6 +6502,18 @@
         }
       },
       "title": "VirtualNetworkDeleteResponse"
+    },
+    "VirtualNetworkDevice": {
+      "type": "object",
+      "properties": {
+        "deviceId": {
+          "type": "string"
+        },
+        "virtualNetworkInstance": {
+          "$ref": "#/definitions/VirtualNetworkInstance"
+        }
+      },
+      "title": "VirtualNetworkDevice"
     },
     "VirtualNetworkGetResponse": {
       "type": "object",

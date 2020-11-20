@@ -46,7 +46,7 @@ func (a *Client) ReservationGetUsingGET(params *ReservationGetUsingGETParams) (*
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ReservationGetUsingGET",
+		ID:                 "reservationGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/subtenants/{subtenantId}/reservations/{reservationId}",
 		ProducesMediaTypes: []string{"application/json"},
@@ -66,7 +66,7 @@ func (a *Client) ReservationGetUsingGET(params *ReservationGetUsingGETParams) (*
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ReservationGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for reservationGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -82,7 +82,7 @@ func (a *Client) ReservationListUsingGET(params *ReservationListUsingGETParams) 
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "ReservationListUsingGET",
+		ID:                 "reservationListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/subtenants/{subtenantId}/reservations",
 		ProducesMediaTypes: []string{"application/json"},
@@ -102,7 +102,7 @@ func (a *Client) ReservationListUsingGET(params *ReservationListUsingGETParams) 
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for ReservationListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for reservationListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
