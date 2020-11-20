@@ -43,7 +43,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 	/* Security group with one member */
 	virtualMachine := VirtualMachineDataSourceTestData{
 		ResourceName: "default",
-		DisplayName:  "devel0000000344",
+		DisplayName:  testData.LegacyVirtualMachineDisplayName,
 	}
 
 	securityGroup := SecurityGroupTestData{
@@ -67,7 +67,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 	securityGroupTwoMembers := securityGroupUpdated
 	virtualMachine2 := VirtualMachineDataSourceTestData{
 		ResourceName: "default2",
-		DisplayName:  testDataVirtualMachine1DisplayName,
+		DisplayName:  testData.LegacyVirtualMachine2DisplayName,
 	}
 	securityGroupTwoMembers.Members = append(securityGroupTwoMembers.Members, SecurityGroupMemberTestData{
 		ID:   testDataResourceID(&virtualMachine2),

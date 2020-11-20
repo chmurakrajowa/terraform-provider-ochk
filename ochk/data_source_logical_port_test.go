@@ -13,9 +13,9 @@ func TestAccLogicalPortDataSource_read(t *testing.T) {
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccLogicalPortDataSourceConfig(testDataLogicalPort1DisplayName),
+				Config: testAccLogicalPortDataSourceConfig(testData.LogicalPort1DisplayName),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "display_name", testDataLogicalPort1DisplayName),
+					resource.TestCheckResourceAttr(resourceName, "display_name", testData.LogicalPort1DisplayName),
 				),
 			},
 		},

@@ -20,14 +20,14 @@ func (p *FirewallSNRulesProxy) Create(ctx context.Context, gatewayPolicyID strin
 		return nil, fmt.Errorf("error while validating firewall SN rule struct: %w", err)
 	}
 
-	params := &firewall_rules_s_n.GFWRuleCreateUsingPUTParams{
+	params := &firewall_rules_s_n.GfwRuleCreateUsingPUTParams{
 		GatewayPolicyID: gatewayPolicyID,
 		GfwRule:         rule,
 		Context:         ctx,
 		HTTPClient:      p.httpClient,
 	}
 
-	_, put, err := p.service.GFWRuleCreateUsingPUT(params)
+	_, put, err := p.service.GfwRuleCreateUsingPUT(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while creating firewall SN rule: %w", err)
 	}
@@ -44,7 +44,7 @@ func (p *FirewallSNRulesProxy) Update(ctx context.Context, gatewayPolicyID strin
 		return nil, fmt.Errorf("error while validating firewall SN rule struct: %w", err)
 	}
 
-	params := &firewall_rules_s_n.GFWRuleUpdateUsingPUTParams{
+	params := &firewall_rules_s_n.GfwRuleUpdateUsingPUTParams{
 		GatewayPolicyID: gatewayPolicyID,
 		RuleID:          rule.RuleID,
 		GfwRule:         rule,
@@ -52,7 +52,7 @@ func (p *FirewallSNRulesProxy) Update(ctx context.Context, gatewayPolicyID strin
 		HTTPClient:      p.httpClient,
 	}
 
-	put, err := p.service.GFWRuleUpdateUsingPUT(params)
+	put, err := p.service.GfwRuleUpdateUsingPUT(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while modifing firewall SN rule: %w", err)
 	}
@@ -65,14 +65,14 @@ func (p *FirewallSNRulesProxy) Update(ctx context.Context, gatewayPolicyID strin
 }
 
 func (p *FirewallSNRulesProxy) Read(ctx context.Context, gatewayPolicyID string, ruleID string) (*models.GFWRule, error) {
-	params := &firewall_rules_s_n.GFWRuleGetUsingGETParams{
+	params := &firewall_rules_s_n.GfwRuleGetUsingGETParams{
 		RuleID:          ruleID,
 		GatewayPolicyID: gatewayPolicyID,
 		Context:         ctx,
 		HTTPClient:      p.httpClient,
 	}
 
-	response, err := p.service.GFWRuleGetUsingGET(params)
+	response, err := p.service.GfwRuleGetUsingGET(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while reading firwall SN rule: %w", err)
 	}
@@ -85,14 +85,14 @@ func (p *FirewallSNRulesProxy) Read(ctx context.Context, gatewayPolicyID string,
 }
 
 func (p *FirewallSNRulesProxy) ListByDisplayName(ctx context.Context, gatewayPolicyID string, displayName string) ([]*models.GFWRule, error) {
-	params := &firewall_rules_s_n.GFWRuleListUsingGETParams{
+	params := &firewall_rules_s_n.GfwRuleListUsingGETParams{
 		GatewayPolicyID: gatewayPolicyID,
 		DisplayName:     &displayName,
 		Context:         ctx,
 		HTTPClient:      p.httpClient,
 	}
 
-	response, err := p.service.GFWRuleListUsingGET(params)
+	response, err := p.service.GfwRuleListUsingGET(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while listing firewall SN rule: %w", err)
 	}
@@ -117,16 +117,16 @@ func (p *FirewallSNRulesProxy) Exists(ctx context.Context, gatewayPolicyID strin
 }
 
 func (p *FirewallSNRulesProxy) Delete(ctx context.Context, gatewayPolicyID string, ruleID string) error {
-	params := &firewall_rules_s_n.GFWRuleDeleteUsingDELETEParams{
+	params := &firewall_rules_s_n.GfwRuleDeleteUsingDELETEParams{
 		GatewayPolicyID: gatewayPolicyID,
 		RuleID:          ruleID,
 		Context:         ctx,
 		HTTPClient:      p.httpClient,
 	}
 
-	response, err := p.service.GFWRuleDeleteUsingDELETE(params)
+	response, err := p.service.GfwRuleDeleteUsingDELETE(params)
 	if err != nil {
-		var badRequest *firewall_rules_s_n.GFWRuleDeleteUsingDELETEBadRequest
+		var badRequest *firewall_rules_s_n.GfwRuleDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}

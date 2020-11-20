@@ -25,7 +25,7 @@ func (c *VirtualMachineDataSourceTestData) FullResourceName() string {
 func TestAccVirtualMachineDataSource_read(t *testing.T) {
 	virtualMachine := &VirtualMachineDataSourceTestData{
 		ResourceName: "default",
-		DisplayName:  testDataVirtualMachine1DisplayName,
+		DisplayName:  testData.LegacyVirtualMachineDisplayName,
 	}
 
 	resource.ParallelTest(t, resource.TestCase{

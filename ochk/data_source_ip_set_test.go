@@ -13,9 +13,9 @@ func TestAccIPSetDataSource_read(t *testing.T) {
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccIPSetDataSourceConfig(testDataIPSet1DisplayName),
+				Config: testAccIPSetDataSourceConfig(testData.IPSet1DisplayName),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "display_name", testDataIPSet1DisplayName),
+					resource.TestCheckResourceAttr(resourceName, "display_name", testData.IPSet1DisplayName),
 					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),

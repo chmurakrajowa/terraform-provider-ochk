@@ -6,5 +6,9 @@ import (
 )
 
 func generateRandName() string {
-	return fmt.Sprintf("tf-acc_test-%s", acctest.RandStringFromCharSet(8, acctest.CharSetAlphaNum))
+	return fmt.Sprintf("tf-acc-test-%s", acctest.RandStringFromCharSet(8, acctest.CharSetAlphaNum))
+}
+
+func generateShortRandName() string {
+	return fmt.Sprintf("tf-%s", acctest.RandStringFromCharSet(8, acctest.CharSetAlphaNum))
 }

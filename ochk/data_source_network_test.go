@@ -25,7 +25,7 @@ func (c *NetworkDataSourceTestData) FullResourceName() string {
 func TestAccNetworkDataSourceTestDataDataSource_read(t *testing.T) {
 	network := &NetworkDataSourceTestData{
 		ResourceName: "default",
-		Name:         testDataNetwork1Name,
+		Name:         testData.Network1Name,
 	}
 
 	resource.ParallelTest(t, resource.TestCase{

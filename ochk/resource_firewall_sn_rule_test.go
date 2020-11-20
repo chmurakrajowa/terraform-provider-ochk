@@ -111,7 +111,7 @@ resource "ochk_security_group" "destination" {
     type = "VIRTUAL_MACHINE"
   }
 }
-`, router, source, destination, testDataVirtualMachine1DisplayName)
+`, router, source, destination, testData.LegacyVirtualMachineDisplayName)
 }
 
 func testAccFirewallSNRuleResourceConfigNoPosition(displayName string) string {

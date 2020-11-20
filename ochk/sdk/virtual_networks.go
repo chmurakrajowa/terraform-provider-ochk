@@ -63,9 +63,13 @@ func (p *VirtualNetworksProxy) Update(ctx context.Context, virtualNetwork *model
 	return put.Payload.RequestInstance, nil
 }
 
-func (p *VirtualNetworksProxy) Read(ctx context.Context, VirtualNetworkID string) (*models.VirtualNetworkInstance, error) {
+func (p *VirtualNetworksProxy) Read(ctx context.Context, virtualNetworkID string) (*models.VirtualNetworkInstance, error) {
+	if virtualNetworkID == "" {
+		return nil, fmt.Errorf("empty virtual network ID")
+	}
+
 	params := &virtual_networks.VirtualNetworkGetUsingGETParams{
-		VirtualNetworkID: VirtualNetworkID,
+		VirtualNetworkID: virtualNetworkID,
 		Context:          ctx,
 		HTTPClient:       p.httpClient,
 	}

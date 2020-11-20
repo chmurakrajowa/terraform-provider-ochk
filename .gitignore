@@ -17,6 +17,7 @@
 # Build
 terraform-provider-ochk
 terraform.tfvars
+*.tfvars
 terraform.tfplan
 terraform.tfstate
 terraform.tfstate.backup

@@ -13,14 +13,14 @@ func TestAccIPCollectionDataSource_read(t *testing.T) {
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccIPCollectionDataSourceConfig(testDataIPCollection1DisplayName),
+				Config: testAccIPCollectionDataSourceConfig(testData.IPCollection1DisplayName),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "display_name", testDataIPCollection1DisplayName),
+					resource.TestCheckResourceAttr(resourceName, "display_name", testData.IPCollection1DisplayName),
 					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_at"),
-					resource.TestCheckResourceAttr(resourceName, "addresses.0.address", "100.100.100.100"),
+					resource.TestCheckResourceAttr(resourceName, "ip_addresses.0", "1.0.0.1"),
 				),
 			},
 		},

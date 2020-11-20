@@ -29,7 +29,7 @@ func dataSourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, m
 
 	displayName := d.Get("display_name").(string)
 
-	virtualMachines, err := proxy.ListByDisplayName(ctx, displayName)
+	virtualMachines, err := proxy.LegacyListByDisplayName(ctx, displayName)
 	if err != nil {
 		return diag.Errorf("error while listing virtual machines: %+v", err)
 	}

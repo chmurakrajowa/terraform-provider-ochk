@@ -177,6 +177,14 @@ func resourceVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error while reading virtual network: %+v", err)
 	}
 
+	if err := mapVirtualNetworkToResourceData(d, virtualNetwork); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func mapVirtualNetworkToResourceData(d *schema.ResourceData, virtualNetwork *models.VirtualNetworkInstance) diag.Diagnostics {
 	if err := d.Set("display_name", virtualNetwork.DisplayName); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
