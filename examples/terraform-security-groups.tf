@@ -1,54 +1,51 @@
-resource "ochk_security_group" "ipset" {
-  display_name = "tf-${var.demo-id}-ipset"
+resource "ochk_security_group" "ipcoll" {
+  display_name = "tf-${var.demo-id}-ipcoll-ranges"
 
   members {
-    id = data.ochk_ip_set.ipset1.id
-    type = "IPSET"
+    id = ochk_ip_collection.ranges.id
+    type = "IPCOLLECTION"
   }
 
   lifecycle {
     ignore_changes = [members]
   }
-}
-
-data "ochk_virtual_machine" "vm1" {
-  display_name = "devel0000000343"
-}
-
-data "ochk_virtual_machine" "vm2" {
-  display_name = "devel0000000350"
 }
 
 resource "ochk_security_group" "vm" {
   display_name = "tf-${var.demo-id}-vm"
 
   members {
-    id = "fa6457e3-aea9-4ef1-8450-de1ce676b6b9"
-//    id = data.ochk_virtual_machine.vm1.id
+    id = data.ochk_virtual_machine.vm1.id
     type = "VIRTUAL_MACHINE"
-  }
-
-  lifecycle {
-    ignore_changes = [members]
   }
 }
 
-resource "ochk_security_group" "vm_ipset" {
-  display_name = "tf-${var.demo-id}-vm-ipset"
+resource "ochk_security_group" "vm_ipc" {
+  display_name = "tf-${var.demo-id}-vm-ipcoll-local24"
 
   members {
-    id = "c1b66861-0d52-4b22-950e-15a99a6d546c"
-//    id = data.ochk_virtual_machine.vm2.id
+    id = data.ochk_virtual_machine.vm2.id
     type = "VIRTUAL_MACHINE"
   }
 
   members {
-    id = data.ochk_ip_set.ipset2.id
-    type = "IPSET"
-  }
-
-  lifecycle {
-    ignore_changes = [members]
+    id = ochk_ip_collection.local24.id
+    type = "IPCOLLECTION"
   }
 }
+
+resource "ochk_security_group" "vm-with-ip-collections" {
+  display_name = "tf-${var.demo-id}-vm-ipcoll-dns-servers"
+
+  members {
+    id = data.ochk_virtual_machine.vm2.id
+    type = "VIRTUAL_MACHINE"
+  }
+
+  members {
+    id = ochk_ip_collection.dns-servers.id
+    type = "IPCOLLECTION"
+  }
+}
+
 

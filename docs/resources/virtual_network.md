@@ -53,7 +53,7 @@ resource "ochk_virtual_network" "{{ .ResourceName}}" {
 
 The following arguments are supported:
 
-* `display_name` - (Required) Vitual network name. Updates to this attribute forces recreate.
+* `display_name` - (Required) Virtual network name. Updates to this attribute forces recreate.
 * `subtenants` - (Required) List of subtenants identifiers in which virtual network will be available. Use `ochk_subtenant` data source to find identifiers by name. 
 * `router` - (Optional) Router id attached to this network. Use `ochk_router` data source to get id by display name.
 * `ipam_enabled` - (Optional) The IP address management (IPAM) to discover IP address and Domain Name System (DNS) servers on the network and manage them. True for enabling IPAM. Defaults to `false`. Updates to this attribute forces recreate.
