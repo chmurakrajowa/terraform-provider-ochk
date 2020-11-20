@@ -18,7 +18,7 @@ data "ochk_virtual_network" "vnet" {
 
 The following arguments are supported:
 
-* `display_name` - Exact display name of virtual network.
+* `display_name` - (Required) Exact display name of virtual network.
 
 ## Attribute Reference
 
@@ -33,10 +33,9 @@ The following attributes are exported:
 * `secondary_dns_address` - Secondary Domain Name System (DNS) server IP address.
 * `primary_wins_address` - Primary Windows Internet Name Service (WINS) address.
 * `secondary_wins_address` - Secondary Windows Internet Name Service (WINS) address.
-* `subnet_mask` - Subnet mask used to divide the IP address into network and host addresses.
-* `gateway_address` - gateway address, set when `subnet_network_cidr` is set.
-* `subnet_mask` - subnet mask, set when `subnet_network_cidr` is set.
-* `subnet_gateway_address_cidr` - subnet gateway address cidr, set when `subnet_network_cidr` is set.  
+* `subnet_mask` - Subnet mask used to divide the IP address into network and host addresses. Set when `subnet_network_cidr` is set.
+* `gateway_address` - IP address of local network gateway. Set when `subnet_network_cidr` is set.
+* `subnet_gateway_address_cidr` - CIDR IP address of subnet gateway. Set when `subnet_network_cidr` is set.  
  
  
  
