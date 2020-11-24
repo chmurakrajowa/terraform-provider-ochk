@@ -80,23 +80,9 @@ func resourceFirewallSNRule() *schema.Resource {
 				ForceNew: true,
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
-			"position": {
-				Type:     schema.TypeList,
-				MaxItems: 1,
-				Optional: true,
-				ForceNew: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"rule_id": {
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"revise_operation": {
-							Type:     schema.TypeString,
-							Required: true,
-						},
-					},
-				},
+			"priority": {
+				Type:     schema.TypeInt,
+				Required: true,
 			},
 			"created_by": {
 				Type:     schema.TypeString,
@@ -183,8 +169,8 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting destination: %+v", err)
 	}
 
-	if err := d.Set("position", flattenFirewallRulePosition(firewallSNRule.Position)); err != nil {
-		return diag.Errorf("error setting position: %+v", err)
+	if err := d.Set("priority", firewallSNRule.Priority); err != nil {
+		return diag.Errorf("error setting priority: %+v", err)
 	}
 
 	if err := d.Set("scope", flattenRouterInstancesFromIDs(firewallSNRule.Scope)); err != nil {
@@ -213,7 +199,7 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallSNRules
 
-	if !d.HasChanges("display_name", "action", "direction", "disabled", "ip_protocol", "services", "source", "destination") {
+	if !d.HasChanges("display_name", "action", "direction", "disabled", "ip_protocol", "services", "source", "destination", "priority") {
 		return nil
 	}
 
@@ -237,6 +223,7 @@ func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GFWRule {
 		Direction:   d.Get("direction").(string),
 		Disabled:    d.Get("disabled").(bool),
 		IPProtocol:  d.Get("ip_protocol").(string),
+		Priority:    d.Get("priority").(int64),
 	}
 
 	if services, ok := d.GetOk("services"); ok {

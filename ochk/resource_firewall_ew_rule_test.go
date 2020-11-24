@@ -11,11 +11,8 @@ import (
 	"testing"
 )
 
-func TestAccFirewallEWRuleResource_noPosition(t *testing.T) {
-	// TODO unskip when fixed fw ordering in backend
-	// TODO handle priority parameter
-	t.Skip("Skipped due to parallel execution issues")
-	resourceName := "ochk_firewall_ew_rule.no_position"
+func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
+	resourceName := "ochk_firewall_ew_rule.default"
 	displayName := generateRandName()
 	displayNameUpdated := displayName + "-updated"
 	action := "ALLOW"
@@ -32,13 +29,13 @@ func TestAccFirewallEWRuleResource_noPosition(t *testing.T) {
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFirewallEWRuleResourceConfig(displayName, source, destination, action, ipProtocol, direction),
+				Config: testAccFirewallEWRuleResourceConfig(displayName, source, destination, action, ipProtocol, direction, 1000),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", displayName),
 					resource.TestCheckResourceAttr(resourceName, "action", action),
 					resource.TestCheckResourceAttr(resourceName, "direction", direction),
 					resource.TestCheckResourceAttr(resourceName, "ip_protocol", ipProtocol),
-					resource.TestCheckNoResourceAttr(resourceName, "position"),
+					resource.TestCheckResourceAttr(resourceName, "priority", "1000"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
@@ -46,13 +43,13 @@ func TestAccFirewallEWRuleResource_noPosition(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccFirewallEWRuleResourceConfig(displayNameUpdated, source, destination, actionUpdated, ipProtocolUpdated, directionUpdated),
+				Config: testAccFirewallEWRuleResourceConfig(displayNameUpdated, source, destination, actionUpdated, ipProtocolUpdated, directionUpdated, 2000),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", displayNameUpdated),
 					resource.TestCheckResourceAttr(resourceName, "action", actionUpdated),
 					resource.TestCheckResourceAttr(resourceName, "direction", directionUpdated),
 					resource.TestCheckResourceAttr(resourceName, "ip_protocol", ipProtocolUpdated),
-					resource.TestCheckNoResourceAttr(resourceName, "position"),
+					resource.TestCheckResourceAttr(resourceName, "priority", "2000"),
 				),
 			},
 		},
@@ -60,7 +57,7 @@ func TestAccFirewallEWRuleResource_noPosition(t *testing.T) {
 	})
 }
 
-func TestAccFirewallEWRuleResource_withPositions(t *testing.T) {
+func TestAccFirewallEWRuleResource_withPriority(t *testing.T) {
 	randDisplayName := generateRandName()
 	displayNameMiddle := randDisplayName + "-middle"
 	displayNameBefore := randDisplayName + "-before"
@@ -167,7 +164,7 @@ func checkOrderOfSecurityPolicies(securityPolicies []*models.DFWRule, displayNam
 	})
 }
 
-func testAccFirewallEWRuleResourceConfig(displayName string, source string, destination string, action string, ipProtocol string, direction string) string {
+func testAccFirewallEWRuleResourceConfig(displayName string, source string, destination string, action string, ipProtocol string, direction string, priority int64) string {
 	return fmt.Sprintf(`
 data "ochk_security_policy" "default" {
   display_name = "devel"
@@ -199,7 +196,7 @@ resource "ochk_security_group" "destination" {
   }
 }
 
-resource "ochk_firewall_ew_rule" "no_position" {
+resource "ochk_firewall_ew_rule" "default" {
   display_name = %[3]q
   security_policy_id = data.ochk_security_policy.default.id
 
@@ -210,8 +207,10 @@ resource "ochk_firewall_ew_rule" "no_position" {
   action = %[4]q 
   ip_protocol = %[5]q
   direction = %[6]q
+
+  priority = %[8]d
 }
-`, source, destination, displayName, action, ipProtocol, direction, testData.LegacyVirtualMachineDisplayName)
+`, source, destination, displayName, action, ipProtocol, direction, testData.LegacyVirtualMachineDisplayName, priority)
 }
 
 func testAccFirewallEWRuleResourceConfigWithOrder(displayNameBefore string, displayNameMiddle string, displayNameAfter string) string {
@@ -292,6 +291,7 @@ resource "ochk_firewall_ew_rule" "middle" {
   services = [data.ochk_service.http.id]
   source = [ochk_security_group.source-middle.id]
   destination = [ochk_security_group.destination-middle.id]
+  priority = 20001
 }
 
 resource "ochk_firewall_ew_rule" "before" {
@@ -301,14 +301,7 @@ resource "ochk_firewall_ew_rule" "before" {
   services = [data.ochk_service.http.id]
   source = [ochk_security_group.source-before.id]
   destination = [ochk_security_group.destination-before.id]
-  position {
- 	rule_id = ochk_firewall_ew_rule.middle.id
-	revise_operation = "BEFORE"
-  }
-
-  lifecycle {
-	ignore_changes = [position]
-  }
+  priority = 20000
 }
 
 resource "ochk_firewall_ew_rule" "after" {
@@ -318,16 +311,7 @@ resource "ochk_firewall_ew_rule" "after" {
   services = [data.ochk_service.http.id]
   source = [ochk_security_group.source-after.id]
   destination = [ochk_security_group.destination-after.id]
-  position {
- 	rule_id = ochk_firewall_ew_rule.middle.id
-	revise_operation = "AFTER"
-  }
-
-  depends_on = [ochk_firewall_ew_rule.before]
-
-  lifecycle {
-	ignore_changes = [position]
-  }
+  priority = 20002
 }
 `, source, destination, displayNameMiddle, displayNameBefore, displayNameAfter, testData.LegacyVirtualMachineDisplayName)
 }

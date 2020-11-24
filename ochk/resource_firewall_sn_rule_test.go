@@ -9,8 +9,8 @@ import (
 	"testing"
 )
 
-func TestAccFirewallSNRuleResource_noPosition(t *testing.T) {
-	resourceName := "ochk_firewall_sn_rule.no_position"
+func TestAccFirewallSNRuleResource_create_update(t *testing.T) {
+	resourceName := "ochk_firewall_sn_rule.default"
 	dataSourceRouter := "data.ochk_router.default"
 	dataSourceService := "data.ochk_service.http"
 	resourceRuleSource := "ochk_security_group.source"
@@ -33,7 +33,7 @@ func TestAccFirewallSNRuleResource_noPosition(t *testing.T) {
 		Steps: []resource.TestStep{
 			{
 				Config: testAccFirewallSNRuleResourceConfig(routerName, sourceDisplayName, destinationDisplayName) +
-					testAccFirewallSNRuleResourceConfigNoPosition(ruleDisplayName),
+					testAccFirewallSNRuleResourceConfigWithPriority(ruleDisplayName, 100),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", ruleDisplayName),
 					resource.TestCheckResourceAttr(resourceName, "action", "ALLOW"),
@@ -43,7 +43,7 @@ func TestAccFirewallSNRuleResource_noPosition(t *testing.T) {
 					resource.TestCheckResourceAttrPair(resourceName, "destination.0", resourceRuleDestination, "id"),
 					resource.TestCheckResourceAttrPair(resourceName, "services.0", dataSourceService, "id"),
 					resource.TestCheckResourceAttrPair(resourceName, "scope.0", dataSourceRouter, "id"),
-					resource.TestCheckNoResourceAttr(resourceName, "position"),
+					resource.TestCheckResourceAttr(resourceName, "priority", "100"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
@@ -52,19 +52,20 @@ func TestAccFirewallSNRuleResource_noPosition(t *testing.T) {
 			},
 			{
 				Config: testAccFirewallSNRuleResourceConfig(routerNameUpdated, sourceDisplayName, destinationDisplayName) +
-					testAccFirewallSNRuleResourceConfigNoPosition(ruleDisplayName),
+					testAccFirewallSNRuleResourceConfigWithPriority(ruleDisplayName, 100),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrPair(resourceName, "scope.0", dataSourceRouter, "id"),
 				),
 			},
 			{
 				Config: testAccFirewallSNRuleResourceConfig(routerNameUpdated, sourceDisplayName, destinationDisplayName) +
-					testAccFirewallSNRuleResourceConfigNoPositionUpdate(ruleDisplayNameUpdated, actionUpdated, ipProtocolUpdated, directionUpdated),
+					testAccFirewallSNRuleResourceConfigNoPositionUpdate(ruleDisplayNameUpdated, actionUpdated, ipProtocolUpdated, directionUpdated, 200),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", ruleDisplayNameUpdated),
 					resource.TestCheckResourceAttr(resourceName, "action", actionUpdated),
 					resource.TestCheckResourceAttr(resourceName, "ip_protocol", ipProtocolUpdated),
 					resource.TestCheckResourceAttr(resourceName, "direction", directionUpdated),
+					resource.TestCheckResourceAttr(resourceName, "priority", "200"),
 				),
 			},
 		},
@@ -114,7 +115,7 @@ resource "ochk_security_group" "destination" {
 `, router, source, destination, testData.LegacyVirtualMachineDisplayName)
 }
 
-func testAccFirewallSNRuleResourceConfigNoPosition(displayName string) string {
+func testAccFirewallSNRuleResourceConfigWithPriority(displayName string, priority int64) string {
 	return fmt.Sprintf(`
 resource "ochk_firewall_sn_rule" "no_position" {
   display_name = %[1]q
@@ -124,11 +125,12 @@ resource "ochk_firewall_sn_rule" "no_position" {
   source = [ochk_security_group.source.id]
   destination = [ochk_security_group.destination.id]
   scope = [data.ochk_router.default.id]
+  priority = %[2]d
 }
-`, displayName)
+`, displayName, priority)
 }
 
-func testAccFirewallSNRuleResourceConfigNoPositionUpdate(displayName string, action string, ipProtocol string, direction string) string {
+func testAccFirewallSNRuleResourceConfigNoPositionUpdate(displayName string, action string, ipProtocol string, direction string, priority int64) string {
 	return fmt.Sprintf(`
 resource "ochk_firewall_sn_rule" "no_position" {
   display_name = %[1]q
@@ -141,8 +143,9 @@ resource "ochk_firewall_sn_rule" "no_position" {
   source = [ochk_security_group.source.id]
   destination = [ochk_security_group.destination.id]
   scope = [data.ochk_router.default.id]
+  priority = %[5]d 
 }
-`, displayName, action, ipProtocol, direction)
+`, displayName, action, ipProtocol, direction, priority)
 }
 
 func testAccFirewallSNRuleResourceNotExists(displayName string) resource.TestCheckFunc {
