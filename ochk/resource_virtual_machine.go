@@ -102,7 +102,8 @@ func resourceVirtualMachine() *schema.Resource {
 						},
 						"device_type": {
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
+							Default:  "SCSI",
 						},
 					},
 				},
@@ -127,7 +128,8 @@ func resourceVirtualMachine() *schema.Resource {
 						},
 						"device_type": {
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
+							Default:  "SCSI",
 						},
 					},
 				},

@@ -68,19 +68,19 @@ The following arguments are supported:
 * `virtual_network_devices` - (Required) List of virtual network devices. Each element must have the following values:
     * **virtual_network_id** - (Required) The unique identifier of virtual network. Virtual network allows the virtual machine to communicate with the rest of your network, host machine, and other virtual machines. Use `ochk_virtual_network` data source for getting identifier by name.
 * `additional_virtual_disks` - (Optional) List of additional virtual disks. Additional disk will be created on the same storage as the virtual machine configuration. Each element must have the following values: 
-    * **controller_id** - (Required) The unique identifier of controller.
-    * **lun_id** - (Required) Number used to identify a logical unit.
-    * **size_mb** - (Required) Size in megabytes of the additional disk. 
-    * **device_type** - (Required) Type of the device.
-* `virtual_disk` - (Optional) Configuration of system disk. Each element must have the following values:
-    * **controller_id** - (Required) The unique identifier of controller.
-    * **lun_id** - (Required) Number used to identify a logical unit.
-    * **size_mb** - (Required) Size in megabytes of the virtual disk.
-    * **device_type** - (Required) Type of the device.
+    * **controller_id** - (Required) The unique identifier of controller. The only supported value for now is "0".
+    * **lun_id** - (Required) Number used to identify a logical unit. Set this to consecutive int numbers > 0. When updating, e.g. extending size, `lun_id` needs to be preserved.
+    * **size_mb** - (Required) Size in megabytes of the additional disk. When updating, only disk extensions are supported (larger value).
+    * **device_type** - (Optional) Type of the device. Only supported value for now: `SCSI`.
 
 ## Attribute Reference
 
 The following attributes are exported in addition to above arguments:
+* `virtual_disk` - Details of a system disk storage created by default. Additional disk will be created on the same storage as the virtual machine configuration. Each element has the following values:
+    * **controller_id** - The unique identifier of controller.
+    * **lun_id** - Number used to identify a logical unit.
+    * **size_mb** - Size in megabytes of the disk.
+    * **device_type** - Type of the device.
 * `created_by` - Who created this resource.
 * `created_at` - When this resource was created.
 * `modified_by` - Who last modified this resource. 
