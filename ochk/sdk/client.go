@@ -34,6 +34,7 @@ type Client struct {
 	VirtualNetworks VirtualNetworksProxy
 	IPCollections   IPCollectionsProxy
 	Deployments     DeploymentsProxy
+	CustomServices  CustomServicesProxy
 }
 
 var clientMutex sync.Mutex
@@ -169,6 +170,10 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		Deployments: DeploymentsProxy{
 			httpClient: httpClient,
 			service:    authClient.Deployments,
+		},
+		CustomServices: CustomServicesProxy{
+			httpClient: httpClient,
+			service:    authClient.CustomServices,
 		},
 	}
 

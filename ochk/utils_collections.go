@@ -34,7 +34,7 @@ func mapToMapSlice(in map[string]interface{}) []map[string]interface{} {
 	}
 
 	output := make([]map[string]interface{}, 1)
-	output = append(output, in)
+	output[0] = in
 
 	return output
 }
@@ -43,6 +43,15 @@ func transformSetToStringSlice(set *schema.Set) []string {
 	list := set.List()
 	return transformToStringSlice(len(list), func(idx int) string {
 		return list[idx].(string)
+	})
+}
+
+func transformInterfaceSliceToStringSlice(in []interface{}) []string {
+	if in == nil {
+		return nil
+	}
+	return transformToStringSlice(len(in), func(idx int) string {
+		return in[idx].(string)
 	})
 }
 
