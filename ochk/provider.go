@@ -75,6 +75,7 @@ func Provider() *schema.Provider {
 			"ochk_virtual_network":  resourceVirtualNetwork(),
 			"ochk_ip_collection":    resourceIPCollection(),
 			"ochk_virtual_machine":  resourceVirtualMachine(),
+			"ochk_custom_service":   resourceCustomService(),
 		},
 		ConfigureContextFunc: func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 			client, err := sdk.NewClient(

@@ -9,7 +9,7 @@ func flattenFirewallRulePosition(in *models.Position) []map[string]interface{} {
 		return nil
 	}
 
-	out := make([]map[string]interface{}, 1)
+	out := make([]map[string]interface{}, 0)
 	position := make(map[string]interface{})
 
 	position["rule_id"] = in.RuleID
