@@ -28,10 +28,7 @@ resource "ochk_firewall_ew_rule" "fw-ew2" {
   action = "ALLOW"
   ip_protocol = "IPV4_IPV6"
 
-  position {
-    rule_id = ochk_firewall_ew_rule.other-ew-rule.id
-    revise_operation = "AFTER"
-  }
+  priority = 1000
 }
 ```
 
@@ -41,6 +38,7 @@ The following arguments are supported:
 
 * `security_policy_id` - (Required) Identifier of security policy.
 * `display_name` - (Required) The Firewall EW Rule name.
+* `priority` - (Required) Priority of the firewall rule. Rules with lower priority are matched first.
 * `action` - (Optional) Action to control the traffic between the source and the target. It is possible to open the traffic between the source and target with the ALLOW rule, cut the traffic between the source and target with the DROP rule, and reject the connection between the source and target with the REJECT rule. Allowed values: `ALLOW`, `DROP`, `REJECT`. Default value: `ALLOW`.
 * `direction` - (Optional) The traffic direction that the firewall rule applies to. Allowed values: `IN`, `IN_OUT`, `OUT`. Default value: `IN_OUT`.
 * `disabled` - (Optional) Sets this rule to be disabled. Default: false
@@ -48,9 +46,6 @@ The following arguments are supported:
 * `services` - (Optional) Identifier of the type of traffic to which a firewall rule applies. Use `ochk_service` data source for finding service id. 
 * `source` - (Optional) Identifier of source. The source in a rule can be a previously created security group. Use ochk_security_group data source for finding security group id. One of source or destination identifiers are required. 
 * `destination` - (Optional) Identifier of destination that will to be used as match criteria for outgoing traffic. The destination in a rule can be a previously created security group. Use ochk_security_group data source for finding security group id. One of source or destination identifiers are required. 
-* `position` - (Optional) Ordering of this rule with respect to other rules. The firewall rules are processed in a set order-from top to bottom. So rule placement is important. Updates to this attribute forces recreate.
-  * **revise_operation**: rule placement on the list. Allowed values: `BEFORE`, `AFTER`, `TOP`, `BOTTOM`.
-  * **rule_id**: (Optional) identifier of other Firewall EW Rule. Required, when `revise_operation` set to `BEFORE` or `AFTER`.       
   
 ## Attribute Reference
 

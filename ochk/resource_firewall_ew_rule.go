@@ -71,23 +71,9 @@ func resourceFirewallEWRule() *schema.Resource {
 				Optional: true,
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
-			"position": {
-				Type:     schema.TypeList,
-				MaxItems: 1,
-				Optional: true,
-				ForceNew: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"rule_id": {
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"revise_operation": {
-							Type:     schema.TypeString,
-							Required: true,
-						},
-					},
-				},
+			"priority": {
+				Type:     schema.TypeInt,
+				Required: true,
 			},
 			"created_by": {
 				Type:     schema.TypeString,
@@ -174,8 +160,8 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting destination: %+v", err)
 	}
 
-	if err := d.Set("position", flattenFirewallRulePosition(firewallEWRule.Position)); err != nil {
-		return diag.Errorf("error setting position: %+v", err)
+	if err := d.Set("priority", firewallEWRule.Priority); err != nil {
+		return diag.Errorf("error setting priority: %+v", err)
 	}
 
 	if err := d.Set("created_by", firewallEWRule.CreatedBy); err != nil {
@@ -198,7 +184,7 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 }
 
 func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	if !d.HasChanges("display_name", "action", "direction", "disabled", "ip_protocol", "services", "source", "destination", "position") {
+	if !d.HasChanges("display_name", "action", "direction", "disabled", "ip_protocol", "services", "source", "destination", "priority") {
 		return nil
 	}
 
@@ -222,6 +208,7 @@ func mapResourceDataToEWRule(d *schema.ResourceData) *models.DFWRule {
 		DisplayName: d.Get("display_name").(string),
 		Action:      d.Get("action").(string),
 		Direction:   d.Get("direction").(string),
+		Priority:    d.Get("priority").(int64),
 	}
 
 	if disabled, ok := d.GetOk("disabled"); ok && disabled.(bool) {
@@ -242,10 +229,6 @@ func mapResourceDataToEWRule(d *schema.ResourceData) *models.DFWRule {
 
 	if destination, ok := d.GetOk("destination"); ok {
 		rule.Destination = expandSecurityGroupFromIDs(destination.(*schema.Set).List())
-	}
-
-	if position, ok := d.GetOk("position"); ok {
-		rule.Position = expandFirewallRulePosition(position.([]interface{}))
 	}
 
 	return rule
