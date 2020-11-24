@@ -31,6 +31,9 @@ type GFWRule struct {
 	// Format: date-time
 	CreationDate *strfmt.DateTime `json:"creationDate,omitempty"`
 
+	// custom services
+	CustomServices []*CustomServiceInstance `json:"customServices"`
+
 	// default services
 	DefaultServices []*ServiceInstance `json:"defaultServices"`
 
@@ -83,6 +86,10 @@ func (m *GFWRule) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateCreationDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateCustomServices(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -178,6 +185,31 @@ func (m *GFWRule) validateCreationDate(formats strfmt.Registry) error {
 
 	if err := validate.FormatOf("creationDate", "body", "date-time", m.CreationDate.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *GFWRule) validateCustomServices(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.CustomServices) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.CustomServices); i++ {
+		if swag.IsZero(m.CustomServices[i]) { // not required
+			continue
+		}
+
+		if m.CustomServices[i] != nil {
+			if err := m.CustomServices[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("customServices" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
