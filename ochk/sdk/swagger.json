@@ -3525,6 +3525,12 @@
           "format": "date-time",
           "x-nullable": true
         },
+        "customServices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomServiceInstance"
+          }
+        },
         "defaultServices": {
           "type": "array",
           "items": {
@@ -3881,6 +3887,12 @@
           "type": "string",
           "format": "date-time",
           "x-nullable": true
+        },
+        "customServices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomServiceInstance"
+          }
         },
         "defaultServices": {
           "type": "array",
