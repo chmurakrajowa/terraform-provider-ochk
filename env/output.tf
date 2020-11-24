@@ -34,3 +34,11 @@ output "vm" {
   value = ochk_virtual_machine.default
 }
 
+output "custom-service-1" {
+  value = ochk_custom_service.web_servers_https
+}
+
+output "custom-service-2" {
+  value = ochk_custom_service.web_servers_http
+}
+

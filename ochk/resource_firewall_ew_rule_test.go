@@ -29,13 +29,14 @@ func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFirewallEWRuleResourceConfig(displayName, source, destination, action, ipProtocol, direction, 1000),
+				Config: testAccFirewallEWRuleResourceConfig(displayName, source, destination, action, ipProtocol, direction, 1000, "data.ochk_custom_service.custom_service1.id"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", displayName),
 					resource.TestCheckResourceAttr(resourceName, "action", action),
 					resource.TestCheckResourceAttr(resourceName, "direction", direction),
 					resource.TestCheckResourceAttr(resourceName, "ip_protocol", ipProtocol),
 					resource.TestCheckResourceAttr(resourceName, "priority", "1000"),
+					resource.TestCheckResourceAttrPair(resourceName, "custom_services.0", "data.ochk_custom_service.custom_service1", "id"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
@@ -43,13 +44,14 @@ func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccFirewallEWRuleResourceConfig(displayNameUpdated, source, destination, actionUpdated, ipProtocolUpdated, directionUpdated, 2000),
+				Config: testAccFirewallEWRuleResourceConfig(displayNameUpdated, source, destination, actionUpdated, ipProtocolUpdated, directionUpdated, 2000, "data.ochk_custom_service.custom_service2.id"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", displayNameUpdated),
 					resource.TestCheckResourceAttr(resourceName, "action", actionUpdated),
 					resource.TestCheckResourceAttr(resourceName, "direction", directionUpdated),
 					resource.TestCheckResourceAttr(resourceName, "ip_protocol", ipProtocolUpdated),
 					resource.TestCheckResourceAttr(resourceName, "priority", "2000"),
+					resource.TestCheckResourceAttrPair(resourceName, "custom_services.0", "data.ochk_custom_service.custom_service2", "id"),
 				),
 			},
 		},
@@ -164,7 +166,7 @@ func checkOrderOfSecurityPolicies(securityPolicies []*models.DFWRule, displayNam
 	})
 }
 
-func testAccFirewallEWRuleResourceConfig(displayName string, source string, destination string, action string, ipProtocol string, direction string, priority int64) string {
+func testAccFirewallEWRuleResourceConfig(displayName string, source string, destination string, action string, ipProtocol string, direction string, priority int64, customServiceResourceID string) string {
 	return fmt.Sprintf(`
 data "ochk_security_policy" "default" {
   display_name = "devel"
@@ -176,6 +178,14 @@ data "ochk_service" "http" {
 
 data "ochk_virtual_machine" "default" {
 	display_name = %[7]q
+}
+
+data "ochk_custom_service" "custom_service1" {
+	display_name = %[9]q
+}
+
+data "ochk_custom_service" "custom_service2" {
+	display_name = %[10]q
 }
 
 resource "ochk_security_group" "source" {
@@ -201,6 +211,7 @@ resource "ochk_firewall_ew_rule" "default" {
   security_policy_id = data.ochk_security_policy.default.id
 
   services = [data.ochk_service.http.id]
+  custom_services = [%[11]s]
   source = [ochk_security_group.source.id]
   destination = [ochk_security_group.destination.id]
 
@@ -210,7 +221,7 @@ resource "ochk_firewall_ew_rule" "default" {
 
   priority = %[8]d
 }
-`, source, destination, displayName, action, ipProtocol, direction, testData.LegacyVirtualMachineDisplayName, priority)
+`, source, destination, displayName, action, ipProtocol, direction, testData.LegacyVirtualMachineDisplayName, priority, testData.CustomService1DisplayName, testData.CustomService2DisplayName, customServiceResourceID)
 }
 
 func testAccFirewallEWRuleResourceConfigWithOrder(displayNameBefore string, displayNameMiddle string, displayNameAfter string) string {

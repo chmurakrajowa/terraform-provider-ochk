@@ -46,3 +46,32 @@ func expandCustomServicePorts(in []interface{}) []*models.L4PortSetEntry {
 
 	return out
 }
+
+func flattenCustomServicesFromIDs(in []*models.CustomServiceInstance) *schema.Set {
+	out := &schema.Set{
+		F: schema.HashString,
+	}
+
+	for _, v := range in {
+		out.Add(v.ServiceID)
+	}
+	return out
+}
+
+func expandCustomServicesFromIDs(in []interface{}) []*models.CustomServiceInstance {
+	if len(in) == 0 {
+		return nil
+	}
+
+	var out = make([]*models.CustomServiceInstance, len(in))
+
+	for i, v := range in {
+		service := &models.CustomServiceInstance{
+			ServiceID: v.(string),
+		}
+
+		out[i] = service
+	}
+
+	return out
+}

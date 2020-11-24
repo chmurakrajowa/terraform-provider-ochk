@@ -61,6 +61,11 @@ func resourceFirewallEWRule() *schema.Resource {
 				Optional: true,
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
+			"custom_services": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem:     &schema.Schema{Type: schema.TypeString},
+			},
 			"source": {
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -152,6 +157,10 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting services: %+v", err)
 	}
 
+	if err := d.Set("custom_services", flattenCustomServicesFromIDs(firewallEWRule.CustomServices)); err != nil {
+		return diag.Errorf("error setting custom services: %+v", err)
+	}
+
 	if err := d.Set("source", flattenSecurityGroupFromIDs(firewallEWRule.Source)); err != nil {
 		return diag.Errorf("error setting source: %+v", err)
 	}
@@ -160,7 +169,7 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting destination: %+v", err)
 	}
 
-	if err := d.Set("priority", firewallEWRule.Priority); err != nil {
+	if err := d.Set("priority", int(firewallEWRule.Priority)); err != nil {
 		return diag.Errorf("error setting priority: %+v", err)
 	}
 
@@ -208,7 +217,7 @@ func mapResourceDataToEWRule(d *schema.ResourceData) *models.DFWRule {
 		DisplayName: d.Get("display_name").(string),
 		Action:      d.Get("action").(string),
 		Direction:   d.Get("direction").(string),
-		Priority:    d.Get("priority").(int64),
+		Priority:    int64(d.Get("priority").(int)),
 	}
 
 	if disabled, ok := d.GetOk("disabled"); ok && disabled.(bool) {
@@ -221,6 +230,10 @@ func mapResourceDataToEWRule(d *schema.ResourceData) *models.DFWRule {
 
 	if services, ok := d.GetOk("services"); ok {
 		rule.DefaultServices = expandServicesFromIDs(services.(*schema.Set).List())
+	}
+
+	if customServices, ok := d.GetOk("custom_services"); ok {
+		rule.CustomServices = expandCustomServicesFromIDs(customServices.(*schema.Set).List())
 	}
 
 	if source, ok := d.GetOk("source"); ok {
