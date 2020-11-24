@@ -41,7 +41,7 @@ type predefinedTestData struct {
 var devTestDataPrefix = "tf-test2"
 var predefinedTestDataDev = predefinedTestData{
 	IPSet1DisplayName:                "ochk1",
-	LogicalPort1DisplayName:          "f766455e-22a7-a2de-35f5-b8599f064a08/devel0000000639.vmx@a596ebcb-a875-4188-8ec5-0a84bfbf1e11",
+	LogicalPort1DisplayName:          "8177b65f-12db-9b67-e1e5-b8599f064a08/ADRIAN-39.vmx@a596ebcb-a875-4188-8ec5-0a84bfbf1e11",
 	Network1Name:                     "vtest8",
 	Network2Name:                     "vtest7",
 	SubtenantNetworkName:             "vtest7",
