@@ -151,3 +151,23 @@ resource "ochk_virtual_machine" "default" {
   }
 }
 
+resource "ochk_custom_service" "web_servers_https" {
+  display_name = "${var.test-data-prefix}-https"
+
+  ports {
+    protocol = "TCP"
+    source = ["443"]
+    destination = ["1-65535"]
+  }
+}
+
+resource "ochk_custom_service" "web_servers_http" {
+  display_name = "${var.test-data-prefix}-http"
+
+  ports {
+    protocol = "TCP"
+    source = ["80", "8080-8090"]
+    destination = ["1-65535"]
+  }
+}
+

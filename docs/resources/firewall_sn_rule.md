@@ -21,12 +21,17 @@ data "ochk_service" "ssh" {
   display_name = "SSH"
 }
 
+data "ochk_custom_service" "web-servers" {
+  display_name = "web-servers"
+}
+
 resource "ochk_firewall_sn_rule" "fw-sn-1" {
   display_name = "fw-sn-drop-ssh"
   gateway_policy_id = data.ochk_gateway_policy.T1.id
   scope = [data.ochk_router.T1.id]
 
   services = [data.ochk_service.ssh.id]
+  custom_services = [data.ochk_custom_service.web-servers.id]
 
   source = [ochk_security_group.source.id]
   destination = [ochk_security_group.destination.id]
@@ -50,7 +55,8 @@ The following arguments are supported:
 * `direction` - (Optional) The traffic direction that the firewall rule applies to. Allowed values: `IN`, `IN_OUT`, `OUT`. Default value: `IN_OUT`.
 * `disabled` - (Optional) Sets this rule to be disabled. Default: false
 * `ip_protocol` - (Optional) The transport protocol used for the connection. Allowed values: `IPV4`, `IPV6`, `IPV4_IPV6`. Default value: `IPV4_IPV6`.
-* `services` - (Optional) Identifier of the type of traffic to which a firewall rule applies. Use `ochk_service` data source for finding service id. 
+* `services` - (Optional) Identifier of the type of traffic to which a firewall rule applies. Use `ochk_service` data source for finding service id.
+* `custom_services` - (Optional) Identifier of the type of traffic to which a firewall rule applies. Use `ochk_custom_service` data source for finding custom service id. 
 * `source` - (Optional) Identifier of source. The source in a rule can be a previously created security group. Use `ochk_security_group` data source for finding security group id. One of source or destination identifiers are required. 
 * `destination` - (Optional) Identifier of destination that will to be used as match criteria for outgoing traffic. The destination in a rule can be a previously created security group. Use ochk_security_group data source for finding security group id. One of source or destination identifiers are required. 
   

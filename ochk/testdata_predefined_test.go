@@ -36,12 +36,14 @@ type predefinedTestData struct {
 	LegacyVirtualMachine2DisplayName string
 	IPCollection1DisplayName         string
 	Deployment1DisplayName           string
+	CustomService1DisplayName        string
+	CustomService2DisplayName        string
 }
 
 var devTestDataPrefix = "tf-test2"
 var predefinedTestDataDev = predefinedTestData{
 	IPSet1DisplayName:                "ochk1",
-	LogicalPort1DisplayName:          "8177b65f-12db-9b67-e1e5-b8599f064a08/ADRIAN-39.vmx@a596ebcb-a875-4188-8ec5-0a84bfbf1e11",
+	LogicalPort1DisplayName:          "d0ac165f-cec0-db4a-2a82-b8599f064900/devel0000001256.vmx@93f28b5d-ec29-4ba2-b753-160ce290b7fd",
 	Network1Name:                     "vtest8",
 	Network2Name:                     "vtest7",
 	SubtenantNetworkName:             "vtest7",
@@ -59,6 +61,8 @@ var predefinedTestDataDev = predefinedTestData{
 	LegacyVirtualMachine2DisplayName: "devel0000000344",
 	IPCollection1DisplayName:         fmt.Sprintf("%s-ipc-default", devTestDataPrefix),
 	Deployment1DisplayName:           "CentOS 7",
+	CustomService1DisplayName:        fmt.Sprintf("%s-https", devTestDataPrefix),
+	CustomService2DisplayName:        fmt.Sprintf("%s-http", devTestDataPrefix),
 }
 
 var predefinedTestDataAT = predefinedTestData{
@@ -81,4 +85,6 @@ var predefinedTestDataAT = predefinedTestData{
 	LegacyVirtualMachine2DisplayName: "devel0000000098",
 	IPCollection1DisplayName:         "tf-test-ipcollection",
 	Deployment1DisplayName:           "CentOS 7",
+	CustomService1DisplayName:        fmt.Sprintf("%s-https", devTestDataPrefix),
+	CustomService2DisplayName:        fmt.Sprintf("%s-http", devTestDataPrefix),
 }

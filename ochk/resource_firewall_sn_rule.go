@@ -62,6 +62,11 @@ func resourceFirewallSNRule() *schema.Resource {
 				Optional: true,
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
+			"custom_services": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem:     &schema.Schema{Type: schema.TypeString},
+			},
 			"source": {
 				Type:         schema.TypeSet,
 				Optional:     true,
@@ -161,6 +166,10 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting services: %+v", err)
 	}
 
+	if err := d.Set("custom_services", flattenCustomServicesFromIDs(firewallSNRule.CustomServices)); err != nil {
+		return diag.Errorf("error setting custom services: %+v", err)
+	}
+
 	if err := d.Set("source", flattenSecurityGroupFromIDs(firewallSNRule.Source)); err != nil {
 		return diag.Errorf("error setting source: %+v", err)
 	}
@@ -223,11 +232,15 @@ func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GFWRule {
 		Direction:   d.Get("direction").(string),
 		Disabled:    d.Get("disabled").(bool),
 		IPProtocol:  d.Get("ip_protocol").(string),
-		Priority:    d.Get("priority").(int64),
+		Priority:    int64(d.Get("priority").(int)),
 	}
 
 	if services, ok := d.GetOk("services"); ok {
 		rule.DefaultServices = expandServicesFromIDs(services.(*schema.Set).List())
+	}
+
+	if customServices, ok := d.GetOk("custom_services"); ok {
+		rule.CustomServices = expandCustomServicesFromIDs(customServices.(*schema.Set).List())
 	}
 
 	if source, ok := d.GetOk("source"); ok {

@@ -65,6 +65,7 @@ func Provider() *schema.Provider {
 			"ochk_ip_collection":   dataSourceIPCollection(),
 			"ochk_deployment":      dataSourceDeployment(),
 			"ochk_virtual_network": dataSourceVirtualNetwork(),
+			"ochk_custom_service":  dataSourceCustomService(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"ochk_firewall_ew_rule": resourceFirewallEWRule(),
