@@ -1,8 +1,6 @@
-## Compiling ##
-
-Just use any OS with Golang installed and do ```make build_local```. Then follow the setup for launching examples below.
-
 ## How to use examples? ##
+
+Examples of TF code in this directory are using official OCHK terraform provider releases coming from ```https://registry.terraform.io/providers/chmurakrajowa/ochk/latest``` .
 
 1. Enter ```examples``` directory in this code branch.
 
