@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ochk = {
-      source = "registry.terraform.io/chmurakrajowa/ochk"
+      source = "chmurakrajowa/ochk"
     }
   }
 }
