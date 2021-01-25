@@ -1,32 +1,24 @@
-resource "ochk_ip_collection" "default" {
-  display_name = "${var.test-data-prefix}-ipc-default"
-  ip_addresses = [
-    "1.1.1.1",
-    "1.0.0.1",
-    "8.8.8.8"
-  ]
-}
-
-data "ochk_network" "subtenant-network" {
-  name = var.subtenant_network_name
+resource "random_string" "random" {
+  length = 5
+  special = false
 }
 
 resource "ochk_router" "default" {
-  display_name = "${var.test-data-prefix}-router"
+  display_name = "${var.tenant}-router-${random_string.random}"
 }
 
 resource "ochk_virtual_network" "default" {
-  display_name = "${var.test-data-prefix}-vnet3"
+  display_name = "${var.tenant}-vnet-${random_string.random}"
   subtenants = [
-    data.ochk_subtenant.subtenant_for_vm.id
+    data.ochk_subtenant.subtenant.id
   ]
 }
 
 resource "ochk_virtual_network" "vnet2" {
-  display_name = "${var.test-data-prefix}-vnet4"
+  display_name = "${var.tenant}-vnet-${random_string.random}"
   ipam_enabled = true
   subtenants = [
-    data.ochk_subtenant.subtenant_for_vm.id
+    data.ochk_subtenant.subtenant.id
   ]
 
   router = ochk_router.default.id

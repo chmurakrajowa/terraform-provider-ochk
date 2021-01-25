@@ -7,15 +7,17 @@ Examples of TF code in this directory are using official OCHK terraform provider
 2. Create yourself a dev.tfvars file with following contents:
 
 ```
-host = <your OCHK iaas API endpoint address>
-tenant = <tenant name>
-username = <your OCHK IAAS API username>
-password = <your OCHK IAAS API password>
+host = "" #OCHK API endpoint
+tenant = "" # obtain this account name from OCHK support
+username = "" # OCHK API username
+password = "" # OCHK API password
 debug_log_file = "debug.log"
-test-data-prefix = <your custom prefix for test data names>
-test_user = <test user name>
-subtenant_network_name = <subtenant network name for your vms>
-subtenant_for_vm_name = <subtenant name for your vms>
+subtenant_name = "" # This is your new project name you create using foundation code
+
+seed_network_name = "initial" #first subnetwork name for an account
+seed_subtenant_name = "admin" #first subaccount name for an account
+seed_ochk_user = "terra-tenantadm" #first seed user name
+
 ```
 
 3. Invoke ```terraform init -var-file=dev.tfvars``` to download all neede TF modules and init the .terraform directory.
@@ -27,5 +29,10 @@ terraform plan -var-file=dev.tfvars
 terraform apply -var-file=dev.tfvars
 terraform destroy -var-file=dev.tfvars
 ```
+
+### Setting up your OCHK accounts/projects
+
+1. Use code from ```examples/foundation``` to create a subtenant/project.
+2. Take subtenant/project name generated in step 1 and use the code from ```examples/vm-network-creation``` to create networks and VMs. 
 
 Enjoy!

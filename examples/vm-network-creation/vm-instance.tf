@@ -3,14 +3,14 @@ data "ochk_deployment" "centos" {
 }
 
 resource "ochk_virtual_machine" "default" {
-  display_name = "${var.test-data-prefix}-vm"
+  display_name = "${var.tenant}-VM-instance-${random_string.random}"
   deployment_id = data.ochk_deployment.centos.id
-  initial_password = "0c80aab0dc1ce6"
+  initial_password = random_string.random
 
   power_state = "poweredOn"
-  resource_profile = "SIZE_S"
+  resource_profile = "SIZE_XS"
   storage_policy = "STANDARD"
-  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+  subtenant_id = data.ochk_subtenant.subtenant.id
 
   virtual_network_devices {
     virtual_network_id = ochk_virtual_network.default.id
