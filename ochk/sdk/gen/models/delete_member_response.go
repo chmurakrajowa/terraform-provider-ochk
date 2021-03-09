@@ -12,16 +12,16 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// IPSetGetResponse IPSetGetResponse
+// DeleteMemberResponse DeleteMemberResponse
 //
-// swagger:model IPSetGetResponse
-type IPSetGetResponse struct {
-
-	// ip set
-	IPSet *IPSet `json:"ipSet,omitempty"`
+// swagger:model DeleteMemberResponse
+type DeleteMemberResponse struct {
 
 	// messages
 	Messages string `json:"messages,omitempty"`
+
+	// request instance
+	RequestInstance *RequestInstance `json:"requestInstance,omitempty"`
 
 	// success
 	Success bool `json:"success,omitempty"`
@@ -31,11 +31,11 @@ type IPSetGetResponse struct {
 	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
-// Validate validates this IP set get response
-func (m *IPSetGetResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this delete member response
+func (m *DeleteMemberResponse) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateIPSet(formats); err != nil {
+	if err := m.validateRequestInstance(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -49,16 +49,16 @@ func (m *IPSetGetResponse) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *IPSetGetResponse) validateIPSet(formats strfmt.Registry) error {
+func (m *DeleteMemberResponse) validateRequestInstance(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.IPSet) { // not required
+	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
 
-	if m.IPSet != nil {
-		if err := m.IPSet.Validate(formats); err != nil {
+	if m.RequestInstance != nil {
+		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("ipSet")
+				return ve.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -67,7 +67,7 @@ func (m *IPSetGetResponse) validateIPSet(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *IPSetGetResponse) validateTimestamp(formats strfmt.Registry) error {
+func (m *DeleteMemberResponse) validateTimestamp(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
@@ -81,7 +81,7 @@ func (m *IPSetGetResponse) validateTimestamp(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *IPSetGetResponse) MarshalBinary() ([]byte, error) {
+func (m *DeleteMemberResponse) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -89,8 +89,8 @@ func (m *IPSetGetResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *IPSetGetResponse) UnmarshalBinary(b []byte) error {
-	var res IPSetGetResponse
+func (m *DeleteMemberResponse) UnmarshalBinary(b []byte) error {
+	var res DeleteMemberResponse
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

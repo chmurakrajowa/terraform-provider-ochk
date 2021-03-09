@@ -36,7 +36,7 @@ type IPCollection struct {
 	IPCollectionAddresses []string `json:"ipCollectionAddresses"`
 
 	// member type
-	// Enum: [IPCOLLECTION IPSET LOGICAL_PORT VIRTUAL_MACHINE]
+	// Enum: [IPCOLLECTION LOGICAL_PORT VIRTUAL_MACHINE]
 	MemberType string `json:"memberType,omitempty"`
 
 	// modification date
@@ -86,7 +86,7 @@ var ipCollectionTypeMemberTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["IPCOLLECTION","IPSET","LOGICAL_PORT","VIRTUAL_MACHINE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["IPCOLLECTION","LOGICAL_PORT","VIRTUAL_MACHINE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -98,9 +98,6 @@ const (
 
 	// IPCollectionMemberTypeIPCOLLECTION captures enum value "IPCOLLECTION"
 	IPCollectionMemberTypeIPCOLLECTION string = "IPCOLLECTION"
-
-	// IPCollectionMemberTypeIPSET captures enum value "IPSET"
-	IPCollectionMemberTypeIPSET string = "IPSET"
 
 	// IPCollectionMemberTypeLOGICALPORT captures enum value "LOGICAL_PORT"
 	IPCollectionMemberTypeLOGICALPORT string = "LOGICAL_PORT"

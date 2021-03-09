@@ -14,13 +14,13 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// IPSetListResponse IPSetListResponse
+// GroupListResponse GroupListResponse
 //
-// swagger:model IPSetListResponse
-type IPSetListResponse struct {
+// swagger:model GroupListResponse
+type GroupListResponse struct {
 
-	// ip set collection
-	IPSetCollection []*IPSet `json:"ipSetCollection"`
+	// group instance collection
+	GroupInstanceCollection []*GroupInstance `json:"groupInstanceCollection"`
 
 	// messages
 	Messages string `json:"messages,omitempty"`
@@ -33,11 +33,11 @@ type IPSetListResponse struct {
 	Timestamp *strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
-// Validate validates this IP set list response
-func (m *IPSetListResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this group list response
+func (m *GroupListResponse) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateIPSetCollection(formats); err != nil {
+	if err := m.validateGroupInstanceCollection(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -51,21 +51,21 @@ func (m *IPSetListResponse) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *IPSetListResponse) validateIPSetCollection(formats strfmt.Registry) error {
+func (m *GroupListResponse) validateGroupInstanceCollection(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.IPSetCollection) { // not required
+	if swag.IsZero(m.GroupInstanceCollection) { // not required
 		return nil
 	}
 
-	for i := 0; i < len(m.IPSetCollection); i++ {
-		if swag.IsZero(m.IPSetCollection[i]) { // not required
+	for i := 0; i < len(m.GroupInstanceCollection); i++ {
+		if swag.IsZero(m.GroupInstanceCollection[i]) { // not required
 			continue
 		}
 
-		if m.IPSetCollection[i] != nil {
-			if err := m.IPSetCollection[i].Validate(formats); err != nil {
+		if m.GroupInstanceCollection[i] != nil {
+			if err := m.GroupInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("ipSetCollection" + "." + strconv.Itoa(i))
+					return ve.ValidateName("groupInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -76,7 +76,7 @@ func (m *IPSetListResponse) validateIPSetCollection(formats strfmt.Registry) err
 	return nil
 }
 
-func (m *IPSetListResponse) validateTimestamp(formats strfmt.Registry) error {
+func (m *GroupListResponse) validateTimestamp(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
@@ -90,7 +90,7 @@ func (m *IPSetListResponse) validateTimestamp(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *IPSetListResponse) MarshalBinary() ([]byte, error) {
+func (m *GroupListResponse) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -98,8 +98,8 @@ func (m *IPSetListResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *IPSetListResponse) UnmarshalBinary(b []byte) error {
-	var res IPSetListResponse
+func (m *GroupListResponse) UnmarshalBinary(b []byte) error {
+	var res GroupListResponse
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

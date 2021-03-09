@@ -29,7 +29,7 @@ type PrincipalID struct {
 	Name string `json:"name,omitempty"`
 
 	// principal type
-	// Enum: [CUSTOM_GROUP GROUP SSO_GROUP USER]
+	// Enum: [CUSTOM CUSTOM_GROUP GROUP SSO_GROUP USER]
 	PrincipalType string `json:"principalType,omitempty"`
 }
 
@@ -51,7 +51,7 @@ var principalIdTypePrincipalTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["CUSTOM_GROUP","GROUP","SSO_GROUP","USER"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["CUSTOM","CUSTOM_GROUP","GROUP","SSO_GROUP","USER"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -60,6 +60,9 @@ func init() {
 }
 
 const (
+
+	// PrincipalIDPrincipalTypeCUSTOM captures enum value "CUSTOM"
+	PrincipalIDPrincipalTypeCUSTOM string = "CUSTOM"
 
 	// PrincipalIDPrincipalTypeCUSTOMGROUP captures enum value "CUSTOM_GROUP"
 	PrincipalIDPrincipalTypeCUSTOMGROUP string = "CUSTOM_GROUP"

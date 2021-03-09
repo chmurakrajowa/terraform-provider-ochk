@@ -33,6 +33,9 @@ type VcsVirtualMachineInstance struct {
 	// deployment instance
 	DeploymentInstance *DeploymentInstance `json:"deploymentInstance,omitempty"`
 
+	// encryption instance
+	EncryptionInstance *EncryptionInstance `json:"encryptionInstance,omitempty"`
+
 	// initial password
 	InitialPassword string `json:"initialPassword,omitempty"`
 
@@ -84,6 +87,10 @@ func (m *VcsVirtualMachineInstance) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateDeploymentInstance(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateEncryptionInstance(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -165,6 +172,24 @@ func (m *VcsVirtualMachineInstance) validateDeploymentInstance(formats strfmt.Re
 		if err := m.DeploymentInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("deploymentInstance")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *VcsVirtualMachineInstance) validateEncryptionInstance(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.EncryptionInstance) { // not required
+		return nil
+	}
+
+	if m.EncryptionInstance != nil {
+		if err := m.EncryptionInstance.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("encryptionInstance")
 			}
 			return err
 		}

@@ -10,25 +10,22 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// IPSetAddress IPSetAddress
+// GetPublicKeyRequest GetPublicKeyRequest
 //
-// swagger:model IPSetAddress
-type IPSetAddress struct {
+// swagger:model GetPublicKeyRequest
+type GetPublicKeyRequest struct {
 
-	// ip address
-	IPAddress string `json:"ipAddress,omitempty"`
-
-	// ip set address Id
-	IPSetAddressID int32 `json:"ipSetAddressId,omitempty"`
+	// sha256 check sum
+	Sha256CheckSum string `json:"sha256CheckSum,omitempty"`
 }
 
-// Validate validates this IP set address
-func (m *IPSetAddress) Validate(formats strfmt.Registry) error {
+// Validate validates this get public key request
+func (m *GetPublicKeyRequest) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *IPSetAddress) MarshalBinary() ([]byte, error) {
+func (m *GetPublicKeyRequest) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -36,8 +33,8 @@ func (m *IPSetAddress) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *IPSetAddress) UnmarshalBinary(b []byte) error {
-	var res IPSetAddress
+func (m *GetPublicKeyRequest) UnmarshalBinary(b []byte) error {
+	var res GetPublicKeyRequest
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

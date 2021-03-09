@@ -10,6 +10,9 @@ import (
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/active_directory_r_s_a_public_key"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/active_directory_sync"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ads_download"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/context_profiles"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/custom_services"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/default_services"
@@ -19,7 +22,8 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_s_n"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/gateway_policies"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_collections"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_sets"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/k_m_s_key_management"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/k_m_s_key_rotation_scheduler"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/logical_ports"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/network_adapters"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/network_profiles"
@@ -31,6 +35,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/routers"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/security_groups"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/security_policies"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/subtenant_custom_groups"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/subtenants"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/users"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/v_id_m"
@@ -83,6 +88,9 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 
 	cli := new(Ochk)
 	cli.Transport = transport
+	cli.ActiveDirectoryrsaPublicKey = active_directory_r_s_a_public_key.New(transport, formats)
+	cli.ActiveDirectorySync = active_directory_sync.New(transport, formats)
+	cli.AdsDownload = ads_download.New(transport, formats)
 	cli.ContextProfiles = context_profiles.New(transport, formats)
 	cli.CustomServices = custom_services.New(transport, formats)
 	cli.DefaultServices = default_services.New(transport, formats)
@@ -92,7 +100,8 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.FirewallRulessn = firewall_rules_s_n.New(transport, formats)
 	cli.GatewayPolicies = gateway_policies.New(transport, formats)
 	cli.IPCollections = ip_collections.New(transport, formats)
-	cli.IPSets = ip_sets.New(transport, formats)
+	cli.KmsKeyManagement = k_m_s_key_management.New(transport, formats)
+	cli.KmsKeyRotationScheduler = k_m_s_key_rotation_scheduler.New(transport, formats)
 	cli.LogicalPorts = logical_ports.New(transport, formats)
 	cli.NetworkAdapters = network_adapters.New(transport, formats)
 	cli.NetworkProfiles = network_profiles.New(transport, formats)
@@ -104,6 +113,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.Routers = routers.New(transport, formats)
 	cli.SecurityGroups = security_groups.New(transport, formats)
 	cli.SecurityPolicies = security_policies.New(transport, formats)
+	cli.SubtenantCustomGroups = subtenant_custom_groups.New(transport, formats)
 	cli.Subtenants = subtenants.New(transport, formats)
 	cli.Users = users.New(transport, formats)
 	cli.VIDm = v_id_m.New(transport, formats)
@@ -156,6 +166,12 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 
 // Ochk is a client for ochk
 type Ochk struct {
+	ActiveDirectoryrsaPublicKey active_directory_r_s_a_public_key.ClientService
+
+	ActiveDirectorySync active_directory_sync.ClientService
+
+	AdsDownload ads_download.ClientService
+
 	ContextProfiles context_profiles.ClientService
 
 	CustomServices custom_services.ClientService
@@ -174,7 +190,9 @@ type Ochk struct {
 
 	IPCollections ip_collections.ClientService
 
-	IPSets ip_sets.ClientService
+	KmsKeyManagement k_m_s_key_management.ClientService
+
+	KmsKeyRotationScheduler k_m_s_key_rotation_scheduler.ClientService
 
 	LogicalPorts logical_ports.ClientService
 
@@ -198,6 +216,8 @@ type Ochk struct {
 
 	SecurityPolicies security_policies.ClientService
 
+	SubtenantCustomGroups subtenant_custom_groups.ClientService
+
 	Subtenants subtenants.ClientService
 
 	Users users.ClientService
@@ -220,6 +240,9 @@ type Ochk struct {
 // SetTransport changes the transport on the client and all its subresources
 func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
+	c.ActiveDirectoryrsaPublicKey.SetTransport(transport)
+	c.ActiveDirectorySync.SetTransport(transport)
+	c.AdsDownload.SetTransport(transport)
 	c.ContextProfiles.SetTransport(transport)
 	c.CustomServices.SetTransport(transport)
 	c.DefaultServices.SetTransport(transport)
@@ -229,7 +252,8 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.FirewallRulessn.SetTransport(transport)
 	c.GatewayPolicies.SetTransport(transport)
 	c.IPCollections.SetTransport(transport)
-	c.IPSets.SetTransport(transport)
+	c.KmsKeyManagement.SetTransport(transport)
+	c.KmsKeyRotationScheduler.SetTransport(transport)
 	c.LogicalPorts.SetTransport(transport)
 	c.NetworkAdapters.SetTransport(transport)
 	c.NetworkProfiles.SetTransport(transport)
@@ -241,6 +265,7 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.Routers.SetTransport(transport)
 	c.SecurityGroups.SetTransport(transport)
 	c.SecurityPolicies.SetTransport(transport)
+	c.SubtenantCustomGroups.SetTransport(transport)
 	c.Subtenants.SetTransport(transport)
 	c.Users.SetTransport(transport)
 	c.VIDm.SetTransport(transport)

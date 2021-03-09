@@ -14,12 +14,13 @@ import (
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewRequestListUsingGETParams creates a new RequestListUsingGETParams object
 // with the default values initialized.
 func NewRequestListUsingGETParams() *RequestListUsingGETParams {
-
+	var ()
 	return &RequestListUsingGETParams{
 
 		timeout: cr.DefaultTimeout,
@@ -29,7 +30,7 @@ func NewRequestListUsingGETParams() *RequestListUsingGETParams {
 // NewRequestListUsingGETParamsWithTimeout creates a new RequestListUsingGETParams object
 // with the default values initialized, and the ability to set a timeout on a request
 func NewRequestListUsingGETParamsWithTimeout(timeout time.Duration) *RequestListUsingGETParams {
-
+	var ()
 	return &RequestListUsingGETParams{
 
 		timeout: timeout,
@@ -39,7 +40,7 @@ func NewRequestListUsingGETParamsWithTimeout(timeout time.Duration) *RequestList
 // NewRequestListUsingGETParamsWithContext creates a new RequestListUsingGETParams object
 // with the default values initialized, and the ability to set a context for a request
 func NewRequestListUsingGETParamsWithContext(ctx context.Context) *RequestListUsingGETParams {
-
+	var ()
 	return &RequestListUsingGETParams{
 
 		Context: ctx,
@@ -49,7 +50,7 @@ func NewRequestListUsingGETParamsWithContext(ctx context.Context) *RequestListUs
 // NewRequestListUsingGETParamsWithHTTPClient creates a new RequestListUsingGETParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewRequestListUsingGETParamsWithHTTPClient(client *http.Client) *RequestListUsingGETParams {
-
+	var ()
 	return &RequestListUsingGETParams{
 		HTTPClient: client,
 	}
@@ -59,6 +60,13 @@ func NewRequestListUsingGETParamsWithHTTPClient(client *http.Client) *RequestLis
 for the request list using g e t operation typically these are written to a http.Request
 */
 type RequestListUsingGETParams struct {
+
+	/*Active
+	  active
+
+	*/
+	Active *bool
+
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -97,6 +105,17 @@ func (o *RequestListUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithActive adds the active to the request list using g e t params
+func (o *RequestListUsingGETParams) WithActive(active *bool) *RequestListUsingGETParams {
+	o.SetActive(active)
+	return o
+}
+
+// SetActive adds the active to the request list using g e t params
+func (o *RequestListUsingGETParams) SetActive(active *bool) {
+	o.Active = active
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *RequestListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -104,6 +123,22 @@ func (o *RequestListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg 
 		return err
 	}
 	var res []error
+
+	if o.Active != nil {
+
+		// query param active
+		var qrActive bool
+		if o.Active != nil {
+			qrActive = *o.Active
+		}
+		qActive := swag.FormatBool(qrActive)
+		if qActive != "" {
+			if err := r.SetQueryParam("active", qActive); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

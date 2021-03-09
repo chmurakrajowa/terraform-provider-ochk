@@ -15,6 +15,14 @@
   "basePath": "/",
   "tags": [
     {
+      "name": "Active Directory RSA Public Key",
+      "description": "Ads Public Key Controller"
+    },
+    {
+      "name": "Active Directory Sync",
+      "description": "Sync Controller"
+    },
+    {
       "name": "Context profiles",
       "description": "Context Profile Controller"
     },
@@ -51,8 +59,12 @@
       "description": "Ip Collection Controller"
     },
     {
-      "name": "IPSets",
-      "description": "IP Set Controller"
+      "name": "KMS Key management",
+      "description": "Key Controller"
+    },
+    {
+      "name": "KMS Key rotation scheduler",
+      "description": "Key Schedule Controller"
     },
     {
       "name": "Logical ports",
@@ -95,6 +107,10 @@
       "description": "Security Policy Controller"
     },
     {
+      "name": "Subtenant custom groups",
+      "description": "Subtenant Group Member Controller"
+    },
+    {
       "name": "Subtenants",
       "description": "Subtenant Controller"
     },
@@ -131,11 +147,97 @@
       "description": "Virtual Network Controller"
     },
     {
+      "name": "ads-download",
+      "description": "Ads Download"
+    },
+    {
       "name": "vIDM",
       "description": "VIDM Controller"
     }
   ],
   "paths": {
+    "/ads/cer": {
+      "post": {
+        "tags": [
+          "Active Directory RSA Public Key"
+        ],
+        "summary": "Get public key",
+        "description": "Get public key",
+        "operationId": "getPublicKeyUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "getPublicKeyRequest",
+            "description": "getPublicKeyRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetPublicKeyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Entity has been imported",
+            "schema": {
+              "$ref": "#/definitions/GetPublicKeyResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/ads/sync": {
+      "post": {
+        "tags": [
+          "Active Directory Sync"
+        ],
+        "summary": "Sync",
+        "description": "Sync",
+        "operationId": "syncUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "createSyncRequest",
+            "description": "createSyncRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSyncRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SyncMessageResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been imported",
+            "schema": {
+              "$ref": "#/definitions/SyncMessageResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
     "/billing/virtual-machine/performance": {
       "get": {
         "tags": [
@@ -332,6 +434,26 @@
         }
       }
     },
+    "/integrationprovider/download": {
+      "get": {
+        "tags": [
+          "ads-download"
+        ],
+        "summary": "getFile",
+        "operationId": "getFileUsingGET",
+        "produces": [
+          "application/octet-stream"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource"
+            }
+          }
+        }
+      }
+    },
     "/ipcs": {
       "get": {
         "tags": [
@@ -509,6 +631,478 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/IpCollectionDeleteResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/kms/key": {
+      "get": {
+        "tags": [
+          "KMS Key management"
+        ],
+        "summary": "List",
+        "description": "List KMS keys",
+        "operationId": "keyListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/KeyListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "KMS Key management"
+        ],
+        "summary": "Create",
+        "description": "Create key (KMS)",
+        "operationId": "keyCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "keyInstance",
+            "description": "keyInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/KeyInstance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateKmsKeyResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateKmsKeyResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/kms/key/import": {
+      "post": {
+        "tags": [
+          "KMS Key management"
+        ],
+        "summary": "Import",
+        "description": "Import key (KMS)",
+        "operationId": "keyImportUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "keyImport",
+            "description": "keyImport",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/KeyImport"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ImportKmsKeyResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been imported",
+            "schema": {
+              "$ref": "#/definitions/ImportKmsKeyResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/kms/key/{id}": {
+      "get": {
+        "tags": [
+          "KMS Key management"
+        ],
+        "summary": "Get",
+        "description": "Get KMS key",
+        "operationId": "keyGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/KeyGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "KMS Key management"
+        ],
+        "summary": "Delete",
+        "description": "Delete key (KMS)",
+        "operationId": "keyDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Entity has been deleted",
+            "schema": {
+              "$ref": "#/definitions/DeleteKmsKeyResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/kms/key/{id}/export": {
+      "post": {
+        "tags": [
+          "KMS Key management"
+        ],
+        "summary": "Export",
+        "description": "Export key (KMS)",
+        "operationId": "keyExportUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "keyExport",
+            "description": "keyExport",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/KeyExport"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Key has been exported successfully.",
+            "schema": {
+              "$ref": "#/definitions/ExportKmsKeyResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/kms/key/{id}/revoke": {
+      "post": {
+        "tags": [
+          "KMS Key management"
+        ],
+        "summary": "Revoke",
+        "description": "Revoke key (KMS)",
+        "operationId": "keyRevokeUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "keyRevocation",
+            "description": "keyRevocation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/KeyRevocation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Key has been revoked.",
+            "schema": {
+              "$ref": "#/definitions/RevokeKmsKeyResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/kms/key/{id}/versions": {
+      "post": {
+        "tags": [
+          "KMS Key management"
+        ],
+        "summary": "New version",
+        "description": "Create new key version (KMS)",
+        "operationId": "keyNewVersionUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateNewKmsKeyVersionResponse"
+            }
+          },
+          "201": {
+            "description": "New key version has been created.",
+            "schema": {
+              "$ref": "#/definitions/CreateNewKmsKeyVersionResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/kms/schedule": {
+      "put": {
+        "tags": [
+          "KMS Key rotation scheduler"
+        ],
+        "summary": "Create",
+        "description": "Create key rotation schedule (KMS)",
+        "operationId": "keyRotationScheduleCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "keyRotationSchedule",
+            "description": "keyRotationSchedule",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/KeyRotationSchedule"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateKeyRotationScheduleResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateKeyRotationScheduleResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/kms/schedule/{keyId}": {
+      "get": {
+        "tags": [
+          "KMS Key rotation scheduler"
+        ],
+        "summary": "Get",
+        "description": "Get key rotation schedule (KMS)",
+        "operationId": "keyRotationScheduleGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "keyId",
+            "in": "path",
+            "description": "keyId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/KeyRotationScheduleGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "KMS Key rotation scheduler"
+        ],
+        "summary": "Update",
+        "description": "Update key rotation schedule (KMS)",
+        "operationId": "keyRotationScheduleUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "keyId",
+            "in": "path",
+            "description": "keyId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "keyRotationSchedule",
+            "description": "keyRotationSchedule",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/KeyRotationSchedule"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateKeyRotationScheduleResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "KMS Key rotation scheduler"
+        ],
+        "summary": "Delete",
+        "description": "Delete key rotation schedule (KMS)",
+        "operationId": "keyRotationScheduleDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "keyId",
+            "in": "path",
+            "description": "keyId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteKeyRotationScheduleResponse"
             }
           },
           "400": {
@@ -1467,75 +2061,6 @@
         }
       }
     },
-    "/network/ipsets": {
-      "get": {
-        "tags": [
-          "IPSets"
-        ],
-        "summary": "List",
-        "description": "List IPSets from NSX-T",
-        "operationId": "ipSetListUsingGET",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "displayName",
-            "in": "query",
-            "description": "displayName",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/IPSetListResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          }
-        }
-      }
-    },
-    "/network/ipsets/{ipSetId}": {
-      "get": {
-        "tags": [
-          "IPSets"
-        ],
-        "summary": "Get",
-        "description": "Get IPSet from NSX-T",
-        "operationId": "ipSetGetUsingGET",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "ipSetId",
-            "in": "path",
-            "description": "ipSetId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/IPSetGetResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          },
-          "404": {
-            "description": "Entity not found."
-          }
-        }
-      }
-    },
     "/network/logical-ports": {
       "get": {
         "tags": [
@@ -2252,6 +2777,15 @@
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "name": "active",
+            "in": "query",
+            "description": "active",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2478,6 +3012,337 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/SubtenantDeleteResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/subtenants/{subtenantId}/groups": {
+      "get": {
+        "tags": [
+          "Subtenant custom groups"
+        ],
+        "summary": "List",
+        "description": "List custom groups for subtenant",
+        "operationId": "subtenantGroupListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GroupListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/subtenants/{subtenantId}/groups/{groupId}": {
+      "get": {
+        "tags": [
+          "Subtenant custom groups"
+        ],
+        "summary": "Get",
+        "description": "Get custom groups for subtenant",
+        "operationId": "subtenantGroupGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "groupId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GroupGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Subtenant custom groups"
+        ],
+        "summary": "Update",
+        "description": "Update custom group membership in vRealize Automation",
+        "operationId": "subtenantGroupUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "groupId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "groupInstance",
+            "description": "groupInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GroupInstance"
+            }
+          },
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/UpdateGroupResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/subtenants/{subtenantId}/groups/{groupId}/members": {
+      "get": {
+        "tags": [
+          "Subtenant custom groups"
+        ],
+        "summary": "List",
+        "description": "List IAAS API group members",
+        "operationId": "memberListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "groupId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Subtenant custom groups"
+        ],
+        "summary": "Create",
+        "description": "Add member of custom group in vRealize Automation",
+        "operationId": "memberCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "groupId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "userInstance",
+            "description": "userInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserInstance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateMemberResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateMemberResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/subtenants/{subtenantId}/groups/{groupId}/members/{userId}": {
+      "get": {
+        "tags": [
+          "Subtenant custom groups"
+        ],
+        "summary": "Get",
+        "description": "Get IAAS API group member",
+        "operationId": "memberGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "groupId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "userId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Subtenant custom groups"
+        ],
+        "summary": "Delete",
+        "description": "Delete member of custom group from vRealize Automation",
+        "operationId": "memberDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "groupId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "userId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteMemberResponse"
             }
           },
           "400": {
@@ -3374,6 +4239,98 @@
       },
       "title": "CreateGFWRuleResponse"
     },
+    "CreateKeyRotationScheduleResponse": {
+      "type": "object",
+      "properties": {
+        "keyRotationSchedule": {
+          "$ref": "#/definitions/KeyRotationSchedule"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "CreateKeyRotationScheduleResponse"
+    },
+    "CreateKmsKeyResponse": {
+      "type": "object",
+      "properties": {
+        "keyInstance": {
+          "$ref": "#/definitions/KeyInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "CreateKmsKeyResponse"
+    },
+    "CreateMemberResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "userInstance": {
+          "$ref": "#/definitions/UserInstance"
+        }
+      },
+      "title": "CreateMemberResponse"
+    },
+    "CreateNewKmsKeyVersionResponse": {
+      "type": "object",
+      "properties": {
+        "keyInstance": {
+          "$ref": "#/definitions/KeyInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "CreateNewKmsKeyVersionResponse"
+    },
     "CreateRouterResponse": {
       "type": "object",
       "properties": {
@@ -3422,6 +4379,15 @@
         }
       },
       "title": "CreateSecurityGroupResponse"
+    },
+    "CreateSyncRequest": {
+      "type": "object",
+      "properties": {
+        "encodedContent": {
+          "type": "string"
+        }
+      },
+      "title": "CreateSyncRequest"
     },
     "CustomServiceGetResponse": {
       "type": "object",
@@ -3707,6 +4673,66 @@
       },
       "title": "DeleteGFWRuleResponse"
     },
+    "DeleteKeyRotationScheduleResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeleteKeyRotationScheduleResponse"
+    },
+    "DeleteKmsKeyResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeleteKmsKeyResponse"
+    },
+    "DeleteMemberResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeleteMemberResponse"
+    },
     "DeleteRouterResponse": {
       "type": "object",
       "properties": {
@@ -3868,6 +4894,55 @@
         }
       },
       "title": "EdgeClusterListResponse"
+    },
+    "EncryptionInstance": {
+      "type": "object",
+      "properties": {
+        "encrypt": {
+          "type": "boolean"
+        },
+        "encryptionKeyId": {
+          "type": "string"
+        },
+        "encryptionProviderId": {
+          "type": "string"
+        },
+        "managed": {
+          "type": "boolean"
+        },
+        "recryptOperation": {
+          "type": "string",
+          "enum": [
+            "DEEP",
+            "NONE",
+            "SHALLOW"
+          ]
+        }
+      },
+      "title": "EncryptionInstance"
+    },
+    "ExportKmsKeyResponse": {
+      "type": "object",
+      "properties": {
+        "keyInstance": {
+          "$ref": "#/definitions/KeyInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "ExportKmsKeyResponse"
     },
     "GFWRule": {
       "type": "object",
@@ -4075,58 +5150,40 @@
       },
       "title": "GatewayPolicyListResponse"
     },
-    "IPSet": {
+    "GetPublicKeyRequest": {
       "type": "object",
       "properties": {
-        "createdBy": {
-          "type": "string"
-        },
-        "creationDate": {
-          "type": "string",
-          "format": "date-time",
-          "x-nullable": true
-        },
-        "displayName": {
-          "type": "string"
-        },
-        "ipSetAddresses": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/IPSetAddress"
-          }
-        },
-        "ipSetId": {
-          "type": "string"
-        },
-        "modificationDate": {
-          "type": "string",
-          "format": "date-time",
-          "x-nullable": true
-        },
-        "modifiedBy": {
+        "sha256CheckSum": {
           "type": "string"
         }
       },
-      "title": "IPSet"
+      "title": "GetPublicKeyRequest"
     },
-    "IPSetAddress": {
+    "GetPublicKeyResponse": {
       "type": "object",
       "properties": {
-        "ipAddress": {
+        "messages": {
           "type": "string"
         },
-        "ipSetAddressId": {
-          "type": "integer",
-          "format": "int32"
+        "rsaPublicKey": {
+          "$ref": "#/definitions/RSAPublicKey"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
         }
       },
-      "title": "IPSetAddress"
+      "title": "GetPublicKeyResponse"
     },
-    "IPSetGetResponse": {
+    "GroupGetResponse": {
       "type": "object",
       "properties": {
-        "ipSet": {
-          "$ref": "#/definitions/IPSet"
+        "groupInstance": {
+          "$ref": "#/definitions/GroupInstance"
         },
         "messages": {
           "type": "string"
@@ -4140,15 +5197,61 @@
           "x-nullable": true
         }
       },
-      "title": "IPSetGetResponse"
+      "title": "GroupGetResponse"
     },
-    "IPSetListResponse": {
+    "GroupInstance": {
       "type": "object",
       "properties": {
-        "ipSetCollection": {
+        "description": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "emailAddress": {
+          "type": "string"
+        },
+        "fqdn": {
+          "type": "string"
+        },
+        "groupId": {
+          "type": "string"
+        },
+        "groupType": {
+          "type": "string",
+          "enum": [
+            "CUSTOM",
+            "SSO"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "netbios": {
+          "type": "string"
+        },
+        "principalId": {
+          "$ref": "#/definitions/PrincipalId"
+        },
+        "principalName": {
+          "type": "string"
+        },
+        "userInstanceList": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/IPSet"
+            "$ref": "#/definitions/UserInstance"
+          }
+        }
+      },
+      "title": "GroupInstance"
+    },
+    "GroupListResponse": {
+      "type": "object",
+      "properties": {
+        "groupInstanceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GroupInstance"
           }
         },
         "messages": {
@@ -4163,7 +5266,34 @@
           "x-nullable": true
         }
       },
-      "title": "IPSetListResponse"
+      "title": "GroupListResponse"
+    },
+    "ImportKmsKeyResponse": {
+      "type": "object",
+      "properties": {
+        "keyInstance": {
+          "$ref": "#/definitions/KeyInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "ImportKmsKeyResponse"
+    },
+    "InputStream": {
+      "type": "object",
+      "title": "InputStream"
     },
     "IpCollection": {
       "type": "object",
@@ -4192,7 +5322,6 @@
           "type": "string",
           "enum": [
             "IPCOLLECTION",
-            "IPSET",
             "LOGICAL_PORT",
             "VIRTUAL_MACHINE"
           ]
@@ -4319,6 +5448,281 @@
         }
       },
       "title": "IpCollectionUpdateResponse"
+    },
+    "KeyExport": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "enum": [
+            "pkcs1",
+            "pkcs8"
+          ]
+        },
+        "wrapPublicKey": {
+          "type": "string"
+        }
+      },
+      "title": "KeyExport"
+    },
+    "KeyGetResponse": {
+      "type": "object",
+      "properties": {
+        "keyInstance": {
+          "$ref": "#/definitions/KeyInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "KeyGetResponse"
+    },
+    "KeyImport": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "type": "string"
+        },
+        "keyName": {
+          "type": "string"
+        },
+        "keyUsageList": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "CERTIFICATE_SIGN",
+              "CONTENT_COMMITMENT",
+              "CRL_SIGN",
+              "DECRYPT",
+              "DERIVE_KEY",
+              "ENCRYPT",
+              "EXPORT_KEY",
+              "FPE_DECRYPT",
+              "FPE_ENCRYPT",
+              "GENERATE_CRYPTOGRAM",
+              "GENERATE_MAC",
+              "KEY_AGREEMENT",
+              "SIGN",
+              "TRANSLATE_DECRYPT",
+              "TRANSLATE_ENCRYPT",
+              "TRANSLATE_UNWRAP",
+              "TRANSLATE_WRAP",
+              "UNWRAP_KEY",
+              "VALIDATE_CRYPTOGRAM",
+              "VERIFY",
+              "VERIFY_MAC",
+              "WRAP_KEY"
+            ]
+          }
+        },
+        "material": {
+          "type": "string"
+        },
+        "privateKeyIdToUnwrap": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "KeyImport"
+    },
+    "KeyInstance": {
+      "type": "object",
+      "properties": {
+        "activationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "algorithm": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "defaultIV": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "keyUsageList": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "CERTIFICATE_SIGN",
+              "CONTENT_COMMITMENT",
+              "CRL_SIGN",
+              "DECRYPT",
+              "DERIVE_KEY",
+              "ENCRYPT",
+              "EXPORT_KEY",
+              "FPE_DECRYPT",
+              "FPE_ENCRYPT",
+              "GENERATE_CRYPTOGRAM",
+              "GENERATE_MAC",
+              "KEY_AGREEMENT",
+              "SIGN",
+              "TRANSLATE_DECRYPT",
+              "TRANSLATE_ENCRYPT",
+              "TRANSLATE_UNWRAP",
+              "TRANSLATE_WRAP",
+              "UNWRAP_KEY",
+              "VALIDATE_CRYPTOGRAM",
+              "VERIFY",
+              "VERIFY_MAC",
+              "WRAP_KEY"
+            ]
+          }
+        },
+        "material": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "objectType": {
+          "type": "string"
+        },
+        "revocationReason": {
+          "type": "string",
+          "enum": [
+            "AffiliationChanged",
+            "CACompromise",
+            "CessationOfOperation",
+            "KeyCompromise",
+            "PrivilegeWithdrawn",
+            "Superseded",
+            "Unspecified"
+          ]
+        },
+        "sha1Fingerprint": {
+          "type": "string"
+        },
+        "sha256Fingerprint": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "state": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "KeyInstance"
+    },
+    "KeyListResponse": {
+      "type": "object",
+      "properties": {
+        "keyInstanceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KeyInstance"
+          }
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "KeyListResponse"
+    },
+    "KeyRevocation": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string",
+          "enum": [
+            "AffiliationChanged",
+            "CACompromise",
+            "CessationOfOperation",
+            "KeyCompromise",
+            "PrivilegeWithdrawn",
+            "Superseded",
+            "Unspecified"
+          ]
+        }
+      },
+      "title": "KeyRevocation"
+    },
+    "KeyRotationSchedule": {
+      "type": "object",
+      "properties": {
+        "cycle": {
+          "type": "boolean"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "entryId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "intervalHours": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "keyId": {
+          "type": "string"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "staticDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "KeyRotationSchedule"
+    },
+    "KeyRotationScheduleGetResponse": {
+      "type": "object",
+      "properties": {
+        "keyRotationSchedule": {
+          "$ref": "#/definitions/KeyRotationSchedule"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "KeyRotationScheduleGetResponse"
     },
     "L4PortSetEntry": {
       "type": "object",
@@ -4741,6 +6145,7 @@
         "principalType": {
           "type": "string",
           "enum": [
+            "CUSTOM",
             "CUSTOM_GROUP",
             "GROUP",
             "SSO_GROUP",
@@ -4750,6 +6155,15 @@
       },
       "title": "PrincipalId"
     },
+    "RSAPublicKey": {
+      "type": "object",
+      "properties": {
+        "base64": {
+          "type": "string"
+        }
+      },
+      "title": "RSAPublicKey"
+    },
     "RequestInstance": {
       "type": "object",
       "properties": {
@@ -4757,6 +6171,9 @@
           "type": "string",
           "format": "date-time",
           "x-nullable": true
+        },
+        "lastErrorMessage": {
+          "type": "string"
         },
         "requestBody": {
           "type": "string"
@@ -4791,6 +6208,13 @@
         "requestType": {
           "type": "string",
           "enum": [
+            "ADS_SYNC",
+            "BILLING_ALARM_DEFINITION_CREATE",
+            "BILLING_ALARM_DEFINITION_DELETE",
+            "BILLING_ALARM_DEFINITION_UPDATE",
+            "CATALOG_ENTITLEMENT_CREATE",
+            "CATALOG_ENTITLEMENT_DELETE",
+            "CATALOG_ENTITLEMENT_UPDATE",
             "CUSTOM_SERVICE_CREATE",
             "CUSTOM_SERVICE_DELETE",
             "CUSTOM_SERVICE_MODIFY",
@@ -4800,9 +6224,23 @@
             "FIREWALL_GFW_RULE_CREATE",
             "FIREWALL_GFW_RULE_DELETE",
             "FIREWALL_GFW_RULE_UPDATE",
+            "GROUP_CREATE",
+            "GROUP_DELETE",
+            "GROUP_MEMBER_CREATE",
+            "GROUP_MEMBER_DELETE",
+            "GROUP_UPDATE",
             "IPCOLLECTION_CREATE",
             "IPCOLLECTION_DELETE",
             "IPCOLLECTION_UPDATE",
+            "KMS_KEY_CREATE",
+            "KMS_KEY_DELETE",
+            "KMS_KEY_EXPORT",
+            "KMS_KEY_IMPORT",
+            "KMS_KEY_NEW_VERSION",
+            "KMS_KEY_REVOKE",
+            "KMS_KEY_ROTATION_SCHEDULE_CREATE",
+            "KMS_KEY_ROTATION_SCHEDULE_DELETE",
+            "KMS_KEY_ROTATION_SCHEDULE_UPDATE",
             "NETWORK_CREATE",
             "NETWORK_DELETE",
             "NETWORK_UPDATE",
@@ -4812,6 +6250,9 @@
             "SECURITY_GROUP_CREATE",
             "SECURITY_GROUP_DELETE",
             "SECURITY_GROUP_UPDATE",
+            "SEGMENT_CREATE",
+            "SEGMENT_DELETE",
+            "SEGMENT_UPDATE",
             "SUBTENANT_CREATE",
             "SUBTENANT_DELETE",
             "SUBTENANT_UPDATE",
@@ -4995,6 +6436,38 @@
       },
       "title": "ReservationType"
     },
+    "Resource": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "inputStream": {
+          "$ref": "#/definitions/InputStream"
+        },
+        "open": {
+          "type": "boolean"
+        },
+        "readable": {
+          "type": "boolean"
+        },
+        "uri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "url": {
+          "type": "string",
+          "format": "url"
+        }
+      },
+      "title": "Resource"
+    },
     "ResourceType": {
       "type": "object",
       "properties": {
@@ -5007,6 +6480,29 @@
         }
       },
       "title": "ResourceType"
+    },
+    "RevokeKmsKeyResponse": {
+      "type": "object",
+      "properties": {
+        "keyInstance": {
+          "$ref": "#/definitions/KeyInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "RevokeKmsKeyResponse"
     },
     "RouterGetResponse": {
       "type": "object",
@@ -5176,7 +6672,6 @@
           "type": "string",
           "enum": [
             "IPCOLLECTION",
-            "IPSET",
             "LOGICAL_PORT",
             "VIRTUAL_MACHINE"
           ]
@@ -5648,6 +7143,29 @@
       },
       "title": "SubtenantUpdateResponse"
     },
+    "SyncMessageResponse": {
+      "type": "object",
+      "properties": {
+        "messageId": {
+          "type": "string"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "SyncMessageResponse"
+    },
     "TagInstance": {
       "type": "object",
       "properties": {
@@ -5732,6 +7250,52 @@
         }
       },
       "title": "UpdateGFWRuleResponse"
+    },
+    "UpdateGroupResponse": {
+      "type": "object",
+      "properties": {
+        "groupInstance": {
+          "$ref": "#/definitions/GroupInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "UpdateGroupResponse"
+    },
+    "UpdateKeyRotationScheduleResponse": {
+      "type": "object",
+      "properties": {
+        "keyRotationSchedule": {
+          "$ref": "#/definitions/KeyRotationSchedule"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "UpdateKeyRotationScheduleResponse"
     },
     "UpdateRouterResponse": {
       "type": "object",
@@ -6154,6 +7718,9 @@
         },
         "deploymentInstance": {
           "$ref": "#/definitions/DeploymentInstance"
+        },
+        "encryptionInstance": {
+          "$ref": "#/definitions/EncryptionInstance"
         },
         "initialPassword": {
           "type": "string"
