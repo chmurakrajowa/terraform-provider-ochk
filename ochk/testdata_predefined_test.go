@@ -17,7 +17,6 @@ func getTestData() predefinedTestData {
 }
 
 type predefinedTestData struct {
-	IPSet1DisplayName                string
 	LogicalPort1DisplayName          string
 	Network1Name                     string
 	Network2Name                     string
@@ -42,7 +41,6 @@ type predefinedTestData struct {
 
 var devTestDataPrefix = "tf-test2"
 var predefinedTestDataDev = predefinedTestData{
-	IPSet1DisplayName:                "ochk1",
 	LogicalPort1DisplayName:          "d0ac165f-cec0-db4a-2a82-b8599f064900/devel0000001256.vmx@93f28b5d-ec29-4ba2-b753-160ce290b7fd",
 	Network1Name:                     "vtest8",
 	Network2Name:                     "vtest7",
@@ -66,7 +64,6 @@ var predefinedTestDataDev = predefinedTestData{
 }
 
 var predefinedTestDataAT = predefinedTestData{
-	IPSet1DisplayName:                "ochk1",
 	LogicalPort1DisplayName:          "f766455e-22a7-a2de-35f5-b8599f064a08/devel0000000639.vmx@a596ebcb-a875-4188-8ec5-0a84bfbf1e11",
 	Network1Name:                     "vtest8",
 	Network2Name:                     "vtest7",

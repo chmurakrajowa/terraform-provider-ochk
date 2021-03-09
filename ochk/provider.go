@@ -52,7 +52,6 @@ func Provider() *schema.Provider {
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"ochk_gateway_policy":  dataSourceGatewayPolicy(),
-			"ochk_ip_set":          dataSourceIPSet(),
 			"ochk_logical_port":    dataSourceLogicalPort(),
 			"ochk_network":         dataSourceNetwork(),
 			"ochk_router":          dataSourceRouter(),

@@ -14,9 +14,9 @@ type DeploymentsProxy struct {
 	service    deployments.ClientService
 }
 
-func (p *DeploymentsProxy) Read(ctx context.Context, ipSetID string) (*models.DeploymentInstance, error) {
+func (p *DeploymentsProxy) Read(ctx context.Context, deploymentID string) (*models.DeploymentInstance, error) {
 	params := &deployments.DeploymentGetUsingGETParams{
-		DeploymentID: ipSetID,
+		DeploymentID: deploymentID,
 		Context:      ctx,
 		HTTPClient:   p.httpClient,
 	}

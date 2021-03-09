@@ -20,7 +20,6 @@ type Client struct {
 	FirewallEWRules FirewallEWRulesProxy
 	FirewallSNRules FirewallSNRulesProxy
 	GatewayPolicy   GatewayPolicyProxy
-	IPSets          IPSetsProxy
 	LogicalPorts    LogicalPortsProxy
 	Networks        NetworksProxy
 	Requests        RequestsProxy
@@ -134,10 +133,6 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 			httpClient:    httpClient,
 			service:       authClient.VirtualMachines,
 			legacyService: authClient.VirtualMachinesnsx,
-		},
-		IPSets: IPSetsProxy{
-			httpClient: httpClient,
-			service:    authClient.IPSets,
 		},
 		LogicalPorts: LogicalPortsProxy{
 			httpClient: httpClient,

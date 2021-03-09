@@ -14,9 +14,9 @@ type LogicalPortsProxy struct {
 	service    logical_ports.ClientService
 }
 
-func (p *LogicalPortsProxy) Read(ctx context.Context, ipSetID string) (*models.LogicalPort, error) {
+func (p *LogicalPortsProxy) Read(ctx context.Context, logicalPortID string) (*models.LogicalPort, error) {
 	params := &logical_ports.LogicalPortGetUsingGETParams{
-		LogicalPortID: ipSetID,
+		LogicalPortID: logicalPortID,
 		Context:       ctx,
 		HTTPClient:    p.httpClient,
 	}
