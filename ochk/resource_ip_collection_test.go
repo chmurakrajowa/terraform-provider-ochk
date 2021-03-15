@@ -31,12 +31,12 @@ func (c *IPCollectionTestData) FullResourceName() string {
 func TestAccIPCollectionResource_create_update(t *testing.T) {
 	ipCollection := IPCollectionTestData{
 		ResourceName: "default",
-		DisplayName:  generateRandName(),
+		DisplayName:  generateShortRandName(),
 		IPAddresses:  []string{"10.10.10.10"},
 	}
 
 	ipCollectionUpdated := ipCollection
-	ipCollectionUpdated.DisplayName += "-updated"
+	ipCollectionUpdated.DisplayName += "-upd"
 	ipCollectionUpdated.IPAddresses = []string{"192.168.1.10"}
 
 	IPCollectionResourceName := ipCollection.FullResourceName()

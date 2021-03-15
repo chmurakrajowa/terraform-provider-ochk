@@ -8,7 +8,6 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"net/http"
-	"strings"
 	"time"
 )
 
@@ -31,8 +30,7 @@ func (p *RequestsProxy) FetchResourceID(ctx context.Context, timeout time.Durati
 		}
 
 		if err := verifyRequestStatusAndPhase(requestState); err != nil {
-			messageList := mapRequestMessageList(requestState.RequestMessageList)
-			return resource.NonRetryableError(fmt.Errorf("request is not in valid state: %w. %s", err, messageList))
+			return resource.NonRetryableError(fmt.Errorf("request is not in valid state: %w. %s", err, requestState.LastErrorMessage))
 		}
 
 		if requestState.RequestPhase != "FINISHED" {
@@ -55,23 +53,6 @@ func verifyRequestStatusAndPhase(request *models.RequestInstance) error {
 	}
 
 	return nil
-}
-
-func mapRequestMessageList(requestMessageList []*models.RequestMessage) string {
-	builder := strings.Builder{}
-	builder.WriteString("[")
-	for i := 0; i < len(requestMessageList); i++ {
-		item := requestMessageList[i]
-
-		builder.WriteString(fmt.Sprintf("%s - %s", item.MessageDate, item.MessageValue))
-
-		if i < len(requestMessageList)-1 {
-			builder.WriteString(", ")
-		}
-	}
-	builder.WriteString("]")
-
-	return builder.String()
 }
 
 func (p *RequestsProxy) Read(ctx context.Context, requestID string) (*models.RequestInstance, error) {

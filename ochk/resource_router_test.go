@@ -29,12 +29,12 @@ func (c *RouterTestData) FullResourceName() string {
 func TestAccRouterResource_create_update(t *testing.T) {
 	router := RouterTestData{
 		ResourceName: "router",
-		DisplayName:  generateRandName(),
+		DisplayName:  generateShortRandName(),
 	}
 
 	routerUpdated := RouterTestData{
 		ResourceName: "router",
-		DisplayName:  router.DisplayName + "-updated",
+		DisplayName:  router.DisplayName + "-upd",
 	}
 
 	RouterResourceName := router.FullResourceName()

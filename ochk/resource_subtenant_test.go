@@ -50,7 +50,7 @@ func TestAccSubtenantResource_create(t *testing.T) {
 
 	user1 := UserDataSourceTestData{
 		ResourceName: "user1",
-		Name:         "devel-dstawicki",
+		Name:         testData.User1Name,
 	}
 
 	subtenant := SubtenantTestData{

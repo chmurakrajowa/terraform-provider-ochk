@@ -1,4 +1,4 @@
-This terraform source is used for dogfooding predefined test resources on different environment.
+This terraform source is used for dogfooding predefined test resources on different environments.
 
 After creating resource here, add it to terraform outputs and define in `testdata_predefined_test.go` file.
  

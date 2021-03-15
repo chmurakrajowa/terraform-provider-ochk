@@ -60,7 +60,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 
 	/* Security group with one member with updated display_name */
 	securityGroupUpdated := securityGroup
-	securityGroupUpdated.DisplayName += "-updated"
+	securityGroupUpdated.DisplayName += "-upd"
 	configOneMemberUpdated := virtualMachine.ToString() + securityGroupUpdated.ToString()
 
 	/* Security group with two members and updated display_name */

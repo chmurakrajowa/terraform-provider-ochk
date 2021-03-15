@@ -25,3 +25,6 @@ terraform.d
 .terraform.tfstate.lock.info
 *.log
 dist
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl

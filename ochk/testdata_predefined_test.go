@@ -37,6 +37,8 @@ type predefinedTestData struct {
 	Deployment1DisplayName           string
 	CustomService1DisplayName        string
 	CustomService2DisplayName        string
+	KMSKeyDisplayName                string
+	SecurityPolicyDisplayName        string
 }
 
 var devTestDataPrefix = "tf-test2"
@@ -63,25 +65,28 @@ var predefinedTestDataDev = predefinedTestData{
 	CustomService2DisplayName:        fmt.Sprintf("%s-http", devTestDataPrefix),
 }
 
+var testTestDataPrefix = "tf-test1"
 var predefinedTestDataAT = predefinedTestData{
-	LogicalPort1DisplayName:          "f766455e-22a7-a2de-35f5-b8599f064a08/devel0000000639.vmx@a596ebcb-a875-4188-8ec5-0a84bfbf1e11",
-	Network1Name:                     "vtest8",
-	Network2Name:                     "vtest7",
-	SubtenantNetworkName:             "vtest7",
-	Subtenant1Name:                   "tf-acc_test-9j97besn",
-	Subtenant2Name:                   "tf-acc_test-0yawdijz",
-	Subtenant3Name:                   "tf-test-name-tf-acc_test-amwyi09b",
-	Subtenant4Name:                   "tf-test-name-tf-acc_test-03w1wt34",
-	SubtenantForVMName:               "admin",
-	User1Name:                        "devel-jpuser",
-	User2Name:                        "devel-jpuser",
-	VirtualMachine1DisplayName:       "devel0000001157",
-	VirtualNetwork1DisplayName:       "tf-test-vnet",
-	VirtualNetwork2DisplayName:       "tf-test-vnet2",
-	LegacyVirtualMachineDisplayName:  "devel0000000098",
-	LegacyVirtualMachine2DisplayName: "devel0000000098",
-	IPCollection1DisplayName:         "tf-test-ipcollection",
+	LogicalPort1DisplayName:          "196eae5f-824c-3156-aa0b-98039b5c9998/Vm12345678-.vmx@8325dc52-dddc-4b43-89a1-a20271a40928",
+	Network1Name:                     "CMP_VNET_7",
+	Network2Name:                     "CMP_VNET_71",
+	SubtenantNetworkName:             "CMP_VNET_1",
+	Subtenant1Name:                   fmt.Sprintf("%s-subt1", testTestDataPrefix),
+	Subtenant2Name:                   fmt.Sprintf("%s-subt2", testTestDataPrefix),
+	Subtenant3Name:                   fmt.Sprintf("%s-subt3", testTestDataPrefix),
+	Subtenant4Name:                   fmt.Sprintf("%s-subt4", testTestDataPrefix),
+	SubtenantForVMName:               "bg_001",
+	User1Name:                        "testy-tftest",
+	User2Name:                        "testy-tt",
+	VirtualMachine1DisplayName:       fmt.Sprintf("%s-vm", testTestDataPrefix),
+	VirtualNetwork1DisplayName:       fmt.Sprintf("%s-vnet3", testTestDataPrefix),
+	VirtualNetwork2DisplayName:       fmt.Sprintf("%s-vnet4", testTestDataPrefix),
+	LegacyVirtualMachineDisplayName:  "testy0000000133",
+	LegacyVirtualMachine2DisplayName: "testy0000000083",
+	IPCollection1DisplayName:         fmt.Sprintf("%s-ipc", testTestDataPrefix),
 	Deployment1DisplayName:           "CentOS 7",
-	CustomService1DisplayName:        fmt.Sprintf("%s-https", devTestDataPrefix),
-	CustomService2DisplayName:        fmt.Sprintf("%s-http", devTestDataPrefix),
+	CustomService1DisplayName:        fmt.Sprintf("%s-https", testTestDataPrefix),
+	CustomService2DisplayName:        fmt.Sprintf("%s-http", testTestDataPrefix),
+	SecurityPolicyDisplayName:        "testy",
+	KMSKeyDisplayName:                fmt.Sprintf("%s-key", testTestDataPrefix),
 }

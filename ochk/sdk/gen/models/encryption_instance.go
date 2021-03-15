@@ -29,7 +29,8 @@ type EncryptionInstance struct {
 	EncryptionProviderID string `json:"encryptionProviderId,omitempty"`
 
 	// managed
-	Managed bool `json:"managed,omitempty"`
+	// FIXME omit empty removed by hand temporarily
+	Managed bool `json:"managed"`
 
 	// recrypt operation
 	// Enum: [DEEP NONE SHALLOW]
