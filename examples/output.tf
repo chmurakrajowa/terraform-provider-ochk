@@ -34,3 +34,26 @@ output "vm" {
   value = ochk_virtual_machine.default
 }
 
+output "aes-generated" {
+  value = ochk_kms_key.aes-generated
+}
+
+output "rsa-to-unwrap" {
+  value = ochk_kms_key.rsa-to-unwrap
+}
+
+output "aes-enc" {
+  value = ochk_kms_key.aes-enc
+}
+
+/*
+output "encrypted-with-own-encrypted-key" {
+  value = ochk_virtual_machine.encrypted-with-own-encrypted-key
+}
+
+output "encrypted-own-key" {
+  value = ochk_virtual_machine.encrypted
+}
+*/
+
+
