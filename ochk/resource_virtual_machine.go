@@ -134,6 +134,21 @@ func resourceVirtualMachine() *schema.Resource {
 					},
 				},
 			},
+			"encryption": {
+				Type:     schema.TypeBool,
+				Default:  false,
+				Optional: true,
+			},
+			"encryption_key_id": {
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"encryption_recrypt": {
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"created_by": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -277,11 +292,22 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 		return fmt.Errorf("error setting virtual_disk: %w", err)
 	}
 
-	if err := d.Set("created_at", virtualMachine.CreationDate.String()); err != nil {
-		return fmt.Errorf("error setting created_at: %w", err)
+	if virtualMachine.EncryptionInstance != nil {
+		if err := d.Set("encryption", virtualMachine.EncryptionInstance.Encrypt); err != nil {
+			return fmt.Errorf("error setting created_by: %w", err)
+		}
+		if virtualMachine.EncryptionInstance.EncryptionKeyID != "" {
+			if err := d.Set("encryption_key_id", virtualMachine.EncryptionInstance.EncryptionKeyID); err != nil {
+				return fmt.Errorf("error setting created_by: %w", err)
+			}
+		}
 	}
+
 	if err := d.Set("created_by", virtualMachine.CreatedBy); err != nil {
 		return fmt.Errorf("error setting created_by: %w", err)
+	}
+	if err := d.Set("created_at", virtualMachine.CreationDate.String()); err != nil {
+		return fmt.Errorf("error setting created_at: %w", err)
 	}
 	if err := d.Set("modified_at", virtualMachine.ModificationDate.String()); err != nil {
 		return fmt.Errorf("error setting modified_at: %w", err)
@@ -307,6 +333,27 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VcsVirtualM
 		VirtualMachineID:      d.Id(),
 		VirtualMachineName:    d.Get("display_name").(string),
 		VirtualNetworkDevices: expandVirtualNetworkDevices(d.Get("virtual_network_devices").([]interface{})),
+	}
+
+	encryptionInstance := &models.EncryptionInstance{
+		Encrypt: d.Get("encryption").(bool),
+	}
+
+	if recryptOperation, ok := d.GetOk("encryption_recrypt"); ok && recryptOperation.(string) != "" {
+		encryptionInstance.RecryptOperation = d.Get("encryption_recrypt").(string)
+	} else {
+		encryptionInstance.RecryptOperation = "NONE"
+	}
+
+	if encryptionKeyId, ok := d.GetOk("encryption_key_id"); ok && encryptionKeyId.(string) != "" {
+		encryptionInstance.EncryptionKeyID = encryptionKeyId.(string)
+		encryptionInstance.Managed = false
+	} else {
+		encryptionInstance.Managed = true
+	}
+
+	if !encryptionInstance.Managed || encryptionInstance.Encrypt {
+		virtualMachineInstance.EncryptionInstance = encryptionInstance
 	}
 
 	virtualDisks := expandVirtualDisks(d.Get("virtual_disk").(*schema.Set).List())

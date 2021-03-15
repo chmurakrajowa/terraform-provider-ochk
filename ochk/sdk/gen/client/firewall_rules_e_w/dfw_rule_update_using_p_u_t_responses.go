@@ -29,6 +29,12 @@ func (o *DfwRuleUpdateUsingPUTReader) ReadResponse(response runtime.ClientRespon
 			return nil, err
 		}
 		return result, nil
+	case 201:
+		result := NewDfwRuleUpdateUsingPUTCreated()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 400:
 		result := NewDfwRuleUpdateUsingPUTBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -63,6 +69,39 @@ func (o *DfwRuleUpdateUsingPUTOK) GetPayload() *models.UpdateDFWRuleResponse {
 }
 
 func (o *DfwRuleUpdateUsingPUTOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.UpdateDFWRuleResponse)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewDfwRuleUpdateUsingPUTCreated creates a DfwRuleUpdateUsingPUTCreated with default headers values
+func NewDfwRuleUpdateUsingPUTCreated() *DfwRuleUpdateUsingPUTCreated {
+	return &DfwRuleUpdateUsingPUTCreated{}
+}
+
+/*DfwRuleUpdateUsingPUTCreated handles this case with default header values.
+
+Entity has been updated
+*/
+type DfwRuleUpdateUsingPUTCreated struct {
+	Payload *models.UpdateDFWRuleResponse
+}
+
+func (o *DfwRuleUpdateUsingPUTCreated) Error() string {
+	return fmt.Sprintf("[PUT /network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}][%d] dfwRuleUpdateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
+func (o *DfwRuleUpdateUsingPUTCreated) GetPayload() *models.UpdateDFWRuleResponse {
+	return o.Payload
+}
+
+func (o *DfwRuleUpdateUsingPUTCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.UpdateDFWRuleResponse)
 

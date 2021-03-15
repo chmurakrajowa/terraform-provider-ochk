@@ -21,9 +21,9 @@ func TestAccFirewallSNRuleResource_create_update(t *testing.T) {
 	ruleDisplayName := generateRandName()
 
 	routerName := "T1"
-	routerNameUpdated := "T0"
+	routerNameUpdated := "testowy"
 
-	ruleDisplayNameUpdated := ruleDisplayName + "-updated"
+	ruleDisplayNameUpdated := ruleDisplayName + "-upd"
 	actionUpdated := "DROP"
 	directionUpdated := "OUT"
 	ipProtocolUpdated := "IPV4"

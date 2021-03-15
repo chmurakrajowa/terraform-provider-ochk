@@ -71,7 +71,10 @@ The following arguments are supported:
     * **controller_id** - (Required) The unique identifier of controller. The only supported value for now is "0".
     * **lun_id** - (Required) Number used to identify a logical unit. Set this to consecutive int numbers > 0. When updating, e.g. extending size, `lun_id` needs to be preserved.
     * **size_mb** - (Required) Size in megabytes of the additional disk. When updating, only disk extensions are supported (larger value).
-    * **device_type** - (Optional) Type of the device. Only supported value for now: `SCSI`.
+    * **device_type** - (Optional) Type of the device. Only supported value for now: `SCSI`. 
+* `encryption` - (Optional) Enables VM encryption. Defaults to false. If this attribute is changed (performing update), encryption is either disabled (false) or VM is encrypted in place (true).  
+* `encryption_key_id` - (Optional) Identifier of encryption key. If not set, encryption is managed automatically. Use `ochk_kms_key` to get key id.  
+* `encryption_recrypt` - (Optional) Re-encryption operation: `NONE`, `SHALLOW`, `DEEP`. Provide `SHALLOW` or `DEEP` when enabling encryption on existing VM (when updating).                                                                                                          
 
 ## Attribute Reference
 

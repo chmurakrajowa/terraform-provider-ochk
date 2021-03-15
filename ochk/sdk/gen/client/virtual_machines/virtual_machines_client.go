@@ -29,13 +29,13 @@ type Client struct {
 type ClientService interface {
 	VcsVirtualMachineCreateUsingPUT(params *VcsVirtualMachineCreateUsingPUTParams) (*VcsVirtualMachineCreateUsingPUTOK, *VcsVirtualMachineCreateUsingPUTCreated, error)
 
-	VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDeleteUsingDELETEParams) (*VcsVirtualMachineDeleteUsingDELETEOK, error)
+	VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDeleteUsingDELETEParams) (*VcsVirtualMachineDeleteUsingDELETEOK, *VcsVirtualMachineDeleteUsingDELETECreated, error)
 
 	VcsVirtualMachineGroupGetUsingGET1(params *VcsVirtualMachineGroupGetUsingGET1Params) (*VcsVirtualMachineGroupGetUsingGET1OK, error)
 
 	VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsingGET1Params) (*VcsVirtualMachineListUsingGET1OK, error)
 
-	VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdateUsingPUTParams) (*VcsVirtualMachineUpdateUsingPUTOK, error)
+	VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdateUsingPUTParams) (*VcsVirtualMachineUpdateUsingPUTOK, *VcsVirtualMachineUpdateUsingPUTCreated, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -82,7 +82,7 @@ func (a *Client) VcsVirtualMachineCreateUsingPUT(params *VcsVirtualMachineCreate
 
   Delete vSphere vCenter virtual machine
 */
-func (a *Client) VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDeleteUsingDELETEParams) (*VcsVirtualMachineDeleteUsingDELETEOK, error) {
+func (a *Client) VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDeleteUsingDELETEParams) (*VcsVirtualMachineDeleteUsingDELETEOK, *VcsVirtualMachineDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineDeleteUsingDELETEParams()
@@ -101,15 +101,16 @@ func (a *Client) VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDel
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*VcsVirtualMachineDeleteUsingDELETEOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *VcsVirtualMachineDeleteUsingDELETEOK:
+		return value, nil, nil
+	case *VcsVirtualMachineDeleteUsingDELETECreated:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for virtual_machines: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -190,7 +191,7 @@ func (a *Client) VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsi
 
   Update vSphere vCenter virtual machine
 */
-func (a *Client) VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdateUsingPUTParams) (*VcsVirtualMachineUpdateUsingPUTOK, error) {
+func (a *Client) VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdateUsingPUTParams) (*VcsVirtualMachineUpdateUsingPUTOK, *VcsVirtualMachineUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineUpdateUsingPUTParams()
@@ -209,15 +210,16 @@ func (a *Client) VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdate
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*VcsVirtualMachineUpdateUsingPUTOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *VcsVirtualMachineUpdateUsingPUTOK:
+		return value, nil, nil
+	case *VcsVirtualMachineUpdateUsingPUTCreated:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for virtual_machines: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

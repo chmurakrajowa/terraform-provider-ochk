@@ -39,6 +39,9 @@ type VcsVirtualMachineInstance struct {
 	// initial password
 	InitialPassword string `json:"initialPassword,omitempty"`
 
+	// lic settings
+	LicSettings *LicSettings `json:"licSettings,omitempty"`
+
 	// modification date
 	// Format: date-time
 	ModificationDate *strfmt.DateTime `json:"modificationDate,omitempty"`
@@ -91,6 +94,10 @@ func (m *VcsVirtualMachineInstance) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateEncryptionInstance(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateLicSettings(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -190,6 +197,24 @@ func (m *VcsVirtualMachineInstance) validateEncryptionInstance(formats strfmt.Re
 		if err := m.EncryptionInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("encryptionInstance")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *VcsVirtualMachineInstance) validateLicSettings(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.LicSettings) { // not required
+		return nil
+	}
+
+	if m.LicSettings != nil {
+		if err := m.LicSettings.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("licSettings")
 			}
 			return err
 		}

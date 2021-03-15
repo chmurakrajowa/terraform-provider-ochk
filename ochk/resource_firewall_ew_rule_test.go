@@ -14,7 +14,7 @@ import (
 func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
 	resourceName := "ochk_firewall_ew_rule.default"
 	displayName := generateRandName()
-	displayNameUpdated := displayName + "-updated"
+	displayNameUpdated := displayName + "-upd"
 	action := "ALLOW"
 	actionUpdated := "DROP"
 	direction := "IN_OUT"
@@ -61,9 +61,9 @@ func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
 
 func TestAccFirewallEWRuleResource_withPriority(t *testing.T) {
 	randDisplayName := generateRandName()
-	displayNameMiddle := randDisplayName + "-middle"
-	displayNameBefore := randDisplayName + "-before"
-	displayNameAfter := randDisplayName + "-after"
+	displayNameMiddle := randDisplayName + "mid"
+	displayNameBefore := randDisplayName + "bef"
+	displayNameAfter := randDisplayName + "aft"
 
 	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
@@ -169,7 +169,7 @@ func checkOrderOfSecurityPolicies(securityPolicies []*models.DFWRule, displayNam
 func testAccFirewallEWRuleResourceConfig(displayName string, source string, destination string, action string, ipProtocol string, direction string, priority int64, customServiceResourceID string) string {
 	return fmt.Sprintf(`
 data "ochk_security_policy" "default" {
-  display_name = "devel"
+  display_name = %[12]q
 }
 
 data "ochk_service" "http" {
@@ -221,7 +221,7 @@ resource "ochk_firewall_ew_rule" "default" {
 
   priority = %[8]d
 }
-`, source, destination, displayName, action, ipProtocol, direction, testData.LegacyVirtualMachineDisplayName, priority, testData.CustomService1DisplayName, testData.CustomService2DisplayName, customServiceResourceID)
+`, source, destination, displayName, action, ipProtocol, direction, testData.LegacyVirtualMachineDisplayName, priority, testData.CustomService1DisplayName, testData.CustomService2DisplayName, customServiceResourceID, testData.SecurityPolicyDisplayName)
 }
 
 func testAccFirewallEWRuleResourceConfigWithOrder(displayNameBefore string, displayNameMiddle string, displayNameAfter string) string {
@@ -230,7 +230,7 @@ func testAccFirewallEWRuleResourceConfigWithOrder(displayNameBefore string, disp
 
 	return fmt.Sprintf(`
 data "ochk_security_policy" "default" {
-  display_name = "devel"
+  display_name = %[7]q
 }
 
 data "ochk_service" "http" {
@@ -242,7 +242,7 @@ data "ochk_virtual_machine" "default" {
 }
 
 resource "ochk_security_group" "source-before" {
-  display_name = "%[1]s-before"
+  display_name = "%[1]sbef"
 
   members {
     id = data.ochk_virtual_machine.default.id
@@ -251,7 +251,7 @@ resource "ochk_security_group" "source-before" {
 }
 
 resource "ochk_security_group" "source-middle" {
-  display_name = "%[1]s-middle"
+  display_name = "%[1]smid"
 
   members {
     id = data.ochk_virtual_machine.default.id
@@ -260,7 +260,7 @@ resource "ochk_security_group" "source-middle" {
 }
 
 resource "ochk_security_group" "source-after" {
-  display_name = "%[1]s-after"
+  display_name = "%[1]saft"
 
   members {
     id = data.ochk_virtual_machine.default.id
@@ -269,7 +269,7 @@ resource "ochk_security_group" "source-after" {
 }
 
 resource "ochk_security_group" "destination-before" {
-  display_name = "%[2]s-before"
+  display_name = "%[2]sbef"
   
   members {
     id = data.ochk_virtual_machine.default.id
@@ -278,7 +278,7 @@ resource "ochk_security_group" "destination-before" {
 }
 
 resource "ochk_security_group" "destination-middle" {
-  display_name = "%[2]s-middle"
+  display_name = "%[2]smid"
   
   members {
     id = data.ochk_virtual_machine.default.id
@@ -287,7 +287,7 @@ resource "ochk_security_group" "destination-middle" {
 }
 
 resource "ochk_security_group" "destination-after" {
-  display_name = "%[2]s-after"
+  display_name = "%[2]saft"
   
   members {
     id = data.ochk_virtual_machine.default.id
@@ -324,7 +324,7 @@ resource "ochk_firewall_ew_rule" "after" {
   destination = [ochk_security_group.destination-after.id]
   priority = 20002
 }
-`, source, destination, displayNameMiddle, displayNameBefore, displayNameAfter, testData.LegacyVirtualMachineDisplayName)
+`, source, destination, displayNameMiddle, displayNameBefore, displayNameAfter, testData.LegacyVirtualMachineDisplayName, testData.SecurityPolicyDisplayName)
 }
 
 func testAccFirewallEWRuleResourceDoesntExist(displayName string) resource.TestCheckFunc {
@@ -333,7 +333,7 @@ func testAccFirewallEWRuleResourceDoesntExist(displayName string) resource.TestC
 
 		client := testAccProvider.Meta().(*sdk.Client)
 
-		securityPolicies, err := client.SecurityPolicy.ListByDisplayName(ctx, "devel")
+		securityPolicies, err := client.SecurityPolicy.ListByDisplayName(ctx, testData.SecurityPolicyDisplayName)
 		if err != nil {
 			return err
 		}

@@ -4,6 +4,7 @@ terraform {
       source = "registry.terraform.io/chmurakrajowa/ochk"
     }
   }
+  backend "local" {}
 }
 
 provider "ochk" {

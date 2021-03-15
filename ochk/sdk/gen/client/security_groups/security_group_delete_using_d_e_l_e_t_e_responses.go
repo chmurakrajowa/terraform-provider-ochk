@@ -29,6 +29,12 @@ func (o *SecurityGroupDeleteUsingDELETEReader) ReadResponse(response runtime.Cli
 			return nil, err
 		}
 		return result, nil
+	case 201:
+		result := NewSecurityGroupDeleteUsingDELETECreated()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 400:
 		result := NewSecurityGroupDeleteUsingDELETEBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -63,6 +69,39 @@ func (o *SecurityGroupDeleteUsingDELETEOK) GetPayload() *models.DeleteSecurityGr
 }
 
 func (o *SecurityGroupDeleteUsingDELETEOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.DeleteSecurityGroupResponse)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewSecurityGroupDeleteUsingDELETECreated creates a SecurityGroupDeleteUsingDELETECreated with default headers values
+func NewSecurityGroupDeleteUsingDELETECreated() *SecurityGroupDeleteUsingDELETECreated {
+	return &SecurityGroupDeleteUsingDELETECreated{}
+}
+
+/*SecurityGroupDeleteUsingDELETECreated handles this case with default header values.
+
+Entity has been deleted
+*/
+type SecurityGroupDeleteUsingDELETECreated struct {
+	Payload *models.DeleteSecurityGroupResponse
+}
+
+func (o *SecurityGroupDeleteUsingDELETECreated) Error() string {
+	return fmt.Sprintf("[DELETE /network/security-groups/{groupId}][%d] securityGroupDeleteUsingDELETECreated  %+v", 201, o.Payload)
+}
+
+func (o *SecurityGroupDeleteUsingDELETECreated) GetPayload() *models.DeleteSecurityGroupResponse {
+	return o.Payload
+}
+
+func (o *SecurityGroupDeleteUsingDELETECreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.DeleteSecurityGroupResponse)
 

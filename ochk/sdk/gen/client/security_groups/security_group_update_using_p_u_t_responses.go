@@ -29,6 +29,12 @@ func (o *SecurityGroupUpdateUsingPUTReader) ReadResponse(response runtime.Client
 			return nil, err
 		}
 		return result, nil
+	case 201:
+		result := NewSecurityGroupUpdateUsingPUTCreated()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 400:
 		result := NewSecurityGroupUpdateUsingPUTBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -63,6 +69,39 @@ func (o *SecurityGroupUpdateUsingPUTOK) GetPayload() *models.UpdateSecurityGroup
 }
 
 func (o *SecurityGroupUpdateUsingPUTOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.UpdateSecurityGroupResponse)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewSecurityGroupUpdateUsingPUTCreated creates a SecurityGroupUpdateUsingPUTCreated with default headers values
+func NewSecurityGroupUpdateUsingPUTCreated() *SecurityGroupUpdateUsingPUTCreated {
+	return &SecurityGroupUpdateUsingPUTCreated{}
+}
+
+/*SecurityGroupUpdateUsingPUTCreated handles this case with default header values.
+
+Entity has been updated
+*/
+type SecurityGroupUpdateUsingPUTCreated struct {
+	Payload *models.UpdateSecurityGroupResponse
+}
+
+func (o *SecurityGroupUpdateUsingPUTCreated) Error() string {
+	return fmt.Sprintf("[PUT /network/security-groups/{groupId}][%d] securityGroupUpdateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
+func (o *SecurityGroupUpdateUsingPUTCreated) GetPayload() *models.UpdateSecurityGroupResponse {
+	return o.Payload
+}
+
+func (o *SecurityGroupUpdateUsingPUTCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.UpdateSecurityGroupResponse)
 

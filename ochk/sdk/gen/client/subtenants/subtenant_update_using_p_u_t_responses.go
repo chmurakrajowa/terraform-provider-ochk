@@ -29,6 +29,12 @@ func (o *SubtenantUpdateUsingPUTReader) ReadResponse(response runtime.ClientResp
 			return nil, err
 		}
 		return result, nil
+	case 201:
+		result := NewSubtenantUpdateUsingPUTCreated()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 400:
 		result := NewSubtenantUpdateUsingPUTBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -63,6 +69,39 @@ func (o *SubtenantUpdateUsingPUTOK) GetPayload() *models.SubtenantUpdateResponse
 }
 
 func (o *SubtenantUpdateUsingPUTOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.SubtenantUpdateResponse)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewSubtenantUpdateUsingPUTCreated creates a SubtenantUpdateUsingPUTCreated with default headers values
+func NewSubtenantUpdateUsingPUTCreated() *SubtenantUpdateUsingPUTCreated {
+	return &SubtenantUpdateUsingPUTCreated{}
+}
+
+/*SubtenantUpdateUsingPUTCreated handles this case with default header values.
+
+Entity has been updated
+*/
+type SubtenantUpdateUsingPUTCreated struct {
+	Payload *models.SubtenantUpdateResponse
+}
+
+func (o *SubtenantUpdateUsingPUTCreated) Error() string {
+	return fmt.Sprintf("[PUT /subtenants/{subtenantId}][%d] subtenantUpdateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
+func (o *SubtenantUpdateUsingPUTCreated) GetPayload() *models.SubtenantUpdateResponse {
+	return o.Payload
+}
+
+func (o *SubtenantUpdateUsingPUTCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.SubtenantUpdateResponse)
 

@@ -8,6 +8,7 @@ import (
 	vidmcontroller "github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/v_id_m"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	httptransport "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/runtime/logger"
 	"github.com/go-openapi/strfmt"
 	"log"
 	"net/http"
@@ -16,7 +17,6 @@ import (
 )
 
 type Client struct {
-	logger          *FileLogger
 	FirewallEWRules FirewallEWRulesProxy
 	FirewallSNRules FirewallSNRulesProxy
 	GatewayPolicy   GatewayPolicyProxy
@@ -34,6 +34,7 @@ type Client struct {
 	IPCollections   IPCollectionsProxy
 	Deployments     DeploymentsProxy
 	CustomServices  CustomServicesProxy
+	KMSKeys         KMSKeysProxy
 }
 
 var clientMutex sync.Mutex
@@ -46,12 +47,13 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		return c, nil
 	}
 
-	var logger *FileLogger
+	var defaultLogger logger.Logger = NewStdErrLogger()
 	if debugLogFile != "" {
-		logger = NewFileLogger(debugLogFile)
-		if err := logger.Init(); err != nil {
+		fileLogger := NewFileLogger(debugLogFile)
+		if err := fileLogger.Init(); err != nil {
 			return nil, fmt.Errorf("error initializing file logger: %v", err)
 		}
+		defaultLogger = fileLogger
 	}
 
 	httpClient := &http.Client{
@@ -65,8 +67,9 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 	apiClientTransport.Transport = &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
-	if logger != nil {
-		apiClientTransport.SetLogger(logger)
+
+	if defaultLogger != nil {
+		apiClientTransport.SetLogger(defaultLogger)
 	}
 
 	ochkClient := client.New(apiClientTransport, strfmt.Default)
@@ -92,15 +95,14 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 
 	apiClientAuthTransport := httptransport.New(host, client.DefaultBasePath, mapToSchemes(insecure))
 	apiClientAuthTransport.SetDebug(true)
-	if logger != nil {
-		apiClientAuthTransport.SetLogger(logger)
+	if defaultLogger != nil {
+		apiClientAuthTransport.SetLogger(defaultLogger)
 	}
 	apiClientAuthTransport.DefaultAuthentication = httptransport.APIKeyAuth("token", "header", authResponse.Payload.Token)
 
 	authClient := client.New(apiClientAuthTransport, strfmt.Default)
 
 	c := &Client{
-		logger: logger,
 		SecurityGroups: SecurityGroupsProxy{
 			httpClient: httpClient,
 			service:    authClient.SecurityGroups,
@@ -169,6 +171,10 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		CustomServices: CustomServicesProxy{
 			httpClient: httpClient,
 			service:    authClient.CustomServices,
+		},
+		KMSKeys: KMSKeysProxy{
+			httpClient: httpClient,
+			service:    authClient.KmsKeyManagement,
 		},
 	}
 

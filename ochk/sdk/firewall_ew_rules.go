@@ -72,7 +72,7 @@ func (p *FirewallEWRulesProxy) Update(ctx context.Context, securityPolicyID stri
 		HTTPClient:       p.httpClient,
 	}
 
-	put, err := p.service.DfwRuleUpdateUsingPUT(params)
+	put, _, err := p.service.DfwRuleUpdateUsingPUT(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while updating firewall EW rule: %w", err)
 	}
@@ -143,7 +143,7 @@ func (p *FirewallEWRulesProxy) Delete(ctx context.Context, securityPolicyID stri
 		HTTPClient:       p.httpClient,
 	}
 
-	response, err := p.service.DfwRuleDeleteUsingDELETE(params)
+	response, _, err := p.service.DfwRuleDeleteUsingDELETE(params)
 	if err != nil {
 		var badRequest *firewall_rules_e_w.DfwRuleDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {

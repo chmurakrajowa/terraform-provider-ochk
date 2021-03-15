@@ -29,6 +29,12 @@ func (o *SubtenantDeleteUsingDELETEReader) ReadResponse(response runtime.ClientR
 			return nil, err
 		}
 		return result, nil
+	case 201:
+		result := NewSubtenantDeleteUsingDELETECreated()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 400:
 		result := NewSubtenantDeleteUsingDELETEBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -63,6 +69,39 @@ func (o *SubtenantDeleteUsingDELETEOK) GetPayload() *models.SubtenantDeleteRespo
 }
 
 func (o *SubtenantDeleteUsingDELETEOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.SubtenantDeleteResponse)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewSubtenantDeleteUsingDELETECreated creates a SubtenantDeleteUsingDELETECreated with default headers values
+func NewSubtenantDeleteUsingDELETECreated() *SubtenantDeleteUsingDELETECreated {
+	return &SubtenantDeleteUsingDELETECreated{}
+}
+
+/*SubtenantDeleteUsingDELETECreated handles this case with default header values.
+
+Entity has been deleted
+*/
+type SubtenantDeleteUsingDELETECreated struct {
+	Payload *models.SubtenantDeleteResponse
+}
+
+func (o *SubtenantDeleteUsingDELETECreated) Error() string {
+	return fmt.Sprintf("[DELETE /subtenants/{subtenantId}][%d] subtenantDeleteUsingDELETECreated  %+v", 201, o.Payload)
+}
+
+func (o *SubtenantDeleteUsingDELETECreated) GetPayload() *models.SubtenantDeleteResponse {
+	return o.Payload
+}
+
+func (o *SubtenantDeleteUsingDELETECreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.SubtenantDeleteResponse)
 

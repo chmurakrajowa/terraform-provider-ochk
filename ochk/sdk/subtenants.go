@@ -50,7 +50,7 @@ func (p *SubtenantsProxy) Update(ctx context.Context, subtenant *models.Subtenan
 		HTTPClient:        p.httpClient,
 	}
 
-	put, err := p.service.SubtenantUpdateUsingPUT(params)
+	put, _, err := p.service.SubtenantUpdateUsingPUT(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying subtenant: %w", err)
 	}
@@ -124,7 +124,7 @@ func (p *SubtenantsProxy) Delete(ctx context.Context, subtenantID string) error 
 		HTTPClient:  p.httpClient,
 	}
 
-	response, err := p.service.SubtenantDeleteUsingDELETE(params)
+	response, _, err := p.service.SubtenantDeleteUsingDELETE(params)
 	if err != nil {
 		var badRequest *subtenants.SubtenantDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {
