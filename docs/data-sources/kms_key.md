@@ -25,16 +25,16 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported in addition to above arguments:
-* `key_usage` - List of key usages, e.g. [`ENCRYPT`, `DECRYPT`].
+* `key_usage` - List of key usages, what actions the key will be applied to: e.g. [`ENCRYPT`, `DECRYPT`].
 * `algorithm` - Encryption algorithm.
-* `size` - Key size.
+* `size` - The maximum number of combinations required to break the encryption algorithm.
 * `activation_date` - When the key was activated.
 * `created_at` - When the key was created.
 * `default_iv` - Default IV.
 * `object_type` - Type of key.
 * `revocation_reason` - Reason of revocation if the key was revoked.
-* `sha1_fingerprint` - SHA-1 fingerprint.
-* `sha256_fingerprint` - SHA-256 fingerprint.
+* `sha1_fingerprint` - SHA-1 unique identifier of the certificate.
+* `sha256_fingerprint` - SHA-256 unique identifier of the certificate.
 * `state` - State of the key, e.g. `Active`.
 
    
