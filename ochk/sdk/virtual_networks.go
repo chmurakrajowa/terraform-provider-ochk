@@ -51,7 +51,7 @@ func (p *VirtualNetworksProxy) Update(ctx context.Context, virtualNetwork *model
 		HTTPClient:             p.httpClient,
 	}
 
-	put, err := p.service.VirtualNetworkUpdateUsingPUT(params)
+	put, _, err := p.service.VirtualNetworkUpdateUsingPUT(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying virtual network: %w", err)
 	}
@@ -117,7 +117,7 @@ func (p *VirtualNetworksProxy) Delete(ctx context.Context, virtualNetworkID stri
 		HTTPClient:       p.httpClient,
 	}
 
-	response, err := p.service.VirtualNetworkDeleteUsingDELETE(params)
+	response, _, err := p.service.VirtualNetworkDeleteUsingDELETE(params)
 	if err != nil {
 		var badRequest *virtual_networks.VirtualNetworkDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {

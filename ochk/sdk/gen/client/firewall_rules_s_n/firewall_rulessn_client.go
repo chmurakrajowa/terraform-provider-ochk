@@ -29,13 +29,13 @@ type Client struct {
 type ClientService interface {
 	GfwRuleCreateUsingPUT(params *GfwRuleCreateUsingPUTParams) (*GfwRuleCreateUsingPUTOK, *GfwRuleCreateUsingPUTCreated, error)
 
-	GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams) (*GfwRuleDeleteUsingDELETEOK, error)
+	GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams) (*GfwRuleDeleteUsingDELETEOK, *GfwRuleDeleteUsingDELETECreated, error)
 
 	GfwRuleGetUsingGET(params *GfwRuleGetUsingGETParams) (*GfwRuleGetUsingGETOK, error)
 
 	GfwRuleListUsingGET(params *GfwRuleListUsingGETParams) (*GfwRuleListUsingGETOK, error)
 
-	GfwRuleUpdateUsingPUT(params *GfwRuleUpdateUsingPUTParams) (*GfwRuleUpdateUsingPUTOK, error)
+	GfwRuleUpdateUsingPUT(params *GfwRuleUpdateUsingPUTParams) (*GfwRuleUpdateUsingPUTOK, *GfwRuleUpdateUsingPUTCreated, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -82,7 +82,7 @@ func (a *Client) GfwRuleCreateUsingPUT(params *GfwRuleCreateUsingPUTParams) (*Gf
 
   Delete firewall rule (south-north) from NSX-T
 */
-func (a *Client) GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams) (*GfwRuleDeleteUsingDELETEOK, error) {
+func (a *Client) GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams) (*GfwRuleDeleteUsingDELETEOK, *GfwRuleDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGfwRuleDeleteUsingDELETEParams()
@@ -101,15 +101,16 @@ func (a *Client) GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*GfwRuleDeleteUsingDELETEOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *GfwRuleDeleteUsingDELETEOK:
+		return value, nil, nil
+	case *GfwRuleDeleteUsingDELETECreated:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for gfwRuleDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for firewall_rules_s_n: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -190,7 +191,7 @@ func (a *Client) GfwRuleListUsingGET(params *GfwRuleListUsingGETParams) (*GfwRul
 
   Create firewall rule (south-north) in NSX-T
 */
-func (a *Client) GfwRuleUpdateUsingPUT(params *GfwRuleUpdateUsingPUTParams) (*GfwRuleUpdateUsingPUTOK, error) {
+func (a *Client) GfwRuleUpdateUsingPUT(params *GfwRuleUpdateUsingPUTParams) (*GfwRuleUpdateUsingPUTOK, *GfwRuleUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGfwRuleUpdateUsingPUTParams()
@@ -209,15 +210,16 @@ func (a *Client) GfwRuleUpdateUsingPUT(params *GfwRuleUpdateUsingPUTParams) (*Gf
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*GfwRuleUpdateUsingPUTOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *GfwRuleUpdateUsingPUTOK:
+		return value, nil, nil
+	case *GfwRuleUpdateUsingPUTCreated:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for gfwRuleUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for firewall_rules_s_n: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

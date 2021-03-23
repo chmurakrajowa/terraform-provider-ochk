@@ -29,6 +29,12 @@ func (o *VirtualNetworkDeleteUsingDELETEReader) ReadResponse(response runtime.Cl
 			return nil, err
 		}
 		return result, nil
+	case 201:
+		result := NewVirtualNetworkDeleteUsingDELETECreated()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 400:
 		result := NewVirtualNetworkDeleteUsingDELETEBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -63,6 +69,39 @@ func (o *VirtualNetworkDeleteUsingDELETEOK) GetPayload() *models.VirtualNetworkD
 }
 
 func (o *VirtualNetworkDeleteUsingDELETEOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.VirtualNetworkDeleteResponse)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewVirtualNetworkDeleteUsingDELETECreated creates a VirtualNetworkDeleteUsingDELETECreated with default headers values
+func NewVirtualNetworkDeleteUsingDELETECreated() *VirtualNetworkDeleteUsingDELETECreated {
+	return &VirtualNetworkDeleteUsingDELETECreated{}
+}
+
+/*VirtualNetworkDeleteUsingDELETECreated handles this case with default header values.
+
+Entity has been deleted
+*/
+type VirtualNetworkDeleteUsingDELETECreated struct {
+	Payload *models.VirtualNetworkDeleteResponse
+}
+
+func (o *VirtualNetworkDeleteUsingDELETECreated) Error() string {
+	return fmt.Sprintf("[DELETE /networks/{virtualNetworkId}][%d] virtualNetworkDeleteUsingDELETECreated  %+v", 201, o.Payload)
+}
+
+func (o *VirtualNetworkDeleteUsingDELETECreated) GetPayload() *models.VirtualNetworkDeleteResponse {
+	return o.Payload
+}
+
+func (o *VirtualNetworkDeleteUsingDELETECreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.VirtualNetworkDeleteResponse)
 

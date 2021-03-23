@@ -52,7 +52,7 @@ func (p *VirtualMachinesProxy) Update(ctx context.Context, virtualMachine *model
 		HTTPClient:       p.httpClient,
 	}
 
-	put, err := p.service.VcsVirtualMachineUpdateUsingPUT(params)
+	put, _, err := p.service.VcsVirtualMachineUpdateUsingPUT(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying virtual machine: %w", err)
 	}
@@ -133,7 +133,7 @@ func (p *VirtualMachinesProxy) Delete(ctx context.Context, virtualMachineID stri
 		HTTPClient:       p.httpClient,
 	}
 
-	response, err := p.service.VcsVirtualMachineDeleteUsingDELETE(params)
+	response, _, err := p.service.VcsVirtualMachineDeleteUsingDELETE(params)
 	if err != nil {
 		var badRequest *virtual_machines.VcsVirtualMachineDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {

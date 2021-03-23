@@ -29,6 +29,12 @@ func (o *VcsVirtualMachineDeleteUsingDELETEReader) ReadResponse(response runtime
 			return nil, err
 		}
 		return result, nil
+	case 201:
+		result := NewVcsVirtualMachineDeleteUsingDELETECreated()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 400:
 		result := NewVcsVirtualMachineDeleteUsingDELETEBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -63,6 +69,39 @@ func (o *VcsVirtualMachineDeleteUsingDELETEOK) GetPayload() *models.VcsVirtualMa
 }
 
 func (o *VcsVirtualMachineDeleteUsingDELETEOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.VcsVirtualMachineDeleteResponse)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewVcsVirtualMachineDeleteUsingDELETECreated creates a VcsVirtualMachineDeleteUsingDELETECreated with default headers values
+func NewVcsVirtualMachineDeleteUsingDELETECreated() *VcsVirtualMachineDeleteUsingDELETECreated {
+	return &VcsVirtualMachineDeleteUsingDELETECreated{}
+}
+
+/*VcsVirtualMachineDeleteUsingDELETECreated handles this case with default header values.
+
+Entity has been deleted
+*/
+type VcsVirtualMachineDeleteUsingDELETECreated struct {
+	Payload *models.VcsVirtualMachineDeleteResponse
+}
+
+func (o *VcsVirtualMachineDeleteUsingDELETECreated) Error() string {
+	return fmt.Sprintf("[DELETE /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineDeleteUsingDELETECreated  %+v", 201, o.Payload)
+}
+
+func (o *VcsVirtualMachineDeleteUsingDELETECreated) GetPayload() *models.VcsVirtualMachineDeleteResponse {
+	return o.Payload
+}
+
+func (o *VcsVirtualMachineDeleteUsingDELETECreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.VcsVirtualMachineDeleteResponse)
 

@@ -29,6 +29,12 @@ func (o *GfwRuleDeleteUsingDELETEReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return result, nil
+	case 201:
+		result := NewGfwRuleDeleteUsingDELETECreated()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 400:
 		result := NewGfwRuleDeleteUsingDELETEBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -63,6 +69,39 @@ func (o *GfwRuleDeleteUsingDELETEOK) GetPayload() *models.DeleteGFWRuleResponse 
 }
 
 func (o *GfwRuleDeleteUsingDELETEOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.DeleteGFWRuleResponse)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewGfwRuleDeleteUsingDELETECreated creates a GfwRuleDeleteUsingDELETECreated with default headers values
+func NewGfwRuleDeleteUsingDELETECreated() *GfwRuleDeleteUsingDELETECreated {
+	return &GfwRuleDeleteUsingDELETECreated{}
+}
+
+/*GfwRuleDeleteUsingDELETECreated handles this case with default header values.
+
+Entity has been deleted
+*/
+type GfwRuleDeleteUsingDELETECreated struct {
+	Payload *models.DeleteGFWRuleResponse
+}
+
+func (o *GfwRuleDeleteUsingDELETECreated) Error() string {
+	return fmt.Sprintf("[DELETE /network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}][%d] gfwRuleDeleteUsingDELETECreated  %+v", 201, o.Payload)
+}
+
+func (o *GfwRuleDeleteUsingDELETECreated) GetPayload() *models.DeleteGFWRuleResponse {
+	return o.Payload
+}
+
+func (o *GfwRuleDeleteUsingDELETECreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.DeleteGFWRuleResponse)
 

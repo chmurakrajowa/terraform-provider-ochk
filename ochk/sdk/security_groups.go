@@ -50,7 +50,7 @@ func (p *SecurityGroupsProxy) Update(ctx context.Context, securityGroup *models.
 		HTTPClient:    p.httpClient,
 	}
 
-	put, err := p.service.SecurityGroupUpdateUsingPUT(params)
+	put, _, err := p.service.SecurityGroupUpdateUsingPUT(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying security group: %w", err)
 	}
@@ -124,7 +124,7 @@ func (p *SecurityGroupsProxy) Delete(ctx context.Context, securityGroupID string
 		HTTPClient: p.httpClient,
 	}
 
-	response, err := p.service.SecurityGroupDeleteUsingDELETE(params)
+	response, _, err := p.service.SecurityGroupDeleteUsingDELETE(params)
 	if err != nil {
 		var badRequest *security_groups.SecurityGroupDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {

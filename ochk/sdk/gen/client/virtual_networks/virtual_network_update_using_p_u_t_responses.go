@@ -29,6 +29,12 @@ func (o *VirtualNetworkUpdateUsingPUTReader) ReadResponse(response runtime.Clien
 			return nil, err
 		}
 		return result, nil
+	case 201:
+		result := NewVirtualNetworkUpdateUsingPUTCreated()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 400:
 		result := NewVirtualNetworkUpdateUsingPUTBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -63,6 +69,39 @@ func (o *VirtualNetworkUpdateUsingPUTOK) GetPayload() *models.VirtualNetworkUpda
 }
 
 func (o *VirtualNetworkUpdateUsingPUTOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.VirtualNetworkUpdateResponse)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewVirtualNetworkUpdateUsingPUTCreated creates a VirtualNetworkUpdateUsingPUTCreated with default headers values
+func NewVirtualNetworkUpdateUsingPUTCreated() *VirtualNetworkUpdateUsingPUTCreated {
+	return &VirtualNetworkUpdateUsingPUTCreated{}
+}
+
+/*VirtualNetworkUpdateUsingPUTCreated handles this case with default header values.
+
+Entity has been updated
+*/
+type VirtualNetworkUpdateUsingPUTCreated struct {
+	Payload *models.VirtualNetworkUpdateResponse
+}
+
+func (o *VirtualNetworkUpdateUsingPUTCreated) Error() string {
+	return fmt.Sprintf("[PUT /networks/{virtualNetworkId}][%d] virtualNetworkUpdateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
+func (o *VirtualNetworkUpdateUsingPUTCreated) GetPayload() *models.VirtualNetworkUpdateResponse {
+	return o.Payload
+}
+
+func (o *VirtualNetworkUpdateUsingPUTCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.VirtualNetworkUpdateResponse)
 

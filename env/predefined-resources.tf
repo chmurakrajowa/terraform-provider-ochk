@@ -1,5 +1,5 @@
 data "ochk_security_policy" "default" {
-  display_name = "devel"
+  display_name = var.security_policy
 }
 
 data "ochk_user" "default" {
@@ -7,7 +7,7 @@ data "ochk_user" "default" {
 }
 
 resource "ochk_ip_collection" "default" {
-  display_name = "${var.test-data-prefix}-ipc-default"
+  display_name = "${var.test-data-prefix}-ipc"
   ip_addresses = [
     "1.1.1.1",
     "1.0.0.1",
@@ -20,7 +20,7 @@ data "ochk_network" "subtenant-network" {
 }
 
 resource "ochk_subtenant" "subtenant-1" {
-  name = "${var.test-data-prefix}-subtenant-1"
+  name = "${var.test-data-prefix}-subt1"
   email = "email1@example.com"
   description = "Business group description 1"
   memory_reserved_size_mb = 30000
@@ -40,7 +40,7 @@ resource "ochk_subtenant" "subtenant-1" {
 }
 
 resource "ochk_subtenant" "subtenant-2" {
-  name = "${var.test-data-prefix}-subtenant-2"
+  name = "${var.test-data-prefix}-subt2"
   email = "email2@example.com"
   description = "Business group description 2"
   memory_reserved_size_mb = 30000
@@ -60,7 +60,7 @@ resource "ochk_subtenant" "subtenant-2" {
 }
 
 resource "ochk_subtenant" "subtenant-3" {
-  name = "${var.test-data-prefix}-subtenant-3"
+  name = "${var.test-data-prefix}-subt3"
   email = "email3@example.com"
   description = "Business group description 3"
   memory_reserved_size_mb = 30000
@@ -80,7 +80,7 @@ resource "ochk_subtenant" "subtenant-3" {
 }
 
 resource "ochk_subtenant" "subtenant-4" {
-  name = "${var.test-data-prefix}-subtenant-4"
+  name = "${var.test-data-prefix}-subt4"
   email = "email4@example.com"
   description = "Business group description 4"
   memory_reserved_size_mb = 30000
@@ -169,5 +169,15 @@ resource "ochk_custom_service" "web_servers_http" {
     source = ["80", "8080-8090"]
     destination = ["1-65535"]
   }
+}
+
+resource "ochk_kms_key" "aes_key" {
+  display_name = "${var.test-data-prefix}-key"
+  key_usage = [
+    "ENCRYPT",
+    "DECRYPT"
+  ]
+  algorithm = "AES"
+  size = "256"
 }
 

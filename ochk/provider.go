@@ -46,6 +46,7 @@ func Provider() *schema.Provider {
 			"debug_log_file": {
 				Type:        schema.TypeString,
 				Optional:    true,
+				Default:     "",
 				Description: "path to debug log",
 				Sensitive:   true,
 			},
@@ -65,6 +66,7 @@ func Provider() *schema.Provider {
 			"ochk_deployment":      dataSourceDeployment(),
 			"ochk_virtual_network": dataSourceVirtualNetwork(),
 			"ochk_custom_service":  dataSourceCustomService(),
+			"ochk_kms_key":         dataSourceKMSKey(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"ochk_firewall_ew_rule": resourceFirewallEWRule(),
@@ -76,6 +78,7 @@ func Provider() *schema.Provider {
 			"ochk_ip_collection":    resourceIPCollection(),
 			"ochk_virtual_machine":  resourceVirtualMachine(),
 			"ochk_custom_service":   resourceCustomService(),
+			"ochk_kms_key":          resourceKMSKey(),
 		},
 		ConfigureContextFunc: func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 			client, err := sdk.NewClient(

@@ -29,13 +29,13 @@ type Client struct {
 type ClientService interface {
 	DfwRuleCreateUsingPUT(params *DfwRuleCreateUsingPUTParams) (*DfwRuleCreateUsingPUTOK, *DfwRuleCreateUsingPUTCreated, error)
 
-	DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams) (*DfwRuleDeleteUsingDELETEOK, error)
+	DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams) (*DfwRuleDeleteUsingDELETEOK, *DfwRuleDeleteUsingDELETECreated, error)
 
 	DfwRuleGetUsingGET(params *DfwRuleGetUsingGETParams) (*DfwRuleGetUsingGETOK, error)
 
 	DfwRuleListUsingGET(params *DfwRuleListUsingGETParams) (*DfwRuleListUsingGETOK, error)
 
-	DfwRuleUpdateUsingPUT(params *DfwRuleUpdateUsingPUTParams) (*DfwRuleUpdateUsingPUTOK, error)
+	DfwRuleUpdateUsingPUT(params *DfwRuleUpdateUsingPUTParams) (*DfwRuleUpdateUsingPUTOK, *DfwRuleUpdateUsingPUTCreated, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -82,7 +82,7 @@ func (a *Client) DfwRuleCreateUsingPUT(params *DfwRuleCreateUsingPUTParams) (*Df
 
   Delete firewall rule (east-west) from NSX-T
 */
-func (a *Client) DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams) (*DfwRuleDeleteUsingDELETEOK, error) {
+func (a *Client) DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams) (*DfwRuleDeleteUsingDELETEOK, *DfwRuleDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDfwRuleDeleteUsingDELETEParams()
@@ -101,15 +101,16 @@ func (a *Client) DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*DfwRuleDeleteUsingDELETEOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *DfwRuleDeleteUsingDELETEOK:
+		return value, nil, nil
+	case *DfwRuleDeleteUsingDELETECreated:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for dfwRuleDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for firewall_rules_e_w: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -190,7 +191,7 @@ func (a *Client) DfwRuleListUsingGET(params *DfwRuleListUsingGETParams) (*DfwRul
 
   Update firewall rule (east-west) in NSX-T
 */
-func (a *Client) DfwRuleUpdateUsingPUT(params *DfwRuleUpdateUsingPUTParams) (*DfwRuleUpdateUsingPUTOK, error) {
+func (a *Client) DfwRuleUpdateUsingPUT(params *DfwRuleUpdateUsingPUTParams) (*DfwRuleUpdateUsingPUTOK, *DfwRuleUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDfwRuleUpdateUsingPUTParams()
@@ -209,15 +210,16 @@ func (a *Client) DfwRuleUpdateUsingPUT(params *DfwRuleUpdateUsingPUTParams) (*Df
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*DfwRuleUpdateUsingPUTOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *DfwRuleUpdateUsingPUTOK:
+		return value, nil, nil
+	case *DfwRuleUpdateUsingPUTCreated:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for dfwRuleUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for firewall_rules_e_w: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

@@ -52,7 +52,7 @@ func (p *FirewallSNRulesProxy) Update(ctx context.Context, gatewayPolicyID strin
 		HTTPClient:      p.httpClient,
 	}
 
-	put, err := p.service.GfwRuleUpdateUsingPUT(params)
+	put, _, err := p.service.GfwRuleUpdateUsingPUT(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while modifing firewall SN rule: %w", err)
 	}
@@ -124,7 +124,7 @@ func (p *FirewallSNRulesProxy) Delete(ctx context.Context, gatewayPolicyID strin
 		HTTPClient:      p.httpClient,
 	}
 
-	response, err := p.service.GfwRuleDeleteUsingDELETE(params)
+	response, _, err := p.service.GfwRuleDeleteUsingDELETE(params)
 	if err != nil {
 		var badRequest *firewall_rules_s_n.GfwRuleDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {

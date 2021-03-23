@@ -29,6 +29,12 @@ func (o *DfwRuleDeleteUsingDELETEReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return result, nil
+	case 201:
+		result := NewDfwRuleDeleteUsingDELETECreated()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 400:
 		result := NewDfwRuleDeleteUsingDELETEBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -63,6 +69,39 @@ func (o *DfwRuleDeleteUsingDELETEOK) GetPayload() *models.DeleteDFWRuleResponse 
 }
 
 func (o *DfwRuleDeleteUsingDELETEOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.DeleteDFWRuleResponse)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewDfwRuleDeleteUsingDELETECreated creates a DfwRuleDeleteUsingDELETECreated with default headers values
+func NewDfwRuleDeleteUsingDELETECreated() *DfwRuleDeleteUsingDELETECreated {
+	return &DfwRuleDeleteUsingDELETECreated{}
+}
+
+/*DfwRuleDeleteUsingDELETECreated handles this case with default header values.
+
+Entity has been deleted
+*/
+type DfwRuleDeleteUsingDELETECreated struct {
+	Payload *models.DeleteDFWRuleResponse
+}
+
+func (o *DfwRuleDeleteUsingDELETECreated) Error() string {
+	return fmt.Sprintf("[DELETE /network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}][%d] dfwRuleDeleteUsingDELETECreated  %+v", 201, o.Payload)
+}
+
+func (o *DfwRuleDeleteUsingDELETECreated) GetPayload() *models.DeleteDFWRuleResponse {
+	return o.Payload
+}
+
+func (o *DfwRuleDeleteUsingDELETECreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.DeleteDFWRuleResponse)
 

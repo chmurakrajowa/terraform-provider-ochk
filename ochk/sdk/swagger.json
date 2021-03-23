@@ -1726,6 +1726,12 @@
               "$ref": "#/definitions/UpdateGFWRuleResponse"
             }
           },
+          "201": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/UpdateGFWRuleResponse"
+            }
+          },
           "400": {
             "description": "Bad request, error occurred. For more details see log messages."
           }
@@ -1760,6 +1766,12 @@
         "responses": {
           "200": {
             "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteGFWRuleResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been deleted",
             "schema": {
               "$ref": "#/definitions/DeleteGFWRuleResponse"
             }
@@ -2017,6 +2029,12 @@
               "$ref": "#/definitions/UpdateDFWRuleResponse"
             }
           },
+          "201": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/UpdateDFWRuleResponse"
+            }
+          },
           "400": {
             "description": "Bad request, error occurred. For more details see log messages."
           }
@@ -2051,6 +2069,12 @@
         "responses": {
           "200": {
             "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteDFWRuleResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been deleted",
             "schema": {
               "$ref": "#/definitions/DeleteDFWRuleResponse"
             }
@@ -2475,6 +2499,12 @@
               "$ref": "#/definitions/UpdateSecurityGroupResponse"
             }
           },
+          "201": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/UpdateSecurityGroupResponse"
+            }
+          },
           "400": {
             "description": "Bad request, error occurred. For more details see log messages."
           }
@@ -2502,6 +2532,12 @@
         "responses": {
           "200": {
             "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteSecurityGroupResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been deleted",
             "schema": {
               "$ref": "#/definitions/DeleteSecurityGroupResponse"
             }
@@ -2729,6 +2765,12 @@
               "$ref": "#/definitions/VirtualNetworkUpdateResponse"
             }
           },
+          "201": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/VirtualNetworkUpdateResponse"
+            }
+          },
           "400": {
             "description": "Bad request, error occurred. For more details see log messages."
           }
@@ -2756,6 +2798,12 @@
         "responses": {
           "200": {
             "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VirtualNetworkDeleteResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been deleted",
             "schema": {
               "$ref": "#/definitions/VirtualNetworkDeleteResponse"
             }
@@ -2983,6 +3031,12 @@
               "$ref": "#/definitions/SubtenantUpdateResponse"
             }
           },
+          "201": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/SubtenantUpdateResponse"
+            }
+          },
           "400": {
             "description": "Bad request, error occurred. For more details see log messages."
           }
@@ -3010,6 +3064,12 @@
         "responses": {
           "200": {
             "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SubtenantDeleteResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been deleted",
             "schema": {
               "$ref": "#/definitions/SubtenantDeleteResponse"
             }
@@ -3858,6 +3918,12 @@
               "$ref": "#/definitions/VcsVirtualMachineUpdateResponse"
             }
           },
+          "201": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/VcsVirtualMachineUpdateResponse"
+            }
+          },
           "400": {
             "description": "Bad request, error occurred. For more details see log messages."
           }
@@ -3885,6 +3951,12 @@
         "responses": {
           "200": {
             "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VcsVirtualMachineDeleteResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been deleted",
             "schema": {
               "$ref": "#/definitions/VcsVirtualMachineDeleteResponse"
             }
@@ -5769,6 +5841,25 @@
         }
       },
       "title": "L4PortSetEntry"
+    },
+    "LicSettings": {
+      "type": "object",
+      "properties": {
+        "byolEnabled": {
+          "type": "boolean"
+        },
+        "osType": {
+          "type": "string",
+          "enum": [
+            "LINUX",
+            "WINDOWS"
+          ]
+        },
+        "useDedicatedHosts": {
+          "type": "boolean"
+        }
+      },
+      "title": "LicSettings"
     },
     "LogicalPort": {
       "type": "object",
@@ -7724,6 +7815,9 @@
         },
         "initialPassword": {
           "type": "string"
+        },
+        "licSettings": {
+          "$ref": "#/definitions/LicSettings"
         },
         "modificationDate": {
           "type": "string",

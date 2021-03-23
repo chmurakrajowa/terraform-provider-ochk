@@ -1,3 +1,20 @@
+## 1.1 (2021-03-23)
+
+## Resources
+* New resources:
+  * `ochk_kms_key`
+* Changed resources:
+  * `ochk_virtual_machine` - added encryption settings
+
+## Data sources
+* New data sources:
+  * `ochk_kms_key`
+* Removed data sources:
+  * `ochk_ip_set`
+
+## Misc
+* Added dumping request/response body to terraform log when TF_LOG=debug
+
 ## 1.0 (2020-11-26)
 
 ## Resources

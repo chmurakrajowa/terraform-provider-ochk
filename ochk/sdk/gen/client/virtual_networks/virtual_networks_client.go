@@ -29,13 +29,13 @@ type Client struct {
 type ClientService interface {
 	VirtualNetworkCreateUsingPUT(params *VirtualNetworkCreateUsingPUTParams) (*VirtualNetworkCreateUsingPUTOK, *VirtualNetworkCreateUsingPUTCreated, error)
 
-	VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsingDELETEParams) (*VirtualNetworkDeleteUsingDELETEOK, error)
+	VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsingDELETEParams) (*VirtualNetworkDeleteUsingDELETEOK, *VirtualNetworkDeleteUsingDELETECreated, error)
 
 	VirtualNetworkGetUsingGET(params *VirtualNetworkGetUsingGETParams) (*VirtualNetworkGetUsingGETOK, error)
 
 	VirtualNetworkListUsingGET(params *VirtualNetworkListUsingGETParams) (*VirtualNetworkListUsingGETOK, error)
 
-	VirtualNetworkUpdateUsingPUT(params *VirtualNetworkUpdateUsingPUTParams) (*VirtualNetworkUpdateUsingPUTOK, error)
+	VirtualNetworkUpdateUsingPUT(params *VirtualNetworkUpdateUsingPUTParams) (*VirtualNetworkUpdateUsingPUTOK, *VirtualNetworkUpdateUsingPUTCreated, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -82,7 +82,7 @@ func (a *Client) VirtualNetworkCreateUsingPUT(params *VirtualNetworkCreateUsingP
 
   Delete virtual network
 */
-func (a *Client) VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsingDELETEParams) (*VirtualNetworkDeleteUsingDELETEOK, error) {
+func (a *Client) VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsingDELETEParams) (*VirtualNetworkDeleteUsingDELETEOK, *VirtualNetworkDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVirtualNetworkDeleteUsingDELETEParams()
@@ -101,15 +101,16 @@ func (a *Client) VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsi
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*VirtualNetworkDeleteUsingDELETEOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *VirtualNetworkDeleteUsingDELETEOK:
+		return value, nil, nil
+	case *VirtualNetworkDeleteUsingDELETECreated:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for virtualNetworkDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for virtual_networks: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -190,7 +191,7 @@ func (a *Client) VirtualNetworkListUsingGET(params *VirtualNetworkListUsingGETPa
 
   Update virtual network
 */
-func (a *Client) VirtualNetworkUpdateUsingPUT(params *VirtualNetworkUpdateUsingPUTParams) (*VirtualNetworkUpdateUsingPUTOK, error) {
+func (a *Client) VirtualNetworkUpdateUsingPUT(params *VirtualNetworkUpdateUsingPUTParams) (*VirtualNetworkUpdateUsingPUTOK, *VirtualNetworkUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVirtualNetworkUpdateUsingPUTParams()
@@ -209,15 +210,16 @@ func (a *Client) VirtualNetworkUpdateUsingPUT(params *VirtualNetworkUpdateUsingP
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*VirtualNetworkUpdateUsingPUTOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *VirtualNetworkUpdateUsingPUTOK:
+		return value, nil, nil
+	case *VirtualNetworkUpdateUsingPUTCreated:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for virtualNetworkUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for virtual_networks: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

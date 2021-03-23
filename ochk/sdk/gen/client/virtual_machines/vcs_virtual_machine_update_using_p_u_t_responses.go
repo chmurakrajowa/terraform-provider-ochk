@@ -29,6 +29,12 @@ func (o *VcsVirtualMachineUpdateUsingPUTReader) ReadResponse(response runtime.Cl
 			return nil, err
 		}
 		return result, nil
+	case 201:
+		result := NewVcsVirtualMachineUpdateUsingPUTCreated()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 400:
 		result := NewVcsVirtualMachineUpdateUsingPUTBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -63,6 +69,39 @@ func (o *VcsVirtualMachineUpdateUsingPUTOK) GetPayload() *models.VcsVirtualMachi
 }
 
 func (o *VcsVirtualMachineUpdateUsingPUTOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.VcsVirtualMachineUpdateResponse)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewVcsVirtualMachineUpdateUsingPUTCreated creates a VcsVirtualMachineUpdateUsingPUTCreated with default headers values
+func NewVcsVirtualMachineUpdateUsingPUTCreated() *VcsVirtualMachineUpdateUsingPUTCreated {
+	return &VcsVirtualMachineUpdateUsingPUTCreated{}
+}
+
+/*VcsVirtualMachineUpdateUsingPUTCreated handles this case with default header values.
+
+Entity has been updated
+*/
+type VcsVirtualMachineUpdateUsingPUTCreated struct {
+	Payload *models.VcsVirtualMachineUpdateResponse
+}
+
+func (o *VcsVirtualMachineUpdateUsingPUTCreated) Error() string {
+	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineUpdateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
+func (o *VcsVirtualMachineUpdateUsingPUTCreated) GetPayload() *models.VcsVirtualMachineUpdateResponse {
+	return o.Payload
+}
+
+func (o *VcsVirtualMachineUpdateUsingPUTCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(models.VcsVirtualMachineUpdateResponse)
 

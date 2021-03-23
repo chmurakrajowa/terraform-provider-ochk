@@ -29,13 +29,13 @@ type Client struct {
 type ClientService interface {
 	SubtenantCreateUsingPUT(params *SubtenantCreateUsingPUTParams) (*SubtenantCreateUsingPUTOK, *SubtenantCreateUsingPUTCreated, error)
 
-	SubtenantDeleteUsingDELETE(params *SubtenantDeleteUsingDELETEParams) (*SubtenantDeleteUsingDELETEOK, error)
+	SubtenantDeleteUsingDELETE(params *SubtenantDeleteUsingDELETEParams) (*SubtenantDeleteUsingDELETEOK, *SubtenantDeleteUsingDELETECreated, error)
 
 	SubtenantGetUsingGET(params *SubtenantGetUsingGETParams) (*SubtenantGetUsingGETOK, error)
 
 	SubtenantListUsingGET(params *SubtenantListUsingGETParams) (*SubtenantListUsingGETOK, error)
 
-	SubtenantUpdateUsingPUT(params *SubtenantUpdateUsingPUTParams) (*SubtenantUpdateUsingPUTOK, error)
+	SubtenantUpdateUsingPUT(params *SubtenantUpdateUsingPUTParams) (*SubtenantUpdateUsingPUTOK, *SubtenantUpdateUsingPUTCreated, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -82,7 +82,7 @@ func (a *Client) SubtenantCreateUsingPUT(params *SubtenantCreateUsingPUTParams) 
 
   Delete subtenant
 */
-func (a *Client) SubtenantDeleteUsingDELETE(params *SubtenantDeleteUsingDELETEParams) (*SubtenantDeleteUsingDELETEOK, error) {
+func (a *Client) SubtenantDeleteUsingDELETE(params *SubtenantDeleteUsingDELETEParams) (*SubtenantDeleteUsingDELETEOK, *SubtenantDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSubtenantDeleteUsingDELETEParams()
@@ -101,15 +101,16 @@ func (a *Client) SubtenantDeleteUsingDELETE(params *SubtenantDeleteUsingDELETEPa
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*SubtenantDeleteUsingDELETEOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *SubtenantDeleteUsingDELETEOK:
+		return value, nil, nil
+	case *SubtenantDeleteUsingDELETECreated:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for subtenantDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for subtenants: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -190,7 +191,7 @@ func (a *Client) SubtenantListUsingGET(params *SubtenantListUsingGETParams) (*Su
 
   Update subtenant
 */
-func (a *Client) SubtenantUpdateUsingPUT(params *SubtenantUpdateUsingPUTParams) (*SubtenantUpdateUsingPUTOK, error) {
+func (a *Client) SubtenantUpdateUsingPUT(params *SubtenantUpdateUsingPUTParams) (*SubtenantUpdateUsingPUTOK, *SubtenantUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSubtenantUpdateUsingPUTParams()
@@ -209,15 +210,16 @@ func (a *Client) SubtenantUpdateUsingPUT(params *SubtenantUpdateUsingPUTParams) 
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*SubtenantUpdateUsingPUTOK)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *SubtenantUpdateUsingPUTOK:
+		return value, nil, nil
+	case *SubtenantUpdateUsingPUTCreated:
+		return nil, value, nil
 	}
-	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for subtenantUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for subtenants: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

@@ -13,9 +13,9 @@ func TestAccSecurityPolicyDataSource_read(t *testing.T) {
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccSecurityPolicyDataSourceConfig("devel"),
+				Config: testAccSecurityPolicyDataSourceConfig(testData.SecurityPolicyDisplayName),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "display_name", "devel"),
+					resource.TestCheckResourceAttr(resourceName, "display_name", testData.SecurityPolicyDisplayName),
 					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
