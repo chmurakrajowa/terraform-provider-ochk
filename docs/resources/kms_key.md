@@ -70,11 +70,11 @@ The following arguments are supported:
 
 * `display_name` - (Required) Exact display name of KMS encryption key.
 * `version` - (Required) Version of the key.
-* `key_usage` - (Required) List of key usages, e.g. [`ENCRYPT`, `DECRYPT`].
+* `key_usage` - (Required) List of key usages, what actions the key will be applied to: e.g. [`ENCRYPT`, `DECRYPT`].
 * `algorithm` - (Required) Encryption algorithm, values: `AES`, `RSA`.
-* `size` - (Required) Key size.
-* `material` - (Optional) Encryption key to import. AES keys are encoded in Base64, RSA keys are in PEM format.
-* `private_key_id_to_unwrap` - (Optional) Id of RSA private key to unwrap encrypted AES key. Use `ochk_kms_key` data source to get key id. 
+* `size` - (Required) The maximum number of combinations required to break the encryption algorithm.
+* `material` - (Optional) Imported cryptographic material, the format depends on the selected key type. AES keys are encoded in Base64, RSA keys are in PEM format.
+* `private_key_id_to_unwrap` - (Optional) Id of the RSA private key that we used to secure the cryptographic material. Use `ochk_kms_key` data source to get key id. 
 
 ## Attribute Reference
 
@@ -84,8 +84,8 @@ The following attributes are exported in addition to above arguments:
 * `default_iv` - Default IV.
 * `object_type` - Type of key.
 * `revocation_reason` - Reason of revocation if the key was revoked.
-* `sha1_fingerprint` - SHA-1 fingerprint.
-* `sha256_fingerprint` - SHA-256 fingerprint.
+* `sha1_fingerprint` - SHA-1 unique identifier of the certificate.
+* `sha256_fingerprint` - SHA-256 unique identifier of the certificate.
 * `state` - State of the key, e.g. `Active`.
 
    
