@@ -123,13 +123,25 @@ func NewSecurityGroupUpdateUsingPUTBadRequest() *SecurityGroupUpdateUsingPUTBadR
 Bad request, error occurred. For more details see log messages.
 */
 type SecurityGroupUpdateUsingPUTBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *SecurityGroupUpdateUsingPUTBadRequest) Error() string {
-	return fmt.Sprintf("[PUT /network/security-groups/{groupId}][%d] securityGroupUpdateUsingPUTBadRequest ", 400)
+	return fmt.Sprintf("[PUT /network/security-groups/{groupId}][%d] securityGroupUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *SecurityGroupUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *SecurityGroupUpdateUsingPUTBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

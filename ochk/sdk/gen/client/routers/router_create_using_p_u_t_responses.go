@@ -123,13 +123,25 @@ func NewRouterCreateUsingPUTBadRequest() *RouterCreateUsingPUTBadRequest {
 Bad request, error occurred. For more details see log messages.
 */
 type RouterCreateUsingPUTBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *RouterCreateUsingPUTBadRequest) Error() string {
-	return fmt.Sprintf("[PUT /network/routers][%d] routerCreateUsingPUTBadRequest ", 400)
+	return fmt.Sprintf("[PUT /network/routers][%d] routerCreateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *RouterCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *RouterCreateUsingPUTBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

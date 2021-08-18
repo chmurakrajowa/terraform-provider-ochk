@@ -27,13 +27,13 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	MemberCreateUsingPUT(params *MemberCreateUsingPUTParams) (*MemberCreateUsingPUTOK, *MemberCreateUsingPUTCreated, error)
+	GroupMemberCreateUsingPUT(params *GroupMemberCreateUsingPUTParams) (*GroupMemberCreateUsingPUTOK, *GroupMemberCreateUsingPUTCreated, error)
 
-	MemberDeleteUsingDELETE(params *MemberDeleteUsingDELETEParams) (*MemberDeleteUsingDELETEOK, error)
+	GroupMemberDeleteUsingDELETE(params *GroupMemberDeleteUsingDELETEParams) (*GroupMemberDeleteUsingDELETEOK, error)
 
-	MemberGetUsingGET(params *MemberGetUsingGETParams) (*MemberGetUsingGETOK, error)
+	GroupMemberGetUsingGET(params *GroupMemberGetUsingGETParams) (*GroupMemberGetUsingGETOK, error)
 
-	MemberListUsingGET(params *MemberListUsingGETParams) (*MemberListUsingGETOK, error)
+	GroupMemberListUsingGET(params *GroupMemberListUsingGETParams) (*GroupMemberListUsingGETOK, error)
 
 	SubtenantGroupGetUsingGET(params *SubtenantGroupGetUsingGETParams) (*SubtenantGroupGetUsingGETOK, error)
 
@@ -41,29 +41,37 @@ type ClientService interface {
 
 	SubtenantGroupUpdateUsingPUT(params *SubtenantGroupUpdateUsingPUTParams) (*SubtenantGroupUpdateUsingPUTOK, error)
 
+	UserMemberCreateUsingPUT(params *UserMemberCreateUsingPUTParams) (*UserMemberCreateUsingPUTOK, *UserMemberCreateUsingPUTCreated, error)
+
+	UserMemberDeleteUsingDELETE(params *UserMemberDeleteUsingDELETEParams) (*UserMemberDeleteUsingDELETEOK, error)
+
+	UserMemberGetUsingGET(params *UserMemberGetUsingGETParams) (*UserMemberGetUsingGETOK, error)
+
+	UserMemberListUsingGET(params *UserMemberListUsingGETParams) (*UserMemberListUsingGETOK, error)
+
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  MemberCreateUsingPUT creates
+  GroupMemberCreateUsingPUT creates
 
-  Add member of custom group in vRealize Automation
+  Add group member of custom group in vRealize Automation
 */
-func (a *Client) MemberCreateUsingPUT(params *MemberCreateUsingPUTParams) (*MemberCreateUsingPUTOK, *MemberCreateUsingPUTCreated, error) {
+func (a *Client) GroupMemberCreateUsingPUT(params *GroupMemberCreateUsingPUTParams) (*GroupMemberCreateUsingPUTOK, *GroupMemberCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewMemberCreateUsingPUTParams()
+		params = NewGroupMemberCreateUsingPUTParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "memberCreateUsingPUT",
+		ID:                 "groupMemberCreateUsingPUT",
 		Method:             "PUT",
-		PathPattern:        "/subtenants/{subtenantId}/groups/{groupId}/members",
+		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/groups",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &MemberCreateUsingPUTReader{formats: a.formats},
+		Reader:             &GroupMemberCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -71,9 +79,9 @@ func (a *Client) MemberCreateUsingPUT(params *MemberCreateUsingPUTParams) (*Memb
 		return nil, nil, err
 	}
 	switch value := result.(type) {
-	case *MemberCreateUsingPUTOK:
+	case *GroupMemberCreateUsingPUTOK:
 		return value, nil, nil
-	case *MemberCreateUsingPUTCreated:
+	case *GroupMemberCreateUsingPUTCreated:
 		return nil, value, nil
 	}
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
@@ -82,110 +90,110 @@ func (a *Client) MemberCreateUsingPUT(params *MemberCreateUsingPUTParams) (*Memb
 }
 
 /*
-  MemberDeleteUsingDELETE deletes
+  GroupMemberDeleteUsingDELETE deletes
 
-  Delete member of custom group from vRealize Automation
+  Delete group member of custom group from vRealize Automation
 */
-func (a *Client) MemberDeleteUsingDELETE(params *MemberDeleteUsingDELETEParams) (*MemberDeleteUsingDELETEOK, error) {
+func (a *Client) GroupMemberDeleteUsingDELETE(params *GroupMemberDeleteUsingDELETEParams) (*GroupMemberDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewMemberDeleteUsingDELETEParams()
+		params = NewGroupMemberDeleteUsingDELETEParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "memberDeleteUsingDELETE",
+		ID:                 "groupMemberDeleteUsingDELETE",
 		Method:             "DELETE",
-		PathPattern:        "/subtenants/{subtenantId}/groups/{groupId}/members/{userId}",
+		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/groups/{groupId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &MemberDeleteUsingDELETEReader{formats: a.formats},
+		Reader:             &GroupMemberDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*MemberDeleteUsingDELETEOK)
+	success, ok := result.(*GroupMemberDeleteUsingDELETEOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for memberDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for groupMemberDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
-  MemberGetUsingGET gets
+  GroupMemberGetUsingGET gets
 
-  Get IAAS API group member
+  Get group IAAS API group member
 */
-func (a *Client) MemberGetUsingGET(params *MemberGetUsingGETParams) (*MemberGetUsingGETOK, error) {
+func (a *Client) GroupMemberGetUsingGET(params *GroupMemberGetUsingGETParams) (*GroupMemberGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewMemberGetUsingGETParams()
+		params = NewGroupMemberGetUsingGETParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "memberGetUsingGET",
+		ID:                 "groupMemberGetUsingGET",
 		Method:             "GET",
-		PathPattern:        "/subtenants/{subtenantId}/groups/{groupId}/members/{userId}",
+		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/groups/{groupId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &MemberGetUsingGETReader{formats: a.formats},
+		Reader:             &GroupMemberGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*MemberGetUsingGETOK)
+	success, ok := result.(*GroupMemberGetUsingGETOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for memberGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for groupMemberGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
-  MemberListUsingGET lists
+  GroupMemberListUsingGET lists
 
-  List IAAS API group members
+  List groups IAAS API group members
 */
-func (a *Client) MemberListUsingGET(params *MemberListUsingGETParams) (*MemberListUsingGETOK, error) {
+func (a *Client) GroupMemberListUsingGET(params *GroupMemberListUsingGETParams) (*GroupMemberListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewMemberListUsingGETParams()
+		params = NewGroupMemberListUsingGETParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "memberListUsingGET",
+		ID:                 "groupMemberListUsingGET",
 		Method:             "GET",
-		PathPattern:        "/subtenants/{subtenantId}/groups/{groupId}/members",
+		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/groups",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &MemberListUsingGETReader{formats: a.formats},
+		Reader:             &GroupMemberListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*MemberListUsingGETOK)
+	success, ok := result.(*GroupMemberListUsingGETOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for memberListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for groupMemberListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -294,6 +302,151 @@ func (a *Client) SubtenantGroupUpdateUsingPUT(params *SubtenantGroupUpdateUsingP
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for subtenantGroupUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  UserMemberCreateUsingPUT creates
+
+  Add user member of custom group in vRealize Automation
+*/
+func (a *Client) UserMemberCreateUsingPUT(params *UserMemberCreateUsingPUTParams) (*UserMemberCreateUsingPUTOK, *UserMemberCreateUsingPUTCreated, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUserMemberCreateUsingPUTParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "userMemberCreateUsingPUT",
+		Method:             "PUT",
+		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/users",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &UserMemberCreateUsingPUTReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UserMemberCreateUsingPUTOK:
+		return value, nil, nil
+	case *UserMemberCreateUsingPUTCreated:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for subtenant_custom_groups: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  UserMemberDeleteUsingDELETE deletes
+
+  Delete user member of custom group from vRealize Automation
+*/
+func (a *Client) UserMemberDeleteUsingDELETE(params *UserMemberDeleteUsingDELETEParams) (*UserMemberDeleteUsingDELETEOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUserMemberDeleteUsingDELETEParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "userMemberDeleteUsingDELETE",
+		Method:             "DELETE",
+		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/users/{userId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &UserMemberDeleteUsingDELETEReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UserMemberDeleteUsingDELETEOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for userMemberDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  UserMemberGetUsingGET gets
+
+  Get user IAAS API group member
+*/
+func (a *Client) UserMemberGetUsingGET(params *UserMemberGetUsingGETParams) (*UserMemberGetUsingGETOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUserMemberGetUsingGETParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "userMemberGetUsingGET",
+		Method:             "GET",
+		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/users/{userId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &UserMemberGetUsingGETReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UserMemberGetUsingGETOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for userMemberGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  UserMemberListUsingGET lists
+
+  List user IAAS API group members
+*/
+func (a *Client) UserMemberListUsingGET(params *UserMemberListUsingGETParams) (*UserMemberListUsingGETOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUserMemberListUsingGETParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "userMemberListUsingGET",
+		Method:             "GET",
+		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/users",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &UserMemberListUsingGETReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UserMemberListUsingGETOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for userMemberListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

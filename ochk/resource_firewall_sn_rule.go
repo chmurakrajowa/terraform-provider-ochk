@@ -27,11 +27,14 @@ func resourceFirewallSNRule() *schema.Resource {
 			Delete: schema.DefaultTimeout(FirewallSNRuleRetryTimeout),
 		},
 
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
 		Schema: map[string]*schema.Schema{
-			"gateway_policy_id": {
+			"router_id": {
 				Type:     schema.TypeString,
 				Required: true,
-				ForceNew: true,
 			},
 			"display_name": {
 				Type:     schema.TypeString,
@@ -79,12 +82,7 @@ func resourceFirewallSNRule() *schema.Resource {
 				AtLeastOneOf: []string{"source", "destination"},
 				Elem:         &schema.Schema{Type: schema.TypeString},
 			},
-			"scope": {
-				Type:     schema.TypeSet,
-				Required: true,
-				ForceNew: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
-			},
+
 			"priority": {
 				Type:     schema.TypeInt,
 				Required: true,
@@ -112,11 +110,11 @@ func resourceFirewallSNRule() *schema.Resource {
 func resourceFirewallSNRuleCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallSNRules
 
-	gatewayPolicyID := d.Get("gateway_policy_id").(string)
+	routerID := d.Get("router_id").(string)
 
 	rule := mapResourceDataToGFWRule(d)
 
-	created, err := proxy.Create(ctx, gatewayPolicyID, rule)
+	created, err := proxy.Create(ctx, routerID, rule)
 	if err != nil {
 		return diag.Errorf("error while creating firewall SN rule: %+v", err)
 	}
@@ -129,9 +127,9 @@ func resourceFirewallSNRuleCreate(ctx context.Context, d *schema.ResourceData, m
 func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallSNRules
 
-	gatewayPolicyID := d.Get("gateway_policy_id").(string)
+	routerID := d.Get("router_id").(string)
 
-	firewallSNRule, err := proxy.Read(ctx, gatewayPolicyID, d.Id())
+	firewallSNRule, err := proxy.Read(ctx, routerID, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -181,11 +179,11 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 	if err := d.Set("priority", firewallSNRule.Priority); err != nil {
 		return diag.Errorf("error setting priority: %+v", err)
 	}
-
-	if err := d.Set("scope", flattenRouterInstancesFromIDs(firewallSNRule.Scope)); err != nil {
-		return diag.Errorf("error setting scope: %+v", err)
-	}
-
+	/*
+		if err := d.Set("scope", flattenRouterInstancesFromIDs(firewallSNRule.Scope)); err != nil {
+			return diag.Errorf("error setting scope: %+v", err)
+		}
+	*/
 	if err := d.Set("created_by", firewallSNRule.CreatedBy); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
@@ -212,12 +210,12 @@ func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 		return nil
 	}
 
-	gatewayPolicyID := d.Get("gateway_policy_id").(string)
+	routerID := d.Get("router_id").(string)
 
 	rule := mapResourceDataToGFWRule(d)
 	rule.RuleID = d.Id()
 
-	_, err := proxy.Update(ctx, gatewayPolicyID, rule)
+	_, err := proxy.Update(ctx, routerID, rule)
 	if err != nil {
 		return diag.Errorf("error while modifying firewall SN rule: %+v", err)
 	}
@@ -250,11 +248,11 @@ func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GFWRule {
 	if destination, ok := d.GetOk("destination"); ok {
 		rule.Destination = expandSecurityGroupFromIDs(destination.(*schema.Set).List())
 	}
-
-	if scope, ok := d.GetOk("scope"); ok {
-		rule.Scope = expandRouterInstancesFromIDs(scope.(*schema.Set).List())
-	}
-
+	/*
+		if scope, ok := d.GetOk("scope"); ok {
+			rule.Scope = expandRouterInstancesFromIDs(scope.(*schema.Set).List())
+		}
+	*/
 	if position, ok := d.GetOk("position"); ok {
 		rule.Position = expandFirewallRulePosition(position.([]interface{}))
 	}
@@ -265,9 +263,9 @@ func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GFWRule {
 func resourceFirewallSNRuleDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallSNRules
 
-	gatewayPolicyID := d.Get("gateway_policy_id").(string)
+	routerID := d.Get("router_id").(string)
 
-	err := proxy.Delete(ctx, gatewayPolicyID, d.Id())
+	err := proxy.Delete(ctx, routerID, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()

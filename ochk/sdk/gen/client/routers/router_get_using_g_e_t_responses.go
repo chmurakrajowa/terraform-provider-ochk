@@ -90,13 +90,25 @@ func NewRouterGetUsingGETBadRequest() *RouterGetUsingGETBadRequest {
 Bad request, error occurred. For more details see log messages.
 */
 type RouterGetUsingGETBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *RouterGetUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/routers/{routerId}][%d] routerGetUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/routers/{routerId}][%d] routerGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *RouterGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *RouterGetUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

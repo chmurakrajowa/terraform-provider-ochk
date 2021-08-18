@@ -26,6 +26,10 @@ func resourceKMSKey() *schema.Resource {
 			Delete: schema.DefaultTimeout(KMSKeyRetryTimeout),
 		},
 
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"display_name": {
 				Type:     schema.TypeString,
@@ -49,15 +53,9 @@ func resourceKMSKey() *schema.Resource {
 				ForceNew: true,
 			},
 			"private_key_id_to_unwrap": {
-				Type:      schema.TypeString,
-				Sensitive: true,
-				Optional:  true,
-				ForceNew:  true,
-				// Setting private_key_id_to_unwrap is possible only on create, subsequent read gets empty string,
-				// which causes config drift. This suppresses any reported differences.
-				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-					return true
-				},
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
 			},
 			"material": {
 				Type:      schema.TypeString,
@@ -67,7 +65,10 @@ func resourceKMSKey() *schema.Resource {
 				// Setting material is possible only on create, subsequent read gets empty string,
 				// which causes config drift. This suppresses any reported differences.
 				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-					return true
+					if old != "" {
+						return true
+					}
+					return false
 				},
 			},
 			"activation_date": {
@@ -243,12 +244,12 @@ func mapResourceDataToKeyImport(d *schema.ResourceData) *models.KeyImport {
 		Size:         int32(d.Get("size").(int)),
 	}
 
-	if material, ok := d.GetOk("material"); ok && material.(string) != "" {
-		keyInstance.Material = material.(string)
+	if privateKeyIDToUnwrap, ok := d.GetOk("private_key_id_to_unwrap"); ok && privateKeyIDToUnwrap.(string) != "" {
+		keyInstance.PrivateKeyIDToUnwrap = privateKeyIDToUnwrap.(string)
 	}
 
-	if privateKeyIDToUnwrap, ok := d.GetOk("private_key_id_to_unwrap"); ok && privateKeyIDToUnwrap.(string) != "" {
-		keyInstance.Material = privateKeyIDToUnwrap.(string)
+	if material, ok := d.GetOk("material"); ok && material.(string) != "" {
+		keyInstance.Material = material.(string)
 	}
 
 	return &keyInstance

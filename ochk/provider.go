@@ -67,6 +67,10 @@ func Provider() *schema.Provider {
 			"ochk_virtual_network": dataSourceVirtualNetwork(),
 			"ochk_custom_service":  dataSourceCustomService(),
 			"ochk_kms_key":         dataSourceKMSKey(),
+			"ochk_backup_plan":     dataSourceBackupPlan(),
+			"ochk_backup_list":     dataSourceBackupList(),
+			"ochk_billing_tag":     dataSourceBillingTag(),
+			"ochk_system_tag":      dataSourceSystemTag(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"ochk_firewall_ew_rule": resourceFirewallEWRule(),
@@ -79,6 +83,8 @@ func Provider() *schema.Provider {
 			"ochk_virtual_machine":  resourceVirtualMachine(),
 			"ochk_custom_service":   resourceCustomService(),
 			"ochk_kms_key":          resourceKMSKey(),
+			"ochk_billing_tag":      resourceBillingTag(),
+			"ochk_system_tag":       resourceSystemTag(),
 		},
 		ConfigureContextFunc: func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 			client, err := sdk.NewClient(

@@ -61,7 +61,7 @@ type GfwRuleDeleteUsingDELETEOK struct {
 }
 
 func (o *GfwRuleDeleteUsingDELETEOK) Error() string {
-	return fmt.Sprintf("[DELETE /network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}][%d] gfwRuleDeleteUsingDELETEOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
 
 func (o *GfwRuleDeleteUsingDELETEOK) GetPayload() *models.DeleteGFWRuleResponse {
@@ -94,7 +94,7 @@ type GfwRuleDeleteUsingDELETECreated struct {
 }
 
 func (o *GfwRuleDeleteUsingDELETECreated) Error() string {
-	return fmt.Sprintf("[DELETE /network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}][%d] gfwRuleDeleteUsingDELETECreated  %+v", 201, o.Payload)
+	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleDeleteUsingDELETECreated  %+v", 201, o.Payload)
 }
 
 func (o *GfwRuleDeleteUsingDELETECreated) GetPayload() *models.DeleteGFWRuleResponse {
@@ -123,13 +123,25 @@ func NewGfwRuleDeleteUsingDELETEBadRequest() *GfwRuleDeleteUsingDELETEBadRequest
 Bad request, error occurred. For more details see log messages.
 */
 type GfwRuleDeleteUsingDELETEBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *GfwRuleDeleteUsingDELETEBadRequest) Error() string {
-	return fmt.Sprintf("[DELETE /network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}][%d] gfwRuleDeleteUsingDELETEBadRequest ", 400)
+	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *GfwRuleDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *GfwRuleDeleteUsingDELETEBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

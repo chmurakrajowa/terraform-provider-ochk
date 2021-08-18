@@ -90,13 +90,25 @@ func NewVcsVirtualMachineGroupGetUsingGETBadRequest() *VcsVirtualMachineGroupGet
 Bad request, error occurred. For more details see log messages.
 */
 type VcsVirtualMachineGroupGetUsingGETBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *VcsVirtualMachineGroupGetUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /vcs/networks/{networkId}][%d] vcsVirtualMachineGroupGetUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /vcs/networks/{networkId}][%d] vcsVirtualMachineGroupGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *VcsVirtualMachineGroupGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *VcsVirtualMachineGroupGetUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

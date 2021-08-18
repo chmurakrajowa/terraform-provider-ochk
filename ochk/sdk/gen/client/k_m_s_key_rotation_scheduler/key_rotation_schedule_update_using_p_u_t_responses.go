@@ -84,13 +84,25 @@ func NewKeyRotationScheduleUpdateUsingPUTBadRequest() *KeyRotationScheduleUpdate
 Bad request, error occurred. For more details see log messages.
 */
 type KeyRotationScheduleUpdateUsingPUTBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *KeyRotationScheduleUpdateUsingPUTBadRequest) Error() string {
-	return fmt.Sprintf("[PUT /kms/schedule/{keyId}][%d] keyRotationScheduleUpdateUsingPUTBadRequest ", 400)
+	return fmt.Sprintf("[PUT /kms/schedule/{keyId}][%d] keyRotationScheduleUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *KeyRotationScheduleUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *KeyRotationScheduleUpdateUsingPUTBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

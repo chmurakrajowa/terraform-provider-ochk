@@ -90,13 +90,25 @@ func NewSecurityGroupGetUsingGETBadRequest() *SecurityGroupGetUsingGETBadRequest
 Bad request, error occurred. For more details see log messages.
 */
 type SecurityGroupGetUsingGETBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *SecurityGroupGetUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/security-groups/{groupId}][%d] securityGroupGetUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/security-groups/{groupId}][%d] securityGroupGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *SecurityGroupGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *SecurityGroupGetUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

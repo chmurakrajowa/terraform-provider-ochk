@@ -23,6 +23,14 @@
       "description": "Sync Controller"
     },
     {
+      "name": "Backups",
+      "description": "Backup Controller"
+    },
+    {
+      "name": "Billing tags",
+      "description": "Billing Tag Controller"
+    },
+    {
       "name": "Context profiles",
       "description": "Context Profile Controller"
     },
@@ -55,6 +63,10 @@
       "description": "Gateway Policy Controller"
     },
     {
+      "name": "Groups",
+      "description": "Groups Controller"
+    },
+    {
       "name": "IP Collections",
       "description": "Ip Collection Controller"
     },
@@ -67,12 +79,12 @@
       "description": "Key Schedule Controller"
     },
     {
-      "name": "Logical ports",
-      "description": "Logical Port Controller"
+      "name": "Log categories",
+      "description": "Log Controller"
     },
     {
-      "name": "Network adapters",
-      "description": "Network Adapter Controller"
+      "name": "Logical ports",
+      "description": "Logical Port Controller"
     },
     {
       "name": "Network profiles",
@@ -107,6 +119,10 @@
       "description": "Security Policy Controller"
     },
     {
+      "name": "Snapshots",
+      "description": "Snapshot Controller"
+    },
+    {
       "name": "Subtenant custom groups",
       "description": "Subtenant Group Member Controller"
     },
@@ -115,12 +131,8 @@
       "description": "Subtenant Controller"
     },
     {
-      "name": "Subtenants/Networks",
-      "description": "Subtenant Network Controller"
-    },
-    {
-      "name": "Subtenants/Reservations",
-      "description": "Reservations Controller"
+      "name": "System tags",
+      "description": "System Tag Controller"
     },
     {
       "name": "Users",
@@ -145,10 +157,6 @@
     {
       "name": "Virtual networks",
       "description": "Virtual Network Controller"
-    },
-    {
-      "name": "ads-download",
-      "description": "Ads Download"
     },
     {
       "name": "vIDM",
@@ -189,7 +197,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -233,7 +244,162 @@
             }
           },
           "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/backups/plans": {
+      "get": {
+        "tags": [
+          "Backups"
+        ],
+        "summary": "List backup plans",
+        "description": "List backup plans",
+        "operationId": "backupPlanListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "backupPlanName",
+            "in": "query",
+            "description": "backupPlanName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BackupPlanListResponse"
+            }
+          },
+          "400": {
             "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/backups/plans/{backupPlanId}": {
+      "get": {
+        "tags": [
+          "Backups"
+        ],
+        "summary": "Get backup plan",
+        "description": "Get backup plan",
+        "operationId": "backupPlanGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "backupPlanId",
+            "in": "path",
+            "description": "backupPlanId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BackupPlanGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/backups/plans/{backupPlanId}/lists": {
+      "get": {
+        "tags": [
+          "Backups"
+        ],
+        "summary": "List backup lists",
+        "description": "List backup lists",
+        "operationId": "backupListListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "backupListName",
+            "in": "query",
+            "description": "backupListName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "backupPlanId",
+            "in": "path",
+            "description": "backupPlanId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BackupListListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/backups/plans/{backupPlanId}/lists/{backupListId}": {
+      "get": {
+        "tags": [
+          "Backups"
+        ],
+        "summary": "Get backup list get",
+        "description": "Get backup list",
+        "operationId": "backupListGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "backupListId",
+            "in": "path",
+            "description": "backupListId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "backupPlanId",
+            "in": "path",
+            "description": "backupPlanId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BackupListGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
           }
         }
       }
@@ -275,7 +441,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -320,7 +489,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -356,7 +528,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -389,7 +564,85 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/groups": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "List",
+        "description": "List users from vra/core",
+        "operationId": "groupListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GroupListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/groups/{groupId}": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "Get",
+        "description": "Get user",
+        "operationId": "groupGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "groupId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GroupGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -426,30 +679,13 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
-          }
-        }
-      }
-    },
-    "/integrationprovider/download": {
-      "get": {
-        "tags": [
-          "ads-download"
-        ],
-        "summary": "getFile",
-        "operationId": "getFileUsingGET",
-        "produces": [
-          "application/octet-stream"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/Resource"
-            }
           }
         }
       }
@@ -482,7 +718,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -524,7 +763,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -557,7 +799,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -603,7 +848,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -634,7 +882,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -667,7 +918,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -709,7 +963,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -753,7 +1010,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -786,7 +1046,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -820,7 +1083,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -865,7 +1131,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -910,7 +1179,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -936,6 +1208,15 @@
             "description": "id",
             "required": true,
             "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "keyNewVersion",
+            "description": "keyNewVersion",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/KeyNewVersion"
+            }
           }
         ],
         "responses": {
@@ -952,7 +1233,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -996,7 +1280,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -1029,7 +1316,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -1075,7 +1365,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -1106,7 +1399,195 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/log/categories": {
+      "get": {
+        "tags": [
+          "Log categories"
+        ],
+        "summary": "List",
+        "description": "List log categories",
+        "operationId": "logCategoriesListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "logCategoryName",
+            "in": "query",
+            "description": "logCategoryName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/LogCategoryListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/log/categories/{logCategoryId}": {
+      "get": {
+        "tags": [
+          "Log categories"
+        ],
+        "summary": "Get",
+        "description": "Get log category",
+        "operationId": "logCategoryGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "logCategoryId",
+            "in": "path",
+            "description": "logCategoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/LogCategoryGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Log categories"
+        ],
+        "summary": "Update",
+        "description": "Update log category",
+        "operationId": "logCategoryUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "logCategory",
+            "description": "logCategory",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LogCategory"
+            }
+          },
+          {
+            "name": "logCategoryId",
+            "in": "path",
+            "description": "logCategoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request has been completed successfully",
+            "schema": {
+              "$ref": "#/definitions/UpdateLogCategoryResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/log/categories/{logCategoryId}/generate": {
+      "post": {
+        "tags": [
+          "Log categories"
+        ],
+        "summary": "Get logs",
+        "description": "Get logs",
+        "operationId": "getLogsUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "dataSize",
+            "in": "query",
+            "description": "dataSize",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "lastIndex",
+            "in": "query",
+            "description": "lastIndex",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "logCategoryId",
+            "in": "path",
+            "description": "logCategoryId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "queryFilter",
+            "description": "queryFilter",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/QueryFilter"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request has been completed successfully",
+            "schema": {
+              "$ref": "#/definitions/GetLogsResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -1139,7 +1620,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -1172,7 +1656,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -1214,7 +1701,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -1247,7 +1737,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -1299,7 +1792,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -1336,7 +1832,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -1369,7 +1868,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -1402,7 +1904,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -1438,7 +1943,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -1471,7 +1979,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -1507,7 +2018,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -1540,244 +2054,13 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
-          }
-        }
-      }
-    },
-    "/network/firewall/gateway-policies/{gatewayPolicyId}/rules": {
-      "get": {
-        "tags": [
-          "Firewall rules S-N"
-        ],
-        "summary": "List",
-        "description": "List firewall rules (south-north) from NSX-T",
-        "operationId": "gfwRuleListUsingGET",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "displayName",
-            "in": "query",
-            "description": "displayName",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "gatewayPolicyId",
-            "in": "path",
-            "description": "gatewayPolicyId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/GFWRuleListResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          }
-        }
-      }
-    },
-    "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/": {
-      "put": {
-        "tags": [
-          "Firewall rules S-N"
-        ],
-        "summary": "Create",
-        "description": "Create firewall rule (south-north) in NSX-T",
-        "operationId": "gfwRuleCreateUsingPUT",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "gatewayPolicyId",
-            "in": "path",
-            "description": "gatewayPolicyId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "gfwRule",
-            "description": "gfwRule",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/GFWRule"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/CreateGFWRuleResponse"
-            }
-          },
-          "201": {
-            "description": "Entity has been created",
-            "schema": {
-              "$ref": "#/definitions/CreateGFWRuleResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          }
-        }
-      }
-    },
-    "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}": {
-      "get": {
-        "tags": [
-          "Firewall rules S-N"
-        ],
-        "summary": "Get",
-        "description": "Get firewall rule (south-north) from NSX-T",
-        "operationId": "gfwRuleGetUsingGET",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "gatewayPolicyId",
-            "in": "path",
-            "description": "gatewayPolicyId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "ruleId",
-            "in": "path",
-            "description": "ruleId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/GFWRuleGetResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          },
-          "404": {
-            "description": "Entity not found."
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Firewall rules S-N"
-        ],
-        "summary": "Update",
-        "description": "Create firewall rule (south-north) in NSX-T",
-        "operationId": "gfwRuleUpdateUsingPUT",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "gatewayPolicyId",
-            "in": "path",
-            "description": "gatewayPolicyId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "gfwRule",
-            "description": "gfwRule",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/GFWRule"
-            }
-          },
-          {
-            "name": "ruleId",
-            "in": "path",
-            "description": "ruleId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/UpdateGFWRuleResponse"
-            }
-          },
-          "201": {
-            "description": "Entity has been updated",
-            "schema": {
-              "$ref": "#/definitions/UpdateGFWRuleResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Firewall rules S-N"
-        ],
-        "summary": "Delete",
-        "description": "Delete firewall rule (south-north) from NSX-T",
-        "operationId": "gfwRuleDeleteUsingDELETE",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "gatewayPolicyId",
-            "in": "path",
-            "description": "gatewayPolicyId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "ruleId",
-            "in": "path",
-            "description": "ruleId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/DeleteGFWRuleResponse"
-            }
-          },
-          "201": {
-            "description": "Entity has been deleted",
-            "schema": {
-              "$ref": "#/definitions/DeleteGFWRuleResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
@@ -1810,7 +2093,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -1843,244 +2129,13 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
-          }
-        }
-      }
-    },
-    "/network/firewall/security-policies/{securityPolicyId}/rules": {
-      "get": {
-        "tags": [
-          "Firewall rules E-W"
-        ],
-        "summary": "List",
-        "description": "List firewall rules (east-west) from NSX-T",
-        "operationId": "dfwRuleListUsingGET",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "displayName",
-            "in": "query",
-            "description": "displayName",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "securityPolicyId",
-            "in": "path",
-            "description": "securityPolicyId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/DFWRuleListResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          }
-        }
-      }
-    },
-    "/network/firewall/security-policies/{securityPolicyId}/rules/": {
-      "put": {
-        "tags": [
-          "Firewall rules E-W"
-        ],
-        "summary": "Create",
-        "description": "Create firewall rule (east-west) in NSX-T",
-        "operationId": "dfwRuleCreateUsingPUT",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "dfwRule",
-            "description": "dfwRule",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/DFWRule"
-            }
-          },
-          {
-            "name": "securityPolicyId",
-            "in": "path",
-            "description": "securityPolicyId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/CreateDFWRuleResponse"
-            }
-          },
-          "201": {
-            "description": "Entity has been created",
-            "schema": {
-              "$ref": "#/definitions/CreateDFWRuleResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          }
-        }
-      }
-    },
-    "/network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}": {
-      "get": {
-        "tags": [
-          "Firewall rules E-W"
-        ],
-        "summary": "Get",
-        "description": "Get firewall rule (east-west) from NSX-T",
-        "operationId": "dfwRuleGetUsingGET",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "ruleId",
-            "in": "path",
-            "description": "ruleId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "securityPolicyId",
-            "in": "path",
-            "description": "securityPolicyId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/DFWRuleGetResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          },
-          "404": {
-            "description": "Entity not found."
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Firewall rules E-W"
-        ],
-        "summary": "Update",
-        "description": "Update firewall rule (east-west) in NSX-T",
-        "operationId": "dfwRuleUpdateUsingPUT",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "dfwRule",
-            "description": "dfwRule",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/DFWRule"
-            }
-          },
-          {
-            "name": "ruleId",
-            "in": "path",
-            "description": "ruleId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "securityPolicyId",
-            "in": "path",
-            "description": "securityPolicyId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/UpdateDFWRuleResponse"
-            }
-          },
-          "201": {
-            "description": "Entity has been updated",
-            "schema": {
-              "$ref": "#/definitions/UpdateDFWRuleResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Firewall rules E-W"
-        ],
-        "summary": "Delete",
-        "description": "Delete firewall rule (east-west) from NSX-T",
-        "operationId": "dfwRuleDeleteUsingDELETE",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "ruleId",
-            "in": "path",
-            "description": "ruleId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "securityPolicyId",
-            "in": "path",
-            "description": "securityPolicyId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/DeleteDFWRuleResponse"
-            }
-          },
-          "201": {
-            "description": "Entity has been deleted",
-            "schema": {
-              "$ref": "#/definitions/DeleteDFWRuleResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
           }
         }
       }
@@ -2113,7 +2168,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -2146,7 +2204,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -2182,7 +2243,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -2224,7 +2288,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -2257,7 +2324,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -2309,7 +2379,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -2346,7 +2419,504 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/network/routers/{routerId}/rules/e-w": {
+      "get": {
+        "tags": [
+          "Firewall rules E-W"
+        ],
+        "summary": "List",
+        "description": "List firewall rules (east-west) from NSX-T",
+        "operationId": "dfwRuleListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "routerId",
+            "in": "path",
+            "description": "routerId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DFWRuleListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Firewall rules E-W"
+        ],
+        "summary": "Create",
+        "description": "Create firewall rule (east-west) in NSX-T",
+        "operationId": "dfwRuleCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dfwRule",
+            "description": "dfwRule",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DFWRule"
+            }
+          },
+          {
+            "name": "routerId",
+            "in": "path",
+            "description": "routerId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateDFWRuleResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateDFWRuleResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/network/routers/{routerId}/rules/e-w/{ruleId}": {
+      "get": {
+        "tags": [
+          "Firewall rules E-W"
+        ],
+        "summary": "Get",
+        "description": "Get firewall rule (east-west) from NSX-T",
+        "operationId": "dfwRuleGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "routerId",
+            "in": "path",
+            "description": "routerId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ruleId",
+            "in": "path",
+            "description": "ruleId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DFWRuleGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Firewall rules E-W"
+        ],
+        "summary": "Update",
+        "description": "Update firewall rule (east-west) in NSX-T",
+        "operationId": "dfwRuleUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dfwRule",
+            "description": "dfwRule",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DFWRule"
+            }
+          },
+          {
+            "name": "routerId",
+            "in": "path",
+            "description": "routerId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ruleId",
+            "in": "path",
+            "description": "ruleId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateDFWRuleResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/UpdateDFWRuleResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Firewall rules E-W"
+        ],
+        "summary": "Delete",
+        "description": "Delete firewall rule (east-west) from NSX-T",
+        "operationId": "dfwRuleDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "routerId",
+            "in": "path",
+            "description": "routerId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ruleId",
+            "in": "path",
+            "description": "ruleId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteDFWRuleResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been deleted",
+            "schema": {
+              "$ref": "#/definitions/DeleteDFWRuleResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/network/routers/{routerId}/rules/s-n": {
+      "get": {
+        "tags": [
+          "Firewall rules S-N"
+        ],
+        "summary": "List",
+        "description": "List firewall rules (south-north) from NSX-T",
+        "operationId": "gfwRuleListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "routerId",
+            "in": "path",
+            "description": "routerId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GFWRuleListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Firewall rules S-N"
+        ],
+        "summary": "Create",
+        "description": "Create firewall rule (south-north) in NSX-T",
+        "operationId": "gfwRuleCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "gfwRule",
+            "description": "gfwRule",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GFWRule"
+            }
+          },
+          {
+            "name": "routerId",
+            "in": "path",
+            "description": "routerId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateGFWRuleResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateGFWRuleResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/network/routers/{routerId}/rules/s-n/{ruleId}": {
+      "get": {
+        "tags": [
+          "Firewall rules S-N"
+        ],
+        "summary": "Get",
+        "description": "Get firewall rule (south-north) from NSX-T",
+        "operationId": "gfwRuleGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "routerId",
+            "in": "path",
+            "description": "routerId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ruleId",
+            "in": "path",
+            "description": "ruleId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GFWRuleGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Firewall rules S-N"
+        ],
+        "summary": "Update",
+        "description": "Create firewall rule (south-north) in NSX-T",
+        "operationId": "gfwRuleUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "gfwRule",
+            "description": "gfwRule",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GFWRule"
+            }
+          },
+          {
+            "name": "routerId",
+            "in": "path",
+            "description": "routerId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ruleId",
+            "in": "path",
+            "description": "ruleId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateGFWRuleResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/UpdateGFWRuleResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Firewall rules S-N"
+        ],
+        "summary": "Delete",
+        "description": "Delete firewall rule (south-north) from NSX-T",
+        "operationId": "gfwRuleDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "routerId",
+            "in": "path",
+            "description": "routerId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ruleId",
+            "in": "path",
+            "description": "ruleId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteGFWRuleResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been deleted",
+            "schema": {
+              "$ref": "#/definitions/DeleteGFWRuleResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -2379,7 +2949,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -2421,7 +2994,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -2454,7 +3030,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -2506,7 +3085,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -2543,7 +3125,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -2576,7 +3161,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -2609,7 +3197,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -2645,7 +3236,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -2687,7 +3281,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -2720,7 +3317,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -2772,7 +3372,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -2809,7 +3412,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -2842,7 +3448,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -2875,7 +3484,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -2911,7 +3523,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -2953,7 +3568,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -2986,7 +3604,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -3038,7 +3659,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -3075,7 +3699,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -3115,7 +3742,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -3155,7 +3785,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -3208,19 +3841,131 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
     },
-    "/subtenants/{subtenantId}/groups/{groupId}/members": {
+    "/subtenants/{subtenantId}/groups/{parentGroupId}/members/groups": {
       "get": {
         "tags": [
           "Subtenant custom groups"
         ],
         "summary": "List",
-        "description": "List IAAS API group members",
-        "operationId": "memberListUsingGET",
+        "description": "List groups IAAS API group members",
+        "operationId": "groupMemberListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "parentGroupId",
+            "in": "path",
+            "description": "parentGroupId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GroupListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Subtenant custom groups"
+        ],
+        "summary": "Create",
+        "description": "Add group member of custom group in vRealize Automation",
+        "operationId": "groupMemberCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "groupInstance",
+            "description": "groupInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GroupInstance"
+            }
+          },
+          {
+            "name": "parentGroupId",
+            "in": "path",
+            "description": "parentGroupId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateGroupMemberResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateGroupMemberResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/subtenants/{subtenantId}/groups/{parentGroupId}/members/groups/{groupId}": {
+      "get": {
+        "tags": [
+          "Subtenant custom groups"
+        ],
+        "summary": "Get",
+        "description": "Get group IAAS API group member",
+        "operationId": "groupMemberGetUsingGET",
         "produces": [
           "application/json"
         ],
@@ -3233,10 +3978,111 @@
             "type": "string"
           },
           {
+            "name": "parentGroupId",
+            "in": "path",
+            "description": "parentGroupId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GroupGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Subtenant custom groups"
+        ],
+        "summary": "Delete",
+        "description": "Delete group member of custom group from vRealize Automation",
+        "operationId": "groupMemberDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "groupId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parentGroupId",
+            "in": "path",
+            "description": "parentGroupId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subtenantId",
+            "in": "path",
+            "description": "subtenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteGroupMemberResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/subtenants/{subtenantId}/groups/{parentGroupId}/members/users": {
+      "get": {
+        "tags": [
+          "Subtenant custom groups"
+        ],
+        "summary": "List",
+        "description": "List user IAAS API group members",
+        "operationId": "userMemberListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
             "name": "name",
             "in": "query",
             "description": "name",
             "required": false,
+            "type": "string"
+          },
+          {
+            "name": "parentGroupId",
+            "in": "path",
+            "description": "parentGroupId",
+            "required": true,
             "type": "string"
           },
           {
@@ -3255,7 +4101,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -3264,8 +4113,8 @@
           "Subtenant custom groups"
         ],
         "summary": "Create",
-        "description": "Add member of custom group in vRealize Automation",
-        "operationId": "memberCreateUsingPUT",
+        "description": "Add user member of custom group in vRealize Automation",
+        "operationId": "userMemberCreateUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -3274,9 +4123,9 @@
         ],
         "parameters": [
           {
-            "name": "groupId",
+            "name": "parentGroupId",
             "in": "path",
-            "description": "groupId",
+            "description": "parentGroupId",
             "required": true,
             "type": "string"
           },
@@ -3301,37 +4150,40 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/CreateMemberResponse"
+              "$ref": "#/definitions/CreateUserMemberResponse"
             }
           },
           "201": {
             "description": "Entity has been created",
             "schema": {
-              "$ref": "#/definitions/CreateMemberResponse"
+              "$ref": "#/definitions/CreateUserMemberResponse"
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
     },
-    "/subtenants/{subtenantId}/groups/{groupId}/members/{userId}": {
+    "/subtenants/{subtenantId}/groups/{parentGroupId}/members/users/{userId}": {
       "get": {
         "tags": [
           "Subtenant custom groups"
         ],
         "summary": "Get",
-        "description": "Get IAAS API group member",
-        "operationId": "memberGetUsingGET",
+        "description": "Get user IAAS API group member",
+        "operationId": "userMemberGetUsingGET",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "groupId",
+            "name": "parentGroupId",
             "in": "path",
-            "description": "groupId",
+            "description": "parentGroupId",
             "required": true,
             "type": "string"
           },
@@ -3358,7 +4210,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -3370,16 +4225,16 @@
           "Subtenant custom groups"
         ],
         "summary": "Delete",
-        "description": "Delete member of custom group from vRealize Automation",
-        "operationId": "memberDeleteUsingDELETE",
+        "description": "Delete user member of custom group from vRealize Automation",
+        "operationId": "userMemberDeleteUsingDELETE",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "groupId",
+            "name": "parentGroupId",
             "in": "path",
-            "description": "groupId",
+            "description": "parentGroupId",
             "required": true,
             "type": "string"
           },
@@ -3402,32 +4257,35 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/DeleteMemberResponse"
+              "$ref": "#/definitions/DeleteUserMemberResponse"
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
     },
-    "/subtenants/{subtenantId}/networks": {
+    "/tags/billingTags": {
       "get": {
         "tags": [
-          "Subtenants/Networks"
+          "Billing tags"
         ],
         "summary": "List",
-        "description": "List network in subtenant",
-        "operationId": "networkListUsingGET",
+        "description": "List billing tags",
+        "operationId": "billingTagListUsingGET",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "subtenantId",
-            "in": "path",
-            "description": "subtenantId",
-            "required": true,
+            "name": "tagValue",
+            "in": "query",
+            "description": "tagValue",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3435,115 +4293,202 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/NetworkListResponse"
+              "$ref": "#/definitions/BillingTagListResponse"
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Billing tags"
+        ],
+        "summary": "Create",
+        "description": "Create billing tag",
+        "operationId": "billingTagCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "billingTag",
+            "description": "billingTag",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BillingTag"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BillingTagCreateResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/BillingTagCreateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
     },
-    "/subtenants/{subtenantId}/networks/{networkId}": {
+    "/tags/billingTags/{billingTagId}": {
       "get": {
         "tags": [
-          "Subtenants/Networks"
+          "Billing tags"
         ],
         "summary": "Get",
-        "description": "Get network for subtenant",
-        "operationId": "networkGetUsingGET",
+        "description": "Get billing tag collection",
+        "operationId": "billingTagGetUsingGET",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "networkId",
+            "name": "billingTagId",
             "in": "path",
-            "description": "networkId",
+            "description": "billingTagId",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "subtenantId",
-            "in": "path",
-            "description": "subtenantId",
-            "required": true,
-            "type": "string"
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/NetworkGetResponse"
+              "$ref": "#/definitions/BillingTagGetResponse"
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
           }
         }
-      }
-    },
-    "/subtenants/{subtenantId}/reservations": {
-      "get": {
+      },
+      "put": {
         "tags": [
-          "Subtenants/Reservations"
+          "Billing tags"
         ],
-        "summary": "List",
-        "description": "List reservations",
-        "operationId": "reservationListUsingGET",
+        "summary": "Update",
+        "description": "Update billing tag",
+        "operationId": "billingTagUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "subtenantId",
-            "in": "path",
-            "description": "subtenantId",
+            "in": "body",
+            "name": "billingTag",
+            "description": "billingTag",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/BillingTag"
+            }
+          },
+          {
+            "name": "billingTagId",
+            "in": "path",
+            "description": "billingTagId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/ReservationListResponse"
+              "$ref": "#/definitions/BillingTagUpdateResponse"
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Billing tags"
+        ],
+        "summary": "Delete",
+        "description": "Delete billing tag",
+        "operationId": "billingTagDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "billingTagId",
+            "in": "path",
+            "description": "billingTagId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BillingTagDeleteResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
     },
-    "/subtenants/{subtenantId}/reservations/{reservationId}": {
+    "/tags/systemTags": {
       "get": {
         "tags": [
-          "Subtenants/Reservations"
+          "System tags"
         ],
-        "summary": "Get",
-        "description": "Get reservation",
-        "operationId": "reservationGetUsingGET",
+        "summary": "List",
+        "description": "List system tags",
+        "operationId": "systemTagListUsingGET",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "reservationId",
-            "in": "path",
-            "description": "reservationId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "subtenantId",
-            "in": "path",
-            "description": "subtenantId",
-            "required": true,
+            "name": "tagValue",
+            "in": "query",
+            "description": "tagValue",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3551,14 +4496,181 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/ReservationGetResponse"
+              "$ref": "#/definitions/SystemTagListResponse"
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "System tags"
+        ],
+        "summary": "Create",
+        "description": "Create system tag",
+        "operationId": "systemTagCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "systemTag",
+            "description": "systemTag",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SystemTag"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SystemTagCreateResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/SystemTagCreateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/tags/systemTags/{systemTagId}": {
+      "get": {
+        "tags": [
+          "System tags"
+        ],
+        "summary": "Get",
+        "description": "Get System tag collection",
+        "operationId": "systemTagGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "systemTagId",
+            "in": "path",
+            "description": "systemTagId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SystemTagGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "System tags"
+        ],
+        "summary": "Update",
+        "description": "Update system tag",
+        "operationId": "systemTagUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "systemTag",
+            "description": "systemTag",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SystemTag"
+            }
+          },
+          {
+            "name": "systemTagId",
+            "in": "path",
+            "description": "systemTagId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SystemTagUpdateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "System tags"
+        ],
+        "summary": "Delete",
+        "description": "Delete system tag",
+        "operationId": "systemTagDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "systemTagId",
+            "in": "path",
+            "description": "systemTagId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SystemTagDeleteResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -3591,7 +4703,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -3624,7 +4739,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -3660,7 +4778,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -3693,7 +4814,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -3729,7 +4853,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -3762,7 +4889,85 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/vcs/snapshots": {
+      "get": {
+        "tags": [
+          "Snapshots"
+        ],
+        "summary": "List",
+        "description": "List vSphere vCenter virtual machines snapshots",
+        "operationId": "snapshotListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SnapshotListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/vcs/snapshots/{snapshotId}": {
+      "get": {
+        "tags": [
+          "Snapshots"
+        ],
+        "summary": "Get",
+        "description": "Get vSphere vCenter virtual machine snapshot",
+        "operationId": "snapshotGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "snapshotId",
+            "in": "path",
+            "description": "snapshotId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SnapshotGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -3798,7 +5003,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -3840,7 +5048,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -3873,7 +5084,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -3913,19 +5127,16 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/VcsVirtualMachineUpdateResponse"
-            }
-          },
-          "201": {
-            "description": "Entity has been updated",
+            "description": "Request has been completed successfully",
             "schema": {
               "$ref": "#/definitions/VcsVirtualMachineUpdateResponse"
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       },
@@ -3950,19 +5161,248 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/VcsVirtualMachineDeleteResponse"
-            }
-          },
-          "201": {
-            "description": "Entity has been deleted",
+            "description": "Request has been completed successfully",
             "schema": {
               "$ref": "#/definitions/VcsVirtualMachineDeleteResponse"
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/vcs/virtual-machines/{virtualMachineId}/snapshots": {
+      "get": {
+        "tags": [
+          "Virtual machines"
+        ],
+        "summary": "List snapshots",
+        "description": "List virtual machine snapshot(s)",
+        "operationId": "vcsVirtualMachineSnapshotListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "virtualMachineId",
+            "in": "path",
+            "description": "virtualMachineId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request has been completed successfully",
+            "schema": {
+              "$ref": "#/definitions/SnapshotListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Virtual machines"
+        ],
+        "summary": "Create snapshot",
+        "description": "Create virtual machine snapshot",
+        "operationId": "vcsVirtualMachineSnapshotCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ramSnapshot",
+            "in": "query",
+            "description": "ramSnapshot",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "in": "body",
+            "name": "snapshotInstance",
+            "description": "snapshotInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SnapshotInstance"
+            }
+          },
+          {
+            "name": "virtualMachineId",
+            "in": "path",
+            "description": "virtualMachineId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateSnapshotResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateSnapshotResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}": {
+      "get": {
+        "tags": [
+          "Virtual machines"
+        ],
+        "summary": "Get snapshot",
+        "description": "Get virtual machine snapshot",
+        "operationId": "vcsVirtualMachineSnapshotGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "snapshotId",
+            "in": "path",
+            "description": "snapshotId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "virtualMachineId",
+            "in": "path",
+            "description": "virtualMachineId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request has been completed successfully",
+            "schema": {
+              "$ref": "#/definitions/SnapshotGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Virtual machines"
+        ],
+        "summary": "Delete snapshot",
+        "description": "Delete virtual machine snapshot",
+        "operationId": "vcsVirtualMachineSnapshotDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "snapshotId",
+            "in": "path",
+            "description": "snapshotId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "virtualMachineId",
+            "in": "path",
+            "description": "virtualMachineId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request has been completed successfully",
+            "schema": {
+              "$ref": "#/definitions/DeleteSnapshotResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}/revert": {
+      "post": {
+        "tags": [
+          "Virtual machines"
+        ],
+        "summary": "Revert to snapshot",
+        "description": "Revert to virtual machine snapshot",
+        "operationId": "vcsVirtualMachineSnapshotRevertUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "snapshotId",
+            "in": "path",
+            "description": "snapshotId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "virtualMachineId",
+            "in": "path",
+            "description": "virtualMachineId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request has been completed successfully",
+            "schema": {
+              "$ref": "#/definitions/RevertSnapshotResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -4000,76 +5440,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          }
-        }
-      }
-    },
-    "/vra/networkadapters": {
-      "get": {
-        "tags": [
-          "Network adapters"
-        ],
-        "summary": "List",
-        "description": "List network adapter",
-        "operationId": "networkAdapterListUsingGET",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "displayName",
-            "in": "query",
-            "description": "displayName",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
+            "description": "Bad request, error occurred. For more details see log messages.",
             "schema": {
-              "$ref": "#/definitions/NetworkAdapterListResponse"
+              "$ref": "#/definitions/ProxyResponseMessage"
             }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          }
-        }
-      }
-    },
-    "/vra/networkadapters/{networkAdapterId}": {
-      "get": {
-        "tags": [
-          "Network adapters"
-        ],
-        "summary": "Get",
-        "description": "Get network adapter",
-        "operationId": "networkAdapterGetUsingGET",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "networkAdapterId",
-            "in": "path",
-            "description": "networkAdapterId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/NetworkAdapterGetResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
-          },
-          "404": {
-            "description": "Entity not found."
           }
         }
       }
@@ -4102,7 +5476,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           }
         }
       }
@@ -4135,7 +5512,10 @@
             }
           },
           "400": {
-            "description": "Bad request, error occurred. For more details see log messages."
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
           },
           "404": {
             "description": "Entity not found."
@@ -4191,6 +5571,241 @@
         }
       },
       "title": "AttributeValueInstance"
+    },
+    "BackupList": {
+      "type": "object",
+      "properties": {
+        "backupListCode": {
+          "type": "string"
+        },
+        "backupListId": {
+          "type": "string"
+        },
+        "backupListName": {
+          "type": "string"
+        }
+      },
+      "title": "BackupList"
+    },
+    "BackupListGetResponse": {
+      "type": "object",
+      "properties": {
+        "backupList": {
+          "$ref": "#/definitions/BackupList"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "BackupListGetResponse"
+    },
+    "BackupListListResponse": {
+      "type": "object",
+      "properties": {
+        "backupListCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BackupList"
+          }
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "BackupListListResponse"
+    },
+    "BackupPlan": {
+      "type": "object",
+      "properties": {
+        "backupPlanId": {
+          "type": "string"
+        },
+        "backupPlanName": {
+          "type": "string"
+        }
+      },
+      "title": "BackupPlan"
+    },
+    "BackupPlanGetResponse": {
+      "type": "object",
+      "properties": {
+        "backupPlan": {
+          "$ref": "#/definitions/BackupPlan"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "BackupPlanGetResponse"
+    },
+    "BackupPlanListResponse": {
+      "type": "object",
+      "properties": {
+        "backupPlanCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BackupPlan"
+          }
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "BackupPlanListResponse"
+    },
+    "BillingTag": {
+      "type": "object",
+      "properties": {
+        "billingTagId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "tagValue": {
+          "type": "string"
+        }
+      },
+      "title": "BillingTag"
+    },
+    "BillingTagCreateResponse": {
+      "type": "object",
+      "properties": {
+        "billingTag": {
+          "$ref": "#/definitions/BillingTag"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "BillingTagCreateResponse"
+    },
+    "BillingTagDeleteResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "BillingTagDeleteResponse"
+    },
+    "BillingTagGetResponse": {
+      "type": "object",
+      "properties": {
+        "billingTag": {
+          "$ref": "#/definitions/BillingTag"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "BillingTagGetResponse"
+    },
+    "BillingTagListResponse": {
+      "type": "object",
+      "properties": {
+        "billingTagCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BillingTag"
+          }
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "BillingTagListResponse"
+    },
+    "BillingTagUpdateResponse": {
+      "type": "object",
+      "properties": {
+        "billingTag": {
+          "$ref": "#/definitions/BillingTag"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "BillingTagUpdateResponse"
     },
     "ContextProfileInstance": {
       "type": "object",
@@ -4311,6 +5926,29 @@
       },
       "title": "CreateGFWRuleResponse"
     },
+    "CreateGroupMemberResponse": {
+      "type": "object",
+      "properties": {
+        "groupInstance": {
+          "$ref": "#/definitions/GroupInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "CreateGroupMemberResponse"
+    },
     "CreateKeyRotationScheduleResponse": {
       "type": "object",
       "properties": {
@@ -4356,29 +5994,6 @@
         }
       },
       "title": "CreateKmsKeyResponse"
-    },
-    "CreateMemberResponse": {
-      "type": "object",
-      "properties": {
-        "messages": {
-          "type": "string"
-        },
-        "requestInstance": {
-          "$ref": "#/definitions/RequestInstance"
-        },
-        "success": {
-          "type": "boolean"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "x-nullable": true
-        },
-        "userInstance": {
-          "$ref": "#/definitions/UserInstance"
-        }
-      },
-      "title": "CreateMemberResponse"
     },
     "CreateNewKmsKeyVersionResponse": {
       "type": "object",
@@ -4452,6 +6067,29 @@
       },
       "title": "CreateSecurityGroupResponse"
     },
+    "CreateSnapshotResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "snapshotInstance": {
+          "$ref": "#/definitions/SnapshotInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "CreateSnapshotResponse"
+    },
     "CreateSyncRequest": {
       "type": "object",
       "properties": {
@@ -4460,6 +6098,29 @@
         }
       },
       "title": "CreateSyncRequest"
+    },
+    "CreateUserMemberResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "userInstance": {
+          "$ref": "#/definitions/UserInstance"
+        }
+      },
+      "title": "CreateUserMemberResponse"
     },
     "CustomServiceGetResponse": {
       "type": "object",
@@ -4745,6 +6406,26 @@
       },
       "title": "DeleteGFWRuleResponse"
     },
+    "DeleteGroupMemberResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeleteGroupMemberResponse"
+    },
     "DeleteKeyRotationScheduleResponse": {
       "type": "object",
       "properties": {
@@ -4784,26 +6465,6 @@
         }
       },
       "title": "DeleteKmsKeyResponse"
-    },
-    "DeleteMemberResponse": {
-      "type": "object",
-      "properties": {
-        "messages": {
-          "type": "string"
-        },
-        "requestInstance": {
-          "$ref": "#/definitions/RequestInstance"
-        },
-        "success": {
-          "type": "boolean"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "x-nullable": true
-        }
-      },
-      "title": "DeleteMemberResponse"
     },
     "DeleteRouterResponse": {
       "type": "object",
@@ -4850,6 +6511,46 @@
         }
       },
       "title": "DeleteSecurityGroupResponse"
+    },
+    "DeleteSnapshotResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeleteSnapshotResponse"
+    },
+    "DeleteUserMemberResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeleteUserMemberResponse"
     },
     "DeploymentGetResponse": {
       "type": "object",
@@ -4966,6 +6667,18 @@
         }
       },
       "title": "EdgeClusterListResponse"
+    },
+    "ElkResponse": {
+      "type": "object",
+      "properties": {
+        "hits": {
+          "$ref": "#/definitions/Hits"
+        },
+        "timed_out": {
+          "type": "boolean"
+        }
+      },
+      "title": "ElkResponse"
     },
     "EncryptionInstance": {
       "type": "object",
@@ -5222,6 +6935,26 @@
       },
       "title": "GatewayPolicyListResponse"
     },
+    "GetLogsResponse": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "$ref": "#/definitions/ElkResponse"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "GetLogsResponse"
+    },
     "GetPublicKeyRequest": {
       "type": "object",
       "properties": {
@@ -5289,6 +7022,12 @@
         "groupId": {
           "type": "string"
         },
+        "groupInstanceList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GroupInstance"
+          }
+        },
         "groupType": {
           "type": "string",
           "enum": [
@@ -5340,6 +7079,37 @@
       },
       "title": "GroupListResponse"
     },
+    "Hit": {
+      "type": "object",
+      "properties": {
+        "_source": {
+          "$ref": "#/definitions/Source"
+        },
+        "sort": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "title": "Hit"
+    },
+    "Hits": {
+      "type": "object",
+      "properties": {
+        "hits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Hit"
+          }
+        },
+        "total": {
+          "$ref": "#/definitions/Total"
+        }
+      },
+      "title": "Hits"
+    },
     "ImportKmsKeyResponse": {
       "type": "object",
       "properties": {
@@ -5362,10 +7132,6 @@
         }
       },
       "title": "ImportKmsKeyResponse"
-    },
-    "InputStream": {
-      "type": "object",
-      "title": "InputStream"
     },
     "IpCollection": {
       "type": "object",
@@ -5520,6 +7286,21 @@
         }
       },
       "title": "IpCollectionUpdateResponse"
+    },
+    "IsoInstance": {
+      "type": "object",
+      "properties": {
+        "connected": {
+          "type": "boolean"
+        },
+        "connectedAtPowerOn": {
+          "type": "boolean"
+        },
+        "isoFileName": {
+          "type": "string"
+        }
+      },
+      "title": "IsoInstance"
     },
     "KeyExport": {
       "type": "object",
@@ -5725,6 +7506,18 @@
       },
       "title": "KeyListResponse"
     },
+    "KeyNewVersion": {
+      "type": "object",
+      "properties": {
+        "material": {
+          "type": "string"
+        },
+        "privateKeyIdToUnwrap": {
+          "type": "string"
+        }
+      },
+      "title": "KeyNewVersion"
+    },
     "KeyRevocation": {
       "type": "object",
       "properties": {
@@ -5861,6 +7654,75 @@
       },
       "title": "LicSettings"
     },
+    "LogCategory": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "logCategoryDescription": {
+          "type": "string"
+        },
+        "logCategoryId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "logCategoryName": {
+          "type": "string"
+        },
+        "retentionDays": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "searchCode": {
+          "type": "string"
+        }
+      },
+      "title": "LogCategory"
+    },
+    "LogCategoryGetResponse": {
+      "type": "object",
+      "properties": {
+        "logCategory": {
+          "$ref": "#/definitions/LogCategory"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "LogCategoryGetResponse"
+    },
+    "LogCategoryListResponse": {
+      "type": "object",
+      "properties": {
+        "logCategoryCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LogCategory"
+          }
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "LogCategoryListResponse"
+    },
     "LogicalPort": {
       "type": "object",
       "properties": {
@@ -5916,79 +7778,6 @@
       },
       "title": "LogicalPortListResponse"
     },
-    "NetworkAdapter": {
-      "type": "object",
-      "properties": {
-        "externalId": {
-          "type": "string"
-        },
-        "label": {
-          "type": "string"
-        },
-        "networkAdapterId": {
-          "type": "string"
-        }
-      },
-      "title": "NetworkAdapter"
-    },
-    "NetworkAdapterGetResponse": {
-      "type": "object",
-      "properties": {
-        "messages": {
-          "type": "string"
-        },
-        "networkAdapter": {
-          "$ref": "#/definitions/NetworkAdapterInstance"
-        },
-        "success": {
-          "type": "boolean"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "x-nullable": true
-        }
-      },
-      "title": "NetworkAdapterGetResponse"
-    },
-    "NetworkAdapterInstance": {
-      "type": "object",
-      "properties": {
-        "externalId": {
-          "type": "string"
-        },
-        "label": {
-          "type": "string"
-        },
-        "networkAdapterId": {
-          "type": "string"
-        }
-      },
-      "title": "NetworkAdapterInstance"
-    },
-    "NetworkAdapterListResponse": {
-      "type": "object",
-      "properties": {
-        "messages": {
-          "type": "string"
-        },
-        "networkAdapterList": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/NetworkAdapterInstance"
-          }
-        },
-        "success": {
-          "type": "boolean"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "x-nullable": true
-        }
-      },
-      "title": "NetworkAdapterListResponse"
-    },
     "NetworkGetResponse": {
       "type": "object",
       "properties": {
@@ -6008,21 +7797,6 @@
         }
       },
       "title": "NetworkGetResponse"
-    },
-    "NetworkInstance": {
-      "type": "object",
-      "properties": {
-        "networkAdapter": {
-          "$ref": "#/definitions/NetworkAdapter"
-        },
-        "networkInstanceId": {
-          "type": "string"
-        },
-        "networkProfile": {
-          "$ref": "#/definitions/NetworkProfile"
-        }
-      },
-      "title": "NetworkInstance"
     },
     "NetworkListResponse": {
       "type": "object",
@@ -6046,21 +7820,6 @@
         }
       },
       "title": "NetworkListResponse"
-    },
-    "NetworkProfile": {
-      "type": "object",
-      "properties": {
-        "externalId": {
-          "type": "string"
-        },
-        "label": {
-          "type": "string"
-        },
-        "networkProfileId": {
-          "type": "string"
-        }
-      },
-      "title": "NetworkProfile"
     },
     "NetworkProfileGetResponse": {
       "type": "object",
@@ -6246,6 +8005,67 @@
       },
       "title": "PrincipalId"
     },
+    "ProxyResponseMessage": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "ProxyResponseMessage"
+    },
+    "QueryFilter": {
+      "type": "object",
+      "properties": {
+        "endDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "logSeverity": {
+          "type": "string",
+          "enum": [
+            "ALERT",
+            "CRITICAL",
+            "DEBUG",
+            "DEFAULT",
+            "EMERGENCY",
+            "ERROR",
+            "FATAL",
+            "INFO",
+            "NOTICE",
+            "WARN",
+            "WARNING"
+          ]
+        },
+        "queryString": {
+          "type": "string"
+        },
+        "resourceName": {
+          "type": "string"
+        },
+        "startDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "userName": {
+          "type": "string"
+        }
+      },
+      "title": "QueryFilter"
+    },
     "RSAPublicKey": {
       "type": "object",
       "properties": {
@@ -6303,6 +8123,9 @@
             "BILLING_ALARM_DEFINITION_CREATE",
             "BILLING_ALARM_DEFINITION_DELETE",
             "BILLING_ALARM_DEFINITION_UPDATE",
+            "BILLING_TAG_CREATE",
+            "BILLING_TAG_DELETE",
+            "BILLING_TAG_UPDATE",
             "CATALOG_ENTITLEMENT_CREATE",
             "CATALOG_ENTITLEMENT_DELETE",
             "CATALOG_ENTITLEMENT_UPDATE",
@@ -6344,9 +8167,16 @@
             "SEGMENT_CREATE",
             "SEGMENT_DELETE",
             "SEGMENT_UPDATE",
+            "SNAPSHOT_CREATE",
+            "SNAPSHOT_DELETE",
+            "SNAPSHOT_REVERT",
             "SUBTENANT_CREATE",
             "SUBTENANT_DELETE",
             "SUBTENANT_UPDATE",
+            "SYSTEM_TAG_CREATE",
+            "SYSTEM_TAG_DELETE",
+            "SYSTEM_TAG_UPDATE",
+            "UPDATE_LOG_CATEGORY",
             "VIRTUAL_MACHINE_CREATE",
             "VIRTUAL_MACHINE_DELETE",
             "VIRTUAL_MACHINE_UPDATE"
@@ -6426,139 +8256,6 @@
       },
       "title": "RequestMessage"
     },
-    "ReservationGetResponse": {
-      "type": "object",
-      "properties": {
-        "messages": {
-          "type": "string"
-        },
-        "reservationInstance": {
-          "$ref": "#/definitions/ReservationInstance"
-        },
-        "success": {
-          "type": "boolean"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "x-nullable": true
-        }
-      },
-      "title": "ReservationGetResponse"
-    },
-    "ReservationInstance": {
-      "type": "object",
-      "properties": {
-        "createdDate": {
-          "type": "string",
-          "format": "date-time",
-          "x-nullable": true
-        },
-        "enabled": {
-          "type": "boolean"
-        },
-        "externalId": {
-          "type": "string"
-        },
-        "lastUpdated": {
-          "type": "string",
-          "format": "date-time",
-          "x-nullable": true
-        },
-        "name": {
-          "type": "string"
-        },
-        "networkInstances": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/NetworkInstance"
-          }
-        },
-        "priority": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "reservationId": {
-          "type": "string"
-        },
-        "reservationType": {
-          "$ref": "#/definitions/ReservationType"
-        },
-        "version": {
-          "type": "integer",
-          "format": "int64"
-        }
-      },
-      "title": "ReservationInstance"
-    },
-    "ReservationListResponse": {
-      "type": "object",
-      "properties": {
-        "messages": {
-          "type": "string"
-        },
-        "reservationInstanceCollection": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ReservationInstance"
-          }
-        },
-        "success": {
-          "type": "boolean"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "x-nullable": true
-        }
-      },
-      "title": "ReservationListResponse"
-    },
-    "ReservationType": {
-      "type": "object",
-      "properties": {
-        "reservationTypeId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "reservationTypeName": {
-          "type": "string"
-        }
-      },
-      "title": "ReservationType"
-    },
-    "Resource": {
-      "type": "object",
-      "properties": {
-        "description": {
-          "type": "string"
-        },
-        "file": {
-          "type": "string"
-        },
-        "filename": {
-          "type": "string"
-        },
-        "inputStream": {
-          "$ref": "#/definitions/InputStream"
-        },
-        "open": {
-          "type": "boolean"
-        },
-        "readable": {
-          "type": "boolean"
-        },
-        "uri": {
-          "type": "string",
-          "format": "uri"
-        },
-        "url": {
-          "type": "string",
-          "format": "url"
-        }
-      },
-      "title": "Resource"
-    },
     "ResourceType": {
       "type": "object",
       "properties": {
@@ -6571,6 +8268,26 @@
         }
       },
       "title": "ResourceType"
+    },
+    "RevertSnapshotResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "RevertSnapshotResponse"
     },
     "RevokeKmsKeyResponse": {
       "type": "object",
@@ -6635,6 +8352,9 @@
           "x-nullable": true
         },
         "modifiedBy": {
+          "type": "string"
+        },
+        "parentT0Id": {
           "type": "string"
         },
         "routerId": {
@@ -6932,6 +8652,124 @@
         }
       },
       "title": "ServiceListResponse"
+    },
+    "SnapshotGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "snapshotInstance": {
+          "$ref": "#/definitions/SnapshotInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "SnapshotGetResponse"
+    },
+    "SnapshotInstance": {
+      "type": "object",
+      "properties": {
+        "childSnapshots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SnapshotInstance"
+          }
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "powerState": {
+          "type": "string",
+          "enum": [
+            "poweredOff",
+            "poweredOn",
+            "suspended"
+          ]
+        },
+        "quiesced": {
+          "type": "boolean"
+        },
+        "snapshotDescription": {
+          "type": "string"
+        },
+        "snapshotId": {
+          "type": "string"
+        },
+        "snapshotName": {
+          "type": "string"
+        },
+        "virtualMachineId": {
+          "type": "string"
+        }
+      },
+      "title": "SnapshotInstance"
+    },
+    "SnapshotListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "snapshotInstanceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SnapshotInstance"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "SnapshotListResponse"
+    },
+    "Source": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "jsonPayload": {
+          "type": "object"
+        },
+        "receiveTimestamp": {
+          "type": "object"
+        },
+        "resource": {
+          "type": "string"
+        },
+        "severity": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "user": {
+          "type": "string"
+        }
+      },
+      "title": "Source"
     },
     "StaticIPv4Address": {
       "type": "object",
@@ -7257,6 +9095,128 @@
       },
       "title": "SyncMessageResponse"
     },
+    "SystemTag": {
+      "type": "object",
+      "properties": {
+        "systemTagId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "tagValue": {
+          "type": "string"
+        }
+      },
+      "title": "SystemTag"
+    },
+    "SystemTagCreateResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "systemTag": {
+          "$ref": "#/definitions/SystemTag"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "SystemTagCreateResponse"
+    },
+    "SystemTagDeleteResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "SystemTagDeleteResponse"
+    },
+    "SystemTagGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "systemTag": {
+          "$ref": "#/definitions/SystemTag"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "SystemTagGetResponse"
+    },
+    "SystemTagListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "systemTagCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SystemTag"
+          }
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "SystemTagListResponse"
+    },
+    "SystemTagUpdateResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "systemTag": {
+          "$ref": "#/definitions/SystemTag"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "SystemTagUpdateResponse"
+    },
     "TagInstance": {
       "type": "object",
       "properties": {
@@ -7272,6 +9232,23 @@
         }
       },
       "title": "TagInstance"
+    },
+    "Total": {
+      "type": "object",
+      "properties": {
+        "lastIndex": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "relation": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Total"
     },
     "UpdateCustomServiceResponse": {
       "type": "object",
@@ -7387,6 +9364,29 @@
         }
       },
       "title": "UpdateKeyRotationScheduleResponse"
+    },
+    "UpdateLogCategoryResponse": {
+      "type": "object",
+      "properties": {
+        "logCategory": {
+          "$ref": "#/definitions/LogCategory"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "UpdateLogCategoryResponse"
     },
     "UpdateRouterResponse": {
       "type": "object",
@@ -7799,6 +9799,18 @@
             "$ref": "#/definitions/VirtualDiskDevice"
           }
         },
+        "backupListCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BackupList"
+          }
+        },
+        "billingTags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BillingTag"
+          }
+        },
         "createdBy": {
           "type": "string"
         },
@@ -7816,6 +9828,15 @@
         "initialPassword": {
           "type": "string"
         },
+        "initialUserName": {
+          "type": "string"
+        },
+        "ipAddress": {
+          "type": "string"
+        },
+        "isoInstance": {
+          "$ref": "#/definitions/IsoInstance"
+        },
         "licSettings": {
           "$ref": "#/definitions/LicSettings"
         },
@@ -7827,8 +9848,18 @@
         "modifiedBy": {
           "type": "string"
         },
+        "osType": {
+          "type": "string",
+          "enum": [
+            "LINUX",
+            "WINDOWS"
+          ]
+        },
         "osVirtualDiskDevice": {
           "$ref": "#/definitions/VirtualDiskDevice"
+        },
+        "ovfIpConfiguration": {
+          "type": "boolean"
         },
         "powerState": {
           "type": "string",
@@ -7849,6 +9880,9 @@
             "SIZE_XS"
           ]
         },
+        "sshKey": {
+          "type": "string"
+        },
         "storagePolicy": {
           "type": "string",
           "enum": [
@@ -7859,6 +9893,12 @@
         },
         "subtenantRefId": {
           "type": "string"
+        },
+        "systemTags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SystemTag"
+          }
         },
         "virtualMachineId": {
           "type": "string"
@@ -8018,6 +10058,13 @@
           "type": "integer",
           "format": "int32"
         },
+        "billingTags": {
+          "type": "string"
+        },
+        "cost": {
+          "type": "number",
+          "format": "float"
+        },
         "resourceUsageTime": {
           "type": "string"
         },
@@ -8055,6 +10102,9 @@
         "avgStorageUtilization": {
           "type": "number",
           "format": "float"
+        },
+        "billingTags": {
+          "type": "string"
         },
         "maxCpuUtilization": {
           "type": "number",

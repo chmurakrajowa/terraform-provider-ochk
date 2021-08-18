@@ -65,11 +65,11 @@ type DfwRuleListUsingGETParams struct {
 
 	*/
 	DisplayName *string
-	/*SecurityPolicyID
-	  securityPolicyId
+	/*RouterID
+	  routerId
 
 	*/
-	SecurityPolicyID string
+	RouterID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -120,15 +120,15 @@ func (o *DfwRuleListUsingGETParams) SetDisplayName(displayName *string) {
 	o.DisplayName = displayName
 }
 
-// WithSecurityPolicyID adds the securityPolicyID to the dfw rule list using g e t params
-func (o *DfwRuleListUsingGETParams) WithSecurityPolicyID(securityPolicyID string) *DfwRuleListUsingGETParams {
-	o.SetSecurityPolicyID(securityPolicyID)
+// WithRouterID adds the routerID to the dfw rule list using g e t params
+func (o *DfwRuleListUsingGETParams) WithRouterID(routerID string) *DfwRuleListUsingGETParams {
+	o.SetRouterID(routerID)
 	return o
 }
 
-// SetSecurityPolicyID adds the securityPolicyId to the dfw rule list using g e t params
-func (o *DfwRuleListUsingGETParams) SetSecurityPolicyID(securityPolicyID string) {
-	o.SecurityPolicyID = securityPolicyID
+// SetRouterID adds the routerId to the dfw rule list using g e t params
+func (o *DfwRuleListUsingGETParams) SetRouterID(routerID string) {
+	o.RouterID = routerID
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -155,8 +155,8 @@ func (o *DfwRuleListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg 
 
 	}
 
-	// path param securityPolicyId
-	if err := r.SetPathParam("securityPolicyId", o.SecurityPolicyID); err != nil {
+	// path param routerId
+	if err := r.SetPathParam("routerId", o.RouterID); err != nil {
 		return err
 	}
 

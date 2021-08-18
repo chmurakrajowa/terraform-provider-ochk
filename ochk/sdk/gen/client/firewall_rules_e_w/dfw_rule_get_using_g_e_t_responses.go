@@ -61,7 +61,7 @@ type DfwRuleGetUsingGETOK struct {
 }
 
 func (o *DfwRuleGetUsingGETOK) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}][%d] dfwRuleGetUsingGETOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleGetUsingGETOK  %+v", 200, o.Payload)
 }
 
 func (o *DfwRuleGetUsingGETOK) GetPayload() *models.DFWRuleGetResponse {
@@ -90,13 +90,25 @@ func NewDfwRuleGetUsingGETBadRequest() *DfwRuleGetUsingGETBadRequest {
 Bad request, error occurred. For more details see log messages.
 */
 type DfwRuleGetUsingGETBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *DfwRuleGetUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}][%d] dfwRuleGetUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DfwRuleGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *DfwRuleGetUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }
@@ -114,7 +126,7 @@ type DfwRuleGetUsingGETNotFound struct {
 }
 
 func (o *DfwRuleGetUsingGETNotFound) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}][%d] dfwRuleGetUsingGETNotFound ", 404)
+	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleGetUsingGETNotFound ", 404)
 }
 
 func (o *DfwRuleGetUsingGETNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

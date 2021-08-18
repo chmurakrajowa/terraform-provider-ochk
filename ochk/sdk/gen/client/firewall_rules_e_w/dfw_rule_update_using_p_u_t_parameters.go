@@ -67,16 +67,16 @@ type DfwRuleUpdateUsingPUTParams struct {
 
 	*/
 	DfwRule *models.DFWRule
+	/*RouterID
+	  routerId
+
+	*/
+	RouterID string
 	/*RuleID
 	  ruleId
 
 	*/
 	RuleID string
-	/*SecurityPolicyID
-	  securityPolicyId
-
-	*/
-	SecurityPolicyID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -127,6 +127,17 @@ func (o *DfwRuleUpdateUsingPUTParams) SetDfwRule(dfwRule *models.DFWRule) {
 	o.DfwRule = dfwRule
 }
 
+// WithRouterID adds the routerID to the dfw rule update using p u t params
+func (o *DfwRuleUpdateUsingPUTParams) WithRouterID(routerID string) *DfwRuleUpdateUsingPUTParams {
+	o.SetRouterID(routerID)
+	return o
+}
+
+// SetRouterID adds the routerId to the dfw rule update using p u t params
+func (o *DfwRuleUpdateUsingPUTParams) SetRouterID(routerID string) {
+	o.RouterID = routerID
+}
+
 // WithRuleID adds the ruleID to the dfw rule update using p u t params
 func (o *DfwRuleUpdateUsingPUTParams) WithRuleID(ruleID string) *DfwRuleUpdateUsingPUTParams {
 	o.SetRuleID(ruleID)
@@ -136,17 +147,6 @@ func (o *DfwRuleUpdateUsingPUTParams) WithRuleID(ruleID string) *DfwRuleUpdateUs
 // SetRuleID adds the ruleId to the dfw rule update using p u t params
 func (o *DfwRuleUpdateUsingPUTParams) SetRuleID(ruleID string) {
 	o.RuleID = ruleID
-}
-
-// WithSecurityPolicyID adds the securityPolicyID to the dfw rule update using p u t params
-func (o *DfwRuleUpdateUsingPUTParams) WithSecurityPolicyID(securityPolicyID string) *DfwRuleUpdateUsingPUTParams {
-	o.SetSecurityPolicyID(securityPolicyID)
-	return o
-}
-
-// SetSecurityPolicyID adds the securityPolicyId to the dfw rule update using p u t params
-func (o *DfwRuleUpdateUsingPUTParams) SetSecurityPolicyID(securityPolicyID string) {
-	o.SecurityPolicyID = securityPolicyID
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -163,13 +163,13 @@ func (o *DfwRuleUpdateUsingPUTParams) WriteToRequest(r runtime.ClientRequest, re
 		}
 	}
 
-	// path param ruleId
-	if err := r.SetPathParam("ruleId", o.RuleID); err != nil {
+	// path param routerId
+	if err := r.SetPathParam("routerId", o.RouterID); err != nil {
 		return err
 	}
 
-	// path param securityPolicyId
-	if err := r.SetPathParam("securityPolicyId", o.SecurityPolicyID); err != nil {
+	// path param ruleId
+	if err := r.SetPathParam("ruleId", o.RuleID); err != nil {
 		return err
 	}
 

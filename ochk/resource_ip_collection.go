@@ -27,6 +27,10 @@ func resourceIPCollection() *schema.Resource {
 			Delete: schema.DefaultTimeout(IPCollectionRetryTimeout),
 		},
 
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"display_name": {
 				Type:     schema.TypeString,

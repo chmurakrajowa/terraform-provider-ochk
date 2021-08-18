@@ -84,13 +84,25 @@ func NewGetTokenUsingPOSTBadRequest() *GetTokenUsingPOSTBadRequest {
 Bad request, error occurred. For more details see log messages.
 */
 type GetTokenUsingPOSTBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *GetTokenUsingPOSTBadRequest) Error() string {
-	return fmt.Sprintf("[POST /vidm/token][%d] getTokenUsingPOSTBadRequest ", 400)
+	return fmt.Sprintf("[POST /vidm/token][%d] getTokenUsingPOSTBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *GetTokenUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *GetTokenUsingPOSTBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

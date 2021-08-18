@@ -35,6 +35,9 @@ type GroupInstance struct {
 	// group Id
 	GroupID string `json:"groupId,omitempty"`
 
+	// group instance list
+	GroupInstanceList []*GroupInstance `json:"groupInstanceList"`
+
 	// group type
 	// Enum: [CUSTOM SSO]
 	GroupType string `json:"groupType,omitempty"`
@@ -59,6 +62,10 @@ type GroupInstance struct {
 func (m *GroupInstance) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateGroupInstanceList(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateGroupType(formats); err != nil {
 		res = append(res, err)
 	}
@@ -74,6 +81,31 @@ func (m *GroupInstance) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *GroupInstance) validateGroupInstanceList(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.GroupInstanceList) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.GroupInstanceList); i++ {
+		if swag.IsZero(m.GroupInstanceList[i]) { // not required
+			continue
+		}
+
+		if m.GroupInstanceList[i] != nil {
+			if err := m.GroupInstanceList[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("groupInstanceList" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 

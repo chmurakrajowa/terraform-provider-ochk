@@ -55,7 +55,7 @@ type GfwRuleListUsingGETOK struct {
 }
 
 func (o *GfwRuleListUsingGETOK) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/gateway-policies/{gatewayPolicyId}/rules][%d] gfwRuleListUsingGETOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/s-n][%d] gfwRuleListUsingGETOK  %+v", 200, o.Payload)
 }
 
 func (o *GfwRuleListUsingGETOK) GetPayload() *models.GFWRuleListResponse {
@@ -84,13 +84,25 @@ func NewGfwRuleListUsingGETBadRequest() *GfwRuleListUsingGETBadRequest {
 Bad request, error occurred. For more details see log messages.
 */
 type GfwRuleListUsingGETBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *GfwRuleListUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/gateway-policies/{gatewayPolicyId}/rules][%d] gfwRuleListUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/s-n][%d] gfwRuleListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *GfwRuleListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *GfwRuleListUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

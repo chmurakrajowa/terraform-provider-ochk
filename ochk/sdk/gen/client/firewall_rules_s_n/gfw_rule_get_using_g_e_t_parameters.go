@@ -60,11 +60,11 @@ for the gfw rule get using g e t operation typically these are written to a http
 */
 type GfwRuleGetUsingGETParams struct {
 
-	/*GatewayPolicyID
-	  gatewayPolicyId
+	/*RouterID
+	  routerId
 
 	*/
-	GatewayPolicyID string
+	RouterID string
 	/*RuleID
 	  ruleId
 
@@ -109,15 +109,15 @@ func (o *GfwRuleGetUsingGETParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithGatewayPolicyID adds the gatewayPolicyID to the gfw rule get using g e t params
-func (o *GfwRuleGetUsingGETParams) WithGatewayPolicyID(gatewayPolicyID string) *GfwRuleGetUsingGETParams {
-	o.SetGatewayPolicyID(gatewayPolicyID)
+// WithRouterID adds the routerID to the gfw rule get using g e t params
+func (o *GfwRuleGetUsingGETParams) WithRouterID(routerID string) *GfwRuleGetUsingGETParams {
+	o.SetRouterID(routerID)
 	return o
 }
 
-// SetGatewayPolicyID adds the gatewayPolicyId to the gfw rule get using g e t params
-func (o *GfwRuleGetUsingGETParams) SetGatewayPolicyID(gatewayPolicyID string) {
-	o.GatewayPolicyID = gatewayPolicyID
+// SetRouterID adds the routerId to the gfw rule get using g e t params
+func (o *GfwRuleGetUsingGETParams) SetRouterID(routerID string) {
+	o.RouterID = routerID
 }
 
 // WithRuleID adds the ruleID to the gfw rule get using g e t params
@@ -139,8 +139,8 @@ func (o *GfwRuleGetUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg s
 	}
 	var res []error
 
-	// path param gatewayPolicyId
-	if err := r.SetPathParam("gatewayPolicyId", o.GatewayPolicyID); err != nil {
+	// path param routerId
+	if err := r.SetPathParam("routerId", o.RouterID); err != nil {
 		return err
 	}
 

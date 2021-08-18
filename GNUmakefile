@@ -1,20 +1,29 @@
 default: testacc
 
+ARCH:=$(shell uname -m)
+ifeq ($(ARCH),x86_64)
+  ARCH:=amd64
+endif
+
+OOS:=darwin
+export GOARCH:=$(ARCH)
+export GOOS:=$(OOS)
+
 .PHONY: testacc
 
 build:
 	go build ./...
 
-EXAMPLES_PROVIDER_DIR=examples/terraform.d/plugins/registry.terraform.io/chmurakrajowa/ochk/0.1.0/darwin_amd64
-ENV_PROVIDER_DIR=env/terraform.d/plugins/registry.terraform.io/chmurakrajowa/ochk/0.1.0/darwin_amd64
+EXAMPLES_PROVIDER_DIR="examples/terraform.d/plugins/registry.terraform.io/chmurakrajowa/ochk/1.2/$(OOS)_$(ARCH)"
+ENV_PROVIDER_DIR="env/terraform.d/plugins/registry.terraform.io/chmurakrajowa/ochk/1.2/$(OOS)_$(ARCH)"
 
 build_local:
 	mkdir -p ${EXAMPLES_PROVIDER_DIR}
 	mkdir -p ${ENV_PROVIDER_DIR}
 	mkdir bin || true
 	go build -o bin ./...
-	cp bin/terraform-provider-ochk ${EXAMPLES_PROVIDER_DIR}/terraform-provider-ochk_v0.1.0
-	cp bin/terraform-provider-ochk ${ENV_PROVIDER_DIR}/terraform-provider-ochk_v0.1.0
+	cp bin/terraform-provider-ochk ${EXAMPLES_PROVIDER_DIR}/terraform-provider-ochk_v1.2.0
+	cp bin/terraform-provider-ochk ${ENV_PROVIDER_DIR}/terraform-provider-ochk_v1.2.0
 
 testacc:
 	TF_ACC=1 go test ./...

@@ -90,13 +90,25 @@ func NewGatewayPolicyGetUsingGETBadRequest() *GatewayPolicyGetUsingGETBadRequest
 Bad request, error occurred. For more details see log messages.
 */
 type GatewayPolicyGetUsingGETBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *GatewayPolicyGetUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/gateway-policies/{gatewayPolicyId}][%d] gatewayPolicyGetUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/firewall/gateway-policies/{gatewayPolicyId}][%d] gatewayPolicyGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *GatewayPolicyGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *GatewayPolicyGetUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

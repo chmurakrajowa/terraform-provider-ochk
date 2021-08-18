@@ -84,13 +84,25 @@ func NewVirtualNetworkListUsingGETBadRequest() *VirtualNetworkListUsingGETBadReq
 Bad request, error occurred. For more details see log messages.
 */
 type VirtualNetworkListUsingGETBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *VirtualNetworkListUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /networks][%d] virtualNetworkListUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /networks][%d] virtualNetworkListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *VirtualNetworkListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *VirtualNetworkListUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

@@ -90,13 +90,25 @@ func NewVcsResourcePoolsGetUsingGETBadRequest() *VcsResourcePoolsGetUsingGETBadR
 Bad request, error occurred. For more details see log messages.
 */
 type VcsResourcePoolsGetUsingGETBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *VcsResourcePoolsGetUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /vcs/resourcepools/{resourcePoolId}][%d] vcsResourcePoolsGetUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /vcs/resourcepools/{resourcePoolId}][%d] vcsResourcePoolsGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *VcsResourcePoolsGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *VcsResourcePoolsGetUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

@@ -28,6 +28,11 @@ func resourceVirtualNetwork() *schema.Resource {
 			Update: schema.DefaultTimeout(VirtualNetworkRetryTimeout),
 			Delete: schema.DefaultTimeout(VirtualNetworkRetryTimeout),
 		},
+
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
 		CustomizeDiff: customdiff.IfValue("ipam_enabled",
 			func(ctx context.Context, value, meta interface{}) bool {
 				return !value.(bool)

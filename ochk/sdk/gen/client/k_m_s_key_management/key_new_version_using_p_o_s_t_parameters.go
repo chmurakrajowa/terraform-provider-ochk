@@ -14,6 +14,8 @@ import (
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
 // NewKeyNewVersionUsingPOSTParams creates a new KeyNewVersionUsingPOSTParams object
@@ -65,6 +67,11 @@ type KeyNewVersionUsingPOSTParams struct {
 
 	*/
 	ID string
+	/*KeyNewVersion
+	  keyNewVersion
+
+	*/
+	KeyNewVersion *models.KeyNewVersion
 
 	timeout    time.Duration
 	Context    context.Context
@@ -115,6 +122,17 @@ func (o *KeyNewVersionUsingPOSTParams) SetID(id string) {
 	o.ID = id
 }
 
+// WithKeyNewVersion adds the keyNewVersion to the key new version using p o s t params
+func (o *KeyNewVersionUsingPOSTParams) WithKeyNewVersion(keyNewVersion *models.KeyNewVersion) *KeyNewVersionUsingPOSTParams {
+	o.SetKeyNewVersion(keyNewVersion)
+	return o
+}
+
+// SetKeyNewVersion adds the keyNewVersion to the key new version using p o s t params
+func (o *KeyNewVersionUsingPOSTParams) SetKeyNewVersion(keyNewVersion *models.KeyNewVersion) {
+	o.KeyNewVersion = keyNewVersion
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *KeyNewVersionUsingPOSTParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -126,6 +144,12 @@ func (o *KeyNewVersionUsingPOSTParams) WriteToRequest(r runtime.ClientRequest, r
 	// path param id
 	if err := r.SetPathParam("id", o.ID); err != nil {
 		return err
+	}
+
+	if o.KeyNewVersion != nil {
+		if err := r.SetBodyParam(o.KeyNewVersion); err != nil {
+			return err
+		}
 	}
 
 	if len(res) > 0 {

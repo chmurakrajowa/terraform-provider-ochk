@@ -27,8 +27,12 @@ func resourceFirewallEWRule() *schema.Resource {
 			Delete: schema.DefaultTimeout(FirewallEWRuleRetryTimeout),
 		},
 
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
 		Schema: map[string]*schema.Schema{
-			"security_policy_id": {
+			"router_id": {
 				Type:     schema.TypeString,
 				Required: true,
 			},
@@ -103,11 +107,11 @@ func resourceFirewallEWRule() *schema.Resource {
 func resourceFirewallEWRuleCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallEWRules
 
-	securityPolicyID := d.Get("security_policy_id").(string)
+	routerID := d.Get("router_id").(string)
 
 	firewallEWRule := mapResourceDataToEWRule(d)
 
-	created, err := proxy.Create(ctx, securityPolicyID, firewallEWRule)
+	created, err := proxy.Create(ctx, routerID, firewallEWRule)
 	if err != nil {
 		return diag.Errorf("error while creating firewall EW rule: %+v", err)
 	}
@@ -120,9 +124,9 @@ func resourceFirewallEWRuleCreate(ctx context.Context, d *schema.ResourceData, m
 func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallEWRules
 
-	securityPolicyID := d.Get("security_policy_id").(string)
+	routerID := d.Get("router_id").(string)
 
-	firewallEWRule, err := proxy.Read(ctx, securityPolicyID, d.Id())
+	firewallEWRule, err := proxy.Read(ctx, routerID, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -199,12 +203,12 @@ func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 
 	proxy := meta.(*sdk.Client).FirewallEWRules
 
-	securityPolicyID := d.Get("security_policy_id").(string)
+	routerID := d.Get("router_id").(string)
 
 	firewallEWRule := mapResourceDataToEWRule(d)
 	firewallEWRule.RuleID = d.Id()
 
-	_, err := proxy.Update(ctx, securityPolicyID, firewallEWRule)
+	_, err := proxy.Update(ctx, routerID, firewallEWRule)
 	if err != nil {
 		return diag.Errorf("error while creating firewall EW rule: %+v", err)
 	}
@@ -250,9 +254,9 @@ func mapResourceDataToEWRule(d *schema.ResourceData) *models.DFWRule {
 func resourceFirewallEWRuleDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallEWRules
 
-	securityPolicyID := d.Get("security_policy_id").(string)
+	routerID := d.Get("router_id").(string)
 
-	err := proxy.Delete(ctx, securityPolicyID, d.Id())
+	err := proxy.Delete(ctx, routerID, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()

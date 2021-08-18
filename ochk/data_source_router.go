@@ -16,6 +16,10 @@ func dataSourceRouter() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"parent_router_id": {
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"router_type": {
 				Type:     schema.TypeString,
 				Computed: true,

@@ -90,13 +90,25 @@ func NewKeyRotationScheduleGetUsingGETBadRequest() *KeyRotationScheduleGetUsingG
 Bad request, error occurred. For more details see log messages.
 */
 type KeyRotationScheduleGetUsingGETBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *KeyRotationScheduleGetUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /kms/schedule/{keyId}][%d] keyRotationScheduleGetUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /kms/schedule/{keyId}][%d] keyRotationScheduleGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *KeyRotationScheduleGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *KeyRotationScheduleGetUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }
