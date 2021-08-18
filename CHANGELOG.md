@@ -1,3 +1,32 @@
+## 1.2 (2021-08-20)
+
+## Resources
+* New resources
+  * `resource_billing_tag`
+  * `resource_system_tag`
+
+* Changed resources
+  * `resource_custom_service`
+  * `resource_firewall_ew_rule`
+  * `resource_firewall_sn_rule`
+  * `resource_ip_collection`
+  * `resource_kms_key`
+  * `resource_router`
+  * `resource_security_group`
+  * `resource_subtenant`
+  * `resource_virtual_machine`
+  * `resource_virtual_network`
+
+## Data sources
+* New data sources:
+  * `data_source_backup_list`
+  * `data_source_backup_plan`
+  * `data_source_billing_tag`
+  * `data_source_system_tag`
+* Changed data sources:
+  * `data_source_router`
+
+
 ## 1.1 (2021-03-23)
 
 ## Resources
@@ -43,10 +72,10 @@
 ## Resources
 * New resource for managing routers: `ochk_router`.
 
-## Data sources 
+## Data sources
 * New data source for logical ports: `ochk_logical_port`.
 
-## Misc 
+## Misc
 * Added caching credentials for improved performance
 * Updated markdown docs
 
@@ -55,7 +84,7 @@
 ## Resources
 * New resource for managing routers: `ochk_router`.
 
-## Data sources 
+## Data sources
 * `gateway_policy`
 * `ip_set`
 * `logical_port`
@@ -65,7 +94,7 @@
 * `service`
 * `virtual_machine`
 
-## Misc 
+## Misc
 * Added caching credentials for improved performance.
 * Updated markdown docs
 
