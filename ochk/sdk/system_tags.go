@@ -122,11 +122,11 @@ func (p *SystemTagsProxy) Exists(ctx context.Context, SystemTagID int32) (bool, 
 
 func (p *SystemTagsProxy) Delete(ctx context.Context, SystemTagID string) error {
 
-	var SystemTagIDInt32 int32
-	fmt.Sscan(SystemTagID, &SystemTagIDInt32)
+	var systemTagIDInt32 int32
+	fmt.Sscan(SystemTagID, &systemTagIDInt32)
 
 	params := &system_tags.SystemTagDeleteUsingDELETEParams{
-		SystemTagID: SystemTagIDInt32,
+		SystemTagID: systemTagIDInt32,
 		Context:     ctx,
 		HTTPClient:  p.httpClient,
 	}

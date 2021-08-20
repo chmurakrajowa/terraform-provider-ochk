@@ -154,11 +154,11 @@ func expandSystemTagsListsFromIDs(in []interface{}) []*models.SystemTag {
 
 	for i, v := range in {
 
-		var SystemTagIDInt32 int32
-		fmt.Sscan(v.(string), &SystemTagIDInt32)
+		var systemTagIDInt32 int32
+		fmt.Sscan(v.(string), &systemTagIDInt32)
 
 		SystemTagInstance := &models.SystemTag{
-			SystemTagID: SystemTagIDInt32,
+			SystemTagID: systemTagIDInt32,
 		}
 
 		out[i] = SystemTagInstance
@@ -187,11 +187,11 @@ func expandBillingTagsListsFromIDs(in []interface{}) []*models.BillingTag {
 
 	for i, v := range in {
 
-		var BillingTagIDInt32 int32
-		fmt.Sscan(v.(string), &BillingTagIDInt32)
+		var billingTagIDInt32 int32
+		fmt.Sscan(v.(string), &billingTagIDInt32)
 
 		BillingTagInstance := &models.BillingTag{
-			BillingTagID: BillingTagIDInt32,
+			BillingTagID: billingTagIDInt32,
 		}
 
 		out[i] = BillingTagInstance

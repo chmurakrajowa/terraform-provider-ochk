@@ -122,11 +122,11 @@ func (p *BillingTagsProxy) Exists(ctx context.Context, BillingTagID int32) (bool
 
 func (p *BillingTagsProxy) Delete(ctx context.Context, BillingTagID string) error {
 
-	var BillingTagIDInt32 int32
-	fmt.Sscan(BillingTagID, &BillingTagIDInt32)
+	var billingTagIDInt32 int32
+	fmt.Sscan(BillingTagID, &billingTagIDInt32)
 
 	params := &billing_tags.BillingTagDeleteUsingDELETEParams{
-		BillingTagID: BillingTagIDInt32,
+		BillingTagID: billingTagIDInt32,
 		Context:      ctx,
 		HTTPClient:   p.httpClient,
 	}

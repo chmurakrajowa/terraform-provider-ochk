@@ -58,10 +58,10 @@ func resourceSystemTagCreate(ctx context.Context, d *schema.ResourceData, meta i
 func resourceSystemTagRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).SystemTags
 
-	var SystemTagIDInt32 int32
-	fmt.Sscan(d.Id(), &SystemTagIDInt32)
+	var systemTagIDInt32 int32
+	fmt.Sscan(d.Id(), &systemTagIDInt32)
 
-	SystemTag, err := proxy.Read(ctx, SystemTagIDInt32)
+	SystemTag, err := proxy.Read(ctx, systemTagIDInt32)
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()

@@ -58,10 +58,10 @@ func resourceBillingTagCreate(ctx context.Context, d *schema.ResourceData, meta 
 func resourceBillingTagRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).BillingTags
 
-	var BillingTagIDInt32 int32
-	fmt.Sscan(d.Id(), &BillingTagIDInt32)
+	var billingTagIDInt32 int32
+	fmt.Sscan(d.Id(), &billingTagIDInt32)
 
-	BillingTag, err := proxy.Read(ctx, BillingTagIDInt32)
+	BillingTag, err := proxy.Read(ctx, billingTagIDInt32)
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
