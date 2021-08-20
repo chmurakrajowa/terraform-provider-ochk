@@ -94,7 +94,9 @@ func resourceRouterRead(ctx context.Context, d *schema.ResourceData, meta interf
 	}
 
 	if Router.ParentT0ID != "" {
-		d.Set("parent_router_id", Router.ParentT0ID)
+		if err := d.Set("parent_router_id", Router.ParentT0ID); err != nil {
+			return diag.Errorf("error setting parent_router_id: %+v", err)
+		}
 	}
 	if err := d.Set("display_name", Router.DisplayName); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
