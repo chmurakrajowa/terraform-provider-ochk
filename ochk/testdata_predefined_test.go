@@ -66,9 +66,9 @@ var predefinedTestDataDev = predefinedTestData{
 	Deployment1DisplayName:           "CentOS 7",
 	CustomService1DisplayName:        fmt.Sprintf("%s-https", devTestDataPrefix),
 	CustomService2DisplayName:        fmt.Sprintf("%s-http", devTestDataPrefix),
-	BackupPlanName:                   fmt.Sprintf("Platinium"),
-	BillingTagName:                   fmt.Sprintf("billing_t1"),
-	SystemTagName:                    fmt.Sprintf("systemTag01"),
+	BackupPlanName:                   "Platinium",
+	BillingTagName:                   "billing_t1",
+	SystemTagName:                    "systemTag01",
 }
 
 var testTestDataPrefix = "tf-test1"
