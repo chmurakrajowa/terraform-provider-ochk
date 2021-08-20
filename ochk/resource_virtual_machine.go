@@ -49,10 +49,7 @@ func resourceVirtualMachine() *schema.Resource {
 				// Setting password is possible only on create, subsequent read gets empty string,
 				// which causes config drift. This suppresses any reported differences.
 				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-					if old == "<hidden>" {
-						return true
-					}
-					return false
+					return old == "<hidden>"
 				},
 			},
 			"power_state": {
