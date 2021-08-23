@@ -23,8 +23,27 @@
   * `data_source_backup_plan`
   * `data_source_billing_tag`
   * `data_source_system_tag`
-* Changed data sources:
+    
+Changed data sources:
   * `data_source_router`
+
+
+## Misc
+  * `Support for Terraform 1.0`
+
+## Bugfix
+  * `Fix for creating machine and setting virtual machine password - inital password is set correctly`  
+  * `Fix for KMS encrypted key - every run apply command has caused to recreation KMS key`  
+  * `Change for creating S-N firewall rule - putting ID router VPC instead of security_policy_id`
+
+## Features
+  * `Added ssh-key upload when crating virtual machine`
+  * `Added system and billing tags management and the ability to assign them to virtual machines`
+  * `Added virtual machine backup plan management`
+  * `Added deploymnet virtual machine from OVF file`
+  * `Added to terrafrom state IP addreess virtual mnachine`
+  
+
 
 
 ## 1.1 (2021-03-23)
@@ -72,10 +91,10 @@
 ## Resources
 * New resource for managing routers: `ochk_router`.
 
-## Data sources
+## Data sources 
 * New data source for logical ports: `ochk_logical_port`.
 
-## Misc
+## Misc 
 * Added caching credentials for improved performance
 * Updated markdown docs
 
@@ -84,7 +103,7 @@
 ## Resources
 * New resource for managing routers: `ochk_router`.
 
-## Data sources
+## Data sources 
 * `gateway_policy`
 * `ip_set`
 * `logical_port`
@@ -94,7 +113,7 @@
 * `service`
 * `virtual_machine`
 
-## Misc
+## Misc 
 * Added caching credentials for improved performance.
 * Updated markdown docs
 
