@@ -41,7 +41,7 @@ resource "ochk_firewall_ew_rule" "fw-ew2" {
 
 The following arguments are supported:
 
-* `router_id` - (Required) Identifier vpc ic.
+* `router_id` - (Required) Identifier of vpc id.
 * `display_name` - (Required) The Firewall EW Rule name.
 * `priority` - (Required) Priority of the firewall rule. Rules with lower priority are matched first.
 * `action` - (Optional) Action to control the traffic between the source and the target. It is possible to open the traffic between the source and target with the ALLOW rule, cut the traffic between the source and target with the DROP rule, and reject the connection between the source and target with the REJECT rule. Allowed values: `ALLOW`, `DROP`, `REJECT`. Default value: `ALLOW`.
