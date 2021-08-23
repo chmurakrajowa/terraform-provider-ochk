@@ -54,7 +54,7 @@ func (a *Client) GfwRuleCreateUsingPUT(params *GfwRuleCreateUsingPUTParams) (*Gf
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "gfwRuleCreateUsingPUT",
 		Method:             "PUT",
-		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/",
+		PathPattern:        "/network/routers/{routerId}/rules/s-n",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -91,7 +91,7 @@ func (a *Client) GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "gfwRuleDeleteUsingDELETE",
 		Method:             "DELETE",
-		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}",
+		PathPattern:        "/network/routers/{routerId}/rules/s-n/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -128,7 +128,7 @@ func (a *Client) GfwRuleGetUsingGET(params *GfwRuleGetUsingGETParams) (*GfwRuleG
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "gfwRuleGetUsingGET",
 		Method:             "GET",
-		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}",
+		PathPattern:        "/network/routers/{routerId}/rules/s-n/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -164,7 +164,7 @@ func (a *Client) GfwRuleListUsingGET(params *GfwRuleListUsingGETParams) (*GfwRul
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "gfwRuleListUsingGET",
 		Method:             "GET",
-		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules",
+		PathPattern:        "/network/routers/{routerId}/rules/s-n",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -200,7 +200,7 @@ func (a *Client) GfwRuleUpdateUsingPUT(params *GfwRuleUpdateUsingPUTParams) (*Gf
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "gfwRuleUpdateUsingPUT",
 		Method:             "PUT",
-		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}/rules/{ruleId}",
+		PathPattern:        "/network/routers/{routerId}/rules/s-n/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

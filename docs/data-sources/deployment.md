@@ -11,6 +11,7 @@ Data Source for getting deployment instances by display name.
 ```hcl
 data "ochk_deployment" "centos" {
   display_name = "CentOS 7"
+
 }
 ```
 
@@ -23,6 +24,6 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported:
- * `display_name` - Name of deployment. 
+ * `display_name` - Name of deployment. For ISO na OVF deployment name is image file name. 
     
  

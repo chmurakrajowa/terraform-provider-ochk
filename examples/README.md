@@ -7,15 +7,27 @@ Examples of TF code in this directory are using official OCHK terraform provider
 2. Create yourself a dev.tfvars file with following contents:
 
 ```
+test-data-prefix = <prefix for created objects>
 host = <your OCHK iaas API endpoint address>
 tenant = <tenant name>
 username = <your OCHK IAAS API username>
 password = <your OCHK IAAS API password>
+
+bg_manager_user =<test user name>
+subtenant_network_name = <vnet name>
+subtenant_for_vm_name = <bg name>
+vrf_router = "VRF"
+
+iso_image = <iso image name>
+ovf_image = <ovf image name>
+backup_plan = <backup plan name>
+backup_list = "<backup list name>
+
+billing_tag_cc = <billing tag name>
+system_tag_os = <system tag name>
+
 debug_log_file = "debug.log"
-test-data-prefix = <your custom prefix for test data names>
-test_user = <test user name>
-subtenant_network_name = <subtenant network name for your vms>
-subtenant_for_vm_name = <subtenant name for your vms>
+initial_password_for_vm=<initial password for vm>
 ```
 
 3. Invoke ```terraform init -var-file=dev.tfvars``` to download all neede TF modules and init the .terraform directory.

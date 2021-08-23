@@ -24,6 +24,12 @@ type VirtualMachineOverallReport struct {
 	// allocatedv RAM
 	AllocatedvRAM int32 `json:"allocatedvRAM,omitempty"`
 
+	// billing tags
+	BillingTags string `json:"billingTags,omitempty"`
+
+	// cost
+	Cost float32 `json:"cost,omitempty"`
+
 	// resource usage time
 	ResourceUsageTime string `json:"resourceUsageTime,omitempty"`
 

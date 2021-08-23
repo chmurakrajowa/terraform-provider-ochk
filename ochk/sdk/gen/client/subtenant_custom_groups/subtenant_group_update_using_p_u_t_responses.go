@@ -84,13 +84,25 @@ func NewSubtenantGroupUpdateUsingPUTBadRequest() *SubtenantGroupUpdateUsingPUTBa
 Bad request, error occurred. For more details see log messages.
 */
 type SubtenantGroupUpdateUsingPUTBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *SubtenantGroupUpdateUsingPUTBadRequest) Error() string {
-	return fmt.Sprintf("[PUT /subtenants/{subtenantId}/groups/{groupId}][%d] subtenantGroupUpdateUsingPUTBadRequest ", 400)
+	return fmt.Sprintf("[PUT /subtenants/{subtenantId}/groups/{groupId}][%d] subtenantGroupUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *SubtenantGroupUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *SubtenantGroupUpdateUsingPUTBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

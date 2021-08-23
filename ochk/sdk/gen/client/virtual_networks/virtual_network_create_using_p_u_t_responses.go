@@ -123,13 +123,25 @@ func NewVirtualNetworkCreateUsingPUTBadRequest() *VirtualNetworkCreateUsingPUTBa
 Bad request, error occurred. For more details see log messages.
 */
 type VirtualNetworkCreateUsingPUTBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *VirtualNetworkCreateUsingPUTBadRequest) Error() string {
-	return fmt.Sprintf("[PUT /networks][%d] virtualNetworkCreateUsingPUTBadRequest ", 400)
+	return fmt.Sprintf("[PUT /networks][%d] virtualNetworkCreateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *VirtualNetworkCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *VirtualNetworkCreateUsingPUTBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

@@ -61,7 +61,7 @@ type GfwRuleCreateUsingPUTOK struct {
 }
 
 func (o *GfwRuleCreateUsingPUTOK) Error() string {
-	return fmt.Sprintf("[PUT /network/firewall/gateway-policies/{gatewayPolicyId}/rules/][%d] gfwRuleCreateUsingPUTOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/s-n][%d] gfwRuleCreateUsingPUTOK  %+v", 200, o.Payload)
 }
 
 func (o *GfwRuleCreateUsingPUTOK) GetPayload() *models.CreateGFWRuleResponse {
@@ -94,7 +94,7 @@ type GfwRuleCreateUsingPUTCreated struct {
 }
 
 func (o *GfwRuleCreateUsingPUTCreated) Error() string {
-	return fmt.Sprintf("[PUT /network/firewall/gateway-policies/{gatewayPolicyId}/rules/][%d] gfwRuleCreateUsingPUTCreated  %+v", 201, o.Payload)
+	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/s-n][%d] gfwRuleCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
 
 func (o *GfwRuleCreateUsingPUTCreated) GetPayload() *models.CreateGFWRuleResponse {
@@ -123,13 +123,25 @@ func NewGfwRuleCreateUsingPUTBadRequest() *GfwRuleCreateUsingPUTBadRequest {
 Bad request, error occurred. For more details see log messages.
 */
 type GfwRuleCreateUsingPUTBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *GfwRuleCreateUsingPUTBadRequest) Error() string {
-	return fmt.Sprintf("[PUT /network/firewall/gateway-policies/{gatewayPolicyId}/rules/][%d] gfwRuleCreateUsingPUTBadRequest ", 400)
+	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/s-n][%d] gfwRuleCreateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *GfwRuleCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *GfwRuleCreateUsingPUTBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

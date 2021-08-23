@@ -29,13 +29,23 @@ type Client struct {
 type ClientService interface {
 	VcsVirtualMachineCreateUsingPUT(params *VcsVirtualMachineCreateUsingPUTParams) (*VcsVirtualMachineCreateUsingPUTOK, *VcsVirtualMachineCreateUsingPUTCreated, error)
 
-	VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDeleteUsingDELETEParams) (*VcsVirtualMachineDeleteUsingDELETEOK, *VcsVirtualMachineDeleteUsingDELETECreated, error)
+	VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDeleteUsingDELETEParams) (*VcsVirtualMachineDeleteUsingDELETEOK, error)
 
 	VcsVirtualMachineGroupGetUsingGET1(params *VcsVirtualMachineGroupGetUsingGET1Params) (*VcsVirtualMachineGroupGetUsingGET1OK, error)
 
 	VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsingGET1Params) (*VcsVirtualMachineListUsingGET1OK, error)
 
-	VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdateUsingPUTParams) (*VcsVirtualMachineUpdateUsingPUTOK, *VcsVirtualMachineUpdateUsingPUTCreated, error)
+	VcsVirtualMachineSnapshotCreateUsingPUT(params *VcsVirtualMachineSnapshotCreateUsingPUTParams) (*VcsVirtualMachineSnapshotCreateUsingPUTOK, *VcsVirtualMachineSnapshotCreateUsingPUTCreated, error)
+
+	VcsVirtualMachineSnapshotDeleteUsingDELETE(params *VcsVirtualMachineSnapshotDeleteUsingDELETEParams) (*VcsVirtualMachineSnapshotDeleteUsingDELETEOK, error)
+
+	VcsVirtualMachineSnapshotGetUsingGET(params *VcsVirtualMachineSnapshotGetUsingGETParams) (*VcsVirtualMachineSnapshotGetUsingGETOK, error)
+
+	VcsVirtualMachineSnapshotListUsingGET(params *VcsVirtualMachineSnapshotListUsingGETParams) (*VcsVirtualMachineSnapshotListUsingGETOK, error)
+
+	VcsVirtualMachineSnapshotRevertUsingPOST(params *VcsVirtualMachineSnapshotRevertUsingPOSTParams) (*VcsVirtualMachineSnapshotRevertUsingPOSTOK, error)
+
+	VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdateUsingPUTParams) (*VcsVirtualMachineUpdateUsingPUTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -82,7 +92,7 @@ func (a *Client) VcsVirtualMachineCreateUsingPUT(params *VcsVirtualMachineCreate
 
   Delete vSphere vCenter virtual machine
 */
-func (a *Client) VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDeleteUsingDELETEParams) (*VcsVirtualMachineDeleteUsingDELETEOK, *VcsVirtualMachineDeleteUsingDELETECreated, error) {
+func (a *Client) VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDeleteUsingDELETEParams) (*VcsVirtualMachineDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineDeleteUsingDELETEParams()
@@ -101,16 +111,15 @@ func (a *Client) VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDel
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
-	switch value := result.(type) {
-	case *VcsVirtualMachineDeleteUsingDELETEOK:
-		return value, nil, nil
-	case *VcsVirtualMachineDeleteUsingDELETECreated:
-		return nil, value, nil
+	success, ok := result.(*VcsVirtualMachineDeleteUsingDELETEOK)
+	if ok {
+		return success, nil
 	}
+	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for virtual_machines: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -187,11 +196,192 @@ func (a *Client) VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsi
 }
 
 /*
+  VcsVirtualMachineSnapshotCreateUsingPUT creates snapshot
+
+  Create virtual machine snapshot
+*/
+func (a *Client) VcsVirtualMachineSnapshotCreateUsingPUT(params *VcsVirtualMachineSnapshotCreateUsingPUTParams) (*VcsVirtualMachineSnapshotCreateUsingPUTOK, *VcsVirtualMachineSnapshotCreateUsingPUTCreated, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewVcsVirtualMachineSnapshotCreateUsingPUTParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "vcsVirtualMachineSnapshotCreateUsingPUT",
+		Method:             "PUT",
+		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}/snapshots",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &VcsVirtualMachineSnapshotCreateUsingPUTReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *VcsVirtualMachineSnapshotCreateUsingPUTOK:
+		return value, nil, nil
+	case *VcsVirtualMachineSnapshotCreateUsingPUTCreated:
+		return nil, value, nil
+	}
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for virtual_machines: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  VcsVirtualMachineSnapshotDeleteUsingDELETE deletes snapshot
+
+  Delete virtual machine snapshot
+*/
+func (a *Client) VcsVirtualMachineSnapshotDeleteUsingDELETE(params *VcsVirtualMachineSnapshotDeleteUsingDELETEParams) (*VcsVirtualMachineSnapshotDeleteUsingDELETEOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewVcsVirtualMachineSnapshotDeleteUsingDELETEParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "vcsVirtualMachineSnapshotDeleteUsingDELETE",
+		Method:             "DELETE",
+		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &VcsVirtualMachineSnapshotDeleteUsingDELETEReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*VcsVirtualMachineSnapshotDeleteUsingDELETEOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineSnapshotDeleteUsingDELETE: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  VcsVirtualMachineSnapshotGetUsingGET gets snapshot
+
+  Get virtual machine snapshot
+*/
+func (a *Client) VcsVirtualMachineSnapshotGetUsingGET(params *VcsVirtualMachineSnapshotGetUsingGETParams) (*VcsVirtualMachineSnapshotGetUsingGETOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewVcsVirtualMachineSnapshotGetUsingGETParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "vcsVirtualMachineSnapshotGetUsingGET",
+		Method:             "GET",
+		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &VcsVirtualMachineSnapshotGetUsingGETReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*VcsVirtualMachineSnapshotGetUsingGETOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineSnapshotGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  VcsVirtualMachineSnapshotListUsingGET lists snapshots
+
+  List virtual machine snapshot(s)
+*/
+func (a *Client) VcsVirtualMachineSnapshotListUsingGET(params *VcsVirtualMachineSnapshotListUsingGETParams) (*VcsVirtualMachineSnapshotListUsingGETOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewVcsVirtualMachineSnapshotListUsingGETParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "vcsVirtualMachineSnapshotListUsingGET",
+		Method:             "GET",
+		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}/snapshots",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &VcsVirtualMachineSnapshotListUsingGETReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*VcsVirtualMachineSnapshotListUsingGETOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineSnapshotListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+  VcsVirtualMachineSnapshotRevertUsingPOST reverts to snapshot
+
+  Revert to virtual machine snapshot
+*/
+func (a *Client) VcsVirtualMachineSnapshotRevertUsingPOST(params *VcsVirtualMachineSnapshotRevertUsingPOSTParams) (*VcsVirtualMachineSnapshotRevertUsingPOSTOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewVcsVirtualMachineSnapshotRevertUsingPOSTParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "vcsVirtualMachineSnapshotRevertUsingPOST",
+		Method:             "POST",
+		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}/revert",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &VcsVirtualMachineSnapshotRevertUsingPOSTReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*VcsVirtualMachineSnapshotRevertUsingPOSTOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineSnapshotRevertUsingPOST: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
   VcsVirtualMachineUpdateUsingPUT updates
 
   Update vSphere vCenter virtual machine
 */
-func (a *Client) VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdateUsingPUTParams) (*VcsVirtualMachineUpdateUsingPUTOK, *VcsVirtualMachineUpdateUsingPUTCreated, error) {
+func (a *Client) VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdateUsingPUTParams) (*VcsVirtualMachineUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineUpdateUsingPUTParams()
@@ -210,16 +400,15 @@ func (a *Client) VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdate
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
-	switch value := result.(type) {
-	case *VcsVirtualMachineUpdateUsingPUTOK:
-		return value, nil, nil
-	case *VcsVirtualMachineUpdateUsingPUTCreated:
-		return nil, value, nil
+	success, ok := result.(*VcsVirtualMachineUpdateUsingPUTOK)
+	if ok {
+		return success, nil
 	}
+	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for virtual_machines: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineUpdateUsingPUT: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

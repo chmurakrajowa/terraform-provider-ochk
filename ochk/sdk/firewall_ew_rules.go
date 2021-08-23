@@ -15,16 +15,16 @@ type FirewallEWRulesProxy struct {
 	service    firewall_rules_e_w.ClientService
 }
 
-func (p *FirewallEWRulesProxy) Create(ctx context.Context, securityPolicyID string, rule *models.DFWRule) (*models.DFWRule, error) {
+func (p *FirewallEWRulesProxy) Create(ctx context.Context, routerID string, rule *models.DFWRule) (*models.DFWRule, error) {
 	if err := rule.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating firewall EW rule struct: %w", err)
 	}
 
 	params := &firewall_rules_e_w.DfwRuleCreateUsingPUTParams{
-		SecurityPolicyID: securityPolicyID,
-		DfwRule:          rule,
-		Context:          ctx,
-		HTTPClient:       p.httpClient,
+		RouterID:   routerID,
+		DfwRule:    rule,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	_, put, err := p.service.DfwRuleCreateUsingPUT(params)
@@ -39,12 +39,12 @@ func (p *FirewallEWRulesProxy) Create(ctx context.Context, securityPolicyID stri
 	return put.Payload.DfwRule, nil
 }
 
-func (p *FirewallEWRulesProxy) Read(ctx context.Context, securityPolicyID string, ruleID string) (*models.DFWRule, error) {
+func (p *FirewallEWRulesProxy) Read(ctx context.Context, routerID string, ruleID string) (*models.DFWRule, error) {
 	params := &firewall_rules_e_w.DfwRuleGetUsingGETParams{
-		RuleID:           ruleID,
-		SecurityPolicyID: securityPolicyID,
-		Context:          ctx,
-		HTTPClient:       p.httpClient,
+		RuleID:     ruleID,
+		RouterID:   routerID,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	response, err := p.service.DfwRuleGetUsingGET(params)
@@ -59,17 +59,17 @@ func (p *FirewallEWRulesProxy) Read(ctx context.Context, securityPolicyID string
 	return response.Payload.RuleInstance, nil
 }
 
-func (p *FirewallEWRulesProxy) Update(ctx context.Context, securityPolicyID string, rule *models.DFWRule) (*models.DFWRule, error) {
+func (p *FirewallEWRulesProxy) Update(ctx context.Context, routerID string, rule *models.DFWRule) (*models.DFWRule, error) {
 	if err := rule.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating firewall EW rule struct: %w", err)
 	}
 
 	params := &firewall_rules_e_w.DfwRuleUpdateUsingPUTParams{
-		SecurityPolicyID: securityPolicyID,
-		RuleID:           rule.RuleID,
-		DfwRule:          rule,
-		Context:          ctx,
-		HTTPClient:       p.httpClient,
+		RouterID:   routerID,
+		RuleID:     rule.RuleID,
+		DfwRule:    rule,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	put, _, err := p.service.DfwRuleUpdateUsingPUT(params)
@@ -84,12 +84,12 @@ func (p *FirewallEWRulesProxy) Update(ctx context.Context, securityPolicyID stri
 	return put.Payload.DfwRule, nil
 }
 
-func (p *FirewallEWRulesProxy) ListByDisplayName(ctx context.Context, securityPolicyID string, displayName string) ([]*models.DFWRule, error) {
+func (p *FirewallEWRulesProxy) ListByDisplayName(ctx context.Context, routerID string, displayName string) ([]*models.DFWRule, error) {
 	params := &firewall_rules_e_w.DfwRuleListUsingGETParams{
-		SecurityPolicyID: securityPolicyID,
-		DisplayName:      &displayName,
-		Context:          ctx,
-		HTTPClient:       p.httpClient,
+		RouterID:    routerID,
+		DisplayName: &displayName,
+		Context:     ctx,
+		HTTPClient:  p.httpClient,
 	}
 
 	response, err := p.service.DfwRuleListUsingGET(params)
@@ -104,11 +104,11 @@ func (p *FirewallEWRulesProxy) ListByDisplayName(ctx context.Context, securityPo
 	return response.Payload.RuleInstances, nil
 }
 
-func (p *FirewallEWRulesProxy) List(ctx context.Context, securityPolicyID string) ([]*models.DFWRule, error) {
+func (p *FirewallEWRulesProxy) List(ctx context.Context, routerID string) ([]*models.DFWRule, error) {
 	params := &firewall_rules_e_w.DfwRuleListUsingGETParams{
-		SecurityPolicyID: securityPolicyID,
-		Context:          ctx,
-		HTTPClient:       p.httpClient,
+		RouterID:   routerID,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	response, err := p.service.DfwRuleListUsingGET(params)
@@ -123,8 +123,8 @@ func (p *FirewallEWRulesProxy) List(ctx context.Context, securityPolicyID string
 	return response.Payload.RuleInstances, nil
 }
 
-func (p *FirewallEWRulesProxy) Exists(ctx context.Context, securityPolicyID string, ruleID string) (bool, error) {
-	if _, err := p.Read(ctx, securityPolicyID, ruleID); err != nil {
+func (p *FirewallEWRulesProxy) Exists(ctx context.Context, routerID string, ruleID string) (bool, error) {
+	if _, err := p.Read(ctx, routerID, ruleID); err != nil {
 		if IsNotFoundError(err) {
 			return false, nil
 		}
@@ -135,12 +135,12 @@ func (p *FirewallEWRulesProxy) Exists(ctx context.Context, securityPolicyID stri
 	return true, nil
 }
 
-func (p *FirewallEWRulesProxy) Delete(ctx context.Context, securityPolicyID string, ruleID string) error {
+func (p *FirewallEWRulesProxy) Delete(ctx context.Context, routerID string, ruleID string) error {
 	params := &firewall_rules_e_w.DfwRuleDeleteUsingDELETEParams{
-		SecurityPolicyID: securityPolicyID,
-		RuleID:           ruleID,
-		Context:          ctx,
-		HTTPClient:       p.httpClient,
+		RouterID:   routerID,
+		RuleID:     ruleID,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	response, _, err := p.service.DfwRuleDeleteUsingDELETE(params)

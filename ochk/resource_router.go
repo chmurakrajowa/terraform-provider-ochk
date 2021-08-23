@@ -27,10 +27,18 @@ func resourceRouter() *schema.Resource {
 			Delete: schema.DefaultTimeout(RouterRetryTimeout),
 		},
 
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"display_name": {
 				Type:     schema.TypeString,
 				Required: true,
+			},
+			"parent_router_id": {
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"router_type": {
 				Type:     schema.TypeString,
@@ -85,6 +93,11 @@ func resourceRouterRead(ctx context.Context, d *schema.ResourceData, meta interf
 		return diag.Errorf("error while reading router: %+v", err)
 	}
 
+	if Router.ParentT0ID != "" {
+		if err := d.Set("parent_router_id", Router.ParentT0ID); err != nil {
+			return diag.Errorf("error setting parent_router_id: %+v", err)
+		}
+	}
 	if err := d.Set("display_name", Router.DisplayName); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
@@ -142,5 +155,6 @@ func resourceRouterDelete(ctx context.Context, d *schema.ResourceData, meta inte
 func mapResourceDataToRouter(d *schema.ResourceData) *models.RouterInstance {
 	return &models.RouterInstance{
 		DisplayName: d.Get("display_name").(string),
+		ParentT0ID:  d.Get("parent_router_id").(string),
 	}
 }

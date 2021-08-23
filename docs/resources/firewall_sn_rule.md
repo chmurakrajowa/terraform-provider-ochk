@@ -27,7 +27,7 @@ data "ochk_custom_service" "web-servers" {
 
 resource "ochk_firewall_sn_rule" "fw-sn-1" {
   display_name = "fw-sn-drop-ssh"
-  gateway_policy_id = data.ochk_gateway_policy.T1.id
+  router_id = data.ochk_router.subtenant-vpc1234.id
   scope = [data.ochk_router.T1.id]
 
   services = [data.ochk_service.ssh.id]
@@ -47,7 +47,7 @@ resource "ochk_firewall_sn_rule" "fw-sn-1" {
 
 The following arguments are supported:
 
-* `gateway_policy_id` - (Required) Identifier of gateway policy referencing T1 router. Use `ochk_gateway_policy` for finding gateway policy id. Updates to this attribute forces recreate.
+* `router_id` - (Required) Identifier of vpc id. Use `router_id` data source to find router id by name. Update to this attribute forces recreate.
 * `scope` - (Required) Scope of this rule. Currently, this needs to be set to id of T1 router referenced in `gateway_policy_id`. Use `ochk_router` with display name the same as in `gateway_policy_id` for finding router identifier for scope. Updates to this attribute forces recreate. 
 * `display_name` - (Required) The Firewall SN Rule name.
 * `priority` - (Required) Priority of the firewall rule. Rules with lower priority are matched first.

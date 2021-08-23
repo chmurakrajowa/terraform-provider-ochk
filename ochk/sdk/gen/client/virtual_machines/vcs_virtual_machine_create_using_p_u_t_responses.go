@@ -123,13 +123,25 @@ func NewVcsVirtualMachineCreateUsingPUTBadRequest() *VcsVirtualMachineCreateUsin
 Bad request, error occurred. For more details see log messages.
 */
 type VcsVirtualMachineCreateUsingPUTBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *VcsVirtualMachineCreateUsingPUTBadRequest) Error() string {
-	return fmt.Sprintf("[PUT /vcs/virtual-machines][%d] vcsVirtualMachineCreateUsingPUTBadRequest ", 400)
+	return fmt.Sprintf("[PUT /vcs/virtual-machines][%d] vcsVirtualMachineCreateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *VcsVirtualMachineCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *VcsVirtualMachineCreateUsingPUTBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

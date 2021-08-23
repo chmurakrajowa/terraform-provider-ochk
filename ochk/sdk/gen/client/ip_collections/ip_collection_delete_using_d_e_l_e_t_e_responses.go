@@ -84,13 +84,25 @@ func NewIPCollectionDeleteUsingDELETEBadRequest() *IPCollectionDeleteUsingDELETE
 Bad request, error occurred. For more details see log messages.
 */
 type IPCollectionDeleteUsingDELETEBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *IPCollectionDeleteUsingDELETEBadRequest) Error() string {
-	return fmt.Sprintf("[DELETE /ipcs/{ipCollectionId}][%d] ipCollectionDeleteUsingDELETEBadRequest ", 400)
+	return fmt.Sprintf("[DELETE /ipcs/{ipCollectionId}][%d] ipCollectionDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *IPCollectionDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *IPCollectionDeleteUsingDELETEBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

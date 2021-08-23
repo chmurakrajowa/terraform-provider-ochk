@@ -123,13 +123,25 @@ func NewVirtualNetworkDeleteUsingDELETEBadRequest() *VirtualNetworkDeleteUsingDE
 Bad request, error occurred. For more details see log messages.
 */
 type VirtualNetworkDeleteUsingDELETEBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *VirtualNetworkDeleteUsingDELETEBadRequest) Error() string {
-	return fmt.Sprintf("[DELETE /networks/{virtualNetworkId}][%d] virtualNetworkDeleteUsingDELETEBadRequest ", 400)
+	return fmt.Sprintf("[DELETE /networks/{virtualNetworkId}][%d] virtualNetworkDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *VirtualNetworkDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *VirtualNetworkDeleteUsingDELETEBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

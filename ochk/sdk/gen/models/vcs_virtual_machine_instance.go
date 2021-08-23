@@ -23,6 +23,12 @@ type VcsVirtualMachineInstance struct {
 	// additional virtual disk device collection
 	AdditionalVirtualDiskDeviceCollection []*VirtualDiskDevice `json:"additionalVirtualDiskDeviceCollection"`
 
+	// backup list collection
+	BackupListCollection []*BackupList `json:"backupListCollection"`
+
+	// billing tags
+	BillingTags []*BillingTag `json:"billingTags"`
+
 	// created by
 	CreatedBy string `json:"createdBy,omitempty"`
 
@@ -39,6 +45,15 @@ type VcsVirtualMachineInstance struct {
 	// initial password
 	InitialPassword string `json:"initialPassword,omitempty"`
 
+	// initial user name
+	InitialUserName string `json:"initialUserName,omitempty"`
+
+	// ip address
+	IPAddress string `json:"ipAddress,omitempty"`
+
+	// iso instance
+	IsoInstance *IsoInstance `json:"isoInstance,omitempty"`
+
 	// lic settings
 	LicSettings *LicSettings `json:"licSettings,omitempty"`
 
@@ -49,8 +64,15 @@ type VcsVirtualMachineInstance struct {
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`
 
+	// os type
+	// Enum: [LINUX WINDOWS]
+	OsType string `json:"osType,omitempty"`
+
 	// os virtual disk device
 	OsVirtualDiskDevice *VirtualDiskDevice `json:"osVirtualDiskDevice,omitempty"`
+
+	// ovf Ip configuration
+	OvfIPConfiguration bool `json:"ovfIpConfiguration,omitempty"`
 
 	// power state
 	// Enum: [poweredOff poweredOn suspended]
@@ -60,12 +82,18 @@ type VcsVirtualMachineInstance struct {
 	// Enum: [CUSTOM SIZE_L SIZE_M SIZE_S SIZE_XL SIZE_XS]
 	ResourceProfile string `json:"resourceProfile,omitempty"`
 
+	// ssh key
+	SSHKey string `json:"sshKey,omitempty"`
+
 	// storage policy
 	// Enum: [ENTERPRISE STANDARD UNKNOWN]
 	StoragePolicy string `json:"storagePolicy,omitempty"`
 
 	// subtenant ref Id
 	SubtenantRefID string `json:"subtenantRefId,omitempty"`
+
+	// system tags
+	SystemTags []*SystemTag `json:"systemTags"`
 
 	// virtual machine Id
 	VirtualMachineID string `json:"virtualMachineId,omitempty"`
@@ -85,6 +113,14 @@ func (m *VcsVirtualMachineInstance) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateBackupListCollection(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateBillingTags(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateCreationDate(formats); err != nil {
 		res = append(res, err)
 	}
@@ -97,11 +133,19 @@ func (m *VcsVirtualMachineInstance) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateIsoInstance(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateLicSettings(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateModificationDate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateOsType(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -118,6 +162,10 @@ func (m *VcsVirtualMachineInstance) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateStoragePolicy(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSystemTags(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -146,6 +194,56 @@ func (m *VcsVirtualMachineInstance) validateAdditionalVirtualDiskDeviceCollectio
 			if err := m.AdditionalVirtualDiskDeviceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("additionalVirtualDiskDeviceCollection" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *VcsVirtualMachineInstance) validateBackupListCollection(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.BackupListCollection) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.BackupListCollection); i++ {
+		if swag.IsZero(m.BackupListCollection[i]) { // not required
+			continue
+		}
+
+		if m.BackupListCollection[i] != nil {
+			if err := m.BackupListCollection[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *VcsVirtualMachineInstance) validateBillingTags(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.BillingTags) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.BillingTags); i++ {
+		if swag.IsZero(m.BillingTags[i]) { // not required
+			continue
+		}
+
+		if m.BillingTags[i] != nil {
+			if err := m.BillingTags[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("billingTags" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -205,6 +303,24 @@ func (m *VcsVirtualMachineInstance) validateEncryptionInstance(formats strfmt.Re
 	return nil
 }
 
+func (m *VcsVirtualMachineInstance) validateIsoInstance(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.IsoInstance) { // not required
+		return nil
+	}
+
+	if m.IsoInstance != nil {
+		if err := m.IsoInstance.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("isoInstance")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *VcsVirtualMachineInstance) validateLicSettings(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.LicSettings) { // not required
@@ -230,6 +346,49 @@ func (m *VcsVirtualMachineInstance) validateModificationDate(formats strfmt.Regi
 	}
 
 	if err := validate.FormatOf("modificationDate", "body", "date-time", m.ModificationDate.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var vcsVirtualMachineInstanceTypeOsTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["LINUX","WINDOWS"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		vcsVirtualMachineInstanceTypeOsTypePropEnum = append(vcsVirtualMachineInstanceTypeOsTypePropEnum, v)
+	}
+}
+
+const (
+
+	// VcsVirtualMachineInstanceOsTypeLINUX captures enum value "LINUX"
+	VcsVirtualMachineInstanceOsTypeLINUX string = "LINUX"
+
+	// VcsVirtualMachineInstanceOsTypeWINDOWS captures enum value "WINDOWS"
+	VcsVirtualMachineInstanceOsTypeWINDOWS string = "WINDOWS"
+)
+
+// prop value enum
+func (m *VcsVirtualMachineInstance) validateOsTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, vcsVirtualMachineInstanceTypeOsTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *VcsVirtualMachineInstance) validateOsType(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.OsType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateOsTypeEnum("osType", "body", m.OsType); err != nil {
 		return err
 	}
 
@@ -396,6 +555,31 @@ func (m *VcsVirtualMachineInstance) validateStoragePolicy(formats strfmt.Registr
 	// value enum
 	if err := m.validateStoragePolicyEnum("storagePolicy", "body", m.StoragePolicy); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *VcsVirtualMachineInstance) validateSystemTags(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.SystemTags) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.SystemTags); i++ {
+		if swag.IsZero(m.SystemTags[i]) { // not required
+			continue
+		}
+
+		if m.SystemTags[i] != nil {
+			if err := m.SystemTags[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("systemTags" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

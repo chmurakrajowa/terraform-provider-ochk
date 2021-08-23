@@ -39,6 +39,9 @@ type predefinedTestData struct {
 	CustomService2DisplayName        string
 	KMSKeyDisplayName                string
 	SecurityPolicyDisplayName        string
+	BackupPlanName                   string
+	BillingTagName                   string
+	SystemTagName                    string
 }
 
 var devTestDataPrefix = "tf-test2"
@@ -63,6 +66,9 @@ var predefinedTestDataDev = predefinedTestData{
 	Deployment1DisplayName:           "CentOS 7",
 	CustomService1DisplayName:        fmt.Sprintf("%s-https", devTestDataPrefix),
 	CustomService2DisplayName:        fmt.Sprintf("%s-http", devTestDataPrefix),
+	BackupPlanName:                   "Platinium",
+	BillingTagName:                   "billing_t1",
+	SystemTagName:                    "systemTag01",
 }
 
 var testTestDataPrefix = "tf-test1"

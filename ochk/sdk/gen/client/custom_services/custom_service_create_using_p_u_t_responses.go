@@ -123,13 +123,25 @@ func NewCustomServiceCreateUsingPUTBadRequest() *CustomServiceCreateUsingPUTBadR
 Bad request, error occurred. For more details see log messages.
 */
 type CustomServiceCreateUsingPUTBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *CustomServiceCreateUsingPUTBadRequest) Error() string {
-	return fmt.Sprintf("[PUT /network/custom-services][%d] customServiceCreateUsingPUTBadRequest ", 400)
+	return fmt.Sprintf("[PUT /network/custom-services][%d] customServiceCreateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *CustomServiceCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *CustomServiceCreateUsingPUTBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

@@ -84,13 +84,25 @@ func NewSecurityPolicyListUsingGETBadRequest() *SecurityPolicyListUsingGETBadReq
 Bad request, error occurred. For more details see log messages.
 */
 type SecurityPolicyListUsingGETBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *SecurityPolicyListUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/firewall/security-policies][%d] securityPolicyListUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/firewall/security-policies][%d] securityPolicyListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *SecurityPolicyListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *SecurityPolicyListUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

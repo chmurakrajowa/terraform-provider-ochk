@@ -28,6 +28,10 @@ func resourceSubtenant() *schema.Resource {
 			Delete: schema.DefaultTimeout(SubtenantRetryTimeout),
 		},
 
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"name": {
 				Type:     schema.TypeString,
@@ -60,9 +64,8 @@ func resourceSubtenant() *schema.Resource {
 			},
 			"networks": {
 				Type:     schema.TypeSet,
-				Required: true,
+				Computed: true,
 				Elem:     &schema.Schema{Type: schema.TypeString},
-				MinItems: 1,
 			},
 		},
 	}

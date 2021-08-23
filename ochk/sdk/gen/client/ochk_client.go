@@ -12,7 +12,8 @@ import (
 
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/active_directory_r_s_a_public_key"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/active_directory_sync"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ads_download"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/backups"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/billing_tags"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/context_profiles"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/custom_services"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/default_services"
@@ -21,22 +22,24 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_e_w"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_s_n"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/gateway_policies"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/groups"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_collections"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/k_m_s_key_management"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/k_m_s_key_rotation_scheduler"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/log_categories"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/logical_ports"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/network_adapters"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/network_profiles"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/networks"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/principals"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/requests"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/reservations"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/resource_pools"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/routers"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/security_groups"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/security_policies"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/snapshots"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/subtenant_custom_groups"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/subtenants"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/system_tags"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/users"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/v_id_m"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machine_overall_reports"
@@ -90,7 +93,8 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.Transport = transport
 	cli.ActiveDirectoryrsaPublicKey = active_directory_r_s_a_public_key.New(transport, formats)
 	cli.ActiveDirectorySync = active_directory_sync.New(transport, formats)
-	cli.AdsDownload = ads_download.New(transport, formats)
+	cli.Backups = backups.New(transport, formats)
+	cli.BillingTags = billing_tags.New(transport, formats)
 	cli.ContextProfiles = context_profiles.New(transport, formats)
 	cli.CustomServices = custom_services.New(transport, formats)
 	cli.DefaultServices = default_services.New(transport, formats)
@@ -99,22 +103,24 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.FirewallRulesew = firewall_rules_e_w.New(transport, formats)
 	cli.FirewallRulessn = firewall_rules_s_n.New(transport, formats)
 	cli.GatewayPolicies = gateway_policies.New(transport, formats)
+	cli.Groups = groups.New(transport, formats)
 	cli.IPCollections = ip_collections.New(transport, formats)
 	cli.KmsKeyManagement = k_m_s_key_management.New(transport, formats)
 	cli.KmsKeyRotationScheduler = k_m_s_key_rotation_scheduler.New(transport, formats)
+	cli.LogCategories = log_categories.New(transport, formats)
 	cli.LogicalPorts = logical_ports.New(transport, formats)
-	cli.NetworkAdapters = network_adapters.New(transport, formats)
 	cli.NetworkProfiles = network_profiles.New(transport, formats)
 	cli.Networks = networks.New(transport, formats)
 	cli.Principals = principals.New(transport, formats)
 	cli.Requests = requests.New(transport, formats)
-	cli.Reservations = reservations.New(transport, formats)
 	cli.ResourcePools = resource_pools.New(transport, formats)
 	cli.Routers = routers.New(transport, formats)
 	cli.SecurityGroups = security_groups.New(transport, formats)
 	cli.SecurityPolicies = security_policies.New(transport, formats)
+	cli.Snapshots = snapshots.New(transport, formats)
 	cli.SubtenantCustomGroups = subtenant_custom_groups.New(transport, formats)
 	cli.Subtenants = subtenants.New(transport, formats)
+	cli.SystemTags = system_tags.New(transport, formats)
 	cli.Users = users.New(transport, formats)
 	cli.VIDm = v_id_m.New(transport, formats)
 	cli.VirtualMachineOverallReports = virtual_machine_overall_reports.New(transport, formats)
@@ -170,7 +176,9 @@ type Ochk struct {
 
 	ActiveDirectorySync active_directory_sync.ClientService
 
-	AdsDownload ads_download.ClientService
+	Backups backups.ClientService
+
+	BillingTags billing_tags.ClientService
 
 	ContextProfiles context_profiles.ClientService
 
@@ -188,15 +196,17 @@ type Ochk struct {
 
 	GatewayPolicies gateway_policies.ClientService
 
+	Groups groups.ClientService
+
 	IPCollections ip_collections.ClientService
 
 	KmsKeyManagement k_m_s_key_management.ClientService
 
 	KmsKeyRotationScheduler k_m_s_key_rotation_scheduler.ClientService
 
-	LogicalPorts logical_ports.ClientService
+	LogCategories log_categories.ClientService
 
-	NetworkAdapters network_adapters.ClientService
+	LogicalPorts logical_ports.ClientService
 
 	NetworkProfiles network_profiles.ClientService
 
@@ -206,8 +216,6 @@ type Ochk struct {
 
 	Requests requests.ClientService
 
-	Reservations reservations.ClientService
-
 	ResourcePools resource_pools.ClientService
 
 	Routers routers.ClientService
@@ -216,9 +224,13 @@ type Ochk struct {
 
 	SecurityPolicies security_policies.ClientService
 
+	Snapshots snapshots.ClientService
+
 	SubtenantCustomGroups subtenant_custom_groups.ClientService
 
 	Subtenants subtenants.ClientService
+
+	SystemTags system_tags.ClientService
 
 	Users users.ClientService
 
@@ -242,7 +254,8 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 	c.ActiveDirectoryrsaPublicKey.SetTransport(transport)
 	c.ActiveDirectorySync.SetTransport(transport)
-	c.AdsDownload.SetTransport(transport)
+	c.Backups.SetTransport(transport)
+	c.BillingTags.SetTransport(transport)
 	c.ContextProfiles.SetTransport(transport)
 	c.CustomServices.SetTransport(transport)
 	c.DefaultServices.SetTransport(transport)
@@ -251,22 +264,24 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.FirewallRulesew.SetTransport(transport)
 	c.FirewallRulessn.SetTransport(transport)
 	c.GatewayPolicies.SetTransport(transport)
+	c.Groups.SetTransport(transport)
 	c.IPCollections.SetTransport(transport)
 	c.KmsKeyManagement.SetTransport(transport)
 	c.KmsKeyRotationScheduler.SetTransport(transport)
+	c.LogCategories.SetTransport(transport)
 	c.LogicalPorts.SetTransport(transport)
-	c.NetworkAdapters.SetTransport(transport)
 	c.NetworkProfiles.SetTransport(transport)
 	c.Networks.SetTransport(transport)
 	c.Principals.SetTransport(transport)
 	c.Requests.SetTransport(transport)
-	c.Reservations.SetTransport(transport)
 	c.ResourcePools.SetTransport(transport)
 	c.Routers.SetTransport(transport)
 	c.SecurityGroups.SetTransport(transport)
 	c.SecurityPolicies.SetTransport(transport)
+	c.Snapshots.SetTransport(transport)
 	c.SubtenantCustomGroups.SetTransport(transport)
 	c.Subtenants.SetTransport(transport)
+	c.SystemTags.SetTransport(transport)
 	c.Users.SetTransport(transport)
 	c.VIDm.SetTransport(transport)
 	c.VirtualMachineOverallReports.SetTransport(transport)

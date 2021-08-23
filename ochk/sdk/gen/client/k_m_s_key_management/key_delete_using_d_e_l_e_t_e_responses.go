@@ -84,13 +84,25 @@ func NewKeyDeleteUsingDELETEBadRequest() *KeyDeleteUsingDELETEBadRequest {
 Bad request, error occurred. For more details see log messages.
 */
 type KeyDeleteUsingDELETEBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *KeyDeleteUsingDELETEBadRequest) Error() string {
-	return fmt.Sprintf("[DELETE /kms/key/{id}][%d] keyDeleteUsingDELETEBadRequest ", 400)
+	return fmt.Sprintf("[DELETE /kms/key/{id}][%d] keyDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *KeyDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *KeyDeleteUsingDELETEBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

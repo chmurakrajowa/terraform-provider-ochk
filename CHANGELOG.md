@@ -1,3 +1,51 @@
+## 1.2 (2021-08-20)
+
+## Resources
+* New resources
+  * `resource_billing_tag`
+  * `resource_system_tag`
+
+* Changed resources
+  * `resource_custom_service`
+  * `resource_firewall_ew_rule`
+  * `resource_firewall_sn_rule`
+  * `resource_ip_collection`
+  * `resource_kms_key`
+  * `resource_router`
+  * `resource_security_group`
+  * `resource_subtenant`
+  * `resource_virtual_machine`
+  * `resource_virtual_network`
+
+## Data sources
+* New data sources:
+  * `data_source_backup_list`
+  * `data_source_backup_plan`
+  * `data_source_billing_tag`
+  * `data_source_system_tag`
+    
+Changed data sources:
+  * `data_source_router`
+
+
+## Misc
+  * `Support for Terraform 1.0`
+
+## Bugfix
+  * `Fix for creating machine and setting virtual machine password - inital password is set correctly`  
+  * `Fix for KMS encrypted key - every run apply command has caused to recreation KMS key`  
+  * `Change for creating S-N firewall rule - putting ID router VPC instead of security_policy_id`
+
+## Features
+  * `Added ssh-key upload when crating virtual machine`
+  * `Added system and billing tags management and the ability to assign them to virtual machines`
+  * `Added virtual machine backup plan management`
+  * `Added deploymnet virtual machine from OVF file`
+  * `Added to terrafrom state IP addreess virtual mnachine`
+  
+
+
+
 ## 1.1 (2021-03-23)
 
 ## Resources

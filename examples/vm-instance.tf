@@ -1,26 +1,111 @@
+
+locals {
+  # should not really be stored like that
+  ssh_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCbMgMU2dxQYg+WLoim6ZuGsuMZ8QB9mrylNqpbWQrCNXZnajuhjff62E1yMPh7uh2nrLBAFhDu7jOOLPMY8uG7Z9FwutnRQbWsve2uo84FmeLgXcbxg/hD3b9CH5pjqZUjJCCN9DpFveKWVsw+4VvIbTS1m5JcNHXccY3mrUCtTPfUP/W3bRQTFyYtmzX4rV68eoBIUlgNia8DF9sUrgvNVEElaK6gXXjt2UW3aHe6VZ4DUl/MfarWwrY92XL9HwZ81S75Q7NBh75PtnR4ipk8QYNqxoOWsbJB9QnqeURdMgWxciaU3Z1eBTfzLmHXMv2EvqYBcHQ2lMhbFRn/2/an radoslawkubera@NB155.local"
+}
+
 data "ochk_deployment" "centos" {
   display_name = "CentOS 7"
 }
 
+/*
+resource "ochk_virtual_machine" "ssh-key" {
+  display_name = "${var.test-data-prefix}-vm-sk"
+  deployment_id = data.ochk_deployment.centos.id
+  initial_password = var.initial_password_for_vm
+
+  ssh_key = local.ssh_key
+
+  power_state = "poweredOn"
+  resource_profile = "SIZE_S"
+  storage_policy = "STANDARD"
+  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+
+  virtual_network_devices {
+    virtual_network_id = ochk_virtual_network.network_for_vm.id
+  }
+
+  backup_lists = [
+    data.ochk_backup_list.backup_list.id
+  ]
+}
+*/
+
+/*
+resource "ochk_virtual_machine" "tags" {
+  display_name = "${var.test-data-prefix}-vm-tag"
+  deployment_id = data.ochk_deployment.centos.id
+  initial_password = var.initial_password_for_vm
+
+  power_state = "poweredOn"
+  resource_profile = "SIZE_S"
+  storage_policy = "STANDARD"
+  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+
+  virtual_network_devices {
+    virtual_network_id = ochk_virtual_network.network_for_vm.id
+  }
+
+  billing_tags = [
+    data.ochk_billing_tag.cc1.id,
+    ochk_billing_tag.res-bt-cc2.id
+  ]
+
+  system_tags = [
+    data.ochk_system_tag.os1.id,
+    ochk_system_tag.res-st-os2.id
+  ]
+}
+*/
+
+/*
+resource "ochk_virtual_machine" "backup-list" {
+  display_name = "${var.test-data-prefix}-vm-bl"
+  deployment_id = data.ochk_deployment.centos.id
+  initial_password = var.initial_password_for_vm
+
+  power_state = "poweredOn"
+  resource_profile = "SIZE_S"
+  storage_policy = "STANDARD"
+  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+
+  virtual_network_devices {
+    virtual_network_id = ochk_virtual_network.network_for_vm.id
+  }
+
+  backup_lists = [
+    data.ochk_backup_list.backup_list.id
+  ]
+}
+
+*/
+
+
 resource "ochk_virtual_machine" "default" {
   display_name = "${var.test-data-prefix}-vm"
   deployment_id = data.ochk_deployment.centos.id
-  initial_password = "0c80aab0dc1ce6"
+  initial_password = var.initial_password_for_vm
 
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
   storage_policy = "STANDARD"
-  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+  subtenant_id = ochk_subtenant.subtenant-1.id
 
   virtual_network_devices {
-    virtual_network_id = ochk_virtual_network.default.id
+    virtual_network_id = ochk_virtual_network.network_for_vm.id
   }
 }
 
-resource "ochk_virtual_machine" "encrypted" {
-  display_name = "${var.test-data-prefix}-vme1"
-  deployment_id = data.ochk_deployment.centos.id
-  initial_password = "0c80aab0dc1ce6"
+
+data "ochk_deployment" "archlinux" {
+  display_name = var.iso_image
+}
+
+
+resource "ochk_virtual_machine" "iso" {
+  display_name = "${var.test-data-prefix}-vm-iso"
+  deployment_id = data.ochk_deployment.archlinux.id
+  os_type = "WINDOWS"
 
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
@@ -28,7 +113,46 @@ resource "ochk_virtual_machine" "encrypted" {
   subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
 
   virtual_network_devices {
-    virtual_network_id = ochk_virtual_network.default.id
+    virtual_network_id = ochk_virtual_network.network_for_vm.id
+  }
+}
+
+
+data "ochk_deployment" "ovf" {
+  display_name = var.ovf_image
+}
+
+resource "ochk_virtual_machine" "ovf" {
+  display_name = "${var.test-data-prefix}-vm-ovf"
+  deployment_id = data.ochk_deployment.ovf.id
+
+  power_state = "poweredOn"
+  resource_profile = "SIZE_S"
+  storage_policy = "STANDARD"
+  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+
+  virtual_network_devices {
+    virtual_network_id = ochk_virtual_network.network_for_vm.id
+  }
+  initial_user_name = "root"
+  initial_password = var.initial_password_for_vm
+  ovf_ip_configuration = false
+  os_type = "LINUX"
+}
+
+/*
+resource "ochk_virtual_machine" "encrypted" {
+  display_name = "${var.test-data-prefix}-vm-en"
+  deployment_id = data.ochk_deployment.centos.id
+  initial_password = var.initial_password_for_vm
+
+  power_state = "poweredOn"
+  resource_profile = "SIZE_S"
+  storage_policy = "STANDARD"
+  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+
+  virtual_network_devices {
+    virtual_network_id = ochk_virtual_network.network_for_vm.id
   }
 
   encryption = true
@@ -37,9 +161,9 @@ resource "ochk_virtual_machine" "encrypted" {
 
 
 resource "ochk_virtual_machine" "encrypted-with-own-encrypted-key" {
-  display_name = "${var.test-data-prefix}-vm-e2"
+  display_name = "${var.test-data-prefix}-vm-eb"
   deployment_id = data.ochk_deployment.centos.id
-  initial_password = "0c80aab0dc1ce6"
+  initial_password = var.initial_password_for_vm
 
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
@@ -47,7 +171,7 @@ resource "ochk_virtual_machine" "encrypted-with-own-encrypted-key" {
   subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
 
   virtual_network_devices {
-    virtual_network_id = ochk_virtual_network.default.id
+    virtual_network_id = ochk_virtual_network.network_for_vm.id
   }
 
   encryption = true
@@ -56,9 +180,9 @@ resource "ochk_virtual_machine" "encrypted-with-own-encrypted-key" {
 
 
 resource "ochk_virtual_machine" "encrypted-managed2" {
-  display_name = "${var.test-data-prefix}-vme4"
+  display_name = "${var.test-data-prefix}-vm-em"
   deployment_id = data.ochk_deployment.centos.id
-  initial_password = "0c80aab0dc1ce6"
+  initial_password = var.initial_password_for_vm
 
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
@@ -66,8 +190,9 @@ resource "ochk_virtual_machine" "encrypted-managed2" {
   subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
 
   virtual_network_devices {
-    virtual_network_id = ochk_virtual_network.default.id
+    virtual_network_id =ochk_virtual_network.network_for_vm.id
   }
 
   encryption = true
 }
+*/

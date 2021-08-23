@@ -62,16 +62,16 @@ for the gfw rule update using p u t operation typically these are written to a h
 */
 type GfwRuleUpdateUsingPUTParams struct {
 
-	/*GatewayPolicyID
-	  gatewayPolicyId
-
-	*/
-	GatewayPolicyID string
 	/*GfwRule
 	  gfwRule
 
 	*/
 	GfwRule *models.GFWRule
+	/*RouterID
+	  routerId
+
+	*/
+	RouterID string
 	/*RuleID
 	  ruleId
 
@@ -116,17 +116,6 @@ func (o *GfwRuleUpdateUsingPUTParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithGatewayPolicyID adds the gatewayPolicyID to the gfw rule update using p u t params
-func (o *GfwRuleUpdateUsingPUTParams) WithGatewayPolicyID(gatewayPolicyID string) *GfwRuleUpdateUsingPUTParams {
-	o.SetGatewayPolicyID(gatewayPolicyID)
-	return o
-}
-
-// SetGatewayPolicyID adds the gatewayPolicyId to the gfw rule update using p u t params
-func (o *GfwRuleUpdateUsingPUTParams) SetGatewayPolicyID(gatewayPolicyID string) {
-	o.GatewayPolicyID = gatewayPolicyID
-}
-
 // WithGfwRule adds the gfwRule to the gfw rule update using p u t params
 func (o *GfwRuleUpdateUsingPUTParams) WithGfwRule(gfwRule *models.GFWRule) *GfwRuleUpdateUsingPUTParams {
 	o.SetGfwRule(gfwRule)
@@ -136,6 +125,17 @@ func (o *GfwRuleUpdateUsingPUTParams) WithGfwRule(gfwRule *models.GFWRule) *GfwR
 // SetGfwRule adds the gfwRule to the gfw rule update using p u t params
 func (o *GfwRuleUpdateUsingPUTParams) SetGfwRule(gfwRule *models.GFWRule) {
 	o.GfwRule = gfwRule
+}
+
+// WithRouterID adds the routerID to the gfw rule update using p u t params
+func (o *GfwRuleUpdateUsingPUTParams) WithRouterID(routerID string) *GfwRuleUpdateUsingPUTParams {
+	o.SetRouterID(routerID)
+	return o
+}
+
+// SetRouterID adds the routerId to the gfw rule update using p u t params
+func (o *GfwRuleUpdateUsingPUTParams) SetRouterID(routerID string) {
+	o.RouterID = routerID
 }
 
 // WithRuleID adds the ruleID to the gfw rule update using p u t params
@@ -157,15 +157,15 @@ func (o *GfwRuleUpdateUsingPUTParams) WriteToRequest(r runtime.ClientRequest, re
 	}
 	var res []error
 
-	// path param gatewayPolicyId
-	if err := r.SetPathParam("gatewayPolicyId", o.GatewayPolicyID); err != nil {
-		return err
-	}
-
 	if o.GfwRule != nil {
 		if err := r.SetBodyParam(o.GfwRule); err != nil {
 			return err
 		}
+	}
+
+	// path param routerId
+	if err := r.SetPathParam("routerId", o.RouterID); err != nil {
+		return err
 	}
 
 	// path param ruleId

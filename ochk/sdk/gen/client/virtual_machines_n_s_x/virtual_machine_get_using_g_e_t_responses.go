@@ -90,13 +90,25 @@ func NewVirtualMachineGetUsingGETBadRequest() *VirtualMachineGetUsingGETBadReque
 Bad request, error occurred. For more details see log messages.
 */
 type VirtualMachineGetUsingGETBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *VirtualMachineGetUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/virtual-machines/{virtualMachineId}][%d] virtualMachineGetUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/virtual-machines/{virtualMachineId}][%d] virtualMachineGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *VirtualMachineGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *VirtualMachineGetUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

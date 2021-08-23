@@ -123,13 +123,25 @@ func NewKeyNewVersionUsingPOSTBadRequest() *KeyNewVersionUsingPOSTBadRequest {
 Bad request, error occurred. For more details see log messages.
 */
 type KeyNewVersionUsingPOSTBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *KeyNewVersionUsingPOSTBadRequest) Error() string {
-	return fmt.Sprintf("[POST /kms/key/{id}/versions][%d] keyNewVersionUsingPOSTBadRequest ", 400)
+	return fmt.Sprintf("[POST /kms/key/{id}/versions][%d] keyNewVersionUsingPOSTBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *KeyNewVersionUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *KeyNewVersionUsingPOSTBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

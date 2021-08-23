@@ -36,6 +36,9 @@ type RouterInstance struct {
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`
 
+	// parent t0 Id
+	ParentT0ID string `json:"parentT0Id,omitempty"`
+
 	// router Id
 	RouterID string `json:"routerId,omitempty"`
 

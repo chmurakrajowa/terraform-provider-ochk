@@ -60,11 +60,11 @@ for the gfw rule delete using d e l e t e operation typically these are written 
 */
 type GfwRuleDeleteUsingDELETEParams struct {
 
-	/*GatewayPolicyID
-	  gatewayPolicyId
+	/*RouterID
+	  routerId
 
 	*/
-	GatewayPolicyID string
+	RouterID string
 	/*RuleID
 	  ruleId
 
@@ -109,15 +109,15 @@ func (o *GfwRuleDeleteUsingDELETEParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithGatewayPolicyID adds the gatewayPolicyID to the gfw rule delete using d e l e t e params
-func (o *GfwRuleDeleteUsingDELETEParams) WithGatewayPolicyID(gatewayPolicyID string) *GfwRuleDeleteUsingDELETEParams {
-	o.SetGatewayPolicyID(gatewayPolicyID)
+// WithRouterID adds the routerID to the gfw rule delete using d e l e t e params
+func (o *GfwRuleDeleteUsingDELETEParams) WithRouterID(routerID string) *GfwRuleDeleteUsingDELETEParams {
+	o.SetRouterID(routerID)
 	return o
 }
 
-// SetGatewayPolicyID adds the gatewayPolicyId to the gfw rule delete using d e l e t e params
-func (o *GfwRuleDeleteUsingDELETEParams) SetGatewayPolicyID(gatewayPolicyID string) {
-	o.GatewayPolicyID = gatewayPolicyID
+// SetRouterID adds the routerId to the gfw rule delete using d e l e t e params
+func (o *GfwRuleDeleteUsingDELETEParams) SetRouterID(routerID string) {
+	o.RouterID = routerID
 }
 
 // WithRuleID adds the ruleID to the gfw rule delete using d e l e t e params
@@ -139,8 +139,8 @@ func (o *GfwRuleDeleteUsingDELETEParams) WriteToRequest(r runtime.ClientRequest,
 	}
 	var res []error
 
-	// path param gatewayPolicyId
-	if err := r.SetPathParam("gatewayPolicyId", o.GatewayPolicyID); err != nil {
+	// path param routerId
+	if err := r.SetPathParam("routerId", o.RouterID); err != nil {
 		return err
 	}
 

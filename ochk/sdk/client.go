@@ -35,6 +35,10 @@ type Client struct {
 	Deployments     DeploymentsProxy
 	CustomServices  CustomServicesProxy
 	KMSKeys         KMSKeysProxy
+	BackupPlans     BackupPlansProxy
+	BackupLists     BackupListsProxy
+	BillingTags     BillingTagsProxy
+	SystemTags      SystemTagsProxy
 }
 
 var clientMutex sync.Mutex
@@ -175,6 +179,22 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		KMSKeys: KMSKeysProxy{
 			httpClient: httpClient,
 			service:    authClient.KmsKeyManagement,
+		},
+		BackupPlans: BackupPlansProxy{
+			httpClient: httpClient,
+			service:    authClient.Backups,
+		},
+		BackupLists: BackupListsProxy{
+			httpClient: httpClient,
+			service:    authClient.Backups,
+		},
+		BillingTags: BillingTagsProxy{
+			httpClient: httpClient,
+			service:    authClient.BillingTags,
+		},
+		SystemTags: SystemTagsProxy{
+			httpClient: httpClient,
+			service:    authClient.SystemTags,
 		},
 	}
 

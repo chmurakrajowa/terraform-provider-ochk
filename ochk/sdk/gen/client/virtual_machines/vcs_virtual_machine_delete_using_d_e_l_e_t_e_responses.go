@@ -29,12 +29,6 @@ func (o *VcsVirtualMachineDeleteUsingDELETEReader) ReadResponse(response runtime
 			return nil, err
 		}
 		return result, nil
-	case 201:
-		result := NewVcsVirtualMachineDeleteUsingDELETECreated()
-		if err := result.readResponse(response, consumer, o.formats); err != nil {
-			return nil, err
-		}
-		return result, nil
 	case 400:
 		result := NewVcsVirtualMachineDeleteUsingDELETEBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -54,7 +48,7 @@ func NewVcsVirtualMachineDeleteUsingDELETEOK() *VcsVirtualMachineDeleteUsingDELE
 
 /*VcsVirtualMachineDeleteUsingDELETEOK handles this case with default header values.
 
-OK
+Request has been completed successfully
 */
 type VcsVirtualMachineDeleteUsingDELETEOK struct {
 	Payload *models.VcsVirtualMachineDeleteResponse
@@ -80,39 +74,6 @@ func (o *VcsVirtualMachineDeleteUsingDELETEOK) readResponse(response runtime.Cli
 	return nil
 }
 
-// NewVcsVirtualMachineDeleteUsingDELETECreated creates a VcsVirtualMachineDeleteUsingDELETECreated with default headers values
-func NewVcsVirtualMachineDeleteUsingDELETECreated() *VcsVirtualMachineDeleteUsingDELETECreated {
-	return &VcsVirtualMachineDeleteUsingDELETECreated{}
-}
-
-/*VcsVirtualMachineDeleteUsingDELETECreated handles this case with default header values.
-
-Entity has been deleted
-*/
-type VcsVirtualMachineDeleteUsingDELETECreated struct {
-	Payload *models.VcsVirtualMachineDeleteResponse
-}
-
-func (o *VcsVirtualMachineDeleteUsingDELETECreated) Error() string {
-	return fmt.Sprintf("[DELETE /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineDeleteUsingDELETECreated  %+v", 201, o.Payload)
-}
-
-func (o *VcsVirtualMachineDeleteUsingDELETECreated) GetPayload() *models.VcsVirtualMachineDeleteResponse {
-	return o.Payload
-}
-
-func (o *VcsVirtualMachineDeleteUsingDELETECreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-
-	o.Payload = new(models.VcsVirtualMachineDeleteResponse)
-
-	// response payload
-	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
-		return err
-	}
-
-	return nil
-}
-
 // NewVcsVirtualMachineDeleteUsingDELETEBadRequest creates a VcsVirtualMachineDeleteUsingDELETEBadRequest with default headers values
 func NewVcsVirtualMachineDeleteUsingDELETEBadRequest() *VcsVirtualMachineDeleteUsingDELETEBadRequest {
 	return &VcsVirtualMachineDeleteUsingDELETEBadRequest{}
@@ -123,13 +84,25 @@ func NewVcsVirtualMachineDeleteUsingDELETEBadRequest() *VcsVirtualMachineDeleteU
 Bad request, error occurred. For more details see log messages.
 */
 type VcsVirtualMachineDeleteUsingDELETEBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *VcsVirtualMachineDeleteUsingDELETEBadRequest) Error() string {
-	return fmt.Sprintf("[DELETE /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineDeleteUsingDELETEBadRequest ", 400)
+	return fmt.Sprintf("[DELETE /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *VcsVirtualMachineDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *VcsVirtualMachineDeleteUsingDELETEBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

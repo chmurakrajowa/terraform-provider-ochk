@@ -27,6 +27,9 @@ type VirtualMachinePerformanceReport struct {
 	// avg storage utilization
 	AvgStorageUtilization float32 `json:"avgStorageUtilization,omitempty"`
 
+	// billing tags
+	BillingTags string `json:"billingTags,omitempty"`
+
 	// max Cpu utilization
 	MaxCPUUtilization float32 `json:"maxCpuUtilization,omitempty"`
 

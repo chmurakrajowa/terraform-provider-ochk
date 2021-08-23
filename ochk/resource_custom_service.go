@@ -27,6 +27,10 @@ func resourceCustomService() *schema.Resource {
 			Delete: schema.DefaultTimeout(CustomServiceRetryTimeout),
 		},
 
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"display_name": {
 				Type:     schema.TypeString,

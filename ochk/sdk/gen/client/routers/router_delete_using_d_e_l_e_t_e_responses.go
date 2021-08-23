@@ -123,13 +123,25 @@ func NewRouterDeleteUsingDELETEBadRequest() *RouterDeleteUsingDELETEBadRequest {
 Bad request, error occurred. For more details see log messages.
 */
 type RouterDeleteUsingDELETEBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *RouterDeleteUsingDELETEBadRequest) Error() string {
-	return fmt.Sprintf("[DELETE /network/routers/{routerId}][%d] routerDeleteUsingDELETEBadRequest ", 400)
+	return fmt.Sprintf("[DELETE /network/routers/{routerId}][%d] routerDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *RouterDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *RouterDeleteUsingDELETEBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

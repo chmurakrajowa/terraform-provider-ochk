@@ -30,6 +30,11 @@ resource "ochk_virtual_network" "default" {
 }
 
 resource "ochk_virtual_machine" "default" {
+  locals {
+  ssh_key = "ssh-rsa 
+    ....  example@example.com"
+  }
+  
   display_name = "vm"
   deployment_id = data.ochk_deployment.centos.id
   initial_password = "<initial-password>"
@@ -42,7 +47,27 @@ resource "ochk_virtual_machine" "default" {
   virtual_network_devices {
     virtual_network_id = ochk_virtual_network.default.id
   }
+ 
+  backup_lists = [
+     "example_backup_id"
+  ]
+  
+  billing_tags = [
+    'example_billing_tag1_id',
+    'example_billing_tag2_id',
+    
+  ]
+  system_tags = [
+    "example_system_tag1_id",
+    "example_system_tag2_id",
+  ]
+  
+  os_tyoe = "LINUX/WINODWS"
+  ovf_ip_configuration = false
+  initial_user_name = "root"
+  initial_password = "initial_password_for_vm"
 }
+
 
 ```
 
@@ -75,6 +100,12 @@ The following arguments are supported:
 * `encryption` - (Optional) Enables VM encryption. Defaults to false. If this attribute is changed (performing update), encryption is either disabled (false) or VM is encrypted in place (true).  
 * `encryption_key_id` - (Optional) Identifier of encryption key. If not set, encryption is managed automatically. Use `ochk_kms_key` to get key id.  
 * `encryption_recrypt` - (Optional) Re-encryption operation: `NONE`, `SHALLOW`, `DEEP`. Provide `SHALLOW` or `DEEP` when enabling encryption on existing VM (when updating).                                                                                                          
+* `os_type` - (Optional) Only for virtual machines created from ISO/OVF file.
+* `ovf_ip_configuration` (Optional) Only for virtual machines created from ISO/OVF file.
+* `initial_user_name` (Optional) Only for virtual machines created from OVF to set ssh-key or ip address.
+* `backup_lists` (Optional) Backup list for virtual machine
+* `billing_tags` (Optional) Billing tags for virtual machine
+* `system_tags` (Optional) System tags for virtual machine
 
 ## Attribute Reference
 
@@ -88,3 +119,4 @@ The following attributes are exported in addition to above arguments:
 * `created_at` - When this resource was created.
 * `modified_by` - Who last modified this resource. 
 * `modified_at` - When last modification occurred.  
+* `ip_address` - Default virtual machine ip address

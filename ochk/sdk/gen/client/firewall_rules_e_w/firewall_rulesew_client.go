@@ -54,7 +54,7 @@ func (a *Client) DfwRuleCreateUsingPUT(params *DfwRuleCreateUsingPUTParams) (*Df
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "dfwRuleCreateUsingPUT",
 		Method:             "PUT",
-		PathPattern:        "/network/firewall/security-policies/{securityPolicyId}/rules/",
+		PathPattern:        "/network/routers/{routerId}/rules/e-w",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -91,7 +91,7 @@ func (a *Client) DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "dfwRuleDeleteUsingDELETE",
 		Method:             "DELETE",
-		PathPattern:        "/network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}",
+		PathPattern:        "/network/routers/{routerId}/rules/e-w/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -128,7 +128,7 @@ func (a *Client) DfwRuleGetUsingGET(params *DfwRuleGetUsingGETParams) (*DfwRuleG
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "dfwRuleGetUsingGET",
 		Method:             "GET",
-		PathPattern:        "/network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}",
+		PathPattern:        "/network/routers/{routerId}/rules/e-w/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -164,7 +164,7 @@ func (a *Client) DfwRuleListUsingGET(params *DfwRuleListUsingGETParams) (*DfwRul
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "dfwRuleListUsingGET",
 		Method:             "GET",
-		PathPattern:        "/network/firewall/security-policies/{securityPolicyId}/rules",
+		PathPattern:        "/network/routers/{routerId}/rules/e-w",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -200,7 +200,7 @@ func (a *Client) DfwRuleUpdateUsingPUT(params *DfwRuleUpdateUsingPUTParams) (*Df
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "dfwRuleUpdateUsingPUT",
 		Method:             "PUT",
-		PathPattern:        "/network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}",
+		PathPattern:        "/network/routers/{routerId}/rules/e-w/{ruleId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

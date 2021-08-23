@@ -90,13 +90,25 @@ func NewPrincipalGetUsingGETBadRequest() *PrincipalGetUsingGETBadRequest {
 Bad request, error occurred. For more details see log messages.
 */
 type PrincipalGetUsingGETBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *PrincipalGetUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /identity/principals/{principalId}][%d] principalGetUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /identity/principals/{principalId}][%d] principalGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *PrincipalGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *PrincipalGetUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

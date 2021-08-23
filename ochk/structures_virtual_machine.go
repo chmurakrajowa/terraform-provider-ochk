@@ -103,3 +103,98 @@ func expandVirtualNetworkDevices(in []interface{}) []*models.VirtualNetworkDevic
 
 	return out
 }
+
+func flattenBackupListsFromIDs(m []*models.BackupList) *schema.Set {
+	s := &schema.Set{
+		F: schema.HashString,
+	}
+
+	for _, v := range m {
+		s.Add(v.BackupListID)
+	}
+
+	return s
+}
+
+func expandBackupListsFromIDs(in []interface{}) []*models.BackupList {
+	if len(in) == 0 {
+		return nil
+	}
+
+	var out = make([]*models.BackupList, len(in))
+
+	for i, v := range in {
+		BackupListInstance := &models.BackupList{
+			BackupListID: v.(string),
+		}
+
+		out[i] = BackupListInstance
+	}
+	return out
+}
+
+func flattenSystemTagsListsFromIDs(m []*models.SystemTag) *schema.Set {
+	s := &schema.Set{
+		F: schema.HashString,
+	}
+
+	for _, v := range m {
+		s.Add(fmt.Sprint(v.SystemTagID))
+	}
+
+	return s
+}
+
+func expandSystemTagsListsFromIDs(in []interface{}) []*models.SystemTag {
+	if len(in) == 0 {
+		return nil
+	}
+
+	var out = make([]*models.SystemTag, len(in))
+
+	for i, v := range in {
+
+		var systemTagIDInt32 int32
+		fmt.Sscan(v.(string), &systemTagIDInt32)
+
+		SystemTagInstance := &models.SystemTag{
+			SystemTagID: systemTagIDInt32,
+		}
+
+		out[i] = SystemTagInstance
+	}
+	return out
+}
+
+func flattenBillingTagsListsFromIDs(m []*models.BillingTag) *schema.Set {
+	s := &schema.Set{
+		F: schema.HashString,
+	}
+
+	for _, v := range m {
+		s.Add(fmt.Sprint(v.BillingTagID))
+	}
+
+	return s
+}
+
+func expandBillingTagsListsFromIDs(in []interface{}) []*models.BillingTag {
+	if len(in) == 0 {
+		return nil
+	}
+
+	var out = make([]*models.BillingTag, len(in))
+
+	for i, v := range in {
+
+		var billingTagIDInt32 int32
+		fmt.Sscan(v.(string), &billingTagIDInt32)
+
+		BillingTagInstance := &models.BillingTag{
+			BillingTagID: billingTagIDInt32,
+		}
+
+		out[i] = BillingTagInstance
+	}
+	return out
+}

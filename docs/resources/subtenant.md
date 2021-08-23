@@ -21,11 +21,6 @@ resource "ochk_subtenant" "bg-1" {
 	memory_reserved_size_mb = 30000
 	storage_reserved_size_gb = 200
 	users = [data.ochk_user.admin.id]
-	networks = ["bd814070-18f3-4182-b2af-edaa72a50fee"]
-
-	lifecycle {
-		ignore_changes = [description]
-	}
 }
 ```
 
@@ -34,12 +29,11 @@ resource "ochk_subtenant" "bg-1" {
 The following arguments are supported:
 
 * `name` - (Required) The name for the subtenant. Updates to this attribute forces recreate.
-* `email` - (Required) Email addresses of users that must receive capacity alert notifications.
+* `email` - (Required) Email address of user that should receive capacity alert notifications.
 * `description` - (Required) Description.
 * `memory_reserved_size_mb` - (Required) Memory reservation size in megabytes. Should be greater than 10000 MB (10GB).
 * `storage_reserved_size_gb` - (Required) Storage reservation size in gigabytes. Should be greater than 100 GB.
 * `users` - (Required) List of user identifiers. After creating a subtenant, these users will be automatically added to the permission group: Permissions Manager. Use `ochk_user` data source for finding identifiers by name. Updates to this attribute forces recreate.
-* `networks` - (Required) List of network identifiers. Selected network will be assigned to the appropriate subtenant reservations. The group will get their own range of IP addresses on the network that is allocated to her. 
   
 ## Attribute Reference
 

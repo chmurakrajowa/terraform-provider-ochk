@@ -27,6 +27,10 @@ func resourceSecurityGroup() *schema.Resource {
 			Delete: schema.DefaultTimeout(SecurityGroupRetryTimeout),
 		},
 
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"display_name": {
 				Type:     schema.TypeString,

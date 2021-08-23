@@ -84,13 +84,25 @@ func NewServiceListUsingGETBadRequest() *ServiceListUsingGETBadRequest {
 Bad request, error occurred. For more details see log messages.
 */
 type ServiceListUsingGETBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *ServiceListUsingGETBadRequest) Error() string {
-	return fmt.Sprintf("[GET /network/default-services][%d] serviceListUsingGETBadRequest ", 400)
+	return fmt.Sprintf("[GET /network/default-services][%d] serviceListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *ServiceListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *ServiceListUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

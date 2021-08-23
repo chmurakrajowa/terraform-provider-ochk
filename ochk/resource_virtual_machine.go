@@ -28,6 +28,10 @@ func resourceVirtualMachine() *schema.Resource {
 			Delete: schema.DefaultTimeout(VirtualMachineRetryTimeout),
 		},
 
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"display_name": {
 				Type:     schema.TypeString,
@@ -45,7 +49,7 @@ func resourceVirtualMachine() *schema.Resource {
 				// Setting password is possible only on create, subsequent read gets empty string,
 				// which causes config drift. This suppresses any reported differences.
 				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-					return true
+					return old == "<hidden>"
 				},
 			},
 			"power_state": {
@@ -64,6 +68,26 @@ func resourceVirtualMachine() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
+			},
+			"ssh_key": {
+				Type:     schema.TypeString,
+				ForceNew: true,
+				Optional: true,
+			},
+			"backup_lists": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem:     &schema.Schema{Type: schema.TypeString},
+			},
+			"system_tags": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem:     &schema.Schema{Type: schema.TypeString},
+			},
+			"billing_tags": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"virtual_network_devices": {
 				Type:     schema.TypeList,
@@ -165,6 +189,22 @@ func resourceVirtualMachine() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"ip_address": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ovf_ip_configuration": {
+				Type:     schema.TypeBool,
+				Optional: true,
+			},
+			"initial_user_name": {
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"os_type": {
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 		},
 	}
 }
@@ -262,7 +302,7 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 			return fmt.Errorf("error setting deployment_id: %w", err)
 		}
 	}
-	if err := d.Set("initial_password", virtualMachine.InitialPassword); err != nil {
+	if err := d.Set("initial_password", "<hidden>"); err != nil {
 		return fmt.Errorf("error setting initial_password: %w", err)
 	}
 	if err := d.Set("power_state", virtualMachine.PowerState); err != nil {
@@ -284,12 +324,22 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 		return fmt.Errorf("error setting additional_virtual_disks: %w", err)
 	}
 
+	if err := d.Set("ip_address", virtualMachine.IPAddress); err != nil {
+		return fmt.Errorf("error setting ip_address: %w", err)
+	}
+
 	var virtualDisks []*models.VirtualDiskDevice
 	if virtualMachine.OsVirtualDiskDevice != nil {
 		virtualDisks = append(virtualDisks, virtualMachine.OsVirtualDiskDevice)
 	}
 	if err := d.Set("virtual_disk", flattenVirtualDisks(virtualDisks)); err != nil {
 		return fmt.Errorf("error setting virtual_disk: %w", err)
+	}
+
+	if virtualMachine.SSHKey != "" {
+		if err := d.Set("ssh_key", virtualMachine.SSHKey); err != nil {
+			return fmt.Errorf("error setting ssh_key: %w", err)
+		}
 	}
 
 	if virtualMachine.EncryptionInstance != nil {
@@ -315,7 +365,15 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 	if err := d.Set("modified_by", virtualMachine.ModifiedBy); err != nil {
 		return fmt.Errorf("error setting modified_by: %w", err)
 	}
-
+	if err := d.Set("backup_lists", flattenBackupListsFromIDs(virtualMachine.BackupListCollection)); err != nil {
+		return fmt.Errorf("error setting backup lists: %w", err)
+	}
+	if err := d.Set("billing_tags", flattenBillingTagsListsFromIDs(virtualMachine.BillingTags)); err != nil {
+		return fmt.Errorf("error setting billing tags: %w", err)
+	}
+	if err := d.Set("system_tags", flattenSystemTagsListsFromIDs(virtualMachine.SystemTags)); err != nil {
+		return fmt.Errorf("error setting system tags: %w", err)
+	}
 	return nil
 }
 
@@ -332,7 +390,14 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VcsVirtualM
 		SubtenantRefID:        d.Get("subtenant_id").(string),
 		VirtualMachineID:      d.Id(),
 		VirtualMachineName:    d.Get("display_name").(string),
+		SSHKey:                d.Get("ssh_key").(string),
 		VirtualNetworkDevices: expandVirtualNetworkDevices(d.Get("virtual_network_devices").([]interface{})),
+		BackupListCollection:  expandBackupListsFromIDs(d.Get("backup_lists").(*schema.Set).List()),
+		BillingTags:           expandBillingTagsListsFromIDs(d.Get("billing_tags").(*schema.Set).List()),
+		SystemTags:            expandSystemTagsListsFromIDs(d.Get("system_tags").(*schema.Set).List()),
+		OsType:                d.Get("os_type").(string),
+		OvfIPConfiguration:    d.Get("ovf_ip_configuration").(bool),
+		InitialUserName:       d.Get("initial_user_name").(string),
 	}
 
 	encryptionInstance := &models.EncryptionInstance{

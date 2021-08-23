@@ -61,7 +61,7 @@ type DfwRuleUpdateUsingPUTOK struct {
 }
 
 func (o *DfwRuleUpdateUsingPUTOK) Error() string {
-	return fmt.Sprintf("[PUT /network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}][%d] dfwRuleUpdateUsingPUTOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
 
 func (o *DfwRuleUpdateUsingPUTOK) GetPayload() *models.UpdateDFWRuleResponse {
@@ -94,7 +94,7 @@ type DfwRuleUpdateUsingPUTCreated struct {
 }
 
 func (o *DfwRuleUpdateUsingPUTCreated) Error() string {
-	return fmt.Sprintf("[PUT /network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}][%d] dfwRuleUpdateUsingPUTCreated  %+v", 201, o.Payload)
+	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleUpdateUsingPUTCreated  %+v", 201, o.Payload)
 }
 
 func (o *DfwRuleUpdateUsingPUTCreated) GetPayload() *models.UpdateDFWRuleResponse {
@@ -123,13 +123,25 @@ func NewDfwRuleUpdateUsingPUTBadRequest() *DfwRuleUpdateUsingPUTBadRequest {
 Bad request, error occurred. For more details see log messages.
 */
 type DfwRuleUpdateUsingPUTBadRequest struct {
+	Payload *models.ProxyResponseMessage
 }
 
 func (o *DfwRuleUpdateUsingPUTBadRequest) Error() string {
-	return fmt.Sprintf("[PUT /network/firewall/security-policies/{securityPolicyId}/rules/{ruleId}][%d] dfwRuleUpdateUsingPUTBadRequest ", 400)
+	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *DfwRuleUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
+	return o.Payload
 }
 
 func (o *DfwRuleUpdateUsingPUTBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.ProxyResponseMessage)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }
