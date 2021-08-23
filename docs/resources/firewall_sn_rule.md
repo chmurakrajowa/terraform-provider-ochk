@@ -47,7 +47,7 @@ resource "ochk_firewall_sn_rule" "fw-sn-1" {
 
 The following arguments are supported:
 
-* `router_id` - (Required) Identifier of vpc id. Use `router_id` to find router id. Updates to this attribute forces recreate.
+* `router_id` - (Required) Identifier of vpc id. Use `router_id` data source to find router id by name. Update to this attribute forces recreate.
 * `scope` - (Required) Scope of this rule. Currently, this needs to be set to id of T1 router referenced in `gateway_policy_id`. Use `ochk_router` with display name the same as in `gateway_policy_id` for finding router identifier for scope. Updates to this attribute forces recreate. 
 * `display_name` - (Required) The Firewall SN Rule name.
 * `priority` - (Required) Priority of the firewall rule. Rules with lower priority are matched first.
