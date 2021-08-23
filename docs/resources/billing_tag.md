@@ -4,7 +4,7 @@ page_title: "Resource Billing Tag"
 
 # Billing Tag Resource
 
-Resource Billing Tag Resource will be available after running BAAS service for client
+Resource Billing Tag will be available after running BAAS service for client
 ## Example Usage
 
 ```
