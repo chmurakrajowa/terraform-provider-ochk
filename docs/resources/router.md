@@ -4,7 +4,7 @@ page_title: "Router Resource"
 
 # Router Resource
 
-Resource for managing Tier-1 logical router to provides routing functionality in a virtual environment. 
+Resource for managing Tier-1 logical router providing routing functionality in a virtual environment. 
 You can create more then one logical router to segment your network.
 
 ## Example Usage
