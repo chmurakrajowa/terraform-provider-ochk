@@ -102,7 +102,7 @@ The following arguments are supported:
 * `encryption_recrypt` - (Optional) Re-encryption operation: `NONE`, `SHALLOW`, `DEEP`. Provide `SHALLOW` or `DEEP` when enabling encryption on existing VM (when updating).                                                                                                          
 * `os_type` - (Optional) Only for virtual machines created from ISO/OVF file.
 * `ovf_ip_configuration` (Optional) Only for virtual machines created from ISO/OVF file.
-* `initial_user_name` (Optional) Only for virtual machines created from OVF to set ssh-key or ip address
+* `initial_user_name` (Optional) Only for virtual machines created from OVF to set ssh-key or ip address.
 * `backup_lists` (Optional) Backup list for virtual machine
 * `billing_tags` (Optional) Billing tags for virtual machine
 * `system_tags` (Optional) System tags for virtual machine
