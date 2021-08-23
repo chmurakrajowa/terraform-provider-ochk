@@ -9,7 +9,7 @@ Resource Billing Tag Resource will be available after running BAAS service for c
 
 ```
 resource "ochk_billing_tag" "res-bt-cc2" {
-    display_name = "${var.test-data-prefix}-billing-tag-cc2"
+    display_name = "billing-tag-cc2"
 }
 ```
 

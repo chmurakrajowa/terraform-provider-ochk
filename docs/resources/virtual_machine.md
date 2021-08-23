@@ -49,7 +49,7 @@ resource "ochk_virtual_machine" "default" {
   }
  
   backup_lists = [
-    ochk_backup_list = 'example'
+     "example_backup_id"
   ]
   
   billing_tags = [
@@ -58,14 +58,14 @@ resource "ochk_virtual_machine" "default" {
     
   ]
   system_tags = [
-    'example_system_tag1_id',
-    'example_system_tag2_id',
+    "example_system_tag1_id",
+    "example_system_tag2_id",
   ]
   
   os_tyoe = "LINUX/WINODWS"
   ovf_ip_configuration = false
   initial_user_name = "root"
-  initial_password = var.initial_password_for_vm
+  initial_password = "initial_password_for_vm"
 }
 
 
@@ -100,7 +100,7 @@ The following arguments are supported:
 * `encryption` - (Optional) Enables VM encryption. Defaults to false. If this attribute is changed (performing update), encryption is either disabled (false) or VM is encrypted in place (true).  
 * `encryption_key_id` - (Optional) Identifier of encryption key. If not set, encryption is managed automatically. Use `ochk_kms_key` to get key id.  
 * `encryption_recrypt` - (Optional) Re-encryption operation: `NONE`, `SHALLOW`, `DEEP`. Provide `SHALLOW` or `DEEP` when enabling encryption on existing VM (when updating).                                                                                                          
-* `os_tyoe` - (Optional) Only for virtual machines created from ISO/OVF file.
+* `os_type` - (Optional) Only for virtual machines created from ISO/OVF file.
 * `ovf_ip_configuration` (Optional) Only for virtual machines created from ISO/OVF file.
 * `initial_user_name` (Optional) Only for virtual machines created from OVF to set ssh-key or ip address
 * `backup_lists` (Optional) Backup list for virtual machine

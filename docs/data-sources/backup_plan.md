@@ -10,7 +10,7 @@ Data Source for getting backup plan by display name.
 
 ```hcl
 data "ochk_backup_plan" "backup_plan" {
-  display_name = var.backup_plan
+  display_name = "example.backup_plan"
 }
 ```
 

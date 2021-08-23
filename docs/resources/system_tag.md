@@ -10,7 +10,7 @@ Resource System Tag Resource will be available after running BAAS service for cl
 
 ```
 resource "ochk_system_tag" "res-st-os2" {
-    display_name = "${var.test-data-prefix}-system-tag-os2"
+    display_name = "system-tag-os2"
 }
 ```
 

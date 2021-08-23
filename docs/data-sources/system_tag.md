@@ -10,7 +10,7 @@ Data Source for getting system tag by name.
 
 ```hcl
 data "ochk_system_tag" "os1" {
-  display_name = var.system_tag_os
+  display_name = "example_system_tag"
 }
 ```
 

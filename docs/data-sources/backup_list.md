@@ -10,8 +10,8 @@ Data Source for getting backup list by display name.
 
 ```hcl
 data "ochk_backup_list" "backup_list" {
-  display_name = var.backup_list
-  backup_plan_id = data.ochk_backup_plan.backup_plan.id
+  display_name = "example_backup_list"
+  backup_plan_id = "data_ochk_backup_plan.backup_plan.id"
 }
 ```
 
