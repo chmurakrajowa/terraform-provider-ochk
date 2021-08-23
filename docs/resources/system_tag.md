@@ -5,7 +5,7 @@ page_title: "Resource System Tag"
 
 # System Tag Resource
 
-Resource System Tag Resource will be available after running BAAS service for client
+System Tag Resource will be available after running BAAS service for client.
 ## Example Usage
 
 ```
