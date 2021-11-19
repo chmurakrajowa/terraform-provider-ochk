@@ -1,3 +1,28 @@
+## 1.2.1 (2021-11-19)
+
+## Resources
+* Changed resources
+  * `resource_virtual_machine`
+  * `resource_subtenant`
+  * `resource_virtual_nmetwork`
+
+## Data sources
+* Changed data sources:
+  * `data_source_group`
+  * `data_source_subtenant`
+  * `data_source_virtual_nmetwork`
+  * `data_source_virtual_machine`
+
+
+
+## Bugfix
+* `Fix for recreation vNet`
+* `Fix for recreation subtenant`
+* `Fix for security group`
+
+### Features
+* `Instead of value STANDARD put STANDARD_W1, STANDARD_W2 for storage_policy in virtual machine object`
+
 ## 1.2 (2021-08-20)
 
 ## Resources
