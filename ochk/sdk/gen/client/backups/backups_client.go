@@ -25,18 +25,15 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	BackupListGetUsingGET(params *BackupListGetUsingGETParams, opts ...ClientOption) (*BackupListGetUsingGETOK, error)
+	BackupListGetUsingGET(params *BackupListGetUsingGETParams) (*BackupListGetUsingGETOK, error)
 
-	BackupListListUsingGET(params *BackupListListUsingGETParams, opts ...ClientOption) (*BackupListListUsingGETOK, error)
+	BackupListListUsingGET(params *BackupListListUsingGETParams) (*BackupListListUsingGETOK, error)
 
-	BackupPlanGetUsingGET(params *BackupPlanGetUsingGETParams, opts ...ClientOption) (*BackupPlanGetUsingGETOK, error)
+	BackupPlanGetUsingGET(params *BackupPlanGetUsingGETParams) (*BackupPlanGetUsingGETOK, error)
 
-	BackupPlanListUsingGET(params *BackupPlanListUsingGETParams, opts ...ClientOption) (*BackupPlanListUsingGETOK, error)
+	BackupPlanListUsingGET(params *BackupPlanListUsingGETParams) (*BackupPlanListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -46,12 +43,13 @@ type ClientService interface {
 
   Get backup list
 */
-func (a *Client) BackupListGetUsingGET(params *BackupListGetUsingGETParams, opts ...ClientOption) (*BackupListGetUsingGETOK, error) {
+func (a *Client) BackupListGetUsingGET(params *BackupListGetUsingGETParams) (*BackupListGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBackupListGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "backupListGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/backups/plans/{backupPlanId}/lists/{backupListId}",
@@ -62,12 +60,7 @@ func (a *Client) BackupListGetUsingGET(params *BackupListGetUsingGETParams, opts
 		Reader:             &BackupListGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -86,12 +79,13 @@ func (a *Client) BackupListGetUsingGET(params *BackupListGetUsingGETParams, opts
 
   List backup lists
 */
-func (a *Client) BackupListListUsingGET(params *BackupListListUsingGETParams, opts ...ClientOption) (*BackupListListUsingGETOK, error) {
+func (a *Client) BackupListListUsingGET(params *BackupListListUsingGETParams) (*BackupListListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBackupListListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "backupListListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/backups/plans/{backupPlanId}/lists",
@@ -102,12 +96,7 @@ func (a *Client) BackupListListUsingGET(params *BackupListListUsingGETParams, op
 		Reader:             &BackupListListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -126,12 +115,13 @@ func (a *Client) BackupListListUsingGET(params *BackupListListUsingGETParams, op
 
   Get backup plan
 */
-func (a *Client) BackupPlanGetUsingGET(params *BackupPlanGetUsingGETParams, opts ...ClientOption) (*BackupPlanGetUsingGETOK, error) {
+func (a *Client) BackupPlanGetUsingGET(params *BackupPlanGetUsingGETParams) (*BackupPlanGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBackupPlanGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "backupPlanGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/backups/plans/{backupPlanId}",
@@ -142,12 +132,7 @@ func (a *Client) BackupPlanGetUsingGET(params *BackupPlanGetUsingGETParams, opts
 		Reader:             &BackupPlanGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -166,12 +151,13 @@ func (a *Client) BackupPlanGetUsingGET(params *BackupPlanGetUsingGETParams, opts
 
   List backup plans
 */
-func (a *Client) BackupPlanListUsingGET(params *BackupPlanListUsingGETParams, opts ...ClientOption) (*BackupPlanListUsingGETOK, error) {
+func (a *Client) BackupPlanListUsingGET(params *BackupPlanListUsingGETParams) (*BackupPlanListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBackupPlanListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "backupPlanListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/backups/plans",
@@ -182,12 +168,7 @@ func (a *Client) BackupPlanListUsingGET(params *BackupPlanListUsingGETParams, op
 		Reader:             &BackupPlanListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}

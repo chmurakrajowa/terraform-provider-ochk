@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"encoding/json"
 	"strconv"
 
@@ -71,6 +70,7 @@ func (m *SnapshotInstance) Validate(formats strfmt.Registry) error {
 }
 
 func (m *SnapshotInstance) validateChildSnapshots(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.ChildSnapshots) { // not required
 		return nil
 	}
@@ -95,6 +95,7 @@ func (m *SnapshotInstance) validateChildSnapshots(formats strfmt.Registry) error
 }
 
 func (m *SnapshotInstance) validateCreateTime(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.CreateTime) { // not required
 		return nil
 	}
@@ -139,6 +140,7 @@ func (m *SnapshotInstance) validatePowerStateEnum(path, location string, value s
 }
 
 func (m *SnapshotInstance) validatePowerState(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.PowerState) { // not required
 		return nil
 	}
@@ -146,38 +148,6 @@ func (m *SnapshotInstance) validatePowerState(formats strfmt.Registry) error {
 	// value enum
 	if err := m.validatePowerStateEnum("powerState", "body", m.PowerState); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this snapshot instance based on the context it is used
-func (m *SnapshotInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateChildSnapshots(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *SnapshotInstance) contextValidateChildSnapshots(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.ChildSnapshots); i++ {
-
-		if m.ChildSnapshots[i] != nil {
-			if err := m.ChildSnapshots[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("childSnapshots" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

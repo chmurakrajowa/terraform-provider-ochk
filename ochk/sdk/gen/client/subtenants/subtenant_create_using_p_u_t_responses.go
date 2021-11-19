@@ -41,8 +41,9 @@ func (o *SubtenantCreateUsingPUTReader) ReadResponse(response runtime.ClientResp
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewSubtenantCreateUsingPUTOK() *SubtenantCreateUsingPUTOK {
 	return &SubtenantCreateUsingPUTOK{}
 }
 
-/* SubtenantCreateUsingPUTOK describes a response with status code 200, with default header values.
+/*SubtenantCreateUsingPUTOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type SubtenantCreateUsingPUTOK struct {
 func (o *SubtenantCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /subtenants][%d] subtenantCreateUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *SubtenantCreateUsingPUTOK) GetPayload() *models.SubtenantCreateResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewSubtenantCreateUsingPUTCreated() *SubtenantCreateUsingPUTCreated {
 	return &SubtenantCreateUsingPUTCreated{}
 }
 
-/* SubtenantCreateUsingPUTCreated describes a response with status code 201, with default header values.
+/*SubtenantCreateUsingPUTCreated handles this case with default header values.
 
 Entity has been created
 */
@@ -94,6 +96,7 @@ type SubtenantCreateUsingPUTCreated struct {
 func (o *SubtenantCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /subtenants][%d] subtenantCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
 func (o *SubtenantCreateUsingPUTCreated) GetPayload() *models.SubtenantCreateResponse {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewSubtenantCreateUsingPUTBadRequest() *SubtenantCreateUsingPUTBadRequest {
 	return &SubtenantCreateUsingPUTBadRequest{}
 }
 
-/* SubtenantCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*SubtenantCreateUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -126,6 +129,7 @@ type SubtenantCreateUsingPUTBadRequest struct {
 func (o *SubtenantCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /subtenants][%d] subtenantCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *SubtenantCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

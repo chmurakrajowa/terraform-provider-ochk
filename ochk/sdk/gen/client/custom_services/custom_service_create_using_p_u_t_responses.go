@@ -41,8 +41,9 @@ func (o *CustomServiceCreateUsingPUTReader) ReadResponse(response runtime.Client
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewCustomServiceCreateUsingPUTOK() *CustomServiceCreateUsingPUTOK {
 	return &CustomServiceCreateUsingPUTOK{}
 }
 
-/* CustomServiceCreateUsingPUTOK describes a response with status code 200, with default header values.
+/*CustomServiceCreateUsingPUTOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type CustomServiceCreateUsingPUTOK struct {
 func (o *CustomServiceCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/custom-services][%d] customServiceCreateUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *CustomServiceCreateUsingPUTOK) GetPayload() *models.CreateCustomServiceResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewCustomServiceCreateUsingPUTCreated() *CustomServiceCreateUsingPUTCreated
 	return &CustomServiceCreateUsingPUTCreated{}
 }
 
-/* CustomServiceCreateUsingPUTCreated describes a response with status code 201, with default header values.
+/*CustomServiceCreateUsingPUTCreated handles this case with default header values.
 
 Entity has been created
 */
@@ -94,6 +96,7 @@ type CustomServiceCreateUsingPUTCreated struct {
 func (o *CustomServiceCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/custom-services][%d] customServiceCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
 func (o *CustomServiceCreateUsingPUTCreated) GetPayload() *models.CreateCustomServiceResponse {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewCustomServiceCreateUsingPUTBadRequest() *CustomServiceCreateUsingPUTBadR
 	return &CustomServiceCreateUsingPUTBadRequest{}
 }
 
-/* CustomServiceCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*CustomServiceCreateUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -126,6 +129,7 @@ type CustomServiceCreateUsingPUTBadRequest struct {
 func (o *CustomServiceCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/custom-services][%d] customServiceCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *CustomServiceCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

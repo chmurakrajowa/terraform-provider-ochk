@@ -35,8 +35,9 @@ func (o *IPCollectionUpdateUsingPUTReader) ReadResponse(response runtime.ClientR
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewIPCollectionUpdateUsingPUTOK() *IPCollectionUpdateUsingPUTOK {
 	return &IPCollectionUpdateUsingPUTOK{}
 }
 
-/* IPCollectionUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*IPCollectionUpdateUsingPUTOK handles this case with default header values.
 
 OK
 */
@@ -56,6 +57,7 @@ type IPCollectionUpdateUsingPUTOK struct {
 func (o *IPCollectionUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /ipcs/{ipCollectionId}][%d] ipCollectionUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *IPCollectionUpdateUsingPUTOK) GetPayload() *models.IPCollectionUpdateResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewIPCollectionUpdateUsingPUTBadRequest() *IPCollectionUpdateUsingPUTBadReq
 	return &IPCollectionUpdateUsingPUTBadRequest{}
 }
 
-/* IPCollectionUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*IPCollectionUpdateUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type IPCollectionUpdateUsingPUTBadRequest struct {
 func (o *IPCollectionUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /ipcs/{ipCollectionId}][%d] ipCollectionUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *IPCollectionUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

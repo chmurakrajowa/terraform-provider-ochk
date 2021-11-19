@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -56,6 +55,7 @@ func (m *SubtenantInstance) Validate(formats strfmt.Registry) error {
 }
 
 func (m *SubtenantInstance) validateNetworks(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Networks) { // not required
 		return nil
 	}
@@ -67,38 +67,6 @@ func (m *SubtenantInstance) validateNetworks(formats strfmt.Registry) error {
 
 		if m.Networks[i] != nil {
 			if err := m.Networks[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("networks" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this subtenant instance based on the context it is used
-func (m *SubtenantInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateNetworks(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *SubtenantInstance) contextValidateNetworks(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.Networks); i++ {
-
-		if m.Networks[i] != nil {
-			if err := m.Networks[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("networks" + "." + strconv.Itoa(i))
 				}

@@ -25,20 +25,17 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	SubtenantCreateUsingPUT(params *SubtenantCreateUsingPUTParams, opts ...ClientOption) (*SubtenantCreateUsingPUTOK, *SubtenantCreateUsingPUTCreated, error)
+	SubtenantCreateUsingPUT(params *SubtenantCreateUsingPUTParams) (*SubtenantCreateUsingPUTOK, *SubtenantCreateUsingPUTCreated, error)
 
-	SubtenantDeleteUsingDELETE(params *SubtenantDeleteUsingDELETEParams, opts ...ClientOption) (*SubtenantDeleteUsingDELETEOK, *SubtenantDeleteUsingDELETECreated, error)
+	SubtenantDeleteUsingDELETE(params *SubtenantDeleteUsingDELETEParams) (*SubtenantDeleteUsingDELETEOK, *SubtenantDeleteUsingDELETECreated, error)
 
-	SubtenantGetUsingGET(params *SubtenantGetUsingGETParams, opts ...ClientOption) (*SubtenantGetUsingGETOK, error)
+	SubtenantGetUsingGET(params *SubtenantGetUsingGETParams) (*SubtenantGetUsingGETOK, error)
 
-	SubtenantListUsingGET(params *SubtenantListUsingGETParams, opts ...ClientOption) (*SubtenantListUsingGETOK, error)
+	SubtenantListUsingGET(params *SubtenantListUsingGETParams) (*SubtenantListUsingGETOK, error)
 
-	SubtenantUpdateUsingPUT(params *SubtenantUpdateUsingPUTParams, opts ...ClientOption) (*SubtenantUpdateUsingPUTOK, *SubtenantUpdateUsingPUTCreated, error)
+	SubtenantUpdateUsingPUT(params *SubtenantUpdateUsingPUTParams) (*SubtenantUpdateUsingPUTOK, *SubtenantUpdateUsingPUTCreated, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -48,12 +45,13 @@ type ClientService interface {
 
   Create subtenant (business group)
 */
-func (a *Client) SubtenantCreateUsingPUT(params *SubtenantCreateUsingPUTParams, opts ...ClientOption) (*SubtenantCreateUsingPUTOK, *SubtenantCreateUsingPUTCreated, error) {
+func (a *Client) SubtenantCreateUsingPUT(params *SubtenantCreateUsingPUTParams) (*SubtenantCreateUsingPUTOK, *SubtenantCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSubtenantCreateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "subtenantCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/subtenants",
@@ -64,12 +62,7 @@ func (a *Client) SubtenantCreateUsingPUT(params *SubtenantCreateUsingPUTParams, 
 		Reader:             &SubtenantCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -89,12 +82,13 @@ func (a *Client) SubtenantCreateUsingPUT(params *SubtenantCreateUsingPUTParams, 
 
   Delete subtenant
 */
-func (a *Client) SubtenantDeleteUsingDELETE(params *SubtenantDeleteUsingDELETEParams, opts ...ClientOption) (*SubtenantDeleteUsingDELETEOK, *SubtenantDeleteUsingDELETECreated, error) {
+func (a *Client) SubtenantDeleteUsingDELETE(params *SubtenantDeleteUsingDELETEParams) (*SubtenantDeleteUsingDELETEOK, *SubtenantDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSubtenantDeleteUsingDELETEParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "subtenantDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/subtenants/{subtenantId}",
@@ -105,12 +99,7 @@ func (a *Client) SubtenantDeleteUsingDELETE(params *SubtenantDeleteUsingDELETEPa
 		Reader:             &SubtenantDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -130,12 +119,13 @@ func (a *Client) SubtenantDeleteUsingDELETE(params *SubtenantDeleteUsingDELETEPa
 
   Get subtenant from NSX-T
 */
-func (a *Client) SubtenantGetUsingGET(params *SubtenantGetUsingGETParams, opts ...ClientOption) (*SubtenantGetUsingGETOK, error) {
+func (a *Client) SubtenantGetUsingGET(params *SubtenantGetUsingGETParams) (*SubtenantGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSubtenantGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "subtenantGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/subtenants/{subtenantId}",
@@ -146,12 +136,7 @@ func (a *Client) SubtenantGetUsingGET(params *SubtenantGetUsingGETParams, opts .
 		Reader:             &SubtenantGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -170,12 +155,13 @@ func (a *Client) SubtenantGetUsingGET(params *SubtenantGetUsingGETParams, opts .
 
   List subtenants
 */
-func (a *Client) SubtenantListUsingGET(params *SubtenantListUsingGETParams, opts ...ClientOption) (*SubtenantListUsingGETOK, error) {
+func (a *Client) SubtenantListUsingGET(params *SubtenantListUsingGETParams) (*SubtenantListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSubtenantListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "subtenantListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/subtenants",
@@ -186,12 +172,7 @@ func (a *Client) SubtenantListUsingGET(params *SubtenantListUsingGETParams, opts
 		Reader:             &SubtenantListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -210,12 +191,13 @@ func (a *Client) SubtenantListUsingGET(params *SubtenantListUsingGETParams, opts
 
   Update subtenant
 */
-func (a *Client) SubtenantUpdateUsingPUT(params *SubtenantUpdateUsingPUTParams, opts ...ClientOption) (*SubtenantUpdateUsingPUTOK, *SubtenantUpdateUsingPUTCreated, error) {
+func (a *Client) SubtenantUpdateUsingPUT(params *SubtenantUpdateUsingPUTParams) (*SubtenantUpdateUsingPUTOK, *SubtenantUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSubtenantUpdateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "subtenantUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/subtenants/{subtenantId}",
@@ -226,12 +208,7 @@ func (a *Client) SubtenantUpdateUsingPUT(params *SubtenantUpdateUsingPUTParams, 
 		Reader:             &SubtenantUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}

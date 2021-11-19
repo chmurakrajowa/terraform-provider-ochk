@@ -35,8 +35,9 @@ func (o *VcsVirtualMachineListUsingGETReader) ReadResponse(response runtime.Clie
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewVcsVirtualMachineListUsingGETOK() *VcsVirtualMachineListUsingGETOK {
 	return &VcsVirtualMachineListUsingGETOK{}
 }
 
-/* VcsVirtualMachineListUsingGETOK describes a response with status code 200, with default header values.
+/*VcsVirtualMachineListUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -56,6 +57,7 @@ type VcsVirtualMachineListUsingGETOK struct {
 func (o *VcsVirtualMachineListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /vcs/networks][%d] vcsVirtualMachineListUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *VcsVirtualMachineListUsingGETOK) GetPayload() *models.NetworkListResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewVcsVirtualMachineListUsingGETBadRequest() *VcsVirtualMachineListUsingGET
 	return &VcsVirtualMachineListUsingGETBadRequest{}
 }
 
-/* VcsVirtualMachineListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*VcsVirtualMachineListUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type VcsVirtualMachineListUsingGETBadRequest struct {
 func (o *VcsVirtualMachineListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /vcs/networks][%d] vcsVirtualMachineListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *VcsVirtualMachineListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

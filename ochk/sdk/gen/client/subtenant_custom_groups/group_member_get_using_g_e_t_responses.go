@@ -41,8 +41,9 @@ func (o *GroupMemberGetUsingGETReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewGroupMemberGetUsingGETOK() *GroupMemberGetUsingGETOK {
 	return &GroupMemberGetUsingGETOK{}
 }
 
-/* GroupMemberGetUsingGETOK describes a response with status code 200, with default header values.
+/*GroupMemberGetUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type GroupMemberGetUsingGETOK struct {
 func (o *GroupMemberGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /subtenants/{subtenantId}/groups/{parentGroupId}/members/groups/{groupId}][%d] groupMemberGetUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *GroupMemberGetUsingGETOK) GetPayload() *models.GroupGetResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewGroupMemberGetUsingGETBadRequest() *GroupMemberGetUsingGETBadRequest {
 	return &GroupMemberGetUsingGETBadRequest{}
 }
 
-/* GroupMemberGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*GroupMemberGetUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -94,6 +96,7 @@ type GroupMemberGetUsingGETBadRequest struct {
 func (o *GroupMemberGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /subtenants/{subtenantId}/groups/{parentGroupId}/members/groups/{groupId}][%d] groupMemberGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *GroupMemberGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewGroupMemberGetUsingGETNotFound() *GroupMemberGetUsingGETNotFound {
 	return &GroupMemberGetUsingGETNotFound{}
 }
 
-/* GroupMemberGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*GroupMemberGetUsingGETNotFound handles this case with default header values.
 
 Entity not found.
 */

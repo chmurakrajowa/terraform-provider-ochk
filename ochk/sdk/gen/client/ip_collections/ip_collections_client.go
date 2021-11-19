@@ -25,20 +25,17 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	IPCollectionCreateUsingPUT(params *IPCollectionCreateUsingPUTParams, opts ...ClientOption) (*IPCollectionCreateUsingPUTOK, *IPCollectionCreateUsingPUTCreated, error)
+	IPCollectionCreateUsingPUT(params *IPCollectionCreateUsingPUTParams) (*IPCollectionCreateUsingPUTOK, *IPCollectionCreateUsingPUTCreated, error)
 
-	IPCollectionDeleteUsingDELETE(params *IPCollectionDeleteUsingDELETEParams, opts ...ClientOption) (*IPCollectionDeleteUsingDELETEOK, error)
+	IPCollectionDeleteUsingDELETE(params *IPCollectionDeleteUsingDELETEParams) (*IPCollectionDeleteUsingDELETEOK, error)
 
-	IPCollectionGetUsingGET(params *IPCollectionGetUsingGETParams, opts ...ClientOption) (*IPCollectionGetUsingGETOK, error)
+	IPCollectionGetUsingGET(params *IPCollectionGetUsingGETParams) (*IPCollectionGetUsingGETOK, error)
 
-	IPCollectionListUsingGET(params *IPCollectionListUsingGETParams, opts ...ClientOption) (*IPCollectionListUsingGETOK, error)
+	IPCollectionListUsingGET(params *IPCollectionListUsingGETParams) (*IPCollectionListUsingGETOK, error)
 
-	IPCollectionUpdateUsingPUT(params *IPCollectionUpdateUsingPUTParams, opts ...ClientOption) (*IPCollectionUpdateUsingPUTOK, error)
+	IPCollectionUpdateUsingPUT(params *IPCollectionUpdateUsingPUTParams) (*IPCollectionUpdateUsingPUTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -48,12 +45,13 @@ type ClientService interface {
 
   Create Ip collection
 */
-func (a *Client) IPCollectionCreateUsingPUT(params *IPCollectionCreateUsingPUTParams, opts ...ClientOption) (*IPCollectionCreateUsingPUTOK, *IPCollectionCreateUsingPUTCreated, error) {
+func (a *Client) IPCollectionCreateUsingPUT(params *IPCollectionCreateUsingPUTParams) (*IPCollectionCreateUsingPUTOK, *IPCollectionCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewIPCollectionCreateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ipCollectionCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/ipcs",
@@ -64,12 +62,7 @@ func (a *Client) IPCollectionCreateUsingPUT(params *IPCollectionCreateUsingPUTPa
 		Reader:             &IPCollectionCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -89,12 +82,13 @@ func (a *Client) IPCollectionCreateUsingPUT(params *IPCollectionCreateUsingPUTPa
 
   Delete ip collection
 */
-func (a *Client) IPCollectionDeleteUsingDELETE(params *IPCollectionDeleteUsingDELETEParams, opts ...ClientOption) (*IPCollectionDeleteUsingDELETEOK, error) {
+func (a *Client) IPCollectionDeleteUsingDELETE(params *IPCollectionDeleteUsingDELETEParams) (*IPCollectionDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewIPCollectionDeleteUsingDELETEParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ipCollectionDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/ipcs/{ipCollectionId}",
@@ -105,12 +99,7 @@ func (a *Client) IPCollectionDeleteUsingDELETE(params *IPCollectionDeleteUsingDE
 		Reader:             &IPCollectionDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -129,12 +118,13 @@ func (a *Client) IPCollectionDeleteUsingDELETE(params *IPCollectionDeleteUsingDE
 
   Get ip collection
 */
-func (a *Client) IPCollectionGetUsingGET(params *IPCollectionGetUsingGETParams, opts ...ClientOption) (*IPCollectionGetUsingGETOK, error) {
+func (a *Client) IPCollectionGetUsingGET(params *IPCollectionGetUsingGETParams) (*IPCollectionGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewIPCollectionGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ipCollectionGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/ipcs/{ipCollectionId}",
@@ -145,12 +135,7 @@ func (a *Client) IPCollectionGetUsingGET(params *IPCollectionGetUsingGETParams, 
 		Reader:             &IPCollectionGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -169,12 +154,13 @@ func (a *Client) IPCollectionGetUsingGET(params *IPCollectionGetUsingGETParams, 
 
   List ip collection
 */
-func (a *Client) IPCollectionListUsingGET(params *IPCollectionListUsingGETParams, opts ...ClientOption) (*IPCollectionListUsingGETOK, error) {
+func (a *Client) IPCollectionListUsingGET(params *IPCollectionListUsingGETParams) (*IPCollectionListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewIPCollectionListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ipCollectionListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/ipcs",
@@ -185,12 +171,7 @@ func (a *Client) IPCollectionListUsingGET(params *IPCollectionListUsingGETParams
 		Reader:             &IPCollectionListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -209,12 +190,13 @@ func (a *Client) IPCollectionListUsingGET(params *IPCollectionListUsingGETParams
 
   Update ip collection
 */
-func (a *Client) IPCollectionUpdateUsingPUT(params *IPCollectionUpdateUsingPUTParams, opts ...ClientOption) (*IPCollectionUpdateUsingPUTOK, error) {
+func (a *Client) IPCollectionUpdateUsingPUT(params *IPCollectionUpdateUsingPUTParams) (*IPCollectionUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewIPCollectionUpdateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ipCollectionUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/ipcs/{ipCollectionId}",
@@ -225,12 +207,7 @@ func (a *Client) IPCollectionUpdateUsingPUT(params *IPCollectionUpdateUsingPUTPa
 		Reader:             &IPCollectionUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}

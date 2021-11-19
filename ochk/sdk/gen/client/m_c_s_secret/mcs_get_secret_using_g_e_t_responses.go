@@ -35,8 +35,9 @@ func (o *McsGetSecretUsingGETReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewMcsGetSecretUsingGETOK() *McsGetSecretUsingGETOK {
 	return &McsGetSecretUsingGETOK{}
 }
 
-/* McsGetSecretUsingGETOK describes a response with status code 200, with default header values.
+/*McsGetSecretUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -56,6 +57,7 @@ type McsGetSecretUsingGETOK struct {
 func (o *McsGetSecretUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /mcs/secret][%d] mcsGetSecretUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *McsGetSecretUsingGETOK) GetPayload() *models.McsSecretGetResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewMcsGetSecretUsingGETBadRequest() *McsGetSecretUsingGETBadRequest {
 	return &McsGetSecretUsingGETBadRequest{}
 }
 
-/* McsGetSecretUsingGETBadRequest describes a response with status code 400, with default header values.
+/*McsGetSecretUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type McsGetSecretUsingGETBadRequest struct {
 func (o *McsGetSecretUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /mcs/secret][%d] mcsGetSecretUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *McsGetSecretUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

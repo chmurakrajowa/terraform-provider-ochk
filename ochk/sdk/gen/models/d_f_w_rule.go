@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"encoding/json"
 	"strconv"
 
@@ -165,6 +164,7 @@ func (m *DFWRule) validateActionEnum(path, location string, value string) error 
 }
 
 func (m *DFWRule) validateAction(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Action) { // not required
 		return nil
 	}
@@ -178,6 +178,7 @@ func (m *DFWRule) validateAction(formats strfmt.Registry) error {
 }
 
 func (m *DFWRule) validateCreationDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.CreationDate) { // not required
 		return nil
 	}
@@ -190,6 +191,7 @@ func (m *DFWRule) validateCreationDate(formats strfmt.Registry) error {
 }
 
 func (m *DFWRule) validateCustomServices(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.CustomServices) { // not required
 		return nil
 	}
@@ -214,6 +216,7 @@ func (m *DFWRule) validateCustomServices(formats strfmt.Registry) error {
 }
 
 func (m *DFWRule) validateDefaultServices(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.DefaultServices) { // not required
 		return nil
 	}
@@ -238,6 +241,7 @@ func (m *DFWRule) validateDefaultServices(formats strfmt.Registry) error {
 }
 
 func (m *DFWRule) validateDestination(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Destination) { // not required
 		return nil
 	}
@@ -294,6 +298,7 @@ func (m *DFWRule) validateDirectionEnum(path, location string, value string) err
 }
 
 func (m *DFWRule) validateDirection(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Direction) { // not required
 		return nil
 	}
@@ -339,6 +344,7 @@ func (m *DFWRule) validateIPProtocolEnum(path, location string, value string) er
 }
 
 func (m *DFWRule) validateIPProtocol(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.IPProtocol) { // not required
 		return nil
 	}
@@ -352,6 +358,7 @@ func (m *DFWRule) validateIPProtocol(formats strfmt.Registry) error {
 }
 
 func (m *DFWRule) validateModificationDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.ModificationDate) { // not required
 		return nil
 	}
@@ -364,6 +371,7 @@ func (m *DFWRule) validateModificationDate(formats strfmt.Registry) error {
 }
 
 func (m *DFWRule) validatePosition(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Position) { // not required
 		return nil
 	}
@@ -381,6 +389,7 @@ func (m *DFWRule) validatePosition(formats strfmt.Registry) error {
 }
 
 func (m *DFWRule) validateScope(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Scope) { // not required
 		return nil
 	}
@@ -405,6 +414,7 @@ func (m *DFWRule) validateScope(formats strfmt.Registry) error {
 }
 
 func (m *DFWRule) validateSource(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Source) { // not required
 		return nil
 	}
@@ -416,144 +426,6 @@ func (m *DFWRule) validateSource(formats strfmt.Registry) error {
 
 		if m.Source[i] != nil {
 			if err := m.Source[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("source" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this d f w rule based on the context it is used
-func (m *DFWRule) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateCustomServices(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateDefaultServices(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateDestination(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidatePosition(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateScope(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateSource(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *DFWRule) contextValidateCustomServices(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.CustomServices); i++ {
-
-		if m.CustomServices[i] != nil {
-			if err := m.CustomServices[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("customServices" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *DFWRule) contextValidateDefaultServices(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.DefaultServices); i++ {
-
-		if m.DefaultServices[i] != nil {
-			if err := m.DefaultServices[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("defaultServices" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *DFWRule) contextValidateDestination(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.Destination); i++ {
-
-		if m.Destination[i] != nil {
-			if err := m.Destination[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("destination" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *DFWRule) contextValidatePosition(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Position != nil {
-		if err := m.Position.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("position")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *DFWRule) contextValidateScope(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.Scope); i++ {
-
-		if m.Scope[i] != nil {
-			if err := m.Scope[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("scope" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *DFWRule) contextValidateSource(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.Source); i++ {
-
-		if m.Source[i] != nil {
-			if err := m.Source[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("source" + "." + strconv.Itoa(i))
 				}

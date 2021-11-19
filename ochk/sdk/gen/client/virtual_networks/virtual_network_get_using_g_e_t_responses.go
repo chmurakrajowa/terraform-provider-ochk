@@ -41,8 +41,9 @@ func (o *VirtualNetworkGetUsingGETReader) ReadResponse(response runtime.ClientRe
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewVirtualNetworkGetUsingGETOK() *VirtualNetworkGetUsingGETOK {
 	return &VirtualNetworkGetUsingGETOK{}
 }
 
-/* VirtualNetworkGetUsingGETOK describes a response with status code 200, with default header values.
+/*VirtualNetworkGetUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type VirtualNetworkGetUsingGETOK struct {
 func (o *VirtualNetworkGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /networks/{virtualNetworkId}][%d] virtualNetworkGetUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *VirtualNetworkGetUsingGETOK) GetPayload() *models.VirtualNetworkGetResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewVirtualNetworkGetUsingGETBadRequest() *VirtualNetworkGetUsingGETBadReque
 	return &VirtualNetworkGetUsingGETBadRequest{}
 }
 
-/* VirtualNetworkGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*VirtualNetworkGetUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -94,6 +96,7 @@ type VirtualNetworkGetUsingGETBadRequest struct {
 func (o *VirtualNetworkGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /networks/{virtualNetworkId}][%d] virtualNetworkGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *VirtualNetworkGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewVirtualNetworkGetUsingGETNotFound() *VirtualNetworkGetUsingGETNotFound {
 	return &VirtualNetworkGetUsingGETNotFound{}
 }
 
-/* VirtualNetworkGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*VirtualNetworkGetUsingGETNotFound handles this case with default header values.
 
 Entity not found.
 */

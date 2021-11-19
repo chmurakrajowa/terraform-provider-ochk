@@ -25,14 +25,11 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GatewayPolicyGetUsingGET(params *GatewayPolicyGetUsingGETParams, opts ...ClientOption) (*GatewayPolicyGetUsingGETOK, error)
+	GatewayPolicyGetUsingGET(params *GatewayPolicyGetUsingGETParams) (*GatewayPolicyGetUsingGETOK, error)
 
-	GatewayPolicyListUsingGET(params *GatewayPolicyListUsingGETParams, opts ...ClientOption) (*GatewayPolicyListUsingGETOK, error)
+	GatewayPolicyListUsingGET(params *GatewayPolicyListUsingGETParams) (*GatewayPolicyListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -42,12 +39,13 @@ type ClientService interface {
 
   Get gateway policies from NSX-T
 */
-func (a *Client) GatewayPolicyGetUsingGET(params *GatewayPolicyGetUsingGETParams, opts ...ClientOption) (*GatewayPolicyGetUsingGETOK, error) {
+func (a *Client) GatewayPolicyGetUsingGET(params *GatewayPolicyGetUsingGETParams) (*GatewayPolicyGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGatewayPolicyGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "gatewayPolicyGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/firewall/gateway-policies/{gatewayPolicyId}",
@@ -58,12 +56,7 @@ func (a *Client) GatewayPolicyGetUsingGET(params *GatewayPolicyGetUsingGETParams
 		Reader:             &GatewayPolicyGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -82,12 +75,13 @@ func (a *Client) GatewayPolicyGetUsingGET(params *GatewayPolicyGetUsingGETParams
 
   List gateway policies from NSX-T
 */
-func (a *Client) GatewayPolicyListUsingGET(params *GatewayPolicyListUsingGETParams, opts ...ClientOption) (*GatewayPolicyListUsingGETOK, error) {
+func (a *Client) GatewayPolicyListUsingGET(params *GatewayPolicyListUsingGETParams) (*GatewayPolicyListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGatewayPolicyListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "gatewayPolicyListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/firewall/gateway-policies",
@@ -98,12 +92,7 @@ func (a *Client) GatewayPolicyListUsingGET(params *GatewayPolicyListUsingGETPara
 		Reader:             &GatewayPolicyListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}

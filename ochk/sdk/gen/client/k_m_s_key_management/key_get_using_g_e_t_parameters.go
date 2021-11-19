@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewKeyGetUsingGETParams creates a new KeyGetUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewKeyGetUsingGETParams creates a new KeyGetUsingGETParams object
+// with the default values initialized.
 func NewKeyGetUsingGETParams() *KeyGetUsingGETParams {
+	var ()
 	return &KeyGetUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewKeyGetUsingGETParamsWithTimeout creates a new KeyGetUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewKeyGetUsingGETParamsWithTimeout(timeout time.Duration) *KeyGetUsingGETParams {
+	var ()
 	return &KeyGetUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewKeyGetUsingGETParamsWithContext creates a new KeyGetUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewKeyGetUsingGETParamsWithContext(ctx context.Context) *KeyGetUsingGETParams {
+	var ()
 	return &KeyGetUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewKeyGetUsingGETParamsWithHTTPClient creates a new KeyGetUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewKeyGetUsingGETParamsWithHTTPClient(client *http.Client) *KeyGetUsingGETParams {
+	var ()
 	return &KeyGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* KeyGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the key get using g e t operation.
-
-   Typically these are written to a http.Request.
+/*KeyGetUsingGETParams contains all the parameters to send to the API endpoint
+for the key get using g e t operation typically these are written to a http.Request
 */
 type KeyGetUsingGETParams struct {
 
-	/* ID.
+	/*ID
+	  id
 
-	   id
 	*/
 	ID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the key get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *KeyGetUsingGETParams) WithDefaults() *KeyGetUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the key get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *KeyGetUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the key get using g e t params

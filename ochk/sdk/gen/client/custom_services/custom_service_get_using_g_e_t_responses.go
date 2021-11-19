@@ -41,8 +41,9 @@ func (o *CustomServiceGetUsingGETReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewCustomServiceGetUsingGETOK() *CustomServiceGetUsingGETOK {
 	return &CustomServiceGetUsingGETOK{}
 }
 
-/* CustomServiceGetUsingGETOK describes a response with status code 200, with default header values.
+/*CustomServiceGetUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type CustomServiceGetUsingGETOK struct {
 func (o *CustomServiceGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/custom-services/{serviceId}][%d] customServiceGetUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *CustomServiceGetUsingGETOK) GetPayload() *models.CustomServiceGetResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewCustomServiceGetUsingGETBadRequest() *CustomServiceGetUsingGETBadRequest
 	return &CustomServiceGetUsingGETBadRequest{}
 }
 
-/* CustomServiceGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*CustomServiceGetUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -94,6 +96,7 @@ type CustomServiceGetUsingGETBadRequest struct {
 func (o *CustomServiceGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/custom-services/{serviceId}][%d] customServiceGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *CustomServiceGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewCustomServiceGetUsingGETNotFound() *CustomServiceGetUsingGETNotFound {
 	return &CustomServiceGetUsingGETNotFound{}
 }
 
-/* CustomServiceGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*CustomServiceGetUsingGETNotFound handles this case with default header values.
 
 Entity not found.
 */

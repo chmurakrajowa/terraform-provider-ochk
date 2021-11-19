@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -59,6 +57,7 @@ func (m *CreateSecurityGroupResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *CreateSecurityGroupResponse) validateRequestInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -76,6 +75,7 @@ func (m *CreateSecurityGroupResponse) validateRequestInstance(formats strfmt.Reg
 }
 
 func (m *CreateSecurityGroupResponse) validateSecurityGroup(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.SecurityGroup) { // not required
 		return nil
 	}
@@ -93,58 +93,13 @@ func (m *CreateSecurityGroupResponse) validateSecurityGroup(formats strfmt.Regis
 }
 
 func (m *CreateSecurityGroupResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this create security group response based on the context it is used
-func (m *CreateSecurityGroupResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateSecurityGroup(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *CreateSecurityGroupResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.RequestInstance != nil {
-		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("requestInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *CreateSecurityGroupResponse) contextValidateSecurityGroup(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.SecurityGroup != nil {
-		if err := m.SecurityGroup.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("securityGroup")
-			}
-			return err
-		}
 	}
 
 	return nil

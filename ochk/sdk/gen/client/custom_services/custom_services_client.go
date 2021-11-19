@@ -25,20 +25,17 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CustomServiceCreateUsingPUT(params *CustomServiceCreateUsingPUTParams, opts ...ClientOption) (*CustomServiceCreateUsingPUTOK, *CustomServiceCreateUsingPUTCreated, error)
+	CustomServiceCreateUsingPUT(params *CustomServiceCreateUsingPUTParams) (*CustomServiceCreateUsingPUTOK, *CustomServiceCreateUsingPUTCreated, error)
 
-	CustomServiceDeleteUsingDELETE(params *CustomServiceDeleteUsingDELETEParams, opts ...ClientOption) (*CustomServiceDeleteUsingDELETEOK, *CustomServiceDeleteUsingDELETECreated, error)
+	CustomServiceDeleteUsingDELETE(params *CustomServiceDeleteUsingDELETEParams) (*CustomServiceDeleteUsingDELETEOK, *CustomServiceDeleteUsingDELETECreated, error)
 
-	CustomServiceGetUsingGET(params *CustomServiceGetUsingGETParams, opts ...ClientOption) (*CustomServiceGetUsingGETOK, error)
+	CustomServiceGetUsingGET(params *CustomServiceGetUsingGETParams) (*CustomServiceGetUsingGETOK, error)
 
-	CustomServiceListUsingGET(params *CustomServiceListUsingGETParams, opts ...ClientOption) (*CustomServiceListUsingGETOK, error)
+	CustomServiceListUsingGET(params *CustomServiceListUsingGETParams) (*CustomServiceListUsingGETOK, error)
 
-	CustomServiceUpdateUsingPUT(params *CustomServiceUpdateUsingPUTParams, opts ...ClientOption) (*CustomServiceUpdateUsingPUTOK, *CustomServiceUpdateUsingPUTCreated, error)
+	CustomServiceUpdateUsingPUT(params *CustomServiceUpdateUsingPUTParams) (*CustomServiceUpdateUsingPUTOK, *CustomServiceUpdateUsingPUTCreated, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -48,12 +45,13 @@ type ClientService interface {
 
   Create custom service in NSX-T
 */
-func (a *Client) CustomServiceCreateUsingPUT(params *CustomServiceCreateUsingPUTParams, opts ...ClientOption) (*CustomServiceCreateUsingPUTOK, *CustomServiceCreateUsingPUTCreated, error) {
+func (a *Client) CustomServiceCreateUsingPUT(params *CustomServiceCreateUsingPUTParams) (*CustomServiceCreateUsingPUTOK, *CustomServiceCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCustomServiceCreateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "customServiceCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/custom-services",
@@ -64,12 +62,7 @@ func (a *Client) CustomServiceCreateUsingPUT(params *CustomServiceCreateUsingPUT
 		Reader:             &CustomServiceCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -89,12 +82,13 @@ func (a *Client) CustomServiceCreateUsingPUT(params *CustomServiceCreateUsingPUT
 
   Delete custom service from NSX-T
 */
-func (a *Client) CustomServiceDeleteUsingDELETE(params *CustomServiceDeleteUsingDELETEParams, opts ...ClientOption) (*CustomServiceDeleteUsingDELETEOK, *CustomServiceDeleteUsingDELETECreated, error) {
+func (a *Client) CustomServiceDeleteUsingDELETE(params *CustomServiceDeleteUsingDELETEParams) (*CustomServiceDeleteUsingDELETEOK, *CustomServiceDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCustomServiceDeleteUsingDELETEParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "customServiceDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/network/custom-services/{serviceId}",
@@ -105,12 +99,7 @@ func (a *Client) CustomServiceDeleteUsingDELETE(params *CustomServiceDeleteUsing
 		Reader:             &CustomServiceDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -130,12 +119,13 @@ func (a *Client) CustomServiceDeleteUsingDELETE(params *CustomServiceDeleteUsing
 
   Get custom service from NSX-T
 */
-func (a *Client) CustomServiceGetUsingGET(params *CustomServiceGetUsingGETParams, opts ...ClientOption) (*CustomServiceGetUsingGETOK, error) {
+func (a *Client) CustomServiceGetUsingGET(params *CustomServiceGetUsingGETParams) (*CustomServiceGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCustomServiceGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "customServiceGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/custom-services/{serviceId}",
@@ -146,12 +136,7 @@ func (a *Client) CustomServiceGetUsingGET(params *CustomServiceGetUsingGETParams
 		Reader:             &CustomServiceGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -170,12 +155,13 @@ func (a *Client) CustomServiceGetUsingGET(params *CustomServiceGetUsingGETParams
 
   List custom services from NSX-T
 */
-func (a *Client) CustomServiceListUsingGET(params *CustomServiceListUsingGETParams, opts ...ClientOption) (*CustomServiceListUsingGETOK, error) {
+func (a *Client) CustomServiceListUsingGET(params *CustomServiceListUsingGETParams) (*CustomServiceListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCustomServiceListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "customServiceListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/custom-services",
@@ -186,12 +172,7 @@ func (a *Client) CustomServiceListUsingGET(params *CustomServiceListUsingGETPara
 		Reader:             &CustomServiceListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -210,12 +191,13 @@ func (a *Client) CustomServiceListUsingGET(params *CustomServiceListUsingGETPara
 
   Update custom service from NSX-T
 */
-func (a *Client) CustomServiceUpdateUsingPUT(params *CustomServiceUpdateUsingPUTParams, opts ...ClientOption) (*CustomServiceUpdateUsingPUTOK, *CustomServiceUpdateUsingPUTCreated, error) {
+func (a *Client) CustomServiceUpdateUsingPUT(params *CustomServiceUpdateUsingPUTParams) (*CustomServiceUpdateUsingPUTOK, *CustomServiceUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCustomServiceUpdateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "customServiceUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/custom-services/{serviceId}",
@@ -226,12 +208,7 @@ func (a *Client) CustomServiceUpdateUsingPUT(params *CustomServiceUpdateUsingPUT
 		Reader:             &CustomServiceUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}

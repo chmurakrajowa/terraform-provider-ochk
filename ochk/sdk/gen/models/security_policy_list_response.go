@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -53,6 +52,7 @@ func (m *SecurityPolicyListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *SecurityPolicyListResponse) validateSecurityPolicyCollection(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.SecurityPolicyCollection) { // not required
 		return nil
 	}
@@ -77,44 +77,13 @@ func (m *SecurityPolicyListResponse) validateSecurityPolicyCollection(formats st
 }
 
 func (m *SecurityPolicyListResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this security policy list response based on the context it is used
-func (m *SecurityPolicyListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateSecurityPolicyCollection(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *SecurityPolicyListResponse) contextValidateSecurityPolicyCollection(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.SecurityPolicyCollection); i++ {
-
-		if m.SecurityPolicyCollection[i] != nil {
-			if err := m.SecurityPolicyCollection[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("securityPolicyCollection" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

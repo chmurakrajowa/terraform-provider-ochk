@@ -18,73 +18,59 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewBillingTagCreateUsingPUTParams creates a new BillingTagCreateUsingPUTParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewBillingTagCreateUsingPUTParams creates a new BillingTagCreateUsingPUTParams object
+// with the default values initialized.
 func NewBillingTagCreateUsingPUTParams() *BillingTagCreateUsingPUTParams {
+	var ()
 	return &BillingTagCreateUsingPUTParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewBillingTagCreateUsingPUTParamsWithTimeout creates a new BillingTagCreateUsingPUTParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewBillingTagCreateUsingPUTParamsWithTimeout(timeout time.Duration) *BillingTagCreateUsingPUTParams {
+	var ()
 	return &BillingTagCreateUsingPUTParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewBillingTagCreateUsingPUTParamsWithContext creates a new BillingTagCreateUsingPUTParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewBillingTagCreateUsingPUTParamsWithContext(ctx context.Context) *BillingTagCreateUsingPUTParams {
+	var ()
 	return &BillingTagCreateUsingPUTParams{
+
 		Context: ctx,
 	}
 }
 
 // NewBillingTagCreateUsingPUTParamsWithHTTPClient creates a new BillingTagCreateUsingPUTParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewBillingTagCreateUsingPUTParamsWithHTTPClient(client *http.Client) *BillingTagCreateUsingPUTParams {
+	var ()
 	return &BillingTagCreateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/* BillingTagCreateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the billing tag create using p u t operation.
-
-   Typically these are written to a http.Request.
+/*BillingTagCreateUsingPUTParams contains all the parameters to send to the API endpoint
+for the billing tag create using p u t operation typically these are written to a http.Request
 */
 type BillingTagCreateUsingPUTParams struct {
 
-	/* BillingTag.
+	/*BillingTag
+	  billingTag
 
-	   billingTag
 	*/
 	BillingTag *models.BillingTag
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the billing tag create using p u t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *BillingTagCreateUsingPUTParams) WithDefaults() *BillingTagCreateUsingPUTParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the billing tag create using p u t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *BillingTagCreateUsingPUTParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the billing tag create using p u t params
@@ -138,6 +124,7 @@ func (o *BillingTagCreateUsingPUTParams) WriteToRequest(r runtime.ClientRequest,
 		return err
 	}
 	var res []error
+
 	if o.BillingTag != nil {
 		if err := r.SetBodyParam(o.BillingTag); err != nil {
 			return err

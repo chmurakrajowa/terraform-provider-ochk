@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -53,6 +52,7 @@ func (m *DeploymentListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *DeploymentListResponse) validateDeploymentInstanceCollection(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.DeploymentInstanceCollection) { // not required
 		return nil
 	}
@@ -77,44 +77,13 @@ func (m *DeploymentListResponse) validateDeploymentInstanceCollection(formats st
 }
 
 func (m *DeploymentListResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this deployment list response based on the context it is used
-func (m *DeploymentListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateDeploymentInstanceCollection(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *DeploymentListResponse) contextValidateDeploymentInstanceCollection(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.DeploymentInstanceCollection); i++ {
-
-		if m.DeploymentInstanceCollection[i] != nil {
-			if err := m.DeploymentInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("deploymentInstanceCollection" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

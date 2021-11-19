@@ -41,8 +41,9 @@ func (o *VcsVirtualMachineGroupGetUsingGET1Reader) ReadResponse(response runtime
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewVcsVirtualMachineGroupGetUsingGET1OK() *VcsVirtualMachineGroupGetUsingGE
 	return &VcsVirtualMachineGroupGetUsingGET1OK{}
 }
 
-/* VcsVirtualMachineGroupGetUsingGET1OK describes a response with status code 200, with default header values.
+/*VcsVirtualMachineGroupGetUsingGET1OK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type VcsVirtualMachineGroupGetUsingGET1OK struct {
 func (o *VcsVirtualMachineGroupGetUsingGET1OK) Error() string {
 	return fmt.Sprintf("[GET /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineGroupGetUsingGET1OK  %+v", 200, o.Payload)
 }
+
 func (o *VcsVirtualMachineGroupGetUsingGET1OK) GetPayload() *models.VcsVirtualMachineGetResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewVcsVirtualMachineGroupGetUsingGET1BadRequest() *VcsVirtualMachineGroupGe
 	return &VcsVirtualMachineGroupGetUsingGET1BadRequest{}
 }
 
-/* VcsVirtualMachineGroupGetUsingGET1BadRequest describes a response with status code 400, with default header values.
+/*VcsVirtualMachineGroupGetUsingGET1BadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -94,6 +96,7 @@ type VcsVirtualMachineGroupGetUsingGET1BadRequest struct {
 func (o *VcsVirtualMachineGroupGetUsingGET1BadRequest) Error() string {
 	return fmt.Sprintf("[GET /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineGroupGetUsingGET1BadRequest  %+v", 400, o.Payload)
 }
+
 func (o *VcsVirtualMachineGroupGetUsingGET1BadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewVcsVirtualMachineGroupGetUsingGET1NotFound() *VcsVirtualMachineGroupGetU
 	return &VcsVirtualMachineGroupGetUsingGET1NotFound{}
 }
 
-/* VcsVirtualMachineGroupGetUsingGET1NotFound describes a response with status code 404, with default header values.
+/*VcsVirtualMachineGroupGetUsingGET1NotFound handles this case with default header values.
 
 Entity not found.
 */

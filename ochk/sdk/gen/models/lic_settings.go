@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -75,6 +74,7 @@ func (m *LicSettings) validateOsTypeEnum(path, location string, value string) er
 }
 
 func (m *LicSettings) validateOsType(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.OsType) { // not required
 		return nil
 	}
@@ -84,11 +84,6 @@ func (m *LicSettings) validateOsType(formats strfmt.Registry) error {
 		return err
 	}
 
-	return nil
-}
-
-// ContextValidate validates this lic settings based on context it is used
-func (m *LicSettings) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

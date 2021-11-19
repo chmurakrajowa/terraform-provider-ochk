@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -59,6 +57,7 @@ func (m *SubtenantUpdateResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *SubtenantUpdateResponse) validateRequestInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -76,6 +75,7 @@ func (m *SubtenantUpdateResponse) validateRequestInstance(formats strfmt.Registr
 }
 
 func (m *SubtenantUpdateResponse) validateSubtenantInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.SubtenantInstance) { // not required
 		return nil
 	}
@@ -93,58 +93,13 @@ func (m *SubtenantUpdateResponse) validateSubtenantInstance(formats strfmt.Regis
 }
 
 func (m *SubtenantUpdateResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this subtenant update response based on the context it is used
-func (m *SubtenantUpdateResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateSubtenantInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *SubtenantUpdateResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.RequestInstance != nil {
-		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("requestInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *SubtenantUpdateResponse) contextValidateSubtenantInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.SubtenantInstance != nil {
-		if err := m.SubtenantInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("subtenantInstance")
-			}
-			return err
-		}
 	}
 
 	return nil

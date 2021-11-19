@@ -41,8 +41,9 @@ func (o *NetworkProfileGetUsingGETReader) ReadResponse(response runtime.ClientRe
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewNetworkProfileGetUsingGETOK() *NetworkProfileGetUsingGETOK {
 	return &NetworkProfileGetUsingGETOK{}
 }
 
-/* NetworkProfileGetUsingGETOK describes a response with status code 200, with default header values.
+/*NetworkProfileGetUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type NetworkProfileGetUsingGETOK struct {
 func (o *NetworkProfileGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /vra/networkprofiles/{networkProfileId}][%d] networkProfileGetUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *NetworkProfileGetUsingGETOK) GetPayload() *models.NetworkProfileGetResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewNetworkProfileGetUsingGETBadRequest() *NetworkProfileGetUsingGETBadReque
 	return &NetworkProfileGetUsingGETBadRequest{}
 }
 
-/* NetworkProfileGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*NetworkProfileGetUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -94,6 +96,7 @@ type NetworkProfileGetUsingGETBadRequest struct {
 func (o *NetworkProfileGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /vra/networkprofiles/{networkProfileId}][%d] networkProfileGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *NetworkProfileGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewNetworkProfileGetUsingGETNotFound() *NetworkProfileGetUsingGETNotFound {
 	return &NetworkProfileGetUsingGETNotFound{}
 }
 
-/* NetworkProfileGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*NetworkProfileGetUsingGETNotFound handles this case with default header values.
 
 Entity not found.
 */

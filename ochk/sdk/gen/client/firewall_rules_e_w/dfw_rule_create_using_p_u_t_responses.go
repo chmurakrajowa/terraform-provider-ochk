@@ -41,8 +41,9 @@ func (o *DfwRuleCreateUsingPUTReader) ReadResponse(response runtime.ClientRespon
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewDfwRuleCreateUsingPUTOK() *DfwRuleCreateUsingPUTOK {
 	return &DfwRuleCreateUsingPUTOK{}
 }
 
-/* DfwRuleCreateUsingPUTOK describes a response with status code 200, with default header values.
+/*DfwRuleCreateUsingPUTOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type DfwRuleCreateUsingPUTOK struct {
 func (o *DfwRuleCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/e-w][%d] dfwRuleCreateUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *DfwRuleCreateUsingPUTOK) GetPayload() *models.CreateDFWRuleResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewDfwRuleCreateUsingPUTCreated() *DfwRuleCreateUsingPUTCreated {
 	return &DfwRuleCreateUsingPUTCreated{}
 }
 
-/* DfwRuleCreateUsingPUTCreated describes a response with status code 201, with default header values.
+/*DfwRuleCreateUsingPUTCreated handles this case with default header values.
 
 Entity has been created
 */
@@ -94,6 +96,7 @@ type DfwRuleCreateUsingPUTCreated struct {
 func (o *DfwRuleCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/e-w][%d] dfwRuleCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
 func (o *DfwRuleCreateUsingPUTCreated) GetPayload() *models.CreateDFWRuleResponse {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewDfwRuleCreateUsingPUTBadRequest() *DfwRuleCreateUsingPUTBadRequest {
 	return &DfwRuleCreateUsingPUTBadRequest{}
 }
 
-/* DfwRuleCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*DfwRuleCreateUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -126,6 +129,7 @@ type DfwRuleCreateUsingPUTBadRequest struct {
 func (o *DfwRuleCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/e-w][%d] dfwRuleCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *DfwRuleCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

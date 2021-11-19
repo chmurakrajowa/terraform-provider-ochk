@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -53,6 +52,7 @@ func (m *SystemTagListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *SystemTagListResponse) validateSystemTagCollection(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.SystemTagCollection) { // not required
 		return nil
 	}
@@ -77,44 +77,13 @@ func (m *SystemTagListResponse) validateSystemTagCollection(formats strfmt.Regis
 }
 
 func (m *SystemTagListResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this system tag list response based on the context it is used
-func (m *SystemTagListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateSystemTagCollection(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *SystemTagListResponse) contextValidateSystemTagCollection(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.SystemTagCollection); i++ {
-
-		if m.SystemTagCollection[i] != nil {
-			if err := m.SystemTagCollection[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("systemTagCollection" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

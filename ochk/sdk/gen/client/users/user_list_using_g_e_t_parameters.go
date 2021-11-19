@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewUserListUsingGETParams creates a new UserListUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewUserListUsingGETParams creates a new UserListUsingGETParams object
+// with the default values initialized.
 func NewUserListUsingGETParams() *UserListUsingGETParams {
+	var ()
 	return &UserListUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUserListUsingGETParamsWithTimeout creates a new UserListUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewUserListUsingGETParamsWithTimeout(timeout time.Duration) *UserListUsingGETParams {
+	var ()
 	return &UserListUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewUserListUsingGETParamsWithContext creates a new UserListUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewUserListUsingGETParamsWithContext(ctx context.Context) *UserListUsingGETParams {
+	var ()
 	return &UserListUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewUserListUsingGETParamsWithHTTPClient creates a new UserListUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewUserListUsingGETParamsWithHTTPClient(client *http.Client) *UserListUsingGETParams {
+	var ()
 	return &UserListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* UserListUsingGETParams contains all the parameters to send to the API endpoint
-   for the user list using g e t operation.
-
-   Typically these are written to a http.Request.
+/*UserListUsingGETParams contains all the parameters to send to the API endpoint
+for the user list using g e t operation typically these are written to a http.Request
 */
 type UserListUsingGETParams struct {
 
-	/* UserName.
+	/*UserName
+	  userName
 
-	   userName
 	*/
 	UserName *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the user list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *UserListUsingGETParams) WithDefaults() *UserListUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the user list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *UserListUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the user list using g e t params
@@ -141,17 +127,16 @@ func (o *UserListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg str
 
 		// query param userName
 		var qrUserName string
-
 		if o.UserName != nil {
 			qrUserName = *o.UserName
 		}
 		qUserName := qrUserName
 		if qUserName != "" {
-
 			if err := r.SetQueryParam("userName", qUserName); err != nil {
 				return err
 			}
 		}
+
 	}
 
 	if len(res) > 0 {

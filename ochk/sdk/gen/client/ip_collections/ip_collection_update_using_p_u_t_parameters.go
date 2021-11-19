@@ -18,79 +18,64 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewIPCollectionUpdateUsingPUTParams creates a new IPCollectionUpdateUsingPUTParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewIPCollectionUpdateUsingPUTParams creates a new IPCollectionUpdateUsingPUTParams object
+// with the default values initialized.
 func NewIPCollectionUpdateUsingPUTParams() *IPCollectionUpdateUsingPUTParams {
+	var ()
 	return &IPCollectionUpdateUsingPUTParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewIPCollectionUpdateUsingPUTParamsWithTimeout creates a new IPCollectionUpdateUsingPUTParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewIPCollectionUpdateUsingPUTParamsWithTimeout(timeout time.Duration) *IPCollectionUpdateUsingPUTParams {
+	var ()
 	return &IPCollectionUpdateUsingPUTParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewIPCollectionUpdateUsingPUTParamsWithContext creates a new IPCollectionUpdateUsingPUTParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewIPCollectionUpdateUsingPUTParamsWithContext(ctx context.Context) *IPCollectionUpdateUsingPUTParams {
+	var ()
 	return &IPCollectionUpdateUsingPUTParams{
+
 		Context: ctx,
 	}
 }
 
 // NewIPCollectionUpdateUsingPUTParamsWithHTTPClient creates a new IPCollectionUpdateUsingPUTParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewIPCollectionUpdateUsingPUTParamsWithHTTPClient(client *http.Client) *IPCollectionUpdateUsingPUTParams {
+	var ()
 	return &IPCollectionUpdateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/* IPCollectionUpdateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the ip collection update using p u t operation.
-
-   Typically these are written to a http.Request.
+/*IPCollectionUpdateUsingPUTParams contains all the parameters to send to the API endpoint
+for the ip collection update using p u t operation typically these are written to a http.Request
 */
 type IPCollectionUpdateUsingPUTParams struct {
 
-	/* IPCollection.
+	/*IPCollection
+	  ipCollection
 
-	   ipCollection
 	*/
 	IPCollection *models.IPCollection
+	/*IPCollectionID
+	  ipCollectionId
 
-	/* IPCollectionID.
-
-	   ipCollectionId
 	*/
 	IPCollectionID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the ip collection update using p u t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *IPCollectionUpdateUsingPUTParams) WithDefaults() *IPCollectionUpdateUsingPUTParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the ip collection update using p u t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *IPCollectionUpdateUsingPUTParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the ip collection update using p u t params
@@ -155,6 +140,7 @@ func (o *IPCollectionUpdateUsingPUTParams) WriteToRequest(r runtime.ClientReques
 		return err
 	}
 	var res []error
+
 	if o.IPCollection != nil {
 		if err := r.SetBodyParam(o.IPCollection); err != nil {
 			return err

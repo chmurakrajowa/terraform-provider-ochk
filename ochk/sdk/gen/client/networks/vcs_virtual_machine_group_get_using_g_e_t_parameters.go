@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewVcsVirtualMachineGroupGetUsingGETParams creates a new VcsVirtualMachineGroupGetUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewVcsVirtualMachineGroupGetUsingGETParams creates a new VcsVirtualMachineGroupGetUsingGETParams object
+// with the default values initialized.
 func NewVcsVirtualMachineGroupGetUsingGETParams() *VcsVirtualMachineGroupGetUsingGETParams {
+	var ()
 	return &VcsVirtualMachineGroupGetUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewVcsVirtualMachineGroupGetUsingGETParamsWithTimeout creates a new VcsVirtualMachineGroupGetUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewVcsVirtualMachineGroupGetUsingGETParamsWithTimeout(timeout time.Duration) *VcsVirtualMachineGroupGetUsingGETParams {
+	var ()
 	return &VcsVirtualMachineGroupGetUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewVcsVirtualMachineGroupGetUsingGETParamsWithContext creates a new VcsVirtualMachineGroupGetUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewVcsVirtualMachineGroupGetUsingGETParamsWithContext(ctx context.Context) *VcsVirtualMachineGroupGetUsingGETParams {
+	var ()
 	return &VcsVirtualMachineGroupGetUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewVcsVirtualMachineGroupGetUsingGETParamsWithHTTPClient creates a new VcsVirtualMachineGroupGetUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewVcsVirtualMachineGroupGetUsingGETParamsWithHTTPClient(client *http.Client) *VcsVirtualMachineGroupGetUsingGETParams {
+	var ()
 	return &VcsVirtualMachineGroupGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* VcsVirtualMachineGroupGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the vcs virtual machine group get using g e t operation.
-
-   Typically these are written to a http.Request.
+/*VcsVirtualMachineGroupGetUsingGETParams contains all the parameters to send to the API endpoint
+for the vcs virtual machine group get using g e t operation typically these are written to a http.Request
 */
 type VcsVirtualMachineGroupGetUsingGETParams struct {
 
-	/* NetworkID.
+	/*NetworkID
+	  networkId
 
-	   networkId
 	*/
 	NetworkID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the vcs virtual machine group get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *VcsVirtualMachineGroupGetUsingGETParams) WithDefaults() *VcsVirtualMachineGroupGetUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the vcs virtual machine group get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *VcsVirtualMachineGroupGetUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the vcs virtual machine group get using g e t params

@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -59,6 +57,7 @@ func (m *VirtualNetworkDeleteResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *VirtualNetworkDeleteResponse) validateRequestInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -76,6 +75,7 @@ func (m *VirtualNetworkDeleteResponse) validateRequestInstance(formats strfmt.Re
 }
 
 func (m *VirtualNetworkDeleteResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
@@ -88,58 +88,13 @@ func (m *VirtualNetworkDeleteResponse) validateTimestamp(formats strfmt.Registry
 }
 
 func (m *VirtualNetworkDeleteResponse) validateVirtualNetworkInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.VirtualNetworkInstance) { // not required
 		return nil
 	}
 
 	if m.VirtualNetworkInstance != nil {
 		if err := m.VirtualNetworkInstance.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("virtualNetworkInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this virtual network delete response based on the context it is used
-func (m *VirtualNetworkDeleteResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateVirtualNetworkInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *VirtualNetworkDeleteResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.RequestInstance != nil {
-		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("requestInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *VirtualNetworkDeleteResponse) contextValidateVirtualNetworkInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.VirtualNetworkInstance != nil {
-		if err := m.VirtualNetworkInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("virtualNetworkInstance")
 			}

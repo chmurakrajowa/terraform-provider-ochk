@@ -16,79 +16,64 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGfwRuleDeleteUsingDELETEParams creates a new GfwRuleDeleteUsingDELETEParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewGfwRuleDeleteUsingDELETEParams creates a new GfwRuleDeleteUsingDELETEParams object
+// with the default values initialized.
 func NewGfwRuleDeleteUsingDELETEParams() *GfwRuleDeleteUsingDELETEParams {
+	var ()
 	return &GfwRuleDeleteUsingDELETEParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGfwRuleDeleteUsingDELETEParamsWithTimeout creates a new GfwRuleDeleteUsingDELETEParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewGfwRuleDeleteUsingDELETEParamsWithTimeout(timeout time.Duration) *GfwRuleDeleteUsingDELETEParams {
+	var ()
 	return &GfwRuleDeleteUsingDELETEParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewGfwRuleDeleteUsingDELETEParamsWithContext creates a new GfwRuleDeleteUsingDELETEParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewGfwRuleDeleteUsingDELETEParamsWithContext(ctx context.Context) *GfwRuleDeleteUsingDELETEParams {
+	var ()
 	return &GfwRuleDeleteUsingDELETEParams{
+
 		Context: ctx,
 	}
 }
 
 // NewGfwRuleDeleteUsingDELETEParamsWithHTTPClient creates a new GfwRuleDeleteUsingDELETEParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewGfwRuleDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) *GfwRuleDeleteUsingDELETEParams {
+	var ()
 	return &GfwRuleDeleteUsingDELETEParams{
 		HTTPClient: client,
 	}
 }
 
-/* GfwRuleDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-   for the gfw rule delete using d e l e t e operation.
-
-   Typically these are written to a http.Request.
+/*GfwRuleDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
+for the gfw rule delete using d e l e t e operation typically these are written to a http.Request
 */
 type GfwRuleDeleteUsingDELETEParams struct {
 
-	/* RouterID.
+	/*RouterID
+	  routerId
 
-	   routerId
 	*/
 	RouterID string
+	/*RuleID
+	  ruleId
 
-	/* RuleID.
-
-	   ruleId
 	*/
 	RuleID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the gfw rule delete using d e l e t e params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *GfwRuleDeleteUsingDELETEParams) WithDefaults() *GfwRuleDeleteUsingDELETEParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the gfw rule delete using d e l e t e params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *GfwRuleDeleteUsingDELETEParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the gfw rule delete using d e l e t e params

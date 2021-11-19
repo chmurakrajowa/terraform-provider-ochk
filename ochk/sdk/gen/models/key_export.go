@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -72,6 +71,7 @@ func (m *KeyExport) validateFormatEnum(path, location string, value string) erro
 }
 
 func (m *KeyExport) validateFormat(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Format) { // not required
 		return nil
 	}
@@ -81,11 +81,6 @@ func (m *KeyExport) validateFormat(formats strfmt.Registry) error {
 		return err
 	}
 
-	return nil
-}
-
-// ContextValidate validates this key export based on context it is used
-func (m *KeyExport) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

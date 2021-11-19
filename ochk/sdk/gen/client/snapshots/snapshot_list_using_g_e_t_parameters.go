@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewSnapshotListUsingGETParams creates a new SnapshotListUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewSnapshotListUsingGETParams creates a new SnapshotListUsingGETParams object
+// with the default values initialized.
 func NewSnapshotListUsingGETParams() *SnapshotListUsingGETParams {
+	var ()
 	return &SnapshotListUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewSnapshotListUsingGETParamsWithTimeout creates a new SnapshotListUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewSnapshotListUsingGETParamsWithTimeout(timeout time.Duration) *SnapshotListUsingGETParams {
+	var ()
 	return &SnapshotListUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewSnapshotListUsingGETParamsWithContext creates a new SnapshotListUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewSnapshotListUsingGETParamsWithContext(ctx context.Context) *SnapshotListUsingGETParams {
+	var ()
 	return &SnapshotListUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewSnapshotListUsingGETParamsWithHTTPClient creates a new SnapshotListUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewSnapshotListUsingGETParamsWithHTTPClient(client *http.Client) *SnapshotListUsingGETParams {
+	var ()
 	return &SnapshotListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* SnapshotListUsingGETParams contains all the parameters to send to the API endpoint
-   for the snapshot list using g e t operation.
-
-   Typically these are written to a http.Request.
+/*SnapshotListUsingGETParams contains all the parameters to send to the API endpoint
+for the snapshot list using g e t operation typically these are written to a http.Request
 */
 type SnapshotListUsingGETParams struct {
 
-	/* DisplayName.
+	/*DisplayName
+	  displayName
 
-	   displayName
 	*/
 	DisplayName *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the snapshot list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *SnapshotListUsingGETParams) WithDefaults() *SnapshotListUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the snapshot list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *SnapshotListUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the snapshot list using g e t params
@@ -141,17 +127,16 @@ func (o *SnapshotListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg
 
 		// query param displayName
 		var qrDisplayName string
-
 		if o.DisplayName != nil {
 			qrDisplayName = *o.DisplayName
 		}
 		qDisplayName := qrDisplayName
 		if qDisplayName != "" {
-
 			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
 				return err
 			}
 		}
+
 	}
 
 	if len(res) > 0 {

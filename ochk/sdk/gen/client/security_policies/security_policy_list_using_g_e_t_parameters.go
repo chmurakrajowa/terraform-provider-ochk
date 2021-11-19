@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewSecurityPolicyListUsingGETParams creates a new SecurityPolicyListUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewSecurityPolicyListUsingGETParams creates a new SecurityPolicyListUsingGETParams object
+// with the default values initialized.
 func NewSecurityPolicyListUsingGETParams() *SecurityPolicyListUsingGETParams {
+	var ()
 	return &SecurityPolicyListUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewSecurityPolicyListUsingGETParamsWithTimeout creates a new SecurityPolicyListUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewSecurityPolicyListUsingGETParamsWithTimeout(timeout time.Duration) *SecurityPolicyListUsingGETParams {
+	var ()
 	return &SecurityPolicyListUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewSecurityPolicyListUsingGETParamsWithContext creates a new SecurityPolicyListUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewSecurityPolicyListUsingGETParamsWithContext(ctx context.Context) *SecurityPolicyListUsingGETParams {
+	var ()
 	return &SecurityPolicyListUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewSecurityPolicyListUsingGETParamsWithHTTPClient creates a new SecurityPolicyListUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewSecurityPolicyListUsingGETParamsWithHTTPClient(client *http.Client) *SecurityPolicyListUsingGETParams {
+	var ()
 	return &SecurityPolicyListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* SecurityPolicyListUsingGETParams contains all the parameters to send to the API endpoint
-   for the security policy list using g e t operation.
-
-   Typically these are written to a http.Request.
+/*SecurityPolicyListUsingGETParams contains all the parameters to send to the API endpoint
+for the security policy list using g e t operation typically these are written to a http.Request
 */
 type SecurityPolicyListUsingGETParams struct {
 
-	/* DisplayName.
+	/*DisplayName
+	  displayName
 
-	   displayName
 	*/
 	DisplayName *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the security policy list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *SecurityPolicyListUsingGETParams) WithDefaults() *SecurityPolicyListUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the security policy list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *SecurityPolicyListUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the security policy list using g e t params
@@ -141,17 +127,16 @@ func (o *SecurityPolicyListUsingGETParams) WriteToRequest(r runtime.ClientReques
 
 		// query param displayName
 		var qrDisplayName string
-
 		if o.DisplayName != nil {
 			qrDisplayName = *o.DisplayName
 		}
 		qDisplayName := qrDisplayName
 		if qDisplayName != "" {
-
 			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
 				return err
 			}
 		}
+
 	}
 
 	if len(res) > 0 {

@@ -35,8 +35,9 @@ func (o *GetTokenUsingPOSTReader) ReadResponse(response runtime.ClientResponse, 
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewGetTokenUsingPOSTOK() *GetTokenUsingPOSTOK {
 	return &GetTokenUsingPOSTOK{}
 }
 
-/* GetTokenUsingPOSTOK describes a response with status code 200, with default header values.
+/*GetTokenUsingPOSTOK handles this case with default header values.
 
 OK
 */
@@ -56,6 +57,7 @@ type GetTokenUsingPOSTOK struct {
 func (o *GetTokenUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /vidm/token][%d] getTokenUsingPOSTOK  %+v", 200, o.Payload)
 }
+
 func (o *GetTokenUsingPOSTOK) GetPayload() *models.VIDMTokenResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewGetTokenUsingPOSTBadRequest() *GetTokenUsingPOSTBadRequest {
 	return &GetTokenUsingPOSTBadRequest{}
 }
 
-/* GetTokenUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*GetTokenUsingPOSTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type GetTokenUsingPOSTBadRequest struct {
 func (o *GetTokenUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /vidm/token][%d] getTokenUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *GetTokenUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

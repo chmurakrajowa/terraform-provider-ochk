@@ -41,8 +41,9 @@ func (o *SystemTagGetUsingGETReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewSystemTagGetUsingGETOK() *SystemTagGetUsingGETOK {
 	return &SystemTagGetUsingGETOK{}
 }
 
-/* SystemTagGetUsingGETOK describes a response with status code 200, with default header values.
+/*SystemTagGetUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type SystemTagGetUsingGETOK struct {
 func (o *SystemTagGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /tags/systemTags/{systemTagId}][%d] systemTagGetUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *SystemTagGetUsingGETOK) GetPayload() *models.SystemTagGetResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewSystemTagGetUsingGETBadRequest() *SystemTagGetUsingGETBadRequest {
 	return &SystemTagGetUsingGETBadRequest{}
 }
 
-/* SystemTagGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*SystemTagGetUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -94,6 +96,7 @@ type SystemTagGetUsingGETBadRequest struct {
 func (o *SystemTagGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /tags/systemTags/{systemTagId}][%d] systemTagGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *SystemTagGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewSystemTagGetUsingGETNotFound() *SystemTagGetUsingGETNotFound {
 	return &SystemTagGetUsingGETNotFound{}
 }
 
-/* SystemTagGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*SystemTagGetUsingGETNotFound handles this case with default header values.
 
 Entity not found.
 */
