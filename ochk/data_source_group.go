@@ -98,7 +98,7 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, meta inter
 	if err := d.Set("users", flattenUserInstancesFromIDs(groups[0].UserInstanceList)); err != nil {
 		return diag.Errorf("error setting users: %+v", err)
 	}
-	if err := d.Set("local_groups", flattenGrouoInstancesFromIDs(groups[0].GroupInstanceList)); err != nil {
+	if err := d.Set("local_groups", flattenGroupInstancesFromIDs(groups[0].GroupInstanceList)); err != nil {
 		return diag.Errorf("error setting users: %+v", err)
 	}
 	return nil
