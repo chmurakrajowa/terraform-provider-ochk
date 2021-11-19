@@ -17,20 +17,20 @@ func flattenUserInstancesFromIDs(m []*models.UserInstance) *schema.Set {
 	return s
 }
 
-func expandUserInstancesFromIDs(in []interface{}) []*models.UserInstance {
-	if len(in) == 0 {
-		return nil
-	}
-
-	var out = make([]*models.UserInstance, len(in))
-
-	for i, v := range in {
-		userInstance := &models.UserInstance{
-			UserID: v.(string),
-		}
-
-		out[i] = userInstance
-	}
-
-	return out
-}
+//func expandUserInstancesFromIDs(in []interface{}) []*models.UserInstance {
+//	if len(in) == 0 {
+//		return nil
+//	}
+//
+//	var out = make([]*models.UserInstance, len(in))
+//
+//	for i, v := range in {
+//		userInstance := &models.UserInstance{
+//			UserID: v.(string),
+//		}
+//
+//		out[i] = userInstance
+//	}
+//
+//	return out
+//}
