@@ -17,20 +17,20 @@ func flattenGrouoInstancesFromIDs(m []*models.GroupInstance) *schema.Set {
 	return s
 }
 
-func expandGroupInstancesFromIDs(in []interface{}) []*models.GroupInstance {
-	if len(in) == 0 {
-		return nil
-	}
-
-	var out = make([]*models.GroupInstance, len(in))
-
-	for i, v := range in {
-		userInstance := &models.GroupInstance{
-			GroupID: v.(string),
-		}
-
-		out[i] = userInstance
-	}
-
-	return out
-}
+//func expandGroupInstancesFromIDs(in []interface{}) []*models.GroupInstance {
+//	if len(in) == 0 {
+//		return nil
+//	}
+//
+//	var out = make([]*models.GroupInstance, len(in))
+//
+//	for i, v := range in {
+//		userInstance := &models.GroupInstance{
+//			GroupID: v.(string),
+//		}
+//
+//		out[i] = userInstance
+//	}
+//
+//	return out
+//}
