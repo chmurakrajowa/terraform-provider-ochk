@@ -1,9 +1,5 @@
-data "ochk_security_policy" "default" {
-  display_name = var.security_policy
-}
-
-data "ochk_user" "default" {
-  name = var.test_user
+data "ochk_router" "default-vrf" {
+  display_name = var.vrf_router
 }
 
 resource "ochk_ip_collection" "default" {
@@ -15,8 +11,18 @@ resource "ochk_ip_collection" "default" {
   ]
 }
 
-data "ochk_network" "subtenant-network" {
-  name = var.subtenant_network_name
+resource "ochk_router" "default-vpc" {
+  display_name = "vpc-testy"
+  parent_router_id = data.ochk_router.default-vrf.id
+}
+
+resource "ochk_virtual_network" "subtenant-network" {
+  display_name = "${var.test-data-prefix}-vnet"
+  subtenants = [
+    ochk_subtenant.subtenant-1.id
+  ]
+  router = ochk_router.default-vpc.id
+  ipam_enabled = false
 }
 
 resource "ochk_subtenant" "subtenant-1" {
@@ -25,13 +31,6 @@ resource "ochk_subtenant" "subtenant-1" {
   description = "Business group description 1"
   memory_reserved_size_mb = 30000
   storage_reserved_size_gb = 400
-  users = [
-    data.ochk_user.default.id
-  ]
-  networks = [
-    data.ochk_network.subtenant-network.id
-  ]
-
   lifecycle {
     ignore_changes = [
       description
@@ -45,13 +44,6 @@ resource "ochk_subtenant" "subtenant-2" {
   description = "Business group description 2"
   memory_reserved_size_mb = 30000
   storage_reserved_size_gb = 400
-  users = [
-    data.ochk_user.default.id
-  ]
-  networks = [
-    data.ochk_network.subtenant-network.id
-  ]
-
   lifecycle {
     ignore_changes = [
       description
@@ -65,13 +57,6 @@ resource "ochk_subtenant" "subtenant-3" {
   description = "Business group description 3"
   memory_reserved_size_mb = 30000
   storage_reserved_size_gb = 400
-  users = [
-    data.ochk_user.default.id
-  ]
-  networks = [
-    data.ochk_network.subtenant-network.id
-  ]
-
   lifecycle {
     ignore_changes = [
       description
@@ -85,12 +70,6 @@ resource "ochk_subtenant" "subtenant-4" {
   description = "Business group description 4"
   memory_reserved_size_mb = 30000
   storage_reserved_size_gb = 400
-  users = [
-    data.ochk_user.default.id
-  ]
-  networks = [
-    data.ochk_network.subtenant-network.id
-  ]
 
   lifecycle {
     ignore_changes = [
@@ -107,14 +86,10 @@ data "ochk_deployment" "centos" {
   display_name = "CentOS 7"
 }
 
-data "ochk_subtenant" "subtenant_for_vm" {
-  name = var.subtenant_for_vm_name
-}
-
 resource "ochk_virtual_network" "default" {
   display_name = "${var.test-data-prefix}-vnet3"
   subtenants = [
-    data.ochk_subtenant.subtenant_for_vm.id
+    ochk_subtenant.subtenant-1.id
   ]
 }
 
@@ -122,7 +97,7 @@ resource "ochk_virtual_network" "vnet2" {
   display_name = "${var.test-data-prefix}-vnet4"
   ipam_enabled = true
   subtenants = [
-    data.ochk_subtenant.subtenant_for_vm.id
+    ochk_subtenant.subtenant-1.id
   ]
 
   router = ochk_router.default.id
@@ -135,6 +110,17 @@ resource "ochk_virtual_network" "vnet2" {
   subnet_network_cidr = "192.168.200.0/24"
 }
 
+locals {
+  ssh_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCbMgMU2dxQYg+WLoim6ZuGsuMZ8QB9mrylNqpbWQrCNXZnajuhjff62E1yMPh7uh2nrLBAFhDu7jOOLPMY8uG7Z9FwutnRQbWsve2uo84FmeLgXcbxg/hD3b9CH5pjqZUjJCCN9DpFveKWVsw+4VvIbTS1m5JcNHXccY3mrUCtTPfUP/W3bRQTFyYtmzX4rV68eoBIUlgNia8DF9sUrgvNVEElaK6gXXjt2UW3aHe6VZ4DUl/MfarWwrY92XL9HwZ81S75Q7NBh75PtnR4ipk8QYNqxoOWsbJB9QnqeURdMgWxciaU3Z1eBTfzLmHXMv2EvqYBcHQ2lMhbFRn/2/an radoslawkubera@NB155.local"
+}
+
+resource "ochk_billing_tag" "bt-default" {
+    display_name = "${var.test-data-prefix}-billing-tag"
+}
+
+resource "ochk_system_tag" "st-default" {
+    display_name = "${var.test-data-prefix}-system-tag"
+}
 
 resource "ochk_virtual_machine" "default" {
   display_name = "${var.test-data-prefix}-vm"
@@ -144,11 +130,21 @@ resource "ochk_virtual_machine" "default" {
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
   storage_policy = "STANDARD"
-  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+  subtenant_id = ochk_subtenant.subtenant-1.id
 
   virtual_network_devices {
     virtual_network_id = ochk_virtual_network.default.id
   }
+
+  ssh_key = local.ssh_key
+
+  billing_tags = [
+    ochk_billing_tag.bt-default.id
+  ]
+
+  system_tags = [
+    ochk_system_tag.st-default.id
+  ]
 }
 
 resource "ochk_custom_service" "web_servers_https" {

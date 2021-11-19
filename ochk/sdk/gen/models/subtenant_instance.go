@@ -38,9 +38,6 @@ type SubtenantInstance struct {
 
 	// subtenant Id
 	SubtenantID string `json:"subtenantId,omitempty"`
-
-	// users
-	Users []*UserInstance `json:"users"`
 }
 
 // Validate validates this subtenant instance
@@ -48,10 +45,6 @@ func (m *SubtenantInstance) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateNetworks(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateUsers(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -76,31 +69,6 @@ func (m *SubtenantInstance) validateNetworks(formats strfmt.Registry) error {
 			if err := m.Networks[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("networks" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *SubtenantInstance) validateUsers(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Users) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Users); i++ {
-		if swag.IsZero(m.Users[i]) { // not required
-			continue
-		}
-
-		if m.Users[i] != nil {
-			if err := m.Users[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("users" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

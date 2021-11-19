@@ -28,6 +28,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/k_m_s_key_rotation_scheduler"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/log_categories"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/logical_ports"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/m_c_s_secret"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/network_profiles"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/networks"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/principals"
@@ -109,6 +110,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.KmsKeyRotationScheduler = k_m_s_key_rotation_scheduler.New(transport, formats)
 	cli.LogCategories = log_categories.New(transport, formats)
 	cli.LogicalPorts = logical_ports.New(transport, formats)
+	cli.McsSecret = m_c_s_secret.New(transport, formats)
 	cli.NetworkProfiles = network_profiles.New(transport, formats)
 	cli.Networks = networks.New(transport, formats)
 	cli.Principals = principals.New(transport, formats)
@@ -208,6 +210,8 @@ type Ochk struct {
 
 	LogicalPorts logical_ports.ClientService
 
+	McsSecret m_c_s_secret.ClientService
+
 	NetworkProfiles network_profiles.ClientService
 
 	Networks networks.ClientService
@@ -270,6 +274,7 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.KmsKeyRotationScheduler.SetTransport(transport)
 	c.LogCategories.SetTransport(transport)
 	c.LogicalPorts.SetTransport(transport)
+	c.McsSecret.SetTransport(transport)
 	c.NetworkProfiles.SetTransport(transport)
 	c.Networks.SetTransport(transport)
 	c.Principals.SetTransport(transport)

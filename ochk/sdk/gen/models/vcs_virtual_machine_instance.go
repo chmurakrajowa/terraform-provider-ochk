@@ -86,7 +86,7 @@ type VcsVirtualMachineInstance struct {
 	SSHKey string `json:"sshKey,omitempty"`
 
 	// storage policy
-	// Enum: [ENTERPRISE STANDARD UNKNOWN]
+	// Enum: [ENTERPRISE STANDARD_W1 STANDARD_W2]
 	StoragePolicy string `json:"storagePolicy,omitempty"`
 
 	// subtenant ref Id
@@ -518,7 +518,7 @@ var vcsVirtualMachineInstanceTypeStoragePolicyPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["ENTERPRISE","STANDARD","UNKNOWN"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["ENTERPRISE","STANDARD_W1","STANDARD_W2"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -531,11 +531,11 @@ const (
 	// VcsVirtualMachineInstanceStoragePolicyENTERPRISE captures enum value "ENTERPRISE"
 	VcsVirtualMachineInstanceStoragePolicyENTERPRISE string = "ENTERPRISE"
 
-	// VcsVirtualMachineInstanceStoragePolicySTANDARD captures enum value "STANDARD"
-	VcsVirtualMachineInstanceStoragePolicySTANDARD string = "STANDARD"
+	// VcsVirtualMachineInstanceStoragePolicySTANDARDW1 captures enum value "STANDARD_W1"
+	VcsVirtualMachineInstanceStoragePolicySTANDARDW1 string = "STANDARD_W1"
 
-	// VcsVirtualMachineInstanceStoragePolicyUNKNOWN captures enum value "UNKNOWN"
-	VcsVirtualMachineInstanceStoragePolicyUNKNOWN string = "UNKNOWN"
+	// VcsVirtualMachineInstanceStoragePolicySTANDARDW2 captures enum value "STANDARD_W2"
+	VcsVirtualMachineInstanceStoragePolicySTANDARDW2 string = "STANDARD_W2"
 )
 
 // prop value enum

@@ -87,6 +87,10 @@
       "description": "Logical Port Controller"
     },
     {
+      "name": "MCS Secret",
+      "description": "Mcs Secret Controller"
+    },
+    {
       "name": "Network profiles",
       "description": "Network Profile Controller"
     },
@@ -1581,6 +1585,83 @@
             "description": "Request has been completed successfully",
             "schema": {
               "$ref": "#/definitions/GetLogsResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/mcs/secret": {
+      "get": {
+        "tags": [
+          "MCS Secret"
+        ],
+        "summary": "Get MCS secret",
+        "description": "Get MCS secret",
+        "operationId": "mcsGetSecretUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "username",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/McsSecretGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/mcs/secret/generate": {
+      "post": {
+        "tags": [
+          "MCS Secret"
+        ],
+        "summary": "Generate MCS secret",
+        "description": "Generate MCS Secret",
+        "operationId": "mcsGenerateSecretUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "mcsSecret",
+            "description": "mcsSecret",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/McsSecret"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request has been completed successfully",
+            "schema": {
+              "$ref": "#/definitions/McsSecretGenerateResponse"
             }
           },
           "400": {
@@ -7160,6 +7241,7 @@
           "type": "string",
           "enum": [
             "IPCOLLECTION",
+            "IPSET",
             "LOGICAL_PORT",
             "VIRTUAL_MACHINE"
           ]
@@ -7777,6 +7859,55 @@
         }
       },
       "title": "LogicalPortListResponse"
+    },
+    "McsSecret": {
+      "type": "object",
+      "properties": {
+        "secret": {
+          "type": "string"
+        }
+      },
+      "title": "McsSecret"
+    },
+    "McsSecretGenerateResponse": {
+      "type": "object",
+      "properties": {
+        "mcsSecret": {
+          "$ref": "#/definitions/McsSecret"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "McsSecretGenerateResponse"
+    },
+    "McsSecretGetResponse": {
+      "type": "object",
+      "properties": {
+        "mcsSecret": {
+          "$ref": "#/definitions/McsSecret"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "McsSecretGetResponse"
     },
     "NetworkGetResponse": {
       "type": "object",
@@ -8483,6 +8614,7 @@
           "type": "string",
           "enum": [
             "IPCOLLECTION",
+            "IPSET",
             "LOGICAL_PORT",
             "VIRTUAL_MACHINE"
           ]
@@ -9016,12 +9148,6 @@
         },
         "subtenantId": {
           "type": "string"
-        },
-        "users": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UserInstance"
-          }
         }
       },
       "title": "SubtenantInstance"
@@ -9887,8 +10013,8 @@
           "type": "string",
           "enum": [
             "ENTERPRISE",
-            "STANDARD",
-            "UNKNOWN"
+            "STANDARD_W1",
+            "STANDARD_W2"
           ]
         },
         "subtenantRefId": {
@@ -10058,6 +10184,9 @@
           "type": "integer",
           "format": "int32"
         },
+        "billingMonth": {
+          "type": "string"
+        },
         "billingTags": {
           "type": "string"
         },
@@ -10065,10 +10194,18 @@
           "type": "number",
           "format": "float"
         },
+        "discountValue": {
+          "type": "number",
+          "format": "float"
+        },
         "resourceUsageTime": {
           "type": "string"
         },
         "storageTotalUsed": {
+          "type": "number",
+          "format": "float"
+        },
+        "totalCostAfterDiscount": {
           "type": "number",
           "format": "float"
         },

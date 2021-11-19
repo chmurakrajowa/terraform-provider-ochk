@@ -82,11 +82,11 @@ func resourceBillingTagRead(ctx context.Context, d *schema.ResourceData, meta in
 func resourceBillingTagUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).BillingTags
 
-	var BillingTagIDInt32 int32
-	fmt.Sscan(d.Id(), &BillingTagIDInt32)
+	var billingTagIDInt32 int32
+	fmt.Sscan(d.Id(), &billingTagIDInt32)
 
 	BillingTag := mapResourceDataToBillingTag(d)
-	BillingTag.BillingTagID = BillingTagIDInt32
+	BillingTag.BillingTagID = billingTagIDInt32
 
 	_, err := proxy.Update(ctx, BillingTag)
 	if err != nil {

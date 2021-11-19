@@ -7,6 +7,7 @@ variable "debug_log_file" {
   default = ""
 }
 variable "bg_manager_user" {}
+variable "bg_manager_user2" {}
 variable "subtenant_network_name" {}
 variable "subtenant_for_vm_name" {}
 variable "initial_password_for_vm" {}

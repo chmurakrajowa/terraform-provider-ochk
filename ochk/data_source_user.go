@@ -85,7 +85,7 @@ func dataSourceUserRead(ctx context.Context, d *schema.ResourceData, meta interf
 	d.SetId(users[0].UserID)
 
 	if err := d.Set("name", users[0].Name); err != nil {
-		return diag.Errorf("error setting user_type: %+v", err)
+		return diag.Errorf("error setting user name: %+v", err)
 	}
 	if err := d.Set("email_address", users[0].EmailAddress); err != nil {
 		return diag.Errorf("error setting email_address: %+v", err)

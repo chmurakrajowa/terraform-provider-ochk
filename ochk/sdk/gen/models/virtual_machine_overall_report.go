@@ -24,17 +24,26 @@ type VirtualMachineOverallReport struct {
 	// allocatedv RAM
 	AllocatedvRAM int32 `json:"allocatedvRAM,omitempty"`
 
+	// billing month
+	BillingMonth string `json:"billingMonth,omitempty"`
+
 	// billing tags
 	BillingTags string `json:"billingTags,omitempty"`
 
 	// cost
 	Cost float32 `json:"cost,omitempty"`
 
+	// discount value
+	DiscountValue float32 `json:"discountValue,omitempty"`
+
 	// resource usage time
 	ResourceUsageTime string `json:"resourceUsageTime,omitempty"`
 
 	// storage total used
 	StorageTotalUsed float32 `json:"storageTotalUsed,omitempty"`
+
+	// total cost after discount
+	TotalCostAfterDiscount float32 `json:"totalCostAfterDiscount,omitempty"`
 
 	// virtual machine guest
 	VirtualMachineGuest string `json:"virtualMachineGuest,omitempty"`

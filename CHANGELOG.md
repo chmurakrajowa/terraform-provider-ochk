@@ -1,3 +1,31 @@
+## 1.2.1 (2021-11-19)
+
+## Resources
+* Changed resources
+  * `resource_virtual_machine`
+  * `resource_subtenant`
+  * `resource_virtual_nmetwork`
+
+## Data sources
+* Changed data sources:
+  * `data_source_group`
+  * `data_source_subtenant`
+  * `data_source_virtual_nmetwork`
+  * `data_source_virtual_machine`
+
+
+
+## Bugfix
+* `Fix for recreation vNet`
+  * `Change for vnet  parameters for IPAM fields (dns_search_suffix, dns_suffix, primary_dns_address, second_dns_address, primary_wins_address, second_wins_address). Changing any of those parameter will not recrate network resources.`
+* `Fix for recreation subtenant`
+  * `Change for subtenant (Business Group)  parameters. Parameter "users" will not  be required any more. This change eliminates recreation Business Group at access management to  resources`
+* `Fix for security group`
+
+### Features
+* `Instead of value STANDARD put STANDARD_W1, STANDARD_W2 for storage_policy in virtual machine object`
+  * `Configuration change for availability policy from "STANDARD" to "STANDARD W1" and "STANDARD_W2" describes where virtual machine is running (which data center)`
+
 ## 1.2 (2021-08-20)
 
 ## Resources
