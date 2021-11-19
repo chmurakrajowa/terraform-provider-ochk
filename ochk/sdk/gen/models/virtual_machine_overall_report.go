@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -24,17 +26,26 @@ type VirtualMachineOverallReport struct {
 	// allocatedv RAM
 	AllocatedvRAM int32 `json:"allocatedvRAM,omitempty"`
 
+	// billing month
+	BillingMonth string `json:"billingMonth,omitempty"`
+
 	// billing tags
 	BillingTags string `json:"billingTags,omitempty"`
 
 	// cost
 	Cost float32 `json:"cost,omitempty"`
 
+	// discount value
+	DiscountValue float32 `json:"discountValue,omitempty"`
+
 	// resource usage time
 	ResourceUsageTime string `json:"resourceUsageTime,omitempty"`
 
 	// storage total used
 	StorageTotalUsed float32 `json:"storageTotalUsed,omitempty"`
+
+	// total cost after discount
+	TotalCostAfterDiscount float32 `json:"totalCostAfterDiscount,omitempty"`
 
 	// virtual machine guest
 	VirtualMachineGuest string `json:"virtualMachineGuest,omitempty"`
@@ -48,6 +59,11 @@ type VirtualMachineOverallReport struct {
 
 // Validate validates this virtual machine overall report
 func (m *VirtualMachineOverallReport) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this virtual machine overall report based on context it is used
+func (m *VirtualMachineOverallReport) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

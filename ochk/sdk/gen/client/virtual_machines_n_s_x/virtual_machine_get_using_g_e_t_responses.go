@@ -41,9 +41,8 @@ func (o *VirtualMachineGetUsingGETReader) ReadResponse(response runtime.ClientRe
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewVirtualMachineGetUsingGETOK() *VirtualMachineGetUsingGETOK {
 	return &VirtualMachineGetUsingGETOK{}
 }
 
-/*VirtualMachineGetUsingGETOK handles this case with default header values.
+/* VirtualMachineGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type VirtualMachineGetUsingGETOK struct {
 func (o *VirtualMachineGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/virtual-machines/{virtualMachineId}][%d] virtualMachineGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *VirtualMachineGetUsingGETOK) GetPayload() *models.VirtualMachineGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewVirtualMachineGetUsingGETBadRequest() *VirtualMachineGetUsingGETBadReque
 	return &VirtualMachineGetUsingGETBadRequest{}
 }
 
-/*VirtualMachineGetUsingGETBadRequest handles this case with default header values.
+/* VirtualMachineGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type VirtualMachineGetUsingGETBadRequest struct {
 func (o *VirtualMachineGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/virtual-machines/{virtualMachineId}][%d] virtualMachineGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *VirtualMachineGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewVirtualMachineGetUsingGETNotFound() *VirtualMachineGetUsingGETNotFound {
 	return &VirtualMachineGetUsingGETNotFound{}
 }
 
-/*VirtualMachineGetUsingGETNotFound handles this case with default header values.
+/* VirtualMachineGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

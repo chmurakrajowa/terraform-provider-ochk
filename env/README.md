@@ -13,6 +13,5 @@ debug_log_file = "<debug log file>"
 # following variables are for resources which are unable to create using terraform yet
 test-data-prefix = "tf-test"
 test_user = "devel-tftest"
-subtenant_network_name = "vtest7"
-subtenant_for_vm_name = "auto-bg1"
+vrf_router = "T0"
 ```

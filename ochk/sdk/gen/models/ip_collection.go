@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -36,7 +37,7 @@ type IPCollection struct {
 	IPCollectionAddresses []string `json:"ipCollectionAddresses"`
 
 	// member type
-	// Enum: [IPCOLLECTION LOGICAL_PORT VIRTUAL_MACHINE]
+	// Enum: [IPCOLLECTION IPSET LOGICAL_PORT VIRTUAL_MACHINE]
 	MemberType string `json:"memberType,omitempty"`
 
 	// modification date
@@ -70,7 +71,6 @@ func (m *IPCollection) Validate(formats strfmt.Registry) error {
 }
 
 func (m *IPCollection) validateCreationDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.CreationDate) { // not required
 		return nil
 	}
@@ -86,7 +86,7 @@ var ipCollectionTypeMemberTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["IPCOLLECTION","LOGICAL_PORT","VIRTUAL_MACHINE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["IPCOLLECTION","IPSET","LOGICAL_PORT","VIRTUAL_MACHINE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -98,6 +98,9 @@ const (
 
 	// IPCollectionMemberTypeIPCOLLECTION captures enum value "IPCOLLECTION"
 	IPCollectionMemberTypeIPCOLLECTION string = "IPCOLLECTION"
+
+	// IPCollectionMemberTypeIPSET captures enum value "IPSET"
+	IPCollectionMemberTypeIPSET string = "IPSET"
 
 	// IPCollectionMemberTypeLOGICALPORT captures enum value "LOGICAL_PORT"
 	IPCollectionMemberTypeLOGICALPORT string = "LOGICAL_PORT"
@@ -115,7 +118,6 @@ func (m *IPCollection) validateMemberTypeEnum(path, location string, value strin
 }
 
 func (m *IPCollection) validateMemberType(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.MemberType) { // not required
 		return nil
 	}
@@ -129,7 +131,6 @@ func (m *IPCollection) validateMemberType(formats strfmt.Registry) error {
 }
 
 func (m *IPCollection) validateModificationDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ModificationDate) { // not required
 		return nil
 	}
@@ -138,6 +139,11 @@ func (m *IPCollection) validateModificationDate(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this Ip collection based on context it is used
+func (m *IPCollection) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

@@ -25,11 +25,14 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	VirtualMachineGetUsingGET(params *VirtualMachineGetUsingGETParams) (*VirtualMachineGetUsingGETOK, error)
+	VirtualMachineGetUsingGET(params *VirtualMachineGetUsingGETParams, opts ...ClientOption) (*VirtualMachineGetUsingGETOK, error)
 
-	VirtualMachineListUsingGET(params *VirtualMachineListUsingGETParams) (*VirtualMachineListUsingGETOK, error)
+	VirtualMachineListUsingGET(params *VirtualMachineListUsingGETParams, opts ...ClientOption) (*VirtualMachineListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -39,13 +42,12 @@ type ClientService interface {
 
   Get virtual machine from NSX-T
 */
-func (a *Client) VirtualMachineGetUsingGET(params *VirtualMachineGetUsingGETParams) (*VirtualMachineGetUsingGETOK, error) {
+func (a *Client) VirtualMachineGetUsingGET(params *VirtualMachineGetUsingGETParams, opts ...ClientOption) (*VirtualMachineGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVirtualMachineGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "virtualMachineGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/virtual-machines/{virtualMachineId}",
@@ -56,7 +58,12 @@ func (a *Client) VirtualMachineGetUsingGET(params *VirtualMachineGetUsingGETPara
 		Reader:             &VirtualMachineGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -75,13 +82,12 @@ func (a *Client) VirtualMachineGetUsingGET(params *VirtualMachineGetUsingGETPara
 
   List virtual machines from NSX-T level
 */
-func (a *Client) VirtualMachineListUsingGET(params *VirtualMachineListUsingGETParams) (*VirtualMachineListUsingGETOK, error) {
+func (a *Client) VirtualMachineListUsingGET(params *VirtualMachineListUsingGETParams, opts ...ClientOption) (*VirtualMachineListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVirtualMachineListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "virtualMachineListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/virtual-machines",
@@ -92,7 +98,12 @@ func (a *Client) VirtualMachineListUsingGET(params *VirtualMachineListUsingGETPa
 		Reader:             &VirtualMachineListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

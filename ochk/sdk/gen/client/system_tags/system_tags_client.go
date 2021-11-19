@@ -25,17 +25,20 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	SystemTagCreateUsingPUT(params *SystemTagCreateUsingPUTParams) (*SystemTagCreateUsingPUTOK, *SystemTagCreateUsingPUTCreated, error)
+	SystemTagCreateUsingPUT(params *SystemTagCreateUsingPUTParams, opts ...ClientOption) (*SystemTagCreateUsingPUTOK, *SystemTagCreateUsingPUTCreated, error)
 
-	SystemTagDeleteUsingDELETE(params *SystemTagDeleteUsingDELETEParams) (*SystemTagDeleteUsingDELETEOK, error)
+	SystemTagDeleteUsingDELETE(params *SystemTagDeleteUsingDELETEParams, opts ...ClientOption) (*SystemTagDeleteUsingDELETEOK, error)
 
-	SystemTagGetUsingGET(params *SystemTagGetUsingGETParams) (*SystemTagGetUsingGETOK, error)
+	SystemTagGetUsingGET(params *SystemTagGetUsingGETParams, opts ...ClientOption) (*SystemTagGetUsingGETOK, error)
 
-	SystemTagListUsingGET(params *SystemTagListUsingGETParams) (*SystemTagListUsingGETOK, error)
+	SystemTagListUsingGET(params *SystemTagListUsingGETParams, opts ...ClientOption) (*SystemTagListUsingGETOK, error)
 
-	SystemTagUpdateUsingPUT(params *SystemTagUpdateUsingPUTParams) (*SystemTagUpdateUsingPUTOK, error)
+	SystemTagUpdateUsingPUT(params *SystemTagUpdateUsingPUTParams, opts ...ClientOption) (*SystemTagUpdateUsingPUTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -45,13 +48,12 @@ type ClientService interface {
 
   Create system tag
 */
-func (a *Client) SystemTagCreateUsingPUT(params *SystemTagCreateUsingPUTParams) (*SystemTagCreateUsingPUTOK, *SystemTagCreateUsingPUTCreated, error) {
+func (a *Client) SystemTagCreateUsingPUT(params *SystemTagCreateUsingPUTParams, opts ...ClientOption) (*SystemTagCreateUsingPUTOK, *SystemTagCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSystemTagCreateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "systemTagCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/tags/systemTags",
@@ -62,7 +64,12 @@ func (a *Client) SystemTagCreateUsingPUT(params *SystemTagCreateUsingPUTParams) 
 		Reader:             &SystemTagCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -82,13 +89,12 @@ func (a *Client) SystemTagCreateUsingPUT(params *SystemTagCreateUsingPUTParams) 
 
   Delete system tag
 */
-func (a *Client) SystemTagDeleteUsingDELETE(params *SystemTagDeleteUsingDELETEParams) (*SystemTagDeleteUsingDELETEOK, error) {
+func (a *Client) SystemTagDeleteUsingDELETE(params *SystemTagDeleteUsingDELETEParams, opts ...ClientOption) (*SystemTagDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSystemTagDeleteUsingDELETEParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "systemTagDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/tags/systemTags/{systemTagId}",
@@ -99,7 +105,12 @@ func (a *Client) SystemTagDeleteUsingDELETE(params *SystemTagDeleteUsingDELETEPa
 		Reader:             &SystemTagDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -118,13 +129,12 @@ func (a *Client) SystemTagDeleteUsingDELETE(params *SystemTagDeleteUsingDELETEPa
 
   Get System tag collection
 */
-func (a *Client) SystemTagGetUsingGET(params *SystemTagGetUsingGETParams) (*SystemTagGetUsingGETOK, error) {
+func (a *Client) SystemTagGetUsingGET(params *SystemTagGetUsingGETParams, opts ...ClientOption) (*SystemTagGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSystemTagGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "systemTagGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/tags/systemTags/{systemTagId}",
@@ -135,7 +145,12 @@ func (a *Client) SystemTagGetUsingGET(params *SystemTagGetUsingGETParams) (*Syst
 		Reader:             &SystemTagGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -154,13 +169,12 @@ func (a *Client) SystemTagGetUsingGET(params *SystemTagGetUsingGETParams) (*Syst
 
   List system tags
 */
-func (a *Client) SystemTagListUsingGET(params *SystemTagListUsingGETParams) (*SystemTagListUsingGETOK, error) {
+func (a *Client) SystemTagListUsingGET(params *SystemTagListUsingGETParams, opts ...ClientOption) (*SystemTagListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSystemTagListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "systemTagListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/tags/systemTags",
@@ -171,7 +185,12 @@ func (a *Client) SystemTagListUsingGET(params *SystemTagListUsingGETParams) (*Sy
 		Reader:             &SystemTagListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -190,13 +209,12 @@ func (a *Client) SystemTagListUsingGET(params *SystemTagListUsingGETParams) (*Sy
 
   Update system tag
 */
-func (a *Client) SystemTagUpdateUsingPUT(params *SystemTagUpdateUsingPUTParams) (*SystemTagUpdateUsingPUTOK, error) {
+func (a *Client) SystemTagUpdateUsingPUT(params *SystemTagUpdateUsingPUTParams, opts ...ClientOption) (*SystemTagUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSystemTagUpdateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "systemTagUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/tags/systemTags/{systemTagId}",
@@ -207,7 +225,12 @@ func (a *Client) SystemTagUpdateUsingPUT(params *SystemTagUpdateUsingPUTParams) 
 		Reader:             &SystemTagUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

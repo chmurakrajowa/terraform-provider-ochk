@@ -29,6 +29,7 @@ type Client struct {
 	Services        ServicesProxy
 	Subtenants      SubtenantsProxy
 	Users           UsersProxy
+	Groups          GroupsProxy
 	VirtualMachines VirtualMachinesProxy
 	VirtualNetworks VirtualNetworksProxy
 	IPCollections   IPCollectionsProxy
@@ -147,6 +148,10 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		Users: UsersProxy{
 			httpClient: httpClient,
 			service:    authClient.Users,
+		},
+		Groups: GroupsProxy{
+			httpClient: httpClient,
+			service:    authClient.Groups,
 		},
 		Subtenants: SubtenantsProxy{
 			httpClient: httpClient,

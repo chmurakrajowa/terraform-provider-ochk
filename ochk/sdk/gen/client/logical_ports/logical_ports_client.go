@@ -25,11 +25,14 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	LogicalPortGetUsingGET(params *LogicalPortGetUsingGETParams) (*LogicalPortGetUsingGETOK, error)
+	LogicalPortGetUsingGET(params *LogicalPortGetUsingGETParams, opts ...ClientOption) (*LogicalPortGetUsingGETOK, error)
 
-	LogicalPortListUsingGET1(params *LogicalPortListUsingGET1Params) (*LogicalPortListUsingGET1OK, error)
+	LogicalPortListUsingGET1(params *LogicalPortListUsingGET1Params, opts ...ClientOption) (*LogicalPortListUsingGET1OK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -39,13 +42,12 @@ type ClientService interface {
 
   Get logical port from NSX-T
 */
-func (a *Client) LogicalPortGetUsingGET(params *LogicalPortGetUsingGETParams) (*LogicalPortGetUsingGETOK, error) {
+func (a *Client) LogicalPortGetUsingGET(params *LogicalPortGetUsingGETParams, opts ...ClientOption) (*LogicalPortGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewLogicalPortGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "logicalPortGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/logical-ports/{logicalPortId}",
@@ -56,7 +58,12 @@ func (a *Client) LogicalPortGetUsingGET(params *LogicalPortGetUsingGETParams) (*
 		Reader:             &LogicalPortGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -75,13 +82,12 @@ func (a *Client) LogicalPortGetUsingGET(params *LogicalPortGetUsingGETParams) (*
 
   List logical ports from NSX-T
 */
-func (a *Client) LogicalPortListUsingGET1(params *LogicalPortListUsingGET1Params) (*LogicalPortListUsingGET1OK, error) {
+func (a *Client) LogicalPortListUsingGET1(params *LogicalPortListUsingGET1Params, opts ...ClientOption) (*LogicalPortListUsingGET1OK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewLogicalPortListUsingGET1Params()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "logicalPortListUsingGET_1",
 		Method:             "GET",
 		PathPattern:        "/network/logical-ports",
@@ -92,7 +98,12 @@ func (a *Client) LogicalPortListUsingGET1(params *LogicalPortListUsingGET1Params
 		Reader:             &LogicalPortListUsingGET1Reader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -50,7 +52,6 @@ func (m *VirtualMachineGetResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *VirtualMachineGetResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
@@ -63,13 +64,40 @@ func (m *VirtualMachineGetResponse) validateTimestamp(formats strfmt.Registry) e
 }
 
 func (m *VirtualMachineGetResponse) validateVirtualMachine(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.VirtualMachine) { // not required
 		return nil
 	}
 
 	if m.VirtualMachine != nil {
 		if err := m.VirtualMachine.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("virtualMachine")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this virtual machine get response based on the context it is used
+func (m *VirtualMachineGetResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateVirtualMachine(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *VirtualMachineGetResponse) contextValidateVirtualMachine(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.VirtualMachine != nil {
+		if err := m.VirtualMachine.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("virtualMachine")
 			}

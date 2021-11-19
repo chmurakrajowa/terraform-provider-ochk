@@ -61,6 +61,7 @@ func Provider() *schema.Provider {
 			"ochk_subtenant":       dataSourceSubtenant(),
 			"ochk_service":         dataSourceService(),
 			"ochk_user":            dataSourceUser(),
+			"ochk_group":           dataSourceGroup(),
 			"ochk_virtual_machine": dataSourceVirtualMachine(),
 			"ochk_ip_collection":   dataSourceIPCollection(),
 			"ochk_deployment":      dataSourceDeployment(),

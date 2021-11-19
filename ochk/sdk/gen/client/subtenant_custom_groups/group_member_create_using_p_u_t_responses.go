@@ -41,9 +41,8 @@ func (o *GroupMemberCreateUsingPUTReader) ReadResponse(response runtime.ClientRe
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewGroupMemberCreateUsingPUTOK() *GroupMemberCreateUsingPUTOK {
 	return &GroupMemberCreateUsingPUTOK{}
 }
 
-/*GroupMemberCreateUsingPUTOK handles this case with default header values.
+/* GroupMemberCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type GroupMemberCreateUsingPUTOK struct {
 func (o *GroupMemberCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /subtenants/{subtenantId}/groups/{parentGroupId}/members/groups][%d] groupMemberCreateUsingPUTOK  %+v", 200, o.Payload)
 }
-
 func (o *GroupMemberCreateUsingPUTOK) GetPayload() *models.CreateGroupMemberResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewGroupMemberCreateUsingPUTCreated() *GroupMemberCreateUsingPUTCreated {
 	return &GroupMemberCreateUsingPUTCreated{}
 }
 
-/*GroupMemberCreateUsingPUTCreated handles this case with default header values.
+/* GroupMemberCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -96,7 +94,6 @@ type GroupMemberCreateUsingPUTCreated struct {
 func (o *GroupMemberCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /subtenants/{subtenantId}/groups/{parentGroupId}/members/groups][%d] groupMemberCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
-
 func (o *GroupMemberCreateUsingPUTCreated) GetPayload() *models.CreateGroupMemberResponse {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewGroupMemberCreateUsingPUTBadRequest() *GroupMemberCreateUsingPUTBadReque
 	return &GroupMemberCreateUsingPUTBadRequest{}
 }
 
-/*GroupMemberCreateUsingPUTBadRequest handles this case with default header values.
+/* GroupMemberCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -129,7 +126,6 @@ type GroupMemberCreateUsingPUTBadRequest struct {
 func (o *GroupMemberCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /subtenants/{subtenantId}/groups/{parentGroupId}/members/groups][%d] groupMemberCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *GroupMemberCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

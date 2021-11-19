@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -67,7 +68,6 @@ func (m *QueryFilter) Validate(formats strfmt.Registry) error {
 }
 
 func (m *QueryFilter) validateEndDateTime(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.EndDateTime) { // not required
 		return nil
 	}
@@ -136,7 +136,6 @@ func (m *QueryFilter) validateLogSeverityEnum(path, location string, value strin
 }
 
 func (m *QueryFilter) validateLogSeverity(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.LogSeverity) { // not required
 		return nil
 	}
@@ -150,7 +149,6 @@ func (m *QueryFilter) validateLogSeverity(formats strfmt.Registry) error {
 }
 
 func (m *QueryFilter) validateStartDateTime(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.StartDateTime) { // not required
 		return nil
 	}
@@ -159,6 +157,11 @@ func (m *QueryFilter) validateStartDateTime(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this query filter based on context it is used
+func (m *QueryFilter) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

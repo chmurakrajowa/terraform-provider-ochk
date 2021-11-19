@@ -25,17 +25,20 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	VirtualNetworkCreateUsingPUT(params *VirtualNetworkCreateUsingPUTParams) (*VirtualNetworkCreateUsingPUTOK, *VirtualNetworkCreateUsingPUTCreated, error)
+	VirtualNetworkCreateUsingPUT(params *VirtualNetworkCreateUsingPUTParams, opts ...ClientOption) (*VirtualNetworkCreateUsingPUTOK, *VirtualNetworkCreateUsingPUTCreated, error)
 
-	VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsingDELETEParams) (*VirtualNetworkDeleteUsingDELETEOK, *VirtualNetworkDeleteUsingDELETECreated, error)
+	VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsingDELETEParams, opts ...ClientOption) (*VirtualNetworkDeleteUsingDELETEOK, *VirtualNetworkDeleteUsingDELETECreated, error)
 
-	VirtualNetworkGetUsingGET(params *VirtualNetworkGetUsingGETParams) (*VirtualNetworkGetUsingGETOK, error)
+	VirtualNetworkGetUsingGET(params *VirtualNetworkGetUsingGETParams, opts ...ClientOption) (*VirtualNetworkGetUsingGETOK, error)
 
-	VirtualNetworkListUsingGET(params *VirtualNetworkListUsingGETParams) (*VirtualNetworkListUsingGETOK, error)
+	VirtualNetworkListUsingGET(params *VirtualNetworkListUsingGETParams, opts ...ClientOption) (*VirtualNetworkListUsingGETOK, error)
 
-	VirtualNetworkUpdateUsingPUT(params *VirtualNetworkUpdateUsingPUTParams) (*VirtualNetworkUpdateUsingPUTOK, *VirtualNetworkUpdateUsingPUTCreated, error)
+	VirtualNetworkUpdateUsingPUT(params *VirtualNetworkUpdateUsingPUTParams, opts ...ClientOption) (*VirtualNetworkUpdateUsingPUTOK, *VirtualNetworkUpdateUsingPUTCreated, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -45,13 +48,12 @@ type ClientService interface {
 
   Create virtual network
 */
-func (a *Client) VirtualNetworkCreateUsingPUT(params *VirtualNetworkCreateUsingPUTParams) (*VirtualNetworkCreateUsingPUTOK, *VirtualNetworkCreateUsingPUTCreated, error) {
+func (a *Client) VirtualNetworkCreateUsingPUT(params *VirtualNetworkCreateUsingPUTParams, opts ...ClientOption) (*VirtualNetworkCreateUsingPUTOK, *VirtualNetworkCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVirtualNetworkCreateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "virtualNetworkCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/networks",
@@ -62,7 +64,12 @@ func (a *Client) VirtualNetworkCreateUsingPUT(params *VirtualNetworkCreateUsingP
 		Reader:             &VirtualNetworkCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -82,13 +89,12 @@ func (a *Client) VirtualNetworkCreateUsingPUT(params *VirtualNetworkCreateUsingP
 
   Delete virtual network
 */
-func (a *Client) VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsingDELETEParams) (*VirtualNetworkDeleteUsingDELETEOK, *VirtualNetworkDeleteUsingDELETECreated, error) {
+func (a *Client) VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsingDELETEParams, opts ...ClientOption) (*VirtualNetworkDeleteUsingDELETEOK, *VirtualNetworkDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVirtualNetworkDeleteUsingDELETEParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "virtualNetworkDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/networks/{virtualNetworkId}",
@@ -99,7 +105,12 @@ func (a *Client) VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsi
 		Reader:             &VirtualNetworkDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -119,13 +130,12 @@ func (a *Client) VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsi
 
   Get virtual network
 */
-func (a *Client) VirtualNetworkGetUsingGET(params *VirtualNetworkGetUsingGETParams) (*VirtualNetworkGetUsingGETOK, error) {
+func (a *Client) VirtualNetworkGetUsingGET(params *VirtualNetworkGetUsingGETParams, opts ...ClientOption) (*VirtualNetworkGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVirtualNetworkGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "virtualNetworkGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/networks/{virtualNetworkId}",
@@ -136,7 +146,12 @@ func (a *Client) VirtualNetworkGetUsingGET(params *VirtualNetworkGetUsingGETPara
 		Reader:             &VirtualNetworkGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -155,13 +170,12 @@ func (a *Client) VirtualNetworkGetUsingGET(params *VirtualNetworkGetUsingGETPara
 
   List virtual network
 */
-func (a *Client) VirtualNetworkListUsingGET(params *VirtualNetworkListUsingGETParams) (*VirtualNetworkListUsingGETOK, error) {
+func (a *Client) VirtualNetworkListUsingGET(params *VirtualNetworkListUsingGETParams, opts ...ClientOption) (*VirtualNetworkListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVirtualNetworkListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "virtualNetworkListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/networks",
@@ -172,7 +186,12 @@ func (a *Client) VirtualNetworkListUsingGET(params *VirtualNetworkListUsingGETPa
 		Reader:             &VirtualNetworkListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -191,13 +210,12 @@ func (a *Client) VirtualNetworkListUsingGET(params *VirtualNetworkListUsingGETPa
 
   Update virtual network
 */
-func (a *Client) VirtualNetworkUpdateUsingPUT(params *VirtualNetworkUpdateUsingPUTParams) (*VirtualNetworkUpdateUsingPUTOK, *VirtualNetworkUpdateUsingPUTCreated, error) {
+func (a *Client) VirtualNetworkUpdateUsingPUT(params *VirtualNetworkUpdateUsingPUTParams, opts ...ClientOption) (*VirtualNetworkUpdateUsingPUTOK, *VirtualNetworkUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVirtualNetworkUpdateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "virtualNetworkUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/networks/{virtualNetworkId}",
@@ -208,7 +226,12 @@ func (a *Client) VirtualNetworkUpdateUsingPUT(params *VirtualNetworkUpdateUsingP
 		Reader:             &VirtualNetworkUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -70,7 +71,6 @@ func (m *RouterInstance) Validate(formats strfmt.Registry) error {
 }
 
 func (m *RouterInstance) validateCreationDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.CreationDate) { // not required
 		return nil
 	}
@@ -83,7 +83,6 @@ func (m *RouterInstance) validateCreationDate(formats strfmt.Registry) error {
 }
 
 func (m *RouterInstance) validateModificationDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ModificationDate) { // not required
 		return nil
 	}
@@ -125,7 +124,6 @@ func (m *RouterInstance) validateRouterTypeEnum(path, location string, value str
 }
 
 func (m *RouterInstance) validateRouterType(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RouterType) { // not required
 		return nil
 	}
@@ -135,6 +133,11 @@ func (m *RouterInstance) validateRouterType(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this router instance based on context it is used
+func (m *RouterInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

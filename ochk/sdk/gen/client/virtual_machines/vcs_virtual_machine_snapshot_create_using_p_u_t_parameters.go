@@ -19,69 +19,85 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewVcsVirtualMachineSnapshotCreateUsingPUTParams creates a new VcsVirtualMachineSnapshotCreateUsingPUTParams object
-// with the default values initialized.
+// NewVcsVirtualMachineSnapshotCreateUsingPUTParams creates a new VcsVirtualMachineSnapshotCreateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewVcsVirtualMachineSnapshotCreateUsingPUTParams() *VcsVirtualMachineSnapshotCreateUsingPUTParams {
-	var ()
 	return &VcsVirtualMachineSnapshotCreateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewVcsVirtualMachineSnapshotCreateUsingPUTParamsWithTimeout creates a new VcsVirtualMachineSnapshotCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewVcsVirtualMachineSnapshotCreateUsingPUTParamsWithTimeout(timeout time.Duration) *VcsVirtualMachineSnapshotCreateUsingPUTParams {
-	var ()
 	return &VcsVirtualMachineSnapshotCreateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewVcsVirtualMachineSnapshotCreateUsingPUTParamsWithContext creates a new VcsVirtualMachineSnapshotCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewVcsVirtualMachineSnapshotCreateUsingPUTParamsWithContext(ctx context.Context) *VcsVirtualMachineSnapshotCreateUsingPUTParams {
-	var ()
 	return &VcsVirtualMachineSnapshotCreateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewVcsVirtualMachineSnapshotCreateUsingPUTParamsWithHTTPClient creates a new VcsVirtualMachineSnapshotCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewVcsVirtualMachineSnapshotCreateUsingPUTParamsWithHTTPClient(client *http.Client) *VcsVirtualMachineSnapshotCreateUsingPUTParams {
-	var ()
 	return &VcsVirtualMachineSnapshotCreateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*VcsVirtualMachineSnapshotCreateUsingPUTParams contains all the parameters to send to the API endpoint
-for the vcs virtual machine snapshot create using p u t operation typically these are written to a http.Request
+/* VcsVirtualMachineSnapshotCreateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the vcs virtual machine snapshot create using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type VcsVirtualMachineSnapshotCreateUsingPUTParams struct {
 
-	/*RAMSnapshot
-	  ramSnapshot
+	/* RAMSnapshot.
 
+	   ramSnapshot
 	*/
 	RAMSnapshot *bool
-	/*SnapshotInstance
-	  snapshotInstance
 
+	/* SnapshotInstance.
+
+	   snapshotInstance
 	*/
 	SnapshotInstance *models.SnapshotInstance
-	/*VirtualMachineID
-	  virtualMachineId
 
+	/* VirtualMachineID.
+
+	   virtualMachineId
 	*/
 	VirtualMachineID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the vcs virtual machine snapshot create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTParams) WithDefaults() *VcsVirtualMachineSnapshotCreateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the vcs virtual machine snapshot create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the vcs virtual machine snapshot create using p u t params
@@ -162,18 +178,18 @@ func (o *VcsVirtualMachineSnapshotCreateUsingPUTParams) WriteToRequest(r runtime
 
 		// query param ramSnapshot
 		var qrRAMSnapshot bool
+
 		if o.RAMSnapshot != nil {
 			qrRAMSnapshot = *o.RAMSnapshot
 		}
 		qRAMSnapshot := swag.FormatBool(qrRAMSnapshot)
 		if qRAMSnapshot != "" {
+
 			if err := r.SetQueryParam("ramSnapshot", qRAMSnapshot); err != nil {
 				return err
 			}
 		}
-
 	}
-
 	if o.SnapshotInstance != nil {
 		if err := r.SetBodyParam(o.SnapshotInstance); err != nil {
 			return err

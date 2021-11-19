@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -26,7 +27,7 @@ type SecurityGroupMember struct {
 	ID string `json:"id,omitempty"`
 
 	// member type
-	// Enum: [IPCOLLECTION LOGICAL_PORT VIRTUAL_MACHINE]
+	// Enum: [IPCOLLECTION IPSET LOGICAL_PORT VIRTUAL_MACHINE]
 	MemberType string `json:"memberType,omitempty"`
 }
 
@@ -48,7 +49,7 @@ var securityGroupMemberTypeMemberTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["IPCOLLECTION","LOGICAL_PORT","VIRTUAL_MACHINE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["IPCOLLECTION","IPSET","LOGICAL_PORT","VIRTUAL_MACHINE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -60,6 +61,9 @@ const (
 
 	// SecurityGroupMemberMemberTypeIPCOLLECTION captures enum value "IPCOLLECTION"
 	SecurityGroupMemberMemberTypeIPCOLLECTION string = "IPCOLLECTION"
+
+	// SecurityGroupMemberMemberTypeIPSET captures enum value "IPSET"
+	SecurityGroupMemberMemberTypeIPSET string = "IPSET"
 
 	// SecurityGroupMemberMemberTypeLOGICALPORT captures enum value "LOGICAL_PORT"
 	SecurityGroupMemberMemberTypeLOGICALPORT string = "LOGICAL_PORT"
@@ -77,7 +81,6 @@ func (m *SecurityGroupMember) validateMemberTypeEnum(path, location string, valu
 }
 
 func (m *SecurityGroupMember) validateMemberType(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.MemberType) { // not required
 		return nil
 	}
@@ -87,6 +90,11 @@ func (m *SecurityGroupMember) validateMemberType(formats strfmt.Registry) error 
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this security group member based on context it is used
+func (m *SecurityGroupMember) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

@@ -17,59 +17,75 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewSystemTagDeleteUsingDELETEParams creates a new SystemTagDeleteUsingDELETEParams object
-// with the default values initialized.
+// NewSystemTagDeleteUsingDELETEParams creates a new SystemTagDeleteUsingDELETEParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewSystemTagDeleteUsingDELETEParams() *SystemTagDeleteUsingDELETEParams {
-	var ()
 	return &SystemTagDeleteUsingDELETEParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewSystemTagDeleteUsingDELETEParamsWithTimeout creates a new SystemTagDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewSystemTagDeleteUsingDELETEParamsWithTimeout(timeout time.Duration) *SystemTagDeleteUsingDELETEParams {
-	var ()
 	return &SystemTagDeleteUsingDELETEParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewSystemTagDeleteUsingDELETEParamsWithContext creates a new SystemTagDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewSystemTagDeleteUsingDELETEParamsWithContext(ctx context.Context) *SystemTagDeleteUsingDELETEParams {
-	var ()
 	return &SystemTagDeleteUsingDELETEParams{
-
 		Context: ctx,
 	}
 }
 
 // NewSystemTagDeleteUsingDELETEParamsWithHTTPClient creates a new SystemTagDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewSystemTagDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) *SystemTagDeleteUsingDELETEParams {
-	var ()
 	return &SystemTagDeleteUsingDELETEParams{
 		HTTPClient: client,
 	}
 }
 
-/*SystemTagDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-for the system tag delete using d e l e t e operation typically these are written to a http.Request
+/* SystemTagDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
+   for the system tag delete using d e l e t e operation.
+
+   Typically these are written to a http.Request.
 */
 type SystemTagDeleteUsingDELETEParams struct {
 
-	/*SystemTagID
-	  systemTagId
+	/* SystemTagID.
 
+	   systemTagId
+
+	   Format: int32
 	*/
 	SystemTagID int32
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the system tag delete using d e l e t e params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SystemTagDeleteUsingDELETEParams) WithDefaults() *SystemTagDeleteUsingDELETEParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the system tag delete using d e l e t e params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SystemTagDeleteUsingDELETEParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the system tag delete using d e l e t e params

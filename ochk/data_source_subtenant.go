@@ -31,11 +31,6 @@ func dataSourceSubtenant() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
-			"users": {
-				Type:     schema.TypeSet,
-				Computed: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
-			},
 			"networks": {
 				Type:     schema.TypeSet,
 				Computed: true,

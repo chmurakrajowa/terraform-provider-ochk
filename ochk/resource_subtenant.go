@@ -41,11 +41,10 @@ func resourceSubtenant() *schema.Resource {
 			"email": {
 				Type:     schema.TypeString,
 				Required: true,
-				ForceNew: true,
 			},
 			"description": {
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
 			},
 			"memory_reserved_size_mb": {
 				Type:     schema.TypeInt,
@@ -54,13 +53,6 @@ func resourceSubtenant() *schema.Resource {
 			"storage_reserved_size_gb": {
 				Type:     schema.TypeInt,
 				Required: true,
-			},
-			"users": {
-				Type:     schema.TypeSet,
-				Required: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
-				MinItems: 1,
-				ForceNew: true,
 			},
 			"networks": {
 				Type:     schema.TypeSet,
@@ -128,10 +120,6 @@ func mapSubtenantToResourceData(d *schema.ResourceData, subtenant *models.Subten
 		return fmt.Errorf("error setting storage_reserved_size_gb: %w", err)
 	}
 
-	if err := d.Set("users", flattenUserInstancesFromIDs(subtenant.Users)); err != nil {
-		return fmt.Errorf("error setting users: %w", err)
-	}
-
 	if err := d.Set("networks", flattenVCSNetworkInstancesFromIDs(subtenant.Networks)); err != nil {
 		return fmt.Errorf("error setting networks: %w", err)
 	}
@@ -178,6 +166,5 @@ func mapResourceDataToSubtenant(d *schema.ResourceData) *models.SubtenantInstanc
 		Name:                  d.Get("name").(string),
 		Networks:              expandVCSNetworkInstancesFromIDs(d.Get("networks").(*schema.Set).List()),
 		StorageReservedSizeGB: int64(d.Get("storage_reserved_size_gb").(int)),
-		Users:                 expandUserInstancesFromIDs(d.Get("users").(*schema.Set).List()),
 	}
 }

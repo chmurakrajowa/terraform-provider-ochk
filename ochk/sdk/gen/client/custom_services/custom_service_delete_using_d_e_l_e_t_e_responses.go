@@ -41,9 +41,8 @@ func (o *CustomServiceDeleteUsingDELETEReader) ReadResponse(response runtime.Cli
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewCustomServiceDeleteUsingDELETEOK() *CustomServiceDeleteUsingDELETEOK {
 	return &CustomServiceDeleteUsingDELETEOK{}
 }
 
-/*CustomServiceDeleteUsingDELETEOK handles this case with default header values.
+/* CustomServiceDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type CustomServiceDeleteUsingDELETEOK struct {
 func (o *CustomServiceDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /network/custom-services/{serviceId}][%d] customServiceDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
-
 func (o *CustomServiceDeleteUsingDELETEOK) GetPayload() *models.DeleteCustomServiceResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewCustomServiceDeleteUsingDELETECreated() *CustomServiceDeleteUsingDELETEC
 	return &CustomServiceDeleteUsingDELETECreated{}
 }
 
-/*CustomServiceDeleteUsingDELETECreated handles this case with default header values.
+/* CustomServiceDeleteUsingDELETECreated describes a response with status code 201, with default header values.
 
 Entity has been deleted
 */
@@ -96,7 +94,6 @@ type CustomServiceDeleteUsingDELETECreated struct {
 func (o *CustomServiceDeleteUsingDELETECreated) Error() string {
 	return fmt.Sprintf("[DELETE /network/custom-services/{serviceId}][%d] customServiceDeleteUsingDELETECreated  %+v", 201, o.Payload)
 }
-
 func (o *CustomServiceDeleteUsingDELETECreated) GetPayload() *models.DeleteCustomServiceResponse {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewCustomServiceDeleteUsingDELETEBadRequest() *CustomServiceDeleteUsingDELE
 	return &CustomServiceDeleteUsingDELETEBadRequest{}
 }
 
-/*CustomServiceDeleteUsingDELETEBadRequest handles this case with default header values.
+/* CustomServiceDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -129,7 +126,6 @@ type CustomServiceDeleteUsingDELETEBadRequest struct {
 func (o *CustomServiceDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /network/custom-services/{serviceId}][%d] customServiceDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *CustomServiceDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

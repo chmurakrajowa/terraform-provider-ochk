@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -57,7 +59,6 @@ func (m *UpdateRouterResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *UpdateRouterResponse) validateRequestInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -75,7 +76,6 @@ func (m *UpdateRouterResponse) validateRequestInstance(formats strfmt.Registry) 
 }
 
 func (m *UpdateRouterResponse) validateRouterInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RouterInstance) { // not required
 		return nil
 	}
@@ -93,13 +93,58 @@ func (m *UpdateRouterResponse) validateRouterInstance(formats strfmt.Registry) e
 }
 
 func (m *UpdateRouterResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update router response based on the context it is used
+func (m *UpdateRouterResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRouterInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *UpdateRouterResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RequestInstance != nil {
+		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("requestInstance")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *UpdateRouterResponse) contextValidateRouterInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RouterInstance != nil {
+		if err := m.RouterInstance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("routerInstance")
+			}
+			return err
+		}
 	}
 
 	return nil

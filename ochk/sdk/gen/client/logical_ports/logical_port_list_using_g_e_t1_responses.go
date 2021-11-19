@@ -35,9 +35,8 @@ func (o *LogicalPortListUsingGET1Reader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewLogicalPortListUsingGET1OK() *LogicalPortListUsingGET1OK {
 	return &LogicalPortListUsingGET1OK{}
 }
 
-/*LogicalPortListUsingGET1OK handles this case with default header values.
+/* LogicalPortListUsingGET1OK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type LogicalPortListUsingGET1OK struct {
 func (o *LogicalPortListUsingGET1OK) Error() string {
 	return fmt.Sprintf("[GET /network/logical-ports][%d] logicalPortListUsingGET1OK  %+v", 200, o.Payload)
 }
-
 func (o *LogicalPortListUsingGET1OK) GetPayload() *models.LogicalPortListResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewLogicalPortListUsingGET1BadRequest() *LogicalPortListUsingGET1BadRequest
 	return &LogicalPortListUsingGET1BadRequest{}
 }
 
-/*LogicalPortListUsingGET1BadRequest handles this case with default header values.
+/* LogicalPortListUsingGET1BadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type LogicalPortListUsingGET1BadRequest struct {
 func (o *LogicalPortListUsingGET1BadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/logical-ports][%d] logicalPortListUsingGET1BadRequest  %+v", 400, o.Payload)
 }
-
 func (o *LogicalPortListUsingGET1BadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

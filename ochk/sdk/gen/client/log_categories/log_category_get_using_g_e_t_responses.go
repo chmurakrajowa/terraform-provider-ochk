@@ -35,9 +35,8 @@ func (o *LogCategoryGetUsingGETReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewLogCategoryGetUsingGETOK() *LogCategoryGetUsingGETOK {
 	return &LogCategoryGetUsingGETOK{}
 }
 
-/*LogCategoryGetUsingGETOK handles this case with default header values.
+/* LogCategoryGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type LogCategoryGetUsingGETOK struct {
 func (o *LogCategoryGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /log/categories/{logCategoryId}][%d] logCategoryGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *LogCategoryGetUsingGETOK) GetPayload() *models.LogCategoryGetResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewLogCategoryGetUsingGETBadRequest() *LogCategoryGetUsingGETBadRequest {
 	return &LogCategoryGetUsingGETBadRequest{}
 }
 
-/*LogCategoryGetUsingGETBadRequest handles this case with default header values.
+/* LogCategoryGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type LogCategoryGetUsingGETBadRequest struct {
 func (o *LogCategoryGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /log/categories/{logCategoryId}][%d] logCategoryGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *LogCategoryGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

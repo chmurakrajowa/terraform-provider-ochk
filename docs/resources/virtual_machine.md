@@ -87,7 +87,8 @@ The following arguments are supported:
   * **`SIZE_XS`** - 1 vCPU, 4 GB RAM
 * `storage_policy` - (Required) Storage Policy associated with virtual machine. The policies control which type of storage is provided for the virtual machine, how the virtual machine is placed within the storage, and which data services are offered for the virtual machine; values: 
   * **`ENTERPRISE`** - virtual machine disks are distributed over two Data Centers
-  * **`STANDARD`** - virtual machine disks are located in one Data Center 
+  * **`STANDARD_W1`** - virtual machine located in Data Center 1 
+  * **`STANDARD_W2`** - virtual machine located in Data Center 2 
 * `deployment_id` - (Required) The unique deployment's identifier, use `ochk_deployment` data source for getting identifier by name. 
 * `subtenant_id` - (Required) Business group's identifier, use `ochk_subtenant` data source for getting identifier by name.
 * `virtual_network_devices` - (Required) List of virtual network devices. Each element must have the following values:

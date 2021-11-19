@@ -41,9 +41,8 @@ func (o *RouterCreateUsingPUTReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewRouterCreateUsingPUTOK() *RouterCreateUsingPUTOK {
 	return &RouterCreateUsingPUTOK{}
 }
 
-/*RouterCreateUsingPUTOK handles this case with default header values.
+/* RouterCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type RouterCreateUsingPUTOK struct {
 func (o *RouterCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/routers][%d] routerCreateUsingPUTOK  %+v", 200, o.Payload)
 }
-
 func (o *RouterCreateUsingPUTOK) GetPayload() *models.CreateRouterResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewRouterCreateUsingPUTCreated() *RouterCreateUsingPUTCreated {
 	return &RouterCreateUsingPUTCreated{}
 }
 
-/*RouterCreateUsingPUTCreated handles this case with default header values.
+/* RouterCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -96,7 +94,6 @@ type RouterCreateUsingPUTCreated struct {
 func (o *RouterCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/routers][%d] routerCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
-
 func (o *RouterCreateUsingPUTCreated) GetPayload() *models.CreateRouterResponse {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewRouterCreateUsingPUTBadRequest() *RouterCreateUsingPUTBadRequest {
 	return &RouterCreateUsingPUTBadRequest{}
 }
 
-/*RouterCreateUsingPUTBadRequest handles this case with default header values.
+/* RouterCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -129,7 +126,6 @@ type RouterCreateUsingPUTBadRequest struct {
 func (o *RouterCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/routers][%d] routerCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *RouterCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

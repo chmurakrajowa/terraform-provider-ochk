@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewSystemTagListUsingGETParams creates a new SystemTagListUsingGETParams object
-// with the default values initialized.
+// NewSystemTagListUsingGETParams creates a new SystemTagListUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewSystemTagListUsingGETParams() *SystemTagListUsingGETParams {
-	var ()
 	return &SystemTagListUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewSystemTagListUsingGETParamsWithTimeout creates a new SystemTagListUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewSystemTagListUsingGETParamsWithTimeout(timeout time.Duration) *SystemTagListUsingGETParams {
-	var ()
 	return &SystemTagListUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewSystemTagListUsingGETParamsWithContext creates a new SystemTagListUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewSystemTagListUsingGETParamsWithContext(ctx context.Context) *SystemTagListUsingGETParams {
-	var ()
 	return &SystemTagListUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewSystemTagListUsingGETParamsWithHTTPClient creates a new SystemTagListUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewSystemTagListUsingGETParamsWithHTTPClient(client *http.Client) *SystemTagListUsingGETParams {
-	var ()
 	return &SystemTagListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*SystemTagListUsingGETParams contains all the parameters to send to the API endpoint
-for the system tag list using g e t operation typically these are written to a http.Request
+/* SystemTagListUsingGETParams contains all the parameters to send to the API endpoint
+   for the system tag list using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type SystemTagListUsingGETParams struct {
 
-	/*TagValue
-	  tagValue
+	/* TagValue.
 
+	   tagValue
 	*/
 	TagValue *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the system tag list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SystemTagListUsingGETParams) WithDefaults() *SystemTagListUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the system tag list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SystemTagListUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the system tag list using g e t params
@@ -127,16 +141,17 @@ func (o *SystemTagListUsingGETParams) WriteToRequest(r runtime.ClientRequest, re
 
 		// query param tagValue
 		var qrTagValue string
+
 		if o.TagValue != nil {
 			qrTagValue = *o.TagValue
 		}
 		qTagValue := qrTagValue
 		if qTagValue != "" {
+
 			if err := r.SetQueryParam("tagValue", qTagValue); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

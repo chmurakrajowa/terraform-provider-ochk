@@ -35,9 +35,8 @@ func (o *NetworkProfileListUsingGETReader) ReadResponse(response runtime.ClientR
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewNetworkProfileListUsingGETOK() *NetworkProfileListUsingGETOK {
 	return &NetworkProfileListUsingGETOK{}
 }
 
-/*NetworkProfileListUsingGETOK handles this case with default header values.
+/* NetworkProfileListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type NetworkProfileListUsingGETOK struct {
 func (o *NetworkProfileListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /vra/networkprofiles][%d] networkProfileListUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *NetworkProfileListUsingGETOK) GetPayload() *models.NetworkProfileListResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewNetworkProfileListUsingGETBadRequest() *NetworkProfileListUsingGETBadReq
 	return &NetworkProfileListUsingGETBadRequest{}
 }
 
-/*NetworkProfileListUsingGETBadRequest handles this case with default header values.
+/* NetworkProfileListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type NetworkProfileListUsingGETBadRequest struct {
 func (o *NetworkProfileListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /vra/networkprofiles][%d] networkProfileListUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *NetworkProfileListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

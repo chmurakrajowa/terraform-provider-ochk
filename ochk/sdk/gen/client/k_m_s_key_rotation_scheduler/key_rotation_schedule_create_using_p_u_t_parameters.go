@@ -18,59 +18,73 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewKeyRotationScheduleCreateUsingPUTParams creates a new KeyRotationScheduleCreateUsingPUTParams object
-// with the default values initialized.
+// NewKeyRotationScheduleCreateUsingPUTParams creates a new KeyRotationScheduleCreateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewKeyRotationScheduleCreateUsingPUTParams() *KeyRotationScheduleCreateUsingPUTParams {
-	var ()
 	return &KeyRotationScheduleCreateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewKeyRotationScheduleCreateUsingPUTParamsWithTimeout creates a new KeyRotationScheduleCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewKeyRotationScheduleCreateUsingPUTParamsWithTimeout(timeout time.Duration) *KeyRotationScheduleCreateUsingPUTParams {
-	var ()
 	return &KeyRotationScheduleCreateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewKeyRotationScheduleCreateUsingPUTParamsWithContext creates a new KeyRotationScheduleCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewKeyRotationScheduleCreateUsingPUTParamsWithContext(ctx context.Context) *KeyRotationScheduleCreateUsingPUTParams {
-	var ()
 	return &KeyRotationScheduleCreateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewKeyRotationScheduleCreateUsingPUTParamsWithHTTPClient creates a new KeyRotationScheduleCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewKeyRotationScheduleCreateUsingPUTParamsWithHTTPClient(client *http.Client) *KeyRotationScheduleCreateUsingPUTParams {
-	var ()
 	return &KeyRotationScheduleCreateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*KeyRotationScheduleCreateUsingPUTParams contains all the parameters to send to the API endpoint
-for the key rotation schedule create using p u t operation typically these are written to a http.Request
+/* KeyRotationScheduleCreateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the key rotation schedule create using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type KeyRotationScheduleCreateUsingPUTParams struct {
 
-	/*KeyRotationSchedule
-	  keyRotationSchedule
+	/* KeyRotationSchedule.
 
+	   keyRotationSchedule
 	*/
 	KeyRotationSchedule *models.KeyRotationSchedule
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the key rotation schedule create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *KeyRotationScheduleCreateUsingPUTParams) WithDefaults() *KeyRotationScheduleCreateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the key rotation schedule create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *KeyRotationScheduleCreateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the key rotation schedule create using p u t params
@@ -124,7 +138,6 @@ func (o *KeyRotationScheduleCreateUsingPUTParams) WriteToRequest(r runtime.Clien
 		return err
 	}
 	var res []error
-
 	if o.KeyRotationSchedule != nil {
 		if err := r.SetBodyParam(o.KeyRotationSchedule); err != nil {
 			return err

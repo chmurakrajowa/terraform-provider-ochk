@@ -19,11 +19,7 @@ output "subtenant_4" {
 }
 
 output "network" {
-  value = data.ochk_network.subtenant-network
-}
-
-output "user1" {
-  value = data.ochk_user.default
+  value = ochk_virtual_network.subtenant-network
 }
 
 output "vnet" {

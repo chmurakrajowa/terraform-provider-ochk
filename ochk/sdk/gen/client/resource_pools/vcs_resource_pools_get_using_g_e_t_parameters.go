@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewVcsResourcePoolsGetUsingGETParams creates a new VcsResourcePoolsGetUsingGETParams object
-// with the default values initialized.
+// NewVcsResourcePoolsGetUsingGETParams creates a new VcsResourcePoolsGetUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewVcsResourcePoolsGetUsingGETParams() *VcsResourcePoolsGetUsingGETParams {
-	var ()
 	return &VcsResourcePoolsGetUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewVcsResourcePoolsGetUsingGETParamsWithTimeout creates a new VcsResourcePoolsGetUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewVcsResourcePoolsGetUsingGETParamsWithTimeout(timeout time.Duration) *VcsResourcePoolsGetUsingGETParams {
-	var ()
 	return &VcsResourcePoolsGetUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewVcsResourcePoolsGetUsingGETParamsWithContext creates a new VcsResourcePoolsGetUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewVcsResourcePoolsGetUsingGETParamsWithContext(ctx context.Context) *VcsResourcePoolsGetUsingGETParams {
-	var ()
 	return &VcsResourcePoolsGetUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewVcsResourcePoolsGetUsingGETParamsWithHTTPClient creates a new VcsResourcePoolsGetUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewVcsResourcePoolsGetUsingGETParamsWithHTTPClient(client *http.Client) *VcsResourcePoolsGetUsingGETParams {
-	var ()
 	return &VcsResourcePoolsGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*VcsResourcePoolsGetUsingGETParams contains all the parameters to send to the API endpoint
-for the vcs resource pools get using g e t operation typically these are written to a http.Request
+/* VcsResourcePoolsGetUsingGETParams contains all the parameters to send to the API endpoint
+   for the vcs resource pools get using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type VcsResourcePoolsGetUsingGETParams struct {
 
-	/*ResourcePoolID
-	  resourcePoolId
+	/* ResourcePoolID.
 
+	   resourcePoolId
 	*/
 	ResourcePoolID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the vcs resource pools get using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *VcsResourcePoolsGetUsingGETParams) WithDefaults() *VcsResourcePoolsGetUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the vcs resource pools get using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *VcsResourcePoolsGetUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the vcs resource pools get using g e t params
