@@ -6,9 +6,9 @@ data "ochk_service" "http_gw" {
 
 resource "ochk_firewall_sn_rule" "fw-ew3" {
   display_name = "${var.test-data-prefix}-tf-fw-sn-http"
-  router_id = data.ochk_router.subtenant-vpc1234.id
+  router_id = ochk_router.subtenant-vpc.id
   services = [data.ochk_service.http_gw.id]
-  #custom_services = [data.ochk_custom_service.web-servers.id]
+  custom_services = [ochk_custom_service.web-servers.id]
 
   source = [ochk_security_group.subtenant-sg1-src.id]
   destination = [ochk_security_group.subtenant-sg1-dst.id]
@@ -18,5 +18,3 @@ resource "ochk_firewall_sn_rule" "fw-ew3" {
 
   priority = 1000
 }
-
-
