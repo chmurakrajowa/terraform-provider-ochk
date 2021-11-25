@@ -1,3 +1,20 @@
+## 1.2.2 (2021-11-25)
+
+
+## Resources
+* Changed resources
+  * `resource_firewall_ew_rule`
+  * `resource_firewall_sn_rule`
+
+## Structure
+* Changed structures
+  * `structure_users`
+  * `structure_router_instance`
+
+## Bugfix
+* `Fix for modify S-N rule, adding 'scope' field to object S-N rule`
+* `Fix for modify custom services in S-N and E-W rules`
+
 ## 1.2.1 (2021-11-19)
 
 ## Resources
