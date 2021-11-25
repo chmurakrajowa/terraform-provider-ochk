@@ -5,6 +5,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+func flattenRouterInstancesFromScope(m []*models.RouterInstance) string {
+	for _, v := range m {
+		return v.RouterID
+	}
+	return ""
+}
+
 func flattenRouterInstancesFromIDs(m []*models.RouterInstance) *schema.Set {
 	s := &schema.Set{
 		F: schema.HashString,

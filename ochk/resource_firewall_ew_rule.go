@@ -197,7 +197,7 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 }
 
 func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	if !d.HasChanges("display_name", "action", "direction", "disabled", "ip_protocol", "services", "source", "destination", "priority") {
+	if !d.HasChanges("display_name", "action", "direction", "disabled", "ip_protocol", "services", "custom_services", "source", "destination", "priority") {
 		return nil
 	}
 

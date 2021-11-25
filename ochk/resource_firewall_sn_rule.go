@@ -140,6 +140,10 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error while reading firewall SN rule: %+v", err)
 	}
 
+	if err := d.Set("router_id", flattenRouterInstancesFromScope(firewallSNRule.Scope)); err != nil {
+		return diag.Errorf("error setting router_id: %+v", err)
+	}
+
 	if err := d.Set("display_name", firewallSNRule.DisplayName); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
@@ -179,11 +183,7 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 	if err := d.Set("priority", firewallSNRule.Priority); err != nil {
 		return diag.Errorf("error setting priority: %+v", err)
 	}
-	/*
-		if err := d.Set("scope", flattenRouterInstancesFromIDs(firewallSNRule.Scope)); err != nil {
-			return diag.Errorf("error setting scope: %+v", err)
-		}
-	*/
+
 	if err := d.Set("created_by", firewallSNRule.CreatedBy); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
@@ -204,9 +204,10 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 }
 
 func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+
 	proxy := meta.(*sdk.Client).FirewallSNRules
 
-	if !d.HasChanges("display_name", "action", "direction", "disabled", "ip_protocol", "services", "source", "destination", "priority") {
+	if !d.HasChanges("display_name", "action", "direction", "disabled", "ip_protocol", "services", "custom_services", "source", "destination", "priority") {
 		return nil
 	}
 
@@ -248,11 +249,17 @@ func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GFWRule {
 	if destination, ok := d.GetOk("destination"); ok {
 		rule.Destination = expandSecurityGroupFromIDs(destination.(*schema.Set).List())
 	}
-	/*
-		if scope, ok := d.GetOk("scope"); ok {
-			rule.Scope = expandRouterInstancesFromIDs(scope.(*schema.Set).List())
+
+	if router_id, ok := d.GetOk("router_id"); ok {
+
+		var RouterInstanceList = make([]*models.RouterInstance, 1)
+		routerInstanceId := &models.RouterInstance{
+			RouterID: router_id.(string),
 		}
-	*/
+		RouterInstanceList[0] = routerInstanceId
+		rule.Scope = RouterInstanceList
+	}
+
 	if position, ok := d.GetOk("position"); ok {
 		rule.Position = expandFirewallRulePosition(position.([]interface{}))
 	}
