@@ -41,8 +41,9 @@ func (o *SecurityGroupDeleteUsingDELETEReader) ReadResponse(response runtime.Cli
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewSecurityGroupDeleteUsingDELETEOK() *SecurityGroupDeleteUsingDELETEOK {
 	return &SecurityGroupDeleteUsingDELETEOK{}
 }
 
-/* SecurityGroupDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*SecurityGroupDeleteUsingDELETEOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type SecurityGroupDeleteUsingDELETEOK struct {
 func (o *SecurityGroupDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /network/security-groups/{groupId}][%d] securityGroupDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
 func (o *SecurityGroupDeleteUsingDELETEOK) GetPayload() *models.DeleteSecurityGroupResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewSecurityGroupDeleteUsingDELETECreated() *SecurityGroupDeleteUsingDELETEC
 	return &SecurityGroupDeleteUsingDELETECreated{}
 }
 
-/* SecurityGroupDeleteUsingDELETECreated describes a response with status code 201, with default header values.
+/*SecurityGroupDeleteUsingDELETECreated handles this case with default header values.
 
 Entity has been deleted
 */
@@ -94,6 +96,7 @@ type SecurityGroupDeleteUsingDELETECreated struct {
 func (o *SecurityGroupDeleteUsingDELETECreated) Error() string {
 	return fmt.Sprintf("[DELETE /network/security-groups/{groupId}][%d] securityGroupDeleteUsingDELETECreated  %+v", 201, o.Payload)
 }
+
 func (o *SecurityGroupDeleteUsingDELETECreated) GetPayload() *models.DeleteSecurityGroupResponse {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewSecurityGroupDeleteUsingDELETEBadRequest() *SecurityGroupDeleteUsingDELE
 	return &SecurityGroupDeleteUsingDELETEBadRequest{}
 }
 
-/* SecurityGroupDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*SecurityGroupDeleteUsingDELETEBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -126,6 +129,7 @@ type SecurityGroupDeleteUsingDELETEBadRequest struct {
 func (o *SecurityGroupDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /network/security-groups/{groupId}][%d] securityGroupDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *SecurityGroupDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

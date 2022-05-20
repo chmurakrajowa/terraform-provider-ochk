@@ -25,20 +25,17 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	RouterCreateUsingPUT(params *RouterCreateUsingPUTParams, opts ...ClientOption) (*RouterCreateUsingPUTOK, *RouterCreateUsingPUTCreated, error)
+	RouterCreateUsingPUT(params *RouterCreateUsingPUTParams) (*RouterCreateUsingPUTOK, *RouterCreateUsingPUTCreated, error)
 
-	RouterDeleteUsingDELETE(params *RouterDeleteUsingDELETEParams, opts ...ClientOption) (*RouterDeleteUsingDELETEOK, *RouterDeleteUsingDELETECreated, error)
+	RouterDeleteUsingDELETE(params *RouterDeleteUsingDELETEParams) (*RouterDeleteUsingDELETEOK, *RouterDeleteUsingDELETECreated, error)
 
-	RouterGetUsingGET(params *RouterGetUsingGETParams, opts ...ClientOption) (*RouterGetUsingGETOK, error)
+	RouterGetUsingGET(params *RouterGetUsingGETParams) (*RouterGetUsingGETOK, error)
 
-	RouterListUsingGET(params *RouterListUsingGETParams, opts ...ClientOption) (*RouterListUsingGETOK, error)
+	RouterListUsingGET(params *RouterListUsingGETParams) (*RouterListUsingGETOK, error)
 
-	RouterUpdateUsingPUT(params *RouterUpdateUsingPUTParams, opts ...ClientOption) (*RouterUpdateUsingPUTOK, *RouterUpdateUsingPUTCreated, error)
+	RouterUpdateUsingPUT(params *RouterUpdateUsingPUTParams) (*RouterUpdateUsingPUTOK, *RouterUpdateUsingPUTCreated, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -48,12 +45,13 @@ type ClientService interface {
 
   Create router T1 in NSX-T
 */
-func (a *Client) RouterCreateUsingPUT(params *RouterCreateUsingPUTParams, opts ...ClientOption) (*RouterCreateUsingPUTOK, *RouterCreateUsingPUTCreated, error) {
+func (a *Client) RouterCreateUsingPUT(params *RouterCreateUsingPUTParams) (*RouterCreateUsingPUTOK, *RouterCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRouterCreateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "routerCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/routers",
@@ -64,12 +62,7 @@ func (a *Client) RouterCreateUsingPUT(params *RouterCreateUsingPUTParams, opts .
 		Reader:             &RouterCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -89,12 +82,13 @@ func (a *Client) RouterCreateUsingPUT(params *RouterCreateUsingPUTParams, opts .
 
   Delete router T1 from NSX-T
 */
-func (a *Client) RouterDeleteUsingDELETE(params *RouterDeleteUsingDELETEParams, opts ...ClientOption) (*RouterDeleteUsingDELETEOK, *RouterDeleteUsingDELETECreated, error) {
+func (a *Client) RouterDeleteUsingDELETE(params *RouterDeleteUsingDELETEParams) (*RouterDeleteUsingDELETEOK, *RouterDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRouterDeleteUsingDELETEParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "routerDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/network/routers/{routerId}",
@@ -105,12 +99,7 @@ func (a *Client) RouterDeleteUsingDELETE(params *RouterDeleteUsingDELETEParams, 
 		Reader:             &RouterDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -130,12 +119,13 @@ func (a *Client) RouterDeleteUsingDELETE(params *RouterDeleteUsingDELETEParams, 
 
   Get router from NSX-T
 */
-func (a *Client) RouterGetUsingGET(params *RouterGetUsingGETParams, opts ...ClientOption) (*RouterGetUsingGETOK, error) {
+func (a *Client) RouterGetUsingGET(params *RouterGetUsingGETParams) (*RouterGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRouterGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "routerGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/routers/{routerId}",
@@ -146,12 +136,7 @@ func (a *Client) RouterGetUsingGET(params *RouterGetUsingGETParams, opts ...Clie
 		Reader:             &RouterGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -170,12 +155,13 @@ func (a *Client) RouterGetUsingGET(params *RouterGetUsingGETParams, opts ...Clie
 
   List routers T0/T1 from NSX-T
 */
-func (a *Client) RouterListUsingGET(params *RouterListUsingGETParams, opts ...ClientOption) (*RouterListUsingGETOK, error) {
+func (a *Client) RouterListUsingGET(params *RouterListUsingGETParams) (*RouterListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRouterListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "routerListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/routers",
@@ -186,12 +172,7 @@ func (a *Client) RouterListUsingGET(params *RouterListUsingGETParams, opts ...Cl
 		Reader:             &RouterListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -210,12 +191,13 @@ func (a *Client) RouterListUsingGET(params *RouterListUsingGETParams, opts ...Cl
 
   Update router T1 from NSX-T
 */
-func (a *Client) RouterUpdateUsingPUT(params *RouterUpdateUsingPUTParams, opts ...ClientOption) (*RouterUpdateUsingPUTOK, *RouterUpdateUsingPUTCreated, error) {
+func (a *Client) RouterUpdateUsingPUT(params *RouterUpdateUsingPUTParams) (*RouterUpdateUsingPUTOK, *RouterUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRouterUpdateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "routerUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/routers/{routerId}",
@@ -226,12 +208,7 @@ func (a *Client) RouterUpdateUsingPUT(params *RouterUpdateUsingPUTParams, opts .
 		Reader:             &RouterUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}

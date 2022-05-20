@@ -16,66 +16,52 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewAvailablePublicIPGetUsingGETParams creates a new AvailablePublicIPGetUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewAvailablePublicIPGetUsingGETParams creates a new AvailablePublicIPGetUsingGETParams object
+// with the default values initialized.
 func NewAvailablePublicIPGetUsingGETParams() *AvailablePublicIPGetUsingGETParams {
+
 	return &AvailablePublicIPGetUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewAvailablePublicIPGetUsingGETParamsWithTimeout creates a new AvailablePublicIPGetUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewAvailablePublicIPGetUsingGETParamsWithTimeout(timeout time.Duration) *AvailablePublicIPGetUsingGETParams {
+
 	return &AvailablePublicIPGetUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewAvailablePublicIPGetUsingGETParamsWithContext creates a new AvailablePublicIPGetUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewAvailablePublicIPGetUsingGETParamsWithContext(ctx context.Context) *AvailablePublicIPGetUsingGETParams {
+
 	return &AvailablePublicIPGetUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewAvailablePublicIPGetUsingGETParamsWithHTTPClient creates a new AvailablePublicIPGetUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewAvailablePublicIPGetUsingGETParamsWithHTTPClient(client *http.Client) *AvailablePublicIPGetUsingGETParams {
+
 	return &AvailablePublicIPGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* AvailablePublicIPGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the available public IP get using g e t operation.
-
-   Typically these are written to a http.Request.
+/*AvailablePublicIPGetUsingGETParams contains all the parameters to send to the API endpoint
+for the available public IP get using g e t operation typically these are written to a http.Request
 */
 type AvailablePublicIPGetUsingGETParams struct {
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the available public IP get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *AvailablePublicIPGetUsingGETParams) WithDefaults() *AvailablePublicIPGetUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the available public IP get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *AvailablePublicIPGetUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the available public IP get using g e t params

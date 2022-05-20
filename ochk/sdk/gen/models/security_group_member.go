@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -81,6 +80,7 @@ func (m *SecurityGroupMember) validateMemberTypeEnum(path, location string, valu
 }
 
 func (m *SecurityGroupMember) validateMemberType(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.MemberType) { // not required
 		return nil
 	}
@@ -90,11 +90,6 @@ func (m *SecurityGroupMember) validateMemberType(formats strfmt.Registry) error 
 		return err
 	}
 
-	return nil
-}
-
-// ContextValidate validates this security group member based on context it is used
-func (m *SecurityGroupMember) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

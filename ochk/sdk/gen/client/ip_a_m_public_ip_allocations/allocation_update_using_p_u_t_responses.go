@@ -35,8 +35,9 @@ func (o *AllocationUpdateUsingPUTReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewAllocationUpdateUsingPUTOK() *AllocationUpdateUsingPUTOK {
 	return &AllocationUpdateUsingPUTOK{}
 }
 
-/* AllocationUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*AllocationUpdateUsingPUTOK handles this case with default header values.
 
 Entity has been created
 */
@@ -56,6 +57,7 @@ type AllocationUpdateUsingPUTOK struct {
 func (o *AllocationUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /ipam/ipaddress/public/allocation/{allocationId}][%d] allocationUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *AllocationUpdateUsingPUTOK) GetPayload() *models.UpdatePublicIPAllocationResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewAllocationUpdateUsingPUTBadRequest() *AllocationUpdateUsingPUTBadRequest
 	return &AllocationUpdateUsingPUTBadRequest{}
 }
 
-/* AllocationUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*AllocationUpdateUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */

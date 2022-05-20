@@ -25,26 +25,23 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	KeyCreateUsingPUT(params *KeyCreateUsingPUTParams, opts ...ClientOption) (*KeyCreateUsingPUTOK, *KeyCreateUsingPUTCreated, error)
+	KeyCreateUsingPUT(params *KeyCreateUsingPUTParams) (*KeyCreateUsingPUTOK, *KeyCreateUsingPUTCreated, error)
 
-	KeyDeleteUsingDELETE(params *KeyDeleteUsingDELETEParams, opts ...ClientOption) (*KeyDeleteUsingDELETEOK, error)
+	KeyDeleteUsingDELETE(params *KeyDeleteUsingDELETEParams) (*KeyDeleteUsingDELETEOK, error)
 
-	KeyExportUsingPOST(params *KeyExportUsingPOSTParams, opts ...ClientOption) (*KeyExportUsingPOSTOK, error)
+	KeyExportUsingPOST(params *KeyExportUsingPOSTParams) (*KeyExportUsingPOSTOK, error)
 
-	KeyGetUsingGET(params *KeyGetUsingGETParams, opts ...ClientOption) (*KeyGetUsingGETOK, error)
+	KeyGetUsingGET(params *KeyGetUsingGETParams) (*KeyGetUsingGETOK, error)
 
-	KeyImportUsingPOST(params *KeyImportUsingPOSTParams, opts ...ClientOption) (*KeyImportUsingPOSTOK, *KeyImportUsingPOSTCreated, error)
+	KeyImportUsingPOST(params *KeyImportUsingPOSTParams) (*KeyImportUsingPOSTOK, *KeyImportUsingPOSTCreated, error)
 
-	KeyListUsingGET(params *KeyListUsingGETParams, opts ...ClientOption) (*KeyListUsingGETOK, error)
+	KeyListUsingGET(params *KeyListUsingGETParams) (*KeyListUsingGETOK, error)
 
-	KeyNewVersionUsingPOST(params *KeyNewVersionUsingPOSTParams, opts ...ClientOption) (*KeyNewVersionUsingPOSTOK, *KeyNewVersionUsingPOSTCreated, error)
+	KeyNewVersionUsingPOST(params *KeyNewVersionUsingPOSTParams) (*KeyNewVersionUsingPOSTOK, *KeyNewVersionUsingPOSTCreated, error)
 
-	KeyRevokeUsingPOST(params *KeyRevokeUsingPOSTParams, opts ...ClientOption) (*KeyRevokeUsingPOSTOK, error)
+	KeyRevokeUsingPOST(params *KeyRevokeUsingPOSTParams) (*KeyRevokeUsingPOSTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -54,12 +51,13 @@ type ClientService interface {
 
   Create key (KMS)
 */
-func (a *Client) KeyCreateUsingPUT(params *KeyCreateUsingPUTParams, opts ...ClientOption) (*KeyCreateUsingPUTOK, *KeyCreateUsingPUTCreated, error) {
+func (a *Client) KeyCreateUsingPUT(params *KeyCreateUsingPUTParams) (*KeyCreateUsingPUTOK, *KeyCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewKeyCreateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "keyCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/kms/key",
@@ -70,12 +68,7 @@ func (a *Client) KeyCreateUsingPUT(params *KeyCreateUsingPUTParams, opts ...Clie
 		Reader:             &KeyCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -95,12 +88,13 @@ func (a *Client) KeyCreateUsingPUT(params *KeyCreateUsingPUTParams, opts ...Clie
 
   Delete key (KMS)
 */
-func (a *Client) KeyDeleteUsingDELETE(params *KeyDeleteUsingDELETEParams, opts ...ClientOption) (*KeyDeleteUsingDELETEOK, error) {
+func (a *Client) KeyDeleteUsingDELETE(params *KeyDeleteUsingDELETEParams) (*KeyDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewKeyDeleteUsingDELETEParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "keyDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/kms/key/{id}",
@@ -111,12 +105,7 @@ func (a *Client) KeyDeleteUsingDELETE(params *KeyDeleteUsingDELETEParams, opts .
 		Reader:             &KeyDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -135,12 +124,13 @@ func (a *Client) KeyDeleteUsingDELETE(params *KeyDeleteUsingDELETEParams, opts .
 
   Export key (KMS)
 */
-func (a *Client) KeyExportUsingPOST(params *KeyExportUsingPOSTParams, opts ...ClientOption) (*KeyExportUsingPOSTOK, error) {
+func (a *Client) KeyExportUsingPOST(params *KeyExportUsingPOSTParams) (*KeyExportUsingPOSTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewKeyExportUsingPOSTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "keyExportUsingPOST",
 		Method:             "POST",
 		PathPattern:        "/kms/key/{id}/export",
@@ -151,12 +141,7 @@ func (a *Client) KeyExportUsingPOST(params *KeyExportUsingPOSTParams, opts ...Cl
 		Reader:             &KeyExportUsingPOSTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -175,12 +160,13 @@ func (a *Client) KeyExportUsingPOST(params *KeyExportUsingPOSTParams, opts ...Cl
 
   Get KMS key
 */
-func (a *Client) KeyGetUsingGET(params *KeyGetUsingGETParams, opts ...ClientOption) (*KeyGetUsingGETOK, error) {
+func (a *Client) KeyGetUsingGET(params *KeyGetUsingGETParams) (*KeyGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewKeyGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "keyGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/kms/key/{id}",
@@ -191,12 +177,7 @@ func (a *Client) KeyGetUsingGET(params *KeyGetUsingGETParams, opts ...ClientOpti
 		Reader:             &KeyGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -215,12 +196,13 @@ func (a *Client) KeyGetUsingGET(params *KeyGetUsingGETParams, opts ...ClientOpti
 
   Import key (KMS)
 */
-func (a *Client) KeyImportUsingPOST(params *KeyImportUsingPOSTParams, opts ...ClientOption) (*KeyImportUsingPOSTOK, *KeyImportUsingPOSTCreated, error) {
+func (a *Client) KeyImportUsingPOST(params *KeyImportUsingPOSTParams) (*KeyImportUsingPOSTOK, *KeyImportUsingPOSTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewKeyImportUsingPOSTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "keyImportUsingPOST",
 		Method:             "POST",
 		PathPattern:        "/kms/key/import",
@@ -231,12 +213,7 @@ func (a *Client) KeyImportUsingPOST(params *KeyImportUsingPOSTParams, opts ...Cl
 		Reader:             &KeyImportUsingPOSTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -256,12 +233,13 @@ func (a *Client) KeyImportUsingPOST(params *KeyImportUsingPOSTParams, opts ...Cl
 
   List KMS keys
 */
-func (a *Client) KeyListUsingGET(params *KeyListUsingGETParams, opts ...ClientOption) (*KeyListUsingGETOK, error) {
+func (a *Client) KeyListUsingGET(params *KeyListUsingGETParams) (*KeyListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewKeyListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "keyListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/kms/key",
@@ -272,12 +250,7 @@ func (a *Client) KeyListUsingGET(params *KeyListUsingGETParams, opts ...ClientOp
 		Reader:             &KeyListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -296,12 +269,13 @@ func (a *Client) KeyListUsingGET(params *KeyListUsingGETParams, opts ...ClientOp
 
   Create new key version (KMS)
 */
-func (a *Client) KeyNewVersionUsingPOST(params *KeyNewVersionUsingPOSTParams, opts ...ClientOption) (*KeyNewVersionUsingPOSTOK, *KeyNewVersionUsingPOSTCreated, error) {
+func (a *Client) KeyNewVersionUsingPOST(params *KeyNewVersionUsingPOSTParams) (*KeyNewVersionUsingPOSTOK, *KeyNewVersionUsingPOSTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewKeyNewVersionUsingPOSTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "keyNewVersionUsingPOST",
 		Method:             "POST",
 		PathPattern:        "/kms/key/{id}/versions",
@@ -312,12 +286,7 @@ func (a *Client) KeyNewVersionUsingPOST(params *KeyNewVersionUsingPOSTParams, op
 		Reader:             &KeyNewVersionUsingPOSTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -337,12 +306,13 @@ func (a *Client) KeyNewVersionUsingPOST(params *KeyNewVersionUsingPOSTParams, op
 
   Revoke key (KMS)
 */
-func (a *Client) KeyRevokeUsingPOST(params *KeyRevokeUsingPOSTParams, opts ...ClientOption) (*KeyRevokeUsingPOSTOK, error) {
+func (a *Client) KeyRevokeUsingPOST(params *KeyRevokeUsingPOSTParams) (*KeyRevokeUsingPOSTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewKeyRevokeUsingPOSTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "keyRevokeUsingPOST",
 		Method:             "POST",
 		PathPattern:        "/kms/key/{id}/revoke",
@@ -353,12 +323,7 @@ func (a *Client) KeyRevokeUsingPOST(params *KeyRevokeUsingPOSTParams, opts ...Cl
 		Reader:             &KeyRevokeUsingPOSTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}

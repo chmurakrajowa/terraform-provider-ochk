@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -59,6 +57,7 @@ func (m *CreateUserInstanceResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *CreateUserInstanceResponse) validateRequestInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -76,6 +75,7 @@ func (m *CreateUserInstanceResponse) validateRequestInstance(formats strfmt.Regi
 }
 
 func (m *CreateUserInstanceResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
@@ -88,58 +88,13 @@ func (m *CreateUserInstanceResponse) validateTimestamp(formats strfmt.Registry) 
 }
 
 func (m *CreateUserInstanceResponse) validateUserInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.UserInstance) { // not required
 		return nil
 	}
 
 	if m.UserInstance != nil {
 		if err := m.UserInstance.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("userInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this create user instance response based on the context it is used
-func (m *CreateUserInstanceResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateUserInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *CreateUserInstanceResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.RequestInstance != nil {
-		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("requestInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *CreateUserInstanceResponse) contextValidateUserInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.UserInstance != nil {
-		if err := m.UserInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("userInstance")
 			}

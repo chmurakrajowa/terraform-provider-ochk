@@ -41,8 +41,9 @@ func (o *NatRuleCreateUsingPUTReader) ReadResponse(response runtime.ClientRespon
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewNatRuleCreateUsingPUTOK() *NatRuleCreateUsingPUTOK {
 	return &NatRuleCreateUsingPUTOK{}
 }
 
-/* NatRuleCreateUsingPUTOK describes a response with status code 200, with default header values.
+/*NatRuleCreateUsingPUTOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type NatRuleCreateUsingPUTOK struct {
 func (o *NatRuleCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/nat/rules][%d] natRuleCreateUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *NatRuleCreateUsingPUTOK) GetPayload() *models.CreateNATRuleResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewNatRuleCreateUsingPUTCreated() *NatRuleCreateUsingPUTCreated {
 	return &NatRuleCreateUsingPUTCreated{}
 }
 
-/* NatRuleCreateUsingPUTCreated describes a response with status code 201, with default header values.
+/*NatRuleCreateUsingPUTCreated handles this case with default header values.
 
 Entity has been created
 */
@@ -94,6 +96,7 @@ type NatRuleCreateUsingPUTCreated struct {
 func (o *NatRuleCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/nat/rules][%d] natRuleCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
 func (o *NatRuleCreateUsingPUTCreated) GetPayload() *models.CreateNATRuleResponse {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewNatRuleCreateUsingPUTBadRequest() *NatRuleCreateUsingPUTBadRequest {
 	return &NatRuleCreateUsingPUTBadRequest{}
 }
 
-/* NatRuleCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*NatRuleCreateUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -126,6 +129,7 @@ type NatRuleCreateUsingPUTBadRequest struct {
 func (o *NatRuleCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/nat/rules][%d] natRuleCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *NatRuleCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

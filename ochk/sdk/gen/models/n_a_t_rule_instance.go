@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -161,6 +160,7 @@ func (m *NATRuleInstance) validateActionEnum(path, location string, value string
 }
 
 func (m *NATRuleInstance) validateAction(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Action) { // not required
 		return nil
 	}
@@ -174,6 +174,7 @@ func (m *NATRuleInstance) validateAction(formats strfmt.Registry) error {
 }
 
 func (m *NATRuleInstance) validateCreationDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.CreationDate) { // not required
 		return nil
 	}
@@ -218,6 +219,7 @@ func (m *NATRuleInstance) validateFirewallMatchEnum(path, location string, value
 }
 
 func (m *NATRuleInstance) validateFirewallMatch(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.FirewallMatch) { // not required
 		return nil
 	}
@@ -231,6 +233,7 @@ func (m *NATRuleInstance) validateFirewallMatch(formats strfmt.Registry) error {
 }
 
 func (m *NATRuleInstance) validateModificationDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.ModificationDate) { // not required
 		return nil
 	}
@@ -272,6 +275,7 @@ func (m *NATRuleInstance) validateNatTypeEnum(path, location string, value strin
 }
 
 func (m *NATRuleInstance) validateNatType(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.NatType) { // not required
 		return nil
 	}
@@ -285,6 +289,7 @@ func (m *NATRuleInstance) validateNatType(formats strfmt.Registry) error {
 }
 
 func (m *NATRuleInstance) validateServiceInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.ServiceInstance) { // not required
 		return nil
 	}
@@ -302,6 +307,7 @@ func (m *NATRuleInstance) validateServiceInstance(formats strfmt.Registry) error
 }
 
 func (m *NATRuleInstance) validateTierZeroRouter(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.TierZeroRouter) { // not required
 		return nil
 	}
@@ -319,76 +325,13 @@ func (m *NATRuleInstance) validateTierZeroRouter(formats strfmt.Registry) error 
 }
 
 func (m *NATRuleInstance) validateVirtualNetworkInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.VirtualNetworkInstance) { // not required
 		return nil
 	}
 
 	if m.VirtualNetworkInstance != nil {
 		if err := m.VirtualNetworkInstance.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("virtualNetworkInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this n a t rule instance based on the context it is used
-func (m *NATRuleInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateServiceInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateTierZeroRouter(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateVirtualNetworkInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *NATRuleInstance) contextValidateServiceInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.ServiceInstance != nil {
-		if err := m.ServiceInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("serviceInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *NATRuleInstance) contextValidateTierZeroRouter(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.TierZeroRouter != nil {
-		if err := m.TierZeroRouter.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("tierZeroRouter")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *NATRuleInstance) contextValidateVirtualNetworkInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.VirtualNetworkInstance != nil {
-		if err := m.VirtualNetworkInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("virtualNetworkInstance")
 			}

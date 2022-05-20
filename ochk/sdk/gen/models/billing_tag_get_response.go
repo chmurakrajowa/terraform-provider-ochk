@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -52,6 +50,7 @@ func (m *BillingTagGetResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *BillingTagGetResponse) validateBillingTag(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.BillingTag) { // not required
 		return nil
 	}
@@ -69,40 +68,13 @@ func (m *BillingTagGetResponse) validateBillingTag(formats strfmt.Registry) erro
 }
 
 func (m *BillingTagGetResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this billing tag get response based on the context it is used
-func (m *BillingTagGetResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateBillingTag(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *BillingTagGetResponse) contextValidateBillingTag(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.BillingTag != nil {
-		if err := m.BillingTag.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("billingTag")
-			}
-			return err
-		}
 	}
 
 	return nil

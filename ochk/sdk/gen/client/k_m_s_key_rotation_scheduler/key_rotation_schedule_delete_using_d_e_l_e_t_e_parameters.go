@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewKeyRotationScheduleDeleteUsingDELETEParams creates a new KeyRotationScheduleDeleteUsingDELETEParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewKeyRotationScheduleDeleteUsingDELETEParams creates a new KeyRotationScheduleDeleteUsingDELETEParams object
+// with the default values initialized.
 func NewKeyRotationScheduleDeleteUsingDELETEParams() *KeyRotationScheduleDeleteUsingDELETEParams {
+	var ()
 	return &KeyRotationScheduleDeleteUsingDELETEParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewKeyRotationScheduleDeleteUsingDELETEParamsWithTimeout creates a new KeyRotationScheduleDeleteUsingDELETEParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewKeyRotationScheduleDeleteUsingDELETEParamsWithTimeout(timeout time.Duration) *KeyRotationScheduleDeleteUsingDELETEParams {
+	var ()
 	return &KeyRotationScheduleDeleteUsingDELETEParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewKeyRotationScheduleDeleteUsingDELETEParamsWithContext creates a new KeyRotationScheduleDeleteUsingDELETEParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewKeyRotationScheduleDeleteUsingDELETEParamsWithContext(ctx context.Context) *KeyRotationScheduleDeleteUsingDELETEParams {
+	var ()
 	return &KeyRotationScheduleDeleteUsingDELETEParams{
+
 		Context: ctx,
 	}
 }
 
 // NewKeyRotationScheduleDeleteUsingDELETEParamsWithHTTPClient creates a new KeyRotationScheduleDeleteUsingDELETEParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewKeyRotationScheduleDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) *KeyRotationScheduleDeleteUsingDELETEParams {
+	var ()
 	return &KeyRotationScheduleDeleteUsingDELETEParams{
 		HTTPClient: client,
 	}
 }
 
-/* KeyRotationScheduleDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-   for the key rotation schedule delete using d e l e t e operation.
-
-   Typically these are written to a http.Request.
+/*KeyRotationScheduleDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
+for the key rotation schedule delete using d e l e t e operation typically these are written to a http.Request
 */
 type KeyRotationScheduleDeleteUsingDELETEParams struct {
 
-	/* KeyID.
+	/*KeyID
+	  keyId
 
-	   keyId
 	*/
 	KeyID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the key rotation schedule delete using d e l e t e params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *KeyRotationScheduleDeleteUsingDELETEParams) WithDefaults() *KeyRotationScheduleDeleteUsingDELETEParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the key rotation schedule delete using d e l e t e params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *KeyRotationScheduleDeleteUsingDELETEParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the key rotation schedule delete using d e l e t e params

@@ -41,8 +41,9 @@ func (o *VirtualMachineOverallReportGetUsingGETReader) ReadResponse(response run
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewVirtualMachineOverallReportGetUsingGETOK() *VirtualMachineOverallReportG
 	return &VirtualMachineOverallReportGetUsingGETOK{}
 }
 
-/* VirtualMachineOverallReportGetUsingGETOK describes a response with status code 200, with default header values.
+/*VirtualMachineOverallReportGetUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type VirtualMachineOverallReportGetUsingGETOK struct {
 func (o *VirtualMachineOverallReportGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /billing/virtual-machine/summary][%d] virtualMachineOverallReportGetUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *VirtualMachineOverallReportGetUsingGETOK) GetPayload() *models.VirtualMachineSummaryReportGetResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewVirtualMachineOverallReportGetUsingGETBadRequest() *VirtualMachineOveral
 	return &VirtualMachineOverallReportGetUsingGETBadRequest{}
 }
 
-/* VirtualMachineOverallReportGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*VirtualMachineOverallReportGetUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -94,6 +96,7 @@ type VirtualMachineOverallReportGetUsingGETBadRequest struct {
 func (o *VirtualMachineOverallReportGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /billing/virtual-machine/summary][%d] virtualMachineOverallReportGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *VirtualMachineOverallReportGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewVirtualMachineOverallReportGetUsingGETNotFound() *VirtualMachineOverallR
 	return &VirtualMachineOverallReportGetUsingGETNotFound{}
 }
 
-/* VirtualMachineOverallReportGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*VirtualMachineOverallReportGetUsingGETNotFound handles this case with default header values.
 
 Entity not found.
 */

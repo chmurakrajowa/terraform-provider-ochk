@@ -35,8 +35,9 @@ func (o *LocalGroupDeleteUsingDELETEReader) ReadResponse(response runtime.Client
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewLocalGroupDeleteUsingDELETEOK() *LocalGroupDeleteUsingDELETEOK {
 	return &LocalGroupDeleteUsingDELETEOK{}
 }
 
-/* LocalGroupDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*LocalGroupDeleteUsingDELETEOK handles this case with default header values.
 
 Entity has been updated
 */
@@ -56,6 +57,7 @@ type LocalGroupDeleteUsingDELETEOK struct {
 func (o *LocalGroupDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /groups/local/{groupId}][%d] localGroupDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
 func (o *LocalGroupDeleteUsingDELETEOK) GetPayload() *models.DeleteLocalGroupResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewLocalGroupDeleteUsingDELETEBadRequest() *LocalGroupDeleteUsingDELETEBadR
 	return &LocalGroupDeleteUsingDELETEBadRequest{}
 }
 
-/* LocalGroupDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*LocalGroupDeleteUsingDELETEBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type LocalGroupDeleteUsingDELETEBadRequest struct {
 func (o *LocalGroupDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /groups/local/{groupId}][%d] localGroupDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *LocalGroupDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

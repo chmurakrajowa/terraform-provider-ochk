@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -53,6 +52,7 @@ func (m *NetworkProfileListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *NetworkProfileListResponse) validateNetworkProfileList(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.NetworkProfileList) { // not required
 		return nil
 	}
@@ -77,44 +77,13 @@ func (m *NetworkProfileListResponse) validateNetworkProfileList(formats strfmt.R
 }
 
 func (m *NetworkProfileListResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this network profile list response based on the context it is used
-func (m *NetworkProfileListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateNetworkProfileList(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *NetworkProfileListResponse) contextValidateNetworkProfileList(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.NetworkProfileList); i++ {
-
-		if m.NetworkProfileList[i] != nil {
-			if err := m.NetworkProfileList[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("networkProfileList" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

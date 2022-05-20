@@ -25,14 +25,11 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	SnapshotGetUsingGET(params *SnapshotGetUsingGETParams, opts ...ClientOption) (*SnapshotGetUsingGETOK, error)
+	SnapshotGetUsingGET(params *SnapshotGetUsingGETParams) (*SnapshotGetUsingGETOK, error)
 
-	SnapshotListUsingGET(params *SnapshotListUsingGETParams, opts ...ClientOption) (*SnapshotListUsingGETOK, error)
+	SnapshotListUsingGET(params *SnapshotListUsingGETParams) (*SnapshotListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -42,12 +39,13 @@ type ClientService interface {
 
   Get vSphere vCenter virtual machine snapshot
 */
-func (a *Client) SnapshotGetUsingGET(params *SnapshotGetUsingGETParams, opts ...ClientOption) (*SnapshotGetUsingGETOK, error) {
+func (a *Client) SnapshotGetUsingGET(params *SnapshotGetUsingGETParams) (*SnapshotGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSnapshotGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "snapshotGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vcs/snapshots/{snapshotId}",
@@ -58,12 +56,7 @@ func (a *Client) SnapshotGetUsingGET(params *SnapshotGetUsingGETParams, opts ...
 		Reader:             &SnapshotGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -82,12 +75,13 @@ func (a *Client) SnapshotGetUsingGET(params *SnapshotGetUsingGETParams, opts ...
 
   List vSphere vCenter virtual machines snapshots
 */
-func (a *Client) SnapshotListUsingGET(params *SnapshotListUsingGETParams, opts ...ClientOption) (*SnapshotListUsingGETOK, error) {
+func (a *Client) SnapshotListUsingGET(params *SnapshotListUsingGETParams) (*SnapshotListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSnapshotListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "snapshotListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vcs/snapshots",
@@ -98,12 +92,7 @@ func (a *Client) SnapshotListUsingGET(params *SnapshotListUsingGETParams, opts .
 		Reader:             &SnapshotListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}

@@ -35,8 +35,9 @@ func (o *SecurityPolicyListUsingGETReader) ReadResponse(response runtime.ClientR
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewSecurityPolicyListUsingGETOK() *SecurityPolicyListUsingGETOK {
 	return &SecurityPolicyListUsingGETOK{}
 }
 
-/* SecurityPolicyListUsingGETOK describes a response with status code 200, with default header values.
+/*SecurityPolicyListUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -56,6 +57,7 @@ type SecurityPolicyListUsingGETOK struct {
 func (o *SecurityPolicyListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/firewall/security-policies][%d] securityPolicyListUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *SecurityPolicyListUsingGETOK) GetPayload() *models.SecurityPolicyListResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewSecurityPolicyListUsingGETBadRequest() *SecurityPolicyListUsingGETBadReq
 	return &SecurityPolicyListUsingGETBadRequest{}
 }
 
-/* SecurityPolicyListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*SecurityPolicyListUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type SecurityPolicyListUsingGETBadRequest struct {
 func (o *SecurityPolicyListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/firewall/security-policies][%d] securityPolicyListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *SecurityPolicyListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

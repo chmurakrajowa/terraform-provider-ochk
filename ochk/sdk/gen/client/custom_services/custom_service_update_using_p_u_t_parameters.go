@@ -18,79 +18,64 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewCustomServiceUpdateUsingPUTParams creates a new CustomServiceUpdateUsingPUTParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewCustomServiceUpdateUsingPUTParams creates a new CustomServiceUpdateUsingPUTParams object
+// with the default values initialized.
 func NewCustomServiceUpdateUsingPUTParams() *CustomServiceUpdateUsingPUTParams {
+	var ()
 	return &CustomServiceUpdateUsingPUTParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCustomServiceUpdateUsingPUTParamsWithTimeout creates a new CustomServiceUpdateUsingPUTParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewCustomServiceUpdateUsingPUTParamsWithTimeout(timeout time.Duration) *CustomServiceUpdateUsingPUTParams {
+	var ()
 	return &CustomServiceUpdateUsingPUTParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewCustomServiceUpdateUsingPUTParamsWithContext creates a new CustomServiceUpdateUsingPUTParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewCustomServiceUpdateUsingPUTParamsWithContext(ctx context.Context) *CustomServiceUpdateUsingPUTParams {
+	var ()
 	return &CustomServiceUpdateUsingPUTParams{
+
 		Context: ctx,
 	}
 }
 
 // NewCustomServiceUpdateUsingPUTParamsWithHTTPClient creates a new CustomServiceUpdateUsingPUTParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewCustomServiceUpdateUsingPUTParamsWithHTTPClient(client *http.Client) *CustomServiceUpdateUsingPUTParams {
+	var ()
 	return &CustomServiceUpdateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/* CustomServiceUpdateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the custom service update using p u t operation.
-
-   Typically these are written to a http.Request.
+/*CustomServiceUpdateUsingPUTParams contains all the parameters to send to the API endpoint
+for the custom service update using p u t operation typically these are written to a http.Request
 */
 type CustomServiceUpdateUsingPUTParams struct {
 
-	/* CustomServiceInstance.
+	/*CustomServiceInstance
+	  customServiceInstance
 
-	   customServiceInstance
 	*/
 	CustomServiceInstance *models.CustomServiceInstance
+	/*ServiceID
+	  serviceId
 
-	/* ServiceID.
-
-	   serviceId
 	*/
 	ServiceID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the custom service update using p u t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *CustomServiceUpdateUsingPUTParams) WithDefaults() *CustomServiceUpdateUsingPUTParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the custom service update using p u t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *CustomServiceUpdateUsingPUTParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the custom service update using p u t params
@@ -155,6 +140,7 @@ func (o *CustomServiceUpdateUsingPUTParams) WriteToRequest(r runtime.ClientReque
 		return err
 	}
 	var res []error
+
 	if o.CustomServiceInstance != nil {
 		if err := r.SetBodyParam(o.CustomServiceInstance); err != nil {
 			return err

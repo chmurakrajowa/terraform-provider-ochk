@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -64,40 +62,13 @@ func (m *UserInstance) Validate(formats strfmt.Registry) error {
 }
 
 func (m *UserInstance) validatePrincipalID(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.PrincipalID) { // not required
 		return nil
 	}
 
 	if m.PrincipalID != nil {
 		if err := m.PrincipalID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("principalId")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this user instance based on the context it is used
-func (m *UserInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidatePrincipalID(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *UserInstance) contextValidatePrincipalID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.PrincipalID != nil {
-		if err := m.PrincipalID.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("principalId")
 			}

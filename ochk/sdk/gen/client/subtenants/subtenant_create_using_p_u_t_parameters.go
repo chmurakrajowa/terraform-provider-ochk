@@ -18,73 +18,59 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewSubtenantCreateUsingPUTParams creates a new SubtenantCreateUsingPUTParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewSubtenantCreateUsingPUTParams creates a new SubtenantCreateUsingPUTParams object
+// with the default values initialized.
 func NewSubtenantCreateUsingPUTParams() *SubtenantCreateUsingPUTParams {
+	var ()
 	return &SubtenantCreateUsingPUTParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewSubtenantCreateUsingPUTParamsWithTimeout creates a new SubtenantCreateUsingPUTParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewSubtenantCreateUsingPUTParamsWithTimeout(timeout time.Duration) *SubtenantCreateUsingPUTParams {
+	var ()
 	return &SubtenantCreateUsingPUTParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewSubtenantCreateUsingPUTParamsWithContext creates a new SubtenantCreateUsingPUTParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewSubtenantCreateUsingPUTParamsWithContext(ctx context.Context) *SubtenantCreateUsingPUTParams {
+	var ()
 	return &SubtenantCreateUsingPUTParams{
+
 		Context: ctx,
 	}
 }
 
 // NewSubtenantCreateUsingPUTParamsWithHTTPClient creates a new SubtenantCreateUsingPUTParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewSubtenantCreateUsingPUTParamsWithHTTPClient(client *http.Client) *SubtenantCreateUsingPUTParams {
+	var ()
 	return &SubtenantCreateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/* SubtenantCreateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the subtenant create using p u t operation.
-
-   Typically these are written to a http.Request.
+/*SubtenantCreateUsingPUTParams contains all the parameters to send to the API endpoint
+for the subtenant create using p u t operation typically these are written to a http.Request
 */
 type SubtenantCreateUsingPUTParams struct {
 
-	/* SubtenantInstance.
+	/*SubtenantInstance
+	  subtenantInstance
 
-	   subtenantInstance
 	*/
 	SubtenantInstance *models.SubtenantInstance
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the subtenant create using p u t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *SubtenantCreateUsingPUTParams) WithDefaults() *SubtenantCreateUsingPUTParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the subtenant create using p u t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *SubtenantCreateUsingPUTParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the subtenant create using p u t params
@@ -138,6 +124,7 @@ func (o *SubtenantCreateUsingPUTParams) WriteToRequest(r runtime.ClientRequest, 
 		return err
 	}
 	var res []error
+
 	if o.SubtenantInstance != nil {
 		if err := r.SetBodyParam(o.SubtenantInstance); err != nil {
 			return err

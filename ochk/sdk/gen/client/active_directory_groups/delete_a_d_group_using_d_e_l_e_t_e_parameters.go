@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDeleteADGroupUsingDELETEParams creates a new DeleteADGroupUsingDELETEParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewDeleteADGroupUsingDELETEParams creates a new DeleteADGroupUsingDELETEParams object
+// with the default values initialized.
 func NewDeleteADGroupUsingDELETEParams() *DeleteADGroupUsingDELETEParams {
+	var ()
 	return &DeleteADGroupUsingDELETEParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDeleteADGroupUsingDELETEParamsWithTimeout creates a new DeleteADGroupUsingDELETEParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewDeleteADGroupUsingDELETEParamsWithTimeout(timeout time.Duration) *DeleteADGroupUsingDELETEParams {
+	var ()
 	return &DeleteADGroupUsingDELETEParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewDeleteADGroupUsingDELETEParamsWithContext creates a new DeleteADGroupUsingDELETEParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewDeleteADGroupUsingDELETEParamsWithContext(ctx context.Context) *DeleteADGroupUsingDELETEParams {
+	var ()
 	return &DeleteADGroupUsingDELETEParams{
+
 		Context: ctx,
 	}
 }
 
 // NewDeleteADGroupUsingDELETEParamsWithHTTPClient creates a new DeleteADGroupUsingDELETEParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewDeleteADGroupUsingDELETEParamsWithHTTPClient(client *http.Client) *DeleteADGroupUsingDELETEParams {
+	var ()
 	return &DeleteADGroupUsingDELETEParams{
 		HTTPClient: client,
 	}
 }
 
-/* DeleteADGroupUsingDELETEParams contains all the parameters to send to the API endpoint
-   for the delete a d group using d e l e t e operation.
-
-   Typically these are written to a http.Request.
+/*DeleteADGroupUsingDELETEParams contains all the parameters to send to the API endpoint
+for the delete a d group using d e l e t e operation typically these are written to a http.Request
 */
 type DeleteADGroupUsingDELETEParams struct {
 
-	/* SamAccountName.
+	/*SamAccountName
+	  samAccountName
 
-	   samAccountName
 	*/
 	SamAccountName string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the delete a d group using d e l e t e params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *DeleteADGroupUsingDELETEParams) WithDefaults() *DeleteADGroupUsingDELETEParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the delete a d group using d e l e t e params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *DeleteADGroupUsingDELETEParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the delete a d group using d e l e t e params

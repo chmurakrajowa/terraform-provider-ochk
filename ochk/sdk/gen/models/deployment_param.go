@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -111,6 +110,7 @@ func (m *DeploymentParam) validateParamTypeEnum(path, location string, value str
 }
 
 func (m *DeploymentParam) validateParamType(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.ParamType) { // not required
 		return nil
 	}
@@ -120,11 +120,6 @@ func (m *DeploymentParam) validateParamType(formats strfmt.Registry) error {
 		return err
 	}
 
-	return nil
-}
-
-// ContextValidate validates this deployment param based on context it is used
-func (m *DeploymentParam) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

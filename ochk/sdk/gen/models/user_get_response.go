@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -52,6 +50,7 @@ func (m *UserGetResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *UserGetResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
@@ -64,40 +63,13 @@ func (m *UserGetResponse) validateTimestamp(formats strfmt.Registry) error {
 }
 
 func (m *UserGetResponse) validateUserInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.UserInstance) { // not required
 		return nil
 	}
 
 	if m.UserInstance != nil {
 		if err := m.UserInstance.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("userInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this user get response based on the context it is used
-func (m *UserGetResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateUserInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *UserGetResponse) contextValidateUserInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.UserInstance != nil {
-		if err := m.UserInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("userInstance")
 			}

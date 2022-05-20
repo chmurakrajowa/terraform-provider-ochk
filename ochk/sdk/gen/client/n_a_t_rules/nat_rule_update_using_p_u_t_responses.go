@@ -35,8 +35,9 @@ func (o *NatRuleUpdateUsingPUTReader) ReadResponse(response runtime.ClientRespon
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewNatRuleUpdateUsingPUTOK() *NatRuleUpdateUsingPUTOK {
 	return &NatRuleUpdateUsingPUTOK{}
 }
 
-/* NatRuleUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*NatRuleUpdateUsingPUTOK handles this case with default header values.
 
 Entity has been updated
 */
@@ -56,6 +57,7 @@ type NatRuleUpdateUsingPUTOK struct {
 func (o *NatRuleUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/nat/rules/{ruleId}][%d] natRuleUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *NatRuleUpdateUsingPUTOK) GetPayload() *models.UpdateNATRuleResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewNatRuleUpdateUsingPUTBadRequest() *NatRuleUpdateUsingPUTBadRequest {
 	return &NatRuleUpdateUsingPUTBadRequest{}
 }
 
-/* NatRuleUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*NatRuleUpdateUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type NatRuleUpdateUsingPUTBadRequest struct {
 func (o *NatRuleUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/nat/rules/{ruleId}][%d] natRuleUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *NatRuleUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

@@ -35,8 +35,9 @@ func (o *GatewayPolicyListUsingGETReader) ReadResponse(response runtime.ClientRe
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewGatewayPolicyListUsingGETOK() *GatewayPolicyListUsingGETOK {
 	return &GatewayPolicyListUsingGETOK{}
 }
 
-/* GatewayPolicyListUsingGETOK describes a response with status code 200, with default header values.
+/*GatewayPolicyListUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -56,6 +57,7 @@ type GatewayPolicyListUsingGETOK struct {
 func (o *GatewayPolicyListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/firewall/gateway-policies][%d] gatewayPolicyListUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *GatewayPolicyListUsingGETOK) GetPayload() *models.GatewayPolicyListResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewGatewayPolicyListUsingGETBadRequest() *GatewayPolicyListUsingGETBadReque
 	return &GatewayPolicyListUsingGETBadRequest{}
 }
 
-/* GatewayPolicyListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*GatewayPolicyListUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type GatewayPolicyListUsingGETBadRequest struct {
 func (o *GatewayPolicyListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/firewall/gateway-policies][%d] gatewayPolicyListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *GatewayPolicyListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

@@ -41,8 +41,9 @@ func (o *GetPublicKeyUsingGETReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewGetPublicKeyUsingGETOK() *GetPublicKeyUsingGETOK {
 	return &GetPublicKeyUsingGETOK{}
 }
 
-/* GetPublicKeyUsingGETOK describes a response with status code 200, with default header values.
+/*GetPublicKeyUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type GetPublicKeyUsingGETOK struct {
 func (o *GetPublicKeyUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /ad/integration/pk][%d] getPublicKeyUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *GetPublicKeyUsingGETOK) GetPayload() *models.PublicKeyInstanceGetResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewGetPublicKeyUsingGETBadRequest() *GetPublicKeyUsingGETBadRequest {
 	return &GetPublicKeyUsingGETBadRequest{}
 }
 
-/* GetPublicKeyUsingGETBadRequest describes a response with status code 400, with default header values.
+/*GetPublicKeyUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -104,7 +106,7 @@ func NewGetPublicKeyUsingGETNotFound() *GetPublicKeyUsingGETNotFound {
 	return &GetPublicKeyUsingGETNotFound{}
 }
 
-/* GetPublicKeyUsingGETNotFound describes a response with status code 404, with default header values.
+/*GetPublicKeyUsingGETNotFound handles this case with default header values.
 
 Entity not found.
 */

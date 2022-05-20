@@ -41,8 +41,9 @@ func (o *KeyImportUsingPOSTReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewKeyImportUsingPOSTOK() *KeyImportUsingPOSTOK {
 	return &KeyImportUsingPOSTOK{}
 }
 
-/* KeyImportUsingPOSTOK describes a response with status code 200, with default header values.
+/*KeyImportUsingPOSTOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type KeyImportUsingPOSTOK struct {
 func (o *KeyImportUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /kms/key/import][%d] keyImportUsingPOSTOK  %+v", 200, o.Payload)
 }
+
 func (o *KeyImportUsingPOSTOK) GetPayload() *models.ImportKmsKeyResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewKeyImportUsingPOSTCreated() *KeyImportUsingPOSTCreated {
 	return &KeyImportUsingPOSTCreated{}
 }
 
-/* KeyImportUsingPOSTCreated describes a response with status code 201, with default header values.
+/*KeyImportUsingPOSTCreated handles this case with default header values.
 
 Entity has been imported
 */
@@ -94,6 +96,7 @@ type KeyImportUsingPOSTCreated struct {
 func (o *KeyImportUsingPOSTCreated) Error() string {
 	return fmt.Sprintf("[POST /kms/key/import][%d] keyImportUsingPOSTCreated  %+v", 201, o.Payload)
 }
+
 func (o *KeyImportUsingPOSTCreated) GetPayload() *models.ImportKmsKeyResponse {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewKeyImportUsingPOSTBadRequest() *KeyImportUsingPOSTBadRequest {
 	return &KeyImportUsingPOSTBadRequest{}
 }
 
-/* KeyImportUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*KeyImportUsingPOSTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -126,6 +129,7 @@ type KeyImportUsingPOSTBadRequest struct {
 func (o *KeyImportUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /kms/key/import][%d] keyImportUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *KeyImportUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

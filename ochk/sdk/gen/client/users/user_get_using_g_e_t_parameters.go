@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewUserGetUsingGETParams creates a new UserGetUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewUserGetUsingGETParams creates a new UserGetUsingGETParams object
+// with the default values initialized.
 func NewUserGetUsingGETParams() *UserGetUsingGETParams {
+	var ()
 	return &UserGetUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUserGetUsingGETParamsWithTimeout creates a new UserGetUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewUserGetUsingGETParamsWithTimeout(timeout time.Duration) *UserGetUsingGETParams {
+	var ()
 	return &UserGetUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewUserGetUsingGETParamsWithContext creates a new UserGetUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewUserGetUsingGETParamsWithContext(ctx context.Context) *UserGetUsingGETParams {
+	var ()
 	return &UserGetUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewUserGetUsingGETParamsWithHTTPClient creates a new UserGetUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewUserGetUsingGETParamsWithHTTPClient(client *http.Client) *UserGetUsingGETParams {
+	var ()
 	return &UserGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* UserGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the user get using g e t operation.
-
-   Typically these are written to a http.Request.
+/*UserGetUsingGETParams contains all the parameters to send to the API endpoint
+for the user get using g e t operation typically these are written to a http.Request
 */
 type UserGetUsingGETParams struct {
 
-	/* UserID.
+	/*UserID
+	  userId
 
-	   userId
 	*/
 	UserID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the user get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *UserGetUsingGETParams) WithDefaults() *UserGetUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the user get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *UserGetUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the user get using g e t params

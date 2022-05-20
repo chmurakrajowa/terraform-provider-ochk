@@ -35,8 +35,9 @@ func (o *GetTokenUsingPOST1Reader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewGetTokenUsingPOST1OK() *GetTokenUsingPOST1OK {
 	return &GetTokenUsingPOST1OK{}
 }
 
-/* GetTokenUsingPOST1OK describes a response with status code 200, with default header values.
+/*GetTokenUsingPOST1OK handles this case with default header values.
 
 OK
 */
@@ -56,6 +57,7 @@ type GetTokenUsingPOST1OK struct {
 func (o *GetTokenUsingPOST1OK) Error() string {
 	return fmt.Sprintf("[POST /wso2/token][%d] getTokenUsingPOST1OK  %+v", 200, o.Payload)
 }
+
 func (o *GetTokenUsingPOST1OK) GetPayload() *models.WSOTokenResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewGetTokenUsingPOST1BadRequest() *GetTokenUsingPOST1BadRequest {
 	return &GetTokenUsingPOST1BadRequest{}
 }
 
-/* GetTokenUsingPOST1BadRequest describes a response with status code 400, with default header values.
+/*GetTokenUsingPOST1BadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type GetTokenUsingPOST1BadRequest struct {
 func (o *GetTokenUsingPOST1BadRequest) Error() string {
 	return fmt.Sprintf("[POST /wso2/token][%d] getTokenUsingPOST1BadRequest  %+v", 400, o.Payload)
 }
+
 func (o *GetTokenUsingPOST1BadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

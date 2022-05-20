@@ -41,8 +41,9 @@ func (o *LocalGroupCreateUsingPUTReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewLocalGroupCreateUsingPUTOK() *LocalGroupCreateUsingPUTOK {
 	return &LocalGroupCreateUsingPUTOK{}
 }
 
-/* LocalGroupCreateUsingPUTOK describes a response with status code 200, with default header values.
+/*LocalGroupCreateUsingPUTOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type LocalGroupCreateUsingPUTOK struct {
 func (o *LocalGroupCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /groups/local][%d] localGroupCreateUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *LocalGroupCreateUsingPUTOK) GetPayload() *models.CreateLocalGroupResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewLocalGroupCreateUsingPUTCreated() *LocalGroupCreateUsingPUTCreated {
 	return &LocalGroupCreateUsingPUTCreated{}
 }
 
-/* LocalGroupCreateUsingPUTCreated describes a response with status code 201, with default header values.
+/*LocalGroupCreateUsingPUTCreated handles this case with default header values.
 
 Entity has been updated
 */
@@ -94,6 +96,7 @@ type LocalGroupCreateUsingPUTCreated struct {
 func (o *LocalGroupCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /groups/local][%d] localGroupCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
 func (o *LocalGroupCreateUsingPUTCreated) GetPayload() *models.CreateLocalGroupResponse {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewLocalGroupCreateUsingPUTBadRequest() *LocalGroupCreateUsingPUTBadRequest
 	return &LocalGroupCreateUsingPUTBadRequest{}
 }
 
-/* LocalGroupCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*LocalGroupCreateUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -126,6 +129,7 @@ type LocalGroupCreateUsingPUTBadRequest struct {
 func (o *LocalGroupCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /groups/local][%d] localGroupCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *LocalGroupCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

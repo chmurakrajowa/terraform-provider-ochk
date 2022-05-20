@@ -35,8 +35,9 @@ func (o *SubtenantGroupListUsingGETReader) ReadResponse(response runtime.ClientR
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewSubtenantGroupListUsingGETOK() *SubtenantGroupListUsingGETOK {
 	return &SubtenantGroupListUsingGETOK{}
 }
 
-/* SubtenantGroupListUsingGETOK describes a response with status code 200, with default header values.
+/*SubtenantGroupListUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -56,6 +57,7 @@ type SubtenantGroupListUsingGETOK struct {
 func (o *SubtenantGroupListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /subtenants/{subtenantId}/groups][%d] subtenantGroupListUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *SubtenantGroupListUsingGETOK) GetPayload() *models.GroupListResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewSubtenantGroupListUsingGETBadRequest() *SubtenantGroupListUsingGETBadReq
 	return &SubtenantGroupListUsingGETBadRequest{}
 }
 
-/* SubtenantGroupListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*SubtenantGroupListUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type SubtenantGroupListUsingGETBadRequest struct {
 func (o *SubtenantGroupListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /subtenants/{subtenantId}/groups][%d] subtenantGroupListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *SubtenantGroupListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

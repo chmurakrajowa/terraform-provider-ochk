@@ -41,8 +41,9 @@ func (o *SnapshotGetUsingGETReader) ReadResponse(response runtime.ClientResponse
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewSnapshotGetUsingGETOK() *SnapshotGetUsingGETOK {
 	return &SnapshotGetUsingGETOK{}
 }
 
-/* SnapshotGetUsingGETOK describes a response with status code 200, with default header values.
+/*SnapshotGetUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type SnapshotGetUsingGETOK struct {
 func (o *SnapshotGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /vcs/snapshots/{snapshotId}][%d] snapshotGetUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *SnapshotGetUsingGETOK) GetPayload() *models.SnapshotGetResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewSnapshotGetUsingGETBadRequest() *SnapshotGetUsingGETBadRequest {
 	return &SnapshotGetUsingGETBadRequest{}
 }
 
-/* SnapshotGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*SnapshotGetUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -94,6 +96,7 @@ type SnapshotGetUsingGETBadRequest struct {
 func (o *SnapshotGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /vcs/snapshots/{snapshotId}][%d] snapshotGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *SnapshotGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewSnapshotGetUsingGETNotFound() *SnapshotGetUsingGETNotFound {
 	return &SnapshotGetUsingGETNotFound{}
 }
 
-/* SnapshotGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*SnapshotGetUsingGETNotFound handles this case with default header values.
 
 Entity not found.
 */

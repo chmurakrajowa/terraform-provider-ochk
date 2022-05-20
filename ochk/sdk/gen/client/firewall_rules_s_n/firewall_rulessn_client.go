@@ -25,20 +25,17 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GfwRuleCreateUsingPUT(params *GfwRuleCreateUsingPUTParams, opts ...ClientOption) (*GfwRuleCreateUsingPUTOK, *GfwRuleCreateUsingPUTCreated, error)
+	GfwRuleCreateUsingPUT(params *GfwRuleCreateUsingPUTParams) (*GfwRuleCreateUsingPUTOK, *GfwRuleCreateUsingPUTCreated, error)
 
-	GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams, opts ...ClientOption) (*GfwRuleDeleteUsingDELETEOK, *GfwRuleDeleteUsingDELETECreated, error)
+	GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams) (*GfwRuleDeleteUsingDELETEOK, *GfwRuleDeleteUsingDELETECreated, error)
 
-	GfwRuleGetUsingGET(params *GfwRuleGetUsingGETParams, opts ...ClientOption) (*GfwRuleGetUsingGETOK, error)
+	GfwRuleGetUsingGET(params *GfwRuleGetUsingGETParams) (*GfwRuleGetUsingGETOK, error)
 
-	GfwRuleListUsingGET(params *GfwRuleListUsingGETParams, opts ...ClientOption) (*GfwRuleListUsingGETOK, error)
+	GfwRuleListUsingGET(params *GfwRuleListUsingGETParams) (*GfwRuleListUsingGETOK, error)
 
-	GfwRuleUpdateUsingPUT(params *GfwRuleUpdateUsingPUTParams, opts ...ClientOption) (*GfwRuleUpdateUsingPUTOK, *GfwRuleUpdateUsingPUTCreated, error)
+	GfwRuleUpdateUsingPUT(params *GfwRuleUpdateUsingPUTParams) (*GfwRuleUpdateUsingPUTOK, *GfwRuleUpdateUsingPUTCreated, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -48,12 +45,13 @@ type ClientService interface {
 
   Create firewall rule (south-north) in NSX-T
 */
-func (a *Client) GfwRuleCreateUsingPUT(params *GfwRuleCreateUsingPUTParams, opts ...ClientOption) (*GfwRuleCreateUsingPUTOK, *GfwRuleCreateUsingPUTCreated, error) {
+func (a *Client) GfwRuleCreateUsingPUT(params *GfwRuleCreateUsingPUTParams) (*GfwRuleCreateUsingPUTOK, *GfwRuleCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGfwRuleCreateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "gfwRuleCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/routers/{routerId}/rules/s-n",
@@ -64,12 +62,7 @@ func (a *Client) GfwRuleCreateUsingPUT(params *GfwRuleCreateUsingPUTParams, opts
 		Reader:             &GfwRuleCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -89,12 +82,13 @@ func (a *Client) GfwRuleCreateUsingPUT(params *GfwRuleCreateUsingPUTParams, opts
 
   Delete firewall rule (south-north) from NSX-T
 */
-func (a *Client) GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams, opts ...ClientOption) (*GfwRuleDeleteUsingDELETEOK, *GfwRuleDeleteUsingDELETECreated, error) {
+func (a *Client) GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams) (*GfwRuleDeleteUsingDELETEOK, *GfwRuleDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGfwRuleDeleteUsingDELETEParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "gfwRuleDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/network/routers/{routerId}/rules/s-n/{ruleId}",
@@ -105,12 +99,7 @@ func (a *Client) GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams
 		Reader:             &GfwRuleDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -130,12 +119,13 @@ func (a *Client) GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams
 
   Get firewall rule (south-north) from NSX-T
 */
-func (a *Client) GfwRuleGetUsingGET(params *GfwRuleGetUsingGETParams, opts ...ClientOption) (*GfwRuleGetUsingGETOK, error) {
+func (a *Client) GfwRuleGetUsingGET(params *GfwRuleGetUsingGETParams) (*GfwRuleGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGfwRuleGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "gfwRuleGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/routers/{routerId}/rules/s-n/{ruleId}",
@@ -146,12 +136,7 @@ func (a *Client) GfwRuleGetUsingGET(params *GfwRuleGetUsingGETParams, opts ...Cl
 		Reader:             &GfwRuleGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -170,12 +155,13 @@ func (a *Client) GfwRuleGetUsingGET(params *GfwRuleGetUsingGETParams, opts ...Cl
 
   List firewall rules (south-north) from NSX-T
 */
-func (a *Client) GfwRuleListUsingGET(params *GfwRuleListUsingGETParams, opts ...ClientOption) (*GfwRuleListUsingGETOK, error) {
+func (a *Client) GfwRuleListUsingGET(params *GfwRuleListUsingGETParams) (*GfwRuleListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGfwRuleListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "gfwRuleListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/routers/{routerId}/rules/s-n",
@@ -186,12 +172,7 @@ func (a *Client) GfwRuleListUsingGET(params *GfwRuleListUsingGETParams, opts ...
 		Reader:             &GfwRuleListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -210,12 +191,13 @@ func (a *Client) GfwRuleListUsingGET(params *GfwRuleListUsingGETParams, opts ...
 
   Create firewall rule (south-north) in NSX-T
 */
-func (a *Client) GfwRuleUpdateUsingPUT(params *GfwRuleUpdateUsingPUTParams, opts ...ClientOption) (*GfwRuleUpdateUsingPUTOK, *GfwRuleUpdateUsingPUTCreated, error) {
+func (a *Client) GfwRuleUpdateUsingPUT(params *GfwRuleUpdateUsingPUTParams) (*GfwRuleUpdateUsingPUTOK, *GfwRuleUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGfwRuleUpdateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "gfwRuleUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/routers/{routerId}/rules/s-n/{ruleId}",
@@ -226,12 +208,7 @@ func (a *Client) GfwRuleUpdateUsingPUT(params *GfwRuleUpdateUsingPUTParams, opts
 		Reader:             &GfwRuleUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}

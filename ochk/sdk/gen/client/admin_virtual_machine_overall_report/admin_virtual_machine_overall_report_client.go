@@ -25,12 +25,9 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	AdminVirtualMachineOverallReportGetUsingGET(params *AdminVirtualMachineOverallReportGetUsingGETParams, opts ...ClientOption) (*AdminVirtualMachineOverallReportGetUsingGETOK, error)
+	AdminVirtualMachineOverallReportGetUsingGET(params *AdminVirtualMachineOverallReportGetUsingGETParams) (*AdminVirtualMachineOverallReportGetUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -40,12 +37,13 @@ type ClientService interface {
 
   Get virtual machine overall report
 */
-func (a *Client) AdminVirtualMachineOverallReportGetUsingGET(params *AdminVirtualMachineOverallReportGetUsingGETParams, opts ...ClientOption) (*AdminVirtualMachineOverallReportGetUsingGETOK, error) {
+func (a *Client) AdminVirtualMachineOverallReportGetUsingGET(params *AdminVirtualMachineOverallReportGetUsingGETParams) (*AdminVirtualMachineOverallReportGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewAdminVirtualMachineOverallReportGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "adminVirtualMachineOverallReportGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/admin/virtual-machine/summary/{tenantId}",
@@ -56,12 +54,7 @@ func (a *Client) AdminVirtualMachineOverallReportGetUsingGET(params *AdminVirtua
 		Reader:             &AdminVirtualMachineOverallReportGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}

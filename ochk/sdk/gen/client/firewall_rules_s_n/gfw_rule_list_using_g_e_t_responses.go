@@ -35,8 +35,9 @@ func (o *GfwRuleListUsingGETReader) ReadResponse(response runtime.ClientResponse
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewGfwRuleListUsingGETOK() *GfwRuleListUsingGETOK {
 	return &GfwRuleListUsingGETOK{}
 }
 
-/* GfwRuleListUsingGETOK describes a response with status code 200, with default header values.
+/*GfwRuleListUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -56,6 +57,7 @@ type GfwRuleListUsingGETOK struct {
 func (o *GfwRuleListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/s-n][%d] gfwRuleListUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *GfwRuleListUsingGETOK) GetPayload() *models.GFWRuleListResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewGfwRuleListUsingGETBadRequest() *GfwRuleListUsingGETBadRequest {
 	return &GfwRuleListUsingGETBadRequest{}
 }
 
-/* GfwRuleListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*GfwRuleListUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type GfwRuleListUsingGETBadRequest struct {
 func (o *GfwRuleListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/s-n][%d] gfwRuleListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *GfwRuleListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

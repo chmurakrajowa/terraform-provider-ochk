@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewCustomServiceListUsingGETParams creates a new CustomServiceListUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewCustomServiceListUsingGETParams creates a new CustomServiceListUsingGETParams object
+// with the default values initialized.
 func NewCustomServiceListUsingGETParams() *CustomServiceListUsingGETParams {
+	var ()
 	return &CustomServiceListUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCustomServiceListUsingGETParamsWithTimeout creates a new CustomServiceListUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewCustomServiceListUsingGETParamsWithTimeout(timeout time.Duration) *CustomServiceListUsingGETParams {
+	var ()
 	return &CustomServiceListUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewCustomServiceListUsingGETParamsWithContext creates a new CustomServiceListUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewCustomServiceListUsingGETParamsWithContext(ctx context.Context) *CustomServiceListUsingGETParams {
+	var ()
 	return &CustomServiceListUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewCustomServiceListUsingGETParamsWithHTTPClient creates a new CustomServiceListUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewCustomServiceListUsingGETParamsWithHTTPClient(client *http.Client) *CustomServiceListUsingGETParams {
+	var ()
 	return &CustomServiceListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* CustomServiceListUsingGETParams contains all the parameters to send to the API endpoint
-   for the custom service list using g e t operation.
-
-   Typically these are written to a http.Request.
+/*CustomServiceListUsingGETParams contains all the parameters to send to the API endpoint
+for the custom service list using g e t operation typically these are written to a http.Request
 */
 type CustomServiceListUsingGETParams struct {
 
-	/* DisplayName.
+	/*DisplayName
+	  displayName
 
-	   displayName
 	*/
 	DisplayName *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the custom service list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *CustomServiceListUsingGETParams) WithDefaults() *CustomServiceListUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the custom service list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *CustomServiceListUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the custom service list using g e t params
@@ -141,17 +127,16 @@ func (o *CustomServiceListUsingGETParams) WriteToRequest(r runtime.ClientRequest
 
 		// query param displayName
 		var qrDisplayName string
-
 		if o.DisplayName != nil {
 			qrDisplayName = *o.DisplayName
 		}
 		qDisplayName := qrDisplayName
 		if qDisplayName != "" {
-
 			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
 				return err
 			}
 		}
+
 	}
 
 	if len(res) > 0 {

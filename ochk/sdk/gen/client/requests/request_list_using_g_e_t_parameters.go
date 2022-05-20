@@ -17,73 +17,59 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewRequestListUsingGETParams creates a new RequestListUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewRequestListUsingGETParams creates a new RequestListUsingGETParams object
+// with the default values initialized.
 func NewRequestListUsingGETParams() *RequestListUsingGETParams {
+	var ()
 	return &RequestListUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewRequestListUsingGETParamsWithTimeout creates a new RequestListUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewRequestListUsingGETParamsWithTimeout(timeout time.Duration) *RequestListUsingGETParams {
+	var ()
 	return &RequestListUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewRequestListUsingGETParamsWithContext creates a new RequestListUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewRequestListUsingGETParamsWithContext(ctx context.Context) *RequestListUsingGETParams {
+	var ()
 	return &RequestListUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewRequestListUsingGETParamsWithHTTPClient creates a new RequestListUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewRequestListUsingGETParamsWithHTTPClient(client *http.Client) *RequestListUsingGETParams {
+	var ()
 	return &RequestListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* RequestListUsingGETParams contains all the parameters to send to the API endpoint
-   for the request list using g e t operation.
-
-   Typically these are written to a http.Request.
+/*RequestListUsingGETParams contains all the parameters to send to the API endpoint
+for the request list using g e t operation typically these are written to a http.Request
 */
 type RequestListUsingGETParams struct {
 
-	/* Active.
+	/*Active
+	  active
 
-	   active
 	*/
 	Active *bool
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the request list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *RequestListUsingGETParams) WithDefaults() *RequestListUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the request list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *RequestListUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the request list using g e t params
@@ -142,17 +128,16 @@ func (o *RequestListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg 
 
 		// query param active
 		var qrActive bool
-
 		if o.Active != nil {
 			qrActive = *o.Active
 		}
 		qActive := swag.FormatBool(qrActive)
 		if qActive != "" {
-
 			if err := r.SetQueryParam("active", qActive); err != nil {
 				return err
 			}
 		}
+
 	}
 
 	if len(res) > 0 {

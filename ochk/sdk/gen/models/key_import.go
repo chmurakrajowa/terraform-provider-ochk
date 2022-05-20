@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"encoding/json"
 	"strconv"
 
@@ -74,6 +73,7 @@ func (m *KeyImport) validateKeyUsageListItemsEnum(path, location string, value s
 }
 
 func (m *KeyImport) validateKeyUsageList(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.KeyUsageList) { // not required
 		return nil
 	}
@@ -87,11 +87,6 @@ func (m *KeyImport) validateKeyUsageList(formats strfmt.Registry) error {
 
 	}
 
-	return nil
-}
-
-// ContextValidate validates this key import based on context it is used
-func (m *KeyImport) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

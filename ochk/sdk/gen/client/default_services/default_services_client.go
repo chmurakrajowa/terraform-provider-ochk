@@ -25,14 +25,11 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	ServiceGetUsingGET(params *ServiceGetUsingGETParams, opts ...ClientOption) (*ServiceGetUsingGETOK, error)
+	ServiceGetUsingGET(params *ServiceGetUsingGETParams) (*ServiceGetUsingGETOK, error)
 
-	ServiceListUsingGET(params *ServiceListUsingGETParams, opts ...ClientOption) (*ServiceListUsingGETOK, error)
+	ServiceListUsingGET(params *ServiceListUsingGETParams) (*ServiceListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -42,12 +39,13 @@ type ClientService interface {
 
   Get default service from NSX-T
 */
-func (a *Client) ServiceGetUsingGET(params *ServiceGetUsingGETParams, opts ...ClientOption) (*ServiceGetUsingGETOK, error) {
+func (a *Client) ServiceGetUsingGET(params *ServiceGetUsingGETParams) (*ServiceGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewServiceGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "serviceGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/default-services/{serviceId}",
@@ -58,12 +56,7 @@ func (a *Client) ServiceGetUsingGET(params *ServiceGetUsingGETParams, opts ...Cl
 		Reader:             &ServiceGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -82,12 +75,13 @@ func (a *Client) ServiceGetUsingGET(params *ServiceGetUsingGETParams, opts ...Cl
 
   List default services from NSX-T
 */
-func (a *Client) ServiceListUsingGET(params *ServiceListUsingGETParams, opts ...ClientOption) (*ServiceListUsingGETOK, error) {
+func (a *Client) ServiceListUsingGET(params *ServiceListUsingGETParams) (*ServiceListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewServiceListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "serviceListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/default-services",
@@ -98,12 +92,7 @@ func (a *Client) ServiceListUsingGET(params *ServiceListUsingGETParams, opts ...
 		Reader:             &ServiceListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}

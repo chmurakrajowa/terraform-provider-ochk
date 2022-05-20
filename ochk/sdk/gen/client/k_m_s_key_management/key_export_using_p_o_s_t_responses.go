@@ -35,8 +35,9 @@ func (o *KeyExportUsingPOSTReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewKeyExportUsingPOSTOK() *KeyExportUsingPOSTOK {
 	return &KeyExportUsingPOSTOK{}
 }
 
-/* KeyExportUsingPOSTOK describes a response with status code 200, with default header values.
+/*KeyExportUsingPOSTOK handles this case with default header values.
 
 Key has been exported successfully.
 */
@@ -56,6 +57,7 @@ type KeyExportUsingPOSTOK struct {
 func (o *KeyExportUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /kms/key/{id}/export][%d] keyExportUsingPOSTOK  %+v", 200, o.Payload)
 }
+
 func (o *KeyExportUsingPOSTOK) GetPayload() *models.ExportKmsKeyResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewKeyExportUsingPOSTBadRequest() *KeyExportUsingPOSTBadRequest {
 	return &KeyExportUsingPOSTBadRequest{}
 }
 
-/* KeyExportUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*KeyExportUsingPOSTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type KeyExportUsingPOSTBadRequest struct {
 func (o *KeyExportUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /kms/key/{id}/export][%d] keyExportUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *KeyExportUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

@@ -35,8 +35,9 @@ func (o *LogCategoryUpdateUsingPUTReader) ReadResponse(response runtime.ClientRe
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewLogCategoryUpdateUsingPUTOK() *LogCategoryUpdateUsingPUTOK {
 	return &LogCategoryUpdateUsingPUTOK{}
 }
 
-/* LogCategoryUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*LogCategoryUpdateUsingPUTOK handles this case with default header values.
 
 Request has been completed successfully
 */
@@ -56,6 +57,7 @@ type LogCategoryUpdateUsingPUTOK struct {
 func (o *LogCategoryUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /log/categories/{logCategoryId}][%d] logCategoryUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *LogCategoryUpdateUsingPUTOK) GetPayload() *models.UpdateLogCategoryResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewLogCategoryUpdateUsingPUTBadRequest() *LogCategoryUpdateUsingPUTBadReque
 	return &LogCategoryUpdateUsingPUTBadRequest{}
 }
 
-/* LogCategoryUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*LogCategoryUpdateUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type LogCategoryUpdateUsingPUTBadRequest struct {
 func (o *LogCategoryUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /log/categories/{logCategoryId}][%d] logCategoryUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *LogCategoryUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

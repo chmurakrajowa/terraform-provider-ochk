@@ -18,73 +18,59 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewKeyImportUsingPOSTParams creates a new KeyImportUsingPOSTParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewKeyImportUsingPOSTParams creates a new KeyImportUsingPOSTParams object
+// with the default values initialized.
 func NewKeyImportUsingPOSTParams() *KeyImportUsingPOSTParams {
+	var ()
 	return &KeyImportUsingPOSTParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewKeyImportUsingPOSTParamsWithTimeout creates a new KeyImportUsingPOSTParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewKeyImportUsingPOSTParamsWithTimeout(timeout time.Duration) *KeyImportUsingPOSTParams {
+	var ()
 	return &KeyImportUsingPOSTParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewKeyImportUsingPOSTParamsWithContext creates a new KeyImportUsingPOSTParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewKeyImportUsingPOSTParamsWithContext(ctx context.Context) *KeyImportUsingPOSTParams {
+	var ()
 	return &KeyImportUsingPOSTParams{
+
 		Context: ctx,
 	}
 }
 
 // NewKeyImportUsingPOSTParamsWithHTTPClient creates a new KeyImportUsingPOSTParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewKeyImportUsingPOSTParamsWithHTTPClient(client *http.Client) *KeyImportUsingPOSTParams {
+	var ()
 	return &KeyImportUsingPOSTParams{
 		HTTPClient: client,
 	}
 }
 
-/* KeyImportUsingPOSTParams contains all the parameters to send to the API endpoint
-   for the key import using p o s t operation.
-
-   Typically these are written to a http.Request.
+/*KeyImportUsingPOSTParams contains all the parameters to send to the API endpoint
+for the key import using p o s t operation typically these are written to a http.Request
 */
 type KeyImportUsingPOSTParams struct {
 
-	/* KeyImport.
+	/*KeyImport
+	  keyImport
 
-	   keyImport
 	*/
 	KeyImport *models.KeyImport
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the key import using p o s t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *KeyImportUsingPOSTParams) WithDefaults() *KeyImportUsingPOSTParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the key import using p o s t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *KeyImportUsingPOSTParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the key import using p o s t params
@@ -138,6 +124,7 @@ func (o *KeyImportUsingPOSTParams) WriteToRequest(r runtime.ClientRequest, reg s
 		return err
 	}
 	var res []error
+
 	if o.KeyImport != nil {
 		if err := r.SetBodyParam(o.KeyImport); err != nil {
 			return err

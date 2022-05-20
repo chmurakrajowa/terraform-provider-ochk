@@ -16,79 +16,64 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewAllocationListUsingGETParams creates a new AllocationListUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewAllocationListUsingGETParams creates a new AllocationListUsingGETParams object
+// with the default values initialized.
 func NewAllocationListUsingGETParams() *AllocationListUsingGETParams {
+	var ()
 	return &AllocationListUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewAllocationListUsingGETParamsWithTimeout creates a new AllocationListUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewAllocationListUsingGETParamsWithTimeout(timeout time.Duration) *AllocationListUsingGETParams {
+	var ()
 	return &AllocationListUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewAllocationListUsingGETParamsWithContext creates a new AllocationListUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewAllocationListUsingGETParamsWithContext(ctx context.Context) *AllocationListUsingGETParams {
+	var ()
 	return &AllocationListUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewAllocationListUsingGETParamsWithHTTPClient creates a new AllocationListUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewAllocationListUsingGETParamsWithHTTPClient(client *http.Client) *AllocationListUsingGETParams {
+	var ()
 	return &AllocationListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* AllocationListUsingGETParams contains all the parameters to send to the API endpoint
-   for the allocation list using g e t operation.
-
-   Typically these are written to a http.Request.
+/*AllocationListUsingGETParams contains all the parameters to send to the API endpoint
+for the allocation list using g e t operation typically these are written to a http.Request
 */
 type AllocationListUsingGETParams struct {
 
-	/* IPAddress.
+	/*IPAddress
+	  ipAddress
 
-	   ipAddress
 	*/
 	IPAddress *string
+	/*Name
+	  name
 
-	/* Name.
-
-	   name
 	*/
 	Name *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the allocation list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *AllocationListUsingGETParams) WithDefaults() *AllocationListUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the allocation list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *AllocationListUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the allocation list using g e t params
@@ -158,34 +143,32 @@ func (o *AllocationListUsingGETParams) WriteToRequest(r runtime.ClientRequest, r
 
 		// query param ipAddress
 		var qrIPAddress string
-
 		if o.IPAddress != nil {
 			qrIPAddress = *o.IPAddress
 		}
 		qIPAddress := qrIPAddress
 		if qIPAddress != "" {
-
 			if err := r.SetQueryParam("ipAddress", qIPAddress); err != nil {
 				return err
 			}
 		}
+
 	}
 
 	if o.Name != nil {
 
 		// query param name
 		var qrName string
-
 		if o.Name != nil {
 			qrName = *o.Name
 		}
 		qName := qrName
 		if qName != "" {
-
 			if err := r.SetQueryParam("name", qName); err != nil {
 				return err
 			}
 		}
+
 	}
 
 	if len(res) > 0 {

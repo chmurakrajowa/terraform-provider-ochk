@@ -35,8 +35,9 @@ func (o *McsGenerateSecretUsingPOSTReader) ReadResponse(response runtime.ClientR
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewMcsGenerateSecretUsingPOSTOK() *McsGenerateSecretUsingPOSTOK {
 	return &McsGenerateSecretUsingPOSTOK{}
 }
 
-/* McsGenerateSecretUsingPOSTOK describes a response with status code 200, with default header values.
+/*McsGenerateSecretUsingPOSTOK handles this case with default header values.
 
 Request has been completed successfully
 */
@@ -56,6 +57,7 @@ type McsGenerateSecretUsingPOSTOK struct {
 func (o *McsGenerateSecretUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /mcs/secret/generate][%d] mcsGenerateSecretUsingPOSTOK  %+v", 200, o.Payload)
 }
+
 func (o *McsGenerateSecretUsingPOSTOK) GetPayload() *models.McsSecretGenerateResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewMcsGenerateSecretUsingPOSTBadRequest() *McsGenerateSecretUsingPOSTBadReq
 	return &McsGenerateSecretUsingPOSTBadRequest{}
 }
 
-/* McsGenerateSecretUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*McsGenerateSecretUsingPOSTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type McsGenerateSecretUsingPOSTBadRequest struct {
 func (o *McsGenerateSecretUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /mcs/secret/generate][%d] mcsGenerateSecretUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *McsGenerateSecretUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

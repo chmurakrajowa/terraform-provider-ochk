@@ -19,97 +19,74 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewGetLogsUsingPOSTParams creates a new GetLogsUsingPOSTParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewGetLogsUsingPOSTParams creates a new GetLogsUsingPOSTParams object
+// with the default values initialized.
 func NewGetLogsUsingPOSTParams() *GetLogsUsingPOSTParams {
+	var ()
 	return &GetLogsUsingPOSTParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetLogsUsingPOSTParamsWithTimeout creates a new GetLogsUsingPOSTParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewGetLogsUsingPOSTParamsWithTimeout(timeout time.Duration) *GetLogsUsingPOSTParams {
+	var ()
 	return &GetLogsUsingPOSTParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewGetLogsUsingPOSTParamsWithContext creates a new GetLogsUsingPOSTParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewGetLogsUsingPOSTParamsWithContext(ctx context.Context) *GetLogsUsingPOSTParams {
+	var ()
 	return &GetLogsUsingPOSTParams{
+
 		Context: ctx,
 	}
 }
 
 // NewGetLogsUsingPOSTParamsWithHTTPClient creates a new GetLogsUsingPOSTParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewGetLogsUsingPOSTParamsWithHTTPClient(client *http.Client) *GetLogsUsingPOSTParams {
+	var ()
 	return &GetLogsUsingPOSTParams{
 		HTTPClient: client,
 	}
 }
 
-/* GetLogsUsingPOSTParams contains all the parameters to send to the API endpoint
-   for the get logs using p o s t operation.
-
-   Typically these are written to a http.Request.
+/*GetLogsUsingPOSTParams contains all the parameters to send to the API endpoint
+for the get logs using p o s t operation typically these are written to a http.Request
 */
 type GetLogsUsingPOSTParams struct {
 
-	/* DataSize.
+	/*DataSize
+	  dataSize
 
-	   dataSize
-
-	   Format: int32
 	*/
 	DataSize int32
+	/*LastIndex
+	  lastIndex
 
-	/* LastIndex.
-
-	   lastIndex
-
-	   Format: int64
 	*/
 	LastIndex int64
+	/*LogCategoryID
+	  logCategoryId
 
-	/* LogCategoryID.
-
-	   logCategoryId
-
-	   Format: int32
 	*/
 	LogCategoryID int32
+	/*QueryFilter
+	  queryFilter
 
-	/* QueryFilter.
-
-	   queryFilter
 	*/
 	QueryFilter *models.QueryFilter
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the get logs using p o s t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *GetLogsUsingPOSTParams) WithDefaults() *GetLogsUsingPOSTParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the get logs using p o s t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *GetLogsUsingPOSTParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get logs using p o s t params
@@ -201,7 +178,6 @@ func (o *GetLogsUsingPOSTParams) WriteToRequest(r runtime.ClientRequest, reg str
 	qrDataSize := o.DataSize
 	qDataSize := swag.FormatInt32(qrDataSize)
 	if qDataSize != "" {
-
 		if err := r.SetQueryParam("dataSize", qDataSize); err != nil {
 			return err
 		}
@@ -211,7 +187,6 @@ func (o *GetLogsUsingPOSTParams) WriteToRequest(r runtime.ClientRequest, reg str
 	qrLastIndex := o.LastIndex
 	qLastIndex := swag.FormatInt64(qrLastIndex)
 	if qLastIndex != "" {
-
 		if err := r.SetQueryParam("lastIndex", qLastIndex); err != nil {
 			return err
 		}
@@ -221,6 +196,7 @@ func (o *GetLogsUsingPOSTParams) WriteToRequest(r runtime.ClientRequest, reg str
 	if err := r.SetPathParam("logCategoryId", swag.FormatInt32(o.LogCategoryID)); err != nil {
 		return err
 	}
+
 	if o.QueryFilter != nil {
 		if err := r.SetBodyParam(o.QueryFilter); err != nil {
 			return err

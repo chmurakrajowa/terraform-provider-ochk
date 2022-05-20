@@ -25,14 +25,11 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	UserGetUsingGET(params *UserGetUsingGETParams, opts ...ClientOption) (*UserGetUsingGETOK, error)
+	UserGetUsingGET(params *UserGetUsingGETParams) (*UserGetUsingGETOK, error)
 
-	UserListUsingGET(params *UserListUsingGETParams, opts ...ClientOption) (*UserListUsingGETOK, error)
+	UserListUsingGET(params *UserListUsingGETParams) (*UserListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -42,12 +39,13 @@ type ClientService interface {
 
   Get user
 */
-func (a *Client) UserGetUsingGET(params *UserGetUsingGETParams, opts ...ClientOption) (*UserGetUsingGETOK, error) {
+func (a *Client) UserGetUsingGET(params *UserGetUsingGETParams) (*UserGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUserGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "userGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/users/{userId}",
@@ -58,12 +56,7 @@ func (a *Client) UserGetUsingGET(params *UserGetUsingGETParams, opts ...ClientOp
 		Reader:             &UserGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -82,12 +75,13 @@ func (a *Client) UserGetUsingGET(params *UserGetUsingGETParams, opts ...ClientOp
 
   List users from vra/core
 */
-func (a *Client) UserListUsingGET(params *UserListUsingGETParams, opts ...ClientOption) (*UserListUsingGETOK, error) {
+func (a *Client) UserListUsingGET(params *UserListUsingGETParams) (*UserListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUserListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "userListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/users",
@@ -98,12 +92,7 @@ func (a *Client) UserListUsingGET(params *UserListUsingGETParams, opts ...Client
 		Reader:             &UserListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}

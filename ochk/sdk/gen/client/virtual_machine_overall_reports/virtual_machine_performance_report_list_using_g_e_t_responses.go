@@ -41,8 +41,9 @@ func (o *VirtualMachinePerformanceReportListUsingGETReader) ReadResponse(respons
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewVirtualMachinePerformanceReportListUsingGETOK() *VirtualMachinePerforman
 	return &VirtualMachinePerformanceReportListUsingGETOK{}
 }
 
-/* VirtualMachinePerformanceReportListUsingGETOK describes a response with status code 200, with default header values.
+/*VirtualMachinePerformanceReportListUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type VirtualMachinePerformanceReportListUsingGETOK struct {
 func (o *VirtualMachinePerformanceReportListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /billing/virtual-machine/performance][%d] virtualMachinePerformanceReportListUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *VirtualMachinePerformanceReportListUsingGETOK) GetPayload() *models.VirtualMachinePerformanceReportGetResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewVirtualMachinePerformanceReportListUsingGETBadRequest() *VirtualMachineP
 	return &VirtualMachinePerformanceReportListUsingGETBadRequest{}
 }
 
-/* VirtualMachinePerformanceReportListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*VirtualMachinePerformanceReportListUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -94,6 +96,7 @@ type VirtualMachinePerformanceReportListUsingGETBadRequest struct {
 func (o *VirtualMachinePerformanceReportListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /billing/virtual-machine/performance][%d] virtualMachinePerformanceReportListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *VirtualMachinePerformanceReportListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewVirtualMachinePerformanceReportListUsingGETNotFound() *VirtualMachinePer
 	return &VirtualMachinePerformanceReportListUsingGETNotFound{}
 }
 
-/* VirtualMachinePerformanceReportListUsingGETNotFound describes a response with status code 404, with default header values.
+/*VirtualMachinePerformanceReportListUsingGETNotFound handles this case with default header values.
 
 Entity not found.
 */

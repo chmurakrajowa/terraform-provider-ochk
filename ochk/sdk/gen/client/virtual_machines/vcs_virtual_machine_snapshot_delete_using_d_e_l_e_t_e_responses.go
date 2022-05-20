@@ -35,8 +35,9 @@ func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEReader) ReadResponse(response
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewVcsVirtualMachineSnapshotDeleteUsingDELETEOK() *VcsVirtualMachineSnapsho
 	return &VcsVirtualMachineSnapshotDeleteUsingDELETEOK{}
 }
 
-/* VcsVirtualMachineSnapshotDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*VcsVirtualMachineSnapshotDeleteUsingDELETEOK handles this case with default header values.
 
 Request has been completed successfully
 */
@@ -56,6 +57,7 @@ type VcsVirtualMachineSnapshotDeleteUsingDELETEOK struct {
 func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}][%d] vcsVirtualMachineSnapshotDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
 func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEOK) GetPayload() *models.DeleteSnapshotResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewVcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest() *VcsVirtualMachin
 	return &VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest{}
 }
 
-/* VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest struct {
 func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}][%d] vcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

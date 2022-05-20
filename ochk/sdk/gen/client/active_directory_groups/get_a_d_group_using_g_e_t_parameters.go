@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetADGroupUsingGETParams creates a new GetADGroupUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewGetADGroupUsingGETParams creates a new GetADGroupUsingGETParams object
+// with the default values initialized.
 func NewGetADGroupUsingGETParams() *GetADGroupUsingGETParams {
+	var ()
 	return &GetADGroupUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetADGroupUsingGETParamsWithTimeout creates a new GetADGroupUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewGetADGroupUsingGETParamsWithTimeout(timeout time.Duration) *GetADGroupUsingGETParams {
+	var ()
 	return &GetADGroupUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewGetADGroupUsingGETParamsWithContext creates a new GetADGroupUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewGetADGroupUsingGETParamsWithContext(ctx context.Context) *GetADGroupUsingGETParams {
+	var ()
 	return &GetADGroupUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewGetADGroupUsingGETParamsWithHTTPClient creates a new GetADGroupUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewGetADGroupUsingGETParamsWithHTTPClient(client *http.Client) *GetADGroupUsingGETParams {
+	var ()
 	return &GetADGroupUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* GetADGroupUsingGETParams contains all the parameters to send to the API endpoint
-   for the get a d group using g e t operation.
-
-   Typically these are written to a http.Request.
+/*GetADGroupUsingGETParams contains all the parameters to send to the API endpoint
+for the get a d group using g e t operation typically these are written to a http.Request
 */
 type GetADGroupUsingGETParams struct {
 
-	/* SamAccountName.
+	/*SamAccountName
+	  samAccountName
 
-	   samAccountName
 	*/
 	SamAccountName string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the get a d group using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *GetADGroupUsingGETParams) WithDefaults() *GetADGroupUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the get a d group using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *GetADGroupUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get a d group using g e t params

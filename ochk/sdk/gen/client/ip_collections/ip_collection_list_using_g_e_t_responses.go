@@ -35,8 +35,9 @@ func (o *IPCollectionListUsingGETReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewIPCollectionListUsingGETOK() *IPCollectionListUsingGETOK {
 	return &IPCollectionListUsingGETOK{}
 }
 
-/* IPCollectionListUsingGETOK describes a response with status code 200, with default header values.
+/*IPCollectionListUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -56,6 +57,7 @@ type IPCollectionListUsingGETOK struct {
 func (o *IPCollectionListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /ipcs][%d] ipCollectionListUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *IPCollectionListUsingGETOK) GetPayload() *models.IPCollectionListResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewIPCollectionListUsingGETBadRequest() *IPCollectionListUsingGETBadRequest
 	return &IPCollectionListUsingGETBadRequest{}
 }
 
-/* IPCollectionListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*IPCollectionListUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type IPCollectionListUsingGETBadRequest struct {
 func (o *IPCollectionListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /ipcs][%d] ipCollectionListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *IPCollectionListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

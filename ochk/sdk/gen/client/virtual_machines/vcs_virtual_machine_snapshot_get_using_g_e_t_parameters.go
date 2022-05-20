@@ -16,79 +16,64 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewVcsVirtualMachineSnapshotGetUsingGETParams creates a new VcsVirtualMachineSnapshotGetUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewVcsVirtualMachineSnapshotGetUsingGETParams creates a new VcsVirtualMachineSnapshotGetUsingGETParams object
+// with the default values initialized.
 func NewVcsVirtualMachineSnapshotGetUsingGETParams() *VcsVirtualMachineSnapshotGetUsingGETParams {
+	var ()
 	return &VcsVirtualMachineSnapshotGetUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewVcsVirtualMachineSnapshotGetUsingGETParamsWithTimeout creates a new VcsVirtualMachineSnapshotGetUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewVcsVirtualMachineSnapshotGetUsingGETParamsWithTimeout(timeout time.Duration) *VcsVirtualMachineSnapshotGetUsingGETParams {
+	var ()
 	return &VcsVirtualMachineSnapshotGetUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewVcsVirtualMachineSnapshotGetUsingGETParamsWithContext creates a new VcsVirtualMachineSnapshotGetUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewVcsVirtualMachineSnapshotGetUsingGETParamsWithContext(ctx context.Context) *VcsVirtualMachineSnapshotGetUsingGETParams {
+	var ()
 	return &VcsVirtualMachineSnapshotGetUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewVcsVirtualMachineSnapshotGetUsingGETParamsWithHTTPClient creates a new VcsVirtualMachineSnapshotGetUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewVcsVirtualMachineSnapshotGetUsingGETParamsWithHTTPClient(client *http.Client) *VcsVirtualMachineSnapshotGetUsingGETParams {
+	var ()
 	return &VcsVirtualMachineSnapshotGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* VcsVirtualMachineSnapshotGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the vcs virtual machine snapshot get using g e t operation.
-
-   Typically these are written to a http.Request.
+/*VcsVirtualMachineSnapshotGetUsingGETParams contains all the parameters to send to the API endpoint
+for the vcs virtual machine snapshot get using g e t operation typically these are written to a http.Request
 */
 type VcsVirtualMachineSnapshotGetUsingGETParams struct {
 
-	/* SnapshotID.
+	/*SnapshotID
+	  snapshotId
 
-	   snapshotId
 	*/
 	SnapshotID string
+	/*VirtualMachineID
+	  virtualMachineId
 
-	/* VirtualMachineID.
-
-	   virtualMachineId
 	*/
 	VirtualMachineID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the vcs virtual machine snapshot get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *VcsVirtualMachineSnapshotGetUsingGETParams) WithDefaults() *VcsVirtualMachineSnapshotGetUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the vcs virtual machine snapshot get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *VcsVirtualMachineSnapshotGetUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the vcs virtual machine snapshot get using g e t params

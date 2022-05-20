@@ -41,8 +41,9 @@ func (o *GfwRuleUpdateUsingPUTReader) ReadResponse(response runtime.ClientRespon
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewGfwRuleUpdateUsingPUTOK() *GfwRuleUpdateUsingPUTOK {
 	return &GfwRuleUpdateUsingPUTOK{}
 }
 
-/* GfwRuleUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*GfwRuleUpdateUsingPUTOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type GfwRuleUpdateUsingPUTOK struct {
 func (o *GfwRuleUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *GfwRuleUpdateUsingPUTOK) GetPayload() *models.UpdateGFWRuleResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewGfwRuleUpdateUsingPUTCreated() *GfwRuleUpdateUsingPUTCreated {
 	return &GfwRuleUpdateUsingPUTCreated{}
 }
 
-/* GfwRuleUpdateUsingPUTCreated describes a response with status code 201, with default header values.
+/*GfwRuleUpdateUsingPUTCreated handles this case with default header values.
 
 Entity has been updated
 */
@@ -94,6 +96,7 @@ type GfwRuleUpdateUsingPUTCreated struct {
 func (o *GfwRuleUpdateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleUpdateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
 func (o *GfwRuleUpdateUsingPUTCreated) GetPayload() *models.UpdateGFWRuleResponse {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewGfwRuleUpdateUsingPUTBadRequest() *GfwRuleUpdateUsingPUTBadRequest {
 	return &GfwRuleUpdateUsingPUTBadRequest{}
 }
 
-/* GfwRuleUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*GfwRuleUpdateUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -126,6 +129,7 @@ type GfwRuleUpdateUsingPUTBadRequest struct {
 func (o *GfwRuleUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *GfwRuleUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

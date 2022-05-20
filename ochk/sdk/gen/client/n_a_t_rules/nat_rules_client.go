@@ -25,20 +25,17 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	NatRuleCreateUsingPUT(params *NatRuleCreateUsingPUTParams, opts ...ClientOption) (*NatRuleCreateUsingPUTOK, *NatRuleCreateUsingPUTCreated, error)
+	NatRuleCreateUsingPUT(params *NatRuleCreateUsingPUTParams) (*NatRuleCreateUsingPUTOK, *NatRuleCreateUsingPUTCreated, error)
 
-	NatRuleDeleteUsingDELETE(params *NatRuleDeleteUsingDELETEParams, opts ...ClientOption) (*NatRuleDeleteUsingDELETEOK, error)
+	NatRuleDeleteUsingDELETE(params *NatRuleDeleteUsingDELETEParams) (*NatRuleDeleteUsingDELETEOK, error)
 
-	NatRuleGetUsingGET(params *NatRuleGetUsingGETParams, opts ...ClientOption) (*NatRuleGetUsingGETOK, error)
+	NatRuleGetUsingGET(params *NatRuleGetUsingGETParams) (*NatRuleGetUsingGETOK, error)
 
-	NatRuleListUsingGET(params *NatRuleListUsingGETParams, opts ...ClientOption) (*NatRuleListUsingGETOK, error)
+	NatRuleListUsingGET(params *NatRuleListUsingGETParams) (*NatRuleListUsingGETOK, error)
 
-	NatRuleUpdateUsingPUT(params *NatRuleUpdateUsingPUTParams, opts ...ClientOption) (*NatRuleUpdateUsingPUTOK, error)
+	NatRuleUpdateUsingPUT(params *NatRuleUpdateUsingPUTParams) (*NatRuleUpdateUsingPUTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -48,12 +45,13 @@ type ClientService interface {
 
   Create NAT rule
 */
-func (a *Client) NatRuleCreateUsingPUT(params *NatRuleCreateUsingPUTParams, opts ...ClientOption) (*NatRuleCreateUsingPUTOK, *NatRuleCreateUsingPUTCreated, error) {
+func (a *Client) NatRuleCreateUsingPUT(params *NatRuleCreateUsingPUTParams) (*NatRuleCreateUsingPUTOK, *NatRuleCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNatRuleCreateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "natRuleCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/nat/rules",
@@ -64,12 +62,7 @@ func (a *Client) NatRuleCreateUsingPUT(params *NatRuleCreateUsingPUTParams, opts
 		Reader:             &NatRuleCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -89,12 +82,13 @@ func (a *Client) NatRuleCreateUsingPUT(params *NatRuleCreateUsingPUTParams, opts
 
   Delete NAT rule
 */
-func (a *Client) NatRuleDeleteUsingDELETE(params *NatRuleDeleteUsingDELETEParams, opts ...ClientOption) (*NatRuleDeleteUsingDELETEOK, error) {
+func (a *Client) NatRuleDeleteUsingDELETE(params *NatRuleDeleteUsingDELETEParams) (*NatRuleDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNatRuleDeleteUsingDELETEParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "natRuleDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/network/nat/rules/{ruleId}",
@@ -105,12 +99,7 @@ func (a *Client) NatRuleDeleteUsingDELETE(params *NatRuleDeleteUsingDELETEParams
 		Reader:             &NatRuleDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -129,12 +118,13 @@ func (a *Client) NatRuleDeleteUsingDELETE(params *NatRuleDeleteUsingDELETEParams
 
   Get NAT rule
 */
-func (a *Client) NatRuleGetUsingGET(params *NatRuleGetUsingGETParams, opts ...ClientOption) (*NatRuleGetUsingGETOK, error) {
+func (a *Client) NatRuleGetUsingGET(params *NatRuleGetUsingGETParams) (*NatRuleGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNatRuleGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "natRuleGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/nat/rules/{ruleId}",
@@ -145,12 +135,7 @@ func (a *Client) NatRuleGetUsingGET(params *NatRuleGetUsingGETParams, opts ...Cl
 		Reader:             &NatRuleGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -169,12 +154,13 @@ func (a *Client) NatRuleGetUsingGET(params *NatRuleGetUsingGETParams, opts ...Cl
 
   List NAT rules
 */
-func (a *Client) NatRuleListUsingGET(params *NatRuleListUsingGETParams, opts ...ClientOption) (*NatRuleListUsingGETOK, error) {
+func (a *Client) NatRuleListUsingGET(params *NatRuleListUsingGETParams) (*NatRuleListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNatRuleListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "natRuleListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/nat/rules",
@@ -185,12 +171,7 @@ func (a *Client) NatRuleListUsingGET(params *NatRuleListUsingGETParams, opts ...
 		Reader:             &NatRuleListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -209,12 +190,13 @@ func (a *Client) NatRuleListUsingGET(params *NatRuleListUsingGETParams, opts ...
 
   Update NAT rule
 */
-func (a *Client) NatRuleUpdateUsingPUT(params *NatRuleUpdateUsingPUTParams, opts ...ClientOption) (*NatRuleUpdateUsingPUTOK, error) {
+func (a *Client) NatRuleUpdateUsingPUT(params *NatRuleUpdateUsingPUTParams) (*NatRuleUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNatRuleUpdateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "natRuleUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/nat/rules/{ruleId}",
@@ -225,12 +207,7 @@ func (a *Client) NatRuleUpdateUsingPUT(params *NatRuleUpdateUsingPUTParams, opts
 		Reader:             &NatRuleUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}

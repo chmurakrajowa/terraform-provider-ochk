@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -66,6 +65,7 @@ func (m *PublicIPAllocation) Validate(formats strfmt.Registry) error {
 }
 
 func (m *PublicIPAllocation) validateAssignmentDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.AssignmentDate) { // not required
 		return nil
 	}
@@ -78,6 +78,7 @@ func (m *PublicIPAllocation) validateAssignmentDate(formats strfmt.Registry) err
 }
 
 func (m *PublicIPAllocation) validatePublicIPAddress(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.PublicIPAddress) { // not required
 		return nil
 	}
@@ -95,6 +96,7 @@ func (m *PublicIPAllocation) validatePublicIPAddress(formats strfmt.Registry) er
 }
 
 func (m *PublicIPAllocation) validateServiceList(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.ServiceList) { // not required
 		return nil
 	}
@@ -106,56 +108,6 @@ func (m *PublicIPAllocation) validateServiceList(formats strfmt.Registry) error 
 
 		if m.ServiceList[i] != nil {
 			if err := m.ServiceList[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("serviceList" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this public Ip allocation based on the context it is used
-func (m *PublicIPAllocation) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidatePublicIPAddress(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateServiceList(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *PublicIPAllocation) contextValidatePublicIPAddress(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.PublicIPAddress != nil {
-		if err := m.PublicIPAddress.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("publicIpAddress")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *PublicIPAllocation) contextValidateServiceList(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.ServiceList); i++ {
-
-		if m.ServiceList[i] != nil {
-			if err := m.ServiceList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("serviceList" + "." + strconv.Itoa(i))
 				}
