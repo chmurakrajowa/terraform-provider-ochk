@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -44,7 +45,6 @@ func (m *Hits) Validate(formats strfmt.Registry) error {
 }
 
 func (m *Hits) validateHits(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Hits) { // not required
 		return nil
 	}
@@ -69,13 +69,62 @@ func (m *Hits) validateHits(formats strfmt.Registry) error {
 }
 
 func (m *Hits) validateTotal(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Total) { // not required
 		return nil
 	}
 
 	if m.Total != nil {
 		if err := m.Total.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("total")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this hits based on the context it is used
+func (m *Hits) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateHits(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTotal(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *Hits) contextValidateHits(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Hits); i++ {
+
+		if m.Hits[i] != nil {
+			if err := m.Hits[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("hits" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *Hits) contextValidateTotal(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Total != nil {
+		if err := m.Total.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("total")
 			}

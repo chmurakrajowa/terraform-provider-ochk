@@ -16,10 +16,6 @@ func dataSourceVirtualMachine() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"host_id": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
 		},
 	}
 }
@@ -29,7 +25,7 @@ func dataSourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, m
 
 	displayName := d.Get("display_name").(string)
 
-	virtualMachines, err := proxy.LegacyListByDisplayName(ctx, displayName)
+	virtualMachines, err := proxy.ListByDisplayName(ctx, displayName)
 	if err != nil {
 		return diag.Errorf("error while listing virtual machines: %+v", err)
 	}
@@ -42,11 +38,7 @@ func dataSourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("more than one virtual machine with display_name: %s found!", displayName)
 	}
 
-	d.SetId(virtualMachines[0].ID)
-
-	if err := d.Set("host_id", virtualMachines[0].HostID); err != nil {
-		return diag.Errorf("error setting host_id: %+v", err)
-	}
+	d.SetId(virtualMachines[0].VirtualMachineID)
 
 	return nil
 }

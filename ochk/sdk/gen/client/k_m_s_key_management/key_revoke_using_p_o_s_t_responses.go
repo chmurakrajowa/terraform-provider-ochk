@@ -35,9 +35,8 @@ func (o *KeyRevokeUsingPOSTReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewKeyRevokeUsingPOSTOK() *KeyRevokeUsingPOSTOK {
 	return &KeyRevokeUsingPOSTOK{}
 }
 
-/*KeyRevokeUsingPOSTOK handles this case with default header values.
+/* KeyRevokeUsingPOSTOK describes a response with status code 200, with default header values.
 
 Key has been revoked.
 */
@@ -57,7 +56,6 @@ type KeyRevokeUsingPOSTOK struct {
 func (o *KeyRevokeUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /kms/key/{id}/revoke][%d] keyRevokeUsingPOSTOK  %+v", 200, o.Payload)
 }
-
 func (o *KeyRevokeUsingPOSTOK) GetPayload() *models.RevokeKmsKeyResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewKeyRevokeUsingPOSTBadRequest() *KeyRevokeUsingPOSTBadRequest {
 	return &KeyRevokeUsingPOSTBadRequest{}
 }
 
-/*KeyRevokeUsingPOSTBadRequest handles this case with default header values.
+/* KeyRevokeUsingPOSTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type KeyRevokeUsingPOSTBadRequest struct {
 func (o *KeyRevokeUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /kms/key/{id}/revoke][%d] keyRevokeUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *KeyRevokeUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

@@ -1,5 +1,6 @@
 package ochk
 
+/*
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"testing"
@@ -8,6 +9,7 @@ import (
 type UserDataSourceTestData struct {
 	ResourceName string
 	Name         string
+	Email        string
 }
 
 func (c *UserDataSourceTestData) ToString() string {
@@ -26,6 +28,8 @@ func TestAccUserDataSource_read(t *testing.T) {
 	user := UserDataSourceTestData{
 		ResourceName: "default",
 		Name:         testData.User1Name,
+		Email:        testData.User1Email,
+
 	}
 
 	resourceName := user.FullResourceName()
@@ -37,19 +41,14 @@ func TestAccUserDataSource_read(t *testing.T) {
 				Config: user.ToString(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "name", user.Name),
-					resource.TestCheckResourceAttr(resourceName, "email_address", "terraform@ochk.pl"),
+					resource.TestCheckResourceAttr(resourceName, "email_address", user.Email),
 					resource.TestCheckResourceAttr(resourceName, "description", ""),
-					resource.TestCheckResourceAttr(resourceName, "first_name", "Terraform"),
-					resource.TestCheckResourceAttr(resourceName, "last_name", "User"),
-					resource.TestCheckResourceAttr(resourceName, "disabled", "false"),
-					resource.TestCheckResourceAttr(resourceName, "locked", "false"),
-					resource.TestCheckResourceAttrSet(resourceName, "user_principal_name"),
-					resource.TestCheckResourceAttrSet(resourceName, "principal_id"),
-					resource.TestCheckResourceAttrSet(resourceName, "principal_name"),
-					resource.TestCheckResourceAttrSet(resourceName, "principal_domain"),
-					resource.TestCheckResourceAttrSet(resourceName, "principal_type"),
+					resource.TestCheckResourceAttr(resourceName, "first_name", "Firstname"),
+					resource.TestCheckResourceAttr(resourceName, "last_name", "Lastname"),
+					resource.TestCheckResourceAttr(resourceName, "enabled", "true"),
 				),
 			},
 		},
 	})
 }
+*/

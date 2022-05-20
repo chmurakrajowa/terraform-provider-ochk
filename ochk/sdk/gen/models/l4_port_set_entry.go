@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -99,7 +100,6 @@ func (m *L4PortSetEntry) validateL4ProtocolEnum(path, location string, value str
 }
 
 func (m *L4PortSetEntry) validateL4Protocol(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.L4Protocol) { // not required
 		return nil
 	}
@@ -113,13 +113,40 @@ func (m *L4PortSetEntry) validateL4Protocol(formats strfmt.Registry) error {
 }
 
 func (m *L4PortSetEntry) validateResourceType(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ResourceType) { // not required
 		return nil
 	}
 
 	if m.ResourceType != nil {
 		if err := m.ResourceType.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("resourceType")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this l4 port set entry based on the context it is used
+func (m *L4PortSetEntry) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateResourceType(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *L4PortSetEntry) contextValidateResourceType(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ResourceType != nil {
+		if err := m.ResourceType.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("resourceType")
 			}

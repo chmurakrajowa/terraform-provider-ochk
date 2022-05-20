@@ -5,16 +5,14 @@ import (
 	"errors"
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machines"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machines_n_s_x"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 )
 
 type VirtualMachinesProxy struct {
-	httpClient    *http.Client
-	service       virtual_machines.ClientService
-	legacyService virtual_machines_n_s_x.ClientService // Deprecated
+	httpClient *http.Client
+	service    virtual_machines.ClientService
 }
 
 func (p *VirtualMachinesProxy) Create(ctx context.Context, virtualMachine *models.VcsVirtualMachineInstance) (*models.RequestInstance, error) {
@@ -105,25 +103,6 @@ func (p *VirtualMachinesProxy) ListByDisplayName(ctx context.Context, displayNam
 	}
 
 	return response.Payload.VcsVirtualMachineInstanceCollection, nil
-}
-
-func (p *VirtualMachinesProxy) LegacyListByDisplayName(ctx context.Context, displayName string) ([]*models.VirtualMachine, error) {
-	params := &virtual_machines_n_s_x.VirtualMachineListUsingGETParams{
-		DisplayName: &displayName,
-		Context:     ctx,
-		HTTPClient:  p.httpClient,
-	}
-
-	response, err := p.legacyService.VirtualMachineListUsingGET(params)
-	if err != nil {
-		return nil, fmt.Errorf("error while listing virtual machines: %w", err)
-	}
-
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing virtual machines failed: %s", response.Payload.Messages)
-	}
-
-	return response.Payload.VirtualMachineCollection, nil
 }
 
 func (p *VirtualMachinesProxy) Delete(ctx context.Context, virtualMachineID string) (*models.RequestInstance, error) {

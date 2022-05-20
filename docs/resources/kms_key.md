@@ -69,12 +69,12 @@ Imports a new RSA key encrypted with other symmetric key.
 The following arguments are supported:
 
 * `display_name` - (Required) Exact display name of KMS encryption key.
-* `version` - (Required) Version of the key.
 * `key_usage` - (Required) List of key usages, what actions the key will be applied to: e.g. [`ENCRYPT`, `DECRYPT`].
 * `algorithm` - (Required) Encryption algorithm, values: `AES`, `RSA`.
 * `size` - (Required) Size of the key in bits.
+* `private_key_id_to_unwrap` - (Optional) Id of the RSA private key that we used to secure the cryptographic material. Use `ochk_kms_key` data source to get key id.
 * `material` - (Optional) Imported cryptographic material, the format depends on the selected key type. AES keys are encoded in Base64, RSA keys are in PEM format.
-* `private_key_id_to_unwrap` - (Optional) Id of the RSA private key that we used to secure the cryptographic material. Use `ochk_kms_key` data source to get key id. 
+* `version` - (Required) Version of the key.
 
 ## Attribute Reference
 

@@ -39,6 +39,7 @@ func resourceRouter() *schema.Resource {
 			"parent_router_id": {
 				Type:     schema.TypeString,
 				Optional: true,
+				ForceNew: true,
 			},
 			"router_type": {
 				Type:     schema.TypeString,

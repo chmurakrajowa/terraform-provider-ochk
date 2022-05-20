@@ -41,9 +41,8 @@ func (o *KeyGetUsingGETReader) ReadResponse(response runtime.ClientResponse, con
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewKeyGetUsingGETOK() *KeyGetUsingGETOK {
 	return &KeyGetUsingGETOK{}
 }
 
-/*KeyGetUsingGETOK handles this case with default header values.
+/* KeyGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type KeyGetUsingGETOK struct {
 func (o *KeyGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /kms/key/{id}][%d] keyGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *KeyGetUsingGETOK) GetPayload() *models.KeyGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewKeyGetUsingGETBadRequest() *KeyGetUsingGETBadRequest {
 	return &KeyGetUsingGETBadRequest{}
 }
 
-/*KeyGetUsingGETBadRequest handles this case with default header values.
+/* KeyGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type KeyGetUsingGETBadRequest struct {
 func (o *KeyGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /kms/key/{id}][%d] keyGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *KeyGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewKeyGetUsingGETNotFound() *KeyGetUsingGETNotFound {
 	return &KeyGetUsingGETNotFound{}
 }
 
-/*KeyGetUsingGETNotFound handles this case with default header values.
+/* KeyGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

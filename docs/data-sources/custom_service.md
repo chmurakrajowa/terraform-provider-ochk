@@ -27,4 +27,9 @@ The following arguments are supported:
   * **protocol**: Set of rules that determine how data is transmitted between different devices in the same network. Allowed values: `TCP`, `UDP`.
   * **source**: List of source ports of a service.
   * **destination**: List of destination ports of a service.
- 
+
+The following attributes are exported in addition to above arguments:
+* `created_by` - Who created this resource.
+* `created_at` - When this resource was created.
+* `modified_by` - Who last modified this resource.
+* `modified_at` - When last modification occurred.

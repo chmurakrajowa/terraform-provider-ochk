@@ -1,3 +1,8 @@
+
+output "fw_rule" {
+  value = ochk_firewall_ew_rule.def
+}
+
 /*
 output "ip_collection" {
   value = ochk_ip_collection.default
@@ -21,23 +26,59 @@ output "subtenant_4" {
 */
 
 /*
+output "user" {
+  value = ochk_user.testy-radek
+}
+*/
+
+/*
+output "test_vm" {
+  value = data.ochk_virtual_machine.test
+}
+*/
+/*
 output "subtenant-vpc" {
   value = ochk_router.subtenant-vpc
 }
 */
 
+/*
+output  "auto-nat" {
+  value = data.ochk_auto_nat.auto-nat
+}
+
+output  "manual-nat" {
+  value = ochk_manual_nat.dnat
+}
+*/
+
+/*
+output  "manual-nat" {
+  value = data.ochk_manual_nat.manual-nat
+}
+
+output  "manual-nat1" {
+  value = data.ochk_manual_nat.manual-nat1
+}
+*/
+/*
 output "network" {
   value = data.ochk_network.subtenant-network
 }
+*/
 
+/*
 output "user1" {
   value = data.ochk_user.bg_manager_user
 }
+*/
 
+/*
 output "vnet" {
   value = ochk_virtual_network.network_for_vm
 }
-
+*/
+/*
 output "billing-tag" {
   value = ochk_billing_tag.res-bt-cc2
 }
@@ -45,6 +86,7 @@ output "billing-tag" {
 output "system-tag" {
   value = ochk_system_tag.res-st-os2
 }
+*/
 /*
 output "vm" {
   value = ochk_virtual_machine.default

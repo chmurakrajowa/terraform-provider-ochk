@@ -12,12 +12,18 @@ import (
 type RouterTestData struct {
 	ResourceName string
 	DisplayName  string
+	ParentRouter string
 }
 
-func (c *RouterTestData) ToString() string {
+func (c *RouterTestData) ToString(routerDataSourceName string) string {
 	return executeTemplateToString(`
+data "ochk_router" "vrf-`+routerDataSourceName+`" {
+  display_name = "{{ .ParentRouter}}"
+}
+
 resource "ochk_router" "{{ .ResourceName}}" {
   display_name = "{{ .DisplayName}}"
+  parent_router_id = data.ochk_router.vrf-`+routerDataSourceName+`.id
 }
 `, c)
 }
@@ -29,12 +35,14 @@ func (c *RouterTestData) FullResourceName() string {
 func TestAccRouterResource_create_update(t *testing.T) {
 	router := RouterTestData{
 		ResourceName: "router",
-		DisplayName:  generateShortRandName(),
+		DisplayName:  generateShortRandName(devTestDataPrefix),
+		ParentRouter: testData.VRF,
 	}
 
 	routerUpdated := RouterTestData{
 		ResourceName: "router",
 		DisplayName:  router.DisplayName + "-upd",
+		ParentRouter: testData.VRF,
 	}
 
 	RouterResourceName := router.FullResourceName()
@@ -42,7 +50,7 @@ func TestAccRouterResource_create_update(t *testing.T) {
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: router.ToString(),
+				Config: router.ToString("r-test1"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(RouterResourceName, "display_name", router.DisplayName),
 					resource.TestCheckResourceAttrSet(RouterResourceName, "created_by"),
@@ -52,7 +60,12 @@ func TestAccRouterResource_create_update(t *testing.T) {
 				),
 			},
 			{
-				Config: routerUpdated.ToString(),
+				ResourceName:      RouterResourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+			{
+				Config: routerUpdated.ToString("r-test1"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(RouterResourceName, "display_name", routerUpdated.DisplayName),
 				),

@@ -35,9 +35,8 @@ func (o *VcsVirtualMachineUpdateUsingPUTReader) ReadResponse(response runtime.Cl
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewVcsVirtualMachineUpdateUsingPUTOK() *VcsVirtualMachineUpdateUsingPUTOK {
 	return &VcsVirtualMachineUpdateUsingPUTOK{}
 }
 
-/*VcsVirtualMachineUpdateUsingPUTOK handles this case with default header values.
+/* VcsVirtualMachineUpdateUsingPUTOK describes a response with status code 200, with default header values.
 
 Request has been completed successfully
 */
@@ -57,7 +56,6 @@ type VcsVirtualMachineUpdateUsingPUTOK struct {
 func (o *VcsVirtualMachineUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
-
 func (o *VcsVirtualMachineUpdateUsingPUTOK) GetPayload() *models.VcsVirtualMachineUpdateResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewVcsVirtualMachineUpdateUsingPUTBadRequest() *VcsVirtualMachineUpdateUsin
 	return &VcsVirtualMachineUpdateUsingPUTBadRequest{}
 }
 
-/*VcsVirtualMachineUpdateUsingPUTBadRequest handles this case with default header values.
+/* VcsVirtualMachineUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type VcsVirtualMachineUpdateUsingPUTBadRequest struct {
 func (o *VcsVirtualMachineUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *VcsVirtualMachineUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

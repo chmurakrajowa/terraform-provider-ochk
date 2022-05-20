@@ -41,9 +41,8 @@ func (o *GroupGetUsingGETReader) ReadResponse(response runtime.ClientResponse, c
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewGroupGetUsingGETOK() *GroupGetUsingGETOK {
 	return &GroupGetUsingGETOK{}
 }
 
-/*GroupGetUsingGETOK handles this case with default header values.
+/* GroupGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type GroupGetUsingGETOK struct {
 func (o *GroupGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /groups/{groupId}][%d] groupGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *GroupGetUsingGETOK) GetPayload() *models.GroupGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewGroupGetUsingGETBadRequest() *GroupGetUsingGETBadRequest {
 	return &GroupGetUsingGETBadRequest{}
 }
 
-/*GroupGetUsingGETBadRequest handles this case with default header values.
+/* GroupGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type GroupGetUsingGETBadRequest struct {
 func (o *GroupGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /groups/{groupId}][%d] groupGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *GroupGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewGroupGetUsingGETNotFound() *GroupGetUsingGETNotFound {
 	return &GroupGetUsingGETNotFound{}
 }
 
-/*GroupGetUsingGETNotFound handles this case with default header values.
+/* GroupGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

@@ -43,7 +43,7 @@ func (c *KMSKeyTestData) FullResourceName() string {
 func TestAccKMSKeyResource_create_update(t *testing.T) {
 	kmsKey := KMSKeyTestData{
 		ResourceName: "key",
-		DisplayName:  generateShortRandName(),
+		DisplayName:  generateShortRandName(devTestDataPrefix),
 		KeyUsage:     []string{"ENCRYPT", "DECRYPT"},
 		Algorithm:    "AES",
 		Size:         256,
@@ -82,7 +82,7 @@ func TestAccKMSKeyResource_create_update(t *testing.T) {
 func TestAccKMSKeyResource_import(t *testing.T) {
 	kmsKey := KMSKeyTestData{
 		ResourceName:         "key",
-		DisplayName:          generateShortRandName(),
+		DisplayName:          generateShortRandName(devTestDataPrefix),
 		KeyUsage:             []string{"ENCRYPT", "DECRYPT"},
 		Algorithm:            "RSA",
 		Size:                 2048,
@@ -101,6 +101,11 @@ func TestAccKMSKeyResource_import(t *testing.T) {
 					resource.TestCheckResourceAttr(KMSKeyResourceName, "algorithm", kmsKey.Algorithm),
 					resource.TestCheckResourceAttr(KMSKeyResourceName, "size", fmt.Sprintf("%d", kmsKey.Size)),
 				),
+			},
+			{
+				ResourceName:      KMSKeyResourceName,
+				ImportState:       true,
+				ImportStateVerify: false,
 			},
 		},
 		CheckDestroy: resource.ComposeTestCheckFunc(
@@ -127,7 +132,7 @@ func testAccKMSKeyResourceNotExists(displayName string) resource.TestCheckFunc {
 		}
 
 		if len(KMSKeys) > 0 {
-			return fmt.Errorf("router %s still exists", KMSKeys[0].ID)
+			return fmt.Errorf("kms_key %s still exists", KMSKeys[0].ID)
 		}
 
 		return nil

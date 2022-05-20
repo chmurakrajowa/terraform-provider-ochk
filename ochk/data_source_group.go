@@ -16,6 +16,10 @@ func dataSourceGroup() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"description": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"group_type": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -29,26 +33,10 @@ func dataSourceGroup() *schema.Resource {
 				Computed: true,
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
-			"local_groups": {
+			"child_groups": {
 				Type:     schema.TypeSet,
 				Computed: true,
 				Elem:     &schema.Schema{Type: schema.TypeString},
-			},
-			"principal_id": {
-				Type:     schema.TypeInt,
-				Computed: true,
-			},
-			"principal_name": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"principal_domain": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"principal_type": {
-				Type:     schema.TypeString,
-				Computed: true,
 			},
 		},
 	}
@@ -59,13 +47,13 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, meta inter
 
 	name := d.Get("name").(string)
 
-	groups, err := proxy.ListByDisplayName(ctx, name)
+	groups, err := proxy.ListByName(ctx, name)
 	if err != nil {
 		return diag.Errorf("error while listing groups: %+v", err)
 	}
 
 	if len(groups) < 1 {
-		return diag.Errorf("no grouop found for name: %s", name)
+		return diag.Errorf("no group found for name: %s", name)
 	}
 
 	if len(groups) > 1 {
@@ -77,29 +65,20 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, meta inter
 	if err := d.Set("name", groups[0].Name); err != nil {
 		return diag.Errorf("error setting group name: %+v", err)
 	}
+	if err := d.Set("description", groups[0].Description); err != nil {
+		return diag.Errorf("error setting group description: %+v", err)
+	}
 	if err := d.Set("group_type", groups[0].GroupType); err != nil {
 		return diag.Errorf("error setting group_type: %+v", err)
 	}
 	if err := d.Set("domain", groups[0].Domain); err != nil {
-		return diag.Errorf("error setting group_type: %+v", err)
-	}
-	if err := d.Set("principal_id", groups[0].PrincipalID.ID); err != nil {
-		return diag.Errorf("error setting principal_id: %+v", err)
-	}
-	if err := d.Set("principal_name", groups[0].PrincipalID.Name); err != nil {
-		return diag.Errorf("error setting principal_name: %+v", err)
-	}
-	if err := d.Set("principal_domain", groups[0].PrincipalID.Domain); err != nil {
-		return diag.Errorf("error setting principal_domain: %+v", err)
-	}
-	if err := d.Set("principal_type", groups[0].PrincipalID.PrincipalType); err != nil {
-		return diag.Errorf("error setting principal_type: %+v", err)
+		return diag.Errorf("error setting group domain: %+v", err)
 	}
 	if err := d.Set("users", flattenUserInstancesFromIDs(groups[0].UserInstanceList)); err != nil {
 		return diag.Errorf("error setting users: %+v", err)
 	}
-	if err := d.Set("local_groups", flattenGroupInstancesFromIDs(groups[0].GroupInstanceList)); err != nil {
-		return diag.Errorf("error setting users: %+v", err)
+	if err := d.Set("child_groups", flattenGroupInstancesFromIDs(groups[0].GroupInstanceList)); err != nil {
+		return diag.Errorf("error setting child groups: %+v", err)
 	}
 	return nil
 }

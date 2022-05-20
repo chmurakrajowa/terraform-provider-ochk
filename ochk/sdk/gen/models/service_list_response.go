@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -52,7 +53,6 @@ func (m *ServiceListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *ServiceListResponse) validateServiceInstanceCollection(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ServiceInstanceCollection) { // not required
 		return nil
 	}
@@ -77,13 +77,44 @@ func (m *ServiceListResponse) validateServiceInstanceCollection(formats strfmt.R
 }
 
 func (m *ServiceListResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this service list response based on the context it is used
+func (m *ServiceListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateServiceInstanceCollection(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ServiceListResponse) contextValidateServiceInstanceCollection(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.ServiceInstanceCollection); i++ {
+
+		if m.ServiceInstanceCollection[i] != nil {
+			if err := m.ServiceInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("serviceInstanceCollection" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

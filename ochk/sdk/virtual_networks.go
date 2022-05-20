@@ -29,7 +29,7 @@ func (p *VirtualNetworksProxy) Create(ctx context.Context, virtualNetwork *model
 
 	_, put, err := p.service.VirtualNetworkCreateUsingPUT(params)
 	if err != nil {
-		return nil, fmt.Errorf("error while creating virtua network: %w", err)
+		return nil, fmt.Errorf("error while creating virtual network: %w", err)
 	}
 
 	if !put.Payload.Success {

@@ -7,3 +7,4 @@ resource "ochk_ip_collection" "default" {
     "8.8.8.8"
   ]
 }
+

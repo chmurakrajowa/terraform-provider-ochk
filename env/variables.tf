@@ -5,3 +5,8 @@ variable "tenant" {}
 variable "username" {}
 variable "password" {}
 variable "debug_log_file" {}
+variable "initial_password_for_vm" {}
+variable "backup_list" {}
+variable "backup_plan" {}
+variable "ovf_image" {}
+variable "iso_image" {}

@@ -41,9 +41,8 @@ func (o *VirtualNetworkCreateUsingPUTReader) ReadResponse(response runtime.Clien
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewVirtualNetworkCreateUsingPUTOK() *VirtualNetworkCreateUsingPUTOK {
 	return &VirtualNetworkCreateUsingPUTOK{}
 }
 
-/*VirtualNetworkCreateUsingPUTOK handles this case with default header values.
+/* VirtualNetworkCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type VirtualNetworkCreateUsingPUTOK struct {
 func (o *VirtualNetworkCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /networks][%d] virtualNetworkCreateUsingPUTOK  %+v", 200, o.Payload)
 }
-
 func (o *VirtualNetworkCreateUsingPUTOK) GetPayload() *models.VirtualNetworkCreateResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewVirtualNetworkCreateUsingPUTCreated() *VirtualNetworkCreateUsingPUTCreat
 	return &VirtualNetworkCreateUsingPUTCreated{}
 }
 
-/*VirtualNetworkCreateUsingPUTCreated handles this case with default header values.
+/* VirtualNetworkCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -96,7 +94,6 @@ type VirtualNetworkCreateUsingPUTCreated struct {
 func (o *VirtualNetworkCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /networks][%d] virtualNetworkCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
-
 func (o *VirtualNetworkCreateUsingPUTCreated) GetPayload() *models.VirtualNetworkCreateResponse {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewVirtualNetworkCreateUsingPUTBadRequest() *VirtualNetworkCreateUsingPUTBa
 	return &VirtualNetworkCreateUsingPUTBadRequest{}
 }
 
-/*VirtualNetworkCreateUsingPUTBadRequest handles this case with default header values.
+/* VirtualNetworkCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -129,7 +126,6 @@ type VirtualNetworkCreateUsingPUTBadRequest struct {
 func (o *VirtualNetworkCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /networks][%d] virtualNetworkCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *VirtualNetworkCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

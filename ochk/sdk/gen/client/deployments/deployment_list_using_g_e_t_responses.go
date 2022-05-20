@@ -35,9 +35,8 @@ func (o *DeploymentListUsingGETReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewDeploymentListUsingGETOK() *DeploymentListUsingGETOK {
 	return &DeploymentListUsingGETOK{}
 }
 
-/*DeploymentListUsingGETOK handles this case with default header values.
+/* DeploymentListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type DeploymentListUsingGETOK struct {
 func (o *DeploymentListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /deployments][%d] deploymentListUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *DeploymentListUsingGETOK) GetPayload() *models.DeploymentListResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewDeploymentListUsingGETBadRequest() *DeploymentListUsingGETBadRequest {
 	return &DeploymentListUsingGETBadRequest{}
 }
 
-/*DeploymentListUsingGETBadRequest handles this case with default header values.
+/* DeploymentListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type DeploymentListUsingGETBadRequest struct {
 func (o *DeploymentListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /deployments][%d] deploymentListUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *DeploymentListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

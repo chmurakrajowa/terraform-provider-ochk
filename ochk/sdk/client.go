@@ -19,17 +19,15 @@ import (
 type Client struct {
 	FirewallEWRules FirewallEWRulesProxy
 	FirewallSNRules FirewallSNRulesProxy
-	GatewayPolicy   GatewayPolicyProxy
 	LogicalPorts    LogicalPortsProxy
-	Networks        NetworksProxy
 	Requests        RequestsProxy
 	Routers         RoutersProxy
 	SecurityGroups  SecurityGroupsProxy
-	SecurityPolicy  SecurityPolicyProxy
 	Services        ServicesProxy
 	Subtenants      SubtenantsProxy
-	Users           UsersProxy
+	Users           ADUsersProxy
 	Groups          GroupsProxy
+	LocalGroups     LocalGroupsProxy
 	VirtualMachines VirtualMachinesProxy
 	VirtualNetworks VirtualNetworksProxy
 	IPCollections   IPCollectionsProxy
@@ -40,6 +38,7 @@ type Client struct {
 	BackupLists     BackupListsProxy
 	BillingTags     BillingTagsProxy
 	SystemTags      SystemTagsProxy
+	Nats            NatProxy
 }
 
 var clientMutex sync.Mutex
@@ -112,10 +111,6 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 			httpClient: httpClient,
 			service:    authClient.SecurityGroups,
 		},
-		SecurityPolicy: SecurityPolicyProxy{
-			httpClient: httpClient,
-			service:    authClient.SecurityPolicies,
-		},
 		FirewallEWRules: FirewallEWRulesProxy{
 			httpClient: httpClient,
 			service:    authClient.FirewallRulesew,
@@ -128,38 +123,33 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 			httpClient: httpClient,
 			service:    authClient.DefaultServices,
 		},
-		GatewayPolicy: GatewayPolicyProxy{
-			httpClient: httpClient,
-			service:    authClient.GatewayPolicies,
-		},
 		Routers: RoutersProxy{
 			httpClient: httpClient,
 			service:    authClient.Routers,
 		},
 		VirtualMachines: VirtualMachinesProxy{
-			httpClient:    httpClient,
-			service:       authClient.VirtualMachines,
-			legacyService: authClient.VirtualMachinesnsx,
+			httpClient: httpClient,
+			service:    authClient.VirtualMachines,
 		},
 		LogicalPorts: LogicalPortsProxy{
 			httpClient: httpClient,
 			service:    authClient.LogicalPorts,
 		},
-		Users: UsersProxy{
+		Users: ADUsersProxy{
 			httpClient: httpClient,
-			service:    authClient.Users,
+			service:    authClient.ActiveDirectoryUsers,
 		},
 		Groups: GroupsProxy{
 			httpClient: httpClient,
 			service:    authClient.Groups,
 		},
+		LocalGroups: LocalGroupsProxy{
+			httpClient: httpClient,
+			service:    authClient.LocalGroups,
+		},
 		Subtenants: SubtenantsProxy{
 			httpClient: httpClient,
 			service:    authClient.Subtenants,
-		},
-		Networks: NetworksProxy{
-			httpClient: httpClient,
-			service:    authClient.Networks,
 		},
 		VirtualNetworks: VirtualNetworksProxy{
 			httpClient: httpClient,
@@ -200,6 +190,10 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		SystemTags: SystemTagsProxy{
 			httpClient: httpClient,
 			service:    authClient.SystemTags,
+		},
+		Nats: NatProxy{
+			httpClient: httpClient,
+			service:    authClient.NatRules,
 		},
 	}
 

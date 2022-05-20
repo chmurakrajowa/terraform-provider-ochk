@@ -25,11 +25,14 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	SecurityPolicyGetUsingGET(params *SecurityPolicyGetUsingGETParams) (*SecurityPolicyGetUsingGETOK, error)
+	SecurityPolicyGetUsingGET(params *SecurityPolicyGetUsingGETParams, opts ...ClientOption) (*SecurityPolicyGetUsingGETOK, error)
 
-	SecurityPolicyListUsingGET(params *SecurityPolicyListUsingGETParams) (*SecurityPolicyListUsingGETOK, error)
+	SecurityPolicyListUsingGET(params *SecurityPolicyListUsingGETParams, opts ...ClientOption) (*SecurityPolicyListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -39,13 +42,12 @@ type ClientService interface {
 
   Get security policy from NSX-T
 */
-func (a *Client) SecurityPolicyGetUsingGET(params *SecurityPolicyGetUsingGETParams) (*SecurityPolicyGetUsingGETOK, error) {
+func (a *Client) SecurityPolicyGetUsingGET(params *SecurityPolicyGetUsingGETParams, opts ...ClientOption) (*SecurityPolicyGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSecurityPolicyGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "securityPolicyGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/firewall/security-policies/{SecurityPolicyId}",
@@ -56,7 +58,12 @@ func (a *Client) SecurityPolicyGetUsingGET(params *SecurityPolicyGetUsingGETPara
 		Reader:             &SecurityPolicyGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -75,13 +82,12 @@ func (a *Client) SecurityPolicyGetUsingGET(params *SecurityPolicyGetUsingGETPara
 
   List security policies from NSX-T
 */
-func (a *Client) SecurityPolicyListUsingGET(params *SecurityPolicyListUsingGETParams) (*SecurityPolicyListUsingGETOK, error) {
+func (a *Client) SecurityPolicyListUsingGET(params *SecurityPolicyListUsingGETParams, opts ...ClientOption) (*SecurityPolicyListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSecurityPolicyListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "securityPolicyListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/firewall/security-policies",
@@ -92,7 +98,12 @@ func (a *Client) SecurityPolicyListUsingGET(params *SecurityPolicyListUsingGETPa
 		Reader:             &SecurityPolicyListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

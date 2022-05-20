@@ -18,59 +18,73 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewMcsGenerateSecretUsingPOSTParams creates a new McsGenerateSecretUsingPOSTParams object
-// with the default values initialized.
+// NewMcsGenerateSecretUsingPOSTParams creates a new McsGenerateSecretUsingPOSTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewMcsGenerateSecretUsingPOSTParams() *McsGenerateSecretUsingPOSTParams {
-	var ()
 	return &McsGenerateSecretUsingPOSTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewMcsGenerateSecretUsingPOSTParamsWithTimeout creates a new McsGenerateSecretUsingPOSTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewMcsGenerateSecretUsingPOSTParamsWithTimeout(timeout time.Duration) *McsGenerateSecretUsingPOSTParams {
-	var ()
 	return &McsGenerateSecretUsingPOSTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewMcsGenerateSecretUsingPOSTParamsWithContext creates a new McsGenerateSecretUsingPOSTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewMcsGenerateSecretUsingPOSTParamsWithContext(ctx context.Context) *McsGenerateSecretUsingPOSTParams {
-	var ()
 	return &McsGenerateSecretUsingPOSTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewMcsGenerateSecretUsingPOSTParamsWithHTTPClient creates a new McsGenerateSecretUsingPOSTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewMcsGenerateSecretUsingPOSTParamsWithHTTPClient(client *http.Client) *McsGenerateSecretUsingPOSTParams {
-	var ()
 	return &McsGenerateSecretUsingPOSTParams{
 		HTTPClient: client,
 	}
 }
 
-/*McsGenerateSecretUsingPOSTParams contains all the parameters to send to the API endpoint
-for the mcs generate secret using p o s t operation typically these are written to a http.Request
+/* McsGenerateSecretUsingPOSTParams contains all the parameters to send to the API endpoint
+   for the mcs generate secret using p o s t operation.
+
+   Typically these are written to a http.Request.
 */
 type McsGenerateSecretUsingPOSTParams struct {
 
-	/*McsSecret
-	  mcsSecret
+	/* McsSecret.
 
+	   mcsSecret
 	*/
 	McsSecret *models.McsSecret
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the mcs generate secret using p o s t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *McsGenerateSecretUsingPOSTParams) WithDefaults() *McsGenerateSecretUsingPOSTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the mcs generate secret using p o s t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *McsGenerateSecretUsingPOSTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the mcs generate secret using p o s t params
@@ -124,7 +138,6 @@ func (o *McsGenerateSecretUsingPOSTParams) WriteToRequest(r runtime.ClientReques
 		return err
 	}
 	var res []error
-
 	if o.McsSecret != nil {
 		if err := r.SetBodyParam(o.McsSecret); err != nil {
 			return err

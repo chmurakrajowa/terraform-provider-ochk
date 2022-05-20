@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -94,7 +95,6 @@ func (m *StaticIPV4Address) Validate(formats strfmt.Registry) error {
 }
 
 func (m *StaticIPV4Address) validateCreatedDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.CreatedDate) { // not required
 		return nil
 	}
@@ -107,7 +107,6 @@ func (m *StaticIPV4Address) validateCreatedDate(formats strfmt.Registry) error {
 }
 
 func (m *StaticIPV4Address) validateLastModifiedDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.LastModifiedDate) { // not required
 		return nil
 	}
@@ -155,7 +154,6 @@ func (m *StaticIPV4Address) validateStateEnum(path, location string, value strin
 }
 
 func (m *StaticIPV4Address) validateState(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.State) { // not required
 		return nil
 	}
@@ -165,6 +163,11 @@ func (m *StaticIPV4Address) validateState(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this static IPv4 address based on context it is used
+func (m *StaticIPV4Address) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

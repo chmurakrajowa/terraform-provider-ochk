@@ -41,9 +41,8 @@ func (o *IPCollectionGetUsingGETReader) ReadResponse(response runtime.ClientResp
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewIPCollectionGetUsingGETOK() *IPCollectionGetUsingGETOK {
 	return &IPCollectionGetUsingGETOK{}
 }
 
-/*IPCollectionGetUsingGETOK handles this case with default header values.
+/* IPCollectionGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type IPCollectionGetUsingGETOK struct {
 func (o *IPCollectionGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /ipcs/{ipCollectionId}][%d] ipCollectionGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *IPCollectionGetUsingGETOK) GetPayload() *models.IPCollectionResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewIPCollectionGetUsingGETBadRequest() *IPCollectionGetUsingGETBadRequest {
 	return &IPCollectionGetUsingGETBadRequest{}
 }
 
-/*IPCollectionGetUsingGETBadRequest handles this case with default header values.
+/* IPCollectionGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type IPCollectionGetUsingGETBadRequest struct {
 func (o *IPCollectionGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /ipcs/{ipCollectionId}][%d] ipCollectionGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *IPCollectionGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewIPCollectionGetUsingGETNotFound() *IPCollectionGetUsingGETNotFound {
 	return &IPCollectionGetUsingGETNotFound{}
 }
 
-/*IPCollectionGetUsingGETNotFound handles this case with default header values.
+/* IPCollectionGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

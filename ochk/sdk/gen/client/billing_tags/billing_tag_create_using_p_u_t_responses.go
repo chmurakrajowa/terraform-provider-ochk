@@ -41,9 +41,8 @@ func (o *BillingTagCreateUsingPUTReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewBillingTagCreateUsingPUTOK() *BillingTagCreateUsingPUTOK {
 	return &BillingTagCreateUsingPUTOK{}
 }
 
-/*BillingTagCreateUsingPUTOK handles this case with default header values.
+/* BillingTagCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type BillingTagCreateUsingPUTOK struct {
 func (o *BillingTagCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /tags/billingTags][%d] billingTagCreateUsingPUTOK  %+v", 200, o.Payload)
 }
-
 func (o *BillingTagCreateUsingPUTOK) GetPayload() *models.BillingTagCreateResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewBillingTagCreateUsingPUTCreated() *BillingTagCreateUsingPUTCreated {
 	return &BillingTagCreateUsingPUTCreated{}
 }
 
-/*BillingTagCreateUsingPUTCreated handles this case with default header values.
+/* BillingTagCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -96,7 +94,6 @@ type BillingTagCreateUsingPUTCreated struct {
 func (o *BillingTagCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /tags/billingTags][%d] billingTagCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
-
 func (o *BillingTagCreateUsingPUTCreated) GetPayload() *models.BillingTagCreateResponse {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewBillingTagCreateUsingPUTBadRequest() *BillingTagCreateUsingPUTBadRequest
 	return &BillingTagCreateUsingPUTBadRequest{}
 }
 
-/*BillingTagCreateUsingPUTBadRequest handles this case with default header values.
+/* BillingTagCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -129,7 +126,6 @@ type BillingTagCreateUsingPUTBadRequest struct {
 func (o *BillingTagCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /tags/billingTags][%d] billingTagCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *BillingTagCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

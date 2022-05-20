@@ -41,9 +41,8 @@ func (o *BackupPlanGetUsingGETReader) ReadResponse(response runtime.ClientRespon
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewBackupPlanGetUsingGETOK() *BackupPlanGetUsingGETOK {
 	return &BackupPlanGetUsingGETOK{}
 }
 
-/*BackupPlanGetUsingGETOK handles this case with default header values.
+/* BackupPlanGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type BackupPlanGetUsingGETOK struct {
 func (o *BackupPlanGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /backups/plans/{backupPlanId}][%d] backupPlanGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *BackupPlanGetUsingGETOK) GetPayload() *models.BackupPlanGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewBackupPlanGetUsingGETBadRequest() *BackupPlanGetUsingGETBadRequest {
 	return &BackupPlanGetUsingGETBadRequest{}
 }
 
-/*BackupPlanGetUsingGETBadRequest handles this case with default header values.
+/* BackupPlanGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -106,7 +104,7 @@ func NewBackupPlanGetUsingGETNotFound() *BackupPlanGetUsingGETNotFound {
 	return &BackupPlanGetUsingGETNotFound{}
 }
 
-/*BackupPlanGetUsingGETNotFound handles this case with default header values.
+/* BackupPlanGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

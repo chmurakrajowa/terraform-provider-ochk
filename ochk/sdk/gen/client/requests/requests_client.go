@@ -25,11 +25,14 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	RequestGetUsingGET(params *RequestGetUsingGETParams) (*RequestGetUsingGETOK, error)
+	RequestGetUsingGET(params *RequestGetUsingGETParams, opts ...ClientOption) (*RequestGetUsingGETOK, error)
 
-	RequestListUsingGET(params *RequestListUsingGETParams) (*RequestListUsingGETOK, error)
+	RequestListUsingGET(params *RequestListUsingGETParams, opts ...ClientOption) (*RequestListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -39,13 +42,12 @@ type ClientService interface {
 
   Get IaaS requests.
 */
-func (a *Client) RequestGetUsingGET(params *RequestGetUsingGETParams) (*RequestGetUsingGETOK, error) {
+func (a *Client) RequestGetUsingGET(params *RequestGetUsingGETParams, opts ...ClientOption) (*RequestGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRequestGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "requestGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/request/{requestId}",
@@ -56,7 +58,12 @@ func (a *Client) RequestGetUsingGET(params *RequestGetUsingGETParams) (*RequestG
 		Reader:             &RequestGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -75,13 +82,12 @@ func (a *Client) RequestGetUsingGET(params *RequestGetUsingGETParams) (*RequestG
 
   List IaaS requests.
 */
-func (a *Client) RequestListUsingGET(params *RequestListUsingGETParams) (*RequestListUsingGETOK, error) {
+func (a *Client) RequestListUsingGET(params *RequestListUsingGETParams, opts ...ClientOption) (*RequestListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRequestListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "requestListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/request/",
@@ -92,7 +98,12 @@ func (a *Client) RequestListUsingGET(params *RequestListUsingGETParams) (*Reques
 		Reader:             &RequestListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

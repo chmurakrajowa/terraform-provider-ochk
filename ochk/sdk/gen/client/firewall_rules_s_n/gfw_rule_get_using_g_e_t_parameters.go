@@ -16,64 +16,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGfwRuleGetUsingGETParams creates a new GfwRuleGetUsingGETParams object
-// with the default values initialized.
+// NewGfwRuleGetUsingGETParams creates a new GfwRuleGetUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGfwRuleGetUsingGETParams() *GfwRuleGetUsingGETParams {
-	var ()
 	return &GfwRuleGetUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGfwRuleGetUsingGETParamsWithTimeout creates a new GfwRuleGetUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGfwRuleGetUsingGETParamsWithTimeout(timeout time.Duration) *GfwRuleGetUsingGETParams {
-	var ()
 	return &GfwRuleGetUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGfwRuleGetUsingGETParamsWithContext creates a new GfwRuleGetUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGfwRuleGetUsingGETParamsWithContext(ctx context.Context) *GfwRuleGetUsingGETParams {
-	var ()
 	return &GfwRuleGetUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGfwRuleGetUsingGETParamsWithHTTPClient creates a new GfwRuleGetUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGfwRuleGetUsingGETParamsWithHTTPClient(client *http.Client) *GfwRuleGetUsingGETParams {
-	var ()
 	return &GfwRuleGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*GfwRuleGetUsingGETParams contains all the parameters to send to the API endpoint
-for the gfw rule get using g e t operation typically these are written to a http.Request
+/* GfwRuleGetUsingGETParams contains all the parameters to send to the API endpoint
+   for the gfw rule get using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type GfwRuleGetUsingGETParams struct {
 
-	/*RouterID
-	  routerId
+	/* RouterID.
 
+	   routerId
 	*/
 	RouterID string
-	/*RuleID
-	  ruleId
 
+	/* RuleID.
+
+	   ruleId
 	*/
 	RuleID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the gfw rule get using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GfwRuleGetUsingGETParams) WithDefaults() *GfwRuleGetUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the gfw rule get using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GfwRuleGetUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the gfw rule get using g e t params

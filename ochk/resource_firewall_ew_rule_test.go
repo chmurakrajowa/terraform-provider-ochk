@@ -11,9 +11,17 @@ import (
 	"testing"
 )
 
+func testAccirewallEWRuleCreateResourceId(firewallRuleResourceName string) resource.ImportStateIdFunc {
+	return func(s *terraform.State) (string, error) {
+		firewallRuleResource := s.RootModule().Resources[firewallRuleResourceName]
+		resourceID := firewallRuleResource.Primary.Attributes["router_id"] + "/" + firewallRuleResource.Primary.ID
+		return resourceID, nil
+	}
+}
+
 func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
 	resourceName := "ochk_firewall_ew_rule.default"
-	displayName := generateRandName()
+	displayName := generateRandName(devTestDataPrefix)
 	displayNameUpdated := displayName + "-upd"
 	action := "ALLOW"
 	actionUpdated := "DROP"
@@ -21,9 +29,10 @@ func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
 	directionUpdated := "OUT"
 	ipProtocol := "IPV4_IPV6"
 	ipProtocolUpdated := "IPV4"
+	dataSourceRouter := "ochk_router.default"
 
-	source := generateRandName()
-	destination := generateRandName()
+	source := generateRandName(devTestDataPrefix)
+	destination := generateRandName(devTestDataPrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
@@ -41,7 +50,14 @@ func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
 					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_at"),
+					resource.TestCheckResourceAttrPair(resourceName, "router_id", dataSourceRouter, "id"),
 				),
+			},
+			{
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+				ImportStateIdFunc: testAccirewallEWRuleCreateResourceId(resourceName),
 			},
 			{
 				Config: testAccFirewallEWRuleResourceConfig(displayNameUpdated, source, destination, actionUpdated, ipProtocolUpdated, directionUpdated, 2000, "data.ochk_custom_service.custom_service2.id"),
@@ -60,7 +76,7 @@ func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
 }
 
 func TestAccFirewallEWRuleResource_withPriority(t *testing.T) {
-	randDisplayName := generateRandName()
+	randDisplayName := generateRandName(devTestDataPrefix)
 	displayNameMiddle := randDisplayName + "mid"
 	displayNameBefore := randDisplayName + "bef"
 	displayNameAfter := randDisplayName + "aft"
@@ -71,7 +87,7 @@ func TestAccFirewallEWRuleResource_withPriority(t *testing.T) {
 			{
 				Config: testAccFirewallEWRuleResourceConfigWithOrder(displayNameBefore, displayNameMiddle, displayNameAfter),
 				Check: resource.ComposeTestCheckFunc(
-					testAccFirewallEWRuleCheckRulesOrder("data.ochk_security_policy.default", displayNameBefore, displayNameMiddle, displayNameAfter),
+					testAccFirewallEWRuleCheckRulesOrder("ochk_router.default", displayNameBefore, displayNameMiddle, displayNameAfter),
 				),
 			},
 		},
@@ -168,8 +184,18 @@ func checkOrderOfSecurityPolicies(securityPolicies []*models.DFWRule, displayNam
 
 func testAccFirewallEWRuleResourceConfig(displayName string, source string, destination string, action string, ipProtocol string, direction string, priority int64, customServiceResourceID string) string {
 	return fmt.Sprintf(`
-data "ochk_security_policy" "default" {
-  display_name = %[12]q
+
+locals {
+	routerDisplayName = %[1]q
+}
+
+data "ochk_router" "vrf-default" {
+	display_name = %[13]q
+}
+
+resource "ochk_router" "default" {
+  display_name = local.routerDisplayName
+  parent_router_id = data.ochk_router.vrf-default.id
 }
 
 data "ochk_service" "http" {
@@ -208,7 +234,7 @@ resource "ochk_security_group" "destination" {
 
 resource "ochk_firewall_ew_rule" "default" {
   display_name = %[3]q
-  security_policy_id = data.ochk_security_policy.default.id
+  router_id = ochk_router.default.id
 
   services = [data.ochk_service.http.id]
   custom_services = [%[11]s]
@@ -221,16 +247,26 @@ resource "ochk_firewall_ew_rule" "default" {
 
   priority = %[8]d
 }
-`, source, destination, displayName, action, ipProtocol, direction, testData.LegacyVirtualMachineDisplayName, priority, testData.CustomService1DisplayName, testData.CustomService2DisplayName, customServiceResourceID, testData.SecurityPolicyDisplayName)
+`, source, destination, displayName, action, ipProtocol, direction, testData.VirtualMachineDisplayName, priority, testData.CustomService1DisplayName, testData.CustomService2DisplayName, customServiceResourceID, testData.VPC, testData.VRF)
 }
 
 func testAccFirewallEWRuleResourceConfigWithOrder(displayNameBefore string, displayNameMiddle string, displayNameAfter string) string {
-	source := generateRandName()
-	destination := generateRandName()
+	source := generateRandName(devTestDataPrefix)
+	destination := generateRandName(devTestDataPrefix)
 
 	return fmt.Sprintf(`
-data "ochk_security_policy" "default" {
-  display_name = %[7]q
+
+locals {
+	routerDisplayName = %[1]q
+}
+
+data "ochk_router" "vrf" {
+	display_name = %[7]q
+}
+
+resource "ochk_router" "default" {
+  display_name = local.routerDisplayName
+  parent_router_id = data.ochk_router.vrf.id
 }
 
 data "ochk_service" "http" {
@@ -297,7 +333,7 @@ resource "ochk_security_group" "destination-after" {
 
 resource "ochk_firewall_ew_rule" "middle" {
   display_name = %[3]q
-  security_policy_id = data.ochk_security_policy.default.id
+  router_id = ochk_router.default.id
 
   services = [data.ochk_service.http.id]
   source = [ochk_security_group.source-middle.id]
@@ -307,7 +343,7 @@ resource "ochk_firewall_ew_rule" "middle" {
 
 resource "ochk_firewall_ew_rule" "before" {
   display_name = %[4]q
-  security_policy_id = data.ochk_security_policy.default.id
+  router_id = ochk_router.default.id
 
   services = [data.ochk_service.http.id]
   source = [ochk_security_group.source-before.id]
@@ -317,14 +353,14 @@ resource "ochk_firewall_ew_rule" "before" {
 
 resource "ochk_firewall_ew_rule" "after" {
   display_name = %[5]q
-  security_policy_id = data.ochk_security_policy.default.id
+  router_id = ochk_router.default.id
 
   services = [data.ochk_service.http.id]
   source = [ochk_security_group.source-after.id]
   destination = [ochk_security_group.destination-after.id]
   priority = 20002
 }
-`, source, destination, displayNameMiddle, displayNameBefore, displayNameAfter, testData.LegacyVirtualMachineDisplayName, testData.SecurityPolicyDisplayName)
+`, source, destination, displayNameMiddle, displayNameBefore, displayNameAfter, testData.VirtualMachineDisplayName, testData.VRF)
 }
 
 func testAccFirewallEWRuleResourceDoesntExist(displayName string) resource.TestCheckFunc {
@@ -333,16 +369,17 @@ func testAccFirewallEWRuleResourceDoesntExist(displayName string) resource.TestC
 
 		client := testAccProvider.Meta().(*sdk.Client)
 
-		securityPolicies, err := client.SecurityPolicy.ListByDisplayName(ctx, testData.SecurityPolicyDisplayName)
+		routers, err := client.Routers.ListByDisplayName(ctx, testData.VPC)
+
 		if err != nil {
 			return err
 		}
 
-		if len(securityPolicies) != 1 {
-			return fmt.Errorf("wrong number of security policies")
+		if len(routers) != 1 {
+			return fmt.Errorf("wrong number of routers")
 		}
 
-		firewallRule, err := client.FirewallEWRules.ListByDisplayName(ctx, securityPolicies[0].SecurityPolicyID, displayName)
+		firewallRule, err := client.FirewallEWRules.ListByDisplayName(ctx, routers[0].RouterID, displayName)
 		if err != nil {
 			return err
 		}

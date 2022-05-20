@@ -25,15 +25,18 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GetLogsUsingPOST(params *GetLogsUsingPOSTParams) (*GetLogsUsingPOSTOK, error)
+	GetLogsUsingPOST(params *GetLogsUsingPOSTParams, opts ...ClientOption) (*GetLogsUsingPOSTOK, error)
 
-	LogCategoriesListUsingGET(params *LogCategoriesListUsingGETParams) (*LogCategoriesListUsingGETOK, error)
+	LogCategoriesListUsingGET(params *LogCategoriesListUsingGETParams, opts ...ClientOption) (*LogCategoriesListUsingGETOK, error)
 
-	LogCategoryGetUsingGET(params *LogCategoryGetUsingGETParams) (*LogCategoryGetUsingGETOK, error)
+	LogCategoryGetUsingGET(params *LogCategoryGetUsingGETParams, opts ...ClientOption) (*LogCategoryGetUsingGETOK, error)
 
-	LogCategoryUpdateUsingPUT(params *LogCategoryUpdateUsingPUTParams) (*LogCategoryUpdateUsingPUTOK, error)
+	LogCategoryUpdateUsingPUT(params *LogCategoryUpdateUsingPUTParams, opts ...ClientOption) (*LogCategoryUpdateUsingPUTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -43,13 +46,12 @@ type ClientService interface {
 
   Get logs
 */
-func (a *Client) GetLogsUsingPOST(params *GetLogsUsingPOSTParams) (*GetLogsUsingPOSTOK, error) {
+func (a *Client) GetLogsUsingPOST(params *GetLogsUsingPOSTParams, opts ...ClientOption) (*GetLogsUsingPOSTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetLogsUsingPOSTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "getLogsUsingPOST",
 		Method:             "POST",
 		PathPattern:        "/log/categories/{logCategoryId}/generate",
@@ -60,7 +62,12 @@ func (a *Client) GetLogsUsingPOST(params *GetLogsUsingPOSTParams) (*GetLogsUsing
 		Reader:             &GetLogsUsingPOSTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -79,13 +86,12 @@ func (a *Client) GetLogsUsingPOST(params *GetLogsUsingPOSTParams) (*GetLogsUsing
 
   List log categories
 */
-func (a *Client) LogCategoriesListUsingGET(params *LogCategoriesListUsingGETParams) (*LogCategoriesListUsingGETOK, error) {
+func (a *Client) LogCategoriesListUsingGET(params *LogCategoriesListUsingGETParams, opts ...ClientOption) (*LogCategoriesListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewLogCategoriesListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "logCategoriesListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/log/categories",
@@ -96,7 +102,12 @@ func (a *Client) LogCategoriesListUsingGET(params *LogCategoriesListUsingGETPara
 		Reader:             &LogCategoriesListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -115,13 +126,12 @@ func (a *Client) LogCategoriesListUsingGET(params *LogCategoriesListUsingGETPara
 
   Get log category
 */
-func (a *Client) LogCategoryGetUsingGET(params *LogCategoryGetUsingGETParams) (*LogCategoryGetUsingGETOK, error) {
+func (a *Client) LogCategoryGetUsingGET(params *LogCategoryGetUsingGETParams, opts ...ClientOption) (*LogCategoryGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewLogCategoryGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "logCategoryGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/log/categories/{logCategoryId}",
@@ -132,7 +142,12 @@ func (a *Client) LogCategoryGetUsingGET(params *LogCategoryGetUsingGETParams) (*
 		Reader:             &LogCategoryGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -151,13 +166,12 @@ func (a *Client) LogCategoryGetUsingGET(params *LogCategoryGetUsingGETParams) (*
 
   Update log category
 */
-func (a *Client) LogCategoryUpdateUsingPUT(params *LogCategoryUpdateUsingPUTParams) (*LogCategoryUpdateUsingPUTOK, error) {
+func (a *Client) LogCategoryUpdateUsingPUT(params *LogCategoryUpdateUsingPUTParams, opts ...ClientOption) (*LogCategoryUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewLogCategoryUpdateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "logCategoryUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/log/categories/{logCategoryId}",
@@ -168,7 +182,12 @@ func (a *Client) LogCategoryUpdateUsingPUT(params *LogCategoryUpdateUsingPUTPara
 		Reader:             &LogCategoryUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

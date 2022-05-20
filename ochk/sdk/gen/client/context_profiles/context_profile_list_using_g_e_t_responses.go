@@ -35,9 +35,8 @@ func (o *ContextProfileListUsingGETReader) ReadResponse(response runtime.ClientR
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewContextProfileListUsingGETOK() *ContextProfileListUsingGETOK {
 	return &ContextProfileListUsingGETOK{}
 }
 
-/*ContextProfileListUsingGETOK handles this case with default header values.
+/* ContextProfileListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type ContextProfileListUsingGETOK struct {
 func (o *ContextProfileListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/context-profiles][%d] contextProfileListUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *ContextProfileListUsingGETOK) GetPayload() *models.ContextProfileListResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewContextProfileListUsingGETBadRequest() *ContextProfileListUsingGETBadReq
 	return &ContextProfileListUsingGETBadRequest{}
 }
 
-/*ContextProfileListUsingGETBadRequest handles this case with default header values.
+/* ContextProfileListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type ContextProfileListUsingGETBadRequest struct {
 func (o *ContextProfileListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/context-profiles][%d] contextProfileListUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *ContextProfileListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

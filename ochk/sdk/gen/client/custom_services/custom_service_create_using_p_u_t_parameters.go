@@ -18,59 +18,73 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewCustomServiceCreateUsingPUTParams creates a new CustomServiceCreateUsingPUTParams object
-// with the default values initialized.
+// NewCustomServiceCreateUsingPUTParams creates a new CustomServiceCreateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCustomServiceCreateUsingPUTParams() *CustomServiceCreateUsingPUTParams {
-	var ()
 	return &CustomServiceCreateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCustomServiceCreateUsingPUTParamsWithTimeout creates a new CustomServiceCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCustomServiceCreateUsingPUTParamsWithTimeout(timeout time.Duration) *CustomServiceCreateUsingPUTParams {
-	var ()
 	return &CustomServiceCreateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCustomServiceCreateUsingPUTParamsWithContext creates a new CustomServiceCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCustomServiceCreateUsingPUTParamsWithContext(ctx context.Context) *CustomServiceCreateUsingPUTParams {
-	var ()
 	return &CustomServiceCreateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCustomServiceCreateUsingPUTParamsWithHTTPClient creates a new CustomServiceCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCustomServiceCreateUsingPUTParamsWithHTTPClient(client *http.Client) *CustomServiceCreateUsingPUTParams {
-	var ()
 	return &CustomServiceCreateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*CustomServiceCreateUsingPUTParams contains all the parameters to send to the API endpoint
-for the custom service create using p u t operation typically these are written to a http.Request
+/* CustomServiceCreateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the custom service create using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type CustomServiceCreateUsingPUTParams struct {
 
-	/*CustomServiceInstance
-	  customServiceInstance
+	/* CustomServiceInstance.
 
+	   customServiceInstance
 	*/
 	CustomServiceInstance *models.CustomServiceInstance
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the custom service create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CustomServiceCreateUsingPUTParams) WithDefaults() *CustomServiceCreateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the custom service create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CustomServiceCreateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the custom service create using p u t params
@@ -124,7 +138,6 @@ func (o *CustomServiceCreateUsingPUTParams) WriteToRequest(r runtime.ClientReque
 		return err
 	}
 	var res []error
-
 	if o.CustomServiceInstance != nil {
 		if err := r.SetBodyParam(o.CustomServiceInstance); err != nil {
 			return err

@@ -41,9 +41,8 @@ func (o *SubtenantGetUsingGETReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewSubtenantGetUsingGETOK() *SubtenantGetUsingGETOK {
 	return &SubtenantGetUsingGETOK{}
 }
 
-/*SubtenantGetUsingGETOK handles this case with default header values.
+/* SubtenantGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type SubtenantGetUsingGETOK struct {
 func (o *SubtenantGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /subtenants/{subtenantId}][%d] subtenantGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *SubtenantGetUsingGETOK) GetPayload() *models.SubtenantGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewSubtenantGetUsingGETBadRequest() *SubtenantGetUsingGETBadRequest {
 	return &SubtenantGetUsingGETBadRequest{}
 }
 
-/*SubtenantGetUsingGETBadRequest handles this case with default header values.
+/* SubtenantGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type SubtenantGetUsingGETBadRequest struct {
 func (o *SubtenantGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /subtenants/{subtenantId}][%d] subtenantGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *SubtenantGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewSubtenantGetUsingGETNotFound() *SubtenantGetUsingGETNotFound {
 	return &SubtenantGetUsingGETNotFound{}
 }
 
-/*SubtenantGetUsingGETNotFound handles this case with default header values.
+/* SubtenantGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

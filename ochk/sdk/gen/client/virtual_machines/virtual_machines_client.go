@@ -25,27 +25,30 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	VcsVirtualMachineCreateUsingPUT(params *VcsVirtualMachineCreateUsingPUTParams) (*VcsVirtualMachineCreateUsingPUTOK, *VcsVirtualMachineCreateUsingPUTCreated, error)
+	VcsVirtualMachineCreateUsingPUT(params *VcsVirtualMachineCreateUsingPUTParams, opts ...ClientOption) (*VcsVirtualMachineCreateUsingPUTOK, *VcsVirtualMachineCreateUsingPUTCreated, error)
 
-	VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDeleteUsingDELETEParams) (*VcsVirtualMachineDeleteUsingDELETEOK, error)
+	VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDeleteUsingDELETEParams, opts ...ClientOption) (*VcsVirtualMachineDeleteUsingDELETEOK, error)
 
-	VcsVirtualMachineGroupGetUsingGET1(params *VcsVirtualMachineGroupGetUsingGET1Params) (*VcsVirtualMachineGroupGetUsingGET1OK, error)
+	VcsVirtualMachineGroupGetUsingGET1(params *VcsVirtualMachineGroupGetUsingGET1Params, opts ...ClientOption) (*VcsVirtualMachineGroupGetUsingGET1OK, error)
 
-	VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsingGET1Params) (*VcsVirtualMachineListUsingGET1OK, error)
+	VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsingGET1Params, opts ...ClientOption) (*VcsVirtualMachineListUsingGET1OK, error)
 
-	VcsVirtualMachineSnapshotCreateUsingPUT(params *VcsVirtualMachineSnapshotCreateUsingPUTParams) (*VcsVirtualMachineSnapshotCreateUsingPUTOK, *VcsVirtualMachineSnapshotCreateUsingPUTCreated, error)
+	VcsVirtualMachineSnapshotCreateUsingPUT(params *VcsVirtualMachineSnapshotCreateUsingPUTParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotCreateUsingPUTOK, *VcsVirtualMachineSnapshotCreateUsingPUTCreated, error)
 
-	VcsVirtualMachineSnapshotDeleteUsingDELETE(params *VcsVirtualMachineSnapshotDeleteUsingDELETEParams) (*VcsVirtualMachineSnapshotDeleteUsingDELETEOK, error)
+	VcsVirtualMachineSnapshotDeleteUsingDELETE(params *VcsVirtualMachineSnapshotDeleteUsingDELETEParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotDeleteUsingDELETEOK, error)
 
-	VcsVirtualMachineSnapshotGetUsingGET(params *VcsVirtualMachineSnapshotGetUsingGETParams) (*VcsVirtualMachineSnapshotGetUsingGETOK, error)
+	VcsVirtualMachineSnapshotGetUsingGET(params *VcsVirtualMachineSnapshotGetUsingGETParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotGetUsingGETOK, error)
 
-	VcsVirtualMachineSnapshotListUsingGET(params *VcsVirtualMachineSnapshotListUsingGETParams) (*VcsVirtualMachineSnapshotListUsingGETOK, error)
+	VcsVirtualMachineSnapshotListUsingGET(params *VcsVirtualMachineSnapshotListUsingGETParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotListUsingGETOK, error)
 
-	VcsVirtualMachineSnapshotRevertUsingPOST(params *VcsVirtualMachineSnapshotRevertUsingPOSTParams) (*VcsVirtualMachineSnapshotRevertUsingPOSTOK, error)
+	VcsVirtualMachineSnapshotRevertUsingPOST(params *VcsVirtualMachineSnapshotRevertUsingPOSTParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotRevertUsingPOSTOK, error)
 
-	VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdateUsingPUTParams) (*VcsVirtualMachineUpdateUsingPUTOK, error)
+	VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdateUsingPUTParams, opts ...ClientOption) (*VcsVirtualMachineUpdateUsingPUTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -55,13 +58,12 @@ type ClientService interface {
 
   Create vSphere vCenter virtual machine
 */
-func (a *Client) VcsVirtualMachineCreateUsingPUT(params *VcsVirtualMachineCreateUsingPUTParams) (*VcsVirtualMachineCreateUsingPUTOK, *VcsVirtualMachineCreateUsingPUTCreated, error) {
+func (a *Client) VcsVirtualMachineCreateUsingPUT(params *VcsVirtualMachineCreateUsingPUTParams, opts ...ClientOption) (*VcsVirtualMachineCreateUsingPUTOK, *VcsVirtualMachineCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineCreateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "vcsVirtualMachineCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/vcs/virtual-machines",
@@ -72,7 +74,12 @@ func (a *Client) VcsVirtualMachineCreateUsingPUT(params *VcsVirtualMachineCreate
 		Reader:             &VcsVirtualMachineCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -92,13 +99,12 @@ func (a *Client) VcsVirtualMachineCreateUsingPUT(params *VcsVirtualMachineCreate
 
   Delete vSphere vCenter virtual machine
 */
-func (a *Client) VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDeleteUsingDELETEParams) (*VcsVirtualMachineDeleteUsingDELETEOK, error) {
+func (a *Client) VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDeleteUsingDELETEParams, opts ...ClientOption) (*VcsVirtualMachineDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineDeleteUsingDELETEParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "vcsVirtualMachineDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}",
@@ -109,7 +115,12 @@ func (a *Client) VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDel
 		Reader:             &VcsVirtualMachineDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -128,13 +139,12 @@ func (a *Client) VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDel
 
   Get vSphere vCenter virtual machine
 */
-func (a *Client) VcsVirtualMachineGroupGetUsingGET1(params *VcsVirtualMachineGroupGetUsingGET1Params) (*VcsVirtualMachineGroupGetUsingGET1OK, error) {
+func (a *Client) VcsVirtualMachineGroupGetUsingGET1(params *VcsVirtualMachineGroupGetUsingGET1Params, opts ...ClientOption) (*VcsVirtualMachineGroupGetUsingGET1OK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineGroupGetUsingGET1Params()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "vcsVirtualMachineGroupGetUsingGET_1",
 		Method:             "GET",
 		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}",
@@ -145,7 +155,12 @@ func (a *Client) VcsVirtualMachineGroupGetUsingGET1(params *VcsVirtualMachineGro
 		Reader:             &VcsVirtualMachineGroupGetUsingGET1Reader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -164,13 +179,12 @@ func (a *Client) VcsVirtualMachineGroupGetUsingGET1(params *VcsVirtualMachineGro
 
   List vSphere vCenter virtual machines
 */
-func (a *Client) VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsingGET1Params) (*VcsVirtualMachineListUsingGET1OK, error) {
+func (a *Client) VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsingGET1Params, opts ...ClientOption) (*VcsVirtualMachineListUsingGET1OK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineListUsingGET1Params()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "vcsVirtualMachineListUsingGET_1",
 		Method:             "GET",
 		PathPattern:        "/vcs/virtual-machines",
@@ -181,7 +195,12 @@ func (a *Client) VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsi
 		Reader:             &VcsVirtualMachineListUsingGET1Reader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -200,13 +219,12 @@ func (a *Client) VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsi
 
   Create virtual machine snapshot
 */
-func (a *Client) VcsVirtualMachineSnapshotCreateUsingPUT(params *VcsVirtualMachineSnapshotCreateUsingPUTParams) (*VcsVirtualMachineSnapshotCreateUsingPUTOK, *VcsVirtualMachineSnapshotCreateUsingPUTCreated, error) {
+func (a *Client) VcsVirtualMachineSnapshotCreateUsingPUT(params *VcsVirtualMachineSnapshotCreateUsingPUTParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotCreateUsingPUTOK, *VcsVirtualMachineSnapshotCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineSnapshotCreateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "vcsVirtualMachineSnapshotCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}/snapshots",
@@ -217,7 +235,12 @@ func (a *Client) VcsVirtualMachineSnapshotCreateUsingPUT(params *VcsVirtualMachi
 		Reader:             &VcsVirtualMachineSnapshotCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -237,13 +260,12 @@ func (a *Client) VcsVirtualMachineSnapshotCreateUsingPUT(params *VcsVirtualMachi
 
   Delete virtual machine snapshot
 */
-func (a *Client) VcsVirtualMachineSnapshotDeleteUsingDELETE(params *VcsVirtualMachineSnapshotDeleteUsingDELETEParams) (*VcsVirtualMachineSnapshotDeleteUsingDELETEOK, error) {
+func (a *Client) VcsVirtualMachineSnapshotDeleteUsingDELETE(params *VcsVirtualMachineSnapshotDeleteUsingDELETEParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineSnapshotDeleteUsingDELETEParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "vcsVirtualMachineSnapshotDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}",
@@ -254,7 +276,12 @@ func (a *Client) VcsVirtualMachineSnapshotDeleteUsingDELETE(params *VcsVirtualMa
 		Reader:             &VcsVirtualMachineSnapshotDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -273,13 +300,12 @@ func (a *Client) VcsVirtualMachineSnapshotDeleteUsingDELETE(params *VcsVirtualMa
 
   Get virtual machine snapshot
 */
-func (a *Client) VcsVirtualMachineSnapshotGetUsingGET(params *VcsVirtualMachineSnapshotGetUsingGETParams) (*VcsVirtualMachineSnapshotGetUsingGETOK, error) {
+func (a *Client) VcsVirtualMachineSnapshotGetUsingGET(params *VcsVirtualMachineSnapshotGetUsingGETParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineSnapshotGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "vcsVirtualMachineSnapshotGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}",
@@ -290,7 +316,12 @@ func (a *Client) VcsVirtualMachineSnapshotGetUsingGET(params *VcsVirtualMachineS
 		Reader:             &VcsVirtualMachineSnapshotGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -309,13 +340,12 @@ func (a *Client) VcsVirtualMachineSnapshotGetUsingGET(params *VcsVirtualMachineS
 
   List virtual machine snapshot(s)
 */
-func (a *Client) VcsVirtualMachineSnapshotListUsingGET(params *VcsVirtualMachineSnapshotListUsingGETParams) (*VcsVirtualMachineSnapshotListUsingGETOK, error) {
+func (a *Client) VcsVirtualMachineSnapshotListUsingGET(params *VcsVirtualMachineSnapshotListUsingGETParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineSnapshotListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "vcsVirtualMachineSnapshotListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}/snapshots",
@@ -326,7 +356,12 @@ func (a *Client) VcsVirtualMachineSnapshotListUsingGET(params *VcsVirtualMachine
 		Reader:             &VcsVirtualMachineSnapshotListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -345,13 +380,12 @@ func (a *Client) VcsVirtualMachineSnapshotListUsingGET(params *VcsVirtualMachine
 
   Revert to virtual machine snapshot
 */
-func (a *Client) VcsVirtualMachineSnapshotRevertUsingPOST(params *VcsVirtualMachineSnapshotRevertUsingPOSTParams) (*VcsVirtualMachineSnapshotRevertUsingPOSTOK, error) {
+func (a *Client) VcsVirtualMachineSnapshotRevertUsingPOST(params *VcsVirtualMachineSnapshotRevertUsingPOSTParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotRevertUsingPOSTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineSnapshotRevertUsingPOSTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "vcsVirtualMachineSnapshotRevertUsingPOST",
 		Method:             "POST",
 		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}/revert",
@@ -362,7 +396,12 @@ func (a *Client) VcsVirtualMachineSnapshotRevertUsingPOST(params *VcsVirtualMach
 		Reader:             &VcsVirtualMachineSnapshotRevertUsingPOSTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -381,13 +420,12 @@ func (a *Client) VcsVirtualMachineSnapshotRevertUsingPOST(params *VcsVirtualMach
 
   Update vSphere vCenter virtual machine
 */
-func (a *Client) VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdateUsingPUTParams) (*VcsVirtualMachineUpdateUsingPUTOK, error) {
+func (a *Client) VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdateUsingPUTParams, opts ...ClientOption) (*VcsVirtualMachineUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineUpdateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "vcsVirtualMachineUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}",
@@ -398,7 +436,12 @@ func (a *Client) VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdate
 		Reader:             &VcsVirtualMachineUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

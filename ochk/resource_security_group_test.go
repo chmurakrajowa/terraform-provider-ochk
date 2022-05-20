@@ -43,12 +43,12 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 	/* Security group with one member */
 	virtualMachine := VirtualMachineDataSourceTestData{
 		ResourceName: "default",
-		DisplayName:  testData.LegacyVirtualMachineDisplayName,
+		DisplayName:  testData.VirtualMachineDisplayName,
 	}
 
 	securityGroup := SecurityGroupTestData{
 		ResourceName: "one_member",
-		DisplayName:  generateRandName(),
+		DisplayName:  generateRandName(devTestDataPrefix),
 		Members: []SecurityGroupMemberTestData{
 			{
 				ID:   testDataResourceID(&virtualMachine),
@@ -67,7 +67,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 	securityGroupTwoMembers := securityGroupUpdated
 	virtualMachine2 := VirtualMachineDataSourceTestData{
 		ResourceName: "default2",
-		DisplayName:  testData.LegacyVirtualMachine2DisplayName,
+		DisplayName:  testData.VirtualMachine2DisplayName,
 	}
 	securityGroupTwoMembers.Members = append(securityGroupTwoMembers.Members, SecurityGroupMemberTestData{
 		ID:   testDataResourceID(&virtualMachine2),
@@ -91,6 +91,11 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 					resource.TestCheckResourceAttrSet(securityGroupResourceName, "modified_by"),
 					resource.TestCheckResourceAttrSet(securityGroupResourceName, "modified_at"),
 				),
+			},
+			{
+				ResourceName:      securityGroupResourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
 			},
 			{
 				Config: configOneMemberUpdated,

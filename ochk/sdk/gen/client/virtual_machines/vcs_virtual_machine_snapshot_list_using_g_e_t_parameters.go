@@ -16,64 +16,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewVcsVirtualMachineSnapshotListUsingGETParams creates a new VcsVirtualMachineSnapshotListUsingGETParams object
-// with the default values initialized.
+// NewVcsVirtualMachineSnapshotListUsingGETParams creates a new VcsVirtualMachineSnapshotListUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewVcsVirtualMachineSnapshotListUsingGETParams() *VcsVirtualMachineSnapshotListUsingGETParams {
-	var ()
 	return &VcsVirtualMachineSnapshotListUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewVcsVirtualMachineSnapshotListUsingGETParamsWithTimeout creates a new VcsVirtualMachineSnapshotListUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewVcsVirtualMachineSnapshotListUsingGETParamsWithTimeout(timeout time.Duration) *VcsVirtualMachineSnapshotListUsingGETParams {
-	var ()
 	return &VcsVirtualMachineSnapshotListUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewVcsVirtualMachineSnapshotListUsingGETParamsWithContext creates a new VcsVirtualMachineSnapshotListUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewVcsVirtualMachineSnapshotListUsingGETParamsWithContext(ctx context.Context) *VcsVirtualMachineSnapshotListUsingGETParams {
-	var ()
 	return &VcsVirtualMachineSnapshotListUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewVcsVirtualMachineSnapshotListUsingGETParamsWithHTTPClient creates a new VcsVirtualMachineSnapshotListUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewVcsVirtualMachineSnapshotListUsingGETParamsWithHTTPClient(client *http.Client) *VcsVirtualMachineSnapshotListUsingGETParams {
-	var ()
 	return &VcsVirtualMachineSnapshotListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*VcsVirtualMachineSnapshotListUsingGETParams contains all the parameters to send to the API endpoint
-for the vcs virtual machine snapshot list using g e t operation typically these are written to a http.Request
+/* VcsVirtualMachineSnapshotListUsingGETParams contains all the parameters to send to the API endpoint
+   for the vcs virtual machine snapshot list using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type VcsVirtualMachineSnapshotListUsingGETParams struct {
 
-	/*DisplayName
-	  displayName
+	/* DisplayName.
 
+	   displayName
 	*/
 	DisplayName *string
-	/*VirtualMachineID
-	  virtualMachineId
 
+	/* VirtualMachineID.
+
+	   virtualMachineId
 	*/
 	VirtualMachineID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the vcs virtual machine snapshot list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *VcsVirtualMachineSnapshotListUsingGETParams) WithDefaults() *VcsVirtualMachineSnapshotListUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the vcs virtual machine snapshot list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *VcsVirtualMachineSnapshotListUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the vcs virtual machine snapshot list using g e t params
@@ -143,16 +158,17 @@ func (o *VcsVirtualMachineSnapshotListUsingGETParams) WriteToRequest(r runtime.C
 
 		// query param displayName
 		var qrDisplayName string
+
 		if o.DisplayName != nil {
 			qrDisplayName = *o.DisplayName
 		}
 		qDisplayName := qrDisplayName
 		if qDisplayName != "" {
+
 			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param virtualMachineId

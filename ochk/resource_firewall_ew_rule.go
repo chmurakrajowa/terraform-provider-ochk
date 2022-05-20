@@ -2,8 +2,10 @@ package ochk
 
 import (
 	"context"
+	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"strings"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -28,7 +30,7 @@ func resourceFirewallEWRule() *schema.Resource {
 		},
 
 		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
+			StateContext: firewallEWRuleStateContextImport,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -102,6 +104,16 @@ func resourceFirewallEWRule() *schema.Resource {
 			},
 		},
 	}
+}
+
+func firewallEWRuleStateContextImport(ctx context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+	parts := strings.SplitN(d.Id(), "/", 2)
+	if len(parts) != 2 || parts[0] == "" || parts[1] == "" {
+		return nil, fmt.Errorf("unexpected format of ID (%s), expected format: router_id/rule_id", d.Id())
+	}
+	d.SetId(parts[1])
+	d.Set("router_id", parts[0])
+	return []*schema.ResourceData{d}, nil
 }
 
 func resourceFirewallEWRuleCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {

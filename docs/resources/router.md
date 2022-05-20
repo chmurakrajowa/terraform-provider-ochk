@@ -31,7 +31,13 @@ The following arguments are supported:
 * `display_name` - (Required) The Tier-1 router name (between 3 and 15 characters).
 * `parent_router_id` - (Required) The Tier-0 router id. (default vrf name : T0)
 
+
 ## Attribute Reference
 
 
-No additional attributes are exported. 
+The following attributes are exported in addition to above arguments:
+* `router_type` - Router type
+* `created_by` - Who created this resource.
+* `created_at` - When this resource was created.
+* `modified_by` - Who last modified this resource.
+* `modified_at` - When last modification occurred.

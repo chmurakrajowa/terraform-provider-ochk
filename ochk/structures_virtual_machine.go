@@ -12,7 +12,50 @@ func virtualDiskHash(v interface{}) int {
 	return schema.HashString(fmt.Sprintf("%d%d", m["controller_id"], m["lun_id"]))
 }
 
+func flattenDeploymentParams(in []*models.DeploymentParam) []map[string]interface{} {
+	if len(in) == 0 {
+		return nil
+	}
+
+	var out []map[string]interface{}
+
+	for _, v := range in {
+		m := make(map[string]interface{})
+		m["param_name"] = v.ParamName
+		m["param_type"] = v.ParamType
+		m["param_value"] = v.ParamValue
+
+		out = append(out, m)
+	}
+	return out
+}
+
+func expandVDeploymentParams(in []interface{}) []*models.DeploymentParam {
+	var out = make([]*models.DeploymentParam, len(in))
+	for i, v := range in {
+		m := v.(map[string]interface{})
+
+		member := &models.DeploymentParam{}
+
+		if paramName, ok := m["param_name"].(string); ok {
+			member.ParamName = paramName
+		}
+		if paramType, ok := m["param_type"].(string); ok {
+			member.ParamType = paramType
+		}
+		if paramValue, ok := m["param_value"].(string); ok {
+			member.ParamValue = paramValue
+		}
+		out[i] = member
+	}
+	return out
+}
+
 func flattenVirtualDisks(in []*models.VirtualDiskDevice) *schema.Set {
+	if len(in) == 0 {
+		return nil
+	}
+
 	out := &schema.Set{
 		F: virtualDiskHash,
 	}

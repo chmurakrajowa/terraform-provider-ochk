@@ -40,6 +40,5 @@ func TestAccVirtualNetworkDatasource(t *testing.T) {
 				),
 			},
 		},
-		CheckDestroy: testAccVirtualNetworkResourceNotExists(virtualNetwork.DisplayName),
 	})
 }

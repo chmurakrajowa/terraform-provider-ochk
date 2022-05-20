@@ -38,7 +38,7 @@ func (p *GroupsProxy) Read(ctx context.Context, groupID string) (*models.GroupIn
 	return response.Payload.GroupInstance, nil
 }
 
-func (p *GroupsProxy) ListByDisplayName(ctx context.Context, groupName string) ([]*models.GroupInstance, error) {
+func (p *GroupsProxy) ListByName(ctx context.Context, groupName string) ([]*models.GroupInstance, error) {
 	params := &groups.GroupListUsingGETParams{
 		Name:       &groupName,
 		Context:    ctx,

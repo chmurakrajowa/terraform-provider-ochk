@@ -1,98 +1,172 @@
 package ochk
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"os"
+	"reflect"
+	"strings"
+	"sync"
 )
 
 var testData = getTestData()
+var testDataSavedFileName = "../env/testdata.json"
+var testDataSavedFields []string
 
-func getTestData() predefinedTestData {
-	switch os.Getenv("TEST_ENV") {
-	case "AT":
-		return predefinedTestDataAT
-	default:
-		return predefinedTestDataDev
+func setTestData(paramName string, value string) {
+
+	predefinedTestDataDev.mu.Lock()
+
+	paramExists := false
+	for _, field := range testDataSavedFields {
+		if field == paramName {
+			paramExists = true
+		}
+	}
+
+	if paramExists == false {
+		testDataSavedFields = append(testDataSavedFields, paramName)
+	}
+
+	type Message struct {
+		Name, Text string
+	}
+	var m Message
+	var fileContent string
+
+	for _, field := range testDataSavedFields {
+		if paramName == field {
+			reflect.ValueOf(&predefinedTestDataDev).Elem().FieldByName(paramName).SetString(value)
+		}
+		m.Text = reflect.ValueOf(&predefinedTestDataDev).Elem().FieldByName(field).String()
+		m.Name = field
+		fileContent = fileContent + executeTemplateToString(
+			`{
+	"Name": "{{ .Name}}",
+	"Text": "{{ .Text}}"
+}
+`, m)
+	}
+
+	f, err := os.Create(testDataSavedFileName)
+	if err == nil {
+		defer f.Close()
+		_, err2 := f.WriteString(fileContent)
+		if err2 != nil {
+			fmt.Errorf("Cannot save " + testDataSavedFileName + "file")
+		}
+	} else {
+		fmt.Errorf("Cannot create " + testDataSavedFileName + "file")
+	}
+	predefinedTestDataDev.mu.Unlock()
+}
+
+func loadTestData() {
+
+	jsonfile, err := os.ReadFile(testDataSavedFileName)
+	if err == nil {
+		type Message struct {
+			Name, Text string
+		}
+
+		var m Message
+
+		decoder := json.NewDecoder(strings.NewReader(string(jsonfile)))
+		for {
+			if err := decoder.Decode(&m); err == io.EOF {
+				break
+			} else if err != nil {
+				fmt.Errorf(err.Error())
+				break
+			}
+			val := reflect.ValueOf(&predefinedTestDataDev).Elem().FieldByName(m.Name)
+			if val.IsValid() {
+				reflect.ValueOf(&predefinedTestDataDev).Elem().FieldByName(m.Name).SetString(m.Text)
+			} else {
+				fmt.Errorf("TestData elemenet: " + m.Name + "not exists")
+			}
+		}
 	}
 }
 
+func getTestData() predefinedTestData {
+	loadTestData()
+	return predefinedTestDataDev
+}
+
 type predefinedTestData struct {
-	LogicalPort1DisplayName          string
-	Network1Name                     string
-	Network2Name                     string
-	SubtenantNetworkName             string
-	Subtenant1Name                   string
-	Subtenant2Name                   string
-	Subtenant3Name                   string
-	Subtenant4Name                   string
-	SubtenantForVMName               string
-	User1Name                        string
-	User2Name                        string
-	VirtualMachine1DisplayName       string
-	VirtualNetwork1DisplayName       string
-	VirtualNetwork2DisplayName       string
-	LegacyVirtualMachineDisplayName  string
-	LegacyVirtualMachine2DisplayName string
-	IPCollection1DisplayName         string
-	Deployment1DisplayName           string
-	CustomService1DisplayName        string
-	CustomService2DisplayName        string
-	KMSKeyDisplayName                string
-	SecurityPolicyDisplayName        string
-	BackupPlanName                   string
-	BillingTagName                   string
-	SystemTagName                    string
+	mu                         sync.Mutex
+	LogicalPort1DisplayName    string
+	Network1Name               string
+	Network2Name               string
+	SubtenantNetworkName       string
+	Subtenant1Name             string
+	Subtenant2Name             string
+	Subtenant3Name             string
+	Subtenant4Name             string
+	SubtenantForVMName         string
+	User1Name                  string
+	User1Email                 string
+	User2Name                  string
+	User2Email                 string
+	VirtualMachine1DisplayName string
+	VirtualNetwork1DisplayName string
+	VirtualNetwork2DisplayName string
+	VirtualMachineDisplayName  string
+	VirtualMachine2DisplayName string
+	IPCollection1DisplayName   string
+	Deployment1DisplayName     string
+	CustomService1DisplayName  string
+	CustomService2DisplayName  string
+	KMSKeyDisplayName          string
+	BackupPlanName             string
+	BackupListName             string
+	BillingTagName             string
+	SystemTagName              string
+	VPC                        string
+	VRF                        string
+	AutoNatName                string
+	DnatName                   string
+	InfraAdminGroup            string
+	FirewallEWRuleName         string
+	FirewallSNRuleName         string
 }
 
-var devTestDataPrefix = "tf-test2"
+var devTestDataPrefix = "tf-tst"
 var predefinedTestDataDev = predefinedTestData{
-	LogicalPort1DisplayName:          "d0ac165f-cec0-db4a-2a82-b8599f064900/devel0000001256.vmx@93f28b5d-ec29-4ba2-b753-160ce290b7fd",
-	Network1Name:                     "vtest8",
-	Network2Name:                     "vtest7",
-	SubtenantNetworkName:             "vtest7",
-	Subtenant1Name:                   fmt.Sprintf("%s-subtenant-1", devTestDataPrefix),
-	Subtenant2Name:                   fmt.Sprintf("%s-subtenant-2", devTestDataPrefix),
-	Subtenant3Name:                   fmt.Sprintf("%s-subtenant-3", devTestDataPrefix),
-	Subtenant4Name:                   fmt.Sprintf("%s-subtenant-4", devTestDataPrefix),
-	SubtenantForVMName:               "auto-bg1",
-	User1Name:                        "devel-tftest",
-	User2Name:                        "devel-bdgn",
-	VirtualMachine1DisplayName:       fmt.Sprintf("%s-vm", devTestDataPrefix),
-	VirtualNetwork1DisplayName:       fmt.Sprintf("%s-vnet3", devTestDataPrefix),
-	VirtualNetwork2DisplayName:       fmt.Sprintf("%s-vnet4", devTestDataPrefix),
-	LegacyVirtualMachineDisplayName:  "devel0000000098",
-	LegacyVirtualMachine2DisplayName: "devel0000000344",
-	IPCollection1DisplayName:         fmt.Sprintf("%s-ipc-default", devTestDataPrefix),
-	Deployment1DisplayName:           "CentOS 7",
-	CustomService1DisplayName:        fmt.Sprintf("%s-https", devTestDataPrefix),
-	CustomService2DisplayName:        fmt.Sprintf("%s-http", devTestDataPrefix),
-	BackupPlanName:                   "Platinium",
-	BillingTagName:                   "billing_t1",
-	SystemTagName:                    "systemTag01",
-}
-
-var testTestDataPrefix = "tf-test1"
-var predefinedTestDataAT = predefinedTestData{
-	LogicalPort1DisplayName:          "196eae5f-824c-3156-aa0b-98039b5c9998/Vm12345678-.vmx@8325dc52-dddc-4b43-89a1-a20271a40928",
-	Network1Name:                     "CMP_VNET_7",
-	Network2Name:                     "CMP_VNET_71",
-	SubtenantNetworkName:             "CMP_VNET_1",
-	Subtenant1Name:                   fmt.Sprintf("%s-subt1", testTestDataPrefix),
-	Subtenant2Name:                   fmt.Sprintf("%s-subt2", testTestDataPrefix),
-	Subtenant3Name:                   fmt.Sprintf("%s-subt3", testTestDataPrefix),
-	Subtenant4Name:                   fmt.Sprintf("%s-subt4", testTestDataPrefix),
-	SubtenantForVMName:               "bg_001",
-	User1Name:                        "testy-tftest",
-	User2Name:                        "testy-tt",
-	VirtualMachine1DisplayName:       fmt.Sprintf("%s-vm", testTestDataPrefix),
-	VirtualNetwork1DisplayName:       fmt.Sprintf("%s-vnet3", testTestDataPrefix),
-	VirtualNetwork2DisplayName:       fmt.Sprintf("%s-vnet4", testTestDataPrefix),
-	LegacyVirtualMachineDisplayName:  "testy0000000133",
-	LegacyVirtualMachine2DisplayName: "testy0000000083",
-	IPCollection1DisplayName:         fmt.Sprintf("%s-ipc", testTestDataPrefix),
-	Deployment1DisplayName:           "CentOS 7",
-	CustomService1DisplayName:        fmt.Sprintf("%s-https", testTestDataPrefix),
-	CustomService2DisplayName:        fmt.Sprintf("%s-http", testTestDataPrefix),
-	SecurityPolicyDisplayName:        "testy",
-	KMSKeyDisplayName:                fmt.Sprintf("%s-key", testTestDataPrefix),
+	LogicalPort1DisplayName:    "",
+	BackupPlanName:             "",
+	BackupListName:             "",
+	Network1Name:               fmt.Sprintf("%s-vnet1", devTestDataPrefix),
+	Network2Name:               fmt.Sprintf("%s-vnet2", devTestDataPrefix),
+	SubtenantNetworkName:       fmt.Sprintf("%s-vnet1", devTestDataPrefix),
+	Subtenant1Name:             fmt.Sprintf("%s-subt1", devTestDataPrefix),
+	Subtenant2Name:             fmt.Sprintf("%s-subt2", devTestDataPrefix),
+	Subtenant3Name:             fmt.Sprintf("%s-subt3", devTestDataPrefix),
+	Subtenant4Name:             fmt.Sprintf("%s-subt4", devTestDataPrefix),
+	SubtenantForVMName:         fmt.Sprintf("%s-subt1", devTestDataPrefix),
+	User1Name:                  fmt.Sprintf("%s-user1", devTestDataPrefix),
+	User1Email:                 fmt.Sprintf("%s-user1@ochk.pl", devTestDataPrefix),
+	User2Name:                  fmt.Sprintf("%s-user2", devTestDataPrefix),
+	User2Email:                 fmt.Sprintf("%s-user2@ochk.pl", devTestDataPrefix),
+	VirtualMachine1DisplayName: fmt.Sprintf("%s-vm", devTestDataPrefix),
+	VirtualNetwork1DisplayName: fmt.Sprintf("%s-vnet3", devTestDataPrefix),
+	VirtualNetwork2DisplayName: fmt.Sprintf("%s-vnet4", devTestDataPrefix),
+	VirtualMachineDisplayName:  fmt.Sprintf("%s-vm1", devTestDataPrefix),
+	VirtualMachine2DisplayName: fmt.Sprintf("%s-vm2", devTestDataPrefix),
+	IPCollection1DisplayName:   fmt.Sprintf("%s-ipc-default", devTestDataPrefix),
+	Deployment1DisplayName:     "",
+	CustomService1DisplayName:  fmt.Sprintf("%s-https", devTestDataPrefix),
+	CustomService2DisplayName:  fmt.Sprintf("%s-http", devTestDataPrefix),
+	BillingTagName:             fmt.Sprintf("%s-billing-t1", devTestDataPrefix),
+	SystemTagName:              fmt.Sprintf("%s-system-t1", devTestDataPrefix),
+	KMSKeyDisplayName:          fmt.Sprintf("%s-key", devTestDataPrefix),
+	VPC:                        fmt.Sprintf("%s-router", devTestDataPrefix),
+	AutoNatName:                fmt.Sprintf("%s-autonat", devTestDataPrefix),
+	DnatName:                   fmt.Sprintf("%s-dnat", devTestDataPrefix),
+	VRF:                        "",
+	InfraAdminGroup:            fmt.Sprintf("%s-subt1-InfraAdm", devTestDataPrefix),
+	FirewallEWRuleName:         fmt.Sprintf("%s-tf-fw-ew-http", devTestDataPrefix),
+	FirewallSNRuleName:         fmt.Sprintf("%s-tf-fw-sn-http", devTestDataPrefix),
 }

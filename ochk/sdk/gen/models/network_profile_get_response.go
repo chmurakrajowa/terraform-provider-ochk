@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -50,7 +52,6 @@ func (m *NetworkProfileGetResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *NetworkProfileGetResponse) validateNetworkProfile(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.NetworkProfile) { // not required
 		return nil
 	}
@@ -68,13 +69,40 @@ func (m *NetworkProfileGetResponse) validateNetworkProfile(formats strfmt.Regist
 }
 
 func (m *NetworkProfileGetResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this network profile get response based on the context it is used
+func (m *NetworkProfileGetResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateNetworkProfile(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *NetworkProfileGetResponse) contextValidateNetworkProfile(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.NetworkProfile != nil {
+		if err := m.NetworkProfile.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("networkProfile")
+			}
+			return err
+		}
 	}
 
 	return nil

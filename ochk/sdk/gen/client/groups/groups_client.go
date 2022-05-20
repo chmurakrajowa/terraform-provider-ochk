@@ -25,11 +25,14 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GroupGetUsingGET(params *GroupGetUsingGETParams) (*GroupGetUsingGETOK, error)
+	GroupGetUsingGET(params *GroupGetUsingGETParams, opts ...ClientOption) (*GroupGetUsingGETOK, error)
 
-	GroupListUsingGET(params *GroupListUsingGETParams) (*GroupListUsingGETOK, error)
+	GroupListUsingGET(params *GroupListUsingGETParams, opts ...ClientOption) (*GroupListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -39,13 +42,12 @@ type ClientService interface {
 
   Get user
 */
-func (a *Client) GroupGetUsingGET(params *GroupGetUsingGETParams) (*GroupGetUsingGETOK, error) {
+func (a *Client) GroupGetUsingGET(params *GroupGetUsingGETParams, opts ...ClientOption) (*GroupGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGroupGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "groupGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/groups/{groupId}",
@@ -56,7 +58,12 @@ func (a *Client) GroupGetUsingGET(params *GroupGetUsingGETParams) (*GroupGetUsin
 		Reader:             &GroupGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -75,13 +82,12 @@ func (a *Client) GroupGetUsingGET(params *GroupGetUsingGETParams) (*GroupGetUsin
 
   List users from vra/core
 */
-func (a *Client) GroupListUsingGET(params *GroupListUsingGETParams) (*GroupListUsingGETOK, error) {
+func (a *Client) GroupListUsingGET(params *GroupListUsingGETParams, opts ...ClientOption) (*GroupListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGroupListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "groupListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/groups",
@@ -92,7 +98,12 @@ func (a *Client) GroupListUsingGET(params *GroupListUsingGETParams) (*GroupListU
 		Reader:             &GroupListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

@@ -15,9 +15,7 @@ type SubtenantTestData struct {
 	Email                 string
 	MemoryReservedSizeMB  int64
 	Name                  string
-	NetworkIDs            []string
 	StorageReservedSizeGB int64
-	UserIDs               []string
 }
 
 func (c *SubtenantTestData) ToString() string {
@@ -28,8 +26,6 @@ resource "ochk_subtenant" "{{ .ResourceName}}" {
 	description = "{{.Description}}"
 	memory_reserved_size_mb = "{{.MemoryReservedSizeMB}}"
 	storage_reserved_size_gb = "{{.StorageReservedSizeGB}}"
-	users = {{ StringsToTFList .UserIDs}}
-	networks = {{ StringsToTFList .NetworkIDs}}
 
 	lifecycle {
 		ignore_changes = [description]
@@ -43,52 +39,29 @@ func (c *SubtenantTestData) FullResourceName() string {
 }
 
 func TestAccSubtenantResource_create(t *testing.T) {
-	network1 := NetworkDataSourceTestData{
-		ResourceName: "network1",
-		Name:         testData.Network1Name,
-	}
-
-	user1 := UserDataSourceTestData{
-		ResourceName: "user1",
-		Name:         testData.User1Name,
-	}
 
 	subtenant := SubtenantTestData{
 		ResourceName:          "default",
 		Description:           "tf-test-description",
 		Email:                 "test@example.com",
 		MemoryReservedSizeMB:  24000,
-		Name:                  generateRandName(),
-		NetworkIDs:            []string{testDataResourceID(&network1)},
+		Name:                  generateRandName(devTestDataPrefix),
 		StorageReservedSizeGB: 150,
-		UserIDs:               []string{testDataResourceID(&user1)},
 	}
 
-	configInitial := user1.ToString() + network1.ToString() + subtenant.ToString()
-
-	network2 := NetworkDataSourceTestData{
-		ResourceName: "network2",
-		Name:         testData.Network2Name,
-	}
-
-	user2 := UserDataSourceTestData{
-		ResourceName: "user2",
-		Name:         testData.User2Name,
-	}
+	configInitial := subtenant.ToString()
 
 	subtenantUpdated := subtenant
 	subtenantUpdated.MemoryReservedSizeMB = 30000
 	subtenantUpdated.StorageReservedSizeGB = 200
-	subtenantUpdated.NetworkIDs = []string{testDataResourceID(&network2)}
 	subtenantUpdated.Description += "- updated"
 
-	configUpdated := user1.ToString() + network1.ToString() + user2.ToString() + network2.ToString() + subtenantUpdated.ToString()
+	configUpdated := subtenantUpdated.ToString()
 
 	subtenantUpdatedWithRecreate := subtenantUpdated
-	subtenantUpdatedWithRecreate.UserIDs = []string{testDataResourceID(&user2)}
 	subtenantUpdatedWithRecreate.Email = "email.updated@example.com"
 
-	configUpdatedWithRecreate := user1.ToString() + network1.ToString() + user2.ToString() + network2.ToString() + subtenantUpdatedWithRecreate.ToString()
+	configUpdatedWithRecreate := subtenantUpdatedWithRecreate.ToString()
 
 	subtenantResourceName := subtenant.FullResourceName()
 	resource.ParallelTest(t, resource.TestCase{
@@ -103,9 +76,12 @@ func TestAccSubtenantResource_create(t *testing.T) {
 					resource.TestCheckResourceAttr(subtenantResourceName, "email", subtenant.Email),
 					resource.TestCheckResourceAttr(subtenantResourceName, "memory_reserved_size_mb", fmt.Sprintf("%d", subtenant.MemoryReservedSizeMB)),
 					resource.TestCheckResourceAttr(subtenantResourceName, "storage_reserved_size_gb", fmt.Sprintf("%d", subtenant.StorageReservedSizeGB)),
-					resource.TestCheckResourceAttrPair(subtenantResourceName, "users.0", user1.FullResourceName(), "id"),
-					resource.TestCheckResourceAttrPair(subtenantResourceName, "networks.0", network1.FullResourceName(), "id"),
 				),
+			},
+			{
+				ResourceName:      subtenantResourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
 			},
 			{
 				Config: configUpdated,
@@ -115,8 +91,6 @@ func TestAccSubtenantResource_create(t *testing.T) {
 					resource.TestCheckResourceAttr(subtenantResourceName, "email", subtenantUpdated.Email),
 					resource.TestCheckResourceAttr(subtenantResourceName, "memory_reserved_size_mb", fmt.Sprintf("%d", subtenantUpdated.MemoryReservedSizeMB)),
 					resource.TestCheckResourceAttr(subtenantResourceName, "storage_reserved_size_gb", fmt.Sprintf("%d", subtenantUpdated.StorageReservedSizeGB)),
-					resource.TestCheckResourceAttrPair(subtenantResourceName, "users.0", user1.FullResourceName(), "id"),
-					resource.TestCheckResourceAttrPair(subtenantResourceName, "networks.0", network2.FullResourceName(), "id"),
 				),
 			},
 			{
@@ -127,8 +101,6 @@ func TestAccSubtenantResource_create(t *testing.T) {
 					resource.TestCheckResourceAttr(subtenantResourceName, "email", subtenantUpdatedWithRecreate.Email),
 					resource.TestCheckResourceAttr(subtenantResourceName, "memory_reserved_size_mb", fmt.Sprintf("%d", subtenantUpdatedWithRecreate.MemoryReservedSizeMB)),
 					resource.TestCheckResourceAttr(subtenantResourceName, "storage_reserved_size_gb", fmt.Sprintf("%d", subtenantUpdatedWithRecreate.StorageReservedSizeGB)),
-					resource.TestCheckResourceAttrPair(subtenantResourceName, "users.0", user2.FullResourceName(), "id"),
-					resource.TestCheckResourceAttrPair(subtenantResourceName, "networks.0", network2.FullResourceName(), "id"),
 				),
 			},
 		},

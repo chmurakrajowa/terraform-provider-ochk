@@ -33,6 +33,8 @@ The following arguments are supported:
 * `description` - (Required) Description.
 * `memory_reserved_size_mb` - (Required) Memory reservation size in megabytes. Should be greater than 10000 MB (10GB).
 * `storage_reserved_size_gb` - (Required) Storage reservation size in gigabytes. Should be greater than 100 GB.
+* `networks` - (Optional) Add earlier created network `networkId`
+
   
 ## Attribute Reference
 

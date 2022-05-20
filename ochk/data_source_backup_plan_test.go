@@ -1,44 +1,31 @@
 package ochk
 
 import (
+	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"testing"
 )
 
-type BackupPlanDataSourceTestData struct {
-	ResourceName string
-	DisplayName  string
-}
-
-func (c *BackupPlanDataSourceTestData) ToString() string {
-	return executeTemplateToString(`
-data "ochk_backup_plan" "{{ .ResourceName}}" {
-  display_name = "{{ .DisplayName}}"
-}
-`, c)
-}
-
-func (c *BackupPlanDataSourceTestData) FullResourceName() string {
-	return "data.ochk_backup_plan." + c.ResourceName
-}
-
-func TestBackupPlanDataSource_read(t *testing.T) {
-	backupPlan := BackupPlanDataSourceTestData{
-		ResourceName: "default",
-		DisplayName:  testData.BackupPlanName,
-	}
-
-	resourceName := backupPlan.FullResourceName()
+func TestAccBackupPlanDataSource_read(t *testing.T) {
+	resourceName := "data.ochk_backup_plan.example"
 
 	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: backupPlan.ToString(),
+				Config: testAccBackupPlanDataSourceConfig(testData.BackupPlanName),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "display_name", backupPlan.DisplayName),
+					resource.TestCheckResourceAttr(resourceName, "display_name", testData.BackupPlanName),
 				),
 			},
 		},
 	})
+}
+
+func testAccBackupPlanDataSourceConfig(displayName string) string {
+	return fmt.Sprintf(`
+data "ochk_backup_plan" "example" {
+  display_name = %[1]q
+}
+`, displayName)
 }

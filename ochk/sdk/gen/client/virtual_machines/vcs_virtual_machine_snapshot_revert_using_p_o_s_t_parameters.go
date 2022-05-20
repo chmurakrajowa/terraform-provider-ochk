@@ -16,64 +16,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewVcsVirtualMachineSnapshotRevertUsingPOSTParams creates a new VcsVirtualMachineSnapshotRevertUsingPOSTParams object
-// with the default values initialized.
+// NewVcsVirtualMachineSnapshotRevertUsingPOSTParams creates a new VcsVirtualMachineSnapshotRevertUsingPOSTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewVcsVirtualMachineSnapshotRevertUsingPOSTParams() *VcsVirtualMachineSnapshotRevertUsingPOSTParams {
-	var ()
 	return &VcsVirtualMachineSnapshotRevertUsingPOSTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewVcsVirtualMachineSnapshotRevertUsingPOSTParamsWithTimeout creates a new VcsVirtualMachineSnapshotRevertUsingPOSTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewVcsVirtualMachineSnapshotRevertUsingPOSTParamsWithTimeout(timeout time.Duration) *VcsVirtualMachineSnapshotRevertUsingPOSTParams {
-	var ()
 	return &VcsVirtualMachineSnapshotRevertUsingPOSTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewVcsVirtualMachineSnapshotRevertUsingPOSTParamsWithContext creates a new VcsVirtualMachineSnapshotRevertUsingPOSTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewVcsVirtualMachineSnapshotRevertUsingPOSTParamsWithContext(ctx context.Context) *VcsVirtualMachineSnapshotRevertUsingPOSTParams {
-	var ()
 	return &VcsVirtualMachineSnapshotRevertUsingPOSTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewVcsVirtualMachineSnapshotRevertUsingPOSTParamsWithHTTPClient creates a new VcsVirtualMachineSnapshotRevertUsingPOSTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewVcsVirtualMachineSnapshotRevertUsingPOSTParamsWithHTTPClient(client *http.Client) *VcsVirtualMachineSnapshotRevertUsingPOSTParams {
-	var ()
 	return &VcsVirtualMachineSnapshotRevertUsingPOSTParams{
 		HTTPClient: client,
 	}
 }
 
-/*VcsVirtualMachineSnapshotRevertUsingPOSTParams contains all the parameters to send to the API endpoint
-for the vcs virtual machine snapshot revert using p o s t operation typically these are written to a http.Request
+/* VcsVirtualMachineSnapshotRevertUsingPOSTParams contains all the parameters to send to the API endpoint
+   for the vcs virtual machine snapshot revert using p o s t operation.
+
+   Typically these are written to a http.Request.
 */
 type VcsVirtualMachineSnapshotRevertUsingPOSTParams struct {
 
-	/*SnapshotID
-	  snapshotId
+	/* SnapshotID.
 
+	   snapshotId
 	*/
 	SnapshotID string
-	/*VirtualMachineID
-	  virtualMachineId
 
+	/* VirtualMachineID.
+
+	   virtualMachineId
 	*/
 	VirtualMachineID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the vcs virtual machine snapshot revert using p o s t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *VcsVirtualMachineSnapshotRevertUsingPOSTParams) WithDefaults() *VcsVirtualMachineSnapshotRevertUsingPOSTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the vcs virtual machine snapshot revert using p o s t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *VcsVirtualMachineSnapshotRevertUsingPOSTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the vcs virtual machine snapshot revert using p o s t params

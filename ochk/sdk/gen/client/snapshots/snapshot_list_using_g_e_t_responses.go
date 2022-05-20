@@ -35,9 +35,8 @@ func (o *SnapshotListUsingGETReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewSnapshotListUsingGETOK() *SnapshotListUsingGETOK {
 	return &SnapshotListUsingGETOK{}
 }
 
-/*SnapshotListUsingGETOK handles this case with default header values.
+/* SnapshotListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type SnapshotListUsingGETOK struct {
 func (o *SnapshotListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /vcs/snapshots][%d] snapshotListUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *SnapshotListUsingGETOK) GetPayload() *models.SnapshotListResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewSnapshotListUsingGETBadRequest() *SnapshotListUsingGETBadRequest {
 	return &SnapshotListUsingGETBadRequest{}
 }
 
-/*SnapshotListUsingGETBadRequest handles this case with default header values.
+/* SnapshotListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type SnapshotListUsingGETBadRequest struct {
 func (o *SnapshotListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /vcs/snapshots][%d] snapshotListUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *SnapshotListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

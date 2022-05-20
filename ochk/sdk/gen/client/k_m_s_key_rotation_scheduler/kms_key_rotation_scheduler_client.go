@@ -25,15 +25,18 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	KeyRotationScheduleCreateUsingPUT(params *KeyRotationScheduleCreateUsingPUTParams) (*KeyRotationScheduleCreateUsingPUTOK, *KeyRotationScheduleCreateUsingPUTCreated, error)
+	KeyRotationScheduleCreateUsingPUT(params *KeyRotationScheduleCreateUsingPUTParams, opts ...ClientOption) (*KeyRotationScheduleCreateUsingPUTOK, *KeyRotationScheduleCreateUsingPUTCreated, error)
 
-	KeyRotationScheduleDeleteUsingDELETE(params *KeyRotationScheduleDeleteUsingDELETEParams) (*KeyRotationScheduleDeleteUsingDELETEOK, error)
+	KeyRotationScheduleDeleteUsingDELETE(params *KeyRotationScheduleDeleteUsingDELETEParams, opts ...ClientOption) (*KeyRotationScheduleDeleteUsingDELETEOK, error)
 
-	KeyRotationScheduleGetUsingGET(params *KeyRotationScheduleGetUsingGETParams) (*KeyRotationScheduleGetUsingGETOK, error)
+	KeyRotationScheduleGetUsingGET(params *KeyRotationScheduleGetUsingGETParams, opts ...ClientOption) (*KeyRotationScheduleGetUsingGETOK, error)
 
-	KeyRotationScheduleUpdateUsingPUT(params *KeyRotationScheduleUpdateUsingPUTParams) (*KeyRotationScheduleUpdateUsingPUTOK, error)
+	KeyRotationScheduleUpdateUsingPUT(params *KeyRotationScheduleUpdateUsingPUTParams, opts ...ClientOption) (*KeyRotationScheduleUpdateUsingPUTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -43,13 +46,12 @@ type ClientService interface {
 
   Create key rotation schedule (KMS)
 */
-func (a *Client) KeyRotationScheduleCreateUsingPUT(params *KeyRotationScheduleCreateUsingPUTParams) (*KeyRotationScheduleCreateUsingPUTOK, *KeyRotationScheduleCreateUsingPUTCreated, error) {
+func (a *Client) KeyRotationScheduleCreateUsingPUT(params *KeyRotationScheduleCreateUsingPUTParams, opts ...ClientOption) (*KeyRotationScheduleCreateUsingPUTOK, *KeyRotationScheduleCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewKeyRotationScheduleCreateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "keyRotationScheduleCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/kms/schedule",
@@ -60,7 +62,12 @@ func (a *Client) KeyRotationScheduleCreateUsingPUT(params *KeyRotationScheduleCr
 		Reader:             &KeyRotationScheduleCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -80,13 +87,12 @@ func (a *Client) KeyRotationScheduleCreateUsingPUT(params *KeyRotationScheduleCr
 
   Delete key rotation schedule (KMS)
 */
-func (a *Client) KeyRotationScheduleDeleteUsingDELETE(params *KeyRotationScheduleDeleteUsingDELETEParams) (*KeyRotationScheduleDeleteUsingDELETEOK, error) {
+func (a *Client) KeyRotationScheduleDeleteUsingDELETE(params *KeyRotationScheduleDeleteUsingDELETEParams, opts ...ClientOption) (*KeyRotationScheduleDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewKeyRotationScheduleDeleteUsingDELETEParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "keyRotationScheduleDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/kms/schedule/{keyId}",
@@ -97,7 +103,12 @@ func (a *Client) KeyRotationScheduleDeleteUsingDELETE(params *KeyRotationSchedul
 		Reader:             &KeyRotationScheduleDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -116,13 +127,12 @@ func (a *Client) KeyRotationScheduleDeleteUsingDELETE(params *KeyRotationSchedul
 
   Get key rotation schedule (KMS)
 */
-func (a *Client) KeyRotationScheduleGetUsingGET(params *KeyRotationScheduleGetUsingGETParams) (*KeyRotationScheduleGetUsingGETOK, error) {
+func (a *Client) KeyRotationScheduleGetUsingGET(params *KeyRotationScheduleGetUsingGETParams, opts ...ClientOption) (*KeyRotationScheduleGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewKeyRotationScheduleGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "keyRotationScheduleGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/kms/schedule/{keyId}",
@@ -133,7 +143,12 @@ func (a *Client) KeyRotationScheduleGetUsingGET(params *KeyRotationScheduleGetUs
 		Reader:             &KeyRotationScheduleGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -152,13 +167,12 @@ func (a *Client) KeyRotationScheduleGetUsingGET(params *KeyRotationScheduleGetUs
 
   Update key rotation schedule (KMS)
 */
-func (a *Client) KeyRotationScheduleUpdateUsingPUT(params *KeyRotationScheduleUpdateUsingPUTParams) (*KeyRotationScheduleUpdateUsingPUTOK, error) {
+func (a *Client) KeyRotationScheduleUpdateUsingPUT(params *KeyRotationScheduleUpdateUsingPUTParams, opts ...ClientOption) (*KeyRotationScheduleUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewKeyRotationScheduleUpdateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "keyRotationScheduleUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/kms/schedule/{keyId}",
@@ -169,7 +183,12 @@ func (a *Client) KeyRotationScheduleUpdateUsingPUT(params *KeyRotationScheduleUp
 		Reader:             &KeyRotationScheduleUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

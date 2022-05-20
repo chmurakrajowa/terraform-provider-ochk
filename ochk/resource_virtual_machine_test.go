@@ -104,12 +104,12 @@ func TestAccVirtualMachineResource_create_update_minimal(t *testing.T) {
 
 	virtualMachine := VirtualMachineTestData{
 		ResourceName:    "default",
-		DisplayName:     generateShortRandName(),
+		DisplayName:     generateShortRandName(devTestDataPrefix),
 		DeploymentID:    testDataResourceID(&deployment),
 		InitialPassword: "50b90880f9f",
 		PowerState:      "poweredOn",
 		ResourceProfile: "SIZE_S",
-		StoragePolicy:   "STANDARD",
+		StoragePolicy:   "STANDARD_W1",
 		SubtenantID:     testDataResourceID(&subtenant1),
 		VirtualNetworkDevices: []struct{ VirtualNetworkID string }{
 			{VirtualNetworkID: testDataResourceID(&vnet1)},
@@ -195,6 +195,11 @@ func TestAccVirtualMachineResource_create_update_minimal(t *testing.T) {
 				),
 			},
 			{
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+			{
 				Config: configUpdated,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", virtualMachineUpdated.DisplayName),
@@ -252,7 +257,7 @@ func TestAccVirtualMachineResource_create_with_managed_encryption(t *testing.T) 
 
 	kmsAESKey := KMSKeyTestData{
 		ResourceName: "key",
-		DisplayName:  generateShortRandName(),
+		DisplayName:  generateShortRandName(devTestDataPrefix),
 		KeyUsage:     []string{"ENCRYPT", "DECRYPT"},
 		Algorithm:    "AES",
 		Size:         256,
@@ -260,12 +265,12 @@ func TestAccVirtualMachineResource_create_with_managed_encryption(t *testing.T) 
 
 	virtualMachine := VirtualMachineTestData{
 		ResourceName:    "default",
-		DisplayName:     generateShortRandName(),
+		DisplayName:     generateShortRandName(devTestDataPrefix),
 		DeploymentID:    testDataResourceID(&deployment),
 		InitialPassword: "50b90880f9f",
 		PowerState:      "poweredOn",
 		ResourceProfile: "SIZE_S",
-		StoragePolicy:   "STANDARD",
+		StoragePolicy:   "STANDARD_W1",
 		SubtenantID:     testDataResourceID(&subtenant1),
 		VirtualNetworkDevices: []struct{ VirtualNetworkID string }{
 			{VirtualNetworkID: testDataResourceID(&vnet1)},
@@ -317,7 +322,7 @@ func TestAccVirtualMachineResource_create_with_own_encryption(t *testing.T) {
 
 	kmsAESKey := KMSKeyTestData{
 		ResourceName: "key",
-		DisplayName:  generateShortRandName(),
+		DisplayName:  generateShortRandName(devTestDataPrefix),
 		KeyUsage:     []string{"ENCRYPT", "DECRYPT"},
 		Algorithm:    "AES",
 		Size:         256,
@@ -325,12 +330,12 @@ func TestAccVirtualMachineResource_create_with_own_encryption(t *testing.T) {
 
 	virtualMachine := VirtualMachineTestData{
 		ResourceName:    "default",
-		DisplayName:     generateShortRandName(),
+		DisplayName:     generateShortRandName(devTestDataPrefix),
 		DeploymentID:    testDataResourceID(&deployment),
 		InitialPassword: "50b90880f9f",
 		PowerState:      "poweredOn",
 		ResourceProfile: "SIZE_S",
-		StoragePolicy:   "STANDARD",
+		StoragePolicy:   "STANDARD_W1",
 		SubtenantID:     testDataResourceID(&subtenant1),
 		VirtualNetworkDevices: []struct{ VirtualNetworkID string }{
 			{VirtualNetworkID: testDataResourceID(&vnet1)},

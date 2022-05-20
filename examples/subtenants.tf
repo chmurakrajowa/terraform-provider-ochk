@@ -14,8 +14,8 @@ data "ochk_user" "bg_manager_user2" {
 }
 */
 
-/*
-resource "ochk_subtenant" "subtenant-1" {
+
+resource "ochk_subtenant" "sub-1" {
   name = "${var.test-data-prefix}-bg-01"
   #name = "testy-test"
   email = "email2@example.com"
@@ -23,7 +23,7 @@ resource "ochk_subtenant" "subtenant-1" {
   memory_reserved_size_mb = 30000
   storage_reserved_size_gb = 400
 }
-*/
+
 
 /*
 resource "ochk_subtenant" "subtenant-1" {
