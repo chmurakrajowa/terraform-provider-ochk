@@ -1,6 +1,6 @@
 default: testacc
 
-PROVIDER_VERSION="1.2.2"
+PROVIDER_VERSION="1.2.3"
 
 ARCH:=$(shell uname -m)
 ifeq ($(ARCH),x86_64)
@@ -8,13 +8,6 @@ ifeq ($(ARCH),x86_64)
 endif
 
 OOS:=darwin
-
-
-OOS:=linux
-ARCH:=amd64
-export GOARCH:=$(ARCH)
-export GOOS:=$(OOS)
-
 export GOARCH:=$(ARCH)
 export GOOS:=$(OOS)
 

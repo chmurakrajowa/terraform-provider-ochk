@@ -76,6 +76,7 @@ resource "ochk_virtual_machine" "default" {
 The following arguments are supported:
 
 * `display_name` - (Required) Specifies display name associated with this virtual machine. 
+* `deployment_id` - (Required) The unique deployment's identifier, use `ochk_deployment` data source for getting identifier by name.
 * `initial_password` - (Required) Initial password. Cannot be changed after creation.
 * `power_state` - (Required) Power state information for the specified virtual machine. Value is one of: `poweredOn`, `poweredOff`, `suspended`. 
 * `resource_profile` - (Required) The definition of the amount of resources that are allocated to virtual machines , values: 
@@ -89,10 +90,18 @@ The following arguments are supported:
   * **`ENTERPRISE`** - virtual machine disks are distributed over two Data Centers
   * **`STANDARD_W1`** - virtual machine located in Data Center 1 
   * **`STANDARD_W2`** - virtual machine located in Data Center 2 
-* `deployment_id` - (Required) The unique deployment's identifier, use `ochk_deployment` data source for getting identifier by name. 
 * `subtenant_id` - (Required) Business group's identifier, use `ochk_subtenant` data source for getting identifier by name.
+* `ssh_key` -SSH key to set on machine.(??????)
+* `backup_lists` (Optional) Backup list for virtual machine
+* `system_tags` (Optional) System tags for virtual machine
+* `billing_tags` (Optional) Billing tags for virtual machine
+* `deployment_params` - Extra deployment parameter 
+    * **param_name** - (Required)
+    * **param_type** - (Required)
+    * **param_value** - (Required)
 * `virtual_network_devices` - (Required) List of virtual network devices. Each element must have the following values:
     * **virtual_network_id** - (Required) The unique identifier of virtual network. Virtual network allows the virtual machine to communicate with the rest of your network, host machine, and other virtual machines. Use `ochk_virtual_network` data source for getting identifier by name.
+    * **device_id** (Optional)
 * `additional_virtual_disks` - (Optional) List of additional virtual disks. Additional disk will be created on the same storage as the virtual machine configuration. Each element must have the following values: 
     * **controller_id** - (Required) The unique identifier of controller. The only supported value for now is "0".
     * **lun_id** - (Required) Number used to identify a logical unit. Set this to consecutive int numbers > 0. When updating, e.g. extending size, `lun_id` needs to be preserved.
@@ -101,12 +110,9 @@ The following arguments are supported:
 * `encryption` - (Optional) Enables VM encryption. Defaults to false. If this attribute is changed (performing update), encryption is either disabled (false) or VM is encrypted in place (true).  
 * `encryption_key_id` - (Optional) Identifier of encryption key. If not set, encryption is managed automatically. Use `ochk_kms_key` to get key id.  
 * `encryption_recrypt` - (Optional) Re-encryption operation: `NONE`, `SHALLOW`, `DEEP`. Provide `SHALLOW` or `DEEP` when enabling encryption on existing VM (when updating).                                                                                                          
-* `os_type` - (Optional) Only for virtual machines created from ISO/OVF file.
 * `ovf_ip_configuration` (Optional) Only for virtual machines created from ISO/OVF file.
 * `initial_user_name` (Optional) Only for virtual machines created from OVF to set ssh-key or ip address.
-* `backup_lists` (Optional) Backup list for virtual machine
-* `billing_tags` (Optional) Billing tags for virtual machine
-* `system_tags` (Optional) System tags for virtual machine
+* `os_type` - (Optional) Only for virtual machines created from ISO/OVF file.
 
 ## Attribute Reference
 

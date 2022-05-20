@@ -44,7 +44,7 @@ func (c *CustomServiceTestData) FullResourceName() string {
 func TestAccCustomServiceResource_create(t *testing.T) {
 	customService := CustomServiceTestData{
 		ResourceName: "default",
-		DisplayName:  generateShortRandName(),
+		DisplayName:  generateShortRandName(devTestDataPrefix),
 		Ports: []CustomServicePortTestData{
 			{
 				Protocol:    "TCP",
@@ -97,6 +97,11 @@ func TestAccCustomServiceResource_create(t *testing.T) {
 					resource.TestCheckResourceAttrSet(customServiceResourceName, "modified_by"),
 					resource.TestCheckResourceAttrSet(customServiceResourceName, "modified_at"),
 				),
+			},
+			{
+				ResourceName:      customServiceResourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
 			},
 			{
 				Config: customServiceUpdated.ToString(),

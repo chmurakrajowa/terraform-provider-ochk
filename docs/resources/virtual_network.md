@@ -56,16 +56,16 @@ resource "ochk_virtual_network" "{{ .ResourceName}}" {
 The following arguments are supported:
 
 * `display_name` - (Required) Virtual network name. Updates to this attribute forces recreate.
-* `subtenants` - (Required) List of subtenants identifiers in which virtual network will be available. Use `ochk_subtenant` data source to find identifiers by name. 
-* `router` - (Optional) Router id attached to this network. Use `ochk_router` data source to get id by display name.
 * `ipam_enabled` - (Optional) The IP address management (IPAM) to discover IP address and Domain Name System (DNS) servers on the network and manage them. True for enabling IPAM. Defaults to `false`. Updates to this attribute forces recreate.
+* `primary_dns_address` - (Optional) Primary Domain Name System (DNS) server IP address. Updates to this attribute forces recreate.
+* `secondary_wins_address` - (Optional) Secondary Windows Internet Name Service (WINS) address. Updates to this attribute forces recreate.
 * `dns_suffix` - (Optional) The custom Domain Name System (DNS) suffix which should have your assigned domain name. Updates to this attribute forces recreate.
 * `dns_search_suffix` - (Optional) Domain Name System (DNS) suffix for search domain. Updates to this attribute forces recreate.
-* `primary_dns_address` - (Optional) Primary Domain Name System (DNS) server IP address. Updates to this attribute forces recreate.
-* `secondary_dns_address` - (Optional) Secondary Domain Name System (DNS) server IP address. Updates to this attribute forces recreate.
 * `primary_wins_address` - (Optional) Primary Windows Internet Name Service (WINS) address. Updates to this attribute forces recreate.
-* `secondary_wins_address` - (Optional) Secondary Windows Internet Name Service (WINS) address. Updates to this attribute forces recreate.
+* `secondary_dns_address` - (Optional) Secondary Domain Name System (DNS) server IP address. Updates to this attribute forces recreate.
 * `subnet_mask` - (Optional) Subnet mask used to divide the IP address into network and host addresses. Updates to this attribute forces recreate.
+* `router` - (Optional) Router id attached to this network. Use `ochk_router` data source to get id by display name.
+* `subtenants` - (Required) List of subtenants identifiers in which virtual network will be available. Use `ochk_subtenant` data source to find identifiers by name.
 
 ## Attribute Reference
 
@@ -73,4 +73,5 @@ The following attributes are exported in addition to above arguments:
 * `gateway_address` - gateway address, set when `subnet_network_cidr` is set.
 * `subnet_mask` - subnet mask, set when `subnet_network_cidr` is set.
 * `subnet_gateway_address_cidr` - subnet gateway address cidr, set when `subnet_network_cidr` is set.  
+* `subnet_network_cidr` - <??????> 
  

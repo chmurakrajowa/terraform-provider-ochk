@@ -15,12 +15,32 @@
   "basePath": "/",
   "tags": [
     {
+      "name": "Active Directory Groups",
+      "description": "AD Group Controller"
+    },
+    {
+      "name": "Active Directory Public Key",
+      "description": "ADPK Controller"
+    },
+    {
       "name": "Active Directory RSA Public Key",
       "description": "Ads Public Key Controller"
     },
     {
       "name": "Active Directory Sync",
       "description": "Sync Controller"
+    },
+    {
+      "name": "Active Directory Users",
+      "description": "AD User Controller"
+    },
+    {
+      "name": "Admin Tenant Overall Allocation",
+      "description": "Admin Tenant Overall Allocation Controller"
+    },
+    {
+      "name": "Admin Virtual Machine Overall Report",
+      "description": "Admin Virtual Machine Overall Report Controller"
     },
     {
       "name": "Backups",
@@ -71,12 +91,28 @@
       "description": "Ip Collection Controller"
     },
     {
+      "name": "IPAM Available public IP address",
+      "description": "Available Public IP Controller"
+    },
+    {
+      "name": "IPAM Public IP Allocations",
+      "description": "Public IP Allocation Controller"
+    },
+    {
+      "name": "IPAM services",
+      "description": "Ipam Service Controller"
+    },
+    {
       "name": "KMS Key management",
       "description": "Key Controller"
     },
     {
       "name": "KMS Key rotation scheduler",
       "description": "Key Schedule Controller"
+    },
+    {
+      "name": "Local groups",
+      "description": "Local Groups Controller"
     },
     {
       "name": "Log categories",
@@ -89,6 +125,10 @@
     {
       "name": "MCS Secret",
       "description": "Mcs Secret Controller"
+    },
+    {
+      "name": "NAT Rules",
+      "description": "NAT Rule Controller"
     },
     {
       "name": "Network profiles",
@@ -128,7 +168,7 @@
     },
     {
       "name": "Subtenant custom groups",
-      "description": "Subtenant Group Member Controller"
+      "description": "Subtenant Group Controller"
     },
     {
       "name": "Subtenants",
@@ -137,6 +177,10 @@
     {
       "name": "System tags",
       "description": "System Tag Controller"
+    },
+    {
+      "name": "Tenants",
+      "description": "Tenant Info Controller"
     },
     {
       "name": "Users",
@@ -155,12 +199,12 @@
       "description": "Vcs Virtual Machine Controller"
     },
     {
-      "name": "Virtual machines (NSX)",
-      "description": "Virtual Machine Controller"
-    },
-    {
       "name": "Virtual networks",
       "description": "Virtual Network Controller"
+    },
+    {
+      "name": "WSO2 Token",
+      "description": "WSO Controller"
     },
     {
       "name": "vIDM",
@@ -168,6 +212,586 @@
     }
   ],
   "paths": {
+    "/ad/integration/groups": {
+      "get": {
+        "tags": [
+          "Active Directory Groups"
+        ],
+        "summary": "List groups",
+        "description": "List groups",
+        "operationId": "listADGroupUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GroupInstanceListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Active Directory Groups"
+        ],
+        "summary": "Create group",
+        "description": "Create group",
+        "operationId": "createADGroupUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "groupInstance",
+            "description": "groupInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ADGroupInstance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateGroupInstanceResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateGroupInstanceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/ad/integration/groups/{samAccountName}": {
+      "get": {
+        "tags": [
+          "Active Directory Groups"
+        ],
+        "summary": "Get group info",
+        "description": "Get group info",
+        "operationId": "getADGroupUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "samAccountName",
+            "in": "path",
+            "description": "samAccountName",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GroupInstanceGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Active Directory Groups"
+        ],
+        "summary": "Update group",
+        "description": "Update group",
+        "operationId": "updateADGroupUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "groupInstance",
+            "description": "groupInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ADGroupInstance"
+            }
+          },
+          {
+            "name": "samAccountName",
+            "in": "path",
+            "description": "samAccountName",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateGroupInstanceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Active Directory Groups"
+        ],
+        "summary": "Delete group",
+        "description": "Delete group",
+        "operationId": "deleteADGroupUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "samAccountName",
+            "in": "path",
+            "description": "samAccountName",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteGroupInstanceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/ad/integration/pk": {
+      "get": {
+        "tags": [
+          "Active Directory Public Key"
+        ],
+        "summary": "Get Public Key",
+        "description": "Get Public Key",
+        "operationId": "getPublicKeyUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PublicKeyInstanceGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/ad/integration/users": {
+      "get": {
+        "tags": [
+          "Active Directory Users"
+        ],
+        "summary": "List users",
+        "description": "List users",
+        "operationId": "listADUsersUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserInstanceListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Active Directory Users"
+        ],
+        "summary": "Create user",
+        "description": "Create user",
+        "operationId": "createADUserUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "userInstance",
+            "description": "userInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ADUserInstance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateUserInstanceResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateUserInstanceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/ad/integration/users/{samAccountName}": {
+      "get": {
+        "tags": [
+          "Active Directory Users"
+        ],
+        "summary": "Get user info",
+        "description": "Get user info",
+        "operationId": "getADUserUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "samAccountName",
+            "in": "path",
+            "description": "samAccountName",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserInstanceGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Active Directory Users"
+        ],
+        "summary": "Update user",
+        "description": "Update user",
+        "operationId": "updateADUserUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "samAccountName",
+            "in": "path",
+            "description": "samAccountName",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "userInstance",
+            "description": "userInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ADUserInstance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateUserInstanceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Active Directory Users"
+        ],
+        "summary": "Delete user",
+        "description": "Delete user",
+        "operationId": "deleteADUserUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "samAccountName",
+            "in": "path",
+            "description": "samAccountName",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteUserInstanceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/ad/integration/users/{samAccountName}/setPassword": {
+      "post": {
+        "tags": [
+          "Active Directory Users"
+        ],
+        "summary": "Set password for user",
+        "description": "Set password for user",
+        "operationId": "setPasswordADUserUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "samAccountName",
+            "in": "path",
+            "description": "samAccountName",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "setUserInstancePassRequest",
+            "description": "setUserInstancePassRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetUserInstancePassRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SetUserInstancePasswordResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/admin/billing/tenant/allocation/{tenantId}": {
+      "get": {
+        "tags": [
+          "Admin Tenant Overall Allocation"
+        ],
+        "summary": "Get",
+        "description": "Get tenant overall allocation report",
+        "operationId": "adminTenantOverallAllocationGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "tenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TenantOverallAllocationGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/admin/tenants": {
+      "get": {
+        "tags": [
+          "Tenants"
+        ],
+        "summary": "List tenants",
+        "description": "List tenants",
+        "operationId": "listTenantInfoUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "tenantName",
+            "in": "query",
+            "description": "tenantName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TenantInfoListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/admin/tenants/{tenantId}": {
+      "get": {
+        "tags": [
+          "Tenants"
+        ],
+        "summary": "Get tenant info",
+        "description": "Get tenant info",
+        "operationId": "getTenantInfoUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "tenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TenantInfoGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/admin/virtual-machine/summary/{tenantId}": {
+      "get": {
+        "tags": [
+          "Admin Virtual Machine Overall Report"
+        ],
+        "summary": "List",
+        "description": "Get virtual machine overall report",
+        "operationId": "adminVirtualMachineOverallReportGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "tenantId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/VirtualMachineSummaryReportGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
     "/ads/cer": {
       "post": {
         "tags": [
@@ -615,6 +1239,206 @@
         }
       }
     },
+    "/groups/local": {
+      "get": {
+        "tags": [
+          "Local groups"
+        ],
+        "summary": "List",
+        "description": "List local groups",
+        "operationId": "localGroupListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/LocalGroupListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Local groups"
+        ],
+        "summary": "Create",
+        "description": "Create local group",
+        "operationId": "localGroupCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "localGroup",
+            "description": "localGroup",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LocalGroup"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateLocalGroupResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/CreateLocalGroupResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/groups/local/{groupId}": {
+      "get": {
+        "tags": [
+          "Local groups"
+        ],
+        "summary": "Get",
+        "description": "Get local group",
+        "operationId": "localGroupGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "groupId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/LocalGroupGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Local groups"
+        ],
+        "summary": "Update",
+        "description": "Update local group",
+        "operationId": "localGroupUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "groupId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "localGroup",
+            "description": "localGroup",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LocalGroup"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/UpdateLocalGroupResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Local groups"
+        ],
+        "summary": "Delete",
+        "description": "Delete local group",
+        "operationId": "localGroupDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "groupId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/DeleteLocalGroupResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
     "/groups/{groupId}": {
       "get": {
         "tags": [
@@ -687,6 +1511,297 @@
             "schema": {
               "$ref": "#/definitions/ProxyResponseMessage"
             }
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/ipam/ipaddress/public/allocation": {
+      "get": {
+        "tags": [
+          "IPAM Public IP Allocations"
+        ],
+        "summary": "List",
+        "description": "List allocations of public IPs",
+        "operationId": "allocationListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ipAddress",
+            "in": "query",
+            "description": "ipAddress",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PublicIpAllocationListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "IPAM Public IP Allocations"
+        ],
+        "summary": "Create",
+        "description": "Create public IP allocation object",
+        "operationId": "allocationCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "publicIpAllocation",
+            "description": "publicIpAllocation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PublicIpAllocation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreatePublicIPAllocationResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreatePublicIPAllocationResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/ipam/ipaddress/public/allocation/{allocationId}": {
+      "get": {
+        "tags": [
+          "IPAM Public IP Allocations"
+        ],
+        "summary": "Get",
+        "description": "Get allocation of public IP",
+        "operationId": "allocationGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "allocationId",
+            "in": "path",
+            "description": "allocationId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PublicIpAllocationGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "IPAM Public IP Allocations"
+        ],
+        "summary": "Update",
+        "description": "Update public IP allocation object",
+        "operationId": "allocationUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "allocationId",
+            "in": "path",
+            "description": "allocationId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "publicIpAllocation",
+            "description": "publicIpAllocation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PublicIpAllocation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/UpdatePublicIPAllocationResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "IPAM Public IP Allocations"
+        ],
+        "summary": "Delete",
+        "description": "Delete public IP allocation object",
+        "operationId": "allocationDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "allocationId",
+            "in": "path",
+            "description": "allocationId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeletePublicIPAllocationResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/ipam/ipaddress/public/available": {
+      "get": {
+        "tags": [
+          "IPAM Available public IP address"
+        ],
+        "summary": "Get",
+        "description": "Get IPAM service",
+        "operationId": "availablePublicIPGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AvailablePublicIPGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      }
+    },
+    "/ipam/services": {
+      "get": {
+        "tags": [
+          "IPAM services"
+        ],
+        "summary": "List",
+        "description": "List IPAM services",
+        "operationId": "ipamServicesListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ServiceListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
+          }
+        }
+      }
+    },
+    "/ipam/services/{serviceId}": {
+      "get": {
+        "tags": [
+          "IPAM services"
+        ],
+        "summary": "Get",
+        "description": "Get IPAM service",
+        "operationId": "ipamServiceGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "serviceId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ServiceGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages."
           },
           "404": {
             "description": "Entity not found."
@@ -2296,6 +3411,206 @@
         }
       }
     },
+    "/network/nat/rules": {
+      "get": {
+        "tags": [
+          "NAT Rules"
+        ],
+        "summary": "List",
+        "description": "List NAT rules",
+        "operationId": "natRuleListUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "description": "displayName",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/NATRuleListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "NAT Rules"
+        ],
+        "summary": "Create",
+        "description": "Create NAT rule",
+        "operationId": "natRuleCreateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "natRuleInstance",
+            "description": "natRuleInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NATRuleInstance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateNATRuleResponse"
+            }
+          },
+          "201": {
+            "description": "Entity has been created",
+            "schema": {
+              "$ref": "#/definitions/CreateNATRuleResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/network/nat/rules/{ruleId}": {
+      "get": {
+        "tags": [
+          "NAT Rules"
+        ],
+        "summary": "Get",
+        "description": "Get NAT rule",
+        "operationId": "natRuleGetUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ruleId",
+            "in": "path",
+            "description": "ruleId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/NATRuleGetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          },
+          "404": {
+            "description": "Entity not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "NAT Rules"
+        ],
+        "summary": "Update",
+        "description": "Update NAT rule",
+        "operationId": "natRuleUpdateUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "natRuleInstance",
+            "description": "natRuleInstance",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NATRuleInstance"
+            }
+          },
+          {
+            "name": "ruleId",
+            "in": "path",
+            "description": "ruleId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Entity has been updated",
+            "schema": {
+              "$ref": "#/definitions/UpdateNATRuleResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "NAT Rules"
+        ],
+        "summary": "Delete",
+        "description": "Delete NAT rule",
+        "operationId": "natRuleDeleteUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ruleId",
+            "in": "path",
+            "description": "ruleId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Entity has been deleted",
+            "schema": {
+              "$ref": "#/definitions/DeleteNATRuleResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
     "/network/routers": {
       "get": {
         "tags": [
@@ -3210,81 +4525,6 @@
             "schema": {
               "$ref": "#/definitions/ProxyResponseMessage"
             }
-          }
-        }
-      }
-    },
-    "/network/virtual-machines": {
-      "get": {
-        "tags": [
-          "Virtual machines (NSX)"
-        ],
-        "summary": "List virtual machines",
-        "description": "List virtual machines from NSX-T level",
-        "operationId": "virtualMachineListUsingGET",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "displayName",
-            "in": "query",
-            "description": "displayName",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/VirtualMachineListResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages.",
-            "schema": {
-              "$ref": "#/definitions/ProxyResponseMessage"
-            }
-          }
-        }
-      }
-    },
-    "/network/virtual-machines/{virtualMachineId}": {
-      "get": {
-        "tags": [
-          "Virtual machines (NSX)"
-        ],
-        "summary": "Get",
-        "description": "Get virtual machine from NSX-T",
-        "operationId": "virtualMachineGetUsingGET",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "virtualMachineId",
-            "in": "path",
-            "description": "virtualMachineId",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/VirtualMachineGetResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request, error occurred. For more details see log messages.",
-            "schema": {
-              "$ref": "#/definitions/ProxyResponseMessage"
-            }
-          },
-          "404": {
-            "description": "Entity not found."
           }
         }
       }
@@ -5603,9 +6843,142 @@
           }
         }
       }
+    },
+    "/wso2/token": {
+      "post": {
+        "tags": [
+          "WSO2 Token"
+        ],
+        "summary": "Get",
+        "description": "Generate authorization token",
+        "operationId": "getTokenUsingPOST_1",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "wsoTokenRequest",
+            "description": "wsoTokenRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/WSOTokenRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WSOTokenResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request, error occurred. For more details see log messages.",
+            "schema": {
+              "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
+    "ADGroupInstance": {
+      "type": "object",
+      "properties": {
+        "dn": {
+          "type": "string"
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ADGroupInstance"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "samAccountName": {
+          "type": "string"
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ADUserInstance"
+          }
+        }
+      },
+      "title": "ADGroupInstance"
+    },
+    "ADUserInstance": {
+      "type": "object",
+      "properties": {
+        "accountExpirationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "accountLockoutTime": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "badLogonCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "description": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "dn": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastBadPasswordAttempt": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "lastLogon": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "lastPasswordSet": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "passwordNeverExpires": {
+          "type": "boolean"
+        },
+        "samAccountName": {
+          "type": "string"
+        },
+        "userPrincipalName": {
+          "type": "string"
+        }
+      },
+      "title": "ADUserInstance"
+    },
     "AttributeInstance": {
       "type": "object",
       "properties": {
@@ -5652,6 +7025,26 @@
         }
       },
       "title": "AttributeValueInstance"
+    },
+    "AvailablePublicIPGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "publicIpAddress": {
+          "$ref": "#/definitions/PublicIpAddress"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "AvailablePublicIPGetResponse"
     },
     "BackupList": {
       "type": "object",
@@ -6007,6 +7400,29 @@
       },
       "title": "CreateGFWRuleResponse"
     },
+    "CreateGroupInstanceResponse": {
+      "type": "object",
+      "properties": {
+        "groupInstance": {
+          "$ref": "#/definitions/ADGroupInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "CreateGroupInstanceResponse"
+    },
     "CreateGroupMemberResponse": {
       "type": "object",
       "properties": {
@@ -6076,6 +7492,52 @@
       },
       "title": "CreateKmsKeyResponse"
     },
+    "CreateLocalGroupResponse": {
+      "type": "object",
+      "properties": {
+        "localGroup": {
+          "$ref": "#/definitions/LocalGroup"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "CreateLocalGroupResponse"
+    },
+    "CreateNATRuleResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "natRuleInstance": {
+          "$ref": "#/definitions/NATRuleInstance"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "CreateNATRuleResponse"
+    },
     "CreateNewKmsKeyVersionResponse": {
       "type": "object",
       "properties": {
@@ -6098,6 +7560,29 @@
         }
       },
       "title": "CreateNewKmsKeyVersionResponse"
+    },
+    "CreatePublicIPAllocationResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "publicIpAllocation": {
+          "$ref": "#/definitions/PublicIpAllocation"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "CreatePublicIPAllocationResponse"
     },
     "CreateRouterResponse": {
       "type": "object",
@@ -6179,6 +7664,29 @@
         }
       },
       "title": "CreateSyncRequest"
+    },
+    "CreateUserInstanceResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "userInstance": {
+          "$ref": "#/definitions/ADUserInstance"
+        }
+      },
+      "title": "CreateUserInstanceResponse"
     },
     "CreateUserMemberResponse": {
       "type": "object",
@@ -6487,6 +7995,26 @@
       },
       "title": "DeleteGFWRuleResponse"
     },
+    "DeleteGroupInstanceResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeleteGroupInstanceResponse"
+    },
     "DeleteGroupMemberResponse": {
       "type": "object",
       "properties": {
@@ -6546,6 +8074,66 @@
         }
       },
       "title": "DeleteKmsKeyResponse"
+    },
+    "DeleteLocalGroupResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeleteLocalGroupResponse"
+    },
+    "DeleteNATRuleResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeleteNATRuleResponse"
+    },
+    "DeletePublicIPAllocationResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeletePublicIPAllocationResponse"
     },
     "DeleteRouterResponse": {
       "type": "object",
@@ -6612,6 +8200,26 @@
         }
       },
       "title": "DeleteSnapshotResponse"
+    },
+    "DeleteUserInstanceResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "DeleteUserInstanceResponse"
     },
     "DeleteUserMemberResponse": {
       "type": "object",
@@ -6690,6 +8298,37 @@
         }
       },
       "title": "DeploymentListResponse"
+    },
+    "DeploymentParam": {
+      "type": "object",
+      "properties": {
+        "paramName": {
+          "type": "string"
+        },
+        "paramType": {
+          "type": "string",
+          "enum": [
+            "HOST_NAME",
+            "LOGIN_PASSWORD",
+            "LOGIN_SSH_KEY",
+            "LOGIN_USERNAME",
+            "NET_DNS_PRIMARY",
+            "NET_DNS_SEARCH",
+            "NET_DNS_SECONDARY",
+            "NET_DNS_SUFFIX",
+            "NET_IP_ADDR_01",
+            "NET_IP_BROADCAST_01",
+            "NET_IP_GATEWAY_01",
+            "NET_IP_MASK_01",
+            "NET_WINS_ALTENATIVE",
+            "NET_WINS_PREFERRED"
+          ]
+        },
+        "paramValue": {
+          "type": "string"
+        }
+      },
+      "title": "DeploymentParam"
     },
     "EdgeClusterGetResponse": {
       "type": "object",
@@ -7136,6 +8775,49 @@
         }
       },
       "title": "GroupInstance"
+    },
+    "GroupInstanceGetResponse": {
+      "type": "object",
+      "properties": {
+        "groupInstance": {
+          "$ref": "#/definitions/ADGroupInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "GroupInstanceGetResponse"
+    },
+    "GroupInstanceListResponse": {
+      "type": "object",
+      "properties": {
+        "groupInstanceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ADGroupInstance"
+          }
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "GroupInstanceListResponse"
     },
     "GroupListResponse": {
       "type": "object",
@@ -7736,6 +9418,107 @@
       },
       "title": "LicSettings"
     },
+    "LocalGroup": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "emailAddress": {
+          "type": "string"
+        },
+        "fqdn": {
+          "type": "string"
+        },
+        "groupId": {
+          "type": "string"
+        },
+        "groupInstanceList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GroupInstance"
+          }
+        },
+        "groupType": {
+          "type": "string",
+          "enum": [
+            "CUSTOM",
+            "SSO"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "netbios": {
+          "type": "string"
+        },
+        "parentGroups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GroupInstance"
+          }
+        },
+        "principalId": {
+          "$ref": "#/definitions/PrincipalId"
+        },
+        "principalName": {
+          "type": "string"
+        },
+        "userInstanceList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserInstance"
+          }
+        }
+      },
+      "title": "LocalGroup"
+    },
+    "LocalGroupGetResponse": {
+      "type": "object",
+      "properties": {
+        "localGroup": {
+          "$ref": "#/definitions/LocalGroup"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "LocalGroupGetResponse"
+    },
+    "LocalGroupListResponse": {
+      "type": "object",
+      "properties": {
+        "localGroupInstanceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LocalGroup"
+          }
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "LocalGroupListResponse"
+    },
     "LogCategory": {
       "type": "object",
       "properties": {
@@ -7908,6 +9691,134 @@
         }
       },
       "title": "McsSecretGetResponse"
+    },
+    "NATRuleGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "natRuleInstance": {
+          "$ref": "#/definitions/NATRuleInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "NATRuleGetResponse"
+    },
+    "NATRuleInstance": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "DNAT",
+            "NO_SNAT",
+            "SNAT"
+          ]
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "creationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "description": {
+          "type": "string"
+        },
+        "destinationNetwork": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "firewallMatch": {
+          "type": "string",
+          "enum": [
+            "BYPASS",
+            "MATCH_EXTERNAL_ADDRESS",
+            "MATCH_INTERNAL_ADDRESS"
+          ]
+        },
+        "modificationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "modifiedBy": {
+          "type": "string"
+        },
+        "natType": {
+          "type": "string",
+          "enum": [
+            "AUTO",
+            "MANUAL"
+          ]
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "ruleId": {
+          "type": "string"
+        },
+        "service": {
+          "type": "string"
+        },
+        "serviceInstance": {
+          "$ref": "#/definitions/ServiceInstance"
+        },
+        "sourceNetwork": {
+          "type": "string"
+        },
+        "tierZeroRouter": {
+          "$ref": "#/definitions/RouterInstance"
+        },
+        "translatedNetwork": {
+          "type": "string"
+        },
+        "translatedPorts": {
+          "type": "string"
+        },
+        "virtualNetworkInstance": {
+          "$ref": "#/definitions/VirtualNetworkInstance"
+        }
+      },
+      "title": "NATRuleInstance"
+    },
+    "NATRuleListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "natRuleInstances": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NATRuleInstance"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "NATRuleListResponse"
     },
     "NetworkGetResponse": {
       "type": "object",
@@ -8153,6 +10064,123 @@
       },
       "title": "ProxyResponseMessage"
     },
+    "PublicIpAddress": {
+      "type": "object",
+      "properties": {
+        "ipAddress": {
+          "type": "string"
+        },
+        "ipAddressId": {
+          "type": "string"
+        }
+      },
+      "title": "PublicIpAddress"
+    },
+    "PublicIpAllocation": {
+      "type": "object",
+      "properties": {
+        "allocationId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "assignmentDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "publicIpAddress": {
+          "$ref": "#/definitions/PublicIpAddress"
+        },
+        "serviceList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ServiceInstance"
+          }
+        },
+        "services": {
+          "type": "string"
+        }
+      },
+      "title": "PublicIpAllocation"
+    },
+    "PublicIpAllocationGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "publicIpAllocation": {
+          "$ref": "#/definitions/PublicIpAllocation"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "PublicIpAllocationGetResponse"
+    },
+    "PublicIpAllocationListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "publicIpAllocationCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PublicIpAllocation"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "PublicIpAllocationListResponse"
+    },
+    "PublicKeyInstance": {
+      "type": "object",
+      "properties": {
+        "publicKey": {
+          "type": "string"
+        }
+      },
+      "title": "PublicKeyInstance"
+    },
+    "PublicKeyInstanceGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "publicKeyInstance": {
+          "$ref": "#/definitions/PublicKeyInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "PublicKeyInstanceGetResponse"
+    },
     "QueryFilter": {
       "type": "object",
       "properties": {
@@ -8251,6 +10279,14 @@
           "type": "string",
           "enum": [
             "ADS_SYNC",
+            "AD_GROUP_CREATE",
+            "AD_GROUP_DELETE",
+            "AD_GROUP_MODIFY",
+            "AD_USER_CREATE",
+            "AD_USER_DELETE",
+            "AD_USER_DISABLE",
+            "AD_USER_ENABLE",
+            "AD_USER_MODIFY",
             "BILLING_ALARM_DEFINITION_CREATE",
             "BILLING_ALARM_DEFINITION_DELETE",
             "BILLING_ALARM_DEFINITION_UPDATE",
@@ -8274,6 +10310,9 @@
             "GROUP_MEMBER_CREATE",
             "GROUP_MEMBER_DELETE",
             "GROUP_UPDATE",
+            "IPAM_PUBLIC_IP_ALLOCATION_CREATE",
+            "IPAM_PUBLIC_IP_ALLOCATION_DELETE",
+            "IPAM_PUBLIC_IP_ALLOCATION_UPDATE",
             "IPCOLLECTION_CREATE",
             "IPCOLLECTION_DELETE",
             "IPCOLLECTION_UPDATE",
@@ -8286,6 +10325,9 @@
             "KMS_KEY_ROTATION_SCHEDULE_CREATE",
             "KMS_KEY_ROTATION_SCHEDULE_DELETE",
             "KMS_KEY_ROTATION_SCHEDULE_UPDATE",
+            "NAT_RULE_CREATE",
+            "NAT_RULE_DELETE",
+            "NAT_RULE_UPDATE",
             "NETWORK_CREATE",
             "NETWORK_DELETE",
             "NETWORK_UPDATE",
@@ -8784,6 +10826,32 @@
         }
       },
       "title": "ServiceListResponse"
+    },
+    "SetUserInstancePassRequest": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "SetUserInstancePassRequest"
+    },
+    "SetUserInstancePasswordResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "SetUserInstancePasswordResponse"
     },
     "SnapshotGetResponse": {
       "type": "object",
@@ -9359,6 +11427,118 @@
       },
       "title": "TagInstance"
     },
+    "TenantInfo": {
+      "type": "object",
+      "properties": {
+        "creationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "modificationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "tenantDescription": {
+          "type": "string"
+        },
+        "tenantDisplayName": {
+          "type": "string"
+        },
+        "tenantId": {
+          "type": "string"
+        },
+        "tenantName": {
+          "type": "string"
+        }
+      },
+      "title": "TenantInfo"
+    },
+    "TenantInfoGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "tenantInfo": {
+          "$ref": "#/definitions/TenantInfo"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "TenantInfoGetResponse"
+    },
+    "TenantInfoListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "tenantInfoCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TenantInfo"
+          }
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "TenantInfoListResponse"
+    },
+    "TenantOverallAllocation": {
+      "type": "object",
+      "properties": {
+        "vcpu": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "vram": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "vstorage": {
+          "type": "number",
+          "format": "float"
+        }
+      },
+      "title": "TenantOverallAllocation"
+    },
+    "TenantOverallAllocationGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "tenantOverallAllocation": {
+          "$ref": "#/definitions/TenantOverallAllocation"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "TenantOverallAllocationGetResponse"
+    },
     "Total": {
       "type": "object",
       "properties": {
@@ -9445,6 +11625,29 @@
       },
       "title": "UpdateGFWRuleResponse"
     },
+    "UpdateGroupInstanceResponse": {
+      "type": "object",
+      "properties": {
+        "groupInstance": {
+          "$ref": "#/definitions/ADGroupInstance"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "UpdateGroupInstanceResponse"
+    },
     "UpdateGroupResponse": {
       "type": "object",
       "properties": {
@@ -9491,6 +11694,29 @@
       },
       "title": "UpdateKeyRotationScheduleResponse"
     },
+    "UpdateLocalGroupResponse": {
+      "type": "object",
+      "properties": {
+        "localGroup": {
+          "$ref": "#/definitions/LocalGroup"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "UpdateLocalGroupResponse"
+    },
     "UpdateLogCategoryResponse": {
       "type": "object",
       "properties": {
@@ -9513,6 +11739,52 @@
         }
       },
       "title": "UpdateLogCategoryResponse"
+    },
+    "UpdateNATRuleResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "natRuleInstance": {
+          "$ref": "#/definitions/NATRuleInstance"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "UpdateNATRuleResponse"
+    },
+    "UpdatePublicIPAllocationResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "publicIpAllocation": {
+          "$ref": "#/definitions/PublicIpAllocation"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "UpdatePublicIPAllocationResponse"
     },
     "UpdateRouterResponse": {
       "type": "object",
@@ -9559,6 +11831,29 @@
         }
       },
       "title": "UpdateSecurityGroupResponse"
+    },
+    "UpdateUserInstanceResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "userInstance": {
+          "$ref": "#/definitions/ADUserInstance"
+        }
+      },
+      "title": "UpdateUserInstanceResponse"
     },
     "UserGetResponse": {
       "type": "object",
@@ -9615,6 +11910,49 @@
         }
       },
       "title": "UserInstance"
+    },
+    "UserInstanceGetResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "userInstance": {
+          "$ref": "#/definitions/ADUserInstance"
+        }
+      },
+      "title": "UserInstanceGetResponse"
+    },
+    "UserInstanceListResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "userInstanceCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ADUserInstance"
+          }
+        }
+      },
+      "title": "UserInstanceListResponse"
     },
     "UserListResponse": {
       "type": "object",
@@ -9948,6 +12286,12 @@
         "deploymentInstance": {
           "$ref": "#/definitions/DeploymentInstance"
         },
+        "deploymentParams": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeploymentParam"
+          }
+        },
         "encryptionInstance": {
           "$ref": "#/definitions/EncryptionInstance"
         },
@@ -10110,64 +12454,6 @@
         }
       },
       "title": "VirtualDiskDevice"
-    },
-    "VirtualMachine": {
-      "type": "object",
-      "properties": {
-        "displayName": {
-          "type": "string"
-        },
-        "hostId": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        }
-      },
-      "title": "VirtualMachine"
-    },
-    "VirtualMachineGetResponse": {
-      "type": "object",
-      "properties": {
-        "messages": {
-          "type": "string"
-        },
-        "success": {
-          "type": "boolean"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "x-nullable": true
-        },
-        "virtualMachine": {
-          "$ref": "#/definitions/VirtualMachine"
-        }
-      },
-      "title": "VirtualMachineGetResponse"
-    },
-    "VirtualMachineListResponse": {
-      "type": "object",
-      "properties": {
-        "messages": {
-          "type": "string"
-        },
-        "success": {
-          "type": "boolean"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "x-nullable": true
-        },
-        "virtualMachineCollection": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/VirtualMachine"
-          }
-        }
-      },
-      "title": "VirtualMachineListResponse"
     },
     "VirtualMachineOverallReport": {
       "type": "object",
@@ -10491,6 +12777,41 @@
         }
       },
       "title": "VirtualNetworkUpdateResponse"
+    },
+    "WSOTokenRequest": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "title": "WSOTokenRequest"
+    },
+    "WSOTokenResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "title": "WSOTokenResponse"
     }
   }
 }

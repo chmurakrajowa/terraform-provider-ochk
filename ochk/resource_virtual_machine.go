@@ -89,6 +89,28 @@ func resourceVirtualMachine() *schema.Resource {
 				Optional: true,
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
+			"deployment_params": {
+				Type:     schema.TypeList,
+				Optional: true,
+				ForceNew: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"param_name": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+						"param_type": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+						"param_value": {
+							Type:     schema.TypeString,
+							ForceNew: true,
+							Required: true,
+						},
+					},
+				},
+			},
 			"virtual_network_devices": {
 				Type:     schema.TypeList,
 				MinItems: 1,
@@ -324,6 +346,11 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 		return fmt.Errorf("error setting additional_virtual_disks: %w", err)
 	}
 
+	virtualMachine.DeploymentParams = expandVDeploymentParams(d.Get("deployment_params").([]interface{}))
+	if err := d.Set("deployment_params", flattenDeploymentParams(virtualMachine.DeploymentParams)); err != nil {
+		return fmt.Errorf("error setting deployment_params: %w", err)
+	}
+
 	if err := d.Set("ip_address", virtualMachine.IPAddress); err != nil {
 		return fmt.Errorf("error setting ip_address: %w", err)
 	}
@@ -359,6 +386,7 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 	if err := d.Set("created_at", virtualMachine.CreationDate.String()); err != nil {
 		return fmt.Errorf("error setting created_at: %w", err)
 	}
+
 	if err := d.Set("modified_at", virtualMachine.ModificationDate.String()); err != nil {
 		return fmt.Errorf("error setting modified_at: %w", err)
 	}
@@ -392,6 +420,7 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VcsVirtualM
 		VirtualMachineName:    d.Get("display_name").(string),
 		SSHKey:                d.Get("ssh_key").(string),
 		VirtualNetworkDevices: expandVirtualNetworkDevices(d.Get("virtual_network_devices").([]interface{})),
+		DeploymentParams:      expandVDeploymentParams(d.Get("deployment_params").([]interface{})),
 		BackupListCollection:  expandBackupListsFromIDs(d.Get("backup_lists").(*schema.Set).List()),
 		BillingTags:           expandBillingTagsListsFromIDs(d.Get("billing_tags").(*schema.Set).List()),
 		SystemTags:            expandSystemTagsListsFromIDs(d.Get("system_tags").(*schema.Set).List()),

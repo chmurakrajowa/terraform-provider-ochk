@@ -28,17 +28,7 @@ func TestAccSubtenantDataSource_read(t *testing.T) {
 		Name:         testData.Subtenant1Name,
 	}
 
-	user := UserDataSourceTestData{
-		ResourceName: "default",
-		Name:         testData.User1Name,
-	}
-
-	subtenantNetwork := NetworkDataSourceTestData{
-		ResourceName: "default",
-		Name:         testData.SubtenantNetworkName,
-	}
-
-	config := user.ToString() + subtenantNetwork.ToString() + subtenant.ToString()
+	config := subtenant.ToString()
 
 	resourceName := subtenant.FullResourceName()
 	resource.ParallelTest(t, resource.TestCase{
@@ -51,10 +41,8 @@ func TestAccSubtenantDataSource_read(t *testing.T) {
 					//FIXME waiting for backend fix
 					//resource.TestCheckResourceAttr(resourceName, "description", subtenant.Description),
 					resource.TestCheckResourceAttr(resourceName, "email", "email1@example.com"),
-					resource.TestCheckResourceAttr(resourceName, "memory_reserved_size_mb", "30000"),
-					resource.TestCheckResourceAttr(resourceName, "storage_reserved_size_gb", "400"),
-					resource.TestCheckResourceAttrPair(resourceName, "users.0", user.FullResourceName(), "id"),
-					resource.TestCheckResourceAttrPair(resourceName, "networks.0", subtenantNetwork.FullResourceName(), "id"),
+					resource.TestCheckResourceAttr(resourceName, "memory_reserved_size_mb", "255000"),
+					resource.TestCheckResourceAttr(resourceName, "storage_reserved_size_gb", "1000"),
 				),
 			},
 		},

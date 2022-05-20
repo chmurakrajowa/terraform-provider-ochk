@@ -13,10 +13,10 @@ func TestAccRouterDataSource_read(t *testing.T) {
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccRouterDataSourceConfig("T1"),
+				Config: testAccRouterDataSourceConfig(testData.VPC),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "display_name", "T1"),
-					resource.TestCheckResourceAttrSet(resourceName, "parent_t0_id"),
+					resource.TestCheckResourceAttr(resourceName, "display_name", testData.VPC),
+					resource.TestCheckResourceAttrSet(resourceName, "parent_router_id"),
 					resource.TestCheckResourceAttrSet(resourceName, "router_type"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
@@ -30,8 +30,14 @@ func TestAccRouterDataSource_read(t *testing.T) {
 
 func testAccRouterDataSourceConfig(displayName string) string {
 	return fmt.Sprintf(`
+
+data "ochk_router" "vrf" {
+	display_name = %[2]q
+}
+
 data "ochk_router" "default" {
   display_name = %[1]q
+  parent_router_id = data.ochk_router.vrf.id
 }
-`, displayName)
+`, displayName, testData.VRF)
 }

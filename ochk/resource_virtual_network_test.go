@@ -52,13 +52,13 @@ func (c *VirtualNetworkTestData) FullResourceName() string {
 
 func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
 	subtenant1 := SubtenantDataSourceTestData{
-		ResourceName: "subtenant1",
+		ResourceName: "subt1",
 		Name:         testData.Subtenant1Name,
 	}
 
 	virtualNetwork := VirtualNetworkTestData{
 		ResourceName: "default",
-		DisplayName:  generateRandName(),
+		DisplayName:  generateRandName(devTestDataPrefix),
 		Subtenants:   []string{testDataResourceID(&subtenant1)},
 	}
 
@@ -84,13 +84,13 @@ func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
 
 func TestAccVirtualNetworkResource_createWithIpamAndSubnet(t *testing.T) {
 	subtenant1 := SubtenantDataSourceTestData{
-		ResourceName: "subtenant1",
+		ResourceName: "subt1",
 		Name:         testData.Subtenant2Name,
 	}
 
 	virtualNetwork := VirtualNetworkTestData{
 		ResourceName:         "default",
-		DisplayName:          generateRandName(),
+		DisplayName:          generateRandName(devTestDataPrefix),
 		Subtenants:           []string{testDataResourceID(&subtenant1)},
 		IpamEnabled:          true,
 		PrimaryDNSAddress:    "192.168.1.6",
@@ -132,28 +132,30 @@ func TestAccVirtualNetworkResource_createWithIpamAndSubnet(t *testing.T) {
 
 func TestAccVirtualNetworkResource_createAndUpdateWithIpamSubnetRouter(t *testing.T) {
 	subtenant1 := SubtenantDataSourceTestData{
-		ResourceName: "subtenant1",
+		ResourceName: "subt1",
 		Name:         testData.Subtenant3Name,
 	}
 
 	subtenant2 := SubtenantDataSourceTestData{
-		ResourceName: "subtenant2",
+		ResourceName: "subt2",
 		Name:         testData.Subtenant4Name,
 	}
 
 	router1 := RouterTestData{
 		ResourceName: "router1",
-		DisplayName:  generateRandName(),
+		DisplayName:  generateRandName(devTestDataPrefix),
+		ParentRouter: testData.VRF,
 	}
 
 	router2 := RouterTestData{
 		ResourceName: "router2",
-		DisplayName:  generateRandName(),
+		DisplayName:  generateRandName(devTestDataPrefix),
+		ParentRouter: testData.VRF,
 	}
 
 	virtualNetwork := VirtualNetworkTestData{
 		ResourceName:         "default",
-		DisplayName:          generateRandName(),
+		DisplayName:          generateRandName(devTestDataPrefix),
 		Subtenants:           []string{testDataResourceID(&subtenant1)},
 		IpamEnabled:          true,
 		PrimaryDNSAddress:    "192.168.1.6",
@@ -166,13 +168,13 @@ func TestAccVirtualNetworkResource_createAndUpdateWithIpamSubnetRouter(t *testin
 		RouterRefID:          testDataResourceID(&router1),
 	}
 
-	configInitial := subtenant1.ToString() + subtenant2.ToString() + router1.ToString() + virtualNetwork.ToString()
+	configInitial := subtenant1.ToString() + subtenant2.ToString() + router1.ToString("n-test1") + virtualNetwork.ToString()
 
 	virtualNetworkUpdated := virtualNetwork
 	virtualNetworkUpdated.Subtenants = []string{testDataResourceID(&subtenant2)}
 	virtualNetworkUpdated.RouterRefID = testDataResourceID(&router2)
 
-	configUpdated := subtenant1.ToString() + subtenant2.ToString() + router1.ToString() + router2.ToString() + virtualNetworkUpdated.ToString()
+	configUpdated := subtenant1.ToString() + subtenant2.ToString() + router1.ToString("n-test1") + router2.ToString("n-test2") + virtualNetworkUpdated.ToString()
 
 	resourceName := virtualNetwork.FullResourceName()
 
@@ -197,6 +199,11 @@ func TestAccVirtualNetworkResource_createAndUpdateWithIpamSubnetRouter(t *testin
 					resource.TestCheckResourceAttrPair(resourceName, "router", router1.FullResourceName(), "id"),
 					resource.TestCheckResourceAttrPair(resourceName, "subtenants.0", subtenant1.FullResourceName(), "id"),
 				),
+			},
+			{
+				ResourceName:      resourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
 			},
 			{
 				Config: configUpdated,

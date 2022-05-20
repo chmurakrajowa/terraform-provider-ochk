@@ -1,0 +1,24 @@
+{
+	"Name": "NatPublicIpAddr",
+	"Text": "198.19.240.121"
+}
+{
+	"Name": "BackupPlanName",
+	"Text": "Platinium"
+}
+{
+    "Name": "BackupListName",
+    "Text": "Platinium (1 week / 24h)"
+}
+{
+	"Name": "LogicalPort1DisplayName",
+	"Text": "tf-tst-vm2.vmx@3051a157-37a9-4647-806e-1eda4ba97802"
+}
+{
+	"Name": "VRF",
+	"Text": "T0"
+}
+{
+	"Name": "Deployment1DisplayName",
+	"Text": "CentOS 7"
+}

@@ -56,10 +56,15 @@ The following arguments are supported:
 * `display_name` - (Required) Security group name.
 * `members` - (Required) Members that are assigned to the same security group. 
   Each entry must have the following values:
-  
-  * **type**: type of security group member. Allowed values: `IPCOLLECTION`, `VIRTUAL_MACHINE`, `LOGICAL_PORT`.
+
   * **id**: resource identifier depending on the security group type selection. Use data sources `ochk_ip_collection`, `ochk_virtual_machine`, `ochk_logical_port` for getting id by name.
-  
+  * **display_name** (Optional) display name of member of security group
+  * **type**: type of security group member. Allowed values: `IPCOLLECTION`, `VIRTUAL_MACHINE`, `LOGICAL_PORT`.
+
 ## Attribute Reference
 
-No additional attributes are exported. 
+The following attributes are exported in addition to above arguments:
+* `created_by` - Who created this resource.
+* `created_at` - When this resource was created.
+* `modified_by` - Who last modified this resource.
+* `modified_at` - When last modification occurred.  

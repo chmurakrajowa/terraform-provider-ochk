@@ -13,10 +13,6 @@ func TestFlattenExpandVirtualDisks(t *testing.T) {
 		flattened []map[string]interface{}
 	}{
 		{
-			expanded:  nil,
-			flattened: nil,
-		},
-		{
 			expanded: []*models.VirtualDiskDevice{
 				{
 					ControllerID:          1,
@@ -75,6 +71,7 @@ func TestFlattenExpandVirtualDisks(t *testing.T) {
 		outExpanded := expandVirtualDisks(flattenedInterfaceSlice)
 		assert.EqualValues(t, c.expanded, outExpanded, "Error matching output and expanded: %#v vs %#v", outExpanded, c.expanded)
 	}
+
 }
 
 func TestFlattenExpandVirtualNetworkDevices(t *testing.T) {

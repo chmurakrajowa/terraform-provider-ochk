@@ -39,6 +39,9 @@ type VcsVirtualMachineInstance struct {
 	// deployment instance
 	DeploymentInstance *DeploymentInstance `json:"deploymentInstance,omitempty"`
 
+	// deployment params
+	DeploymentParams []*DeploymentParam `json:"deploymentParams"`
+
 	// encryption instance
 	EncryptionInstance *EncryptionInstance `json:"encryptionInstance,omitempty"`
 
@@ -126,6 +129,10 @@ func (m *VcsVirtualMachineInstance) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateDeploymentInstance(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateDeploymentParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -280,6 +287,31 @@ func (m *VcsVirtualMachineInstance) validateDeploymentInstance(formats strfmt.Re
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *VcsVirtualMachineInstance) validateDeploymentParams(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.DeploymentParams) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.DeploymentParams); i++ {
+		if swag.IsZero(m.DeploymentParams[i]) { // not required
+			continue
+		}
+
+		if m.DeploymentParams[i] != nil {
+			if err := m.DeploymentParams[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("deploymentParams" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

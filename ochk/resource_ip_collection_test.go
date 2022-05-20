@@ -31,7 +31,7 @@ func (c *IPCollectionTestData) FullResourceName() string {
 func TestAccIPCollectionResource_create_update(t *testing.T) {
 	ipCollection := IPCollectionTestData{
 		ResourceName: "default",
-		DisplayName:  generateShortRandName(),
+		DisplayName:  generateShortRandName(devTestDataPrefix),
 		IPAddresses:  []string{"10.10.10.10"},
 	}
 
@@ -53,6 +53,11 @@ func TestAccIPCollectionResource_create_update(t *testing.T) {
 					resource.TestCheckResourceAttrSet(IPCollectionResourceName, "modified_by"),
 					resource.TestCheckResourceAttrSet(IPCollectionResourceName, "modified_at"),
 				),
+			},
+			{
+				ResourceName:      IPCollectionResourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
 			},
 			{
 				Config: ipCollectionUpdated.ToString(),
@@ -80,7 +85,7 @@ func testAccIPCollectionResourceNotExists(displayName string) resource.TestCheck
 		}
 
 		if len(ipCollections) > 0 {
-			return fmt.Errorf("router %s still exists", ipCollections[0].ID)
+			return fmt.Errorf("ip_collection %s still exists", ipCollections[0].ID)
 		}
 
 		return nil

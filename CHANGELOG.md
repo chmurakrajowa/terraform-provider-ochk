@@ -1,3 +1,44 @@
+## 1.2.3 (2022-05-20)
+
+## Resources
+* Changed resources
+  * `resource_firewall_ew_rule`
+  * `resource_firewall_sn_rule`
+  * `router`
+  * `securioty_group`
+  * `virtual_machine`
+
+* Add resources
+  * `manual_nat`
+  * `auto_nat`
+
+
+## Data sources
+* Changed data sources
+  * `virtual_machine`
+  
+* Remove data sources
+  * `gateway_policy`
+  * `security_policy`
+  * `networks` Legacy Networks - instead by `virtual_networks`
+
+* Add data sources
+  * `firewall_ew_rule`
+  * `firewall_sn_rule`
+  * `auto_nat`
+  * `manual_nat`
+
+
+## Misc
+* Changed return params by Virtual Machine. Returned id virtual machine is the same 
+ as id in virtual machine resource
+* Data source network was definitely replaced by virtual_networks
+* Fix for importer rules mechanism (firewall_ew_rule, firewall_sn_rule)
+* Changed resource router, if parent_router_id is changed, then router is recreated
+* Changed resource security_group. An id virtual machine has to the same as virtual machine 
+id in data source virtual machine
+* Resource manual_nat let to translate internal network addresses to a single public address
+* Resource auto_nat let to make configuration NAT rule with output to internet
 ## 1.2.2 (2021-11-25)
 
 
@@ -24,7 +65,7 @@
   * `resource_virtual_nmetwork`
 
 ## Data sources
-* Changed data sources:
+* Changed data sources
   * `data_source_group`
   * `data_source_subtenant`
   * `data_source_virtual_nmetwork`
@@ -63,13 +104,13 @@
   * `resource_virtual_network`
 
 ## Data sources
-* New data sources:
+* New data sources
   * `data_source_backup_list`
   * `data_source_backup_plan`
   * `data_source_billing_tag`
   * `data_source_system_tag`
     
-Changed data sources:
+Changed data sources
   * `data_source_router`
 
 
@@ -94,15 +135,15 @@ Changed data sources:
 ## 1.1 (2021-03-23)
 
 ## Resources
-* New resources:
+* New resources
   * `ochk_kms_key`
-* Changed resources:
+* Changed resources
   * `ochk_virtual_machine` - added encryption settings
 
 ## Data sources
-* New data sources:
+* New data sources
   * `ochk_kms_key`
-* Removed data sources:
+* Removed data sources
   * `ochk_ip_set`
 
 ## Misc
@@ -111,7 +152,7 @@ Changed data sources:
 ## 1.0 (2020-11-26)
 
 ## Resources
-* New resources:
+* New resources
   * `ochk_custom_service`
   * `ochk_ip_collection`
   * `ochk_subtenant`
@@ -119,7 +160,7 @@ Changed data sources:
   * `ochk_virtual_network`
 
 ## Data sources
-* New data sources:
+* New data sources
   * `ochk_custom_service`
   * `ochk_deployment`
   * `ochk_ip_collection`
@@ -134,10 +175,10 @@ Changed data sources:
 ## 0.1.1-pre (2020-08-27)
 
 ## Resources
-* New resource for managing routers: `ochk_router`.
+* New resource for managing routers `ochk_router`.
 
 ## Data sources 
-* New data source for logical ports: `ochk_logical_port`.
+* New data source for logical ports `ochk_logical_port`.
 
 ## Misc 
 * Added caching credentials for improved performance
@@ -146,7 +187,7 @@ Changed data sources:
 ## 0.1.0-pre (2020-08-20)
 
 ## Resources
-* New resource for managing routers: `ochk_router`.
+* New resource for managing routers `ochk_router`.
 
 ## Data sources 
 * `gateway_policy`

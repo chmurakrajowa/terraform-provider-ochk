@@ -1,4 +1,9 @@
 /*
+data "ochk_virtual_machine" "test" {
+  display_name = "${var.test-data-prefix}-vm"
+}
+*/
+
 resource "ochk_virtual_machine" "default" {
   display_name = "${var.test-data-prefix}-vm"
   deployment_id = "6bbd31ee-9144-4f14-af36-549065112cb9"
@@ -6,12 +11,24 @@ resource "ochk_virtual_machine" "default" {
 
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
-  storage_policy = "STANDARD"
-  subtenant_id = "c4c9c7a9-8983-431c-b36d-4c086a415f8c"
+  storage_policy = "STANDARD_W1"
+  subtenant_id = ochk_subtenant.sub-1.id
 
   virtual_network_devices {
     virtual_network_id = "b6529fce-d950-4a73-9915-7dc031293196"
   }
+
+  deployment_params {
+    param_name="hostname"
+    param_type="HOST_NAME"
+    param_value="myshost1"
+  }
+
+   deployment_params {
+     param_name="hostname"
+     param_type="NET_DNS_PRIMARY"
+     param_value="192.168.15.100"
+   }
 
   additional_virtual_disks {
     lun_id=1
@@ -35,7 +52,7 @@ resource "ochk_virtual_machine" "default" {
     "5403439c-38a5-4f98-a58b-134072260bfb"
   ]
 }
-*/
+
 
 /*
 data "ochk_deployment" "centos" {

@@ -8,7 +8,7 @@ import (
 
 func TestAccSecurityGroupDataSource_read(t *testing.T) {
 	resourceName := "data.ochk_security_group.one_member"
-	displayName := generateRandName()
+	displayName := generateRandName(devTestDataPrefix)
 
 	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
@@ -49,5 +49,5 @@ data "ochk_security_group" "one_member" {
   display_name = ochk_security_group.one_member.display_name
   depends_on = [ochk_security_group.one_member]
 }
-`, displayName, testData.LegacyVirtualMachineDisplayName)
+`, displayName, testData.VirtualMachineDisplayName)
 }

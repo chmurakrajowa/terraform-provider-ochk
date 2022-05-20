@@ -27,7 +27,7 @@ func dataSourceLogicalPortRead(ctx context.Context, d *schema.ResourceData, meta
 
 	logicalPorts, err := proxy.ListByDisplayName(ctx, displayName)
 	if err != nil {
-		return diag.Errorf("error while listing logical ports: %+v", err)
+		return diag.Errorf("error w	 hile listing logical ports: %+v", err)
 	}
 
 	if len(logicalPorts) < 1 {

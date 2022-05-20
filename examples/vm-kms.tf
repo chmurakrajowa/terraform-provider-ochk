@@ -5,7 +5,8 @@ resource "ochk_kms_key" "aes-generated" {
   algorithm = "AES"
   size = 256
 }
-
+*?
+/*
 locals {
   # should not really be stored like that
   rsa_private_key = <<EOT
