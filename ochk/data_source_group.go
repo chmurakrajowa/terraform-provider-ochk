@@ -7,40 +7,40 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func dataSourceGroup() *schema.Resource {
-	return &schema.Resource{
-		ReadContext: dataSourceGroupRead,
-
-		Schema: map[string]*schema.Schema{
-			"name": {
-				Type:     schema.TypeString,
-				Required: true,
-			},
-			"description": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"group_type": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"domain": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"users": {
-				Type:     schema.TypeSet,
-				Computed: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
-			},
-			"child_groups": {
-				Type:     schema.TypeSet,
-				Computed: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
-			},
-		},
-	}
-}
+//func dataSourceGroup() *schema.Resource {
+//	return &schema.Resource{
+//		ReadContext: dataSourceGroupRead,
+//
+//		Schema: map[string]*schema.Schema{
+//			"name": {
+//				Type:     schema.TypeString,
+//				Required: true,
+//			},
+//			"description": {
+//				Type:     schema.TypeString,
+//				Computed: true,
+//			},
+//			"group_type": {
+//				Type:     schema.TypeString,
+//				Computed: true,
+//			},
+//			"domain": {
+//				Type:     schema.TypeString,
+//				Computed: true,
+//			},
+//			"users": {
+//				Type:     schema.TypeSet,
+//				Computed: true,
+//				Elem:     &schema.Schema{Type: schema.TypeString},
+//			},
+//			"child_groups": {
+//				Type:     schema.TypeSet,
+//				Computed: true,
+//				Elem:     &schema.Schema{Type: schema.TypeString},
+//			},
+//		},
+//	}
+//}
 
 func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Groups
