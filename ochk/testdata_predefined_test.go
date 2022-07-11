@@ -7,12 +7,10 @@ import (
 	"os"
 	"reflect"
 	"strings"
-	"sync"
 )
 
 var testData = getTestData()
 var testDataSavedFileName = "../env/testdata.json"
-var testDataSavedFields []string
 
 func loadTestData() {
 
@@ -48,7 +46,6 @@ func getTestData() predefinedTestData {
 }
 
 type predefinedTestData struct {
-	mu                         sync.Mutex
 	LogicalPort1DisplayName    string
 	Network1Name               string
 	Network2Name               string

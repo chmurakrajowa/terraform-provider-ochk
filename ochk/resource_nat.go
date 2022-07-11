@@ -371,8 +371,7 @@ func mapResourceDataToAutoNat(d *schema.ResourceData) *models.NATRuleInstance {
 }
 
 func mapResourceDataToManualNat(d *schema.ResourceData) *models.NATRuleInstance {
-	var publicPriorityInt64 int64
-	publicPriorityInt64 = int64(d.Get("priority").(int))
+	var publicPriorityInt64 = int64(d.Get("priority").(int))
 
 	natManualRule := &models.NATRuleInstance{
 		DisplayName:        d.Get("display_name").(string),
