@@ -27,14 +27,11 @@ func loadTestData() {
 			if err := decoder.Decode(&m); err == io.EOF {
 				break
 			} else if err != nil {
-				fmt.Errorf(err.Error())
 				break
 			}
 			val := reflect.ValueOf(&predefinedTestDataDev).Elem().FieldByName(m.Name)
 			if val.IsValid() {
 				reflect.ValueOf(&predefinedTestDataDev).Elem().FieldByName(m.Name).SetString(m.Text)
-			} else {
-				fmt.Errorf("TestData elemenet: " + m.Name + "not exists")
 			}
 		}
 	}
