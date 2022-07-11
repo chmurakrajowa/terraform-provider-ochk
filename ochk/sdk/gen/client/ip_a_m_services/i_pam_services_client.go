@@ -25,11 +25,14 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	IpamServiceGetUsingGET(params *IpamServiceGetUsingGETParams) (*IpamServiceGetUsingGETOK, error)
+	IpamServiceGetUsingGET(params *IpamServiceGetUsingGETParams, opts ...ClientOption) (*IpamServiceGetUsingGETOK, error)
 
-	IpamServicesListUsingGET(params *IpamServicesListUsingGETParams) (*IpamServicesListUsingGETOK, error)
+	IpamServicesListUsingGET(params *IpamServicesListUsingGETParams, opts ...ClientOption) (*IpamServicesListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -39,13 +42,12 @@ type ClientService interface {
 
   Get IPAM service
 */
-func (a *Client) IpamServiceGetUsingGET(params *IpamServiceGetUsingGETParams) (*IpamServiceGetUsingGETOK, error) {
+func (a *Client) IpamServiceGetUsingGET(params *IpamServiceGetUsingGETParams, opts ...ClientOption) (*IpamServiceGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewIpamServiceGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ipamServiceGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/ipam/services/{serviceId}",
@@ -56,7 +58,12 @@ func (a *Client) IpamServiceGetUsingGET(params *IpamServiceGetUsingGETParams) (*
 		Reader:             &IpamServiceGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -75,13 +82,12 @@ func (a *Client) IpamServiceGetUsingGET(params *IpamServiceGetUsingGETParams) (*
 
   List IPAM services
 */
-func (a *Client) IpamServicesListUsingGET(params *IpamServicesListUsingGETParams) (*IpamServicesListUsingGETOK, error) {
+func (a *Client) IpamServicesListUsingGET(params *IpamServicesListUsingGETParams, opts ...ClientOption) (*IpamServicesListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewIpamServicesListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "ipamServicesListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/ipam/services",
@@ -92,7 +98,12 @@ func (a *Client) IpamServicesListUsingGET(params *IpamServicesListUsingGETParams
 		Reader:             &IpamServicesListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

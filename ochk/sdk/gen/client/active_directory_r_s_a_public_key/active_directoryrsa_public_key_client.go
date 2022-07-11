@@ -25,9 +25,12 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GetPublicKeyUsingPOST(params *GetPublicKeyUsingPOSTParams) (*GetPublicKeyUsingPOSTOK, error)
+	GetPublicKeyUsingPOST(params *GetPublicKeyUsingPOSTParams, opts ...ClientOption) (*GetPublicKeyUsingPOSTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -37,13 +40,12 @@ type ClientService interface {
 
   Get public key
 */
-func (a *Client) GetPublicKeyUsingPOST(params *GetPublicKeyUsingPOSTParams) (*GetPublicKeyUsingPOSTOK, error) {
+func (a *Client) GetPublicKeyUsingPOST(params *GetPublicKeyUsingPOSTParams, opts ...ClientOption) (*GetPublicKeyUsingPOSTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetPublicKeyUsingPOSTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "getPublicKeyUsingPOST",
 		Method:             "POST",
 		PathPattern:        "/ads/cer",
@@ -54,7 +56,12 @@ func (a *Client) GetPublicKeyUsingPOST(params *GetPublicKeyUsingPOSTParams) (*Ge
 		Reader:             &GetPublicKeyUsingPOSTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

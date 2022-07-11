@@ -41,9 +41,8 @@ func (o *CustomServiceUpdateUsingPUTReader) ReadResponse(response runtime.Client
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewCustomServiceUpdateUsingPUTOK() *CustomServiceUpdateUsingPUTOK {
 	return &CustomServiceUpdateUsingPUTOK{}
 }
 
-/*CustomServiceUpdateUsingPUTOK handles this case with default header values.
+/* CustomServiceUpdateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type CustomServiceUpdateUsingPUTOK struct {
 func (o *CustomServiceUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/custom-services/{serviceId}][%d] customServiceUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
-
 func (o *CustomServiceUpdateUsingPUTOK) GetPayload() *models.UpdateCustomServiceResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewCustomServiceUpdateUsingPUTCreated() *CustomServiceUpdateUsingPUTCreated
 	return &CustomServiceUpdateUsingPUTCreated{}
 }
 
-/*CustomServiceUpdateUsingPUTCreated handles this case with default header values.
+/* CustomServiceUpdateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been updated
 */
@@ -96,7 +94,6 @@ type CustomServiceUpdateUsingPUTCreated struct {
 func (o *CustomServiceUpdateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/custom-services/{serviceId}][%d] customServiceUpdateUsingPUTCreated  %+v", 201, o.Payload)
 }
-
 func (o *CustomServiceUpdateUsingPUTCreated) GetPayload() *models.UpdateCustomServiceResponse {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewCustomServiceUpdateUsingPUTBadRequest() *CustomServiceUpdateUsingPUTBadR
 	return &CustomServiceUpdateUsingPUTBadRequest{}
 }
 
-/*CustomServiceUpdateUsingPUTBadRequest handles this case with default header values.
+/* CustomServiceUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -129,7 +126,6 @@ type CustomServiceUpdateUsingPUTBadRequest struct {
 func (o *CustomServiceUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/custom-services/{serviceId}][%d] customServiceUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *CustomServiceUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

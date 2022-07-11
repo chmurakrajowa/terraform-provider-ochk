@@ -41,9 +41,8 @@ func (o *ServiceGetUsingGETReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewServiceGetUsingGETOK() *ServiceGetUsingGETOK {
 	return &ServiceGetUsingGETOK{}
 }
 
-/*ServiceGetUsingGETOK handles this case with default header values.
+/* ServiceGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type ServiceGetUsingGETOK struct {
 func (o *ServiceGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/default-services/{serviceId}][%d] serviceGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *ServiceGetUsingGETOK) GetPayload() *models.ServiceGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewServiceGetUsingGETBadRequest() *ServiceGetUsingGETBadRequest {
 	return &ServiceGetUsingGETBadRequest{}
 }
 
-/*ServiceGetUsingGETBadRequest handles this case with default header values.
+/* ServiceGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type ServiceGetUsingGETBadRequest struct {
 func (o *ServiceGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/default-services/{serviceId}][%d] serviceGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *ServiceGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewServiceGetUsingGETNotFound() *ServiceGetUsingGETNotFound {
 	return &ServiceGetUsingGETNotFound{}
 }
 
-/*ServiceGetUsingGETNotFound handles this case with default header values.
+/* ServiceGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

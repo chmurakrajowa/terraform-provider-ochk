@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 	"strconv"
 
@@ -97,7 +98,6 @@ func (m *RequestInstance) Validate(formats strfmt.Registry) error {
 }
 
 func (m *RequestInstance) validateEndDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.EndDate) { // not required
 		return nil
 	}
@@ -110,7 +110,6 @@ func (m *RequestInstance) validateEndDate(formats strfmt.Registry) error {
 }
 
 func (m *RequestInstance) validateRequestMessageList(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestMessageList) { // not required
 		return nil
 	}
@@ -176,7 +175,6 @@ func (m *RequestInstance) validateRequestPhaseEnum(path, location string, value 
 }
 
 func (m *RequestInstance) validateRequestPhase(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestPhase) { // not required
 		return nil
 	}
@@ -219,7 +217,6 @@ func (m *RequestInstance) validateRequestStatusEnum(path, location string, value
 }
 
 func (m *RequestInstance) validateRequestStatus(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestStatus) { // not required
 		return nil
 	}
@@ -481,7 +478,6 @@ func (m *RequestInstance) validateRequestTypeEnum(path, location string, value s
 }
 
 func (m *RequestInstance) validateRequestType(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestType) { // not required
 		return nil
 	}
@@ -495,13 +491,44 @@ func (m *RequestInstance) validateRequestType(formats strfmt.Registry) error {
 }
 
 func (m *RequestInstance) validateStartDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.StartDate) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("startDate", "body", "date-time", m.StartDate.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this request instance based on the context it is used
+func (m *RequestInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateRequestMessageList(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *RequestInstance) contextValidateRequestMessageList(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.RequestMessageList); i++ {
+
+		if m.RequestMessageList[i] != nil {
+			if err := m.RequestMessageList[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("requestMessageList" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

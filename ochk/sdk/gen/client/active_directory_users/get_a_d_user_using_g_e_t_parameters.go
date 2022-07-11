@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetADUserUsingGETParams creates a new GetADUserUsingGETParams object
-// with the default values initialized.
+// NewGetADUserUsingGETParams creates a new GetADUserUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetADUserUsingGETParams() *GetADUserUsingGETParams {
-	var ()
 	return &GetADUserUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetADUserUsingGETParamsWithTimeout creates a new GetADUserUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetADUserUsingGETParamsWithTimeout(timeout time.Duration) *GetADUserUsingGETParams {
-	var ()
 	return &GetADUserUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetADUserUsingGETParamsWithContext creates a new GetADUserUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetADUserUsingGETParamsWithContext(ctx context.Context) *GetADUserUsingGETParams {
-	var ()
 	return &GetADUserUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetADUserUsingGETParamsWithHTTPClient creates a new GetADUserUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetADUserUsingGETParamsWithHTTPClient(client *http.Client) *GetADUserUsingGETParams {
-	var ()
 	return &GetADUserUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetADUserUsingGETParams contains all the parameters to send to the API endpoint
-for the get a d user using g e t operation typically these are written to a http.Request
+/* GetADUserUsingGETParams contains all the parameters to send to the API endpoint
+   for the get a d user using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type GetADUserUsingGETParams struct {
 
-	/*SamAccountName
-	  samAccountName
+	/* SamAccountName.
 
+	   samAccountName
 	*/
 	SamAccountName string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get a d user using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetADUserUsingGETParams) WithDefaults() *GetADUserUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get a d user using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetADUserUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get a d user using g e t params

@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewAdminTenantOverallAllocationGetUsingGETParams creates a new AdminTenantOverallAllocationGetUsingGETParams object
-// with the default values initialized.
+// NewAdminTenantOverallAllocationGetUsingGETParams creates a new AdminTenantOverallAllocationGetUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewAdminTenantOverallAllocationGetUsingGETParams() *AdminTenantOverallAllocationGetUsingGETParams {
-	var ()
 	return &AdminTenantOverallAllocationGetUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewAdminTenantOverallAllocationGetUsingGETParamsWithTimeout creates a new AdminTenantOverallAllocationGetUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewAdminTenantOverallAllocationGetUsingGETParamsWithTimeout(timeout time.Duration) *AdminTenantOverallAllocationGetUsingGETParams {
-	var ()
 	return &AdminTenantOverallAllocationGetUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewAdminTenantOverallAllocationGetUsingGETParamsWithContext creates a new AdminTenantOverallAllocationGetUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewAdminTenantOverallAllocationGetUsingGETParamsWithContext(ctx context.Context) *AdminTenantOverallAllocationGetUsingGETParams {
-	var ()
 	return &AdminTenantOverallAllocationGetUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewAdminTenantOverallAllocationGetUsingGETParamsWithHTTPClient creates a new AdminTenantOverallAllocationGetUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewAdminTenantOverallAllocationGetUsingGETParamsWithHTTPClient(client *http.Client) *AdminTenantOverallAllocationGetUsingGETParams {
-	var ()
 	return &AdminTenantOverallAllocationGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*AdminTenantOverallAllocationGetUsingGETParams contains all the parameters to send to the API endpoint
-for the admin tenant overall allocation get using g e t operation typically these are written to a http.Request
+/* AdminTenantOverallAllocationGetUsingGETParams contains all the parameters to send to the API endpoint
+   for the admin tenant overall allocation get using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type AdminTenantOverallAllocationGetUsingGETParams struct {
 
-	/*TenantID
-	  tenantId
+	/* TenantID.
 
+	   tenantId
 	*/
 	TenantID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the admin tenant overall allocation get using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *AdminTenantOverallAllocationGetUsingGETParams) WithDefaults() *AdminTenantOverallAllocationGetUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the admin tenant overall allocation get using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *AdminTenantOverallAllocationGetUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the admin tenant overall allocation get using g e t params

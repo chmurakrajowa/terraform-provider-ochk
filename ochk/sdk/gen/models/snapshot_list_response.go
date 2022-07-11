@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -52,7 +53,6 @@ func (m *SnapshotListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *SnapshotListResponse) validateSnapshotInstanceCollection(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.SnapshotInstanceCollection) { // not required
 		return nil
 	}
@@ -77,13 +77,44 @@ func (m *SnapshotListResponse) validateSnapshotInstanceCollection(formats strfmt
 }
 
 func (m *SnapshotListResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this snapshot list response based on the context it is used
+func (m *SnapshotListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateSnapshotInstanceCollection(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *SnapshotListResponse) contextValidateSnapshotInstanceCollection(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.SnapshotInstanceCollection); i++ {
+
+		if m.SnapshotInstanceCollection[i] != nil {
+			if err := m.SnapshotInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("snapshotInstanceCollection" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

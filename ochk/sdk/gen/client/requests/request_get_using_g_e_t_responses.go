@@ -41,9 +41,8 @@ func (o *RequestGetUsingGETReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewRequestGetUsingGETOK() *RequestGetUsingGETOK {
 	return &RequestGetUsingGETOK{}
 }
 
-/*RequestGetUsingGETOK handles this case with default header values.
+/* RequestGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type RequestGetUsingGETOK struct {
 func (o *RequestGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /request/{requestId}][%d] requestGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *RequestGetUsingGETOK) GetPayload() *models.RequestInstanceGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewRequestGetUsingGETBadRequest() *RequestGetUsingGETBadRequest {
 	return &RequestGetUsingGETBadRequest{}
 }
 
-/*RequestGetUsingGETBadRequest handles this case with default header values.
+/* RequestGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type RequestGetUsingGETBadRequest struct {
 func (o *RequestGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /request/{requestId}][%d] requestGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *RequestGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewRequestGetUsingGETNotFound() *RequestGetUsingGETNotFound {
 	return &RequestGetUsingGETNotFound{}
 }
 
-/*RequestGetUsingGETNotFound handles this case with default header values.
+/* RequestGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

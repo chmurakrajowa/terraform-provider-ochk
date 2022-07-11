@@ -41,9 +41,8 @@ func (o *VirtualNetworkDeleteUsingDELETEReader) ReadResponse(response runtime.Cl
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewVirtualNetworkDeleteUsingDELETEOK() *VirtualNetworkDeleteUsingDELETEOK {
 	return &VirtualNetworkDeleteUsingDELETEOK{}
 }
 
-/*VirtualNetworkDeleteUsingDELETEOK handles this case with default header values.
+/* VirtualNetworkDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type VirtualNetworkDeleteUsingDELETEOK struct {
 func (o *VirtualNetworkDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /networks/{virtualNetworkId}][%d] virtualNetworkDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
-
 func (o *VirtualNetworkDeleteUsingDELETEOK) GetPayload() *models.VirtualNetworkDeleteResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewVirtualNetworkDeleteUsingDELETECreated() *VirtualNetworkDeleteUsingDELET
 	return &VirtualNetworkDeleteUsingDELETECreated{}
 }
 
-/*VirtualNetworkDeleteUsingDELETECreated handles this case with default header values.
+/* VirtualNetworkDeleteUsingDELETECreated describes a response with status code 201, with default header values.
 
 Entity has been deleted
 */
@@ -96,7 +94,6 @@ type VirtualNetworkDeleteUsingDELETECreated struct {
 func (o *VirtualNetworkDeleteUsingDELETECreated) Error() string {
 	return fmt.Sprintf("[DELETE /networks/{virtualNetworkId}][%d] virtualNetworkDeleteUsingDELETECreated  %+v", 201, o.Payload)
 }
-
 func (o *VirtualNetworkDeleteUsingDELETECreated) GetPayload() *models.VirtualNetworkDeleteResponse {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewVirtualNetworkDeleteUsingDELETEBadRequest() *VirtualNetworkDeleteUsingDE
 	return &VirtualNetworkDeleteUsingDELETEBadRequest{}
 }
 
-/*VirtualNetworkDeleteUsingDELETEBadRequest handles this case with default header values.
+/* VirtualNetworkDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -129,7 +126,6 @@ type VirtualNetworkDeleteUsingDELETEBadRequest struct {
 func (o *VirtualNetworkDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /networks/{virtualNetworkId}][%d] virtualNetworkDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *VirtualNetworkDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

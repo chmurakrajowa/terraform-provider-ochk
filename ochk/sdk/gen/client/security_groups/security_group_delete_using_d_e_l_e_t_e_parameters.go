@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewSecurityGroupDeleteUsingDELETEParams creates a new SecurityGroupDeleteUsingDELETEParams object
-// with the default values initialized.
+// NewSecurityGroupDeleteUsingDELETEParams creates a new SecurityGroupDeleteUsingDELETEParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewSecurityGroupDeleteUsingDELETEParams() *SecurityGroupDeleteUsingDELETEParams {
-	var ()
 	return &SecurityGroupDeleteUsingDELETEParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewSecurityGroupDeleteUsingDELETEParamsWithTimeout creates a new SecurityGroupDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewSecurityGroupDeleteUsingDELETEParamsWithTimeout(timeout time.Duration) *SecurityGroupDeleteUsingDELETEParams {
-	var ()
 	return &SecurityGroupDeleteUsingDELETEParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewSecurityGroupDeleteUsingDELETEParamsWithContext creates a new SecurityGroupDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewSecurityGroupDeleteUsingDELETEParamsWithContext(ctx context.Context) *SecurityGroupDeleteUsingDELETEParams {
-	var ()
 	return &SecurityGroupDeleteUsingDELETEParams{
-
 		Context: ctx,
 	}
 }
 
 // NewSecurityGroupDeleteUsingDELETEParamsWithHTTPClient creates a new SecurityGroupDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewSecurityGroupDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) *SecurityGroupDeleteUsingDELETEParams {
-	var ()
 	return &SecurityGroupDeleteUsingDELETEParams{
 		HTTPClient: client,
 	}
 }
 
-/*SecurityGroupDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-for the security group delete using d e l e t e operation typically these are written to a http.Request
+/* SecurityGroupDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
+   for the security group delete using d e l e t e operation.
+
+   Typically these are written to a http.Request.
 */
 type SecurityGroupDeleteUsingDELETEParams struct {
 
-	/*GroupID
-	  groupId
+	/* GroupID.
 
+	   groupId
 	*/
 	GroupID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the security group delete using d e l e t e params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SecurityGroupDeleteUsingDELETEParams) WithDefaults() *SecurityGroupDeleteUsingDELETEParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the security group delete using d e l e t e params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SecurityGroupDeleteUsingDELETEParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the security group delete using d e l e t e params

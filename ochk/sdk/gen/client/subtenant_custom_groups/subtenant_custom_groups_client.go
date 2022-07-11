@@ -25,29 +25,32 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GroupMemberCreateUsingPUT(params *GroupMemberCreateUsingPUTParams) (*GroupMemberCreateUsingPUTOK, *GroupMemberCreateUsingPUTCreated, error)
+	GroupMemberCreateUsingPUT(params *GroupMemberCreateUsingPUTParams, opts ...ClientOption) (*GroupMemberCreateUsingPUTOK, *GroupMemberCreateUsingPUTCreated, error)
 
-	GroupMemberDeleteUsingDELETE(params *GroupMemberDeleteUsingDELETEParams) (*GroupMemberDeleteUsingDELETEOK, error)
+	GroupMemberDeleteUsingDELETE(params *GroupMemberDeleteUsingDELETEParams, opts ...ClientOption) (*GroupMemberDeleteUsingDELETEOK, error)
 
-	GroupMemberGetUsingGET(params *GroupMemberGetUsingGETParams) (*GroupMemberGetUsingGETOK, error)
+	GroupMemberGetUsingGET(params *GroupMemberGetUsingGETParams, opts ...ClientOption) (*GroupMemberGetUsingGETOK, error)
 
-	GroupMemberListUsingGET(params *GroupMemberListUsingGETParams) (*GroupMemberListUsingGETOK, error)
+	GroupMemberListUsingGET(params *GroupMemberListUsingGETParams, opts ...ClientOption) (*GroupMemberListUsingGETOK, error)
 
-	SubtenantGroupGetUsingGET(params *SubtenantGroupGetUsingGETParams) (*SubtenantGroupGetUsingGETOK, error)
+	SubtenantGroupGetUsingGET(params *SubtenantGroupGetUsingGETParams, opts ...ClientOption) (*SubtenantGroupGetUsingGETOK, error)
 
-	SubtenantGroupListUsingGET(params *SubtenantGroupListUsingGETParams) (*SubtenantGroupListUsingGETOK, error)
+	SubtenantGroupListUsingGET(params *SubtenantGroupListUsingGETParams, opts ...ClientOption) (*SubtenantGroupListUsingGETOK, error)
 
-	SubtenantGroupUpdateUsingPUT(params *SubtenantGroupUpdateUsingPUTParams) (*SubtenantGroupUpdateUsingPUTOK, error)
+	SubtenantGroupUpdateUsingPUT(params *SubtenantGroupUpdateUsingPUTParams, opts ...ClientOption) (*SubtenantGroupUpdateUsingPUTOK, error)
 
-	UserMemberCreateUsingPUT(params *UserMemberCreateUsingPUTParams) (*UserMemberCreateUsingPUTOK, *UserMemberCreateUsingPUTCreated, error)
+	UserMemberCreateUsingPUT(params *UserMemberCreateUsingPUTParams, opts ...ClientOption) (*UserMemberCreateUsingPUTOK, *UserMemberCreateUsingPUTCreated, error)
 
-	UserMemberDeleteUsingDELETE(params *UserMemberDeleteUsingDELETEParams) (*UserMemberDeleteUsingDELETEOK, error)
+	UserMemberDeleteUsingDELETE(params *UserMemberDeleteUsingDELETEParams, opts ...ClientOption) (*UserMemberDeleteUsingDELETEOK, error)
 
-	UserMemberGetUsingGET(params *UserMemberGetUsingGETParams) (*UserMemberGetUsingGETOK, error)
+	UserMemberGetUsingGET(params *UserMemberGetUsingGETParams, opts ...ClientOption) (*UserMemberGetUsingGETOK, error)
 
-	UserMemberListUsingGET(params *UserMemberListUsingGETParams) (*UserMemberListUsingGETOK, error)
+	UserMemberListUsingGET(params *UserMemberListUsingGETParams, opts ...ClientOption) (*UserMemberListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -57,13 +60,12 @@ type ClientService interface {
 
   Add group member of custom group in vRealize Automation
 */
-func (a *Client) GroupMemberCreateUsingPUT(params *GroupMemberCreateUsingPUTParams) (*GroupMemberCreateUsingPUTOK, *GroupMemberCreateUsingPUTCreated, error) {
+func (a *Client) GroupMemberCreateUsingPUT(params *GroupMemberCreateUsingPUTParams, opts ...ClientOption) (*GroupMemberCreateUsingPUTOK, *GroupMemberCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGroupMemberCreateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "groupMemberCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/groups",
@@ -74,7 +76,12 @@ func (a *Client) GroupMemberCreateUsingPUT(params *GroupMemberCreateUsingPUTPara
 		Reader:             &GroupMemberCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -94,13 +101,12 @@ func (a *Client) GroupMemberCreateUsingPUT(params *GroupMemberCreateUsingPUTPara
 
   Delete group member of custom group from vRealize Automation
 */
-func (a *Client) GroupMemberDeleteUsingDELETE(params *GroupMemberDeleteUsingDELETEParams) (*GroupMemberDeleteUsingDELETEOK, error) {
+func (a *Client) GroupMemberDeleteUsingDELETE(params *GroupMemberDeleteUsingDELETEParams, opts ...ClientOption) (*GroupMemberDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGroupMemberDeleteUsingDELETEParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "groupMemberDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/groups/{groupId}",
@@ -111,7 +117,12 @@ func (a *Client) GroupMemberDeleteUsingDELETE(params *GroupMemberDeleteUsingDELE
 		Reader:             &GroupMemberDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -130,13 +141,12 @@ func (a *Client) GroupMemberDeleteUsingDELETE(params *GroupMemberDeleteUsingDELE
 
   Get group IAAS API group member
 */
-func (a *Client) GroupMemberGetUsingGET(params *GroupMemberGetUsingGETParams) (*GroupMemberGetUsingGETOK, error) {
+func (a *Client) GroupMemberGetUsingGET(params *GroupMemberGetUsingGETParams, opts ...ClientOption) (*GroupMemberGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGroupMemberGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "groupMemberGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/groups/{groupId}",
@@ -147,7 +157,12 @@ func (a *Client) GroupMemberGetUsingGET(params *GroupMemberGetUsingGETParams) (*
 		Reader:             &GroupMemberGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -166,13 +181,12 @@ func (a *Client) GroupMemberGetUsingGET(params *GroupMemberGetUsingGETParams) (*
 
   List groups IAAS API group members
 */
-func (a *Client) GroupMemberListUsingGET(params *GroupMemberListUsingGETParams) (*GroupMemberListUsingGETOK, error) {
+func (a *Client) GroupMemberListUsingGET(params *GroupMemberListUsingGETParams, opts ...ClientOption) (*GroupMemberListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGroupMemberListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "groupMemberListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/groups",
@@ -183,7 +197,12 @@ func (a *Client) GroupMemberListUsingGET(params *GroupMemberListUsingGETParams) 
 		Reader:             &GroupMemberListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -202,13 +221,12 @@ func (a *Client) GroupMemberListUsingGET(params *GroupMemberListUsingGETParams) 
 
   Get custom groups for subtenant
 */
-func (a *Client) SubtenantGroupGetUsingGET(params *SubtenantGroupGetUsingGETParams) (*SubtenantGroupGetUsingGETOK, error) {
+func (a *Client) SubtenantGroupGetUsingGET(params *SubtenantGroupGetUsingGETParams, opts ...ClientOption) (*SubtenantGroupGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSubtenantGroupGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "subtenantGroupGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/subtenants/{subtenantId}/groups/{groupId}",
@@ -219,7 +237,12 @@ func (a *Client) SubtenantGroupGetUsingGET(params *SubtenantGroupGetUsingGETPara
 		Reader:             &SubtenantGroupGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -238,13 +261,12 @@ func (a *Client) SubtenantGroupGetUsingGET(params *SubtenantGroupGetUsingGETPara
 
   List custom groups for subtenant
 */
-func (a *Client) SubtenantGroupListUsingGET(params *SubtenantGroupListUsingGETParams) (*SubtenantGroupListUsingGETOK, error) {
+func (a *Client) SubtenantGroupListUsingGET(params *SubtenantGroupListUsingGETParams, opts ...ClientOption) (*SubtenantGroupListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSubtenantGroupListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "subtenantGroupListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/subtenants/{subtenantId}/groups",
@@ -255,7 +277,12 @@ func (a *Client) SubtenantGroupListUsingGET(params *SubtenantGroupListUsingGETPa
 		Reader:             &SubtenantGroupListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -274,13 +301,12 @@ func (a *Client) SubtenantGroupListUsingGET(params *SubtenantGroupListUsingGETPa
 
   Update custom group membership in vRealize Automation
 */
-func (a *Client) SubtenantGroupUpdateUsingPUT(params *SubtenantGroupUpdateUsingPUTParams) (*SubtenantGroupUpdateUsingPUTOK, error) {
+func (a *Client) SubtenantGroupUpdateUsingPUT(params *SubtenantGroupUpdateUsingPUTParams, opts ...ClientOption) (*SubtenantGroupUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSubtenantGroupUpdateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "subtenantGroupUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/subtenants/{subtenantId}/groups/{groupId}",
@@ -291,7 +317,12 @@ func (a *Client) SubtenantGroupUpdateUsingPUT(params *SubtenantGroupUpdateUsingP
 		Reader:             &SubtenantGroupUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -310,13 +341,12 @@ func (a *Client) SubtenantGroupUpdateUsingPUT(params *SubtenantGroupUpdateUsingP
 
   Add user member of custom group in vRealize Automation
 */
-func (a *Client) UserMemberCreateUsingPUT(params *UserMemberCreateUsingPUTParams) (*UserMemberCreateUsingPUTOK, *UserMemberCreateUsingPUTCreated, error) {
+func (a *Client) UserMemberCreateUsingPUT(params *UserMemberCreateUsingPUTParams, opts ...ClientOption) (*UserMemberCreateUsingPUTOK, *UserMemberCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUserMemberCreateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "userMemberCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/users",
@@ -327,7 +357,12 @@ func (a *Client) UserMemberCreateUsingPUT(params *UserMemberCreateUsingPUTParams
 		Reader:             &UserMemberCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -347,13 +382,12 @@ func (a *Client) UserMemberCreateUsingPUT(params *UserMemberCreateUsingPUTParams
 
   Delete user member of custom group from vRealize Automation
 */
-func (a *Client) UserMemberDeleteUsingDELETE(params *UserMemberDeleteUsingDELETEParams) (*UserMemberDeleteUsingDELETEOK, error) {
+func (a *Client) UserMemberDeleteUsingDELETE(params *UserMemberDeleteUsingDELETEParams, opts ...ClientOption) (*UserMemberDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUserMemberDeleteUsingDELETEParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "userMemberDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/users/{userId}",
@@ -364,7 +398,12 @@ func (a *Client) UserMemberDeleteUsingDELETE(params *UserMemberDeleteUsingDELETE
 		Reader:             &UserMemberDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -383,13 +422,12 @@ func (a *Client) UserMemberDeleteUsingDELETE(params *UserMemberDeleteUsingDELETE
 
   Get user IAAS API group member
 */
-func (a *Client) UserMemberGetUsingGET(params *UserMemberGetUsingGETParams) (*UserMemberGetUsingGETOK, error) {
+func (a *Client) UserMemberGetUsingGET(params *UserMemberGetUsingGETParams, opts ...ClientOption) (*UserMemberGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUserMemberGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "userMemberGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/users/{userId}",
@@ -400,7 +438,12 @@ func (a *Client) UserMemberGetUsingGET(params *UserMemberGetUsingGETParams) (*Us
 		Reader:             &UserMemberGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -419,13 +462,12 @@ func (a *Client) UserMemberGetUsingGET(params *UserMemberGetUsingGETParams) (*Us
 
   List user IAAS API group members
 */
-func (a *Client) UserMemberListUsingGET(params *UserMemberListUsingGETParams) (*UserMemberListUsingGETOK, error) {
+func (a *Client) UserMemberListUsingGET(params *UserMemberListUsingGETParams, opts ...ClientOption) (*UserMemberListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUserMemberListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "userMemberListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/subtenants/{subtenantId}/groups/{parentGroupId}/members/users",
@@ -436,7 +478,12 @@ func (a *Client) UserMemberListUsingGET(params *UserMemberListUsingGETParams) (*
 		Reader:             &UserMemberListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

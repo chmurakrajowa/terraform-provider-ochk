@@ -41,9 +41,8 @@ func (o *KeyCreateUsingPUTReader) ReadResponse(response runtime.ClientResponse, 
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewKeyCreateUsingPUTOK() *KeyCreateUsingPUTOK {
 	return &KeyCreateUsingPUTOK{}
 }
 
-/*KeyCreateUsingPUTOK handles this case with default header values.
+/* KeyCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type KeyCreateUsingPUTOK struct {
 func (o *KeyCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /kms/key][%d] keyCreateUsingPUTOK  %+v", 200, o.Payload)
 }
-
 func (o *KeyCreateUsingPUTOK) GetPayload() *models.CreateKmsKeyResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewKeyCreateUsingPUTCreated() *KeyCreateUsingPUTCreated {
 	return &KeyCreateUsingPUTCreated{}
 }
 
-/*KeyCreateUsingPUTCreated handles this case with default header values.
+/* KeyCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -96,7 +94,6 @@ type KeyCreateUsingPUTCreated struct {
 func (o *KeyCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /kms/key][%d] keyCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
-
 func (o *KeyCreateUsingPUTCreated) GetPayload() *models.CreateKmsKeyResponse {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewKeyCreateUsingPUTBadRequest() *KeyCreateUsingPUTBadRequest {
 	return &KeyCreateUsingPUTBadRequest{}
 }
 
-/*KeyCreateUsingPUTBadRequest handles this case with default header values.
+/* KeyCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -129,7 +126,6 @@ type KeyCreateUsingPUTBadRequest struct {
 func (o *KeyCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /kms/key][%d] keyCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *KeyCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

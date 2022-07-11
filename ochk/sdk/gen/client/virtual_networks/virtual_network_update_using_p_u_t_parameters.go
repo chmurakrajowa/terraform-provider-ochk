@@ -18,64 +18,79 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewVirtualNetworkUpdateUsingPUTParams creates a new VirtualNetworkUpdateUsingPUTParams object
-// with the default values initialized.
+// NewVirtualNetworkUpdateUsingPUTParams creates a new VirtualNetworkUpdateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewVirtualNetworkUpdateUsingPUTParams() *VirtualNetworkUpdateUsingPUTParams {
-	var ()
 	return &VirtualNetworkUpdateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewVirtualNetworkUpdateUsingPUTParamsWithTimeout creates a new VirtualNetworkUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewVirtualNetworkUpdateUsingPUTParamsWithTimeout(timeout time.Duration) *VirtualNetworkUpdateUsingPUTParams {
-	var ()
 	return &VirtualNetworkUpdateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewVirtualNetworkUpdateUsingPUTParamsWithContext creates a new VirtualNetworkUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewVirtualNetworkUpdateUsingPUTParamsWithContext(ctx context.Context) *VirtualNetworkUpdateUsingPUTParams {
-	var ()
 	return &VirtualNetworkUpdateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewVirtualNetworkUpdateUsingPUTParamsWithHTTPClient creates a new VirtualNetworkUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewVirtualNetworkUpdateUsingPUTParamsWithHTTPClient(client *http.Client) *VirtualNetworkUpdateUsingPUTParams {
-	var ()
 	return &VirtualNetworkUpdateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*VirtualNetworkUpdateUsingPUTParams contains all the parameters to send to the API endpoint
-for the virtual network update using p u t operation typically these are written to a http.Request
+/* VirtualNetworkUpdateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the virtual network update using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type VirtualNetworkUpdateUsingPUTParams struct {
 
-	/*VirtualNetworkID
-	  virtualNetworkId
+	/* VirtualNetworkID.
 
+	   virtualNetworkId
 	*/
 	VirtualNetworkID string
-	/*VirtualNetworkInstance
-	  virtualNetworkInstance
 
+	/* VirtualNetworkInstance.
+
+	   virtualNetworkInstance
 	*/
 	VirtualNetworkInstance *models.VirtualNetworkInstance
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the virtual network update using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *VirtualNetworkUpdateUsingPUTParams) WithDefaults() *VirtualNetworkUpdateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the virtual network update using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *VirtualNetworkUpdateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the virtual network update using p u t params
@@ -145,7 +160,6 @@ func (o *VirtualNetworkUpdateUsingPUTParams) WriteToRequest(r runtime.ClientRequ
 	if err := r.SetPathParam("virtualNetworkId", o.VirtualNetworkID); err != nil {
 		return err
 	}
-
 	if o.VirtualNetworkInstance != nil {
 		if err := r.SetBodyParam(o.VirtualNetworkInstance); err != nil {
 			return err

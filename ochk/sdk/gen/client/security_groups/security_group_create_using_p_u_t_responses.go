@@ -41,9 +41,8 @@ func (o *SecurityGroupCreateUsingPUTReader) ReadResponse(response runtime.Client
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewSecurityGroupCreateUsingPUTOK() *SecurityGroupCreateUsingPUTOK {
 	return &SecurityGroupCreateUsingPUTOK{}
 }
 
-/*SecurityGroupCreateUsingPUTOK handles this case with default header values.
+/* SecurityGroupCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type SecurityGroupCreateUsingPUTOK struct {
 func (o *SecurityGroupCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/security-groups][%d] securityGroupCreateUsingPUTOK  %+v", 200, o.Payload)
 }
-
 func (o *SecurityGroupCreateUsingPUTOK) GetPayload() *models.CreateSecurityGroupResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewSecurityGroupCreateUsingPUTCreated() *SecurityGroupCreateUsingPUTCreated
 	return &SecurityGroupCreateUsingPUTCreated{}
 }
 
-/*SecurityGroupCreateUsingPUTCreated handles this case with default header values.
+/* SecurityGroupCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -96,7 +94,6 @@ type SecurityGroupCreateUsingPUTCreated struct {
 func (o *SecurityGroupCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/security-groups][%d] securityGroupCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
-
 func (o *SecurityGroupCreateUsingPUTCreated) GetPayload() *models.CreateSecurityGroupResponse {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewSecurityGroupCreateUsingPUTBadRequest() *SecurityGroupCreateUsingPUTBadR
 	return &SecurityGroupCreateUsingPUTBadRequest{}
 }
 
-/*SecurityGroupCreateUsingPUTBadRequest handles this case with default header values.
+/* SecurityGroupCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -129,7 +126,6 @@ type SecurityGroupCreateUsingPUTBadRequest struct {
 func (o *SecurityGroupCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/security-groups][%d] securityGroupCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *SecurityGroupCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

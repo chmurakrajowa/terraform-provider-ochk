@@ -35,9 +35,8 @@ func (o *GroupMemberDeleteUsingDELETEReader) ReadResponse(response runtime.Clien
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewGroupMemberDeleteUsingDELETEOK() *GroupMemberDeleteUsingDELETEOK {
 	return &GroupMemberDeleteUsingDELETEOK{}
 }
 
-/*GroupMemberDeleteUsingDELETEOK handles this case with default header values.
+/* GroupMemberDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type GroupMemberDeleteUsingDELETEOK struct {
 func (o *GroupMemberDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /subtenants/{subtenantId}/groups/{parentGroupId}/members/groups/{groupId}][%d] groupMemberDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
-
 func (o *GroupMemberDeleteUsingDELETEOK) GetPayload() *models.DeleteGroupMemberResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewGroupMemberDeleteUsingDELETEBadRequest() *GroupMemberDeleteUsingDELETEBa
 	return &GroupMemberDeleteUsingDELETEBadRequest{}
 }
 
-/*GroupMemberDeleteUsingDELETEBadRequest handles this case with default header values.
+/* GroupMemberDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type GroupMemberDeleteUsingDELETEBadRequest struct {
 func (o *GroupMemberDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /subtenants/{subtenantId}/groups/{parentGroupId}/members/groups/{groupId}][%d] groupMemberDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *GroupMemberDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

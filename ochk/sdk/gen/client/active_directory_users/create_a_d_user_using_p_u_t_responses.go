@@ -47,9 +47,8 @@ func (o *CreateADUserUsingPUTReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -58,7 +57,7 @@ func NewCreateADUserUsingPUTOK() *CreateADUserUsingPUTOK {
 	return &CreateADUserUsingPUTOK{}
 }
 
-/*CreateADUserUsingPUTOK handles this case with default header values.
+/* CreateADUserUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -69,7 +68,6 @@ type CreateADUserUsingPUTOK struct {
 func (o *CreateADUserUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /ad/integration/users][%d] createADUserUsingPUTOK  %+v", 200, o.Payload)
 }
-
 func (o *CreateADUserUsingPUTOK) GetPayload() *models.CreateUserInstanceResponse {
 	return o.Payload
 }
@@ -91,7 +89,7 @@ func NewCreateADUserUsingPUTCreated() *CreateADUserUsingPUTCreated {
 	return &CreateADUserUsingPUTCreated{}
 }
 
-/*CreateADUserUsingPUTCreated handles this case with default header values.
+/* CreateADUserUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -102,7 +100,6 @@ type CreateADUserUsingPUTCreated struct {
 func (o *CreateADUserUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /ad/integration/users][%d] createADUserUsingPUTCreated  %+v", 201, o.Payload)
 }
-
 func (o *CreateADUserUsingPUTCreated) GetPayload() *models.CreateUserInstanceResponse {
 	return o.Payload
 }
@@ -124,7 +121,7 @@ func NewCreateADUserUsingPUTBadRequest() *CreateADUserUsingPUTBadRequest {
 	return &CreateADUserUsingPUTBadRequest{}
 }
 
-/*CreateADUserUsingPUTBadRequest handles this case with default header values.
+/* CreateADUserUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -145,7 +142,7 @@ func NewCreateADUserUsingPUTNotFound() *CreateADUserUsingPUTNotFound {
 	return &CreateADUserUsingPUTNotFound{}
 }
 
-/*CreateADUserUsingPUTNotFound handles this case with default header values.
+/* CreateADUserUsingPUTNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

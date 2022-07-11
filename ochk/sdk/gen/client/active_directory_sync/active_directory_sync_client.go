@@ -25,9 +25,12 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	SyncUsingPOST(params *SyncUsingPOSTParams) (*SyncUsingPOSTOK, *SyncUsingPOSTCreated, error)
+	SyncUsingPOST(params *SyncUsingPOSTParams, opts ...ClientOption) (*SyncUsingPOSTOK, *SyncUsingPOSTCreated, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -37,13 +40,12 @@ type ClientService interface {
 
   Sync
 */
-func (a *Client) SyncUsingPOST(params *SyncUsingPOSTParams) (*SyncUsingPOSTOK, *SyncUsingPOSTCreated, error) {
+func (a *Client) SyncUsingPOST(params *SyncUsingPOSTParams, opts ...ClientOption) (*SyncUsingPOSTOK, *SyncUsingPOSTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSyncUsingPOSTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "syncUsingPOST",
 		Method:             "POST",
 		PathPattern:        "/ads/sync",
@@ -54,7 +56,12 @@ func (a *Client) SyncUsingPOST(params *SyncUsingPOSTParams) (*SyncUsingPOSTOK, *
 		Reader:             &SyncUsingPOSTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -25,11 +25,14 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	EdgeClusterGetUsingGET(params *EdgeClusterGetUsingGETParams) (*EdgeClusterGetUsingGETOK, error)
+	EdgeClusterGetUsingGET(params *EdgeClusterGetUsingGETParams, opts ...ClientOption) (*EdgeClusterGetUsingGETOK, error)
 
-	LogicalPortListUsingGET(params *LogicalPortListUsingGETParams) (*LogicalPortListUsingGETOK, error)
+	LogicalPortListUsingGET(params *LogicalPortListUsingGETParams, opts ...ClientOption) (*LogicalPortListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -39,13 +42,12 @@ type ClientService interface {
 
   Get edge cluster from NSX-T
 */
-func (a *Client) EdgeClusterGetUsingGET(params *EdgeClusterGetUsingGETParams) (*EdgeClusterGetUsingGETOK, error) {
+func (a *Client) EdgeClusterGetUsingGET(params *EdgeClusterGetUsingGETParams, opts ...ClientOption) (*EdgeClusterGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewEdgeClusterGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "edgeClusterGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/edge-clusters/{edgeClusterId}",
@@ -56,7 +58,12 @@ func (a *Client) EdgeClusterGetUsingGET(params *EdgeClusterGetUsingGETParams) (*
 		Reader:             &EdgeClusterGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -75,13 +82,12 @@ func (a *Client) EdgeClusterGetUsingGET(params *EdgeClusterGetUsingGETParams) (*
 
   List edge clusters from NSX-T
 */
-func (a *Client) LogicalPortListUsingGET(params *LogicalPortListUsingGETParams) (*LogicalPortListUsingGETOK, error) {
+func (a *Client) LogicalPortListUsingGET(params *LogicalPortListUsingGETParams, opts ...ClientOption) (*LogicalPortListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewLogicalPortListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "logicalPortListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/edge-clusters",
@@ -92,7 +98,12 @@ func (a *Client) LogicalPortListUsingGET(params *LogicalPortListUsingGETParams) 
 		Reader:             &LogicalPortListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

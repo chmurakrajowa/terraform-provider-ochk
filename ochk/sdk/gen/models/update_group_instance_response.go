@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -57,7 +59,6 @@ func (m *UpdateGroupInstanceResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *UpdateGroupInstanceResponse) validateGroupInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.GroupInstance) { // not required
 		return nil
 	}
@@ -75,7 +76,6 @@ func (m *UpdateGroupInstanceResponse) validateGroupInstance(formats strfmt.Regis
 }
 
 func (m *UpdateGroupInstanceResponse) validateRequestInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -93,13 +93,58 @@ func (m *UpdateGroupInstanceResponse) validateRequestInstance(formats strfmt.Reg
 }
 
 func (m *UpdateGroupInstanceResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update group instance response based on the context it is used
+func (m *UpdateGroupInstanceResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateGroupInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *UpdateGroupInstanceResponse) contextValidateGroupInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.GroupInstance != nil {
+		if err := m.GroupInstance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("groupInstance")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *UpdateGroupInstanceResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RequestInstance != nil {
+		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("requestInstance")
+			}
+			return err
+		}
 	}
 
 	return nil

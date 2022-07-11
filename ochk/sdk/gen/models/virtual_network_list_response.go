@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -52,7 +53,6 @@ func (m *VirtualNetworkListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *VirtualNetworkListResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
@@ -65,7 +65,6 @@ func (m *VirtualNetworkListResponse) validateTimestamp(formats strfmt.Registry) 
 }
 
 func (m *VirtualNetworkListResponse) validateVirtualNetworkInstanceCollection(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.VirtualNetworkInstanceCollection) { // not required
 		return nil
 	}
@@ -77,6 +76,38 @@ func (m *VirtualNetworkListResponse) validateVirtualNetworkInstanceCollection(fo
 
 		if m.VirtualNetworkInstanceCollection[i] != nil {
 			if err := m.VirtualNetworkInstanceCollection[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("virtualNetworkInstanceCollection" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this virtual network list response based on the context it is used
+func (m *VirtualNetworkListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateVirtualNetworkInstanceCollection(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *VirtualNetworkListResponse) contextValidateVirtualNetworkInstanceCollection(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.VirtualNetworkInstanceCollection); i++ {
+
+		if m.VirtualNetworkInstanceCollection[i] != nil {
+			if err := m.VirtualNetworkInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("virtualNetworkInstanceCollection" + "." + strconv.Itoa(i))
 				}

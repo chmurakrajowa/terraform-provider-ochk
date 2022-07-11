@@ -25,9 +25,12 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GetTokenUsingPOST(params *GetTokenUsingPOSTParams) (*GetTokenUsingPOSTOK, error)
+	GetTokenUsingPOST(params *GetTokenUsingPOSTParams, opts ...ClientOption) (*GetTokenUsingPOSTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -37,13 +40,12 @@ type ClientService interface {
 
   Generate authorization token
 */
-func (a *Client) GetTokenUsingPOST(params *GetTokenUsingPOSTParams) (*GetTokenUsingPOSTOK, error) {
+func (a *Client) GetTokenUsingPOST(params *GetTokenUsingPOSTParams, opts ...ClientOption) (*GetTokenUsingPOSTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetTokenUsingPOSTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "getTokenUsingPOST",
 		Method:             "POST",
 		PathPattern:        "/vidm/token",
@@ -54,7 +56,12 @@ func (a *Client) GetTokenUsingPOST(params *GetTokenUsingPOSTParams) (*GetTokenUs
 		Reader:             &GetTokenUsingPOSTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

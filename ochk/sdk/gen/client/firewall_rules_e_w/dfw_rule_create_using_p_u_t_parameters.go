@@ -18,64 +18,79 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewDfwRuleCreateUsingPUTParams creates a new DfwRuleCreateUsingPUTParams object
-// with the default values initialized.
+// NewDfwRuleCreateUsingPUTParams creates a new DfwRuleCreateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewDfwRuleCreateUsingPUTParams() *DfwRuleCreateUsingPUTParams {
-	var ()
 	return &DfwRuleCreateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDfwRuleCreateUsingPUTParamsWithTimeout creates a new DfwRuleCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewDfwRuleCreateUsingPUTParamsWithTimeout(timeout time.Duration) *DfwRuleCreateUsingPUTParams {
-	var ()
 	return &DfwRuleCreateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewDfwRuleCreateUsingPUTParamsWithContext creates a new DfwRuleCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewDfwRuleCreateUsingPUTParamsWithContext(ctx context.Context) *DfwRuleCreateUsingPUTParams {
-	var ()
 	return &DfwRuleCreateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewDfwRuleCreateUsingPUTParamsWithHTTPClient creates a new DfwRuleCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewDfwRuleCreateUsingPUTParamsWithHTTPClient(client *http.Client) *DfwRuleCreateUsingPUTParams {
-	var ()
 	return &DfwRuleCreateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*DfwRuleCreateUsingPUTParams contains all the parameters to send to the API endpoint
-for the dfw rule create using p u t operation typically these are written to a http.Request
+/* DfwRuleCreateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the dfw rule create using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type DfwRuleCreateUsingPUTParams struct {
 
-	/*DfwRule
-	  dfwRule
+	/* DfwRule.
 
+	   dfwRule
 	*/
 	DfwRule *models.DFWRule
-	/*RouterID
-	  routerId
 
+	/* RouterID.
+
+	   routerId
 	*/
 	RouterID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the dfw rule create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DfwRuleCreateUsingPUTParams) WithDefaults() *DfwRuleCreateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the dfw rule create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DfwRuleCreateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the dfw rule create using p u t params
@@ -140,7 +155,6 @@ func (o *DfwRuleCreateUsingPUTParams) WriteToRequest(r runtime.ClientRequest, re
 		return err
 	}
 	var res []error
-
 	if o.DfwRule != nil {
 		if err := r.SetBodyParam(o.DfwRule); err != nil {
 			return err

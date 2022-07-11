@@ -16,64 +16,79 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewSubtenantGroupGetUsingGETParams creates a new SubtenantGroupGetUsingGETParams object
-// with the default values initialized.
+// NewSubtenantGroupGetUsingGETParams creates a new SubtenantGroupGetUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewSubtenantGroupGetUsingGETParams() *SubtenantGroupGetUsingGETParams {
-	var ()
 	return &SubtenantGroupGetUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewSubtenantGroupGetUsingGETParamsWithTimeout creates a new SubtenantGroupGetUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewSubtenantGroupGetUsingGETParamsWithTimeout(timeout time.Duration) *SubtenantGroupGetUsingGETParams {
-	var ()
 	return &SubtenantGroupGetUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewSubtenantGroupGetUsingGETParamsWithContext creates a new SubtenantGroupGetUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewSubtenantGroupGetUsingGETParamsWithContext(ctx context.Context) *SubtenantGroupGetUsingGETParams {
-	var ()
 	return &SubtenantGroupGetUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewSubtenantGroupGetUsingGETParamsWithHTTPClient creates a new SubtenantGroupGetUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewSubtenantGroupGetUsingGETParamsWithHTTPClient(client *http.Client) *SubtenantGroupGetUsingGETParams {
-	var ()
 	return &SubtenantGroupGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*SubtenantGroupGetUsingGETParams contains all the parameters to send to the API endpoint
-for the subtenant group get using g e t operation typically these are written to a http.Request
+/* SubtenantGroupGetUsingGETParams contains all the parameters to send to the API endpoint
+   for the subtenant group get using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type SubtenantGroupGetUsingGETParams struct {
 
-	/*GroupID
-	  groupId
+	/* GroupID.
 
+	   groupId
 	*/
 	GroupID string
-	/*SubtenantID
-	  subtenantId
 
+	/* SubtenantID.
+
+	   subtenantId
 	*/
 	SubtenantID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the subtenant group get using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SubtenantGroupGetUsingGETParams) WithDefaults() *SubtenantGroupGetUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the subtenant group get using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SubtenantGroupGetUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the subtenant group get using g e t params

@@ -41,9 +41,8 @@ func (o *GatewayPolicyGetUsingGETReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewGatewayPolicyGetUsingGETOK() *GatewayPolicyGetUsingGETOK {
 	return &GatewayPolicyGetUsingGETOK{}
 }
 
-/*GatewayPolicyGetUsingGETOK handles this case with default header values.
+/* GatewayPolicyGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type GatewayPolicyGetUsingGETOK struct {
 func (o *GatewayPolicyGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/firewall/gateway-policies/{gatewayPolicyId}][%d] gatewayPolicyGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *GatewayPolicyGetUsingGETOK) GetPayload() *models.GatewayPolicyGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewGatewayPolicyGetUsingGETBadRequest() *GatewayPolicyGetUsingGETBadRequest
 	return &GatewayPolicyGetUsingGETBadRequest{}
 }
 
-/*GatewayPolicyGetUsingGETBadRequest handles this case with default header values.
+/* GatewayPolicyGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type GatewayPolicyGetUsingGETBadRequest struct {
 func (o *GatewayPolicyGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/firewall/gateway-policies/{gatewayPolicyId}][%d] gatewayPolicyGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *GatewayPolicyGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewGatewayPolicyGetUsingGETNotFound() *GatewayPolicyGetUsingGETNotFound {
 	return &GatewayPolicyGetUsingGETNotFound{}
 }
 
-/*GatewayPolicyGetUsingGETNotFound handles this case with default header values.
+/* GatewayPolicyGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

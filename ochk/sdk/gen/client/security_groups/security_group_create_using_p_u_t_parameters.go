@@ -18,59 +18,73 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewSecurityGroupCreateUsingPUTParams creates a new SecurityGroupCreateUsingPUTParams object
-// with the default values initialized.
+// NewSecurityGroupCreateUsingPUTParams creates a new SecurityGroupCreateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewSecurityGroupCreateUsingPUTParams() *SecurityGroupCreateUsingPUTParams {
-	var ()
 	return &SecurityGroupCreateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewSecurityGroupCreateUsingPUTParamsWithTimeout creates a new SecurityGroupCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewSecurityGroupCreateUsingPUTParamsWithTimeout(timeout time.Duration) *SecurityGroupCreateUsingPUTParams {
-	var ()
 	return &SecurityGroupCreateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewSecurityGroupCreateUsingPUTParamsWithContext creates a new SecurityGroupCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewSecurityGroupCreateUsingPUTParamsWithContext(ctx context.Context) *SecurityGroupCreateUsingPUTParams {
-	var ()
 	return &SecurityGroupCreateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewSecurityGroupCreateUsingPUTParamsWithHTTPClient creates a new SecurityGroupCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewSecurityGroupCreateUsingPUTParamsWithHTTPClient(client *http.Client) *SecurityGroupCreateUsingPUTParams {
-	var ()
 	return &SecurityGroupCreateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*SecurityGroupCreateUsingPUTParams contains all the parameters to send to the API endpoint
-for the security group create using p u t operation typically these are written to a http.Request
+/* SecurityGroupCreateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the security group create using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type SecurityGroupCreateUsingPUTParams struct {
 
-	/*SecurityGroup
-	  securityGroup
+	/* SecurityGroup.
 
+	   securityGroup
 	*/
 	SecurityGroup *models.SecurityGroup
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the security group create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SecurityGroupCreateUsingPUTParams) WithDefaults() *SecurityGroupCreateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the security group create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SecurityGroupCreateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the security group create using p u t params
@@ -124,7 +138,6 @@ func (o *SecurityGroupCreateUsingPUTParams) WriteToRequest(r runtime.ClientReque
 		return err
 	}
 	var res []error
-
 	if o.SecurityGroup != nil {
 		if err := r.SetBodyParam(o.SecurityGroup); err != nil {
 			return err

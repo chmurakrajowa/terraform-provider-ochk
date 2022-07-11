@@ -41,9 +41,8 @@ func (o *SubtenantGroupGetUsingGETReader) ReadResponse(response runtime.ClientRe
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewSubtenantGroupGetUsingGETOK() *SubtenantGroupGetUsingGETOK {
 	return &SubtenantGroupGetUsingGETOK{}
 }
 
-/*SubtenantGroupGetUsingGETOK handles this case with default header values.
+/* SubtenantGroupGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type SubtenantGroupGetUsingGETOK struct {
 func (o *SubtenantGroupGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /subtenants/{subtenantId}/groups/{groupId}][%d] subtenantGroupGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *SubtenantGroupGetUsingGETOK) GetPayload() *models.GroupGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewSubtenantGroupGetUsingGETBadRequest() *SubtenantGroupGetUsingGETBadReque
 	return &SubtenantGroupGetUsingGETBadRequest{}
 }
 
-/*SubtenantGroupGetUsingGETBadRequest handles this case with default header values.
+/* SubtenantGroupGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type SubtenantGroupGetUsingGETBadRequest struct {
 func (o *SubtenantGroupGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /subtenants/{subtenantId}/groups/{groupId}][%d] subtenantGroupGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *SubtenantGroupGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewSubtenantGroupGetUsingGETNotFound() *SubtenantGroupGetUsingGETNotFound {
 	return &SubtenantGroupGetUsingGETNotFound{}
 }
 
-/*SubtenantGroupGetUsingGETNotFound handles this case with default header values.
+/* SubtenantGroupGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

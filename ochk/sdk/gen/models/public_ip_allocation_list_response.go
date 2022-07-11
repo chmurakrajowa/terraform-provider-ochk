@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -52,7 +53,6 @@ func (m *PublicIPAllocationListResponse) Validate(formats strfmt.Registry) error
 }
 
 func (m *PublicIPAllocationListResponse) validatePublicIPAllocationCollection(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.PublicIPAllocationCollection) { // not required
 		return nil
 	}
@@ -77,13 +77,44 @@ func (m *PublicIPAllocationListResponse) validatePublicIPAllocationCollection(fo
 }
 
 func (m *PublicIPAllocationListResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this public Ip allocation list response based on the context it is used
+func (m *PublicIPAllocationListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidatePublicIPAllocationCollection(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *PublicIPAllocationListResponse) contextValidatePublicIPAllocationCollection(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.PublicIPAllocationCollection); i++ {
+
+		if m.PublicIPAllocationCollection[i] != nil {
+			if err := m.PublicIPAllocationCollection[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("publicIpAllocationCollection" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

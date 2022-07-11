@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewLogCategoriesListUsingGETParams creates a new LogCategoriesListUsingGETParams object
-// with the default values initialized.
+// NewLogCategoriesListUsingGETParams creates a new LogCategoriesListUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewLogCategoriesListUsingGETParams() *LogCategoriesListUsingGETParams {
-	var ()
 	return &LogCategoriesListUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewLogCategoriesListUsingGETParamsWithTimeout creates a new LogCategoriesListUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewLogCategoriesListUsingGETParamsWithTimeout(timeout time.Duration) *LogCategoriesListUsingGETParams {
-	var ()
 	return &LogCategoriesListUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewLogCategoriesListUsingGETParamsWithContext creates a new LogCategoriesListUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewLogCategoriesListUsingGETParamsWithContext(ctx context.Context) *LogCategoriesListUsingGETParams {
-	var ()
 	return &LogCategoriesListUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewLogCategoriesListUsingGETParamsWithHTTPClient creates a new LogCategoriesListUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewLogCategoriesListUsingGETParamsWithHTTPClient(client *http.Client) *LogCategoriesListUsingGETParams {
-	var ()
 	return &LogCategoriesListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*LogCategoriesListUsingGETParams contains all the parameters to send to the API endpoint
-for the log categories list using g e t operation typically these are written to a http.Request
+/* LogCategoriesListUsingGETParams contains all the parameters to send to the API endpoint
+   for the log categories list using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type LogCategoriesListUsingGETParams struct {
 
-	/*LogCategoryName
-	  logCategoryName
+	/* LogCategoryName.
 
+	   logCategoryName
 	*/
 	LogCategoryName *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the log categories list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *LogCategoriesListUsingGETParams) WithDefaults() *LogCategoriesListUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the log categories list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *LogCategoriesListUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the log categories list using g e t params
@@ -127,16 +141,17 @@ func (o *LogCategoriesListUsingGETParams) WriteToRequest(r runtime.ClientRequest
 
 		// query param logCategoryName
 		var qrLogCategoryName string
+
 		if o.LogCategoryName != nil {
 			qrLogCategoryName = *o.LogCategoryName
 		}
 		qLogCategoryName := qrLogCategoryName
 		if qLogCategoryName != "" {
+
 			if err := r.SetQueryParam("logCategoryName", qLogCategoryName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

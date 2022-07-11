@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewIpamServicesListUsingGETParams creates a new IpamServicesListUsingGETParams object
-// with the default values initialized.
+// NewIpamServicesListUsingGETParams creates a new IpamServicesListUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewIpamServicesListUsingGETParams() *IpamServicesListUsingGETParams {
-	var ()
 	return &IpamServicesListUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewIpamServicesListUsingGETParamsWithTimeout creates a new IpamServicesListUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewIpamServicesListUsingGETParamsWithTimeout(timeout time.Duration) *IpamServicesListUsingGETParams {
-	var ()
 	return &IpamServicesListUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewIpamServicesListUsingGETParamsWithContext creates a new IpamServicesListUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewIpamServicesListUsingGETParamsWithContext(ctx context.Context) *IpamServicesListUsingGETParams {
-	var ()
 	return &IpamServicesListUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewIpamServicesListUsingGETParamsWithHTTPClient creates a new IpamServicesListUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewIpamServicesListUsingGETParamsWithHTTPClient(client *http.Client) *IpamServicesListUsingGETParams {
-	var ()
 	return &IpamServicesListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*IpamServicesListUsingGETParams contains all the parameters to send to the API endpoint
-for the ipam services list using g e t operation typically these are written to a http.Request
+/* IpamServicesListUsingGETParams contains all the parameters to send to the API endpoint
+   for the ipam services list using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type IpamServicesListUsingGETParams struct {
 
-	/*DisplayName
-	  displayName
+	/* DisplayName.
 
+	   displayName
 	*/
 	DisplayName *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the ipam services list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *IpamServicesListUsingGETParams) WithDefaults() *IpamServicesListUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the ipam services list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *IpamServicesListUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the ipam services list using g e t params
@@ -127,16 +141,17 @@ func (o *IpamServicesListUsingGETParams) WriteToRequest(r runtime.ClientRequest,
 
 		// query param displayName
 		var qrDisplayName string
+
 		if o.DisplayName != nil {
 			qrDisplayName = *o.DisplayName
 		}
 		qDisplayName := qrDisplayName
 		if qDisplayName != "" {
+
 			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

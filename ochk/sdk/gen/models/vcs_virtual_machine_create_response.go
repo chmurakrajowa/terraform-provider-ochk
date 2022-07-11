@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -57,7 +59,6 @@ func (m *VcsVirtualMachineCreateResponse) Validate(formats strfmt.Registry) erro
 }
 
 func (m *VcsVirtualMachineCreateResponse) validateRequestInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -75,7 +76,6 @@ func (m *VcsVirtualMachineCreateResponse) validateRequestInstance(formats strfmt
 }
 
 func (m *VcsVirtualMachineCreateResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
@@ -88,13 +88,58 @@ func (m *VcsVirtualMachineCreateResponse) validateTimestamp(formats strfmt.Regis
 }
 
 func (m *VcsVirtualMachineCreateResponse) validateVcsVirtualMachineInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.VcsVirtualMachineInstance) { // not required
 		return nil
 	}
 
 	if m.VcsVirtualMachineInstance != nil {
 		if err := m.VcsVirtualMachineInstance.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("vcsVirtualMachineInstance")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this vcs virtual machine create response based on the context it is used
+func (m *VcsVirtualMachineCreateResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateVcsVirtualMachineInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *VcsVirtualMachineCreateResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RequestInstance != nil {
+		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("requestInstance")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *VcsVirtualMachineCreateResponse) contextValidateVcsVirtualMachineInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.VcsVirtualMachineInstance != nil {
+		if err := m.VcsVirtualMachineInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("vcsVirtualMachineInstance")
 			}

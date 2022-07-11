@@ -25,9 +25,12 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	AdminTenantOverallAllocationGetUsingGET(params *AdminTenantOverallAllocationGetUsingGETParams) (*AdminTenantOverallAllocationGetUsingGETOK, error)
+	AdminTenantOverallAllocationGetUsingGET(params *AdminTenantOverallAllocationGetUsingGETParams, opts ...ClientOption) (*AdminTenantOverallAllocationGetUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -37,13 +40,12 @@ type ClientService interface {
 
   Get tenant overall allocation report
 */
-func (a *Client) AdminTenantOverallAllocationGetUsingGET(params *AdminTenantOverallAllocationGetUsingGETParams) (*AdminTenantOverallAllocationGetUsingGETOK, error) {
+func (a *Client) AdminTenantOverallAllocationGetUsingGET(params *AdminTenantOverallAllocationGetUsingGETParams, opts ...ClientOption) (*AdminTenantOverallAllocationGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewAdminTenantOverallAllocationGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "adminTenantOverallAllocationGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/admin/billing/tenant/allocation/{tenantId}",
@@ -54,7 +56,12 @@ func (a *Client) AdminTenantOverallAllocationGetUsingGET(params *AdminTenantOver
 		Reader:             &AdminTenantOverallAllocationGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

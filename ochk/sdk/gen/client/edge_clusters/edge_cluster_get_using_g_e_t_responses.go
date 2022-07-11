@@ -41,9 +41,8 @@ func (o *EdgeClusterGetUsingGETReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewEdgeClusterGetUsingGETOK() *EdgeClusterGetUsingGETOK {
 	return &EdgeClusterGetUsingGETOK{}
 }
 
-/*EdgeClusterGetUsingGETOK handles this case with default header values.
+/* EdgeClusterGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type EdgeClusterGetUsingGETOK struct {
 func (o *EdgeClusterGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/edge-clusters/{edgeClusterId}][%d] edgeClusterGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *EdgeClusterGetUsingGETOK) GetPayload() *models.EdgeClusterGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewEdgeClusterGetUsingGETBadRequest() *EdgeClusterGetUsingGETBadRequest {
 	return &EdgeClusterGetUsingGETBadRequest{}
 }
 
-/*EdgeClusterGetUsingGETBadRequest handles this case with default header values.
+/* EdgeClusterGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type EdgeClusterGetUsingGETBadRequest struct {
 func (o *EdgeClusterGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/edge-clusters/{edgeClusterId}][%d] edgeClusterGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *EdgeClusterGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewEdgeClusterGetUsingGETNotFound() *EdgeClusterGetUsingGETNotFound {
 	return &EdgeClusterGetUsingGETNotFound{}
 }
 
-/*EdgeClusterGetUsingGETNotFound handles this case with default header values.
+/* EdgeClusterGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

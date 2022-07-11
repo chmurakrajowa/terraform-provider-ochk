@@ -25,17 +25,20 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	BillingTagCreateUsingPUT(params *BillingTagCreateUsingPUTParams) (*BillingTagCreateUsingPUTOK, *BillingTagCreateUsingPUTCreated, error)
+	BillingTagCreateUsingPUT(params *BillingTagCreateUsingPUTParams, opts ...ClientOption) (*BillingTagCreateUsingPUTOK, *BillingTagCreateUsingPUTCreated, error)
 
-	BillingTagDeleteUsingDELETE(params *BillingTagDeleteUsingDELETEParams) (*BillingTagDeleteUsingDELETEOK, error)
+	BillingTagDeleteUsingDELETE(params *BillingTagDeleteUsingDELETEParams, opts ...ClientOption) (*BillingTagDeleteUsingDELETEOK, error)
 
-	BillingTagGetUsingGET(params *BillingTagGetUsingGETParams) (*BillingTagGetUsingGETOK, error)
+	BillingTagGetUsingGET(params *BillingTagGetUsingGETParams, opts ...ClientOption) (*BillingTagGetUsingGETOK, error)
 
-	BillingTagListUsingGET(params *BillingTagListUsingGETParams) (*BillingTagListUsingGETOK, error)
+	BillingTagListUsingGET(params *BillingTagListUsingGETParams, opts ...ClientOption) (*BillingTagListUsingGETOK, error)
 
-	BillingTagUpdateUsingPUT(params *BillingTagUpdateUsingPUTParams) (*BillingTagUpdateUsingPUTOK, error)
+	BillingTagUpdateUsingPUT(params *BillingTagUpdateUsingPUTParams, opts ...ClientOption) (*BillingTagUpdateUsingPUTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -45,13 +48,12 @@ type ClientService interface {
 
   Create billing tag
 */
-func (a *Client) BillingTagCreateUsingPUT(params *BillingTagCreateUsingPUTParams) (*BillingTagCreateUsingPUTOK, *BillingTagCreateUsingPUTCreated, error) {
+func (a *Client) BillingTagCreateUsingPUT(params *BillingTagCreateUsingPUTParams, opts ...ClientOption) (*BillingTagCreateUsingPUTOK, *BillingTagCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBillingTagCreateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "billingTagCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/tags/billingTags",
@@ -62,7 +64,12 @@ func (a *Client) BillingTagCreateUsingPUT(params *BillingTagCreateUsingPUTParams
 		Reader:             &BillingTagCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -82,13 +89,12 @@ func (a *Client) BillingTagCreateUsingPUT(params *BillingTagCreateUsingPUTParams
 
   Delete billing tag
 */
-func (a *Client) BillingTagDeleteUsingDELETE(params *BillingTagDeleteUsingDELETEParams) (*BillingTagDeleteUsingDELETEOK, error) {
+func (a *Client) BillingTagDeleteUsingDELETE(params *BillingTagDeleteUsingDELETEParams, opts ...ClientOption) (*BillingTagDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBillingTagDeleteUsingDELETEParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "billingTagDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/tags/billingTags/{billingTagId}",
@@ -99,7 +105,12 @@ func (a *Client) BillingTagDeleteUsingDELETE(params *BillingTagDeleteUsingDELETE
 		Reader:             &BillingTagDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -118,13 +129,12 @@ func (a *Client) BillingTagDeleteUsingDELETE(params *BillingTagDeleteUsingDELETE
 
   Get billing tag collection
 */
-func (a *Client) BillingTagGetUsingGET(params *BillingTagGetUsingGETParams) (*BillingTagGetUsingGETOK, error) {
+func (a *Client) BillingTagGetUsingGET(params *BillingTagGetUsingGETParams, opts ...ClientOption) (*BillingTagGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBillingTagGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "billingTagGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/tags/billingTags/{billingTagId}",
@@ -135,7 +145,12 @@ func (a *Client) BillingTagGetUsingGET(params *BillingTagGetUsingGETParams) (*Bi
 		Reader:             &BillingTagGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -154,13 +169,12 @@ func (a *Client) BillingTagGetUsingGET(params *BillingTagGetUsingGETParams) (*Bi
 
   List billing tags
 */
-func (a *Client) BillingTagListUsingGET(params *BillingTagListUsingGETParams) (*BillingTagListUsingGETOK, error) {
+func (a *Client) BillingTagListUsingGET(params *BillingTagListUsingGETParams, opts ...ClientOption) (*BillingTagListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBillingTagListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "billingTagListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/tags/billingTags",
@@ -171,7 +185,12 @@ func (a *Client) BillingTagListUsingGET(params *BillingTagListUsingGETParams) (*
 		Reader:             &BillingTagListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -190,13 +209,12 @@ func (a *Client) BillingTagListUsingGET(params *BillingTagListUsingGETParams) (*
 
   Update billing tag
 */
-func (a *Client) BillingTagUpdateUsingPUT(params *BillingTagUpdateUsingPUTParams) (*BillingTagUpdateUsingPUTOK, error) {
+func (a *Client) BillingTagUpdateUsingPUT(params *BillingTagUpdateUsingPUTParams, opts ...ClientOption) (*BillingTagUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBillingTagUpdateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "billingTagUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/tags/billingTags/{billingTagId}",
@@ -207,7 +225,12 @@ func (a *Client) BillingTagUpdateUsingPUT(params *BillingTagUpdateUsingPUTParams
 		Reader:             &BillingTagUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

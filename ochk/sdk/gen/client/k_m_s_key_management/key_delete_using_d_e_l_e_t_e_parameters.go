@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewKeyDeleteUsingDELETEParams creates a new KeyDeleteUsingDELETEParams object
-// with the default values initialized.
+// NewKeyDeleteUsingDELETEParams creates a new KeyDeleteUsingDELETEParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewKeyDeleteUsingDELETEParams() *KeyDeleteUsingDELETEParams {
-	var ()
 	return &KeyDeleteUsingDELETEParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewKeyDeleteUsingDELETEParamsWithTimeout creates a new KeyDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewKeyDeleteUsingDELETEParamsWithTimeout(timeout time.Duration) *KeyDeleteUsingDELETEParams {
-	var ()
 	return &KeyDeleteUsingDELETEParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewKeyDeleteUsingDELETEParamsWithContext creates a new KeyDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewKeyDeleteUsingDELETEParamsWithContext(ctx context.Context) *KeyDeleteUsingDELETEParams {
-	var ()
 	return &KeyDeleteUsingDELETEParams{
-
 		Context: ctx,
 	}
 }
 
 // NewKeyDeleteUsingDELETEParamsWithHTTPClient creates a new KeyDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewKeyDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) *KeyDeleteUsingDELETEParams {
-	var ()
 	return &KeyDeleteUsingDELETEParams{
 		HTTPClient: client,
 	}
 }
 
-/*KeyDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-for the key delete using d e l e t e operation typically these are written to a http.Request
+/* KeyDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
+   for the key delete using d e l e t e operation.
+
+   Typically these are written to a http.Request.
 */
 type KeyDeleteUsingDELETEParams struct {
 
-	/*ID
-	  id
+	/* ID.
 
+	   id
 	*/
 	ID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the key delete using d e l e t e params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *KeyDeleteUsingDELETEParams) WithDefaults() *KeyDeleteUsingDELETEParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the key delete using d e l e t e params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *KeyDeleteUsingDELETEParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the key delete using d e l e t e params

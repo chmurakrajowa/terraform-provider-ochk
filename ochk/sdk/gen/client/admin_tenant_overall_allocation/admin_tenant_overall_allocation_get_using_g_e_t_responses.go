@@ -35,9 +35,8 @@ func (o *AdminTenantOverallAllocationGetUsingGETReader) ReadResponse(response ru
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewAdminTenantOverallAllocationGetUsingGETOK() *AdminTenantOverallAllocatio
 	return &AdminTenantOverallAllocationGetUsingGETOK{}
 }
 
-/*AdminTenantOverallAllocationGetUsingGETOK handles this case with default header values.
+/* AdminTenantOverallAllocationGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type AdminTenantOverallAllocationGetUsingGETOK struct {
 func (o *AdminTenantOverallAllocationGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /admin/billing/tenant/allocation/{tenantId}][%d] adminTenantOverallAllocationGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *AdminTenantOverallAllocationGetUsingGETOK) GetPayload() *models.TenantOverallAllocationGetResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewAdminTenantOverallAllocationGetUsingGETBadRequest() *AdminTenantOverallA
 	return &AdminTenantOverallAllocationGetUsingGETBadRequest{}
 }
 
-/*AdminTenantOverallAllocationGetUsingGETBadRequest handles this case with default header values.
+/* AdminTenantOverallAllocationGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */

@@ -41,9 +41,8 @@ func (o *PrincipalGetUsingGETReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewPrincipalGetUsingGETOK() *PrincipalGetUsingGETOK {
 	return &PrincipalGetUsingGETOK{}
 }
 
-/*PrincipalGetUsingGETOK handles this case with default header values.
+/* PrincipalGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type PrincipalGetUsingGETOK struct {
 func (o *PrincipalGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /identity/principals/{principalId}][%d] principalGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *PrincipalGetUsingGETOK) GetPayload() *models.PrincipalGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewPrincipalGetUsingGETBadRequest() *PrincipalGetUsingGETBadRequest {
 	return &PrincipalGetUsingGETBadRequest{}
 }
 
-/*PrincipalGetUsingGETBadRequest handles this case with default header values.
+/* PrincipalGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type PrincipalGetUsingGETBadRequest struct {
 func (o *PrincipalGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /identity/principals/{principalId}][%d] principalGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *PrincipalGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewPrincipalGetUsingGETNotFound() *PrincipalGetUsingGETNotFound {
 	return &PrincipalGetUsingGETNotFound{}
 }
 
-/*PrincipalGetUsingGETNotFound handles this case with default header values.
+/* PrincipalGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */
