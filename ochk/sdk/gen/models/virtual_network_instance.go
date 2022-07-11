@@ -84,6 +84,8 @@ func (m *VirtualNetworkInstance) validateSubnet(formats strfmt.Registry) error {
 		if err := m.Subnet.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("subnet")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("subnet")
 			}
 			return err
 		}
@@ -112,6 +114,8 @@ func (m *VirtualNetworkInstance) contextValidateSubnet(ctx context.Context, form
 		if err := m.Subnet.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("subnet")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("subnet")
 			}
 			return err
 		}

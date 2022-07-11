@@ -60,6 +60,8 @@ func (m *TenantInfoGetResponse) validateTenantInfo(formats strfmt.Registry) erro
 		if err := m.TenantInfo.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tenantInfo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("tenantInfo")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *TenantInfoGetResponse) contextValidateTenantInfo(ctx context.Context, f
 		if err := m.TenantInfo.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tenantInfo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("tenantInfo")
 			}
 			return err
 		}

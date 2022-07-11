@@ -48,6 +48,8 @@ func (m *VirtualNetworkDevice) validateVirtualNetworkInstance(formats strfmt.Reg
 		if err := m.VirtualNetworkInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("virtualNetworkInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("virtualNetworkInstance")
 			}
 			return err
 		}
@@ -76,6 +78,8 @@ func (m *VirtualNetworkDevice) contextValidateVirtualNetworkInstance(ctx context
 		if err := m.VirtualNetworkInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("virtualNetworkInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("virtualNetworkInstance")
 			}
 			return err
 		}

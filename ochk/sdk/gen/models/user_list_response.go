@@ -78,6 +78,8 @@ func (m *UserListResponse) validateUserInstanceCollection(formats strfmt.Registr
 			if err := m.UserInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("userInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("userInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *UserListResponse) contextValidateUserInstanceCollection(ctx context.Con
 			if err := m.UserInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("userInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("userInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

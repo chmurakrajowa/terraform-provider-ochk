@@ -67,6 +67,8 @@ func (m *CreateKeyRotationScheduleResponse) validateKeyRotationSchedule(formats 
 		if err := m.KeyRotationSchedule.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("keyRotationSchedule")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("keyRotationSchedule")
 			}
 			return err
 		}
@@ -84,6 +86,8 @@ func (m *CreateKeyRotationScheduleResponse) validateRequestInstance(formats strf
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *CreateKeyRotationScheduleResponse) contextValidateKeyRotationSchedule(c
 		if err := m.KeyRotationSchedule.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("keyRotationSchedule")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("keyRotationSchedule")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *CreateKeyRotationScheduleResponse) contextValidateRequestInstance(ctx c
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}

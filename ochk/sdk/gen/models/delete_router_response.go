@@ -70,6 +70,8 @@ func (m *DeleteRouterResponse) validateRequestInstance(formats strfmt.Registry) 
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -87,6 +89,8 @@ func (m *DeleteRouterResponse) validateRouterInstance(formats strfmt.Registry) e
 		if err := m.RouterInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("routerInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("routerInstance")
 			}
 			return err
 		}
@@ -131,6 +135,8 @@ func (m *DeleteRouterResponse) contextValidateRequestInstance(ctx context.Contex
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -145,6 +151,8 @@ func (m *DeleteRouterResponse) contextValidateRouterInstance(ctx context.Context
 		if err := m.RouterInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("routerInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("routerInstance")
 			}
 			return err
 		}

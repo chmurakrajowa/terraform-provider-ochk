@@ -78,6 +78,8 @@ func (m *VcsResourcePoolsListResponse) validateVcsResourcePoolInstanceCollection
 			if err := m.VcsResourcePoolInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("vcsResourcePoolInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("vcsResourcePoolInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *VcsResourcePoolsListResponse) contextValidateVcsResourcePoolInstanceCol
 			if err := m.VcsResourcePoolInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("vcsResourcePoolInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("vcsResourcePoolInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

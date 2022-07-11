@@ -60,6 +60,8 @@ func (m *GetLogsResponse) validateContent(formats strfmt.Registry) error {
 		if err := m.Content.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("content")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("content")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *GetLogsResponse) contextValidateContent(ctx context.Context, formats st
 		if err := m.Content.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("content")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("content")
 			}
 			return err
 		}

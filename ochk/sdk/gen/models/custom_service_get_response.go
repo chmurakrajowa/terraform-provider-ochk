@@ -60,6 +60,8 @@ func (m *CustomServiceGetResponse) validateCustomServiceInstance(formats strfmt.
 		if err := m.CustomServiceInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("customServiceInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("customServiceInstance")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *CustomServiceGetResponse) contextValidateCustomServiceInstance(ctx cont
 		if err := m.CustomServiceInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("customServiceInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("customServiceInstance")
 			}
 			return err
 		}

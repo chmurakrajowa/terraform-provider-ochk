@@ -60,6 +60,8 @@ func (m *RouterGetResponse) validateRouterInstance(formats strfmt.Registry) erro
 		if err := m.RouterInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("routerInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("routerInstance")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *RouterGetResponse) contextValidateRouterInstance(ctx context.Context, f
 		if err := m.RouterInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("routerInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("routerInstance")
 			}
 			return err
 		}

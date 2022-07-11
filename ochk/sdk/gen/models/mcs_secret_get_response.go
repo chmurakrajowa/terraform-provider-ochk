@@ -60,6 +60,8 @@ func (m *McsSecretGetResponse) validateMcsSecret(formats strfmt.Registry) error 
 		if err := m.McsSecret.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("mcsSecret")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("mcsSecret")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *McsSecretGetResponse) contextValidateMcsSecret(ctx context.Context, for
 		if err := m.McsSecret.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("mcsSecret")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("mcsSecret")
 			}
 			return err
 		}

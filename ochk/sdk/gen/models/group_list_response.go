@@ -66,6 +66,8 @@ func (m *GroupListResponse) validateGroupInstanceCollection(formats strfmt.Regis
 			if err := m.GroupInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("groupInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("groupInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *GroupListResponse) contextValidateGroupInstanceCollection(ctx context.C
 			if err := m.GroupInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("groupInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("groupInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

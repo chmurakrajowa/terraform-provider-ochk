@@ -72,6 +72,8 @@ func (m *VcsResourcePoolsGetResponse) validateVcsResourcePoolInstance(formats st
 		if err := m.VcsResourcePoolInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("vcsResourcePoolInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("vcsResourcePoolInstance")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *VcsResourcePoolsGetResponse) contextValidateVcsResourcePoolInstance(ctx
 		if err := m.VcsResourcePoolInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("vcsResourcePoolInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("vcsResourcePoolInstance")
 			}
 			return err
 		}

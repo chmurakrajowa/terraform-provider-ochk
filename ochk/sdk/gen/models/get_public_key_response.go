@@ -60,6 +60,8 @@ func (m *GetPublicKeyResponse) validateRsaPublicKey(formats strfmt.Registry) err
 		if err := m.RsaPublicKey.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("rsaPublicKey")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("rsaPublicKey")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *GetPublicKeyResponse) contextValidateRsaPublicKey(ctx context.Context, 
 		if err := m.RsaPublicKey.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("rsaPublicKey")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("rsaPublicKey")
 			}
 			return err
 		}

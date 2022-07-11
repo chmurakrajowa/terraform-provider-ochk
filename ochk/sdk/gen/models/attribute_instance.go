@@ -73,6 +73,8 @@ func (m *AttributeInstance) validateAttributeValueList(formats strfmt.Registry) 
 			if err := m.AttributeValueList[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("attributeValueList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("attributeValueList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -97,6 +99,8 @@ func (m *AttributeInstance) validateSubAttributeList(formats strfmt.Registry) er
 			if err := m.SubAttributeList[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("subAttributeList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("subAttributeList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -133,6 +137,8 @@ func (m *AttributeInstance) contextValidateAttributeValueList(ctx context.Contex
 			if err := m.AttributeValueList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("attributeValueList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("attributeValueList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -151,6 +157,8 @@ func (m *AttributeInstance) contextValidateSubAttributeList(ctx context.Context,
 			if err := m.SubAttributeList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("subAttributeList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("subAttributeList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

@@ -60,6 +60,8 @@ func (m *TenantOverallAllocationGetResponse) validateTenantOverallAllocation(for
 		if err := m.TenantOverallAllocation.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tenantOverallAllocation")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("tenantOverallAllocation")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *TenantOverallAllocationGetResponse) contextValidateTenantOverallAllocat
 		if err := m.TenantOverallAllocation.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tenantOverallAllocation")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("tenantOverallAllocation")
 			}
 			return err
 		}

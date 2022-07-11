@@ -86,6 +86,8 @@ func (m *PublicIPAllocation) validatePublicIPAddress(formats strfmt.Registry) er
 		if err := m.PublicIPAddress.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("publicIpAddress")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("publicIpAddress")
 			}
 			return err
 		}
@@ -108,6 +110,8 @@ func (m *PublicIPAllocation) validateServiceList(formats strfmt.Registry) error 
 			if err := m.ServiceList[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("serviceList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("serviceList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -142,6 +146,8 @@ func (m *PublicIPAllocation) contextValidatePublicIPAddress(ctx context.Context,
 		if err := m.PublicIPAddress.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("publicIpAddress")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("publicIpAddress")
 			}
 			return err
 		}
@@ -158,6 +164,8 @@ func (m *PublicIPAllocation) contextValidateServiceList(ctx context.Context, for
 			if err := m.ServiceList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("serviceList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("serviceList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

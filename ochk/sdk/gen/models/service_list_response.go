@@ -66,6 +66,8 @@ func (m *ServiceListResponse) validateServiceInstanceCollection(formats strfmt.R
 			if err := m.ServiceInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("serviceInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("serviceInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *ServiceListResponse) contextValidateServiceInstanceCollection(ctx conte
 			if err := m.ServiceInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("serviceInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("serviceInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

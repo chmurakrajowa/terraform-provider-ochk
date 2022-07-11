@@ -78,6 +78,8 @@ func (m *VcsVirtualMachineListResponse) validateVcsVirtualMachineInstanceCollect
 			if err := m.VcsVirtualMachineInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("vcsVirtualMachineInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("vcsVirtualMachineInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *VcsVirtualMachineListResponse) contextValidateVcsVirtualMachineInstance
 			if err := m.VcsVirtualMachineInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("vcsVirtualMachineInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("vcsVirtualMachineInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

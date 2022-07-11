@@ -60,6 +60,8 @@ func (m *EdgeClusterGetResponse) validateEdgeClusterInstance(formats strfmt.Regi
 		if err := m.EdgeClusterInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("edgeClusterInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("edgeClusterInstance")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *EdgeClusterGetResponse) contextValidateEdgeClusterInstance(ctx context.
 		if err := m.EdgeClusterInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("edgeClusterInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("edgeClusterInstance")
 			}
 			return err
 		}

@@ -60,6 +60,8 @@ func (m *KeyRotationScheduleGetResponse) validateKeyRotationSchedule(formats str
 		if err := m.KeyRotationSchedule.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("keyRotationSchedule")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("keyRotationSchedule")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *KeyRotationScheduleGetResponse) contextValidateKeyRotationSchedule(ctx 
 		if err := m.KeyRotationSchedule.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("keyRotationSchedule")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("keyRotationSchedule")
 			}
 			return err
 		}

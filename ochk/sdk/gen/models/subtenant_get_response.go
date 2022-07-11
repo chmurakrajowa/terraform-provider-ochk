@@ -60,6 +60,8 @@ func (m *SubtenantGetResponse) validateSubtenantInstance(formats strfmt.Registry
 		if err := m.SubtenantInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("subtenantInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("subtenantInstance")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *SubtenantGetResponse) contextValidateSubtenantInstance(ctx context.Cont
 		if err := m.SubtenantInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("subtenantInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("subtenantInstance")
 			}
 			return err
 		}

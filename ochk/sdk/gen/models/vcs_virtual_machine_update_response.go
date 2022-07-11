@@ -67,6 +67,8 @@ func (m *VcsVirtualMachineUpdateResponse) validateRequestInstance(formats strfmt
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -96,6 +98,8 @@ func (m *VcsVirtualMachineUpdateResponse) validateVcsVirtualMachineInstance(form
 		if err := m.VcsVirtualMachineInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("vcsVirtualMachineInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("vcsVirtualMachineInstance")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *VcsVirtualMachineUpdateResponse) contextValidateRequestInstance(ctx con
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *VcsVirtualMachineUpdateResponse) contextValidateVcsVirtualMachineInstan
 		if err := m.VcsVirtualMachineInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("vcsVirtualMachineInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("vcsVirtualMachineInstance")
 			}
 			return err
 		}

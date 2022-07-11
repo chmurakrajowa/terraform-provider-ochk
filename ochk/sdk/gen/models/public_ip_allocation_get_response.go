@@ -60,6 +60,8 @@ func (m *PublicIPAllocationGetResponse) validatePublicIPAllocation(formats strfm
 		if err := m.PublicIPAllocation.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("publicIpAllocation")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("publicIpAllocation")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *PublicIPAllocationGetResponse) contextValidatePublicIPAllocation(ctx co
 		if err := m.PublicIPAllocation.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("publicIpAllocation")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("publicIpAllocation")
 			}
 			return err
 		}

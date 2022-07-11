@@ -293,6 +293,8 @@ func (m *NATRuleInstance) validateServiceInstance(formats strfmt.Registry) error
 		if err := m.ServiceInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("serviceInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("serviceInstance")
 			}
 			return err
 		}
@@ -310,6 +312,8 @@ func (m *NATRuleInstance) validateTierZeroRouter(formats strfmt.Registry) error 
 		if err := m.TierZeroRouter.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tierZeroRouter")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("tierZeroRouter")
 			}
 			return err
 		}
@@ -327,6 +331,8 @@ func (m *NATRuleInstance) validateVirtualNetworkInstance(formats strfmt.Registry
 		if err := m.VirtualNetworkInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("virtualNetworkInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("virtualNetworkInstance")
 			}
 			return err
 		}
@@ -363,6 +369,8 @@ func (m *NATRuleInstance) contextValidateServiceInstance(ctx context.Context, fo
 		if err := m.ServiceInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("serviceInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("serviceInstance")
 			}
 			return err
 		}
@@ -377,6 +385,8 @@ func (m *NATRuleInstance) contextValidateTierZeroRouter(ctx context.Context, for
 		if err := m.TierZeroRouter.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tierZeroRouter")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("tierZeroRouter")
 			}
 			return err
 		}
@@ -391,6 +401,8 @@ func (m *NATRuleInstance) contextValidateVirtualNetworkInstance(ctx context.Cont
 		if err := m.VirtualNetworkInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("virtualNetworkInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("virtualNetworkInstance")
 			}
 			return err
 		}

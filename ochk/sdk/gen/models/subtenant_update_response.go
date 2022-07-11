@@ -67,6 +67,8 @@ func (m *SubtenantUpdateResponse) validateRequestInstance(formats strfmt.Registr
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -84,6 +86,8 @@ func (m *SubtenantUpdateResponse) validateSubtenantInstance(formats strfmt.Regis
 		if err := m.SubtenantInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("subtenantInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("subtenantInstance")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *SubtenantUpdateResponse) contextValidateRequestInstance(ctx context.Con
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *SubtenantUpdateResponse) contextValidateSubtenantInstance(ctx context.C
 		if err := m.SubtenantInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("subtenantInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("subtenantInstance")
 			}
 			return err
 		}

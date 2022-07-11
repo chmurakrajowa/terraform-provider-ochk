@@ -84,6 +84,8 @@ func (m *SnapshotInstance) validateChildSnapshots(formats strfmt.Registry) error
 			if err := m.ChildSnapshots[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("childSnapshots" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("childSnapshots" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -173,6 +175,8 @@ func (m *SnapshotInstance) contextValidateChildSnapshots(ctx context.Context, fo
 			if err := m.ChildSnapshots[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("childSnapshots" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("childSnapshots" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

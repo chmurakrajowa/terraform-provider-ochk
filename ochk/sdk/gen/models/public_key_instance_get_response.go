@@ -60,6 +60,8 @@ func (m *PublicKeyInstanceGetResponse) validatePublicKeyInstance(formats strfmt.
 		if err := m.PublicKeyInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("publicKeyInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("publicKeyInstance")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *PublicKeyInstanceGetResponse) contextValidatePublicKeyInstance(ctx cont
 		if err := m.PublicKeyInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("publicKeyInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("publicKeyInstance")
 			}
 			return err
 		}

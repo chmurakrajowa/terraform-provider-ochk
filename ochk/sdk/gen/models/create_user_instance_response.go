@@ -67,6 +67,8 @@ func (m *CreateUserInstanceResponse) validateRequestInstance(formats strfmt.Regi
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -96,6 +98,8 @@ func (m *CreateUserInstanceResponse) validateUserInstance(formats strfmt.Registr
 		if err := m.UserInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("userInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("userInstance")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *CreateUserInstanceResponse) contextValidateRequestInstance(ctx context.
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *CreateUserInstanceResponse) contextValidateUserInstance(ctx context.Con
 		if err := m.UserInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("userInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("userInstance")
 			}
 			return err
 		}

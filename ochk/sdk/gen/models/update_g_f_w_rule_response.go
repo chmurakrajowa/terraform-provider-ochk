@@ -67,6 +67,8 @@ func (m *UpdateGFWRuleResponse) validateGfwRule(formats strfmt.Registry) error {
 		if err := m.GfwRule.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("gfwRule")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("gfwRule")
 			}
 			return err
 		}
@@ -84,6 +86,8 @@ func (m *UpdateGFWRuleResponse) validateRequestInstance(formats strfmt.Registry)
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *UpdateGFWRuleResponse) contextValidateGfwRule(ctx context.Context, form
 		if err := m.GfwRule.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("gfwRule")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("gfwRule")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *UpdateGFWRuleResponse) contextValidateRequestInstance(ctx context.Conte
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}

@@ -60,6 +60,8 @@ func (m *BackupPlanGetResponse) validateBackupPlan(formats strfmt.Registry) erro
 		if err := m.BackupPlan.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("backupPlan")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("backupPlan")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *BackupPlanGetResponse) contextValidateBackupPlan(ctx context.Context, f
 		if err := m.BackupPlan.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("backupPlan")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("backupPlan")
 			}
 			return err
 		}

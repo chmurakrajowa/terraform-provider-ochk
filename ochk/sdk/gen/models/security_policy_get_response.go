@@ -60,6 +60,8 @@ func (m *SecurityPolicyGetResponse) validateSecurityPolicy(formats strfmt.Regist
 		if err := m.SecurityPolicy.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("securityPolicy")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("securityPolicy")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *SecurityPolicyGetResponse) contextValidateSecurityPolicy(ctx context.Co
 		if err := m.SecurityPolicy.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("securityPolicy")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("securityPolicy")
 			}
 			return err
 		}

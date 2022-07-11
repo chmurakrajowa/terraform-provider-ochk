@@ -66,6 +66,8 @@ func (m *KeyListResponse) validateKeyInstanceCollection(formats strfmt.Registry)
 			if err := m.KeyInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("keyInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("keyInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *KeyListResponse) contextValidateKeyInstanceCollection(ctx context.Conte
 			if err := m.KeyInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("keyInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("keyInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

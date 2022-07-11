@@ -66,6 +66,8 @@ func (m *CustomServiceListResponse) validateCustomServiceInstanceCollection(form
 			if err := m.CustomServiceInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("customServiceInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("customServiceInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *CustomServiceListResponse) contextValidateCustomServiceInstanceCollecti
 			if err := m.CustomServiceInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("customServiceInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("customServiceInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

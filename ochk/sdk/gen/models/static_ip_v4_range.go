@@ -113,6 +113,8 @@ func (m *StaticIPV4Range) validateDefinedAddresses(formats strfmt.Registry) erro
 			if err := m.DefinedAddresses[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("definedAddresses" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("definedAddresses" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -205,6 +207,8 @@ func (m *StaticIPV4Range) contextValidateDefinedAddresses(ctx context.Context, f
 			if err := m.DefinedAddresses[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("definedAddresses" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("definedAddresses" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

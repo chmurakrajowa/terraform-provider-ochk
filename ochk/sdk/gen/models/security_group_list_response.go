@@ -66,6 +66,8 @@ func (m *SecurityGroupListResponse) validateSecurityGroupCollection(formats strf
 			if err := m.SecurityGroupCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("securityGroupCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("securityGroupCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *SecurityGroupListResponse) contextValidateSecurityGroupCollection(ctx c
 			if err := m.SecurityGroupCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("securityGroupCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("securityGroupCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

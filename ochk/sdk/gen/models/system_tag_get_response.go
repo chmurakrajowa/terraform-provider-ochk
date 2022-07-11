@@ -60,6 +60,8 @@ func (m *SystemTagGetResponse) validateSystemTag(formats strfmt.Registry) error 
 		if err := m.SystemTag.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("systemTag")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("systemTag")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *SystemTagGetResponse) contextValidateSystemTag(ctx context.Context, for
 		if err := m.SystemTag.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("systemTag")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("systemTag")
 			}
 			return err
 		}

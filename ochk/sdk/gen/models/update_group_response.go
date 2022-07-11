@@ -67,6 +67,8 @@ func (m *UpdateGroupResponse) validateGroupInstance(formats strfmt.Registry) err
 		if err := m.GroupInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("groupInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("groupInstance")
 			}
 			return err
 		}
@@ -84,6 +86,8 @@ func (m *UpdateGroupResponse) validateRequestInstance(formats strfmt.Registry) e
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *UpdateGroupResponse) contextValidateGroupInstance(ctx context.Context, 
 		if err := m.GroupInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("groupInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("groupInstance")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *UpdateGroupResponse) contextValidateRequestInstance(ctx context.Context
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}

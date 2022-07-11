@@ -70,6 +70,8 @@ func (m *DeleteCustomServiceResponse) validateCustomServiceInstance(formats strf
 		if err := m.CustomServiceInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("customServiceInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("customServiceInstance")
 			}
 			return err
 		}
@@ -87,6 +89,8 @@ func (m *DeleteCustomServiceResponse) validateRequestInstance(formats strfmt.Reg
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -131,6 +135,8 @@ func (m *DeleteCustomServiceResponse) contextValidateCustomServiceInstance(ctx c
 		if err := m.CustomServiceInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("customServiceInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("customServiceInstance")
 			}
 			return err
 		}
@@ -145,6 +151,8 @@ func (m *DeleteCustomServiceResponse) contextValidateRequestInstance(ctx context
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}

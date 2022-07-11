@@ -66,6 +66,8 @@ func (m *BackupListListResponse) validateBackupListCollection(formats strfmt.Reg
 			if err := m.BackupListCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *BackupListListResponse) contextValidateBackupListCollection(ctx context
 			if err := m.BackupListCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

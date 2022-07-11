@@ -137,6 +137,8 @@ func (m *NetworkProfileInstance) validateDefinedRanges(formats strfmt.Registry) 
 			if err := m.DefinedRanges[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("definedRanges" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("definedRanges" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -229,6 +231,8 @@ func (m *NetworkProfileInstance) contextValidateDefinedRanges(ctx context.Contex
 			if err := m.DefinedRanges[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("definedRanges" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("definedRanges" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

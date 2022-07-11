@@ -60,6 +60,8 @@ func (m *GatewayPolicyGetResponse) validateGatewayPolicy(formats strfmt.Registry
 		if err := m.GatewayPolicy.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("gatewayPolicy")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("gatewayPolicy")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *GatewayPolicyGetResponse) contextValidateGatewayPolicy(ctx context.Cont
 		if err := m.GatewayPolicy.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("gatewayPolicy")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("gatewayPolicy")
 			}
 			return err
 		}

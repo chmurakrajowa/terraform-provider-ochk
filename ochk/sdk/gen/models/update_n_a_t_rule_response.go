@@ -67,6 +67,8 @@ func (m *UpdateNATRuleResponse) validateNatRuleInstance(formats strfmt.Registry)
 		if err := m.NatRuleInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("natRuleInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("natRuleInstance")
 			}
 			return err
 		}
@@ -84,6 +86,8 @@ func (m *UpdateNATRuleResponse) validateRequestInstance(formats strfmt.Registry)
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *UpdateNATRuleResponse) contextValidateNatRuleInstance(ctx context.Conte
 		if err := m.NatRuleInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("natRuleInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("natRuleInstance")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *UpdateNATRuleResponse) contextValidateRequestInstance(ctx context.Conte
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}

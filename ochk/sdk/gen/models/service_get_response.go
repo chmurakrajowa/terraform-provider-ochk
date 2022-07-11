@@ -60,6 +60,8 @@ func (m *ServiceGetResponse) validateServiceInstance(formats strfmt.Registry) er
 		if err := m.ServiceInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("serviceInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("serviceInstance")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *ServiceGetResponse) contextValidateServiceInstance(ctx context.Context,
 		if err := m.ServiceInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("serviceInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("serviceInstance")
 			}
 			return err
 		}

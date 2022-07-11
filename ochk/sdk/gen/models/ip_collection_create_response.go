@@ -67,6 +67,8 @@ func (m *IPCollectionCreateResponse) validateIPCollection(formats strfmt.Registr
 		if err := m.IPCollection.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("ipCollection")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ipCollection")
 			}
 			return err
 		}
@@ -84,6 +86,8 @@ func (m *IPCollectionCreateResponse) validateRequestInstance(formats strfmt.Regi
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *IPCollectionCreateResponse) contextValidateIPCollection(ctx context.Con
 		if err := m.IPCollection.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("ipCollection")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ipCollection")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *IPCollectionCreateResponse) contextValidateRequestInstance(ctx context.
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}

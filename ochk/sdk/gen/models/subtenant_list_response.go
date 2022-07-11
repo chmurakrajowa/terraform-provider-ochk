@@ -66,6 +66,8 @@ func (m *SubtenantListResponse) validateSubtenantInstanceCollection(formats strf
 			if err := m.SubtenantInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("subtenantInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("subtenantInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *SubtenantListResponse) contextValidateSubtenantInstanceCollection(ctx c
 			if err := m.SubtenantInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("subtenantInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("subtenantInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

@@ -66,6 +66,8 @@ func (m *SnapshotListResponse) validateSnapshotInstanceCollection(formats strfmt
 			if err := m.SnapshotInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("snapshotInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("snapshotInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *SnapshotListResponse) contextValidateSnapshotInstanceCollection(ctx con
 			if err := m.SnapshotInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("snapshotInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("snapshotInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

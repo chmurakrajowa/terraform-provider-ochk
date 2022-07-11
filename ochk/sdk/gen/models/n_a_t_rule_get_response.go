@@ -60,6 +60,8 @@ func (m *NATRuleGetResponse) validateNatRuleInstance(formats strfmt.Registry) er
 		if err := m.NatRuleInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("natRuleInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("natRuleInstance")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *NATRuleGetResponse) contextValidateNatRuleInstance(ctx context.Context,
 		if err := m.NatRuleInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("natRuleInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("natRuleInstance")
 			}
 			return err
 		}

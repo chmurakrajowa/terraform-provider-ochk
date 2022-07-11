@@ -48,6 +48,8 @@ func (m *ElkResponse) validateHits(formats strfmt.Registry) error {
 		if err := m.Hits.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("hits")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("hits")
 			}
 			return err
 		}
@@ -76,6 +78,8 @@ func (m *ElkResponse) contextValidateHits(ctx context.Context, formats strfmt.Re
 		if err := m.Hits.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("hits")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("hits")
 			}
 			return err
 		}

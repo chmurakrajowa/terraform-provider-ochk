@@ -67,6 +67,8 @@ func (m *CreateNewKmsKeyVersionResponse) validateKeyInstance(formats strfmt.Regi
 		if err := m.KeyInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("keyInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("keyInstance")
 			}
 			return err
 		}
@@ -84,6 +86,8 @@ func (m *CreateNewKmsKeyVersionResponse) validateRequestInstance(formats strfmt.
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *CreateNewKmsKeyVersionResponse) contextValidateKeyInstance(ctx context.
 		if err := m.KeyInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("keyInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("keyInstance")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *CreateNewKmsKeyVersionResponse) contextValidateRequestInstance(ctx cont
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}

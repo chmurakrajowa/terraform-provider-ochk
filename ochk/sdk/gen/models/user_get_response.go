@@ -72,6 +72,8 @@ func (m *UserGetResponse) validateUserInstance(formats strfmt.Registry) error {
 		if err := m.UserInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("userInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("userInstance")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *UserGetResponse) contextValidateUserInstance(ctx context.Context, forma
 		if err := m.UserInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("userInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("userInstance")
 			}
 			return err
 		}

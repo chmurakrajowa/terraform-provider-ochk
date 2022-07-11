@@ -60,6 +60,8 @@ func (m *LogCategoryGetResponse) validateLogCategory(formats strfmt.Registry) er
 		if err := m.LogCategory.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("logCategory")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("logCategory")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *LogCategoryGetResponse) contextValidateLogCategory(ctx context.Context,
 		if err := m.LogCategory.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("logCategory")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("logCategory")
 			}
 			return err
 		}

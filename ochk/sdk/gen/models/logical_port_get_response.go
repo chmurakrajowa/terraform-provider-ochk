@@ -60,6 +60,8 @@ func (m *LogicalPortGetResponse) validateLogicalPort(formats strfmt.Registry) er
 		if err := m.LogicalPort.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("logicalPort")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("logicalPort")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *LogicalPortGetResponse) contextValidateLogicalPort(ctx context.Context,
 		if err := m.LogicalPort.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("logicalPort")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("logicalPort")
 			}
 			return err
 		}

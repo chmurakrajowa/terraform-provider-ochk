@@ -60,6 +60,8 @@ func (m *LocalGroupGetResponse) validateLocalGroup(formats strfmt.Registry) erro
 		if err := m.LocalGroup.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("localGroup")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("localGroup")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *LocalGroupGetResponse) contextValidateLocalGroup(ctx context.Context, f
 		if err := m.LocalGroup.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("localGroup")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("localGroup")
 			}
 			return err
 		}

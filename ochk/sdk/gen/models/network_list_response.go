@@ -78,6 +78,8 @@ func (m *NetworkListResponse) validateVcsNetworkInstanceCollection(formats strfm
 			if err := m.VcsNetworkInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("vcsNetworkInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("vcsNetworkInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *NetworkListResponse) contextValidateVcsNetworkInstanceCollection(ctx co
 			if err := m.VcsNetworkInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("vcsNetworkInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("vcsNetworkInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

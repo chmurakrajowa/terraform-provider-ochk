@@ -67,6 +67,8 @@ func (m *UpdateLogCategoryResponse) validateLogCategory(formats strfmt.Registry)
 		if err := m.LogCategory.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("logCategory")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("logCategory")
 			}
 			return err
 		}
@@ -84,6 +86,8 @@ func (m *UpdateLogCategoryResponse) validateRequestInstance(formats strfmt.Regis
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *UpdateLogCategoryResponse) contextValidateLogCategory(ctx context.Conte
 		if err := m.LogCategory.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("logCategory")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("logCategory")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *UpdateLogCategoryResponse) contextValidateRequestInstance(ctx context.C
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}

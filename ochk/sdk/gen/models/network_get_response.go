@@ -72,6 +72,8 @@ func (m *NetworkGetResponse) validateVcsNetworkInstance(formats strfmt.Registry)
 		if err := m.VcsNetworkInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("vcsNetworkInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("vcsNetworkInstance")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *NetworkGetResponse) contextValidateVcsNetworkInstance(ctx context.Conte
 		if err := m.VcsNetworkInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("vcsNetworkInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("vcsNetworkInstance")
 			}
 			return err
 		}

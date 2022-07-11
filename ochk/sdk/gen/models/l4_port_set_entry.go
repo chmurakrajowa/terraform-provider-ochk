@@ -121,6 +121,8 @@ func (m *L4PortSetEntry) validateResourceType(formats strfmt.Registry) error {
 		if err := m.ResourceType.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("resourceType")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("resourceType")
 			}
 			return err
 		}
@@ -149,6 +151,8 @@ func (m *L4PortSetEntry) contextValidateResourceType(ctx context.Context, format
 		if err := m.ResourceType.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("resourceType")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("resourceType")
 			}
 			return err
 		}

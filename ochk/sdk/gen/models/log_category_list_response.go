@@ -66,6 +66,8 @@ func (m *LogCategoryListResponse) validateLogCategoryCollection(formats strfmt.R
 			if err := m.LogCategoryCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("logCategoryCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("logCategoryCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *LogCategoryListResponse) contextValidateLogCategoryCollection(ctx conte
 			if err := m.LogCategoryCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("logCategoryCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("logCategoryCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

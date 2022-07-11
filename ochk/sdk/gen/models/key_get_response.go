@@ -60,6 +60,8 @@ func (m *KeyGetResponse) validateKeyInstance(formats strfmt.Registry) error {
 		if err := m.KeyInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("keyInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("keyInstance")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *KeyGetResponse) contextValidateKeyInstance(ctx context.Context, formats
 		if err := m.KeyInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("keyInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("keyInstance")
 			}
 			return err
 		}

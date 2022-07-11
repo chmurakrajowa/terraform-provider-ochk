@@ -203,6 +203,8 @@ func (m *GFWRule) validateCustomServices(formats strfmt.Registry) error {
 			if err := m.CustomServices[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("customServices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("customServices" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -227,6 +229,8 @@ func (m *GFWRule) validateDefaultServices(formats strfmt.Registry) error {
 			if err := m.DefaultServices[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("defaultServices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("defaultServices" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -251,6 +255,8 @@ func (m *GFWRule) validateDestination(formats strfmt.Registry) error {
 			if err := m.Destination[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("destination" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("destination" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -372,6 +378,8 @@ func (m *GFWRule) validatePosition(formats strfmt.Registry) error {
 		if err := m.Position.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("position")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("position")
 			}
 			return err
 		}
@@ -394,6 +402,8 @@ func (m *GFWRule) validateScope(formats strfmt.Registry) error {
 			if err := m.Scope[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("scope" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("scope" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -418,6 +428,8 @@ func (m *GFWRule) validateSource(formats strfmt.Registry) error {
 			if err := m.Source[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("source" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("source" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -470,6 +482,8 @@ func (m *GFWRule) contextValidateCustomServices(ctx context.Context, formats str
 			if err := m.CustomServices[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("customServices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("customServices" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -488,6 +502,8 @@ func (m *GFWRule) contextValidateDefaultServices(ctx context.Context, formats st
 			if err := m.DefaultServices[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("defaultServices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("defaultServices" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -506,6 +522,8 @@ func (m *GFWRule) contextValidateDestination(ctx context.Context, formats strfmt
 			if err := m.Destination[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("destination" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("destination" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -522,6 +540,8 @@ func (m *GFWRule) contextValidatePosition(ctx context.Context, formats strfmt.Re
 		if err := m.Position.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("position")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("position")
 			}
 			return err
 		}
@@ -538,6 +558,8 @@ func (m *GFWRule) contextValidateScope(ctx context.Context, formats strfmt.Regis
 			if err := m.Scope[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("scope" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("scope" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -556,6 +578,8 @@ func (m *GFWRule) contextValidateSource(ctx context.Context, formats strfmt.Regi
 			if err := m.Source[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("source" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("source" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

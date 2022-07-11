@@ -66,6 +66,8 @@ func (m *BillingTagListResponse) validateBillingTagCollection(formats strfmt.Reg
 			if err := m.BillingTagCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("billingTagCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("billingTagCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *BillingTagListResponse) contextValidateBillingTagCollection(ctx context
 			if err := m.BillingTagCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("billingTagCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("billingTagCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

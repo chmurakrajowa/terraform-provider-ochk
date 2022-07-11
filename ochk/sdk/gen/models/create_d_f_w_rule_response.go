@@ -67,6 +67,8 @@ func (m *CreateDFWRuleResponse) validateDfwRule(formats strfmt.Registry) error {
 		if err := m.DfwRule.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("dfwRule")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("dfwRule")
 			}
 			return err
 		}
@@ -84,6 +86,8 @@ func (m *CreateDFWRuleResponse) validateRequestInstance(formats strfmt.Registry)
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *CreateDFWRuleResponse) contextValidateDfwRule(ctx context.Context, form
 		if err := m.DfwRule.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("dfwRule")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("dfwRule")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *CreateDFWRuleResponse) contextValidateRequestInstance(ctx context.Conte
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}

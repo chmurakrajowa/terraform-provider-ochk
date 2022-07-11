@@ -78,6 +78,8 @@ func (m *VirtualNetworkListResponse) validateVirtualNetworkInstanceCollection(fo
 			if err := m.VirtualNetworkInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("virtualNetworkInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("virtualNetworkInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *VirtualNetworkListResponse) contextValidateVirtualNetworkInstanceCollec
 			if err := m.VirtualNetworkInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("virtualNetworkInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("virtualNetworkInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

@@ -60,6 +60,8 @@ func (m *BillingTagGetResponse) validateBillingTag(formats strfmt.Registry) erro
 		if err := m.BillingTag.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("billingTag")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("billingTag")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *BillingTagGetResponse) contextValidateBillingTag(ctx context.Context, f
 		if err := m.BillingTag.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("billingTag")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("billingTag")
 			}
 			return err
 		}

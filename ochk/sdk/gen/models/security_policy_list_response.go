@@ -66,6 +66,8 @@ func (m *SecurityPolicyListResponse) validateSecurityPolicyCollection(formats st
 			if err := m.SecurityPolicyCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("securityPolicyCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("securityPolicyCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *SecurityPolicyListResponse) contextValidateSecurityPolicyCollection(ctx
 			if err := m.SecurityPolicyCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("securityPolicyCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("securityPolicyCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

@@ -60,6 +60,8 @@ func (m *DeploymentGetResponse) validateDeploymentInstance(formats strfmt.Regist
 		if err := m.DeploymentInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("deploymentInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("deploymentInstance")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *DeploymentGetResponse) contextValidateDeploymentInstance(ctx context.Co
 		if err := m.DeploymentInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("deploymentInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("deploymentInstance")
 			}
 			return err
 		}

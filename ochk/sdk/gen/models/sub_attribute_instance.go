@@ -60,6 +60,8 @@ func (m *SubAttributeInstance) validateSubAttributeValueList(formats strfmt.Regi
 			if err := m.SubAttributeValueList[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("subAttributeValueList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("subAttributeValueList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -92,6 +94,8 @@ func (m *SubAttributeInstance) contextValidateSubAttributeValueList(ctx context.
 			if err := m.SubAttributeValueList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("subAttributeValueList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("subAttributeValueList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

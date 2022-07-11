@@ -106,6 +106,8 @@ func (m *LocalGroup) validateGroupInstanceList(formats strfmt.Registry) error {
 			if err := m.GroupInstanceList[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("groupInstanceList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("groupInstanceList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -172,6 +174,8 @@ func (m *LocalGroup) validateParentGroups(formats strfmt.Registry) error {
 			if err := m.ParentGroups[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("parentGroups" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("parentGroups" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -191,6 +195,8 @@ func (m *LocalGroup) validatePrincipalID(formats strfmt.Registry) error {
 		if err := m.PrincipalID.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("principalId")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("principalId")
 			}
 			return err
 		}
@@ -213,6 +219,8 @@ func (m *LocalGroup) validateUserInstanceList(formats strfmt.Registry) error {
 			if err := m.UserInstanceList[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("userInstanceList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("userInstanceList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -257,6 +265,8 @@ func (m *LocalGroup) contextValidateGroupInstanceList(ctx context.Context, forma
 			if err := m.GroupInstanceList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("groupInstanceList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("groupInstanceList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -275,6 +285,8 @@ func (m *LocalGroup) contextValidateParentGroups(ctx context.Context, formats st
 			if err := m.ParentGroups[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("parentGroups" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("parentGroups" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -291,6 +303,8 @@ func (m *LocalGroup) contextValidatePrincipalID(ctx context.Context, formats str
 		if err := m.PrincipalID.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("principalId")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("principalId")
 			}
 			return err
 		}
@@ -307,6 +321,8 @@ func (m *LocalGroup) contextValidateUserInstanceList(ctx context.Context, format
 			if err := m.UserInstanceList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("userInstanceList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("userInstanceList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

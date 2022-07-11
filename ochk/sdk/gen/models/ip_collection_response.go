@@ -60,6 +60,8 @@ func (m *IPCollectionResponse) validateIPCollection(formats strfmt.Registry) err
 		if err := m.IPCollection.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("ipCollection")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ipCollection")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *IPCollectionResponse) contextValidateIPCollection(ctx context.Context, 
 		if err := m.IPCollection.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("ipCollection")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ipCollection")
 			}
 			return err
 		}

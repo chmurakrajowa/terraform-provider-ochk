@@ -67,6 +67,8 @@ func (m *BillingTagCreateResponse) validateBillingTag(formats strfmt.Registry) e
 		if err := m.BillingTag.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("billingTag")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("billingTag")
 			}
 			return err
 		}
@@ -84,6 +86,8 @@ func (m *BillingTagCreateResponse) validateRequestInstance(formats strfmt.Regist
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *BillingTagCreateResponse) contextValidateBillingTag(ctx context.Context
 		if err := m.BillingTag.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("billingTag")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("billingTag")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *BillingTagCreateResponse) contextValidateRequestInstance(ctx context.Co
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}

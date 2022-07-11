@@ -67,6 +67,8 @@ func (m *UpdateLocalGroupResponse) validateLocalGroup(formats strfmt.Registry) e
 		if err := m.LocalGroup.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("localGroup")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("localGroup")
 			}
 			return err
 		}
@@ -84,6 +86,8 @@ func (m *UpdateLocalGroupResponse) validateRequestInstance(formats strfmt.Regist
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *UpdateLocalGroupResponse) contextValidateLocalGroup(ctx context.Context
 		if err := m.LocalGroup.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("localGroup")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("localGroup")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *UpdateLocalGroupResponse) contextValidateRequestInstance(ctx context.Co
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}

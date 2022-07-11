@@ -67,6 +67,8 @@ func (m *ContextProfileInstance) validateAttributeList(formats strfmt.Registry) 
 			if err := m.AttributeList[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("attributeList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("attributeList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -86,6 +88,8 @@ func (m *ContextProfileInstance) validateResourceType(formats strfmt.Registry) e
 		if err := m.ResourceType.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("resourceType")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("resourceType")
 			}
 			return err
 		}
@@ -120,6 +124,8 @@ func (m *ContextProfileInstance) contextValidateAttributeList(ctx context.Contex
 			if err := m.AttributeList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("attributeList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("attributeList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -136,6 +142,8 @@ func (m *ContextProfileInstance) contextValidateResourceType(ctx context.Context
 		if err := m.ResourceType.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("resourceType")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("resourceType")
 			}
 			return err
 		}

@@ -66,6 +66,8 @@ func (m *SystemTagListResponse) validateSystemTagCollection(formats strfmt.Regis
 			if err := m.SystemTagCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("systemTagCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("systemTagCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *SystemTagListResponse) contextValidateSystemTagCollection(ctx context.C
 			if err := m.SystemTagCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("systemTagCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("systemTagCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

@@ -66,6 +66,8 @@ func (m *NetworkProfileListResponse) validateNetworkProfileList(formats strfmt.R
 			if err := m.NetworkProfileList[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("networkProfileList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("networkProfileList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *NetworkProfileListResponse) contextValidateNetworkProfileList(ctx conte
 			if err := m.NetworkProfileList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("networkProfileList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("networkProfileList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

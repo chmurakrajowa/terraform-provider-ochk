@@ -67,6 +67,8 @@ func (m *RevokeKmsKeyResponse) validateKeyInstance(formats strfmt.Registry) erro
 		if err := m.KeyInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("keyInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("keyInstance")
 			}
 			return err
 		}
@@ -84,6 +86,8 @@ func (m *RevokeKmsKeyResponse) validateRequestInstance(formats strfmt.Registry) 
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -128,6 +132,8 @@ func (m *RevokeKmsKeyResponse) contextValidateKeyInstance(ctx context.Context, f
 		if err := m.KeyInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("keyInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("keyInstance")
 			}
 			return err
 		}
@@ -142,6 +148,8 @@ func (m *RevokeKmsKeyResponse) contextValidateRequestInstance(ctx context.Contex
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}

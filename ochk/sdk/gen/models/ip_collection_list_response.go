@@ -66,6 +66,8 @@ func (m *IPCollectionListResponse) validateIPCollectionSet(formats strfmt.Regist
 			if err := m.IPCollectionSet[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("ipCollectionSet" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("ipCollectionSet" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *IPCollectionListResponse) contextValidateIPCollectionSet(ctx context.Co
 			if err := m.IPCollectionSet[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("ipCollectionSet" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("ipCollectionSet" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

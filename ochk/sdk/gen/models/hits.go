@@ -58,6 +58,8 @@ func (m *Hits) validateHits(formats strfmt.Registry) error {
 			if err := m.Hits[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("hits" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("hits" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -77,6 +79,8 @@ func (m *Hits) validateTotal(formats strfmt.Registry) error {
 		if err := m.Total.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("total")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("total")
 			}
 			return err
 		}
@@ -111,6 +115,8 @@ func (m *Hits) contextValidateHits(ctx context.Context, formats strfmt.Registry)
 			if err := m.Hits[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("hits" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("hits" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -127,6 +133,8 @@ func (m *Hits) contextValidateTotal(ctx context.Context, formats strfmt.Registry
 		if err := m.Total.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("total")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("total")
 			}
 			return err
 		}

@@ -60,6 +60,8 @@ func (m *AvailablePublicIPGetResponse) validatePublicIPAddress(formats strfmt.Re
 		if err := m.PublicIPAddress.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("publicIpAddress")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("publicIpAddress")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *AvailablePublicIPGetResponse) contextValidatePublicIPAddress(ctx contex
 		if err := m.PublicIPAddress.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("publicIpAddress")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("publicIpAddress")
 			}
 			return err
 		}

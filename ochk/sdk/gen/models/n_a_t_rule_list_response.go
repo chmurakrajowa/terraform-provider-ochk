@@ -66,6 +66,8 @@ func (m *NATRuleListResponse) validateNatRuleInstances(formats strfmt.Registry) 
 			if err := m.NatRuleInstances[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("natRuleInstances" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("natRuleInstances" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *NATRuleListResponse) contextValidateNatRuleInstances(ctx context.Contex
 			if err := m.NatRuleInstances[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("natRuleInstances" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("natRuleInstances" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

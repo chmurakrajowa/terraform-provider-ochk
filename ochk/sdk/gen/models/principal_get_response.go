@@ -60,6 +60,8 @@ func (m *PrincipalGetResponse) validatePrincipalID(formats strfmt.Registry) erro
 		if err := m.PrincipalID.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("principalId")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("principalId")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *PrincipalGetResponse) contextValidatePrincipalID(ctx context.Context, f
 		if err := m.PrincipalID.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("principalId")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("principalId")
 			}
 			return err
 		}

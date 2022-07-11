@@ -60,6 +60,8 @@ func (m *GFWRuleGetResponse) validateRuleInstance(formats strfmt.Registry) error
 		if err := m.RuleInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("ruleInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ruleInstance")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *GFWRuleGetResponse) contextValidateRuleInstance(ctx context.Context, fo
 		if err := m.RuleInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("ruleInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ruleInstance")
 			}
 			return err
 		}

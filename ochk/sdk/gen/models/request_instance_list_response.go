@@ -66,6 +66,8 @@ func (m *RequestInstanceListResponse) validateRequestInstanceList(formats strfmt
 			if err := m.RequestInstanceList[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("requestInstanceList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("requestInstanceList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *RequestInstanceListResponse) contextValidateRequestInstanceList(ctx con
 			if err := m.RequestInstanceList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("requestInstanceList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("requestInstanceList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

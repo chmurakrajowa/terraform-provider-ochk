@@ -60,6 +60,8 @@ func (m *NetworkProfileGetResponse) validateNetworkProfile(formats strfmt.Regist
 		if err := m.NetworkProfile.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("networkProfile")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("networkProfile")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *NetworkProfileGetResponse) contextValidateNetworkProfile(ctx context.Co
 		if err := m.NetworkProfile.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("networkProfile")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("networkProfile")
 			}
 			return err
 		}

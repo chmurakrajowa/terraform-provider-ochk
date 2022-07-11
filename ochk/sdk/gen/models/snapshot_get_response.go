@@ -60,6 +60,8 @@ func (m *SnapshotGetResponse) validateSnapshotInstance(formats strfmt.Registry) 
 		if err := m.SnapshotInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("snapshotInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("snapshotInstance")
 			}
 			return err
 		}
@@ -100,6 +102,8 @@ func (m *SnapshotGetResponse) contextValidateSnapshotInstance(ctx context.Contex
 		if err := m.SnapshotInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("snapshotInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("snapshotInstance")
 			}
 			return err
 		}

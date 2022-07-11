@@ -66,6 +66,8 @@ func (m *ContextProfileListResponse) validateContextProfiles(formats strfmt.Regi
 			if err := m.ContextProfiles[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("contextProfiles" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("contextProfiles" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *ContextProfileListResponse) contextValidateContextProfiles(ctx context.
 			if err := m.ContextProfiles[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("contextProfiles" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("contextProfiles" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

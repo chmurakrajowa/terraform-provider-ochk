@@ -66,6 +66,8 @@ func (m *EdgeClusterListResponse) validateEdgeClusterCollection(formats strfmt.R
 			if err := m.EdgeClusterCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("edgeClusterCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("edgeClusterCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -110,6 +112,8 @@ func (m *EdgeClusterListResponse) contextValidateEdgeClusterCollection(ctx conte
 			if err := m.EdgeClusterCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("edgeClusterCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("edgeClusterCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
