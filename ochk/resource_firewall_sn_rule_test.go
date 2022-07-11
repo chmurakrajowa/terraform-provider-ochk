@@ -124,24 +124,6 @@ resource "ochk_firewall_sn_rule" "default" {
 `, displayName, priority, customServiceResourceID)
 }
 
-func testAccFirewallSNRuleResourceConfigNoPositionUpdate(displayName string, action string, ipProtocol string, direction string, priority int64, customServiceResourceID string) string {
-	return fmt.Sprintf(`
-resource "ochk_firewall_sn_rule" "default" {
-  display_name = %[1]q
-  action = %[2]q 
-  ip_protocol = %[3]q
-  direction = %[4]q
-  router_id = data.ochk_router.default.id
-
-  services = [data.ochk_service.http.id]
-  custom_services = [%[6]s]
-  source = [ochk_security_group.source.id]
-  destination = [ochk_security_group.destination.id]
-  priority = %[5]d 
-}
-`, displayName, action, ipProtocol, direction, priority, customServiceResourceID)
-}
-
 func testAccFirewallSNRuleResourceNotExists(displayName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		ctx := context.Background()

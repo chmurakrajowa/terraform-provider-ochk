@@ -14,54 +14,6 @@ var testData = getTestData()
 var testDataSavedFileName = "../env/testdata.json"
 var testDataSavedFields []string
 
-func setTestData(paramName string, value string) {
-
-	predefinedTestDataDev.mu.Lock()
-
-	paramExists := false
-	for _, field := range testDataSavedFields {
-		if field == paramName {
-			paramExists = true
-		}
-	}
-
-	if paramExists == false {
-		testDataSavedFields = append(testDataSavedFields, paramName)
-	}
-
-	type Message struct {
-		Name, Text string
-	}
-	var m Message
-	var fileContent string
-
-	for _, field := range testDataSavedFields {
-		if paramName == field {
-			reflect.ValueOf(&predefinedTestDataDev).Elem().FieldByName(paramName).SetString(value)
-		}
-		m.Text = reflect.ValueOf(&predefinedTestDataDev).Elem().FieldByName(field).String()
-		m.Name = field
-		fileContent = fileContent + executeTemplateToString(
-			`{
-	"Name": "{{ .Name}}",
-	"Text": "{{ .Text}}"
-}
-`, m)
-	}
-
-	f, err := os.Create(testDataSavedFileName)
-	if err == nil {
-		defer f.Close()
-		_, err2 := f.WriteString(fileContent)
-		if err2 != nil {
-			fmt.Errorf("Cannot save " + testDataSavedFileName + "file")
-		}
-	} else {
-		fmt.Errorf("Cannot create " + testDataSavedFileName + "file")
-	}
-	predefinedTestDataDev.mu.Unlock()
-}
-
 func loadTestData() {
 
 	jsonfile, err := os.ReadFile(testDataSavedFileName)
@@ -100,7 +52,6 @@ type predefinedTestData struct {
 	LogicalPort1DisplayName    string
 	Network1Name               string
 	Network2Name               string
-	SubtenantNetworkName       string
 	Subtenant1Name             string
 	Subtenant2Name             string
 	Subtenant3Name             string
@@ -140,7 +91,6 @@ var predefinedTestDataDev = predefinedTestData{
 	BackupListName:             "",
 	Network1Name:               fmt.Sprintf("%s-vnet1", devTestDataPrefix),
 	Network2Name:               fmt.Sprintf("%s-vnet2", devTestDataPrefix),
-	SubtenantNetworkName:       fmt.Sprintf("%s-vnet1", devTestDataPrefix),
 	Subtenant1Name:             fmt.Sprintf("%s-subt1", devTestDataPrefix),
 	Subtenant2Name:             fmt.Sprintf("%s-subt2", devTestDataPrefix),
 	Subtenant3Name:             fmt.Sprintf("%s-subt3", devTestDataPrefix),

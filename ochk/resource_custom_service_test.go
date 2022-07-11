@@ -113,7 +113,6 @@ func TestAccCustomServiceResource_create(t *testing.T) {
 					testStringInSet(customServiceResourceName, "ports.0.source", customServiceUpdated.Ports[0].Source[1]),
 					testStringInSet(customServiceResourceName, "ports.0.source", customServiceUpdated.Ports[0].Source[2]),
 					testStringInSet(customServiceResourceName, "ports.0.destination", customServiceUpdated.Ports[0].Destination[0]),
-					resource.TestCheckNoResourceAttr(customServiceResourceName, "ports.0.destination"),
 					resource.TestCheckResourceAttrSet(customServiceResourceName, "ports.1.id"),
 					resource.TestCheckResourceAttr(customServiceResourceName, "ports.1.protocol", customServiceUpdated.Ports[1].Protocol),
 					testStringInSet(customServiceResourceName, "ports.1.source", customServiceUpdated.Ports[1].Source[0]),

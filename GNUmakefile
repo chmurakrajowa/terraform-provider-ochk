@@ -1,6 +1,6 @@
 default: testacc
 
-PROVIDER_VERSION="1.2.3"
+PROVIDER_VERSION="1.2.4"
 
 ARCH:=$(shell uname -m)
 ifeq ($(ARCH),x86_64)

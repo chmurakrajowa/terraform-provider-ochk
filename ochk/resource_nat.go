@@ -232,7 +232,9 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 
 	if Nat.NatType == "MANUAL" {
 		if Nat.Description == "UNKNOWN" || Nat.Description == "" {
-			d.Set("description", "")
+			if err := d.Set("description", ""); err != nil {
+				return diag.Errorf("error setting description: %+v", err)
+			}
 		} else {
 			if err := d.Set("description", Nat.Description); err != nil {
 				return diag.Errorf("error setting description: %+v", err)

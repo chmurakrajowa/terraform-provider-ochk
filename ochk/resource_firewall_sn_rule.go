@@ -115,7 +115,9 @@ func firewallSNRuleStateContextImport(ctx context.Context, d *schema.ResourceDat
 		return nil, fmt.Errorf("unexpected format of ID (%s), expected format: router_id/rule_id", d.Id())
 	}
 	d.SetId(parts[1])
-	d.Set("router_id", parts[0])
+	if err := d.Set("router_id", parts[0]); err != nil {
+		return nil, fmt.Errorf("cannot set router_id: (%s)", parts[0])
+	}
 	return []*schema.ResourceData{d}, nil
 }
 
