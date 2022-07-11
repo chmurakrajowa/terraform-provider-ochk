@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -53,6 +52,7 @@ func (m *TenantInfoListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *TenantInfoListResponse) validateTenantInfoCollection(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.TenantInfoCollection) { // not required
 		return nil
 	}
@@ -66,8 +66,6 @@ func (m *TenantInfoListResponse) validateTenantInfoCollection(formats strfmt.Reg
 			if err := m.TenantInfoCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("tenantInfoCollection" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("tenantInfoCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -79,46 +77,13 @@ func (m *TenantInfoListResponse) validateTenantInfoCollection(formats strfmt.Reg
 }
 
 func (m *TenantInfoListResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this tenant info list response based on the context it is used
-func (m *TenantInfoListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateTenantInfoCollection(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *TenantInfoListResponse) contextValidateTenantInfoCollection(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.TenantInfoCollection); i++ {
-
-		if m.TenantInfoCollection[i] != nil {
-			if err := m.TenantInfoCollection[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("tenantInfoCollection" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("tenantInfoCollection" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

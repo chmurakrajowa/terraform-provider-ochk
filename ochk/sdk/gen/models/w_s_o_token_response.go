@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -48,6 +46,7 @@ func (m *WSOTokenResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *WSOTokenResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
@@ -56,11 +55,6 @@ func (m *WSOTokenResponse) validateTimestamp(formats strfmt.Registry) error {
 		return err
 	}
 
-	return nil
-}
-
-// ContextValidate validates this w s o token response based on context it is used
-func (m *WSOTokenResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

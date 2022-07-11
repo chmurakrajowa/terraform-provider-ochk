@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewEdgeClusterGetUsingGETParams creates a new EdgeClusterGetUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewEdgeClusterGetUsingGETParams creates a new EdgeClusterGetUsingGETParams object
+// with the default values initialized.
 func NewEdgeClusterGetUsingGETParams() *EdgeClusterGetUsingGETParams {
+	var ()
 	return &EdgeClusterGetUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewEdgeClusterGetUsingGETParamsWithTimeout creates a new EdgeClusterGetUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewEdgeClusterGetUsingGETParamsWithTimeout(timeout time.Duration) *EdgeClusterGetUsingGETParams {
+	var ()
 	return &EdgeClusterGetUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewEdgeClusterGetUsingGETParamsWithContext creates a new EdgeClusterGetUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewEdgeClusterGetUsingGETParamsWithContext(ctx context.Context) *EdgeClusterGetUsingGETParams {
+	var ()
 	return &EdgeClusterGetUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewEdgeClusterGetUsingGETParamsWithHTTPClient creates a new EdgeClusterGetUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewEdgeClusterGetUsingGETParamsWithHTTPClient(client *http.Client) *EdgeClusterGetUsingGETParams {
+	var ()
 	return &EdgeClusterGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* EdgeClusterGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the edge cluster get using g e t operation.
-
-   Typically these are written to a http.Request.
+/*EdgeClusterGetUsingGETParams contains all the parameters to send to the API endpoint
+for the edge cluster get using g e t operation typically these are written to a http.Request
 */
 type EdgeClusterGetUsingGETParams struct {
 
-	/* EdgeClusterID.
+	/*EdgeClusterID
+	  edgeClusterId
 
-	   edgeClusterId
 	*/
 	EdgeClusterID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the edge cluster get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *EdgeClusterGetUsingGETParams) WithDefaults() *EdgeClusterGetUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the edge cluster get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *EdgeClusterGetUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the edge cluster get using g e t params

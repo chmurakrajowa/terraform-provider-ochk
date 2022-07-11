@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"encoding/json"
 	"strconv"
 
@@ -112,6 +111,7 @@ func (m *NetworkProfileInstance) Validate(formats strfmt.Registry) error {
 }
 
 func (m *NetworkProfileInstance) validateCreatedDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.CreatedDate) { // not required
 		return nil
 	}
@@ -124,6 +124,7 @@ func (m *NetworkProfileInstance) validateCreatedDate(formats strfmt.Registry) er
 }
 
 func (m *NetworkProfileInstance) validateDefinedRanges(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.DefinedRanges) { // not required
 		return nil
 	}
@@ -137,8 +138,6 @@ func (m *NetworkProfileInstance) validateDefinedRanges(formats strfmt.Registry) 
 			if err := m.DefinedRanges[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("definedRanges" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("definedRanges" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -150,6 +149,7 @@ func (m *NetworkProfileInstance) validateDefinedRanges(formats strfmt.Registry) 
 }
 
 func (m *NetworkProfileInstance) validateLastModifiedDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.LastModifiedDate) { // not required
 		return nil
 	}
@@ -197,6 +197,7 @@ func (m *NetworkProfileInstance) validateProfileTypeEnum(path, location string, 
 }
 
 func (m *NetworkProfileInstance) validateProfileType(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.ProfileType) { // not required
 		return nil
 	}
@@ -204,40 +205,6 @@ func (m *NetworkProfileInstance) validateProfileType(formats strfmt.Registry) er
 	// value enum
 	if err := m.validateProfileTypeEnum("profileType", "body", m.ProfileType); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this network profile instance based on the context it is used
-func (m *NetworkProfileInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateDefinedRanges(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *NetworkProfileInstance) contextValidateDefinedRanges(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.DefinedRanges); i++ {
-
-		if m.DefinedRanges[i] != nil {
-			if err := m.DefinedRanges[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("definedRanges" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("definedRanges" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

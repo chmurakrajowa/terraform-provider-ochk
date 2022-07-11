@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -74,6 +73,7 @@ func (m *CustomServiceInstance) Validate(formats strfmt.Registry) error {
 }
 
 func (m *CustomServiceInstance) validateCreationDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.CreationDate) { // not required
 		return nil
 	}
@@ -86,6 +86,7 @@ func (m *CustomServiceInstance) validateCreationDate(formats strfmt.Registry) er
 }
 
 func (m *CustomServiceInstance) validateL4PortSetEntries(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.L4PortSetEntries) { // not required
 		return nil
 	}
@@ -99,8 +100,6 @@ func (m *CustomServiceInstance) validateL4PortSetEntries(formats strfmt.Registry
 			if err := m.L4PortSetEntries[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("l4PortSetEntries" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("l4PortSetEntries" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -112,6 +111,7 @@ func (m *CustomServiceInstance) validateL4PortSetEntries(formats strfmt.Registry
 }
 
 func (m *CustomServiceInstance) validateModificationDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.ModificationDate) { // not required
 		return nil
 	}
@@ -124,6 +124,7 @@ func (m *CustomServiceInstance) validateModificationDate(formats strfmt.Registry
 }
 
 func (m *CustomServiceInstance) validateTags(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Tags) { // not required
 		return nil
 	}
@@ -137,66 +138,6 @@ func (m *CustomServiceInstance) validateTags(formats strfmt.Registry) error {
 			if err := m.Tags[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("tags" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("tags" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this custom service instance based on the context it is used
-func (m *CustomServiceInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateL4PortSetEntries(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateTags(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *CustomServiceInstance) contextValidateL4PortSetEntries(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.L4PortSetEntries); i++ {
-
-		if m.L4PortSetEntries[i] != nil {
-			if err := m.L4PortSetEntries[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("l4PortSetEntries" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("l4PortSetEntries" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *CustomServiceInstance) contextValidateTags(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.Tags); i++ {
-
-		if m.Tags[i] != nil {
-			if err := m.Tags[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("tags" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("tags" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

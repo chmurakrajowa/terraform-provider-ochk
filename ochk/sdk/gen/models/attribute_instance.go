@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -60,6 +59,7 @@ func (m *AttributeInstance) Validate(formats strfmt.Registry) error {
 }
 
 func (m *AttributeInstance) validateAttributeValueList(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.AttributeValueList) { // not required
 		return nil
 	}
@@ -73,8 +73,6 @@ func (m *AttributeInstance) validateAttributeValueList(formats strfmt.Registry) 
 			if err := m.AttributeValueList[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("attributeValueList" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("attributeValueList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -86,6 +84,7 @@ func (m *AttributeInstance) validateAttributeValueList(formats strfmt.Registry) 
 }
 
 func (m *AttributeInstance) validateSubAttributeList(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.SubAttributeList) { // not required
 		return nil
 	}
@@ -99,66 +98,6 @@ func (m *AttributeInstance) validateSubAttributeList(formats strfmt.Registry) er
 			if err := m.SubAttributeList[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("subAttributeList" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("subAttributeList" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this attribute instance based on the context it is used
-func (m *AttributeInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateAttributeValueList(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateSubAttributeList(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *AttributeInstance) contextValidateAttributeValueList(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.AttributeValueList); i++ {
-
-		if m.AttributeValueList[i] != nil {
-			if err := m.AttributeValueList[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("attributeValueList" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("attributeValueList" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *AttributeInstance) contextValidateSubAttributeList(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.SubAttributeList); i++ {
-
-		if m.SubAttributeList[i] != nil {
-			if err := m.SubAttributeList[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("subAttributeList" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("subAttributeList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

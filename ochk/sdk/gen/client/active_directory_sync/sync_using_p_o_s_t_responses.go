@@ -41,8 +41,9 @@ func (o *SyncUsingPOSTReader) ReadResponse(response runtime.ClientResponse, cons
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewSyncUsingPOSTOK() *SyncUsingPOSTOK {
 	return &SyncUsingPOSTOK{}
 }
 
-/* SyncUsingPOSTOK describes a response with status code 200, with default header values.
+/*SyncUsingPOSTOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type SyncUsingPOSTOK struct {
 func (o *SyncUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /ads/sync][%d] syncUsingPOSTOK  %+v", 200, o.Payload)
 }
+
 func (o *SyncUsingPOSTOK) GetPayload() *models.SyncMessageResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewSyncUsingPOSTCreated() *SyncUsingPOSTCreated {
 	return &SyncUsingPOSTCreated{}
 }
 
-/* SyncUsingPOSTCreated describes a response with status code 201, with default header values.
+/*SyncUsingPOSTCreated handles this case with default header values.
 
 Entity has been imported
 */
@@ -94,6 +96,7 @@ type SyncUsingPOSTCreated struct {
 func (o *SyncUsingPOSTCreated) Error() string {
 	return fmt.Sprintf("[POST /ads/sync][%d] syncUsingPOSTCreated  %+v", 201, o.Payload)
 }
+
 func (o *SyncUsingPOSTCreated) GetPayload() *models.SyncMessageResponse {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewSyncUsingPOSTBadRequest() *SyncUsingPOSTBadRequest {
 	return &SyncUsingPOSTBadRequest{}
 }
 
-/* SyncUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*SyncUsingPOSTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -126,6 +129,7 @@ type SyncUsingPOSTBadRequest struct {
 func (o *SyncUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /ads/sync][%d] syncUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *SyncUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

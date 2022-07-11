@@ -16,79 +16,64 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDfwRuleListUsingGETParams creates a new DfwRuleListUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewDfwRuleListUsingGETParams creates a new DfwRuleListUsingGETParams object
+// with the default values initialized.
 func NewDfwRuleListUsingGETParams() *DfwRuleListUsingGETParams {
+	var ()
 	return &DfwRuleListUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDfwRuleListUsingGETParamsWithTimeout creates a new DfwRuleListUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewDfwRuleListUsingGETParamsWithTimeout(timeout time.Duration) *DfwRuleListUsingGETParams {
+	var ()
 	return &DfwRuleListUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewDfwRuleListUsingGETParamsWithContext creates a new DfwRuleListUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewDfwRuleListUsingGETParamsWithContext(ctx context.Context) *DfwRuleListUsingGETParams {
+	var ()
 	return &DfwRuleListUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewDfwRuleListUsingGETParamsWithHTTPClient creates a new DfwRuleListUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewDfwRuleListUsingGETParamsWithHTTPClient(client *http.Client) *DfwRuleListUsingGETParams {
+	var ()
 	return &DfwRuleListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* DfwRuleListUsingGETParams contains all the parameters to send to the API endpoint
-   for the dfw rule list using g e t operation.
-
-   Typically these are written to a http.Request.
+/*DfwRuleListUsingGETParams contains all the parameters to send to the API endpoint
+for the dfw rule list using g e t operation typically these are written to a http.Request
 */
 type DfwRuleListUsingGETParams struct {
 
-	/* DisplayName.
+	/*DisplayName
+	  displayName
 
-	   displayName
 	*/
 	DisplayName *string
+	/*RouterID
+	  routerId
 
-	/* RouterID.
-
-	   routerId
 	*/
 	RouterID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the dfw rule list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *DfwRuleListUsingGETParams) WithDefaults() *DfwRuleListUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the dfw rule list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *DfwRuleListUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the dfw rule list using g e t params
@@ -158,17 +143,16 @@ func (o *DfwRuleListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg 
 
 		// query param displayName
 		var qrDisplayName string
-
 		if o.DisplayName != nil {
 			qrDisplayName = *o.DisplayName
 		}
 		qDisplayName := qrDisplayName
 		if qDisplayName != "" {
-
 			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
 				return err
 			}
 		}
+
 	}
 
 	// path param routerId

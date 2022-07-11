@@ -41,8 +41,9 @@ func (o *BillingTagGetUsingGETReader) ReadResponse(response runtime.ClientRespon
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewBillingTagGetUsingGETOK() *BillingTagGetUsingGETOK {
 	return &BillingTagGetUsingGETOK{}
 }
 
-/* BillingTagGetUsingGETOK describes a response with status code 200, with default header values.
+/*BillingTagGetUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type BillingTagGetUsingGETOK struct {
 func (o *BillingTagGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /tags/billingTags/{billingTagId}][%d] billingTagGetUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *BillingTagGetUsingGETOK) GetPayload() *models.BillingTagGetResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewBillingTagGetUsingGETBadRequest() *BillingTagGetUsingGETBadRequest {
 	return &BillingTagGetUsingGETBadRequest{}
 }
 
-/* BillingTagGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*BillingTagGetUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -94,6 +96,7 @@ type BillingTagGetUsingGETBadRequest struct {
 func (o *BillingTagGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /tags/billingTags/{billingTagId}][%d] billingTagGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *BillingTagGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewBillingTagGetUsingGETNotFound() *BillingTagGetUsingGETNotFound {
 	return &BillingTagGetUsingGETNotFound{}
 }
 
-/* BillingTagGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*BillingTagGetUsingGETNotFound handles this case with default header values.
 
 Entity not found.
 */

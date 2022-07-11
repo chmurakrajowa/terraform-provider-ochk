@@ -41,8 +41,9 @@ func (o *KeyRotationScheduleCreateUsingPUTReader) ReadResponse(response runtime.
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewKeyRotationScheduleCreateUsingPUTOK() *KeyRotationScheduleCreateUsingPUT
 	return &KeyRotationScheduleCreateUsingPUTOK{}
 }
 
-/* KeyRotationScheduleCreateUsingPUTOK describes a response with status code 200, with default header values.
+/*KeyRotationScheduleCreateUsingPUTOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type KeyRotationScheduleCreateUsingPUTOK struct {
 func (o *KeyRotationScheduleCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /kms/schedule][%d] keyRotationScheduleCreateUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *KeyRotationScheduleCreateUsingPUTOK) GetPayload() *models.CreateKeyRotationScheduleResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewKeyRotationScheduleCreateUsingPUTCreated() *KeyRotationScheduleCreateUsi
 	return &KeyRotationScheduleCreateUsingPUTCreated{}
 }
 
-/* KeyRotationScheduleCreateUsingPUTCreated describes a response with status code 201, with default header values.
+/*KeyRotationScheduleCreateUsingPUTCreated handles this case with default header values.
 
 Entity has been created
 */
@@ -94,6 +96,7 @@ type KeyRotationScheduleCreateUsingPUTCreated struct {
 func (o *KeyRotationScheduleCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /kms/schedule][%d] keyRotationScheduleCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
 func (o *KeyRotationScheduleCreateUsingPUTCreated) GetPayload() *models.CreateKeyRotationScheduleResponse {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewKeyRotationScheduleCreateUsingPUTBadRequest() *KeyRotationScheduleCreate
 	return &KeyRotationScheduleCreateUsingPUTBadRequest{}
 }
 
-/* KeyRotationScheduleCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*KeyRotationScheduleCreateUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -126,6 +129,7 @@ type KeyRotationScheduleCreateUsingPUTBadRequest struct {
 func (o *KeyRotationScheduleCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /kms/schedule][%d] keyRotationScheduleCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *KeyRotationScheduleCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

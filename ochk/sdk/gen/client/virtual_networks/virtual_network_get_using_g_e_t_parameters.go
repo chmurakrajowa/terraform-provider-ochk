@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewVirtualNetworkGetUsingGETParams creates a new VirtualNetworkGetUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewVirtualNetworkGetUsingGETParams creates a new VirtualNetworkGetUsingGETParams object
+// with the default values initialized.
 func NewVirtualNetworkGetUsingGETParams() *VirtualNetworkGetUsingGETParams {
+	var ()
 	return &VirtualNetworkGetUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewVirtualNetworkGetUsingGETParamsWithTimeout creates a new VirtualNetworkGetUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewVirtualNetworkGetUsingGETParamsWithTimeout(timeout time.Duration) *VirtualNetworkGetUsingGETParams {
+	var ()
 	return &VirtualNetworkGetUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewVirtualNetworkGetUsingGETParamsWithContext creates a new VirtualNetworkGetUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewVirtualNetworkGetUsingGETParamsWithContext(ctx context.Context) *VirtualNetworkGetUsingGETParams {
+	var ()
 	return &VirtualNetworkGetUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewVirtualNetworkGetUsingGETParamsWithHTTPClient creates a new VirtualNetworkGetUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewVirtualNetworkGetUsingGETParamsWithHTTPClient(client *http.Client) *VirtualNetworkGetUsingGETParams {
+	var ()
 	return &VirtualNetworkGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* VirtualNetworkGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the virtual network get using g e t operation.
-
-   Typically these are written to a http.Request.
+/*VirtualNetworkGetUsingGETParams contains all the parameters to send to the API endpoint
+for the virtual network get using g e t operation typically these are written to a http.Request
 */
 type VirtualNetworkGetUsingGETParams struct {
 
-	/* VirtualNetworkID.
+	/*VirtualNetworkID
+	  virtualNetworkId
 
-	   virtualNetworkId
 	*/
 	VirtualNetworkID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the virtual network get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *VirtualNetworkGetUsingGETParams) WithDefaults() *VirtualNetworkGetUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the virtual network get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *VirtualNetworkGetUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the virtual network get using g e t params

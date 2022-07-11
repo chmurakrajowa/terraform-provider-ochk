@@ -25,12 +25,9 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	AvailablePublicIPGetUsingGET(params *AvailablePublicIPGetUsingGETParams, opts ...ClientOption) (*AvailablePublicIPGetUsingGETOK, error)
+	AvailablePublicIPGetUsingGET(params *AvailablePublicIPGetUsingGETParams) (*AvailablePublicIPGetUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -40,12 +37,13 @@ type ClientService interface {
 
   Get IPAM service
 */
-func (a *Client) AvailablePublicIPGetUsingGET(params *AvailablePublicIPGetUsingGETParams, opts ...ClientOption) (*AvailablePublicIPGetUsingGETOK, error) {
+func (a *Client) AvailablePublicIPGetUsingGET(params *AvailablePublicIPGetUsingGETParams) (*AvailablePublicIPGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewAvailablePublicIPGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "availablePublicIPGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/ipam/ipaddress/public/available",
@@ -56,12 +54,7 @@ func (a *Client) AvailablePublicIPGetUsingGET(params *AvailablePublicIPGetUsingG
 		Reader:             &AvailablePublicIPGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}

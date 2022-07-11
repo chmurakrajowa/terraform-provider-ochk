@@ -41,8 +41,9 @@ func (o *SecurityGroupUpdateUsingPUTReader) ReadResponse(response runtime.Client
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewSecurityGroupUpdateUsingPUTOK() *SecurityGroupUpdateUsingPUTOK {
 	return &SecurityGroupUpdateUsingPUTOK{}
 }
 
-/* SecurityGroupUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*SecurityGroupUpdateUsingPUTOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type SecurityGroupUpdateUsingPUTOK struct {
 func (o *SecurityGroupUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/security-groups/{groupId}][%d] securityGroupUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *SecurityGroupUpdateUsingPUTOK) GetPayload() *models.UpdateSecurityGroupResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewSecurityGroupUpdateUsingPUTCreated() *SecurityGroupUpdateUsingPUTCreated
 	return &SecurityGroupUpdateUsingPUTCreated{}
 }
 
-/* SecurityGroupUpdateUsingPUTCreated describes a response with status code 201, with default header values.
+/*SecurityGroupUpdateUsingPUTCreated handles this case with default header values.
 
 Entity has been updated
 */
@@ -94,6 +96,7 @@ type SecurityGroupUpdateUsingPUTCreated struct {
 func (o *SecurityGroupUpdateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/security-groups/{groupId}][%d] securityGroupUpdateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
 func (o *SecurityGroupUpdateUsingPUTCreated) GetPayload() *models.UpdateSecurityGroupResponse {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewSecurityGroupUpdateUsingPUTBadRequest() *SecurityGroupUpdateUsingPUTBadR
 	return &SecurityGroupUpdateUsingPUTBadRequest{}
 }
 
-/* SecurityGroupUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*SecurityGroupUpdateUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -126,6 +129,7 @@ type SecurityGroupUpdateUsingPUTBadRequest struct {
 func (o *SecurityGroupUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/security-groups/{groupId}][%d] securityGroupUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *SecurityGroupUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

@@ -41,8 +41,9 @@ func (o *GfwRuleDeleteUsingDELETEReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewGfwRuleDeleteUsingDELETEOK() *GfwRuleDeleteUsingDELETEOK {
 	return &GfwRuleDeleteUsingDELETEOK{}
 }
 
-/* GfwRuleDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*GfwRuleDeleteUsingDELETEOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type GfwRuleDeleteUsingDELETEOK struct {
 func (o *GfwRuleDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
 func (o *GfwRuleDeleteUsingDELETEOK) GetPayload() *models.DeleteGFWRuleResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewGfwRuleDeleteUsingDELETECreated() *GfwRuleDeleteUsingDELETECreated {
 	return &GfwRuleDeleteUsingDELETECreated{}
 }
 
-/* GfwRuleDeleteUsingDELETECreated describes a response with status code 201, with default header values.
+/*GfwRuleDeleteUsingDELETECreated handles this case with default header values.
 
 Entity has been deleted
 */
@@ -94,6 +96,7 @@ type GfwRuleDeleteUsingDELETECreated struct {
 func (o *GfwRuleDeleteUsingDELETECreated) Error() string {
 	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleDeleteUsingDELETECreated  %+v", 201, o.Payload)
 }
+
 func (o *GfwRuleDeleteUsingDELETECreated) GetPayload() *models.DeleteGFWRuleResponse {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewGfwRuleDeleteUsingDELETEBadRequest() *GfwRuleDeleteUsingDELETEBadRequest
 	return &GfwRuleDeleteUsingDELETEBadRequest{}
 }
 
-/* GfwRuleDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*GfwRuleDeleteUsingDELETEBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -126,6 +129,7 @@ type GfwRuleDeleteUsingDELETEBadRequest struct {
 func (o *GfwRuleDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *GfwRuleDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

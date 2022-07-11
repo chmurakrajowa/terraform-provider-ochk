@@ -41,8 +41,9 @@ func (o *SubtenantGetUsingGETReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewSubtenantGetUsingGETOK() *SubtenantGetUsingGETOK {
 	return &SubtenantGetUsingGETOK{}
 }
 
-/* SubtenantGetUsingGETOK describes a response with status code 200, with default header values.
+/*SubtenantGetUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type SubtenantGetUsingGETOK struct {
 func (o *SubtenantGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /subtenants/{subtenantId}][%d] subtenantGetUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *SubtenantGetUsingGETOK) GetPayload() *models.SubtenantGetResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewSubtenantGetUsingGETBadRequest() *SubtenantGetUsingGETBadRequest {
 	return &SubtenantGetUsingGETBadRequest{}
 }
 
-/* SubtenantGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*SubtenantGetUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -94,6 +96,7 @@ type SubtenantGetUsingGETBadRequest struct {
 func (o *SubtenantGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /subtenants/{subtenantId}][%d] subtenantGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *SubtenantGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewSubtenantGetUsingGETNotFound() *SubtenantGetUsingGETNotFound {
 	return &SubtenantGetUsingGETNotFound{}
 }
 
-/* SubtenantGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*SubtenantGetUsingGETNotFound handles this case with default header values.
 
 Entity not found.
 */

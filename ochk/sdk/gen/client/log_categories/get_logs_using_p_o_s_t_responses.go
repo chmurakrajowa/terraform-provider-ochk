@@ -35,8 +35,9 @@ func (o *GetLogsUsingPOSTReader) ReadResponse(response runtime.ClientResponse, c
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewGetLogsUsingPOSTOK() *GetLogsUsingPOSTOK {
 	return &GetLogsUsingPOSTOK{}
 }
 
-/* GetLogsUsingPOSTOK describes a response with status code 200, with default header values.
+/*GetLogsUsingPOSTOK handles this case with default header values.
 
 Request has been completed successfully
 */
@@ -56,6 +57,7 @@ type GetLogsUsingPOSTOK struct {
 func (o *GetLogsUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /log/categories/{logCategoryId}/generate][%d] getLogsUsingPOSTOK  %+v", 200, o.Payload)
 }
+
 func (o *GetLogsUsingPOSTOK) GetPayload() *models.GetLogsResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewGetLogsUsingPOSTBadRequest() *GetLogsUsingPOSTBadRequest {
 	return &GetLogsUsingPOSTBadRequest{}
 }
 
-/* GetLogsUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*GetLogsUsingPOSTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type GetLogsUsingPOSTBadRequest struct {
 func (o *GetLogsUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /log/categories/{logCategoryId}/generate][%d] getLogsUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *GetLogsUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

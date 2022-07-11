@@ -35,8 +35,9 @@ func (o *BillingTagDeleteUsingDELETEReader) ReadResponse(response runtime.Client
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewBillingTagDeleteUsingDELETEOK() *BillingTagDeleteUsingDELETEOK {
 	return &BillingTagDeleteUsingDELETEOK{}
 }
 
-/* BillingTagDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*BillingTagDeleteUsingDELETEOK handles this case with default header values.
 
 OK
 */
@@ -56,6 +57,7 @@ type BillingTagDeleteUsingDELETEOK struct {
 func (o *BillingTagDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /tags/billingTags/{billingTagId}][%d] billingTagDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
 func (o *BillingTagDeleteUsingDELETEOK) GetPayload() *models.BillingTagDeleteResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewBillingTagDeleteUsingDELETEBadRequest() *BillingTagDeleteUsingDELETEBadR
 	return &BillingTagDeleteUsingDELETEBadRequest{}
 }
 
-/* BillingTagDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*BillingTagDeleteUsingDELETEBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type BillingTagDeleteUsingDELETEBadRequest struct {
 func (o *BillingTagDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /tags/billingTags/{billingTagId}][%d] billingTagDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *BillingTagDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

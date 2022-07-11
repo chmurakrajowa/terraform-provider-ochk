@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -53,6 +52,7 @@ func (m *IPCollectionListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *IPCollectionListResponse) validateIPCollectionSet(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.IPCollectionSet) { // not required
 		return nil
 	}
@@ -66,8 +66,6 @@ func (m *IPCollectionListResponse) validateIPCollectionSet(formats strfmt.Regist
 			if err := m.IPCollectionSet[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("ipCollectionSet" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("ipCollectionSet" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -79,46 +77,13 @@ func (m *IPCollectionListResponse) validateIPCollectionSet(formats strfmt.Regist
 }
 
 func (m *IPCollectionListResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this Ip collection list response based on the context it is used
-func (m *IPCollectionListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateIPCollectionSet(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *IPCollectionListResponse) contextValidateIPCollectionSet(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.IPCollectionSet); i++ {
-
-		if m.IPCollectionSet[i] != nil {
-			if err := m.IPCollectionSet[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("ipCollectionSet" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("ipCollectionSet" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

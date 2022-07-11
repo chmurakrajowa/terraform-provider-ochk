@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -53,6 +52,7 @@ func (m *GFWRuleListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *GFWRuleListResponse) validateRuleInstances(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.RuleInstances) { // not required
 		return nil
 	}
@@ -66,8 +66,6 @@ func (m *GFWRuleListResponse) validateRuleInstances(formats strfmt.Registry) err
 			if err := m.RuleInstances[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("ruleInstances" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("ruleInstances" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -79,46 +77,13 @@ func (m *GFWRuleListResponse) validateRuleInstances(formats strfmt.Registry) err
 }
 
 func (m *GFWRuleListResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this g f w rule list response based on the context it is used
-func (m *GFWRuleListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateRuleInstances(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *GFWRuleListResponse) contextValidateRuleInstances(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.RuleInstances); i++ {
-
-		if m.RuleInstances[i] != nil {
-			if err := m.RuleInstances[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("ruleInstances" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("ruleInstances" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

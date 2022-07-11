@@ -35,8 +35,9 @@ func (o *SystemTagUpdateUsingPUTReader) ReadResponse(response runtime.ClientResp
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewSystemTagUpdateUsingPUTOK() *SystemTagUpdateUsingPUTOK {
 	return &SystemTagUpdateUsingPUTOK{}
 }
 
-/* SystemTagUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*SystemTagUpdateUsingPUTOK handles this case with default header values.
 
 OK
 */
@@ -56,6 +57,7 @@ type SystemTagUpdateUsingPUTOK struct {
 func (o *SystemTagUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /tags/systemTags/{systemTagId}][%d] systemTagUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *SystemTagUpdateUsingPUTOK) GetPayload() *models.SystemTagUpdateResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewSystemTagUpdateUsingPUTBadRequest() *SystemTagUpdateUsingPUTBadRequest {
 	return &SystemTagUpdateUsingPUTBadRequest{}
 }
 
-/* SystemTagUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*SystemTagUpdateUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type SystemTagUpdateUsingPUTBadRequest struct {
 func (o *SystemTagUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /tags/systemTags/{systemTagId}][%d] systemTagUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *SystemTagUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

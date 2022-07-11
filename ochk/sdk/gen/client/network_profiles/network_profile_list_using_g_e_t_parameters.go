@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewNetworkProfileListUsingGETParams creates a new NetworkProfileListUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewNetworkProfileListUsingGETParams creates a new NetworkProfileListUsingGETParams object
+// with the default values initialized.
 func NewNetworkProfileListUsingGETParams() *NetworkProfileListUsingGETParams {
+	var ()
 	return &NetworkProfileListUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewNetworkProfileListUsingGETParamsWithTimeout creates a new NetworkProfileListUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewNetworkProfileListUsingGETParamsWithTimeout(timeout time.Duration) *NetworkProfileListUsingGETParams {
+	var ()
 	return &NetworkProfileListUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewNetworkProfileListUsingGETParamsWithContext creates a new NetworkProfileListUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewNetworkProfileListUsingGETParamsWithContext(ctx context.Context) *NetworkProfileListUsingGETParams {
+	var ()
 	return &NetworkProfileListUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewNetworkProfileListUsingGETParamsWithHTTPClient creates a new NetworkProfileListUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewNetworkProfileListUsingGETParamsWithHTTPClient(client *http.Client) *NetworkProfileListUsingGETParams {
+	var ()
 	return &NetworkProfileListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* NetworkProfileListUsingGETParams contains all the parameters to send to the API endpoint
-   for the network profile list using g e t operation.
-
-   Typically these are written to a http.Request.
+/*NetworkProfileListUsingGETParams contains all the parameters to send to the API endpoint
+for the network profile list using g e t operation typically these are written to a http.Request
 */
 type NetworkProfileListUsingGETParams struct {
 
-	/* DisplayName.
+	/*DisplayName
+	  displayName
 
-	   displayName
 	*/
 	DisplayName *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the network profile list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *NetworkProfileListUsingGETParams) WithDefaults() *NetworkProfileListUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the network profile list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *NetworkProfileListUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the network profile list using g e t params
@@ -141,17 +127,16 @@ func (o *NetworkProfileListUsingGETParams) WriteToRequest(r runtime.ClientReques
 
 		// query param displayName
 		var qrDisplayName string
-
 		if o.DisplayName != nil {
 			qrDisplayName = *o.DisplayName
 		}
 		qDisplayName := qrDisplayName
 		if qDisplayName != "" {
-
 			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
 				return err
 			}
 		}
+
 	}
 
 	if len(res) > 0 {

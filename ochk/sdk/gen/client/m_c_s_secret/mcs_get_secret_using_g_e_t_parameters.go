@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewMcsGetSecretUsingGETParams creates a new McsGetSecretUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewMcsGetSecretUsingGETParams creates a new McsGetSecretUsingGETParams object
+// with the default values initialized.
 func NewMcsGetSecretUsingGETParams() *McsGetSecretUsingGETParams {
+	var ()
 	return &McsGetSecretUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewMcsGetSecretUsingGETParamsWithTimeout creates a new McsGetSecretUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewMcsGetSecretUsingGETParamsWithTimeout(timeout time.Duration) *McsGetSecretUsingGETParams {
+	var ()
 	return &McsGetSecretUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewMcsGetSecretUsingGETParamsWithContext creates a new McsGetSecretUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewMcsGetSecretUsingGETParamsWithContext(ctx context.Context) *McsGetSecretUsingGETParams {
+	var ()
 	return &McsGetSecretUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewMcsGetSecretUsingGETParamsWithHTTPClient creates a new McsGetSecretUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewMcsGetSecretUsingGETParamsWithHTTPClient(client *http.Client) *McsGetSecretUsingGETParams {
+	var ()
 	return &McsGetSecretUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* McsGetSecretUsingGETParams contains all the parameters to send to the API endpoint
-   for the mcs get secret using g e t operation.
-
-   Typically these are written to a http.Request.
+/*McsGetSecretUsingGETParams contains all the parameters to send to the API endpoint
+for the mcs get secret using g e t operation typically these are written to a http.Request
 */
 type McsGetSecretUsingGETParams struct {
 
-	/* Username.
+	/*Username
+	  username
 
-	   username
 	*/
 	Username string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the mcs get secret using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *McsGetSecretUsingGETParams) WithDefaults() *McsGetSecretUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the mcs get secret using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *McsGetSecretUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the mcs get secret using g e t params
@@ -141,7 +127,6 @@ func (o *McsGetSecretUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg
 	qrUsername := o.Username
 	qUsername := qrUsername
 	if qUsername != "" {
-
 		if err := r.SetQueryParam("username", qUsername); err != nil {
 			return err
 		}

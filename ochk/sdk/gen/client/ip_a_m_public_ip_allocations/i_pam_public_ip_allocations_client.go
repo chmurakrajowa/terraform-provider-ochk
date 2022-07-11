@@ -25,20 +25,17 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	AllocationCreateUsingPUT(params *AllocationCreateUsingPUTParams, opts ...ClientOption) (*AllocationCreateUsingPUTOK, *AllocationCreateUsingPUTCreated, error)
+	AllocationCreateUsingPUT(params *AllocationCreateUsingPUTParams) (*AllocationCreateUsingPUTOK, *AllocationCreateUsingPUTCreated, error)
 
-	AllocationDeleteUsingDELETE(params *AllocationDeleteUsingDELETEParams, opts ...ClientOption) (*AllocationDeleteUsingDELETEOK, error)
+	AllocationDeleteUsingDELETE(params *AllocationDeleteUsingDELETEParams) (*AllocationDeleteUsingDELETEOK, error)
 
-	AllocationGetUsingGET(params *AllocationGetUsingGETParams, opts ...ClientOption) (*AllocationGetUsingGETOK, error)
+	AllocationGetUsingGET(params *AllocationGetUsingGETParams) (*AllocationGetUsingGETOK, error)
 
-	AllocationListUsingGET(params *AllocationListUsingGETParams, opts ...ClientOption) (*AllocationListUsingGETOK, error)
+	AllocationListUsingGET(params *AllocationListUsingGETParams) (*AllocationListUsingGETOK, error)
 
-	AllocationUpdateUsingPUT(params *AllocationUpdateUsingPUTParams, opts ...ClientOption) (*AllocationUpdateUsingPUTOK, error)
+	AllocationUpdateUsingPUT(params *AllocationUpdateUsingPUTParams) (*AllocationUpdateUsingPUTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -48,12 +45,13 @@ type ClientService interface {
 
   Create public IP allocation object
 */
-func (a *Client) AllocationCreateUsingPUT(params *AllocationCreateUsingPUTParams, opts ...ClientOption) (*AllocationCreateUsingPUTOK, *AllocationCreateUsingPUTCreated, error) {
+func (a *Client) AllocationCreateUsingPUT(params *AllocationCreateUsingPUTParams) (*AllocationCreateUsingPUTOK, *AllocationCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewAllocationCreateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "allocationCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/ipam/ipaddress/public/allocation",
@@ -64,12 +62,7 @@ func (a *Client) AllocationCreateUsingPUT(params *AllocationCreateUsingPUTParams
 		Reader:             &AllocationCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -89,12 +82,13 @@ func (a *Client) AllocationCreateUsingPUT(params *AllocationCreateUsingPUTParams
 
   Delete public IP allocation object
 */
-func (a *Client) AllocationDeleteUsingDELETE(params *AllocationDeleteUsingDELETEParams, opts ...ClientOption) (*AllocationDeleteUsingDELETEOK, error) {
+func (a *Client) AllocationDeleteUsingDELETE(params *AllocationDeleteUsingDELETEParams) (*AllocationDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewAllocationDeleteUsingDELETEParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "allocationDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/ipam/ipaddress/public/allocation/{allocationId}",
@@ -105,12 +99,7 @@ func (a *Client) AllocationDeleteUsingDELETE(params *AllocationDeleteUsingDELETE
 		Reader:             &AllocationDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -129,12 +118,13 @@ func (a *Client) AllocationDeleteUsingDELETE(params *AllocationDeleteUsingDELETE
 
   Get allocation of public IP
 */
-func (a *Client) AllocationGetUsingGET(params *AllocationGetUsingGETParams, opts ...ClientOption) (*AllocationGetUsingGETOK, error) {
+func (a *Client) AllocationGetUsingGET(params *AllocationGetUsingGETParams) (*AllocationGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewAllocationGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "allocationGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/ipam/ipaddress/public/allocation/{allocationId}",
@@ -145,12 +135,7 @@ func (a *Client) AllocationGetUsingGET(params *AllocationGetUsingGETParams, opts
 		Reader:             &AllocationGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -169,12 +154,13 @@ func (a *Client) AllocationGetUsingGET(params *AllocationGetUsingGETParams, opts
 
   List allocations of public IPs
 */
-func (a *Client) AllocationListUsingGET(params *AllocationListUsingGETParams, opts ...ClientOption) (*AllocationListUsingGETOK, error) {
+func (a *Client) AllocationListUsingGET(params *AllocationListUsingGETParams) (*AllocationListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewAllocationListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "allocationListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/ipam/ipaddress/public/allocation",
@@ -185,12 +171,7 @@ func (a *Client) AllocationListUsingGET(params *AllocationListUsingGETParams, op
 		Reader:             &AllocationListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -209,12 +190,13 @@ func (a *Client) AllocationListUsingGET(params *AllocationListUsingGETParams, op
 
   Update public IP allocation object
 */
-func (a *Client) AllocationUpdateUsingPUT(params *AllocationUpdateUsingPUTParams, opts ...ClientOption) (*AllocationUpdateUsingPUTOK, error) {
+func (a *Client) AllocationUpdateUsingPUT(params *AllocationUpdateUsingPUTParams) (*AllocationUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewAllocationUpdateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "allocationUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/ipam/ipaddress/public/allocation/{allocationId}",
@@ -225,12 +207,7 @@ func (a *Client) AllocationUpdateUsingPUT(params *AllocationUpdateUsingPUTParams
 		Reader:             &AllocationUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}

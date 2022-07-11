@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -23,11 +21,6 @@ type PublicKeyInstance struct {
 
 // Validate validates this public key instance
 func (m *PublicKeyInstance) Validate(formats strfmt.Registry) error {
-	return nil
-}
-
-// ContextValidate validates this public key instance based on context it is used
-func (m *PublicKeyInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

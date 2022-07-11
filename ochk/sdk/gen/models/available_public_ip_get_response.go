@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -52,6 +50,7 @@ func (m *AvailablePublicIPGetResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *AvailablePublicIPGetResponse) validatePublicIPAddress(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.PublicIPAddress) { // not required
 		return nil
 	}
@@ -60,8 +59,6 @@ func (m *AvailablePublicIPGetResponse) validatePublicIPAddress(formats strfmt.Re
 		if err := m.PublicIPAddress.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("publicIpAddress")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("publicIpAddress")
 			}
 			return err
 		}
@@ -71,42 +68,13 @@ func (m *AvailablePublicIPGetResponse) validatePublicIPAddress(formats strfmt.Re
 }
 
 func (m *AvailablePublicIPGetResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this available public IP get response based on the context it is used
-func (m *AvailablePublicIPGetResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidatePublicIPAddress(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *AvailablePublicIPGetResponse) contextValidatePublicIPAddress(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.PublicIPAddress != nil {
-		if err := m.PublicIPAddress.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("publicIpAddress")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("publicIpAddress")
-			}
-			return err
-		}
 	}
 
 	return nil

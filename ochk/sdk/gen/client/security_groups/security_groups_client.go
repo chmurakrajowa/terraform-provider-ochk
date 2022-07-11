@@ -25,20 +25,17 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	SecurityGroupCreateUsingPUT(params *SecurityGroupCreateUsingPUTParams, opts ...ClientOption) (*SecurityGroupCreateUsingPUTOK, *SecurityGroupCreateUsingPUTCreated, error)
+	SecurityGroupCreateUsingPUT(params *SecurityGroupCreateUsingPUTParams) (*SecurityGroupCreateUsingPUTOK, *SecurityGroupCreateUsingPUTCreated, error)
 
-	SecurityGroupDeleteUsingDELETE(params *SecurityGroupDeleteUsingDELETEParams, opts ...ClientOption) (*SecurityGroupDeleteUsingDELETEOK, *SecurityGroupDeleteUsingDELETECreated, error)
+	SecurityGroupDeleteUsingDELETE(params *SecurityGroupDeleteUsingDELETEParams) (*SecurityGroupDeleteUsingDELETEOK, *SecurityGroupDeleteUsingDELETECreated, error)
 
-	SecurityGroupGetUsingGET(params *SecurityGroupGetUsingGETParams, opts ...ClientOption) (*SecurityGroupGetUsingGETOK, error)
+	SecurityGroupGetUsingGET(params *SecurityGroupGetUsingGETParams) (*SecurityGroupGetUsingGETOK, error)
 
-	SecurityGroupListUsingGET(params *SecurityGroupListUsingGETParams, opts ...ClientOption) (*SecurityGroupListUsingGETOK, error)
+	SecurityGroupListUsingGET(params *SecurityGroupListUsingGETParams) (*SecurityGroupListUsingGETOK, error)
 
-	SecurityGroupUpdateUsingPUT(params *SecurityGroupUpdateUsingPUTParams, opts ...ClientOption) (*SecurityGroupUpdateUsingPUTOK, *SecurityGroupUpdateUsingPUTCreated, error)
+	SecurityGroupUpdateUsingPUT(params *SecurityGroupUpdateUsingPUTParams) (*SecurityGroupUpdateUsingPUTOK, *SecurityGroupUpdateUsingPUTCreated, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -48,12 +45,13 @@ type ClientService interface {
 
   Create security group in NSX-T
 */
-func (a *Client) SecurityGroupCreateUsingPUT(params *SecurityGroupCreateUsingPUTParams, opts ...ClientOption) (*SecurityGroupCreateUsingPUTOK, *SecurityGroupCreateUsingPUTCreated, error) {
+func (a *Client) SecurityGroupCreateUsingPUT(params *SecurityGroupCreateUsingPUTParams) (*SecurityGroupCreateUsingPUTOK, *SecurityGroupCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSecurityGroupCreateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "securityGroupCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/security-groups",
@@ -64,12 +62,7 @@ func (a *Client) SecurityGroupCreateUsingPUT(params *SecurityGroupCreateUsingPUT
 		Reader:             &SecurityGroupCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -89,12 +82,13 @@ func (a *Client) SecurityGroupCreateUsingPUT(params *SecurityGroupCreateUsingPUT
 
   Delete security group from NSX-T
 */
-func (a *Client) SecurityGroupDeleteUsingDELETE(params *SecurityGroupDeleteUsingDELETEParams, opts ...ClientOption) (*SecurityGroupDeleteUsingDELETEOK, *SecurityGroupDeleteUsingDELETECreated, error) {
+func (a *Client) SecurityGroupDeleteUsingDELETE(params *SecurityGroupDeleteUsingDELETEParams) (*SecurityGroupDeleteUsingDELETEOK, *SecurityGroupDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSecurityGroupDeleteUsingDELETEParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "securityGroupDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/network/security-groups/{groupId}",
@@ -105,12 +99,7 @@ func (a *Client) SecurityGroupDeleteUsingDELETE(params *SecurityGroupDeleteUsing
 		Reader:             &SecurityGroupDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -130,12 +119,13 @@ func (a *Client) SecurityGroupDeleteUsingDELETE(params *SecurityGroupDeleteUsing
 
   Get security group from NSX-T
 */
-func (a *Client) SecurityGroupGetUsingGET(params *SecurityGroupGetUsingGETParams, opts ...ClientOption) (*SecurityGroupGetUsingGETOK, error) {
+func (a *Client) SecurityGroupGetUsingGET(params *SecurityGroupGetUsingGETParams) (*SecurityGroupGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSecurityGroupGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "securityGroupGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/security-groups/{groupId}",
@@ -146,12 +136,7 @@ func (a *Client) SecurityGroupGetUsingGET(params *SecurityGroupGetUsingGETParams
 		Reader:             &SecurityGroupGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -170,12 +155,13 @@ func (a *Client) SecurityGroupGetUsingGET(params *SecurityGroupGetUsingGETParams
 
   List security groups from NSX-T
 */
-func (a *Client) SecurityGroupListUsingGET(params *SecurityGroupListUsingGETParams, opts ...ClientOption) (*SecurityGroupListUsingGETOK, error) {
+func (a *Client) SecurityGroupListUsingGET(params *SecurityGroupListUsingGETParams) (*SecurityGroupListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSecurityGroupListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "securityGroupListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/security-groups",
@@ -186,12 +172,7 @@ func (a *Client) SecurityGroupListUsingGET(params *SecurityGroupListUsingGETPara
 		Reader:             &SecurityGroupListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -210,12 +191,13 @@ func (a *Client) SecurityGroupListUsingGET(params *SecurityGroupListUsingGETPara
 
   Update security group from NSX-T
 */
-func (a *Client) SecurityGroupUpdateUsingPUT(params *SecurityGroupUpdateUsingPUTParams, opts ...ClientOption) (*SecurityGroupUpdateUsingPUTOK, *SecurityGroupUpdateUsingPUTCreated, error) {
+func (a *Client) SecurityGroupUpdateUsingPUT(params *SecurityGroupUpdateUsingPUTParams) (*SecurityGroupUpdateUsingPUTOK, *SecurityGroupUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSecurityGroupUpdateUsingPUTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "securityGroupUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/security-groups/{groupId}",
@@ -226,12 +208,7 @@ func (a *Client) SecurityGroupUpdateUsingPUT(params *SecurityGroupUpdateUsingPUT
 		Reader:             &SecurityGroupUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, nil, err
 	}

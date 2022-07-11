@@ -35,8 +35,9 @@ func (o *ListADGroupUsingGETReader) ReadResponse(response runtime.ClientResponse
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewListADGroupUsingGETOK() *ListADGroupUsingGETOK {
 	return &ListADGroupUsingGETOK{}
 }
 
-/* ListADGroupUsingGETOK describes a response with status code 200, with default header values.
+/*ListADGroupUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -56,6 +57,7 @@ type ListADGroupUsingGETOK struct {
 func (o *ListADGroupUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /ad/integration/groups][%d] listADGroupUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *ListADGroupUsingGETOK) GetPayload() *models.GroupInstanceListResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewListADGroupUsingGETBadRequest() *ListADGroupUsingGETBadRequest {
 	return &ListADGroupUsingGETBadRequest{}
 }
 
-/* ListADGroupUsingGETBadRequest describes a response with status code 400, with default header values.
+/*ListADGroupUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */

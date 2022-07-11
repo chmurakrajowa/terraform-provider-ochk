@@ -17,75 +17,59 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewLogCategoryGetUsingGETParams creates a new LogCategoryGetUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewLogCategoryGetUsingGETParams creates a new LogCategoryGetUsingGETParams object
+// with the default values initialized.
 func NewLogCategoryGetUsingGETParams() *LogCategoryGetUsingGETParams {
+	var ()
 	return &LogCategoryGetUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewLogCategoryGetUsingGETParamsWithTimeout creates a new LogCategoryGetUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewLogCategoryGetUsingGETParamsWithTimeout(timeout time.Duration) *LogCategoryGetUsingGETParams {
+	var ()
 	return &LogCategoryGetUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewLogCategoryGetUsingGETParamsWithContext creates a new LogCategoryGetUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewLogCategoryGetUsingGETParamsWithContext(ctx context.Context) *LogCategoryGetUsingGETParams {
+	var ()
 	return &LogCategoryGetUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewLogCategoryGetUsingGETParamsWithHTTPClient creates a new LogCategoryGetUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewLogCategoryGetUsingGETParamsWithHTTPClient(client *http.Client) *LogCategoryGetUsingGETParams {
+	var ()
 	return &LogCategoryGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* LogCategoryGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the log category get using g e t operation.
-
-   Typically these are written to a http.Request.
+/*LogCategoryGetUsingGETParams contains all the parameters to send to the API endpoint
+for the log category get using g e t operation typically these are written to a http.Request
 */
 type LogCategoryGetUsingGETParams struct {
 
-	/* LogCategoryID.
+	/*LogCategoryID
+	  logCategoryId
 
-	   logCategoryId
-
-	   Format: int32
 	*/
 	LogCategoryID int32
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the log category get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *LogCategoryGetUsingGETParams) WithDefaults() *LogCategoryGetUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the log category get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *LogCategoryGetUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the log category get using g e t params

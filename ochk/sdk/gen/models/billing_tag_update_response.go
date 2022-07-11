@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -59,6 +57,7 @@ func (m *BillingTagUpdateResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *BillingTagUpdateResponse) validateBillingTag(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.BillingTag) { // not required
 		return nil
 	}
@@ -67,8 +66,6 @@ func (m *BillingTagUpdateResponse) validateBillingTag(formats strfmt.Registry) e
 		if err := m.BillingTag.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("billingTag")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("billingTag")
 			}
 			return err
 		}
@@ -78,6 +75,7 @@ func (m *BillingTagUpdateResponse) validateBillingTag(formats strfmt.Registry) e
 }
 
 func (m *BillingTagUpdateResponse) validateRequestInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -86,8 +84,6 @@ func (m *BillingTagUpdateResponse) validateRequestInstance(formats strfmt.Regist
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -97,62 +93,13 @@ func (m *BillingTagUpdateResponse) validateRequestInstance(formats strfmt.Regist
 }
 
 func (m *BillingTagUpdateResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this billing tag update response based on the context it is used
-func (m *BillingTagUpdateResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateBillingTag(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *BillingTagUpdateResponse) contextValidateBillingTag(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.BillingTag != nil {
-		if err := m.BillingTag.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("billingTag")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("billingTag")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *BillingTagUpdateResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.RequestInstance != nil {
-		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("requestInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("requestInstance")
-			}
-			return err
-		}
 	}
 
 	return nil

@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"encoding/json"
 	"strconv"
 
@@ -88,6 +87,7 @@ func (m *StaticIPV4Range) Validate(formats strfmt.Registry) error {
 }
 
 func (m *StaticIPV4Range) validateCreatedDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.CreatedDate) { // not required
 		return nil
 	}
@@ -100,6 +100,7 @@ func (m *StaticIPV4Range) validateCreatedDate(formats strfmt.Registry) error {
 }
 
 func (m *StaticIPV4Range) validateDefinedAddresses(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.DefinedAddresses) { // not required
 		return nil
 	}
@@ -113,8 +114,6 @@ func (m *StaticIPV4Range) validateDefinedAddresses(formats strfmt.Registry) erro
 			if err := m.DefinedAddresses[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("definedAddresses" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("definedAddresses" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -126,6 +125,7 @@ func (m *StaticIPV4Range) validateDefinedAddresses(formats strfmt.Registry) erro
 }
 
 func (m *StaticIPV4Range) validateLastModifiedDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.LastModifiedDate) { // not required
 		return nil
 	}
@@ -173,6 +173,7 @@ func (m *StaticIPV4Range) validateStateEnum(path, location string, value string)
 }
 
 func (m *StaticIPV4Range) validateState(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.State) { // not required
 		return nil
 	}
@@ -180,40 +181,6 @@ func (m *StaticIPV4Range) validateState(formats strfmt.Registry) error {
 	// value enum
 	if err := m.validateStateEnum("state", "body", m.State); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this static IPv4 range based on the context it is used
-func (m *StaticIPV4Range) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateDefinedAddresses(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *StaticIPV4Range) contextValidateDefinedAddresses(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.DefinedAddresses); i++ {
-
-		if m.DefinedAddresses[i] != nil {
-			if err := m.DefinedAddresses[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("definedAddresses" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("definedAddresses" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

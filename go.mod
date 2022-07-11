@@ -1,6 +1,6 @@
 module github.com/chmurakrajowa/terraform-provider-ochk
 
-go 1.17
+go 1.15
 
 require (
 	github.com/bflad/tfproviderdocs v0.9.1

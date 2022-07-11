@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -52,6 +50,7 @@ func (m *DFWRuleGetResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *DFWRuleGetResponse) validateRuleInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.RuleInstance) { // not required
 		return nil
 	}
@@ -60,8 +59,6 @@ func (m *DFWRuleGetResponse) validateRuleInstance(formats strfmt.Registry) error
 		if err := m.RuleInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("ruleInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("ruleInstance")
 			}
 			return err
 		}
@@ -71,42 +68,13 @@ func (m *DFWRuleGetResponse) validateRuleInstance(formats strfmt.Registry) error
 }
 
 func (m *DFWRuleGetResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this d f w rule get response based on the context it is used
-func (m *DFWRuleGetResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateRuleInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *DFWRuleGetResponse) contextValidateRuleInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.RuleInstance != nil {
-		if err := m.RuleInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("ruleInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("ruleInstance")
-			}
-			return err
-		}
 	}
 
 	return nil

@@ -41,8 +41,9 @@ func (o *RouterUpdateUsingPUTReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewRouterUpdateUsingPUTOK() *RouterUpdateUsingPUTOK {
 	return &RouterUpdateUsingPUTOK{}
 }
 
-/* RouterUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*RouterUpdateUsingPUTOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type RouterUpdateUsingPUTOK struct {
 func (o *RouterUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}][%d] routerUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *RouterUpdateUsingPUTOK) GetPayload() *models.UpdateRouterResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewRouterUpdateUsingPUTCreated() *RouterUpdateUsingPUTCreated {
 	return &RouterUpdateUsingPUTCreated{}
 }
 
-/* RouterUpdateUsingPUTCreated describes a response with status code 201, with default header values.
+/*RouterUpdateUsingPUTCreated handles this case with default header values.
 
 Entity has been updated
 */
@@ -94,6 +96,7 @@ type RouterUpdateUsingPUTCreated struct {
 func (o *RouterUpdateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}][%d] routerUpdateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
 func (o *RouterUpdateUsingPUTCreated) GetPayload() *models.UpdateRouterResponse {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewRouterUpdateUsingPUTBadRequest() *RouterUpdateUsingPUTBadRequest {
 	return &RouterUpdateUsingPUTBadRequest{}
 }
 
-/* RouterUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*RouterUpdateUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -126,6 +129,7 @@ type RouterUpdateUsingPUTBadRequest struct {
 func (o *RouterUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}][%d] routerUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *RouterUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

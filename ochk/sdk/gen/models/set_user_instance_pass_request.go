@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -23,11 +21,6 @@ type SetUserInstancePassRequest struct {
 
 // Validate validates this set user instance pass request
 func (m *SetUserInstancePassRequest) Validate(formats strfmt.Registry) error {
-	return nil
-}
-
-// ContextValidate validates this set user instance pass request based on context it is used
-func (m *SetUserInstancePassRequest) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

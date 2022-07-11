@@ -41,8 +41,9 @@ func (o *KeyNewVersionUsingPOSTReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewKeyNewVersionUsingPOSTOK() *KeyNewVersionUsingPOSTOK {
 	return &KeyNewVersionUsingPOSTOK{}
 }
 
-/* KeyNewVersionUsingPOSTOK describes a response with status code 200, with default header values.
+/*KeyNewVersionUsingPOSTOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type KeyNewVersionUsingPOSTOK struct {
 func (o *KeyNewVersionUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /kms/key/{id}/versions][%d] keyNewVersionUsingPOSTOK  %+v", 200, o.Payload)
 }
+
 func (o *KeyNewVersionUsingPOSTOK) GetPayload() *models.CreateNewKmsKeyVersionResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewKeyNewVersionUsingPOSTCreated() *KeyNewVersionUsingPOSTCreated {
 	return &KeyNewVersionUsingPOSTCreated{}
 }
 
-/* KeyNewVersionUsingPOSTCreated describes a response with status code 201, with default header values.
+/*KeyNewVersionUsingPOSTCreated handles this case with default header values.
 
 New key version has been created.
 */
@@ -94,6 +96,7 @@ type KeyNewVersionUsingPOSTCreated struct {
 func (o *KeyNewVersionUsingPOSTCreated) Error() string {
 	return fmt.Sprintf("[POST /kms/key/{id}/versions][%d] keyNewVersionUsingPOSTCreated  %+v", 201, o.Payload)
 }
+
 func (o *KeyNewVersionUsingPOSTCreated) GetPayload() *models.CreateNewKmsKeyVersionResponse {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewKeyNewVersionUsingPOSTBadRequest() *KeyNewVersionUsingPOSTBadRequest {
 	return &KeyNewVersionUsingPOSTBadRequest{}
 }
 
-/* KeyNewVersionUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*KeyNewVersionUsingPOSTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -126,6 +129,7 @@ type KeyNewVersionUsingPOSTBadRequest struct {
 func (o *KeyNewVersionUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /kms/key/{id}/versions][%d] keyNewVersionUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *KeyNewVersionUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

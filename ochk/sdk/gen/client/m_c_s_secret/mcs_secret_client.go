@@ -25,14 +25,11 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	McsGenerateSecretUsingPOST(params *McsGenerateSecretUsingPOSTParams, opts ...ClientOption) (*McsGenerateSecretUsingPOSTOK, error)
+	McsGenerateSecretUsingPOST(params *McsGenerateSecretUsingPOSTParams) (*McsGenerateSecretUsingPOSTOK, error)
 
-	McsGetSecretUsingGET(params *McsGetSecretUsingGETParams, opts ...ClientOption) (*McsGetSecretUsingGETOK, error)
+	McsGetSecretUsingGET(params *McsGetSecretUsingGETParams) (*McsGetSecretUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -42,12 +39,13 @@ type ClientService interface {
 
   Generate MCS Secret
 */
-func (a *Client) McsGenerateSecretUsingPOST(params *McsGenerateSecretUsingPOSTParams, opts ...ClientOption) (*McsGenerateSecretUsingPOSTOK, error) {
+func (a *Client) McsGenerateSecretUsingPOST(params *McsGenerateSecretUsingPOSTParams) (*McsGenerateSecretUsingPOSTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewMcsGenerateSecretUsingPOSTParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "mcsGenerateSecretUsingPOST",
 		Method:             "POST",
 		PathPattern:        "/mcs/secret/generate",
@@ -58,12 +56,7 @@ func (a *Client) McsGenerateSecretUsingPOST(params *McsGenerateSecretUsingPOSTPa
 		Reader:             &McsGenerateSecretUsingPOSTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -82,12 +75,13 @@ func (a *Client) McsGenerateSecretUsingPOST(params *McsGenerateSecretUsingPOSTPa
 
   Get MCS secret
 */
-func (a *Client) McsGetSecretUsingGET(params *McsGetSecretUsingGETParams, opts ...ClientOption) (*McsGetSecretUsingGETOK, error) {
+func (a *Client) McsGetSecretUsingGET(params *McsGetSecretUsingGETParams) (*McsGetSecretUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewMcsGetSecretUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "mcsGetSecretUsingGET",
 		Method:             "GET",
 		PathPattern:        "/mcs/secret",
@@ -98,12 +92,7 @@ func (a *Client) McsGetSecretUsingGET(params *McsGetSecretUsingGETParams, opts .
 		Reader:             &McsGetSecretUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}

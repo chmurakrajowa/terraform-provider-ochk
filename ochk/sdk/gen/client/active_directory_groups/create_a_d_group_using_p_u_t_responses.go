@@ -47,8 +47,9 @@ func (o *CreateADGroupUsingPUTReader) ReadResponse(response runtime.ClientRespon
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -57,7 +58,7 @@ func NewCreateADGroupUsingPUTOK() *CreateADGroupUsingPUTOK {
 	return &CreateADGroupUsingPUTOK{}
 }
 
-/* CreateADGroupUsingPUTOK describes a response with status code 200, with default header values.
+/*CreateADGroupUsingPUTOK handles this case with default header values.
 
 OK
 */
@@ -68,6 +69,7 @@ type CreateADGroupUsingPUTOK struct {
 func (o *CreateADGroupUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /ad/integration/groups][%d] createADGroupUsingPUTOK  %+v", 200, o.Payload)
 }
+
 func (o *CreateADGroupUsingPUTOK) GetPayload() *models.CreateGroupInstanceResponse {
 	return o.Payload
 }
@@ -89,7 +91,7 @@ func NewCreateADGroupUsingPUTCreated() *CreateADGroupUsingPUTCreated {
 	return &CreateADGroupUsingPUTCreated{}
 }
 
-/* CreateADGroupUsingPUTCreated describes a response with status code 201, with default header values.
+/*CreateADGroupUsingPUTCreated handles this case with default header values.
 
 Entity has been created
 */
@@ -100,6 +102,7 @@ type CreateADGroupUsingPUTCreated struct {
 func (o *CreateADGroupUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /ad/integration/groups][%d] createADGroupUsingPUTCreated  %+v", 201, o.Payload)
 }
+
 func (o *CreateADGroupUsingPUTCreated) GetPayload() *models.CreateGroupInstanceResponse {
 	return o.Payload
 }
@@ -121,7 +124,7 @@ func NewCreateADGroupUsingPUTBadRequest() *CreateADGroupUsingPUTBadRequest {
 	return &CreateADGroupUsingPUTBadRequest{}
 }
 
-/* CreateADGroupUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*CreateADGroupUsingPUTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -142,7 +145,7 @@ func NewCreateADGroupUsingPUTNotFound() *CreateADGroupUsingPUTNotFound {
 	return &CreateADGroupUsingPUTNotFound{}
 }
 
-/* CreateADGroupUsingPUTNotFound describes a response with status code 404, with default header values.
+/*CreateADGroupUsingPUTNotFound handles this case with default header values.
 
 Entity not found.
 */

@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -26,11 +24,6 @@ type AttributeValueInstance struct {
 
 // Validate validates this attribute value instance
 func (m *AttributeValueInstance) Validate(formats strfmt.Registry) error {
-	return nil
-}
-
-// ContextValidate validates this attribute value instance based on context it is used
-func (m *AttributeValueInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

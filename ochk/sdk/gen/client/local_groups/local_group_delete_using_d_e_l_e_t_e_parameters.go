@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewLocalGroupDeleteUsingDELETEParams creates a new LocalGroupDeleteUsingDELETEParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewLocalGroupDeleteUsingDELETEParams creates a new LocalGroupDeleteUsingDELETEParams object
+// with the default values initialized.
 func NewLocalGroupDeleteUsingDELETEParams() *LocalGroupDeleteUsingDELETEParams {
+	var ()
 	return &LocalGroupDeleteUsingDELETEParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewLocalGroupDeleteUsingDELETEParamsWithTimeout creates a new LocalGroupDeleteUsingDELETEParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewLocalGroupDeleteUsingDELETEParamsWithTimeout(timeout time.Duration) *LocalGroupDeleteUsingDELETEParams {
+	var ()
 	return &LocalGroupDeleteUsingDELETEParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewLocalGroupDeleteUsingDELETEParamsWithContext creates a new LocalGroupDeleteUsingDELETEParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewLocalGroupDeleteUsingDELETEParamsWithContext(ctx context.Context) *LocalGroupDeleteUsingDELETEParams {
+	var ()
 	return &LocalGroupDeleteUsingDELETEParams{
+
 		Context: ctx,
 	}
 }
 
 // NewLocalGroupDeleteUsingDELETEParamsWithHTTPClient creates a new LocalGroupDeleteUsingDELETEParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewLocalGroupDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) *LocalGroupDeleteUsingDELETEParams {
+	var ()
 	return &LocalGroupDeleteUsingDELETEParams{
 		HTTPClient: client,
 	}
 }
 
-/* LocalGroupDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-   for the local group delete using d e l e t e operation.
-
-   Typically these are written to a http.Request.
+/*LocalGroupDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
+for the local group delete using d e l e t e operation typically these are written to a http.Request
 */
 type LocalGroupDeleteUsingDELETEParams struct {
 
-	/* GroupID.
+	/*GroupID
+	  groupId
 
-	   groupId
 	*/
 	GroupID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the local group delete using d e l e t e params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *LocalGroupDeleteUsingDELETEParams) WithDefaults() *LocalGroupDeleteUsingDELETEParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the local group delete using d e l e t e params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *LocalGroupDeleteUsingDELETEParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the local group delete using d e l e t e params

@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewIpamServiceGetUsingGETParams creates a new IpamServiceGetUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewIpamServiceGetUsingGETParams creates a new IpamServiceGetUsingGETParams object
+// with the default values initialized.
 func NewIpamServiceGetUsingGETParams() *IpamServiceGetUsingGETParams {
+	var ()
 	return &IpamServiceGetUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewIpamServiceGetUsingGETParamsWithTimeout creates a new IpamServiceGetUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewIpamServiceGetUsingGETParamsWithTimeout(timeout time.Duration) *IpamServiceGetUsingGETParams {
+	var ()
 	return &IpamServiceGetUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewIpamServiceGetUsingGETParamsWithContext creates a new IpamServiceGetUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewIpamServiceGetUsingGETParamsWithContext(ctx context.Context) *IpamServiceGetUsingGETParams {
+	var ()
 	return &IpamServiceGetUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewIpamServiceGetUsingGETParamsWithHTTPClient creates a new IpamServiceGetUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewIpamServiceGetUsingGETParamsWithHTTPClient(client *http.Client) *IpamServiceGetUsingGETParams {
+	var ()
 	return &IpamServiceGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* IpamServiceGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the ipam service get using g e t operation.
-
-   Typically these are written to a http.Request.
+/*IpamServiceGetUsingGETParams contains all the parameters to send to the API endpoint
+for the ipam service get using g e t operation typically these are written to a http.Request
 */
 type IpamServiceGetUsingGETParams struct {
 
-	/* ServiceID.
+	/*ServiceID
+	  serviceId
 
-	   serviceId
 	*/
 	ServiceID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the ipam service get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *IpamServiceGetUsingGETParams) WithDefaults() *IpamServiceGetUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the ipam service get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *IpamServiceGetUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the ipam service get using g e t params

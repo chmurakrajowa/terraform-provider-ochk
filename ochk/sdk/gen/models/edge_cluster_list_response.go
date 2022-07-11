@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -53,6 +52,7 @@ func (m *EdgeClusterListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *EdgeClusterListResponse) validateEdgeClusterCollection(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.EdgeClusterCollection) { // not required
 		return nil
 	}
@@ -66,8 +66,6 @@ func (m *EdgeClusterListResponse) validateEdgeClusterCollection(formats strfmt.R
 			if err := m.EdgeClusterCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("edgeClusterCollection" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("edgeClusterCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -79,46 +77,13 @@ func (m *EdgeClusterListResponse) validateEdgeClusterCollection(formats strfmt.R
 }
 
 func (m *EdgeClusterListResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this edge cluster list response based on the context it is used
-func (m *EdgeClusterListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateEdgeClusterCollection(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *EdgeClusterListResponse) contextValidateEdgeClusterCollection(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.EdgeClusterCollection); i++ {
-
-		if m.EdgeClusterCollection[i] != nil {
-			if err := m.EdgeClusterCollection[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("edgeClusterCollection" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("edgeClusterCollection" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

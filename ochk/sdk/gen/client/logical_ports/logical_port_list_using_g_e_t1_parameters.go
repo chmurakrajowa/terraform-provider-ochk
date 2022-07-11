@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewLogicalPortListUsingGET1Params creates a new LogicalPortListUsingGET1Params object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewLogicalPortListUsingGET1Params creates a new LogicalPortListUsingGET1Params object
+// with the default values initialized.
 func NewLogicalPortListUsingGET1Params() *LogicalPortListUsingGET1Params {
+	var ()
 	return &LogicalPortListUsingGET1Params{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewLogicalPortListUsingGET1ParamsWithTimeout creates a new LogicalPortListUsingGET1Params object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewLogicalPortListUsingGET1ParamsWithTimeout(timeout time.Duration) *LogicalPortListUsingGET1Params {
+	var ()
 	return &LogicalPortListUsingGET1Params{
+
 		timeout: timeout,
 	}
 }
 
 // NewLogicalPortListUsingGET1ParamsWithContext creates a new LogicalPortListUsingGET1Params object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewLogicalPortListUsingGET1ParamsWithContext(ctx context.Context) *LogicalPortListUsingGET1Params {
+	var ()
 	return &LogicalPortListUsingGET1Params{
+
 		Context: ctx,
 	}
 }
 
 // NewLogicalPortListUsingGET1ParamsWithHTTPClient creates a new LogicalPortListUsingGET1Params object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewLogicalPortListUsingGET1ParamsWithHTTPClient(client *http.Client) *LogicalPortListUsingGET1Params {
+	var ()
 	return &LogicalPortListUsingGET1Params{
 		HTTPClient: client,
 	}
 }
 
-/* LogicalPortListUsingGET1Params contains all the parameters to send to the API endpoint
-   for the logical port list using g e t 1 operation.
-
-   Typically these are written to a http.Request.
+/*LogicalPortListUsingGET1Params contains all the parameters to send to the API endpoint
+for the logical port list using g e t 1 operation typically these are written to a http.Request
 */
 type LogicalPortListUsingGET1Params struct {
 
-	/* DisplayName.
+	/*DisplayName
+	  displayName
 
-	   displayName
 	*/
 	DisplayName *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the logical port list using g e t 1 params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *LogicalPortListUsingGET1Params) WithDefaults() *LogicalPortListUsingGET1Params {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the logical port list using g e t 1 params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *LogicalPortListUsingGET1Params) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the logical port list using g e t 1 params
@@ -141,17 +127,16 @@ func (o *LogicalPortListUsingGET1Params) WriteToRequest(r runtime.ClientRequest,
 
 		// query param displayName
 		var qrDisplayName string
-
 		if o.DisplayName != nil {
 			qrDisplayName = *o.DisplayName
 		}
 		qDisplayName := qrDisplayName
 		if qDisplayName != "" {
-
 			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
 				return err
 			}
 		}
+
 	}
 
 	if len(res) > 0 {

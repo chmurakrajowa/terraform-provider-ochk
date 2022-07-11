@@ -18,79 +18,64 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewGfwRuleCreateUsingPUTParams creates a new GfwRuleCreateUsingPUTParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewGfwRuleCreateUsingPUTParams creates a new GfwRuleCreateUsingPUTParams object
+// with the default values initialized.
 func NewGfwRuleCreateUsingPUTParams() *GfwRuleCreateUsingPUTParams {
+	var ()
 	return &GfwRuleCreateUsingPUTParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGfwRuleCreateUsingPUTParamsWithTimeout creates a new GfwRuleCreateUsingPUTParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewGfwRuleCreateUsingPUTParamsWithTimeout(timeout time.Duration) *GfwRuleCreateUsingPUTParams {
+	var ()
 	return &GfwRuleCreateUsingPUTParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewGfwRuleCreateUsingPUTParamsWithContext creates a new GfwRuleCreateUsingPUTParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewGfwRuleCreateUsingPUTParamsWithContext(ctx context.Context) *GfwRuleCreateUsingPUTParams {
+	var ()
 	return &GfwRuleCreateUsingPUTParams{
+
 		Context: ctx,
 	}
 }
 
 // NewGfwRuleCreateUsingPUTParamsWithHTTPClient creates a new GfwRuleCreateUsingPUTParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewGfwRuleCreateUsingPUTParamsWithHTTPClient(client *http.Client) *GfwRuleCreateUsingPUTParams {
+	var ()
 	return &GfwRuleCreateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/* GfwRuleCreateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the gfw rule create using p u t operation.
-
-   Typically these are written to a http.Request.
+/*GfwRuleCreateUsingPUTParams contains all the parameters to send to the API endpoint
+for the gfw rule create using p u t operation typically these are written to a http.Request
 */
 type GfwRuleCreateUsingPUTParams struct {
 
-	/* GfwRule.
+	/*GfwRule
+	  gfwRule
 
-	   gfwRule
 	*/
 	GfwRule *models.GFWRule
+	/*RouterID
+	  routerId
 
-	/* RouterID.
-
-	   routerId
 	*/
 	RouterID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the gfw rule create using p u t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *GfwRuleCreateUsingPUTParams) WithDefaults() *GfwRuleCreateUsingPUTParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the gfw rule create using p u t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *GfwRuleCreateUsingPUTParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the gfw rule create using p u t params
@@ -155,6 +140,7 @@ func (o *GfwRuleCreateUsingPUTParams) WriteToRequest(r runtime.ClientRequest, re
 		return err
 	}
 	var res []error
+
 	if o.GfwRule != nil {
 		if err := r.SetBodyParam(o.GfwRule); err != nil {
 			return err

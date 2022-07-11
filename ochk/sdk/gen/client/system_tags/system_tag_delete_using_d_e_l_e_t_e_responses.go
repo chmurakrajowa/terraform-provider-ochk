@@ -35,8 +35,9 @@ func (o *SystemTagDeleteUsingDELETEReader) ReadResponse(response runtime.ClientR
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewSystemTagDeleteUsingDELETEOK() *SystemTagDeleteUsingDELETEOK {
 	return &SystemTagDeleteUsingDELETEOK{}
 }
 
-/* SystemTagDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*SystemTagDeleteUsingDELETEOK handles this case with default header values.
 
 OK
 */
@@ -56,6 +57,7 @@ type SystemTagDeleteUsingDELETEOK struct {
 func (o *SystemTagDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /tags/systemTags/{systemTagId}][%d] systemTagDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
 func (o *SystemTagDeleteUsingDELETEOK) GetPayload() *models.SystemTagDeleteResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewSystemTagDeleteUsingDELETEBadRequest() *SystemTagDeleteUsingDELETEBadReq
 	return &SystemTagDeleteUsingDELETEBadRequest{}
 }
 
-/* SystemTagDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*SystemTagDeleteUsingDELETEBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type SystemTagDeleteUsingDELETEBadRequest struct {
 func (o *SystemTagDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /tags/systemTags/{systemTagId}][%d] systemTagDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *SystemTagDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

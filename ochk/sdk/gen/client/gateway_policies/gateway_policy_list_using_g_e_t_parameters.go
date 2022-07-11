@@ -16,73 +16,59 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGatewayPolicyListUsingGETParams creates a new GatewayPolicyListUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewGatewayPolicyListUsingGETParams creates a new GatewayPolicyListUsingGETParams object
+// with the default values initialized.
 func NewGatewayPolicyListUsingGETParams() *GatewayPolicyListUsingGETParams {
+	var ()
 	return &GatewayPolicyListUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGatewayPolicyListUsingGETParamsWithTimeout creates a new GatewayPolicyListUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewGatewayPolicyListUsingGETParamsWithTimeout(timeout time.Duration) *GatewayPolicyListUsingGETParams {
+	var ()
 	return &GatewayPolicyListUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewGatewayPolicyListUsingGETParamsWithContext creates a new GatewayPolicyListUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewGatewayPolicyListUsingGETParamsWithContext(ctx context.Context) *GatewayPolicyListUsingGETParams {
+	var ()
 	return &GatewayPolicyListUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewGatewayPolicyListUsingGETParamsWithHTTPClient creates a new GatewayPolicyListUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewGatewayPolicyListUsingGETParamsWithHTTPClient(client *http.Client) *GatewayPolicyListUsingGETParams {
+	var ()
 	return &GatewayPolicyListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* GatewayPolicyListUsingGETParams contains all the parameters to send to the API endpoint
-   for the gateway policy list using g e t operation.
-
-   Typically these are written to a http.Request.
+/*GatewayPolicyListUsingGETParams contains all the parameters to send to the API endpoint
+for the gateway policy list using g e t operation typically these are written to a http.Request
 */
 type GatewayPolicyListUsingGETParams struct {
 
-	/* DisplayName.
+	/*DisplayName
+	  displayName
 
-	   displayName
 	*/
 	DisplayName *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the gateway policy list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *GatewayPolicyListUsingGETParams) WithDefaults() *GatewayPolicyListUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the gateway policy list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *GatewayPolicyListUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the gateway policy list using g e t params
@@ -141,17 +127,16 @@ func (o *GatewayPolicyListUsingGETParams) WriteToRequest(r runtime.ClientRequest
 
 		// query param displayName
 		var qrDisplayName string
-
 		if o.DisplayName != nil {
 			qrDisplayName = *o.DisplayName
 		}
 		qDisplayName := qrDisplayName
 		if qDisplayName != "" {
-
 			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
 				return err
 			}
 		}
+
 	}
 
 	if len(res) > 0 {

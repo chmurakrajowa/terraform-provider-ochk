@@ -18,79 +18,64 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewUpdateADUserUsingPUTParams creates a new UpdateADUserUsingPUTParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewUpdateADUserUsingPUTParams creates a new UpdateADUserUsingPUTParams object
+// with the default values initialized.
 func NewUpdateADUserUsingPUTParams() *UpdateADUserUsingPUTParams {
+	var ()
 	return &UpdateADUserUsingPUTParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUpdateADUserUsingPUTParamsWithTimeout creates a new UpdateADUserUsingPUTParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewUpdateADUserUsingPUTParamsWithTimeout(timeout time.Duration) *UpdateADUserUsingPUTParams {
+	var ()
 	return &UpdateADUserUsingPUTParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewUpdateADUserUsingPUTParamsWithContext creates a new UpdateADUserUsingPUTParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewUpdateADUserUsingPUTParamsWithContext(ctx context.Context) *UpdateADUserUsingPUTParams {
+	var ()
 	return &UpdateADUserUsingPUTParams{
+
 		Context: ctx,
 	}
 }
 
 // NewUpdateADUserUsingPUTParamsWithHTTPClient creates a new UpdateADUserUsingPUTParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewUpdateADUserUsingPUTParamsWithHTTPClient(client *http.Client) *UpdateADUserUsingPUTParams {
+	var ()
 	return &UpdateADUserUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/* UpdateADUserUsingPUTParams contains all the parameters to send to the API endpoint
-   for the update a d user using p u t operation.
-
-   Typically these are written to a http.Request.
+/*UpdateADUserUsingPUTParams contains all the parameters to send to the API endpoint
+for the update a d user using p u t operation typically these are written to a http.Request
 */
 type UpdateADUserUsingPUTParams struct {
 
-	/* SamAccountName.
+	/*SamAccountName
+	  samAccountName
 
-	   samAccountName
 	*/
 	SamAccountName string
+	/*UserInstance
+	  userInstance
 
-	/* UserInstance.
-
-	   userInstance
 	*/
 	UserInstance *models.ADUserInstance
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the update a d user using p u t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *UpdateADUserUsingPUTParams) WithDefaults() *UpdateADUserUsingPUTParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the update a d user using p u t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *UpdateADUserUsingPUTParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the update a d user using p u t params
@@ -160,6 +145,7 @@ func (o *UpdateADUserUsingPUTParams) WriteToRequest(r runtime.ClientRequest, reg
 	if err := r.SetPathParam("samAccountName", o.SamAccountName); err != nil {
 		return err
 	}
+
 	if o.UserInstance != nil {
 		if err := r.SetBodyParam(o.UserInstance); err != nil {
 			return err

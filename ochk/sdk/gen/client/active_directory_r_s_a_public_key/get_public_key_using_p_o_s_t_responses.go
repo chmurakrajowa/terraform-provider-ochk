@@ -35,8 +35,9 @@ func (o *GetPublicKeyUsingPOSTReader) ReadResponse(response runtime.ClientRespon
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -45,7 +46,7 @@ func NewGetPublicKeyUsingPOSTOK() *GetPublicKeyUsingPOSTOK {
 	return &GetPublicKeyUsingPOSTOK{}
 }
 
-/* GetPublicKeyUsingPOSTOK describes a response with status code 200, with default header values.
+/*GetPublicKeyUsingPOSTOK handles this case with default header values.
 
 Entity has been imported
 */
@@ -56,6 +57,7 @@ type GetPublicKeyUsingPOSTOK struct {
 func (o *GetPublicKeyUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /ads/cer][%d] getPublicKeyUsingPOSTOK  %+v", 200, o.Payload)
 }
+
 func (o *GetPublicKeyUsingPOSTOK) GetPayload() *models.GetPublicKeyResponse {
 	return o.Payload
 }
@@ -77,7 +79,7 @@ func NewGetPublicKeyUsingPOSTBadRequest() *GetPublicKeyUsingPOSTBadRequest {
 	return &GetPublicKeyUsingPOSTBadRequest{}
 }
 
-/* GetPublicKeyUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*GetPublicKeyUsingPOSTBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -88,6 +90,7 @@ type GetPublicKeyUsingPOSTBadRequest struct {
 func (o *GetPublicKeyUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /ads/cer][%d] getPublicKeyUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *GetPublicKeyUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

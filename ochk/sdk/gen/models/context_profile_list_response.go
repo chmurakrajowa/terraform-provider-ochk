@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -53,6 +52,7 @@ func (m *ContextProfileListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *ContextProfileListResponse) validateContextProfiles(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.ContextProfiles) { // not required
 		return nil
 	}
@@ -66,8 +66,6 @@ func (m *ContextProfileListResponse) validateContextProfiles(formats strfmt.Regi
 			if err := m.ContextProfiles[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("contextProfiles" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("contextProfiles" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -79,46 +77,13 @@ func (m *ContextProfileListResponse) validateContextProfiles(formats strfmt.Regi
 }
 
 func (m *ContextProfileListResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this context profile list response based on the context it is used
-func (m *ContextProfileListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateContextProfiles(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *ContextProfileListResponse) contextValidateContextProfiles(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.ContextProfiles); i++ {
-
-		if m.ContextProfiles[i] != nil {
-			if err := m.ContextProfiles[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("contextProfiles" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("contextProfiles" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

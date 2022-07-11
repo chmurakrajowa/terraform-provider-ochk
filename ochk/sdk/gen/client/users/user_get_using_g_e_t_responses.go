@@ -41,8 +41,9 @@ func (o *UserGetUsingGETReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewUserGetUsingGETOK() *UserGetUsingGETOK {
 	return &UserGetUsingGETOK{}
 }
 
-/* UserGetUsingGETOK describes a response with status code 200, with default header values.
+/*UserGetUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type UserGetUsingGETOK struct {
 func (o *UserGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /users/{userId}][%d] userGetUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *UserGetUsingGETOK) GetPayload() *models.UserGetResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewUserGetUsingGETBadRequest() *UserGetUsingGETBadRequest {
 	return &UserGetUsingGETBadRequest{}
 }
 
-/* UserGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*UserGetUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -94,6 +96,7 @@ type UserGetUsingGETBadRequest struct {
 func (o *UserGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /users/{userId}][%d] userGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *UserGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewUserGetUsingGETNotFound() *UserGetUsingGETNotFound {
 	return &UserGetUsingGETNotFound{}
 }
 
-/* UserGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*UserGetUsingGETNotFound handles this case with default header values.
 
 Entity not found.
 */

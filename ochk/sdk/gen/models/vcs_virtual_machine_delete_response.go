@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -59,6 +57,7 @@ func (m *VcsVirtualMachineDeleteResponse) Validate(formats strfmt.Registry) erro
 }
 
 func (m *VcsVirtualMachineDeleteResponse) validateRequestInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -67,8 +66,6 @@ func (m *VcsVirtualMachineDeleteResponse) validateRequestInstance(formats strfmt
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -78,6 +75,7 @@ func (m *VcsVirtualMachineDeleteResponse) validateRequestInstance(formats strfmt
 }
 
 func (m *VcsVirtualMachineDeleteResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
@@ -90,6 +88,7 @@ func (m *VcsVirtualMachineDeleteResponse) validateTimestamp(formats strfmt.Regis
 }
 
 func (m *VcsVirtualMachineDeleteResponse) validateVcsVirtualMachineInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.VcsVirtualMachineInstance) { // not required
 		return nil
 	}
@@ -98,58 +97,6 @@ func (m *VcsVirtualMachineDeleteResponse) validateVcsVirtualMachineInstance(form
 		if err := m.VcsVirtualMachineInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("vcsVirtualMachineInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("vcsVirtualMachineInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this vcs virtual machine delete response based on the context it is used
-func (m *VcsVirtualMachineDeleteResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateVcsVirtualMachineInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *VcsVirtualMachineDeleteResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.RequestInstance != nil {
-		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("requestInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("requestInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *VcsVirtualMachineDeleteResponse) contextValidateVcsVirtualMachineInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.VcsVirtualMachineInstance != nil {
-		if err := m.VcsVirtualMachineInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("vcsVirtualMachineInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("vcsVirtualMachineInstance")
 			}
 			return err
 		}

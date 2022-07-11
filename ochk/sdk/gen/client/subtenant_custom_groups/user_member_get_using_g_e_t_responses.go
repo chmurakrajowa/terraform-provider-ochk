@@ -41,8 +41,9 @@ func (o *UserMemberGetUsingGETReader) ReadResponse(response runtime.ClientRespon
 			return nil, err
 		}
 		return nil, result
+
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
 }
 
@@ -51,7 +52,7 @@ func NewUserMemberGetUsingGETOK() *UserMemberGetUsingGETOK {
 	return &UserMemberGetUsingGETOK{}
 }
 
-/* UserMemberGetUsingGETOK describes a response with status code 200, with default header values.
+/*UserMemberGetUsingGETOK handles this case with default header values.
 
 OK
 */
@@ -62,6 +63,7 @@ type UserMemberGetUsingGETOK struct {
 func (o *UserMemberGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /subtenants/{subtenantId}/groups/{parentGroupId}/members/users/{userId}][%d] userMemberGetUsingGETOK  %+v", 200, o.Payload)
 }
+
 func (o *UserMemberGetUsingGETOK) GetPayload() *models.UserGetResponse {
 	return o.Payload
 }
@@ -83,7 +85,7 @@ func NewUserMemberGetUsingGETBadRequest() *UserMemberGetUsingGETBadRequest {
 	return &UserMemberGetUsingGETBadRequest{}
 }
 
-/* UserMemberGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*UserMemberGetUsingGETBadRequest handles this case with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -94,6 +96,7 @@ type UserMemberGetUsingGETBadRequest struct {
 func (o *UserMemberGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /subtenants/{subtenantId}/groups/{parentGroupId}/members/users/{userId}][%d] userMemberGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
 func (o *UserMemberGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,7 +118,7 @@ func NewUserMemberGetUsingGETNotFound() *UserMemberGetUsingGETNotFound {
 	return &UserMemberGetUsingGETNotFound{}
 }
 
-/* UserMemberGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*UserMemberGetUsingGETNotFound handles this case with default header values.
 
 Entity not found.
 */

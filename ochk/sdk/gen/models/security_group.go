@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -67,6 +66,7 @@ func (m *SecurityGroup) Validate(formats strfmt.Registry) error {
 }
 
 func (m *SecurityGroup) validateCreationDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.CreationDate) { // not required
 		return nil
 	}
@@ -79,6 +79,7 @@ func (m *SecurityGroup) validateCreationDate(formats strfmt.Registry) error {
 }
 
 func (m *SecurityGroup) validateMembers(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Members) { // not required
 		return nil
 	}
@@ -92,8 +93,6 @@ func (m *SecurityGroup) validateMembers(formats strfmt.Registry) error {
 			if err := m.Members[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("members" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("members" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -105,46 +104,13 @@ func (m *SecurityGroup) validateMembers(formats strfmt.Registry) error {
 }
 
 func (m *SecurityGroup) validateModificationDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.ModificationDate) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("modificationDate", "body", "date-time", m.ModificationDate.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this security group based on the context it is used
-func (m *SecurityGroup) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateMembers(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *SecurityGroup) contextValidateMembers(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.Members); i++ {
-
-		if m.Members[i] != nil {
-			if err := m.Members[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("members" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("members" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

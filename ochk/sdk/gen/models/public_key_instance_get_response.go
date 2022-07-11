@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -52,6 +50,7 @@ func (m *PublicKeyInstanceGetResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *PublicKeyInstanceGetResponse) validatePublicKeyInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.PublicKeyInstance) { // not required
 		return nil
 	}
@@ -60,8 +59,6 @@ func (m *PublicKeyInstanceGetResponse) validatePublicKeyInstance(formats strfmt.
 		if err := m.PublicKeyInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("publicKeyInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("publicKeyInstance")
 			}
 			return err
 		}
@@ -71,42 +68,13 @@ func (m *PublicKeyInstanceGetResponse) validatePublicKeyInstance(formats strfmt.
 }
 
 func (m *PublicKeyInstanceGetResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this public key instance get response based on the context it is used
-func (m *PublicKeyInstanceGetResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidatePublicKeyInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *PublicKeyInstanceGetResponse) contextValidatePublicKeyInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.PublicKeyInstance != nil {
-		if err := m.PublicKeyInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("publicKeyInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("publicKeyInstance")
-			}
-			return err
-		}
 	}
 
 	return nil

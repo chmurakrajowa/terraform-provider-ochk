@@ -16,83 +16,64 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewVirtualMachineOverallReportGetUsingGETParams creates a new VirtualMachineOverallReportGetUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewVirtualMachineOverallReportGetUsingGETParams creates a new VirtualMachineOverallReportGetUsingGETParams object
+// with the default values initialized.
 func NewVirtualMachineOverallReportGetUsingGETParams() *VirtualMachineOverallReportGetUsingGETParams {
+	var ()
 	return &VirtualMachineOverallReportGetUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewVirtualMachineOverallReportGetUsingGETParamsWithTimeout creates a new VirtualMachineOverallReportGetUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewVirtualMachineOverallReportGetUsingGETParamsWithTimeout(timeout time.Duration) *VirtualMachineOverallReportGetUsingGETParams {
+	var ()
 	return &VirtualMachineOverallReportGetUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewVirtualMachineOverallReportGetUsingGETParamsWithContext creates a new VirtualMachineOverallReportGetUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewVirtualMachineOverallReportGetUsingGETParamsWithContext(ctx context.Context) *VirtualMachineOverallReportGetUsingGETParams {
+	var ()
 	return &VirtualMachineOverallReportGetUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewVirtualMachineOverallReportGetUsingGETParamsWithHTTPClient creates a new VirtualMachineOverallReportGetUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewVirtualMachineOverallReportGetUsingGETParamsWithHTTPClient(client *http.Client) *VirtualMachineOverallReportGetUsingGETParams {
+	var ()
 	return &VirtualMachineOverallReportGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* VirtualMachineOverallReportGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the virtual machine overall report get using g e t operation.
-
-   Typically these are written to a http.Request.
+/*VirtualMachineOverallReportGetUsingGETParams contains all the parameters to send to the API endpoint
+for the virtual machine overall report get using g e t operation typically these are written to a http.Request
 */
 type VirtualMachineOverallReportGetUsingGETParams struct {
 
-	/* EndDate.
+	/*EndDate
+	  endDate
 
-	   endDate
-
-	   Format: date-time
 	*/
 	EndDate strfmt.DateTime
+	/*StartDate
+	  startDate
 
-	/* StartDate.
-
-	   startDate
-
-	   Format: date-time
 	*/
 	StartDate strfmt.DateTime
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the virtual machine overall report get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *VirtualMachineOverallReportGetUsingGETParams) WithDefaults() *VirtualMachineOverallReportGetUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the virtual machine overall report get using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *VirtualMachineOverallReportGetUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the virtual machine overall report get using g e t params
@@ -162,7 +143,6 @@ func (o *VirtualMachineOverallReportGetUsingGETParams) WriteToRequest(r runtime.
 	qrEndDate := o.EndDate
 	qEndDate := qrEndDate.String()
 	if qEndDate != "" {
-
 		if err := r.SetQueryParam("endDate", qEndDate); err != nil {
 			return err
 		}
@@ -172,7 +152,6 @@ func (o *VirtualMachineOverallReportGetUsingGETParams) WriteToRequest(r runtime.
 	qrStartDate := o.StartDate
 	qStartDate := qrStartDate.String()
 	if qStartDate != "" {
-
 		if err := r.SetQueryParam("startDate", qStartDate); err != nil {
 			return err
 		}

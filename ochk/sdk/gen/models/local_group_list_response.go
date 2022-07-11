@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -53,6 +52,7 @@ func (m *LocalGroupListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *LocalGroupListResponse) validateLocalGroupInstanceCollection(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.LocalGroupInstanceCollection) { // not required
 		return nil
 	}
@@ -66,8 +66,6 @@ func (m *LocalGroupListResponse) validateLocalGroupInstanceCollection(formats st
 			if err := m.LocalGroupInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("localGroupInstanceCollection" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("localGroupInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -79,46 +77,13 @@ func (m *LocalGroupListResponse) validateLocalGroupInstanceCollection(formats st
 }
 
 func (m *LocalGroupListResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this local group list response based on the context it is used
-func (m *LocalGroupListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateLocalGroupInstanceCollection(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *LocalGroupListResponse) contextValidateLocalGroupInstanceCollection(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.LocalGroupInstanceCollection); i++ {
-
-		if m.LocalGroupInstanceCollection[i] != nil {
-			if err := m.LocalGroupInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("localGroupInstanceCollection" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("localGroupInstanceCollection" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

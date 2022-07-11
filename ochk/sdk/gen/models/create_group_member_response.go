@@ -6,8 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -59,6 +57,7 @@ func (m *CreateGroupMemberResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *CreateGroupMemberResponse) validateGroupInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.GroupInstance) { // not required
 		return nil
 	}
@@ -67,8 +66,6 @@ func (m *CreateGroupMemberResponse) validateGroupInstance(formats strfmt.Registr
 		if err := m.GroupInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("groupInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("groupInstance")
 			}
 			return err
 		}
@@ -78,6 +75,7 @@ func (m *CreateGroupMemberResponse) validateGroupInstance(formats strfmt.Registr
 }
 
 func (m *CreateGroupMemberResponse) validateRequestInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -86,8 +84,6 @@ func (m *CreateGroupMemberResponse) validateRequestInstance(formats strfmt.Regis
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -97,62 +93,13 @@ func (m *CreateGroupMemberResponse) validateRequestInstance(formats strfmt.Regis
 }
 
 func (m *CreateGroupMemberResponse) validateTimestamp(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this create group member response based on the context it is used
-func (m *CreateGroupMemberResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateGroupInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *CreateGroupMemberResponse) contextValidateGroupInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.GroupInstance != nil {
-		if err := m.GroupInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("groupInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("groupInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *CreateGroupMemberResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.RequestInstance != nil {
-		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("requestInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("requestInstance")
-			}
-			return err
-		}
 	}
 
 	return nil

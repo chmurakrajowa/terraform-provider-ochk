@@ -16,83 +16,64 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewVirtualMachinePerformanceReportListUsingGETParams creates a new VirtualMachinePerformanceReportListUsingGETParams object,
-// with the default timeout for this client.
-//
-// Default values are not hydrated, since defaults are normally applied by the API server side.
-//
-// To enforce default values in parameter, use SetDefaults or WithDefaults.
+// NewVirtualMachinePerformanceReportListUsingGETParams creates a new VirtualMachinePerformanceReportListUsingGETParams object
+// with the default values initialized.
 func NewVirtualMachinePerformanceReportListUsingGETParams() *VirtualMachinePerformanceReportListUsingGETParams {
+	var ()
 	return &VirtualMachinePerformanceReportListUsingGETParams{
+
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewVirtualMachinePerformanceReportListUsingGETParamsWithTimeout creates a new VirtualMachinePerformanceReportListUsingGETParams object
-// with the ability to set a timeout on a request.
+// with the default values initialized, and the ability to set a timeout on a request
 func NewVirtualMachinePerformanceReportListUsingGETParamsWithTimeout(timeout time.Duration) *VirtualMachinePerformanceReportListUsingGETParams {
+	var ()
 	return &VirtualMachinePerformanceReportListUsingGETParams{
+
 		timeout: timeout,
 	}
 }
 
 // NewVirtualMachinePerformanceReportListUsingGETParamsWithContext creates a new VirtualMachinePerformanceReportListUsingGETParams object
-// with the ability to set a context for a request.
+// with the default values initialized, and the ability to set a context for a request
 func NewVirtualMachinePerformanceReportListUsingGETParamsWithContext(ctx context.Context) *VirtualMachinePerformanceReportListUsingGETParams {
+	var ()
 	return &VirtualMachinePerformanceReportListUsingGETParams{
+
 		Context: ctx,
 	}
 }
 
 // NewVirtualMachinePerformanceReportListUsingGETParamsWithHTTPClient creates a new VirtualMachinePerformanceReportListUsingGETParams object
-// with the ability to set a custom HTTPClient for a request.
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
 func NewVirtualMachinePerformanceReportListUsingGETParamsWithHTTPClient(client *http.Client) *VirtualMachinePerformanceReportListUsingGETParams {
+	var ()
 	return &VirtualMachinePerformanceReportListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/* VirtualMachinePerformanceReportListUsingGETParams contains all the parameters to send to the API endpoint
-   for the virtual machine performance report list using g e t operation.
-
-   Typically these are written to a http.Request.
+/*VirtualMachinePerformanceReportListUsingGETParams contains all the parameters to send to the API endpoint
+for the virtual machine performance report list using g e t operation typically these are written to a http.Request
 */
 type VirtualMachinePerformanceReportListUsingGETParams struct {
 
-	/* EndDate.
+	/*EndDate
+	  endDate
 
-	   endDate
-
-	   Format: date-time
 	*/
 	EndDate strfmt.DateTime
+	/*StartDate
+	  startDate
 
-	/* StartDate.
-
-	   startDate
-
-	   Format: date-time
 	*/
 	StartDate strfmt.DateTime
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
-}
-
-// WithDefaults hydrates default values in the virtual machine performance report list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *VirtualMachinePerformanceReportListUsingGETParams) WithDefaults() *VirtualMachinePerformanceReportListUsingGETParams {
-	o.SetDefaults()
-	return o
-}
-
-// SetDefaults hydrates default values in the virtual machine performance report list using g e t params (not the query body).
-//
-// All values with no default are reset to their zero value.
-func (o *VirtualMachinePerformanceReportListUsingGETParams) SetDefaults() {
-	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the virtual machine performance report list using g e t params
@@ -162,7 +143,6 @@ func (o *VirtualMachinePerformanceReportListUsingGETParams) WriteToRequest(r run
 	qrEndDate := o.EndDate
 	qEndDate := qrEndDate.String()
 	if qEndDate != "" {
-
 		if err := r.SetQueryParam("endDate", qEndDate); err != nil {
 			return err
 		}
@@ -172,7 +152,6 @@ func (o *VirtualMachinePerformanceReportListUsingGETParams) WriteToRequest(r run
 	qrStartDate := o.StartDate
 	qStartDate := qrStartDate.String()
 	if qStartDate != "" {
-
 		if err := r.SetQueryParam("startDate", qStartDate); err != nil {
 			return err
 		}

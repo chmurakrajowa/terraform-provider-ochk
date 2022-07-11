@@ -6,7 +6,6 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"context"
 	"encoding/json"
 	"strconv"
 
@@ -188,6 +187,7 @@ func (m *VcsVirtualMachineInstance) Validate(formats strfmt.Registry) error {
 }
 
 func (m *VcsVirtualMachineInstance) validateAdditionalVirtualDiskDeviceCollection(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.AdditionalVirtualDiskDeviceCollection) { // not required
 		return nil
 	}
@@ -201,8 +201,6 @@ func (m *VcsVirtualMachineInstance) validateAdditionalVirtualDiskDeviceCollectio
 			if err := m.AdditionalVirtualDiskDeviceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("additionalVirtualDiskDeviceCollection" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("additionalVirtualDiskDeviceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -214,6 +212,7 @@ func (m *VcsVirtualMachineInstance) validateAdditionalVirtualDiskDeviceCollectio
 }
 
 func (m *VcsVirtualMachineInstance) validateBackupListCollection(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.BackupListCollection) { // not required
 		return nil
 	}
@@ -227,8 +226,6 @@ func (m *VcsVirtualMachineInstance) validateBackupListCollection(formats strfmt.
 			if err := m.BackupListCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -240,6 +237,7 @@ func (m *VcsVirtualMachineInstance) validateBackupListCollection(formats strfmt.
 }
 
 func (m *VcsVirtualMachineInstance) validateBillingTags(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.BillingTags) { // not required
 		return nil
 	}
@@ -253,8 +251,6 @@ func (m *VcsVirtualMachineInstance) validateBillingTags(formats strfmt.Registry)
 			if err := m.BillingTags[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("billingTags" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("billingTags" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -266,6 +262,7 @@ func (m *VcsVirtualMachineInstance) validateBillingTags(formats strfmt.Registry)
 }
 
 func (m *VcsVirtualMachineInstance) validateCreationDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.CreationDate) { // not required
 		return nil
 	}
@@ -278,6 +275,7 @@ func (m *VcsVirtualMachineInstance) validateCreationDate(formats strfmt.Registry
 }
 
 func (m *VcsVirtualMachineInstance) validateDeploymentInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.DeploymentInstance) { // not required
 		return nil
 	}
@@ -286,8 +284,6 @@ func (m *VcsVirtualMachineInstance) validateDeploymentInstance(formats strfmt.Re
 		if err := m.DeploymentInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("deploymentInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("deploymentInstance")
 			}
 			return err
 		}
@@ -297,6 +293,7 @@ func (m *VcsVirtualMachineInstance) validateDeploymentInstance(formats strfmt.Re
 }
 
 func (m *VcsVirtualMachineInstance) validateDeploymentParams(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.DeploymentParams) { // not required
 		return nil
 	}
@@ -310,8 +307,6 @@ func (m *VcsVirtualMachineInstance) validateDeploymentParams(formats strfmt.Regi
 			if err := m.DeploymentParams[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("deploymentParams" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("deploymentParams" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -323,6 +318,7 @@ func (m *VcsVirtualMachineInstance) validateDeploymentParams(formats strfmt.Regi
 }
 
 func (m *VcsVirtualMachineInstance) validateEncryptionInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.EncryptionInstance) { // not required
 		return nil
 	}
@@ -331,8 +327,6 @@ func (m *VcsVirtualMachineInstance) validateEncryptionInstance(formats strfmt.Re
 		if err := m.EncryptionInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("encryptionInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("encryptionInstance")
 			}
 			return err
 		}
@@ -342,6 +336,7 @@ func (m *VcsVirtualMachineInstance) validateEncryptionInstance(formats strfmt.Re
 }
 
 func (m *VcsVirtualMachineInstance) validateIsoInstance(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.IsoInstance) { // not required
 		return nil
 	}
@@ -350,8 +345,6 @@ func (m *VcsVirtualMachineInstance) validateIsoInstance(formats strfmt.Registry)
 		if err := m.IsoInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("isoInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("isoInstance")
 			}
 			return err
 		}
@@ -361,6 +354,7 @@ func (m *VcsVirtualMachineInstance) validateIsoInstance(formats strfmt.Registry)
 }
 
 func (m *VcsVirtualMachineInstance) validateLicSettings(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.LicSettings) { // not required
 		return nil
 	}
@@ -369,8 +363,6 @@ func (m *VcsVirtualMachineInstance) validateLicSettings(formats strfmt.Registry)
 		if err := m.LicSettings.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("licSettings")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("licSettings")
 			}
 			return err
 		}
@@ -380,6 +372,7 @@ func (m *VcsVirtualMachineInstance) validateLicSettings(formats strfmt.Registry)
 }
 
 func (m *VcsVirtualMachineInstance) validateModificationDate(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.ModificationDate) { // not required
 		return nil
 	}
@@ -421,6 +414,7 @@ func (m *VcsVirtualMachineInstance) validateOsTypeEnum(path, location string, va
 }
 
 func (m *VcsVirtualMachineInstance) validateOsType(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.OsType) { // not required
 		return nil
 	}
@@ -434,6 +428,7 @@ func (m *VcsVirtualMachineInstance) validateOsType(formats strfmt.Registry) erro
 }
 
 func (m *VcsVirtualMachineInstance) validateOsVirtualDiskDevice(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.OsVirtualDiskDevice) { // not required
 		return nil
 	}
@@ -442,8 +437,6 @@ func (m *VcsVirtualMachineInstance) validateOsVirtualDiskDevice(formats strfmt.R
 		if err := m.OsVirtualDiskDevice.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("osVirtualDiskDevice")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("osVirtualDiskDevice")
 			}
 			return err
 		}
@@ -485,6 +478,7 @@ func (m *VcsVirtualMachineInstance) validatePowerStateEnum(path, location string
 }
 
 func (m *VcsVirtualMachineInstance) validatePowerState(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.PowerState) { // not required
 		return nil
 	}
@@ -539,6 +533,7 @@ func (m *VcsVirtualMachineInstance) validateResourceProfileEnum(path, location s
 }
 
 func (m *VcsVirtualMachineInstance) validateResourceProfile(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.ResourceProfile) { // not required
 		return nil
 	}
@@ -584,6 +579,7 @@ func (m *VcsVirtualMachineInstance) validateStoragePolicyEnum(path, location str
 }
 
 func (m *VcsVirtualMachineInstance) validateStoragePolicy(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.StoragePolicy) { // not required
 		return nil
 	}
@@ -597,6 +593,7 @@ func (m *VcsVirtualMachineInstance) validateStoragePolicy(formats strfmt.Registr
 }
 
 func (m *VcsVirtualMachineInstance) validateSystemTags(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.SystemTags) { // not required
 		return nil
 	}
@@ -610,8 +607,6 @@ func (m *VcsVirtualMachineInstance) validateSystemTags(formats strfmt.Registry) 
 			if err := m.SystemTags[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("systemTags" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("systemTags" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -623,6 +618,7 @@ func (m *VcsVirtualMachineInstance) validateSystemTags(formats strfmt.Registry) 
 }
 
 func (m *VcsVirtualMachineInstance) validateVirtualNetworkDevices(formats strfmt.Registry) error {
+
 	if swag.IsZero(m.VirtualNetworkDevices) { // not required
 		return nil
 	}
@@ -636,262 +632,6 @@ func (m *VcsVirtualMachineInstance) validateVirtualNetworkDevices(formats strfmt
 			if err := m.VirtualNetworkDevices[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("virtualNetworkDevices" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("virtualNetworkDevices" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this vcs virtual machine instance based on the context it is used
-func (m *VcsVirtualMachineInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateAdditionalVirtualDiskDeviceCollection(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateBackupListCollection(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateBillingTags(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateDeploymentInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateDeploymentParams(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateEncryptionInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateIsoInstance(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateLicSettings(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateOsVirtualDiskDevice(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateSystemTags(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateVirtualNetworkDevices(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *VcsVirtualMachineInstance) contextValidateAdditionalVirtualDiskDeviceCollection(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.AdditionalVirtualDiskDeviceCollection); i++ {
-
-		if m.AdditionalVirtualDiskDeviceCollection[i] != nil {
-			if err := m.AdditionalVirtualDiskDeviceCollection[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("additionalVirtualDiskDeviceCollection" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("additionalVirtualDiskDeviceCollection" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *VcsVirtualMachineInstance) contextValidateBackupListCollection(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.BackupListCollection); i++ {
-
-		if m.BackupListCollection[i] != nil {
-			if err := m.BackupListCollection[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *VcsVirtualMachineInstance) contextValidateBillingTags(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.BillingTags); i++ {
-
-		if m.BillingTags[i] != nil {
-			if err := m.BillingTags[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("billingTags" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("billingTags" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *VcsVirtualMachineInstance) contextValidateDeploymentInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.DeploymentInstance != nil {
-		if err := m.DeploymentInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("deploymentInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("deploymentInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *VcsVirtualMachineInstance) contextValidateDeploymentParams(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.DeploymentParams); i++ {
-
-		if m.DeploymentParams[i] != nil {
-			if err := m.DeploymentParams[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("deploymentParams" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("deploymentParams" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *VcsVirtualMachineInstance) contextValidateEncryptionInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.EncryptionInstance != nil {
-		if err := m.EncryptionInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("encryptionInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("encryptionInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *VcsVirtualMachineInstance) contextValidateIsoInstance(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.IsoInstance != nil {
-		if err := m.IsoInstance.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("isoInstance")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("isoInstance")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *VcsVirtualMachineInstance) contextValidateLicSettings(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.LicSettings != nil {
-		if err := m.LicSettings.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("licSettings")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("licSettings")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *VcsVirtualMachineInstance) contextValidateOsVirtualDiskDevice(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.OsVirtualDiskDevice != nil {
-		if err := m.OsVirtualDiskDevice.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("osVirtualDiskDevice")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("osVirtualDiskDevice")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *VcsVirtualMachineInstance) contextValidateSystemTags(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.SystemTags); i++ {
-
-		if m.SystemTags[i] != nil {
-			if err := m.SystemTags[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("systemTags" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("systemTags" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *VcsVirtualMachineInstance) contextValidateVirtualNetworkDevices(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.VirtualNetworkDevices); i++ {
-
-		if m.VirtualNetworkDevices[i] != nil {
-			if err := m.VirtualNetworkDevices[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("virtualNetworkDevices" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("virtualNetworkDevices" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

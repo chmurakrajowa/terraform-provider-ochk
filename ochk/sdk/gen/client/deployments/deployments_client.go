@@ -25,14 +25,11 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
-type ClientOption func(*runtime.ClientOperation)
-
 // ClientService is the interface for Client methods
 type ClientService interface {
-	DeploymentGetUsingGET(params *DeploymentGetUsingGETParams, opts ...ClientOption) (*DeploymentGetUsingGETOK, error)
+	DeploymentGetUsingGET(params *DeploymentGetUsingGETParams) (*DeploymentGetUsingGETOK, error)
 
-	DeploymentListUsingGET(params *DeploymentListUsingGETParams, opts ...ClientOption) (*DeploymentListUsingGETOK, error)
+	DeploymentListUsingGET(params *DeploymentListUsingGETParams) (*DeploymentListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -42,12 +39,13 @@ type ClientService interface {
 
   Get deployment object
 */
-func (a *Client) DeploymentGetUsingGET(params *DeploymentGetUsingGETParams, opts ...ClientOption) (*DeploymentGetUsingGETOK, error) {
+func (a *Client) DeploymentGetUsingGET(params *DeploymentGetUsingGETParams) (*DeploymentGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeploymentGetUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "deploymentGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/deployments/{deploymentId}",
@@ -58,12 +56,7 @@ func (a *Client) DeploymentGetUsingGET(params *DeploymentGetUsingGETParams, opts
 		Reader:             &DeploymentGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -82,12 +75,13 @@ func (a *Client) DeploymentGetUsingGET(params *DeploymentGetUsingGETParams, opts
 
   List deployments from server
 */
-func (a *Client) DeploymentListUsingGET(params *DeploymentListUsingGETParams, opts ...ClientOption) (*DeploymentListUsingGETOK, error) {
+func (a *Client) DeploymentListUsingGET(params *DeploymentListUsingGETParams) (*DeploymentListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeploymentListUsingGETParams()
 	}
-	op := &runtime.ClientOperation{
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "deploymentListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/deployments",
@@ -98,12 +92,7 @@ func (a *Client) DeploymentListUsingGET(params *DeploymentListUsingGETParams, op
 		Reader:             &DeploymentListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
+	})
 	if err != nil {
 		return nil, err
 	}
