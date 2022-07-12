@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -50,7 +52,6 @@ func (m *GetPublicKeyResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *GetPublicKeyResponse) validateRsaPublicKey(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RsaPublicKey) { // not required
 		return nil
 	}
@@ -59,6 +60,8 @@ func (m *GetPublicKeyResponse) validateRsaPublicKey(formats strfmt.Registry) err
 		if err := m.RsaPublicKey.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("rsaPublicKey")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("rsaPublicKey")
 			}
 			return err
 		}
@@ -68,13 +71,42 @@ func (m *GetPublicKeyResponse) validateRsaPublicKey(formats strfmt.Registry) err
 }
 
 func (m *GetPublicKeyResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get public key response based on the context it is used
+func (m *GetPublicKeyResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateRsaPublicKey(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *GetPublicKeyResponse) contextValidateRsaPublicKey(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RsaPublicKey != nil {
+		if err := m.RsaPublicKey.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("rsaPublicKey")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("rsaPublicKey")
+			}
+			return err
+		}
 	}
 
 	return nil

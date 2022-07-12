@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -50,7 +52,6 @@ func (m *BackupListGetResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *BackupListGetResponse) validateBackupList(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.BackupList) { // not required
 		return nil
 	}
@@ -59,6 +60,8 @@ func (m *BackupListGetResponse) validateBackupList(formats strfmt.Registry) erro
 		if err := m.BackupList.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("backupList")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("backupList")
 			}
 			return err
 		}
@@ -68,13 +71,42 @@ func (m *BackupListGetResponse) validateBackupList(formats strfmt.Registry) erro
 }
 
 func (m *BackupListGetResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this backup list get response based on the context it is used
+func (m *BackupListGetResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateBackupList(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *BackupListGetResponse) contextValidateBackupList(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.BackupList != nil {
+		if err := m.BackupList.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("backupList")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("backupList")
+			}
+			return err
+		}
 	}
 
 	return nil

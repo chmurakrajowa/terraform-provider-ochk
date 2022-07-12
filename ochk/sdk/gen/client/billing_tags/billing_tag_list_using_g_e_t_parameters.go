@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewBillingTagListUsingGETParams creates a new BillingTagListUsingGETParams object
-// with the default values initialized.
+// NewBillingTagListUsingGETParams creates a new BillingTagListUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewBillingTagListUsingGETParams() *BillingTagListUsingGETParams {
-	var ()
 	return &BillingTagListUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewBillingTagListUsingGETParamsWithTimeout creates a new BillingTagListUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewBillingTagListUsingGETParamsWithTimeout(timeout time.Duration) *BillingTagListUsingGETParams {
-	var ()
 	return &BillingTagListUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewBillingTagListUsingGETParamsWithContext creates a new BillingTagListUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewBillingTagListUsingGETParamsWithContext(ctx context.Context) *BillingTagListUsingGETParams {
-	var ()
 	return &BillingTagListUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewBillingTagListUsingGETParamsWithHTTPClient creates a new BillingTagListUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewBillingTagListUsingGETParamsWithHTTPClient(client *http.Client) *BillingTagListUsingGETParams {
-	var ()
 	return &BillingTagListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*BillingTagListUsingGETParams contains all the parameters to send to the API endpoint
-for the billing tag list using g e t operation typically these are written to a http.Request
+/* BillingTagListUsingGETParams contains all the parameters to send to the API endpoint
+   for the billing tag list using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type BillingTagListUsingGETParams struct {
 
-	/*TagValue
-	  tagValue
+	/* TagValue.
 
+	   tagValue
 	*/
 	TagValue *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the billing tag list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *BillingTagListUsingGETParams) WithDefaults() *BillingTagListUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the billing tag list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *BillingTagListUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the billing tag list using g e t params
@@ -127,16 +141,17 @@ func (o *BillingTagListUsingGETParams) WriteToRequest(r runtime.ClientRequest, r
 
 		// query param tagValue
 		var qrTagValue string
+
 		if o.TagValue != nil {
 			qrTagValue = *o.TagValue
 		}
 		qTagValue := qrTagValue
 		if qTagValue != "" {
+
 			if err := r.SetQueryParam("tagValue", qTagValue); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

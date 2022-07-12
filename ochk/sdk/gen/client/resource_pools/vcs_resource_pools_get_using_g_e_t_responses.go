@@ -41,9 +41,8 @@ func (o *VcsResourcePoolsGetUsingGETReader) ReadResponse(response runtime.Client
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewVcsResourcePoolsGetUsingGETOK() *VcsResourcePoolsGetUsingGETOK {
 	return &VcsResourcePoolsGetUsingGETOK{}
 }
 
-/*VcsResourcePoolsGetUsingGETOK handles this case with default header values.
+/* VcsResourcePoolsGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type VcsResourcePoolsGetUsingGETOK struct {
 func (o *VcsResourcePoolsGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /vcs/resourcepools/{resourcePoolId}][%d] vcsResourcePoolsGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *VcsResourcePoolsGetUsingGETOK) GetPayload() *models.VcsResourcePoolsGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewVcsResourcePoolsGetUsingGETBadRequest() *VcsResourcePoolsGetUsingGETBadR
 	return &VcsResourcePoolsGetUsingGETBadRequest{}
 }
 
-/*VcsResourcePoolsGetUsingGETBadRequest handles this case with default header values.
+/* VcsResourcePoolsGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type VcsResourcePoolsGetUsingGETBadRequest struct {
 func (o *VcsResourcePoolsGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /vcs/resourcepools/{resourcePoolId}][%d] vcsResourcePoolsGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *VcsResourcePoolsGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewVcsResourcePoolsGetUsingGETNotFound() *VcsResourcePoolsGetUsingGETNotFou
 	return &VcsResourcePoolsGetUsingGETNotFound{}
 }
 
-/*VcsResourcePoolsGetUsingGETNotFound handles this case with default header values.
+/* VcsResourcePoolsGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

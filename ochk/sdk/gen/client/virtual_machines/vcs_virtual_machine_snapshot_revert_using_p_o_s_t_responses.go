@@ -35,9 +35,8 @@ func (o *VcsVirtualMachineSnapshotRevertUsingPOSTReader) ReadResponse(response r
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewVcsVirtualMachineSnapshotRevertUsingPOSTOK() *VcsVirtualMachineSnapshotR
 	return &VcsVirtualMachineSnapshotRevertUsingPOSTOK{}
 }
 
-/*VcsVirtualMachineSnapshotRevertUsingPOSTOK handles this case with default header values.
+/* VcsVirtualMachineSnapshotRevertUsingPOSTOK describes a response with status code 200, with default header values.
 
 Request has been completed successfully
 */
@@ -57,7 +56,6 @@ type VcsVirtualMachineSnapshotRevertUsingPOSTOK struct {
 func (o *VcsVirtualMachineSnapshotRevertUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}/revert][%d] vcsVirtualMachineSnapshotRevertUsingPOSTOK  %+v", 200, o.Payload)
 }
-
 func (o *VcsVirtualMachineSnapshotRevertUsingPOSTOK) GetPayload() *models.RevertSnapshotResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewVcsVirtualMachineSnapshotRevertUsingPOSTBadRequest() *VcsVirtualMachineS
 	return &VcsVirtualMachineSnapshotRevertUsingPOSTBadRequest{}
 }
 
-/*VcsVirtualMachineSnapshotRevertUsingPOSTBadRequest handles this case with default header values.
+/* VcsVirtualMachineSnapshotRevertUsingPOSTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type VcsVirtualMachineSnapshotRevertUsingPOSTBadRequest struct {
 func (o *VcsVirtualMachineSnapshotRevertUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}/revert][%d] vcsVirtualMachineSnapshotRevertUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *VcsVirtualMachineSnapshotRevertUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

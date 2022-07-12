@@ -25,11 +25,14 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	VcsVirtualMachineGroupGetUsingGET(params *VcsVirtualMachineGroupGetUsingGETParams) (*VcsVirtualMachineGroupGetUsingGETOK, error)
+	VcsVirtualMachineGroupGetUsingGET(params *VcsVirtualMachineGroupGetUsingGETParams, opts ...ClientOption) (*VcsVirtualMachineGroupGetUsingGETOK, error)
 
-	VcsVirtualMachineListUsingGET(params *VcsVirtualMachineListUsingGETParams) (*VcsVirtualMachineListUsingGETOK, error)
+	VcsVirtualMachineListUsingGET(params *VcsVirtualMachineListUsingGETParams, opts ...ClientOption) (*VcsVirtualMachineListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -39,13 +42,12 @@ type ClientService interface {
 
   Get vSphere vCenter networks
 */
-func (a *Client) VcsVirtualMachineGroupGetUsingGET(params *VcsVirtualMachineGroupGetUsingGETParams) (*VcsVirtualMachineGroupGetUsingGETOK, error) {
+func (a *Client) VcsVirtualMachineGroupGetUsingGET(params *VcsVirtualMachineGroupGetUsingGETParams, opts ...ClientOption) (*VcsVirtualMachineGroupGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineGroupGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "vcsVirtualMachineGroupGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vcs/networks/{networkId}",
@@ -56,7 +58,12 @@ func (a *Client) VcsVirtualMachineGroupGetUsingGET(params *VcsVirtualMachineGrou
 		Reader:             &VcsVirtualMachineGroupGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -75,13 +82,12 @@ func (a *Client) VcsVirtualMachineGroupGetUsingGET(params *VcsVirtualMachineGrou
 
   List vSphere vCenter networks
 */
-func (a *Client) VcsVirtualMachineListUsingGET(params *VcsVirtualMachineListUsingGETParams) (*VcsVirtualMachineListUsingGETOK, error) {
+func (a *Client) VcsVirtualMachineListUsingGET(params *VcsVirtualMachineListUsingGETParams, opts ...ClientOption) (*VcsVirtualMachineListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsVirtualMachineListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "vcsVirtualMachineListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vcs/networks",
@@ -92,7 +98,12 @@ func (a *Client) VcsVirtualMachineListUsingGET(params *VcsVirtualMachineListUsin
 		Reader:             &VcsVirtualMachineListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

@@ -25,17 +25,20 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	LocalGroupCreateUsingPUT(params *LocalGroupCreateUsingPUTParams) (*LocalGroupCreateUsingPUTOK, *LocalGroupCreateUsingPUTCreated, error)
+	LocalGroupCreateUsingPUT(params *LocalGroupCreateUsingPUTParams, opts ...ClientOption) (*LocalGroupCreateUsingPUTOK, *LocalGroupCreateUsingPUTCreated, error)
 
-	LocalGroupDeleteUsingDELETE(params *LocalGroupDeleteUsingDELETEParams) (*LocalGroupDeleteUsingDELETEOK, error)
+	LocalGroupDeleteUsingDELETE(params *LocalGroupDeleteUsingDELETEParams, opts ...ClientOption) (*LocalGroupDeleteUsingDELETEOK, error)
 
-	LocalGroupGetUsingGET(params *LocalGroupGetUsingGETParams) (*LocalGroupGetUsingGETOK, error)
+	LocalGroupGetUsingGET(params *LocalGroupGetUsingGETParams, opts ...ClientOption) (*LocalGroupGetUsingGETOK, error)
 
-	LocalGroupListUsingGET(params *LocalGroupListUsingGETParams) (*LocalGroupListUsingGETOK, error)
+	LocalGroupListUsingGET(params *LocalGroupListUsingGETParams, opts ...ClientOption) (*LocalGroupListUsingGETOK, error)
 
-	LocalGroupUpdateUsingPUT(params *LocalGroupUpdateUsingPUTParams) (*LocalGroupUpdateUsingPUTOK, error)
+	LocalGroupUpdateUsingPUT(params *LocalGroupUpdateUsingPUTParams, opts ...ClientOption) (*LocalGroupUpdateUsingPUTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -45,13 +48,12 @@ type ClientService interface {
 
   Create local group
 */
-func (a *Client) LocalGroupCreateUsingPUT(params *LocalGroupCreateUsingPUTParams) (*LocalGroupCreateUsingPUTOK, *LocalGroupCreateUsingPUTCreated, error) {
+func (a *Client) LocalGroupCreateUsingPUT(params *LocalGroupCreateUsingPUTParams, opts ...ClientOption) (*LocalGroupCreateUsingPUTOK, *LocalGroupCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewLocalGroupCreateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "localGroupCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/groups/local",
@@ -62,7 +64,12 @@ func (a *Client) LocalGroupCreateUsingPUT(params *LocalGroupCreateUsingPUTParams
 		Reader:             &LocalGroupCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -82,13 +89,12 @@ func (a *Client) LocalGroupCreateUsingPUT(params *LocalGroupCreateUsingPUTParams
 
   Delete local group
 */
-func (a *Client) LocalGroupDeleteUsingDELETE(params *LocalGroupDeleteUsingDELETEParams) (*LocalGroupDeleteUsingDELETEOK, error) {
+func (a *Client) LocalGroupDeleteUsingDELETE(params *LocalGroupDeleteUsingDELETEParams, opts ...ClientOption) (*LocalGroupDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewLocalGroupDeleteUsingDELETEParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "localGroupDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/groups/local/{groupId}",
@@ -99,7 +105,12 @@ func (a *Client) LocalGroupDeleteUsingDELETE(params *LocalGroupDeleteUsingDELETE
 		Reader:             &LocalGroupDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -118,13 +129,12 @@ func (a *Client) LocalGroupDeleteUsingDELETE(params *LocalGroupDeleteUsingDELETE
 
   Get local group
 */
-func (a *Client) LocalGroupGetUsingGET(params *LocalGroupGetUsingGETParams) (*LocalGroupGetUsingGETOK, error) {
+func (a *Client) LocalGroupGetUsingGET(params *LocalGroupGetUsingGETParams, opts ...ClientOption) (*LocalGroupGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewLocalGroupGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "localGroupGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/groups/local/{groupId}",
@@ -135,7 +145,12 @@ func (a *Client) LocalGroupGetUsingGET(params *LocalGroupGetUsingGETParams) (*Lo
 		Reader:             &LocalGroupGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -154,13 +169,12 @@ func (a *Client) LocalGroupGetUsingGET(params *LocalGroupGetUsingGETParams) (*Lo
 
   List local groups
 */
-func (a *Client) LocalGroupListUsingGET(params *LocalGroupListUsingGETParams) (*LocalGroupListUsingGETOK, error) {
+func (a *Client) LocalGroupListUsingGET(params *LocalGroupListUsingGETParams, opts ...ClientOption) (*LocalGroupListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewLocalGroupListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "localGroupListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/groups/local",
@@ -171,7 +185,12 @@ func (a *Client) LocalGroupListUsingGET(params *LocalGroupListUsingGETParams) (*
 		Reader:             &LocalGroupListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -190,13 +209,12 @@ func (a *Client) LocalGroupListUsingGET(params *LocalGroupListUsingGETParams) (*
 
   Update local group
 */
-func (a *Client) LocalGroupUpdateUsingPUT(params *LocalGroupUpdateUsingPUTParams) (*LocalGroupUpdateUsingPUTOK, error) {
+func (a *Client) LocalGroupUpdateUsingPUT(params *LocalGroupUpdateUsingPUTParams, opts ...ClientOption) (*LocalGroupUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewLocalGroupUpdateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "localGroupUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/groups/local/{groupId}",
@@ -207,7 +225,12 @@ func (a *Client) LocalGroupUpdateUsingPUT(params *LocalGroupUpdateUsingPUTParams
 		Reader:             &LocalGroupUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

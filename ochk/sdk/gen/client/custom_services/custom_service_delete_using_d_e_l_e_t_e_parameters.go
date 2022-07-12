@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewCustomServiceDeleteUsingDELETEParams creates a new CustomServiceDeleteUsingDELETEParams object
-// with the default values initialized.
+// NewCustomServiceDeleteUsingDELETEParams creates a new CustomServiceDeleteUsingDELETEParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCustomServiceDeleteUsingDELETEParams() *CustomServiceDeleteUsingDELETEParams {
-	var ()
 	return &CustomServiceDeleteUsingDELETEParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCustomServiceDeleteUsingDELETEParamsWithTimeout creates a new CustomServiceDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCustomServiceDeleteUsingDELETEParamsWithTimeout(timeout time.Duration) *CustomServiceDeleteUsingDELETEParams {
-	var ()
 	return &CustomServiceDeleteUsingDELETEParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCustomServiceDeleteUsingDELETEParamsWithContext creates a new CustomServiceDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCustomServiceDeleteUsingDELETEParamsWithContext(ctx context.Context) *CustomServiceDeleteUsingDELETEParams {
-	var ()
 	return &CustomServiceDeleteUsingDELETEParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCustomServiceDeleteUsingDELETEParamsWithHTTPClient creates a new CustomServiceDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCustomServiceDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) *CustomServiceDeleteUsingDELETEParams {
-	var ()
 	return &CustomServiceDeleteUsingDELETEParams{
 		HTTPClient: client,
 	}
 }
 
-/*CustomServiceDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-for the custom service delete using d e l e t e operation typically these are written to a http.Request
+/* CustomServiceDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
+   for the custom service delete using d e l e t e operation.
+
+   Typically these are written to a http.Request.
 */
 type CustomServiceDeleteUsingDELETEParams struct {
 
-	/*ServiceID
-	  serviceId
+	/* ServiceID.
 
+	   serviceId
 	*/
 	ServiceID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the custom service delete using d e l e t e params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CustomServiceDeleteUsingDELETEParams) WithDefaults() *CustomServiceDeleteUsingDELETEParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the custom service delete using d e l e t e params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CustomServiceDeleteUsingDELETEParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the custom service delete using d e l e t e params

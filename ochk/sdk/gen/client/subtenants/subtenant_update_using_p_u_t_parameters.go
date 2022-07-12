@@ -18,64 +18,79 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewSubtenantUpdateUsingPUTParams creates a new SubtenantUpdateUsingPUTParams object
-// with the default values initialized.
+// NewSubtenantUpdateUsingPUTParams creates a new SubtenantUpdateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewSubtenantUpdateUsingPUTParams() *SubtenantUpdateUsingPUTParams {
-	var ()
 	return &SubtenantUpdateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewSubtenantUpdateUsingPUTParamsWithTimeout creates a new SubtenantUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewSubtenantUpdateUsingPUTParamsWithTimeout(timeout time.Duration) *SubtenantUpdateUsingPUTParams {
-	var ()
 	return &SubtenantUpdateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewSubtenantUpdateUsingPUTParamsWithContext creates a new SubtenantUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewSubtenantUpdateUsingPUTParamsWithContext(ctx context.Context) *SubtenantUpdateUsingPUTParams {
-	var ()
 	return &SubtenantUpdateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewSubtenantUpdateUsingPUTParamsWithHTTPClient creates a new SubtenantUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewSubtenantUpdateUsingPUTParamsWithHTTPClient(client *http.Client) *SubtenantUpdateUsingPUTParams {
-	var ()
 	return &SubtenantUpdateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*SubtenantUpdateUsingPUTParams contains all the parameters to send to the API endpoint
-for the subtenant update using p u t operation typically these are written to a http.Request
+/* SubtenantUpdateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the subtenant update using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type SubtenantUpdateUsingPUTParams struct {
 
-	/*SubtenantID
-	  subtenantId
+	/* SubtenantID.
 
+	   subtenantId
 	*/
 	SubtenantID string
-	/*SubtenantInstance
-	  subtenantInstance
 
+	/* SubtenantInstance.
+
+	   subtenantInstance
 	*/
 	SubtenantInstance *models.SubtenantInstance
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the subtenant update using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SubtenantUpdateUsingPUTParams) WithDefaults() *SubtenantUpdateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the subtenant update using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SubtenantUpdateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the subtenant update using p u t params
@@ -145,7 +160,6 @@ func (o *SubtenantUpdateUsingPUTParams) WriteToRequest(r runtime.ClientRequest, 
 	if err := r.SetPathParam("subtenantId", o.SubtenantID); err != nil {
 		return err
 	}
-
 	if o.SubtenantInstance != nil {
 		if err := r.SetBodyParam(o.SubtenantInstance); err != nil {
 			return err

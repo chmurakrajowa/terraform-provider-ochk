@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGetTenantInfoUsingGETParams creates a new GetTenantInfoUsingGETParams object
-// with the default values initialized.
+// NewGetTenantInfoUsingGETParams creates a new GetTenantInfoUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetTenantInfoUsingGETParams() *GetTenantInfoUsingGETParams {
-	var ()
 	return &GetTenantInfoUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetTenantInfoUsingGETParamsWithTimeout creates a new GetTenantInfoUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetTenantInfoUsingGETParamsWithTimeout(timeout time.Duration) *GetTenantInfoUsingGETParams {
-	var ()
 	return &GetTenantInfoUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetTenantInfoUsingGETParamsWithContext creates a new GetTenantInfoUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetTenantInfoUsingGETParamsWithContext(ctx context.Context) *GetTenantInfoUsingGETParams {
-	var ()
 	return &GetTenantInfoUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetTenantInfoUsingGETParamsWithHTTPClient creates a new GetTenantInfoUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetTenantInfoUsingGETParamsWithHTTPClient(client *http.Client) *GetTenantInfoUsingGETParams {
-	var ()
 	return &GetTenantInfoUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetTenantInfoUsingGETParams contains all the parameters to send to the API endpoint
-for the get tenant info using g e t operation typically these are written to a http.Request
+/* GetTenantInfoUsingGETParams contains all the parameters to send to the API endpoint
+   for the get tenant info using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type GetTenantInfoUsingGETParams struct {
 
-	/*TenantID
-	  tenantId
+	/* TenantID.
 
+	   tenantId
 	*/
 	TenantID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get tenant info using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetTenantInfoUsingGETParams) WithDefaults() *GetTenantInfoUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get tenant info using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetTenantInfoUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get tenant info using g e t params

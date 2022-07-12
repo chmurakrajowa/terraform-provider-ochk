@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -27,6 +29,11 @@ type BackupList struct {
 
 // Validate validates this backup list
 func (m *BackupList) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this backup list based on context it is used
+func (m *BackupList) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

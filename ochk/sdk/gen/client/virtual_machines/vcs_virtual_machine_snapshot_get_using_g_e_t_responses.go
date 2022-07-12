@@ -35,9 +35,8 @@ func (o *VcsVirtualMachineSnapshotGetUsingGETReader) ReadResponse(response runti
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewVcsVirtualMachineSnapshotGetUsingGETOK() *VcsVirtualMachineSnapshotGetUs
 	return &VcsVirtualMachineSnapshotGetUsingGETOK{}
 }
 
-/*VcsVirtualMachineSnapshotGetUsingGETOK handles this case with default header values.
+/* VcsVirtualMachineSnapshotGetUsingGETOK describes a response with status code 200, with default header values.
 
 Request has been completed successfully
 */
@@ -57,7 +56,6 @@ type VcsVirtualMachineSnapshotGetUsingGETOK struct {
 func (o *VcsVirtualMachineSnapshotGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}][%d] vcsVirtualMachineSnapshotGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *VcsVirtualMachineSnapshotGetUsingGETOK) GetPayload() *models.SnapshotGetResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewVcsVirtualMachineSnapshotGetUsingGETBadRequest() *VcsVirtualMachineSnaps
 	return &VcsVirtualMachineSnapshotGetUsingGETBadRequest{}
 }
 
-/*VcsVirtualMachineSnapshotGetUsingGETBadRequest handles this case with default header values.
+/* VcsVirtualMachineSnapshotGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type VcsVirtualMachineSnapshotGetUsingGETBadRequest struct {
 func (o *VcsVirtualMachineSnapshotGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}][%d] vcsVirtualMachineSnapshotGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *VcsVirtualMachineSnapshotGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

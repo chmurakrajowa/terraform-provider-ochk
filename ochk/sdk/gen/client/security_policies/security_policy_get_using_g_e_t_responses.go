@@ -41,9 +41,8 @@ func (o *SecurityPolicyGetUsingGETReader) ReadResponse(response runtime.ClientRe
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewSecurityPolicyGetUsingGETOK() *SecurityPolicyGetUsingGETOK {
 	return &SecurityPolicyGetUsingGETOK{}
 }
 
-/*SecurityPolicyGetUsingGETOK handles this case with default header values.
+/* SecurityPolicyGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type SecurityPolicyGetUsingGETOK struct {
 func (o *SecurityPolicyGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/firewall/security-policies/{SecurityPolicyId}][%d] securityPolicyGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *SecurityPolicyGetUsingGETOK) GetPayload() *models.SecurityPolicyGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewSecurityPolicyGetUsingGETBadRequest() *SecurityPolicyGetUsingGETBadReque
 	return &SecurityPolicyGetUsingGETBadRequest{}
 }
 
-/*SecurityPolicyGetUsingGETBadRequest handles this case with default header values.
+/* SecurityPolicyGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type SecurityPolicyGetUsingGETBadRequest struct {
 func (o *SecurityPolicyGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/firewall/security-policies/{SecurityPolicyId}][%d] securityPolicyGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *SecurityPolicyGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewSecurityPolicyGetUsingGETNotFound() *SecurityPolicyGetUsingGETNotFound {
 	return &SecurityPolicyGetUsingGETNotFound{}
 }
 
-/*SecurityPolicyGetUsingGETNotFound handles this case with default header values.
+/* SecurityPolicyGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

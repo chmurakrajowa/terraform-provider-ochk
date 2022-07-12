@@ -18,59 +18,73 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewNatRuleCreateUsingPUTParams creates a new NatRuleCreateUsingPUTParams object
-// with the default values initialized.
+// NewNatRuleCreateUsingPUTParams creates a new NatRuleCreateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewNatRuleCreateUsingPUTParams() *NatRuleCreateUsingPUTParams {
-	var ()
 	return &NatRuleCreateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewNatRuleCreateUsingPUTParamsWithTimeout creates a new NatRuleCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewNatRuleCreateUsingPUTParamsWithTimeout(timeout time.Duration) *NatRuleCreateUsingPUTParams {
-	var ()
 	return &NatRuleCreateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewNatRuleCreateUsingPUTParamsWithContext creates a new NatRuleCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewNatRuleCreateUsingPUTParamsWithContext(ctx context.Context) *NatRuleCreateUsingPUTParams {
-	var ()
 	return &NatRuleCreateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewNatRuleCreateUsingPUTParamsWithHTTPClient creates a new NatRuleCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewNatRuleCreateUsingPUTParamsWithHTTPClient(client *http.Client) *NatRuleCreateUsingPUTParams {
-	var ()
 	return &NatRuleCreateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*NatRuleCreateUsingPUTParams contains all the parameters to send to the API endpoint
-for the nat rule create using p u t operation typically these are written to a http.Request
+/* NatRuleCreateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the nat rule create using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type NatRuleCreateUsingPUTParams struct {
 
-	/*NatRuleInstance
-	  natRuleInstance
+	/* NatRuleInstance.
 
+	   natRuleInstance
 	*/
 	NatRuleInstance *models.NATRuleInstance
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the nat rule create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NatRuleCreateUsingPUTParams) WithDefaults() *NatRuleCreateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the nat rule create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NatRuleCreateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the nat rule create using p u t params
@@ -124,7 +138,6 @@ func (o *NatRuleCreateUsingPUTParams) WriteToRequest(r runtime.ClientRequest, re
 		return err
 	}
 	var res []error
-
 	if o.NatRuleInstance != nil {
 		if err := r.SetBodyParam(o.NatRuleInstance); err != nil {
 			return err

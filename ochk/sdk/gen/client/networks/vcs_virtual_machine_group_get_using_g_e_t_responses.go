@@ -41,9 +41,8 @@ func (o *VcsVirtualMachineGroupGetUsingGETReader) ReadResponse(response runtime.
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewVcsVirtualMachineGroupGetUsingGETOK() *VcsVirtualMachineGroupGetUsingGET
 	return &VcsVirtualMachineGroupGetUsingGETOK{}
 }
 
-/*VcsVirtualMachineGroupGetUsingGETOK handles this case with default header values.
+/* VcsVirtualMachineGroupGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type VcsVirtualMachineGroupGetUsingGETOK struct {
 func (o *VcsVirtualMachineGroupGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /vcs/networks/{networkId}][%d] vcsVirtualMachineGroupGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *VcsVirtualMachineGroupGetUsingGETOK) GetPayload() *models.NetworkGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewVcsVirtualMachineGroupGetUsingGETBadRequest() *VcsVirtualMachineGroupGet
 	return &VcsVirtualMachineGroupGetUsingGETBadRequest{}
 }
 
-/*VcsVirtualMachineGroupGetUsingGETBadRequest handles this case with default header values.
+/* VcsVirtualMachineGroupGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type VcsVirtualMachineGroupGetUsingGETBadRequest struct {
 func (o *VcsVirtualMachineGroupGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /vcs/networks/{networkId}][%d] vcsVirtualMachineGroupGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *VcsVirtualMachineGroupGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewVcsVirtualMachineGroupGetUsingGETNotFound() *VcsVirtualMachineGroupGetUs
 	return &VcsVirtualMachineGroupGetUsingGETNotFound{}
 }
 
-/*VcsVirtualMachineGroupGetUsingGETNotFound handles this case with default header values.
+/* VcsVirtualMachineGroupGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

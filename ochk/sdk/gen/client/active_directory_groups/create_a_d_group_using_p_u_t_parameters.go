@@ -18,59 +18,73 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewCreateADGroupUsingPUTParams creates a new CreateADGroupUsingPUTParams object
-// with the default values initialized.
+// NewCreateADGroupUsingPUTParams creates a new CreateADGroupUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateADGroupUsingPUTParams() *CreateADGroupUsingPUTParams {
-	var ()
 	return &CreateADGroupUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateADGroupUsingPUTParamsWithTimeout creates a new CreateADGroupUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateADGroupUsingPUTParamsWithTimeout(timeout time.Duration) *CreateADGroupUsingPUTParams {
-	var ()
 	return &CreateADGroupUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateADGroupUsingPUTParamsWithContext creates a new CreateADGroupUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateADGroupUsingPUTParamsWithContext(ctx context.Context) *CreateADGroupUsingPUTParams {
-	var ()
 	return &CreateADGroupUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateADGroupUsingPUTParamsWithHTTPClient creates a new CreateADGroupUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateADGroupUsingPUTParamsWithHTTPClient(client *http.Client) *CreateADGroupUsingPUTParams {
-	var ()
 	return &CreateADGroupUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateADGroupUsingPUTParams contains all the parameters to send to the API endpoint
-for the create a d group using p u t operation typically these are written to a http.Request
+/* CreateADGroupUsingPUTParams contains all the parameters to send to the API endpoint
+   for the create a d group using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type CreateADGroupUsingPUTParams struct {
 
-	/*GroupInstance
-	  groupInstance
+	/* GroupInstance.
 
+	   groupInstance
 	*/
 	GroupInstance *models.ADGroupInstance
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create a d group using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateADGroupUsingPUTParams) WithDefaults() *CreateADGroupUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create a d group using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateADGroupUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create a d group using p u t params
@@ -124,7 +138,6 @@ func (o *CreateADGroupUsingPUTParams) WriteToRequest(r runtime.ClientRequest, re
 		return err
 	}
 	var res []error
-
 	if o.GroupInstance != nil {
 		if err := r.SetBodyParam(o.GroupInstance); err != nil {
 			return err

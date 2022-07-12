@@ -18,64 +18,79 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewRouterUpdateUsingPUTParams creates a new RouterUpdateUsingPUTParams object
-// with the default values initialized.
+// NewRouterUpdateUsingPUTParams creates a new RouterUpdateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewRouterUpdateUsingPUTParams() *RouterUpdateUsingPUTParams {
-	var ()
 	return &RouterUpdateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewRouterUpdateUsingPUTParamsWithTimeout creates a new RouterUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewRouterUpdateUsingPUTParamsWithTimeout(timeout time.Duration) *RouterUpdateUsingPUTParams {
-	var ()
 	return &RouterUpdateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewRouterUpdateUsingPUTParamsWithContext creates a new RouterUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewRouterUpdateUsingPUTParamsWithContext(ctx context.Context) *RouterUpdateUsingPUTParams {
-	var ()
 	return &RouterUpdateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewRouterUpdateUsingPUTParamsWithHTTPClient creates a new RouterUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewRouterUpdateUsingPUTParamsWithHTTPClient(client *http.Client) *RouterUpdateUsingPUTParams {
-	var ()
 	return &RouterUpdateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*RouterUpdateUsingPUTParams contains all the parameters to send to the API endpoint
-for the router update using p u t operation typically these are written to a http.Request
+/* RouterUpdateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the router update using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type RouterUpdateUsingPUTParams struct {
 
-	/*RouterID
-	  routerId
+	/* RouterID.
 
+	   routerId
 	*/
 	RouterID string
-	/*RouterInstance
-	  routerInstance
 
+	/* RouterInstance.
+
+	   routerInstance
 	*/
 	RouterInstance *models.RouterInstance
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the router update using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *RouterUpdateUsingPUTParams) WithDefaults() *RouterUpdateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the router update using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *RouterUpdateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the router update using p u t params
@@ -145,7 +160,6 @@ func (o *RouterUpdateUsingPUTParams) WriteToRequest(r runtime.ClientRequest, reg
 	if err := r.SetPathParam("routerId", o.RouterID); err != nil {
 		return err
 	}
-
 	if o.RouterInstance != nil {
 		if err := r.SetBodyParam(o.RouterInstance); err != nil {
 			return err

@@ -35,9 +35,8 @@ func (o *CustomServiceListUsingGETReader) ReadResponse(response runtime.ClientRe
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewCustomServiceListUsingGETOK() *CustomServiceListUsingGETOK {
 	return &CustomServiceListUsingGETOK{}
 }
 
-/*CustomServiceListUsingGETOK handles this case with default header values.
+/* CustomServiceListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type CustomServiceListUsingGETOK struct {
 func (o *CustomServiceListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/custom-services][%d] customServiceListUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *CustomServiceListUsingGETOK) GetPayload() *models.CustomServiceListResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewCustomServiceListUsingGETBadRequest() *CustomServiceListUsingGETBadReque
 	return &CustomServiceListUsingGETBadRequest{}
 }
 
-/*CustomServiceListUsingGETBadRequest handles this case with default header values.
+/* CustomServiceListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type CustomServiceListUsingGETBadRequest struct {
 func (o *CustomServiceListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/custom-services][%d] customServiceListUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *CustomServiceListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

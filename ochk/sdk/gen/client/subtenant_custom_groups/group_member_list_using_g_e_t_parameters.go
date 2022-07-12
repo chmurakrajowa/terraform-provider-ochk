@@ -16,69 +16,85 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewGroupMemberListUsingGETParams creates a new GroupMemberListUsingGETParams object
-// with the default values initialized.
+// NewGroupMemberListUsingGETParams creates a new GroupMemberListUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGroupMemberListUsingGETParams() *GroupMemberListUsingGETParams {
-	var ()
 	return &GroupMemberListUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGroupMemberListUsingGETParamsWithTimeout creates a new GroupMemberListUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGroupMemberListUsingGETParamsWithTimeout(timeout time.Duration) *GroupMemberListUsingGETParams {
-	var ()
 	return &GroupMemberListUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGroupMemberListUsingGETParamsWithContext creates a new GroupMemberListUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGroupMemberListUsingGETParamsWithContext(ctx context.Context) *GroupMemberListUsingGETParams {
-	var ()
 	return &GroupMemberListUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGroupMemberListUsingGETParamsWithHTTPClient creates a new GroupMemberListUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGroupMemberListUsingGETParamsWithHTTPClient(client *http.Client) *GroupMemberListUsingGETParams {
-	var ()
 	return &GroupMemberListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*GroupMemberListUsingGETParams contains all the parameters to send to the API endpoint
-for the group member list using g e t operation typically these are written to a http.Request
+/* GroupMemberListUsingGETParams contains all the parameters to send to the API endpoint
+   for the group member list using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type GroupMemberListUsingGETParams struct {
 
-	/*Name
-	  name
+	/* Name.
 
+	   name
 	*/
 	Name *string
-	/*ParentGroupID
-	  parentGroupId
 
+	/* ParentGroupID.
+
+	   parentGroupId
 	*/
 	ParentGroupID string
-	/*SubtenantID
-	  subtenantId
 
+	/* SubtenantID.
+
+	   subtenantId
 	*/
 	SubtenantID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the group member list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GroupMemberListUsingGETParams) WithDefaults() *GroupMemberListUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the group member list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GroupMemberListUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the group member list using g e t params
@@ -159,16 +175,17 @@ func (o *GroupMemberListUsingGETParams) WriteToRequest(r runtime.ClientRequest, 
 
 		// query param name
 		var qrName string
+
 		if o.Name != nil {
 			qrName = *o.Name
 		}
 		qName := qrName
 		if qName != "" {
+
 			if err := r.SetQueryParam("name", qName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	// path param parentGroupId

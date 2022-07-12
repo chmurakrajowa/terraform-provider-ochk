@@ -16,52 +16,66 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewListADUsersUsingGETParams creates a new ListADUsersUsingGETParams object
-// with the default values initialized.
+// NewListADUsersUsingGETParams creates a new ListADUsersUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewListADUsersUsingGETParams() *ListADUsersUsingGETParams {
-
 	return &ListADUsersUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewListADUsersUsingGETParamsWithTimeout creates a new ListADUsersUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewListADUsersUsingGETParamsWithTimeout(timeout time.Duration) *ListADUsersUsingGETParams {
-
 	return &ListADUsersUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewListADUsersUsingGETParamsWithContext creates a new ListADUsersUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewListADUsersUsingGETParamsWithContext(ctx context.Context) *ListADUsersUsingGETParams {
-
 	return &ListADUsersUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewListADUsersUsingGETParamsWithHTTPClient creates a new ListADUsersUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewListADUsersUsingGETParamsWithHTTPClient(client *http.Client) *ListADUsersUsingGETParams {
-
 	return &ListADUsersUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*ListADUsersUsingGETParams contains all the parameters to send to the API endpoint
-for the list a d users using g e t operation typically these are written to a http.Request
+/* ListADUsersUsingGETParams contains all the parameters to send to the API endpoint
+   for the list a d users using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type ListADUsersUsingGETParams struct {
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the list a d users using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ListADUsersUsingGETParams) WithDefaults() *ListADUsersUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the list a d users using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *ListADUsersUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the list a d users using g e t params

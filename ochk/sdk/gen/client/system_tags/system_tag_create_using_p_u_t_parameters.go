@@ -18,59 +18,73 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewSystemTagCreateUsingPUTParams creates a new SystemTagCreateUsingPUTParams object
-// with the default values initialized.
+// NewSystemTagCreateUsingPUTParams creates a new SystemTagCreateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewSystemTagCreateUsingPUTParams() *SystemTagCreateUsingPUTParams {
-	var ()
 	return &SystemTagCreateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewSystemTagCreateUsingPUTParamsWithTimeout creates a new SystemTagCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewSystemTagCreateUsingPUTParamsWithTimeout(timeout time.Duration) *SystemTagCreateUsingPUTParams {
-	var ()
 	return &SystemTagCreateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewSystemTagCreateUsingPUTParamsWithContext creates a new SystemTagCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewSystemTagCreateUsingPUTParamsWithContext(ctx context.Context) *SystemTagCreateUsingPUTParams {
-	var ()
 	return &SystemTagCreateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewSystemTagCreateUsingPUTParamsWithHTTPClient creates a new SystemTagCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewSystemTagCreateUsingPUTParamsWithHTTPClient(client *http.Client) *SystemTagCreateUsingPUTParams {
-	var ()
 	return &SystemTagCreateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*SystemTagCreateUsingPUTParams contains all the parameters to send to the API endpoint
-for the system tag create using p u t operation typically these are written to a http.Request
+/* SystemTagCreateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the system tag create using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type SystemTagCreateUsingPUTParams struct {
 
-	/*SystemTag
-	  systemTag
+	/* SystemTag.
 
+	   systemTag
 	*/
 	SystemTag *models.SystemTag
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the system tag create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SystemTagCreateUsingPUTParams) WithDefaults() *SystemTagCreateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the system tag create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SystemTagCreateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the system tag create using p u t params
@@ -124,7 +138,6 @@ func (o *SystemTagCreateUsingPUTParams) WriteToRequest(r runtime.ClientRequest, 
 		return err
 	}
 	var res []error
-
 	if o.SystemTag != nil {
 		if err := r.SetBodyParam(o.SystemTag); err != nil {
 			return err

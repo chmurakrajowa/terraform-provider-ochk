@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 	"strconv"
 
@@ -96,7 +97,6 @@ func (m *KeyInstance) Validate(formats strfmt.Registry) error {
 }
 
 func (m *KeyInstance) validateActivationDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.ActivationDate) { // not required
 		return nil
 	}
@@ -109,7 +109,6 @@ func (m *KeyInstance) validateActivationDate(formats strfmt.Registry) error {
 }
 
 func (m *KeyInstance) validateCreatedAt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.CreatedAt) { // not required
 		return nil
 	}
@@ -141,7 +140,6 @@ func (m *KeyInstance) validateKeyUsageListItemsEnum(path, location string, value
 }
 
 func (m *KeyInstance) validateKeyUsageList(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.KeyUsageList) { // not required
 		return nil
 	}
@@ -203,7 +201,6 @@ func (m *KeyInstance) validateRevocationReasonEnum(path, location string, value 
 }
 
 func (m *KeyInstance) validateRevocationReason(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RevocationReason) { // not required
 		return nil
 	}
@@ -213,6 +210,11 @@ func (m *KeyInstance) validateRevocationReason(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this key instance based on context it is used
+func (m *KeyInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

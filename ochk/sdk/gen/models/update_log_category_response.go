@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -57,7 +59,6 @@ func (m *UpdateLogCategoryResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *UpdateLogCategoryResponse) validateLogCategory(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.LogCategory) { // not required
 		return nil
 	}
@@ -66,6 +67,8 @@ func (m *UpdateLogCategoryResponse) validateLogCategory(formats strfmt.Registry)
 		if err := m.LogCategory.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("logCategory")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("logCategory")
 			}
 			return err
 		}
@@ -75,7 +78,6 @@ func (m *UpdateLogCategoryResponse) validateLogCategory(formats strfmt.Registry)
 }
 
 func (m *UpdateLogCategoryResponse) validateRequestInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -84,6 +86,8 @@ func (m *UpdateLogCategoryResponse) validateRequestInstance(formats strfmt.Regis
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -93,13 +97,62 @@ func (m *UpdateLogCategoryResponse) validateRequestInstance(formats strfmt.Regis
 }
 
 func (m *UpdateLogCategoryResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update log category response based on the context it is used
+func (m *UpdateLogCategoryResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateLogCategory(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *UpdateLogCategoryResponse) contextValidateLogCategory(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.LogCategory != nil {
+		if err := m.LogCategory.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("logCategory")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("logCategory")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *UpdateLogCategoryResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RequestInstance != nil {
+		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
+			}
+			return err
+		}
 	}
 
 	return nil

@@ -41,9 +41,8 @@ func (o *IPCollectionCreateUsingPUTReader) ReadResponse(response runtime.ClientR
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewIPCollectionCreateUsingPUTOK() *IPCollectionCreateUsingPUTOK {
 	return &IPCollectionCreateUsingPUTOK{}
 }
 
-/*IPCollectionCreateUsingPUTOK handles this case with default header values.
+/* IPCollectionCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type IPCollectionCreateUsingPUTOK struct {
 func (o *IPCollectionCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /ipcs][%d] ipCollectionCreateUsingPUTOK  %+v", 200, o.Payload)
 }
-
 func (o *IPCollectionCreateUsingPUTOK) GetPayload() *models.IPCollectionCreateResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewIPCollectionCreateUsingPUTCreated() *IPCollectionCreateUsingPUTCreated {
 	return &IPCollectionCreateUsingPUTCreated{}
 }
 
-/*IPCollectionCreateUsingPUTCreated handles this case with default header values.
+/* IPCollectionCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -96,7 +94,6 @@ type IPCollectionCreateUsingPUTCreated struct {
 func (o *IPCollectionCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /ipcs][%d] ipCollectionCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
-
 func (o *IPCollectionCreateUsingPUTCreated) GetPayload() *models.IPCollectionCreateResponse {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewIPCollectionCreateUsingPUTBadRequest() *IPCollectionCreateUsingPUTBadReq
 	return &IPCollectionCreateUsingPUTBadRequest{}
 }
 
-/*IPCollectionCreateUsingPUTBadRequest handles this case with default header values.
+/* IPCollectionCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -129,7 +126,6 @@ type IPCollectionCreateUsingPUTBadRequest struct {
 func (o *IPCollectionCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /ipcs][%d] ipCollectionCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *IPCollectionCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

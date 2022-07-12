@@ -25,9 +25,12 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	VirtualMachinePerformanceReportListUsingGET(params *VirtualMachinePerformanceReportListUsingGETParams) (*VirtualMachinePerformanceReportListUsingGETOK, error)
+	VirtualMachinePerformanceReportListUsingGET(params *VirtualMachinePerformanceReportListUsingGETParams, opts ...ClientOption) (*VirtualMachinePerformanceReportListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -37,13 +40,12 @@ type ClientService interface {
 
   Get virtual machine performance report
 */
-func (a *Client) VirtualMachinePerformanceReportListUsingGET(params *VirtualMachinePerformanceReportListUsingGETParams) (*VirtualMachinePerformanceReportListUsingGETOK, error) {
+func (a *Client) VirtualMachinePerformanceReportListUsingGET(params *VirtualMachinePerformanceReportListUsingGETParams, opts ...ClientOption) (*VirtualMachinePerformanceReportListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVirtualMachinePerformanceReportListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "virtualMachinePerformanceReportListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/billing/virtual-machine/performance",
@@ -54,7 +56,12 @@ func (a *Client) VirtualMachinePerformanceReportListUsingGET(params *VirtualMach
 		Reader:             &VirtualMachinePerformanceReportListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

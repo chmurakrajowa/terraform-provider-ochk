@@ -35,9 +35,8 @@ func (o *ListTenantInfoUsingGETReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewListTenantInfoUsingGETOK() *ListTenantInfoUsingGETOK {
 	return &ListTenantInfoUsingGETOK{}
 }
 
-/*ListTenantInfoUsingGETOK handles this case with default header values.
+/* ListTenantInfoUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type ListTenantInfoUsingGETOK struct {
 func (o *ListTenantInfoUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /admin/tenants][%d] listTenantInfoUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *ListTenantInfoUsingGETOK) GetPayload() *models.TenantInfoListResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewListTenantInfoUsingGETBadRequest() *ListTenantInfoUsingGETBadRequest {
 	return &ListTenantInfoUsingGETBadRequest{}
 }
 
-/*ListTenantInfoUsingGETBadRequest handles this case with default header values.
+/* ListTenantInfoUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */

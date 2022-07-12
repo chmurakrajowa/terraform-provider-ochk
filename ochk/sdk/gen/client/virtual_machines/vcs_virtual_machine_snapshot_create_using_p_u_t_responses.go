@@ -41,9 +41,8 @@ func (o *VcsVirtualMachineSnapshotCreateUsingPUTReader) ReadResponse(response ru
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewVcsVirtualMachineSnapshotCreateUsingPUTOK() *VcsVirtualMachineSnapshotCr
 	return &VcsVirtualMachineSnapshotCreateUsingPUTOK{}
 }
 
-/*VcsVirtualMachineSnapshotCreateUsingPUTOK handles this case with default header values.
+/* VcsVirtualMachineSnapshotCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type VcsVirtualMachineSnapshotCreateUsingPUTOK struct {
 func (o *VcsVirtualMachineSnapshotCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}/snapshots][%d] vcsVirtualMachineSnapshotCreateUsingPUTOK  %+v", 200, o.Payload)
 }
-
 func (o *VcsVirtualMachineSnapshotCreateUsingPUTOK) GetPayload() *models.CreateSnapshotResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewVcsVirtualMachineSnapshotCreateUsingPUTCreated() *VcsVirtualMachineSnaps
 	return &VcsVirtualMachineSnapshotCreateUsingPUTCreated{}
 }
 
-/*VcsVirtualMachineSnapshotCreateUsingPUTCreated handles this case with default header values.
+/* VcsVirtualMachineSnapshotCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -96,7 +94,6 @@ type VcsVirtualMachineSnapshotCreateUsingPUTCreated struct {
 func (o *VcsVirtualMachineSnapshotCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}/snapshots][%d] vcsVirtualMachineSnapshotCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
-
 func (o *VcsVirtualMachineSnapshotCreateUsingPUTCreated) GetPayload() *models.CreateSnapshotResponse {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewVcsVirtualMachineSnapshotCreateUsingPUTBadRequest() *VcsVirtualMachineSn
 	return &VcsVirtualMachineSnapshotCreateUsingPUTBadRequest{}
 }
 
-/*VcsVirtualMachineSnapshotCreateUsingPUTBadRequest handles this case with default header values.
+/* VcsVirtualMachineSnapshotCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -129,7 +126,6 @@ type VcsVirtualMachineSnapshotCreateUsingPUTBadRequest struct {
 func (o *VcsVirtualMachineSnapshotCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}/snapshots][%d] vcsVirtualMachineSnapshotCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *VcsVirtualMachineSnapshotCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

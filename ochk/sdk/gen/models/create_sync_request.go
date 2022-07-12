@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -21,6 +23,11 @@ type CreateSyncRequest struct {
 
 // Validate validates this create sync request
 func (m *CreateSyncRequest) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this create sync request based on context it is used
+func (m *CreateSyncRequest) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

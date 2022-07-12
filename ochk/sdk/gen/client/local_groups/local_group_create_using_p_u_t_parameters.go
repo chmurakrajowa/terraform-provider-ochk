@@ -18,59 +18,73 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewLocalGroupCreateUsingPUTParams creates a new LocalGroupCreateUsingPUTParams object
-// with the default values initialized.
+// NewLocalGroupCreateUsingPUTParams creates a new LocalGroupCreateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewLocalGroupCreateUsingPUTParams() *LocalGroupCreateUsingPUTParams {
-	var ()
 	return &LocalGroupCreateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewLocalGroupCreateUsingPUTParamsWithTimeout creates a new LocalGroupCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewLocalGroupCreateUsingPUTParamsWithTimeout(timeout time.Duration) *LocalGroupCreateUsingPUTParams {
-	var ()
 	return &LocalGroupCreateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewLocalGroupCreateUsingPUTParamsWithContext creates a new LocalGroupCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewLocalGroupCreateUsingPUTParamsWithContext(ctx context.Context) *LocalGroupCreateUsingPUTParams {
-	var ()
 	return &LocalGroupCreateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewLocalGroupCreateUsingPUTParamsWithHTTPClient creates a new LocalGroupCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewLocalGroupCreateUsingPUTParamsWithHTTPClient(client *http.Client) *LocalGroupCreateUsingPUTParams {
-	var ()
 	return &LocalGroupCreateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*LocalGroupCreateUsingPUTParams contains all the parameters to send to the API endpoint
-for the local group create using p u t operation typically these are written to a http.Request
+/* LocalGroupCreateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the local group create using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type LocalGroupCreateUsingPUTParams struct {
 
-	/*LocalGroup
-	  localGroup
+	/* LocalGroup.
 
+	   localGroup
 	*/
 	LocalGroup *models.LocalGroup
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the local group create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *LocalGroupCreateUsingPUTParams) WithDefaults() *LocalGroupCreateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the local group create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *LocalGroupCreateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the local group create using p u t params
@@ -124,7 +138,6 @@ func (o *LocalGroupCreateUsingPUTParams) WriteToRequest(r runtime.ClientRequest,
 		return err
 	}
 	var res []error
-
 	if o.LocalGroup != nil {
 		if err := r.SetBodyParam(o.LocalGroup); err != nil {
 			return err

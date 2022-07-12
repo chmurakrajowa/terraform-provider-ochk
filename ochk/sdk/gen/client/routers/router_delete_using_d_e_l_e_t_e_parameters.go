@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewRouterDeleteUsingDELETEParams creates a new RouterDeleteUsingDELETEParams object
-// with the default values initialized.
+// NewRouterDeleteUsingDELETEParams creates a new RouterDeleteUsingDELETEParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewRouterDeleteUsingDELETEParams() *RouterDeleteUsingDELETEParams {
-	var ()
 	return &RouterDeleteUsingDELETEParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewRouterDeleteUsingDELETEParamsWithTimeout creates a new RouterDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewRouterDeleteUsingDELETEParamsWithTimeout(timeout time.Duration) *RouterDeleteUsingDELETEParams {
-	var ()
 	return &RouterDeleteUsingDELETEParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewRouterDeleteUsingDELETEParamsWithContext creates a new RouterDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewRouterDeleteUsingDELETEParamsWithContext(ctx context.Context) *RouterDeleteUsingDELETEParams {
-	var ()
 	return &RouterDeleteUsingDELETEParams{
-
 		Context: ctx,
 	}
 }
 
 // NewRouterDeleteUsingDELETEParamsWithHTTPClient creates a new RouterDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewRouterDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) *RouterDeleteUsingDELETEParams {
-	var ()
 	return &RouterDeleteUsingDELETEParams{
 		HTTPClient: client,
 	}
 }
 
-/*RouterDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-for the router delete using d e l e t e operation typically these are written to a http.Request
+/* RouterDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
+   for the router delete using d e l e t e operation.
+
+   Typically these are written to a http.Request.
 */
 type RouterDeleteUsingDELETEParams struct {
 
-	/*RouterID
-	  routerId
+	/* RouterID.
 
+	   routerId
 	*/
 	RouterID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the router delete using d e l e t e params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *RouterDeleteUsingDELETEParams) WithDefaults() *RouterDeleteUsingDELETEParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the router delete using d e l e t e params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *RouterDeleteUsingDELETEParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the router delete using d e l e t e params

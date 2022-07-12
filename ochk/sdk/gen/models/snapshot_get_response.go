@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -50,7 +52,6 @@ func (m *SnapshotGetResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *SnapshotGetResponse) validateSnapshotInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.SnapshotInstance) { // not required
 		return nil
 	}
@@ -59,6 +60,8 @@ func (m *SnapshotGetResponse) validateSnapshotInstance(formats strfmt.Registry) 
 		if err := m.SnapshotInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("snapshotInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("snapshotInstance")
 			}
 			return err
 		}
@@ -68,13 +71,42 @@ func (m *SnapshotGetResponse) validateSnapshotInstance(formats strfmt.Registry) 
 }
 
 func (m *SnapshotGetResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this snapshot get response based on the context it is used
+func (m *SnapshotGetResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateSnapshotInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *SnapshotGetResponse) contextValidateSnapshotInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.SnapshotInstance != nil {
+		if err := m.SnapshotInstance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("snapshotInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("snapshotInstance")
+			}
+			return err
+		}
 	}
 
 	return nil

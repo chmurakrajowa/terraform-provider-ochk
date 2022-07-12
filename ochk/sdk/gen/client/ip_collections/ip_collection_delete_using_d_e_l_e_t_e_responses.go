@@ -35,9 +35,8 @@ func (o *IPCollectionDeleteUsingDELETEReader) ReadResponse(response runtime.Clie
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewIPCollectionDeleteUsingDELETEOK() *IPCollectionDeleteUsingDELETEOK {
 	return &IPCollectionDeleteUsingDELETEOK{}
 }
 
-/*IPCollectionDeleteUsingDELETEOK handles this case with default header values.
+/* IPCollectionDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type IPCollectionDeleteUsingDELETEOK struct {
 func (o *IPCollectionDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /ipcs/{ipCollectionId}][%d] ipCollectionDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
-
 func (o *IPCollectionDeleteUsingDELETEOK) GetPayload() *models.IPCollectionDeleteResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewIPCollectionDeleteUsingDELETEBadRequest() *IPCollectionDeleteUsingDELETE
 	return &IPCollectionDeleteUsingDELETEBadRequest{}
 }
 
-/*IPCollectionDeleteUsingDELETEBadRequest handles this case with default header values.
+/* IPCollectionDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type IPCollectionDeleteUsingDELETEBadRequest struct {
 func (o *IPCollectionDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /ipcs/{ipCollectionId}][%d] ipCollectionDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *IPCollectionDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

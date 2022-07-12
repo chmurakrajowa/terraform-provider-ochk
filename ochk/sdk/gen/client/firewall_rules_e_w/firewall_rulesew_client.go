@@ -25,17 +25,20 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	DfwRuleCreateUsingPUT(params *DfwRuleCreateUsingPUTParams) (*DfwRuleCreateUsingPUTOK, *DfwRuleCreateUsingPUTCreated, error)
+	DfwRuleCreateUsingPUT(params *DfwRuleCreateUsingPUTParams, opts ...ClientOption) (*DfwRuleCreateUsingPUTOK, *DfwRuleCreateUsingPUTCreated, error)
 
-	DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams) (*DfwRuleDeleteUsingDELETEOK, *DfwRuleDeleteUsingDELETECreated, error)
+	DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams, opts ...ClientOption) (*DfwRuleDeleteUsingDELETEOK, *DfwRuleDeleteUsingDELETECreated, error)
 
-	DfwRuleGetUsingGET(params *DfwRuleGetUsingGETParams) (*DfwRuleGetUsingGETOK, error)
+	DfwRuleGetUsingGET(params *DfwRuleGetUsingGETParams, opts ...ClientOption) (*DfwRuleGetUsingGETOK, error)
 
-	DfwRuleListUsingGET(params *DfwRuleListUsingGETParams) (*DfwRuleListUsingGETOK, error)
+	DfwRuleListUsingGET(params *DfwRuleListUsingGETParams, opts ...ClientOption) (*DfwRuleListUsingGETOK, error)
 
-	DfwRuleUpdateUsingPUT(params *DfwRuleUpdateUsingPUTParams) (*DfwRuleUpdateUsingPUTOK, *DfwRuleUpdateUsingPUTCreated, error)
+	DfwRuleUpdateUsingPUT(params *DfwRuleUpdateUsingPUTParams, opts ...ClientOption) (*DfwRuleUpdateUsingPUTOK, *DfwRuleUpdateUsingPUTCreated, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -45,13 +48,12 @@ type ClientService interface {
 
   Create firewall rule (east-west) in NSX-T
 */
-func (a *Client) DfwRuleCreateUsingPUT(params *DfwRuleCreateUsingPUTParams) (*DfwRuleCreateUsingPUTOK, *DfwRuleCreateUsingPUTCreated, error) {
+func (a *Client) DfwRuleCreateUsingPUT(params *DfwRuleCreateUsingPUTParams, opts ...ClientOption) (*DfwRuleCreateUsingPUTOK, *DfwRuleCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDfwRuleCreateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "dfwRuleCreateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/routers/{routerId}/rules/e-w",
@@ -62,7 +64,12 @@ func (a *Client) DfwRuleCreateUsingPUT(params *DfwRuleCreateUsingPUTParams) (*Df
 		Reader:             &DfwRuleCreateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -82,13 +89,12 @@ func (a *Client) DfwRuleCreateUsingPUT(params *DfwRuleCreateUsingPUTParams) (*Df
 
   Delete firewall rule (east-west) from NSX-T
 */
-func (a *Client) DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams) (*DfwRuleDeleteUsingDELETEOK, *DfwRuleDeleteUsingDELETECreated, error) {
+func (a *Client) DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams, opts ...ClientOption) (*DfwRuleDeleteUsingDELETEOK, *DfwRuleDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDfwRuleDeleteUsingDELETEParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "dfwRuleDeleteUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/network/routers/{routerId}/rules/e-w/{ruleId}",
@@ -99,7 +105,12 @@ func (a *Client) DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams
 		Reader:             &DfwRuleDeleteUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -119,13 +130,12 @@ func (a *Client) DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams
 
   Get firewall rule (east-west) from NSX-T
 */
-func (a *Client) DfwRuleGetUsingGET(params *DfwRuleGetUsingGETParams) (*DfwRuleGetUsingGETOK, error) {
+func (a *Client) DfwRuleGetUsingGET(params *DfwRuleGetUsingGETParams, opts ...ClientOption) (*DfwRuleGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDfwRuleGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "dfwRuleGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/routers/{routerId}/rules/e-w/{ruleId}",
@@ -136,7 +146,12 @@ func (a *Client) DfwRuleGetUsingGET(params *DfwRuleGetUsingGETParams) (*DfwRuleG
 		Reader:             &DfwRuleGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -155,13 +170,12 @@ func (a *Client) DfwRuleGetUsingGET(params *DfwRuleGetUsingGETParams) (*DfwRuleG
 
   List firewall rules (east-west) from NSX-T
 */
-func (a *Client) DfwRuleListUsingGET(params *DfwRuleListUsingGETParams) (*DfwRuleListUsingGETOK, error) {
+func (a *Client) DfwRuleListUsingGET(params *DfwRuleListUsingGETParams, opts ...ClientOption) (*DfwRuleListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDfwRuleListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "dfwRuleListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/network/routers/{routerId}/rules/e-w",
@@ -172,7 +186,12 @@ func (a *Client) DfwRuleListUsingGET(params *DfwRuleListUsingGETParams) (*DfwRul
 		Reader:             &DfwRuleListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -191,13 +210,12 @@ func (a *Client) DfwRuleListUsingGET(params *DfwRuleListUsingGETParams) (*DfwRul
 
   Update firewall rule (east-west) in NSX-T
 */
-func (a *Client) DfwRuleUpdateUsingPUT(params *DfwRuleUpdateUsingPUTParams) (*DfwRuleUpdateUsingPUTOK, *DfwRuleUpdateUsingPUTCreated, error) {
+func (a *Client) DfwRuleUpdateUsingPUT(params *DfwRuleUpdateUsingPUTParams, opts ...ClientOption) (*DfwRuleUpdateUsingPUTOK, *DfwRuleUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDfwRuleUpdateUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "dfwRuleUpdateUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/network/routers/{routerId}/rules/e-w/{ruleId}",
@@ -208,7 +226,12 @@ func (a *Client) DfwRuleUpdateUsingPUT(params *DfwRuleUpdateUsingPUTParams) (*Df
 		Reader:             &DfwRuleUpdateUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}

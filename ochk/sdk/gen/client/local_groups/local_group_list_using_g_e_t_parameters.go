@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewLocalGroupListUsingGETParams creates a new LocalGroupListUsingGETParams object
-// with the default values initialized.
+// NewLocalGroupListUsingGETParams creates a new LocalGroupListUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewLocalGroupListUsingGETParams() *LocalGroupListUsingGETParams {
-	var ()
 	return &LocalGroupListUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewLocalGroupListUsingGETParamsWithTimeout creates a new LocalGroupListUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewLocalGroupListUsingGETParamsWithTimeout(timeout time.Duration) *LocalGroupListUsingGETParams {
-	var ()
 	return &LocalGroupListUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewLocalGroupListUsingGETParamsWithContext creates a new LocalGroupListUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewLocalGroupListUsingGETParamsWithContext(ctx context.Context) *LocalGroupListUsingGETParams {
-	var ()
 	return &LocalGroupListUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewLocalGroupListUsingGETParamsWithHTTPClient creates a new LocalGroupListUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewLocalGroupListUsingGETParamsWithHTTPClient(client *http.Client) *LocalGroupListUsingGETParams {
-	var ()
 	return &LocalGroupListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*LocalGroupListUsingGETParams contains all the parameters to send to the API endpoint
-for the local group list using g e t operation typically these are written to a http.Request
+/* LocalGroupListUsingGETParams contains all the parameters to send to the API endpoint
+   for the local group list using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type LocalGroupListUsingGETParams struct {
 
-	/*Name
-	  name
+	/* Name.
 
+	   name
 	*/
 	Name *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the local group list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *LocalGroupListUsingGETParams) WithDefaults() *LocalGroupListUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the local group list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *LocalGroupListUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the local group list using g e t params
@@ -127,16 +141,17 @@ func (o *LocalGroupListUsingGETParams) WriteToRequest(r runtime.ClientRequest, r
 
 		// query param name
 		var qrName string
+
 		if o.Name != nil {
 			qrName = *o.Name
 		}
 		qName := qrName
 		if qName != "" {
+
 			if err := r.SetQueryParam("name", qName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

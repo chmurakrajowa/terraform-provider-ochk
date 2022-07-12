@@ -41,9 +41,8 @@ func (o *AllocationCreateUsingPUTReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewAllocationCreateUsingPUTOK() *AllocationCreateUsingPUTOK {
 	return &AllocationCreateUsingPUTOK{}
 }
 
-/*AllocationCreateUsingPUTOK handles this case with default header values.
+/* AllocationCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type AllocationCreateUsingPUTOK struct {
 func (o *AllocationCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /ipam/ipaddress/public/allocation][%d] allocationCreateUsingPUTOK  %+v", 200, o.Payload)
 }
-
 func (o *AllocationCreateUsingPUTOK) GetPayload() *models.CreatePublicIPAllocationResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewAllocationCreateUsingPUTCreated() *AllocationCreateUsingPUTCreated {
 	return &AllocationCreateUsingPUTCreated{}
 }
 
-/*AllocationCreateUsingPUTCreated handles this case with default header values.
+/* AllocationCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -96,7 +94,6 @@ type AllocationCreateUsingPUTCreated struct {
 func (o *AllocationCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /ipam/ipaddress/public/allocation][%d] allocationCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
-
 func (o *AllocationCreateUsingPUTCreated) GetPayload() *models.CreatePublicIPAllocationResponse {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewAllocationCreateUsingPUTBadRequest() *AllocationCreateUsingPUTBadRequest
 	return &AllocationCreateUsingPUTBadRequest{}
 }
 
-/*AllocationCreateUsingPUTBadRequest handles this case with default header values.
+/* AllocationCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */

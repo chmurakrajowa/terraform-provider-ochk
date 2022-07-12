@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -50,7 +52,6 @@ func (m *BillingTagDeleteResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *BillingTagDeleteResponse) validateRequestInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -59,6 +60,8 @@ func (m *BillingTagDeleteResponse) validateRequestInstance(formats strfmt.Regist
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -68,13 +71,42 @@ func (m *BillingTagDeleteResponse) validateRequestInstance(formats strfmt.Regist
 }
 
 func (m *BillingTagDeleteResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this billing tag delete response based on the context it is used
+func (m *BillingTagDeleteResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *BillingTagDeleteResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RequestInstance != nil {
+		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
+			}
+			return err
+		}
 	}
 
 	return nil

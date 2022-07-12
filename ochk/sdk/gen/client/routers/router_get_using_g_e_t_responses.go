@@ -41,9 +41,8 @@ func (o *RouterGetUsingGETReader) ReadResponse(response runtime.ClientResponse, 
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewRouterGetUsingGETOK() *RouterGetUsingGETOK {
 	return &RouterGetUsingGETOK{}
 }
 
-/*RouterGetUsingGETOK handles this case with default header values.
+/* RouterGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type RouterGetUsingGETOK struct {
 func (o *RouterGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/routers/{routerId}][%d] routerGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *RouterGetUsingGETOK) GetPayload() *models.RouterGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewRouterGetUsingGETBadRequest() *RouterGetUsingGETBadRequest {
 	return &RouterGetUsingGETBadRequest{}
 }
 
-/*RouterGetUsingGETBadRequest handles this case with default header values.
+/* RouterGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type RouterGetUsingGETBadRequest struct {
 func (o *RouterGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/routers/{routerId}][%d] routerGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *RouterGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewRouterGetUsingGETNotFound() *RouterGetUsingGETNotFound {
 	return &RouterGetUsingGETNotFound{}
 }
 
-/*RouterGetUsingGETNotFound handles this case with default header values.
+/* RouterGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

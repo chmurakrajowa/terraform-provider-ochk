@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 	"strconv"
 
@@ -85,7 +86,6 @@ func (m *GroupInstance) Validate(formats strfmt.Registry) error {
 }
 
 func (m *GroupInstance) validateGroupInstanceList(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.GroupInstanceList) { // not required
 		return nil
 	}
@@ -99,6 +99,8 @@ func (m *GroupInstance) validateGroupInstanceList(formats strfmt.Registry) error
 			if err := m.GroupInstanceList[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("groupInstanceList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("groupInstanceList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -139,7 +141,6 @@ func (m *GroupInstance) validateGroupTypeEnum(path, location string, value strin
 }
 
 func (m *GroupInstance) validateGroupType(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.GroupType) { // not required
 		return nil
 	}
@@ -153,7 +154,6 @@ func (m *GroupInstance) validateGroupType(formats strfmt.Registry) error {
 }
 
 func (m *GroupInstance) validatePrincipalID(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.PrincipalID) { // not required
 		return nil
 	}
@@ -162,6 +162,8 @@ func (m *GroupInstance) validatePrincipalID(formats strfmt.Registry) error {
 		if err := m.PrincipalID.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("principalId")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("principalId")
 			}
 			return err
 		}
@@ -171,7 +173,6 @@ func (m *GroupInstance) validatePrincipalID(formats strfmt.Registry) error {
 }
 
 func (m *GroupInstance) validateUserInstanceList(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.UserInstanceList) { // not required
 		return nil
 	}
@@ -185,6 +186,86 @@ func (m *GroupInstance) validateUserInstanceList(formats strfmt.Registry) error 
 			if err := m.UserInstanceList[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("userInstanceList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("userInstanceList" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this group instance based on the context it is used
+func (m *GroupInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateGroupInstanceList(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidatePrincipalID(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateUserInstanceList(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *GroupInstance) contextValidateGroupInstanceList(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.GroupInstanceList); i++ {
+
+		if m.GroupInstanceList[i] != nil {
+			if err := m.GroupInstanceList[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("groupInstanceList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("groupInstanceList" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *GroupInstance) contextValidatePrincipalID(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.PrincipalID != nil {
+		if err := m.PrincipalID.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("principalId")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("principalId")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *GroupInstance) contextValidateUserInstanceList(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.UserInstanceList); i++ {
+
+		if m.UserInstanceList[i] != nil {
+			if err := m.UserInstanceList[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("userInstanceList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("userInstanceList" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

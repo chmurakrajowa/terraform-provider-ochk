@@ -41,9 +41,8 @@ func (o *IpamServiceGetUsingGETReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewIpamServiceGetUsingGETOK() *IpamServiceGetUsingGETOK {
 	return &IpamServiceGetUsingGETOK{}
 }
 
-/*IpamServiceGetUsingGETOK handles this case with default header values.
+/* IpamServiceGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type IpamServiceGetUsingGETOK struct {
 func (o *IpamServiceGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /ipam/services/{serviceId}][%d] ipamServiceGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *IpamServiceGetUsingGETOK) GetPayload() *models.ServiceGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewIpamServiceGetUsingGETBadRequest() *IpamServiceGetUsingGETBadRequest {
 	return &IpamServiceGetUsingGETBadRequest{}
 }
 
-/*IpamServiceGetUsingGETBadRequest handles this case with default header values.
+/* IpamServiceGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -106,7 +104,7 @@ func NewIpamServiceGetUsingGETNotFound() *IpamServiceGetUsingGETNotFound {
 	return &IpamServiceGetUsingGETNotFound{}
 }
 
-/*IpamServiceGetUsingGETNotFound handles this case with default header values.
+/* IpamServiceGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

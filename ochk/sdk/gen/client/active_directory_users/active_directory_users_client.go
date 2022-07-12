@@ -25,19 +25,22 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateADUserUsingPUT(params *CreateADUserUsingPUTParams) (*CreateADUserUsingPUTOK, *CreateADUserUsingPUTCreated, error)
+	CreateADUserUsingPUT(params *CreateADUserUsingPUTParams, opts ...ClientOption) (*CreateADUserUsingPUTOK, *CreateADUserUsingPUTCreated, error)
 
-	DeleteADUserUsingDELETE(params *DeleteADUserUsingDELETEParams) (*DeleteADUserUsingDELETEOK, error)
+	DeleteADUserUsingDELETE(params *DeleteADUserUsingDELETEParams, opts ...ClientOption) (*DeleteADUserUsingDELETEOK, error)
 
-	GetADUserUsingGET(params *GetADUserUsingGETParams) (*GetADUserUsingGETOK, error)
+	GetADUserUsingGET(params *GetADUserUsingGETParams, opts ...ClientOption) (*GetADUserUsingGETOK, error)
 
-	ListADUsersUsingGET(params *ListADUsersUsingGETParams) (*ListADUsersUsingGETOK, error)
+	ListADUsersUsingGET(params *ListADUsersUsingGETParams, opts ...ClientOption) (*ListADUsersUsingGETOK, error)
 
-	SetPasswordADUserUsingPOST(params *SetPasswordADUserUsingPOSTParams) (*SetPasswordADUserUsingPOSTOK, error)
+	SetPasswordADUserUsingPOST(params *SetPasswordADUserUsingPOSTParams, opts ...ClientOption) (*SetPasswordADUserUsingPOSTOK, error)
 
-	UpdateADUserUsingPUT(params *UpdateADUserUsingPUTParams) (*UpdateADUserUsingPUTOK, error)
+	UpdateADUserUsingPUT(params *UpdateADUserUsingPUTParams, opts ...ClientOption) (*UpdateADUserUsingPUTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -47,13 +50,12 @@ type ClientService interface {
 
   Create user
 */
-func (a *Client) CreateADUserUsingPUT(params *CreateADUserUsingPUTParams) (*CreateADUserUsingPUTOK, *CreateADUserUsingPUTCreated, error) {
+func (a *Client) CreateADUserUsingPUT(params *CreateADUserUsingPUTParams, opts ...ClientOption) (*CreateADUserUsingPUTOK, *CreateADUserUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateADUserUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "createADUserUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/ad/integration/users",
@@ -64,7 +66,12 @@ func (a *Client) CreateADUserUsingPUT(params *CreateADUserUsingPUTParams) (*Crea
 		Reader:             &CreateADUserUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -84,13 +91,12 @@ func (a *Client) CreateADUserUsingPUT(params *CreateADUserUsingPUTParams) (*Crea
 
   Delete user
 */
-func (a *Client) DeleteADUserUsingDELETE(params *DeleteADUserUsingDELETEParams) (*DeleteADUserUsingDELETEOK, error) {
+func (a *Client) DeleteADUserUsingDELETE(params *DeleteADUserUsingDELETEParams, opts ...ClientOption) (*DeleteADUserUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteADUserUsingDELETEParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "deleteADUserUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/ad/integration/users/{samAccountName}",
@@ -101,7 +107,12 @@ func (a *Client) DeleteADUserUsingDELETE(params *DeleteADUserUsingDELETEParams) 
 		Reader:             &DeleteADUserUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -120,13 +131,12 @@ func (a *Client) DeleteADUserUsingDELETE(params *DeleteADUserUsingDELETEParams) 
 
   Get user info
 */
-func (a *Client) GetADUserUsingGET(params *GetADUserUsingGETParams) (*GetADUserUsingGETOK, error) {
+func (a *Client) GetADUserUsingGET(params *GetADUserUsingGETParams, opts ...ClientOption) (*GetADUserUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetADUserUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "getADUserUsingGET",
 		Method:             "GET",
 		PathPattern:        "/ad/integration/users/{samAccountName}",
@@ -137,7 +147,12 @@ func (a *Client) GetADUserUsingGET(params *GetADUserUsingGETParams) (*GetADUserU
 		Reader:             &GetADUserUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -156,13 +171,12 @@ func (a *Client) GetADUserUsingGET(params *GetADUserUsingGETParams) (*GetADUserU
 
   List users
 */
-func (a *Client) ListADUsersUsingGET(params *ListADUsersUsingGETParams) (*ListADUsersUsingGETOK, error) {
+func (a *Client) ListADUsersUsingGET(params *ListADUsersUsingGETParams, opts ...ClientOption) (*ListADUsersUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListADUsersUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "listADUsersUsingGET",
 		Method:             "GET",
 		PathPattern:        "/ad/integration/users",
@@ -173,7 +187,12 @@ func (a *Client) ListADUsersUsingGET(params *ListADUsersUsingGETParams) (*ListAD
 		Reader:             &ListADUsersUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -192,13 +211,12 @@ func (a *Client) ListADUsersUsingGET(params *ListADUsersUsingGETParams) (*ListAD
 
   Set password for user
 */
-func (a *Client) SetPasswordADUserUsingPOST(params *SetPasswordADUserUsingPOSTParams) (*SetPasswordADUserUsingPOSTOK, error) {
+func (a *Client) SetPasswordADUserUsingPOST(params *SetPasswordADUserUsingPOSTParams, opts ...ClientOption) (*SetPasswordADUserUsingPOSTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewSetPasswordADUserUsingPOSTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "setPasswordADUserUsingPOST",
 		Method:             "POST",
 		PathPattern:        "/ad/integration/users/{samAccountName}/setPassword",
@@ -209,7 +227,12 @@ func (a *Client) SetPasswordADUserUsingPOST(params *SetPasswordADUserUsingPOSTPa
 		Reader:             &SetPasswordADUserUsingPOSTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -228,13 +251,12 @@ func (a *Client) SetPasswordADUserUsingPOST(params *SetPasswordADUserUsingPOSTPa
 
   Update user
 */
-func (a *Client) UpdateADUserUsingPUT(params *UpdateADUserUsingPUTParams) (*UpdateADUserUsingPUTOK, error) {
+func (a *Client) UpdateADUserUsingPUT(params *UpdateADUserUsingPUTParams, opts ...ClientOption) (*UpdateADUserUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateADUserUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "updateADUserUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/ad/integration/users/{samAccountName}",
@@ -245,7 +267,12 @@ func (a *Client) UpdateADUserUsingPUT(params *UpdateADUserUsingPUTParams) (*Upda
 		Reader:             &UpdateADUserUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

@@ -18,59 +18,73 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewGetTokenUsingPOST1Params creates a new GetTokenUsingPOST1Params object
-// with the default values initialized.
+// NewGetTokenUsingPOST1Params creates a new GetTokenUsingPOST1Params object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetTokenUsingPOST1Params() *GetTokenUsingPOST1Params {
-	var ()
 	return &GetTokenUsingPOST1Params{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetTokenUsingPOST1ParamsWithTimeout creates a new GetTokenUsingPOST1Params object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetTokenUsingPOST1ParamsWithTimeout(timeout time.Duration) *GetTokenUsingPOST1Params {
-	var ()
 	return &GetTokenUsingPOST1Params{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetTokenUsingPOST1ParamsWithContext creates a new GetTokenUsingPOST1Params object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetTokenUsingPOST1ParamsWithContext(ctx context.Context) *GetTokenUsingPOST1Params {
-	var ()
 	return &GetTokenUsingPOST1Params{
-
 		Context: ctx,
 	}
 }
 
 // NewGetTokenUsingPOST1ParamsWithHTTPClient creates a new GetTokenUsingPOST1Params object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetTokenUsingPOST1ParamsWithHTTPClient(client *http.Client) *GetTokenUsingPOST1Params {
-	var ()
 	return &GetTokenUsingPOST1Params{
 		HTTPClient: client,
 	}
 }
 
-/*GetTokenUsingPOST1Params contains all the parameters to send to the API endpoint
-for the get token using p o s t 1 operation typically these are written to a http.Request
+/* GetTokenUsingPOST1Params contains all the parameters to send to the API endpoint
+   for the get token using p o s t 1 operation.
+
+   Typically these are written to a http.Request.
 */
 type GetTokenUsingPOST1Params struct {
 
-	/*WsoTokenRequest
-	  wsoTokenRequest
+	/* WsoTokenRequest.
 
+	   wsoTokenRequest
 	*/
 	WsoTokenRequest *models.WSOTokenRequest
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get token using p o s t 1 params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetTokenUsingPOST1Params) WithDefaults() *GetTokenUsingPOST1Params {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get token using p o s t 1 params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetTokenUsingPOST1Params) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get token using p o s t 1 params
@@ -124,7 +138,6 @@ func (o *GetTokenUsingPOST1Params) WriteToRequest(r runtime.ClientRequest, reg s
 		return err
 	}
 	var res []error
-
 	if o.WsoTokenRequest != nil {
 		if err := r.SetBodyParam(o.WsoTokenRequest); err != nil {
 			return err

@@ -25,11 +25,14 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GetTenantInfoUsingGET(params *GetTenantInfoUsingGETParams) (*GetTenantInfoUsingGETOK, error)
+	GetTenantInfoUsingGET(params *GetTenantInfoUsingGETParams, opts ...ClientOption) (*GetTenantInfoUsingGETOK, error)
 
-	ListTenantInfoUsingGET(params *ListTenantInfoUsingGETParams) (*ListTenantInfoUsingGETOK, error)
+	ListTenantInfoUsingGET(params *ListTenantInfoUsingGETParams, opts ...ClientOption) (*ListTenantInfoUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -39,13 +42,12 @@ type ClientService interface {
 
   Get tenant info
 */
-func (a *Client) GetTenantInfoUsingGET(params *GetTenantInfoUsingGETParams) (*GetTenantInfoUsingGETOK, error) {
+func (a *Client) GetTenantInfoUsingGET(params *GetTenantInfoUsingGETParams, opts ...ClientOption) (*GetTenantInfoUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetTenantInfoUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "getTenantInfoUsingGET",
 		Method:             "GET",
 		PathPattern:        "/admin/tenants/{tenantId}",
@@ -56,7 +58,12 @@ func (a *Client) GetTenantInfoUsingGET(params *GetTenantInfoUsingGETParams) (*Ge
 		Reader:             &GetTenantInfoUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -75,13 +82,12 @@ func (a *Client) GetTenantInfoUsingGET(params *GetTenantInfoUsingGETParams) (*Ge
 
   List tenants
 */
-func (a *Client) ListTenantInfoUsingGET(params *ListTenantInfoUsingGETParams) (*ListTenantInfoUsingGETOK, error) {
+func (a *Client) ListTenantInfoUsingGET(params *ListTenantInfoUsingGETParams, opts ...ClientOption) (*ListTenantInfoUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListTenantInfoUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "listTenantInfoUsingGET",
 		Method:             "GET",
 		PathPattern:        "/admin/tenants",
@@ -92,7 +98,12 @@ func (a *Client) ListTenantInfoUsingGET(params *ListTenantInfoUsingGETParams) (*
 		Reader:             &ListTenantInfoUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

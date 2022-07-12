@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -52,7 +53,6 @@ func (m *BackupListListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *BackupListListResponse) validateBackupListCollection(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.BackupListCollection) { // not required
 		return nil
 	}
@@ -66,6 +66,8 @@ func (m *BackupListListResponse) validateBackupListCollection(formats strfmt.Reg
 			if err := m.BackupListCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -77,13 +79,46 @@ func (m *BackupListListResponse) validateBackupListCollection(formats strfmt.Reg
 }
 
 func (m *BackupListListResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this backup list list response based on the context it is used
+func (m *BackupListListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateBackupListCollection(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *BackupListListResponse) contextValidateBackupListCollection(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.BackupListCollection); i++ {
+
+		if m.BackupListCollection[i] != nil {
+			if err := m.BackupListCollection[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

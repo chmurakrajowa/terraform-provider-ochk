@@ -35,9 +35,8 @@ func (o *AllocationDeleteUsingDELETEReader) ReadResponse(response runtime.Client
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewAllocationDeleteUsingDELETEOK() *AllocationDeleteUsingDELETEOK {
 	return &AllocationDeleteUsingDELETEOK{}
 }
 
-/*AllocationDeleteUsingDELETEOK handles this case with default header values.
+/* AllocationDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type AllocationDeleteUsingDELETEOK struct {
 func (o *AllocationDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /ipam/ipaddress/public/allocation/{allocationId}][%d] allocationDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
-
 func (o *AllocationDeleteUsingDELETEOK) GetPayload() *models.DeletePublicIPAllocationResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewAllocationDeleteUsingDELETEBadRequest() *AllocationDeleteUsingDELETEBadR
 	return &AllocationDeleteUsingDELETEBadRequest{}
 }
 
-/*AllocationDeleteUsingDELETEBadRequest handles this case with default header values.
+/* AllocationDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */

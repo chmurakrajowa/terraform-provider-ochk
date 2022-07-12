@@ -25,11 +25,14 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	VcsResourcePoolsGetUsingGET(params *VcsResourcePoolsGetUsingGETParams) (*VcsResourcePoolsGetUsingGETOK, error)
+	VcsResourcePoolsGetUsingGET(params *VcsResourcePoolsGetUsingGETParams, opts ...ClientOption) (*VcsResourcePoolsGetUsingGETOK, error)
 
-	VcsResourcePoolsListUsingGET(params *VcsResourcePoolsListUsingGETParams) (*VcsResourcePoolsListUsingGETOK, error)
+	VcsResourcePoolsListUsingGET(params *VcsResourcePoolsListUsingGETParams, opts ...ClientOption) (*VcsResourcePoolsListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -39,13 +42,12 @@ type ClientService interface {
 
   Get resource pools
 */
-func (a *Client) VcsResourcePoolsGetUsingGET(params *VcsResourcePoolsGetUsingGETParams) (*VcsResourcePoolsGetUsingGETOK, error) {
+func (a *Client) VcsResourcePoolsGetUsingGET(params *VcsResourcePoolsGetUsingGETParams, opts ...ClientOption) (*VcsResourcePoolsGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsResourcePoolsGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "vcsResourcePoolsGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vcs/resourcepools/{resourcePoolId}",
@@ -56,7 +58,12 @@ func (a *Client) VcsResourcePoolsGetUsingGET(params *VcsResourcePoolsGetUsingGET
 		Reader:             &VcsResourcePoolsGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -75,13 +82,12 @@ func (a *Client) VcsResourcePoolsGetUsingGET(params *VcsResourcePoolsGetUsingGET
 
   List resource pools
 */
-func (a *Client) VcsResourcePoolsListUsingGET(params *VcsResourcePoolsListUsingGETParams) (*VcsResourcePoolsListUsingGETOK, error) {
+func (a *Client) VcsResourcePoolsListUsingGET(params *VcsResourcePoolsListUsingGETParams, opts ...ClientOption) (*VcsResourcePoolsListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVcsResourcePoolsListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "vcsResourcePoolsListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vcs/resourcepools",
@@ -92,7 +98,12 @@ func (a *Client) VcsResourcePoolsListUsingGET(params *VcsResourcePoolsListUsingG
 		Reader:             &VcsResourcePoolsListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

@@ -41,9 +41,8 @@ func (o *DeploymentGetUsingGETReader) ReadResponse(response runtime.ClientRespon
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewDeploymentGetUsingGETOK() *DeploymentGetUsingGETOK {
 	return &DeploymentGetUsingGETOK{}
 }
 
-/*DeploymentGetUsingGETOK handles this case with default header values.
+/* DeploymentGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type DeploymentGetUsingGETOK struct {
 func (o *DeploymentGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /deployments/{deploymentId}][%d] deploymentGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *DeploymentGetUsingGETOK) GetPayload() *models.DeploymentGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewDeploymentGetUsingGETBadRequest() *DeploymentGetUsingGETBadRequest {
 	return &DeploymentGetUsingGETBadRequest{}
 }
 
-/*DeploymentGetUsingGETBadRequest handles this case with default header values.
+/* DeploymentGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type DeploymentGetUsingGETBadRequest struct {
 func (o *DeploymentGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /deployments/{deploymentId}][%d] deploymentGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *DeploymentGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewDeploymentGetUsingGETNotFound() *DeploymentGetUsingGETNotFound {
 	return &DeploymentGetUsingGETNotFound{}
 }
 
-/*DeploymentGetUsingGETNotFound handles this case with default header values.
+/* DeploymentGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

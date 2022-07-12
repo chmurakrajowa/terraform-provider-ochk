@@ -35,9 +35,8 @@ func (o *GroupMemberListUsingGETReader) ReadResponse(response runtime.ClientResp
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewGroupMemberListUsingGETOK() *GroupMemberListUsingGETOK {
 	return &GroupMemberListUsingGETOK{}
 }
 
-/*GroupMemberListUsingGETOK handles this case with default header values.
+/* GroupMemberListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type GroupMemberListUsingGETOK struct {
 func (o *GroupMemberListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /subtenants/{subtenantId}/groups/{parentGroupId}/members/groups][%d] groupMemberListUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *GroupMemberListUsingGETOK) GetPayload() *models.GroupListResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewGroupMemberListUsingGETBadRequest() *GroupMemberListUsingGETBadRequest {
 	return &GroupMemberListUsingGETBadRequest{}
 }
 
-/*GroupMemberListUsingGETBadRequest handles this case with default header values.
+/* GroupMemberListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type GroupMemberListUsingGETBadRequest struct {
 func (o *GroupMemberListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /subtenants/{subtenantId}/groups/{parentGroupId}/members/groups][%d] groupMemberListUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *GroupMemberListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
