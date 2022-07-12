@@ -35,9 +35,8 @@ func (o *LocalGroupListUsingGETReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewLocalGroupListUsingGETOK() *LocalGroupListUsingGETOK {
 	return &LocalGroupListUsingGETOK{}
 }
 
-/*LocalGroupListUsingGETOK handles this case with default header values.
+/* LocalGroupListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type LocalGroupListUsingGETOK struct {
 func (o *LocalGroupListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /groups/local][%d] localGroupListUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *LocalGroupListUsingGETOK) GetPayload() *models.LocalGroupListResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewLocalGroupListUsingGETBadRequest() *LocalGroupListUsingGETBadRequest {
 	return &LocalGroupListUsingGETBadRequest{}
 }
 
-/*LocalGroupListUsingGETBadRequest handles this case with default header values.
+/* LocalGroupListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type LocalGroupListUsingGETBadRequest struct {
 func (o *LocalGroupListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /groups/local][%d] localGroupListUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *LocalGroupListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

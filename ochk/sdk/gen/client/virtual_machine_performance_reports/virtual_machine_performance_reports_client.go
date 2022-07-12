@@ -25,9 +25,12 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	VirtualMachineOverallReportGetUsingGET(params *VirtualMachineOverallReportGetUsingGETParams) (*VirtualMachineOverallReportGetUsingGETOK, error)
+	VirtualMachineOverallReportGetUsingGET(params *VirtualMachineOverallReportGetUsingGETParams, opts ...ClientOption) (*VirtualMachineOverallReportGetUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -37,13 +40,12 @@ type ClientService interface {
 
   Get virtual machine overall report
 */
-func (a *Client) VirtualMachineOverallReportGetUsingGET(params *VirtualMachineOverallReportGetUsingGETParams) (*VirtualMachineOverallReportGetUsingGETOK, error) {
+func (a *Client) VirtualMachineOverallReportGetUsingGET(params *VirtualMachineOverallReportGetUsingGETParams, opts ...ClientOption) (*VirtualMachineOverallReportGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewVirtualMachineOverallReportGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "virtualMachineOverallReportGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/billing/virtual-machine/summary",
@@ -54,7 +56,12 @@ func (a *Client) VirtualMachineOverallReportGetUsingGET(params *VirtualMachineOv
 		Reader:             &VirtualMachineOverallReportGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

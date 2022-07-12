@@ -41,9 +41,8 @@ func (o *SecurityGroupGetUsingGETReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewSecurityGroupGetUsingGETOK() *SecurityGroupGetUsingGETOK {
 	return &SecurityGroupGetUsingGETOK{}
 }
 
-/*SecurityGroupGetUsingGETOK handles this case with default header values.
+/* SecurityGroupGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type SecurityGroupGetUsingGETOK struct {
 func (o *SecurityGroupGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/security-groups/{groupId}][%d] securityGroupGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *SecurityGroupGetUsingGETOK) GetPayload() *models.SecurityGroupGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewSecurityGroupGetUsingGETBadRequest() *SecurityGroupGetUsingGETBadRequest
 	return &SecurityGroupGetUsingGETBadRequest{}
 }
 
-/*SecurityGroupGetUsingGETBadRequest handles this case with default header values.
+/* SecurityGroupGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type SecurityGroupGetUsingGETBadRequest struct {
 func (o *SecurityGroupGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/security-groups/{groupId}][%d] securityGroupGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *SecurityGroupGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewSecurityGroupGetUsingGETNotFound() *SecurityGroupGetUsingGETNotFound {
 	return &SecurityGroupGetUsingGETNotFound{}
 }
 
-/*SecurityGroupGetUsingGETNotFound handles this case with default header values.
+/* SecurityGroupGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

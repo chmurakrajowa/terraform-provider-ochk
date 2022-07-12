@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDeleteADUserUsingDELETEParams creates a new DeleteADUserUsingDELETEParams object
-// with the default values initialized.
+// NewDeleteADUserUsingDELETEParams creates a new DeleteADUserUsingDELETEParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewDeleteADUserUsingDELETEParams() *DeleteADUserUsingDELETEParams {
-	var ()
 	return &DeleteADUserUsingDELETEParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewDeleteADUserUsingDELETEParamsWithTimeout creates a new DeleteADUserUsingDELETEParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewDeleteADUserUsingDELETEParamsWithTimeout(timeout time.Duration) *DeleteADUserUsingDELETEParams {
-	var ()
 	return &DeleteADUserUsingDELETEParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewDeleteADUserUsingDELETEParamsWithContext creates a new DeleteADUserUsingDELETEParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewDeleteADUserUsingDELETEParamsWithContext(ctx context.Context) *DeleteADUserUsingDELETEParams {
-	var ()
 	return &DeleteADUserUsingDELETEParams{
-
 		Context: ctx,
 	}
 }
 
 // NewDeleteADUserUsingDELETEParamsWithHTTPClient creates a new DeleteADUserUsingDELETEParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewDeleteADUserUsingDELETEParamsWithHTTPClient(client *http.Client) *DeleteADUserUsingDELETEParams {
-	var ()
 	return &DeleteADUserUsingDELETEParams{
 		HTTPClient: client,
 	}
 }
 
-/*DeleteADUserUsingDELETEParams contains all the parameters to send to the API endpoint
-for the delete a d user using d e l e t e operation typically these are written to a http.Request
+/* DeleteADUserUsingDELETEParams contains all the parameters to send to the API endpoint
+   for the delete a d user using d e l e t e operation.
+
+   Typically these are written to a http.Request.
 */
 type DeleteADUserUsingDELETEParams struct {
 
-	/*SamAccountName
-	  samAccountName
+	/* SamAccountName.
 
+	   samAccountName
 	*/
 	SamAccountName string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the delete a d user using d e l e t e params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteADUserUsingDELETEParams) WithDefaults() *DeleteADUserUsingDELETEParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the delete a d user using d e l e t e params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *DeleteADUserUsingDELETEParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the delete a d user using d e l e t e params

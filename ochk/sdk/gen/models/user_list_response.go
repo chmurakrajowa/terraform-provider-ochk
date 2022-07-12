@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -52,7 +53,6 @@ func (m *UserListResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *UserListResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
@@ -65,7 +65,6 @@ func (m *UserListResponse) validateTimestamp(formats strfmt.Registry) error {
 }
 
 func (m *UserListResponse) validateUserInstanceCollection(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.UserInstanceCollection) { // not required
 		return nil
 	}
@@ -79,6 +78,42 @@ func (m *UserListResponse) validateUserInstanceCollection(formats strfmt.Registr
 			if err := m.UserInstanceCollection[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("userInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("userInstanceCollection" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this user list response based on the context it is used
+func (m *UserListResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateUserInstanceCollection(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *UserListResponse) contextValidateUserInstanceCollection(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.UserInstanceCollection); i++ {
+
+		if m.UserInstanceCollection[i] != nil {
+			if err := m.UserInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("userInstanceCollection" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("userInstanceCollection" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

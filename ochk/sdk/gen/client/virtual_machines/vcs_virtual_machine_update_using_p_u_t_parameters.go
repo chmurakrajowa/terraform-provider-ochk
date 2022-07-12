@@ -18,64 +18,79 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewVcsVirtualMachineUpdateUsingPUTParams creates a new VcsVirtualMachineUpdateUsingPUTParams object
-// with the default values initialized.
+// NewVcsVirtualMachineUpdateUsingPUTParams creates a new VcsVirtualMachineUpdateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewVcsVirtualMachineUpdateUsingPUTParams() *VcsVirtualMachineUpdateUsingPUTParams {
-	var ()
 	return &VcsVirtualMachineUpdateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewVcsVirtualMachineUpdateUsingPUTParamsWithTimeout creates a new VcsVirtualMachineUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewVcsVirtualMachineUpdateUsingPUTParamsWithTimeout(timeout time.Duration) *VcsVirtualMachineUpdateUsingPUTParams {
-	var ()
 	return &VcsVirtualMachineUpdateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewVcsVirtualMachineUpdateUsingPUTParamsWithContext creates a new VcsVirtualMachineUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewVcsVirtualMachineUpdateUsingPUTParamsWithContext(ctx context.Context) *VcsVirtualMachineUpdateUsingPUTParams {
-	var ()
 	return &VcsVirtualMachineUpdateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewVcsVirtualMachineUpdateUsingPUTParamsWithHTTPClient creates a new VcsVirtualMachineUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewVcsVirtualMachineUpdateUsingPUTParamsWithHTTPClient(client *http.Client) *VcsVirtualMachineUpdateUsingPUTParams {
-	var ()
 	return &VcsVirtualMachineUpdateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*VcsVirtualMachineUpdateUsingPUTParams contains all the parameters to send to the API endpoint
-for the vcs virtual machine update using p u t operation typically these are written to a http.Request
+/* VcsVirtualMachineUpdateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the vcs virtual machine update using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type VcsVirtualMachineUpdateUsingPUTParams struct {
 
-	/*VirtualMachine
-	  virtualMachine
+	/* VirtualMachine.
 
+	   virtualMachine
 	*/
 	VirtualMachine *models.VcsVirtualMachineInstance
-	/*VirtualMachineID
-	  virtualMachineId
 
+	/* VirtualMachineID.
+
+	   virtualMachineId
 	*/
 	VirtualMachineID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the vcs virtual machine update using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *VcsVirtualMachineUpdateUsingPUTParams) WithDefaults() *VcsVirtualMachineUpdateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the vcs virtual machine update using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *VcsVirtualMachineUpdateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the vcs virtual machine update using p u t params
@@ -140,7 +155,6 @@ func (o *VcsVirtualMachineUpdateUsingPUTParams) WriteToRequest(r runtime.ClientR
 		return err
 	}
 	var res []error
-
 	if o.VirtualMachine != nil {
 		if err := r.SetBodyParam(o.VirtualMachine); err != nil {
 			return err

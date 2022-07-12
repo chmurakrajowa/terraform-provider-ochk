@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -57,7 +59,6 @@ func (m *CreateLocalGroupResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *CreateLocalGroupResponse) validateLocalGroup(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.LocalGroup) { // not required
 		return nil
 	}
@@ -66,6 +67,8 @@ func (m *CreateLocalGroupResponse) validateLocalGroup(formats strfmt.Registry) e
 		if err := m.LocalGroup.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("localGroup")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("localGroup")
 			}
 			return err
 		}
@@ -75,7 +78,6 @@ func (m *CreateLocalGroupResponse) validateLocalGroup(formats strfmt.Registry) e
 }
 
 func (m *CreateLocalGroupResponse) validateRequestInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -84,6 +86,8 @@ func (m *CreateLocalGroupResponse) validateRequestInstance(formats strfmt.Regist
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -93,13 +97,62 @@ func (m *CreateLocalGroupResponse) validateRequestInstance(formats strfmt.Regist
 }
 
 func (m *CreateLocalGroupResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this create local group response based on the context it is used
+func (m *CreateLocalGroupResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateLocalGroup(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *CreateLocalGroupResponse) contextValidateLocalGroup(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.LocalGroup != nil {
+		if err := m.LocalGroup.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("localGroup")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("localGroup")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *CreateLocalGroupResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RequestInstance != nil {
+		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
+			}
+			return err
+		}
 	}
 
 	return nil

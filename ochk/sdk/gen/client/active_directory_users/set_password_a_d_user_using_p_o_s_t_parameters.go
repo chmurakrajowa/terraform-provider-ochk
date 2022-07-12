@@ -18,64 +18,79 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewSetPasswordADUserUsingPOSTParams creates a new SetPasswordADUserUsingPOSTParams object
-// with the default values initialized.
+// NewSetPasswordADUserUsingPOSTParams creates a new SetPasswordADUserUsingPOSTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewSetPasswordADUserUsingPOSTParams() *SetPasswordADUserUsingPOSTParams {
-	var ()
 	return &SetPasswordADUserUsingPOSTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewSetPasswordADUserUsingPOSTParamsWithTimeout creates a new SetPasswordADUserUsingPOSTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewSetPasswordADUserUsingPOSTParamsWithTimeout(timeout time.Duration) *SetPasswordADUserUsingPOSTParams {
-	var ()
 	return &SetPasswordADUserUsingPOSTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewSetPasswordADUserUsingPOSTParamsWithContext creates a new SetPasswordADUserUsingPOSTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewSetPasswordADUserUsingPOSTParamsWithContext(ctx context.Context) *SetPasswordADUserUsingPOSTParams {
-	var ()
 	return &SetPasswordADUserUsingPOSTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewSetPasswordADUserUsingPOSTParamsWithHTTPClient creates a new SetPasswordADUserUsingPOSTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewSetPasswordADUserUsingPOSTParamsWithHTTPClient(client *http.Client) *SetPasswordADUserUsingPOSTParams {
-	var ()
 	return &SetPasswordADUserUsingPOSTParams{
 		HTTPClient: client,
 	}
 }
 
-/*SetPasswordADUserUsingPOSTParams contains all the parameters to send to the API endpoint
-for the set password a d user using p o s t operation typically these are written to a http.Request
+/* SetPasswordADUserUsingPOSTParams contains all the parameters to send to the API endpoint
+   for the set password a d user using p o s t operation.
+
+   Typically these are written to a http.Request.
 */
 type SetPasswordADUserUsingPOSTParams struct {
 
-	/*SamAccountName
-	  samAccountName
+	/* SamAccountName.
 
+	   samAccountName
 	*/
 	SamAccountName string
-	/*SetUserInstancePassRequest
-	  setUserInstancePassRequest
 
+	/* SetUserInstancePassRequest.
+
+	   setUserInstancePassRequest
 	*/
 	SetUserInstancePassRequest *models.SetUserInstancePassRequest
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the set password a d user using p o s t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SetPasswordADUserUsingPOSTParams) WithDefaults() *SetPasswordADUserUsingPOSTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the set password a d user using p o s t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *SetPasswordADUserUsingPOSTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the set password a d user using p o s t params
@@ -145,7 +160,6 @@ func (o *SetPasswordADUserUsingPOSTParams) WriteToRequest(r runtime.ClientReques
 	if err := r.SetPathParam("samAccountName", o.SamAccountName); err != nil {
 		return err
 	}
-
 	if o.SetUserInstancePassRequest != nil {
 		if err := r.SetBodyParam(o.SetUserInstancePassRequest); err != nil {
 			return err

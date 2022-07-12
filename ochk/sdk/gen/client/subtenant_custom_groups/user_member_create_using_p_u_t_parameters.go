@@ -18,69 +18,85 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewUserMemberCreateUsingPUTParams creates a new UserMemberCreateUsingPUTParams object
-// with the default values initialized.
+// NewUserMemberCreateUsingPUTParams creates a new UserMemberCreateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUserMemberCreateUsingPUTParams() *UserMemberCreateUsingPUTParams {
-	var ()
 	return &UserMemberCreateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUserMemberCreateUsingPUTParamsWithTimeout creates a new UserMemberCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUserMemberCreateUsingPUTParamsWithTimeout(timeout time.Duration) *UserMemberCreateUsingPUTParams {
-	var ()
 	return &UserMemberCreateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUserMemberCreateUsingPUTParamsWithContext creates a new UserMemberCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUserMemberCreateUsingPUTParamsWithContext(ctx context.Context) *UserMemberCreateUsingPUTParams {
-	var ()
 	return &UserMemberCreateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUserMemberCreateUsingPUTParamsWithHTTPClient creates a new UserMemberCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUserMemberCreateUsingPUTParamsWithHTTPClient(client *http.Client) *UserMemberCreateUsingPUTParams {
-	var ()
 	return &UserMemberCreateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*UserMemberCreateUsingPUTParams contains all the parameters to send to the API endpoint
-for the user member create using p u t operation typically these are written to a http.Request
+/* UserMemberCreateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the user member create using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type UserMemberCreateUsingPUTParams struct {
 
-	/*ParentGroupID
-	  parentGroupId
+	/* ParentGroupID.
 
+	   parentGroupId
 	*/
 	ParentGroupID string
-	/*SubtenantID
-	  subtenantId
 
+	/* SubtenantID.
+
+	   subtenantId
 	*/
 	SubtenantID string
-	/*UserInstance
-	  userInstance
 
+	/* UserInstance.
+
+	   userInstance
 	*/
 	UserInstance *models.UserInstance
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the user member create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UserMemberCreateUsingPUTParams) WithDefaults() *UserMemberCreateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the user member create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UserMemberCreateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the user member create using p u t params
@@ -166,7 +182,6 @@ func (o *UserMemberCreateUsingPUTParams) WriteToRequest(r runtime.ClientRequest,
 	if err := r.SetPathParam("subtenantId", o.SubtenantID); err != nil {
 		return err
 	}
-
 	if o.UserInstance != nil {
 		if err := r.SetBodyParam(o.UserInstance); err != nil {
 			return err

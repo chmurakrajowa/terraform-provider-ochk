@@ -41,9 +41,8 @@ func (o *LogicalPortGetUsingGETReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewLogicalPortGetUsingGETOK() *LogicalPortGetUsingGETOK {
 	return &LogicalPortGetUsingGETOK{}
 }
 
-/*LogicalPortGetUsingGETOK handles this case with default header values.
+/* LogicalPortGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type LogicalPortGetUsingGETOK struct {
 func (o *LogicalPortGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/logical-ports/{logicalPortId}][%d] logicalPortGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *LogicalPortGetUsingGETOK) GetPayload() *models.LogicalPortGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewLogicalPortGetUsingGETBadRequest() *LogicalPortGetUsingGETBadRequest {
 	return &LogicalPortGetUsingGETBadRequest{}
 }
 
-/*LogicalPortGetUsingGETBadRequest handles this case with default header values.
+/* LogicalPortGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type LogicalPortGetUsingGETBadRequest struct {
 func (o *LogicalPortGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/logical-ports/{logicalPortId}][%d] logicalPortGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *LogicalPortGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewLogicalPortGetUsingGETNotFound() *LogicalPortGetUsingGETNotFound {
 	return &LogicalPortGetUsingGETNotFound{}
 }
 
-/*LogicalPortGetUsingGETNotFound handles this case with default header values.
+/* LogicalPortGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

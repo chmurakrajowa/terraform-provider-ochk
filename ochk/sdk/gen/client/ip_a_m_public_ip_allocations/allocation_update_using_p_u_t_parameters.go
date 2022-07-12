@@ -19,64 +19,81 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewAllocationUpdateUsingPUTParams creates a new AllocationUpdateUsingPUTParams object
-// with the default values initialized.
+// NewAllocationUpdateUsingPUTParams creates a new AllocationUpdateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewAllocationUpdateUsingPUTParams() *AllocationUpdateUsingPUTParams {
-	var ()
 	return &AllocationUpdateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewAllocationUpdateUsingPUTParamsWithTimeout creates a new AllocationUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewAllocationUpdateUsingPUTParamsWithTimeout(timeout time.Duration) *AllocationUpdateUsingPUTParams {
-	var ()
 	return &AllocationUpdateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewAllocationUpdateUsingPUTParamsWithContext creates a new AllocationUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewAllocationUpdateUsingPUTParamsWithContext(ctx context.Context) *AllocationUpdateUsingPUTParams {
-	var ()
 	return &AllocationUpdateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewAllocationUpdateUsingPUTParamsWithHTTPClient creates a new AllocationUpdateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewAllocationUpdateUsingPUTParamsWithHTTPClient(client *http.Client) *AllocationUpdateUsingPUTParams {
-	var ()
 	return &AllocationUpdateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*AllocationUpdateUsingPUTParams contains all the parameters to send to the API endpoint
-for the allocation update using p u t operation typically these are written to a http.Request
+/* AllocationUpdateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the allocation update using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type AllocationUpdateUsingPUTParams struct {
 
-	/*AllocationID
-	  allocationId
+	/* AllocationID.
 
+	   allocationId
+
+	   Format: int32
 	*/
 	AllocationID int32
-	/*PublicIPAllocation
-	  publicIpAllocation
 
+	/* PublicIPAllocation.
+
+	   publicIpAllocation
 	*/
 	PublicIPAllocation *models.PublicIPAllocation
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the allocation update using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *AllocationUpdateUsingPUTParams) WithDefaults() *AllocationUpdateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the allocation update using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *AllocationUpdateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the allocation update using p u t params
@@ -146,7 +163,6 @@ func (o *AllocationUpdateUsingPUTParams) WriteToRequest(r runtime.ClientRequest,
 	if err := r.SetPathParam("allocationId", swag.FormatInt32(o.AllocationID)); err != nil {
 		return err
 	}
-
 	if o.PublicIPAllocation != nil {
 		if err := r.SetBodyParam(o.PublicIPAllocation); err != nil {
 			return err

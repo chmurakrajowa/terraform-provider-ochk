@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -102,7 +104,6 @@ func (m *ADUserInstance) Validate(formats strfmt.Registry) error {
 }
 
 func (m *ADUserInstance) validateAccountExpirationDate(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.AccountExpirationDate) { // not required
 		return nil
 	}
@@ -115,7 +116,6 @@ func (m *ADUserInstance) validateAccountExpirationDate(formats strfmt.Registry) 
 }
 
 func (m *ADUserInstance) validateAccountLockoutTime(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.AccountLockoutTime) { // not required
 		return nil
 	}
@@ -128,7 +128,6 @@ func (m *ADUserInstance) validateAccountLockoutTime(formats strfmt.Registry) err
 }
 
 func (m *ADUserInstance) validateLastBadPasswordAttempt(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.LastBadPasswordAttempt) { // not required
 		return nil
 	}
@@ -141,7 +140,6 @@ func (m *ADUserInstance) validateLastBadPasswordAttempt(formats strfmt.Registry)
 }
 
 func (m *ADUserInstance) validateLastLogon(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.LastLogon) { // not required
 		return nil
 	}
@@ -154,7 +152,6 @@ func (m *ADUserInstance) validateLastLogon(formats strfmt.Registry) error {
 }
 
 func (m *ADUserInstance) validateLastPasswordSet(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.LastPasswordSet) { // not required
 		return nil
 	}
@@ -163,6 +160,11 @@ func (m *ADUserInstance) validateLastPasswordSet(formats strfmt.Registry) error 
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this a d user instance based on context it is used
+func (m *ADUserInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

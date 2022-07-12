@@ -1,6 +1,6 @@
 {
 	"Name": "NatPublicIpAddr",
-	"Text": "198.19.240.121"
+	"Text": "45.130.209.206"
 }
 {
 	"Name": "BackupPlanName",
@@ -12,7 +12,7 @@
 }
 {
 	"Name": "LogicalPort1DisplayName",
-	"Text": "tf-tst-vm2.vmx@3051a157-37a9-4647-806e-1eda4ba97802"
+	"Text": "d1-vm.vmx@76d4de35-3c68-4910-b243-fcd7695a30e7"
 }
 {
 	"Name": "VRF",

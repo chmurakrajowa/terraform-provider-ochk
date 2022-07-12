@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -57,7 +59,6 @@ func (m *CreateNewKmsKeyVersionResponse) Validate(formats strfmt.Registry) error
 }
 
 func (m *CreateNewKmsKeyVersionResponse) validateKeyInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.KeyInstance) { // not required
 		return nil
 	}
@@ -66,6 +67,8 @@ func (m *CreateNewKmsKeyVersionResponse) validateKeyInstance(formats strfmt.Regi
 		if err := m.KeyInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("keyInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("keyInstance")
 			}
 			return err
 		}
@@ -75,7 +78,6 @@ func (m *CreateNewKmsKeyVersionResponse) validateKeyInstance(formats strfmt.Regi
 }
 
 func (m *CreateNewKmsKeyVersionResponse) validateRequestInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -84,6 +86,8 @@ func (m *CreateNewKmsKeyVersionResponse) validateRequestInstance(formats strfmt.
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -93,13 +97,62 @@ func (m *CreateNewKmsKeyVersionResponse) validateRequestInstance(formats strfmt.
 }
 
 func (m *CreateNewKmsKeyVersionResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
 
 	if err := validate.FormatOf("timestamp", "body", "date-time", m.Timestamp.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validate this create new kms key version response based on the context it is used
+func (m *CreateNewKmsKeyVersionResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateKeyInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *CreateNewKmsKeyVersionResponse) contextValidateKeyInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.KeyInstance != nil {
+		if err := m.KeyInstance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("keyInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("keyInstance")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *CreateNewKmsKeyVersionResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RequestInstance != nil {
+		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
+			}
+			return err
+		}
 	}
 
 	return nil

@@ -25,11 +25,14 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	NetworkProfileGetUsingGET(params *NetworkProfileGetUsingGETParams) (*NetworkProfileGetUsingGETOK, error)
+	NetworkProfileGetUsingGET(params *NetworkProfileGetUsingGETParams, opts ...ClientOption) (*NetworkProfileGetUsingGETOK, error)
 
-	NetworkProfileListUsingGET(params *NetworkProfileListUsingGETParams) (*NetworkProfileListUsingGETOK, error)
+	NetworkProfileListUsingGET(params *NetworkProfileListUsingGETParams, opts ...ClientOption) (*NetworkProfileListUsingGETOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -39,13 +42,12 @@ type ClientService interface {
 
   Get network profile
 */
-func (a *Client) NetworkProfileGetUsingGET(params *NetworkProfileGetUsingGETParams) (*NetworkProfileGetUsingGETOK, error) {
+func (a *Client) NetworkProfileGetUsingGET(params *NetworkProfileGetUsingGETParams, opts ...ClientOption) (*NetworkProfileGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNetworkProfileGetUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "networkProfileGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vra/networkprofiles/{networkProfileId}",
@@ -56,7 +58,12 @@ func (a *Client) NetworkProfileGetUsingGET(params *NetworkProfileGetUsingGETPara
 		Reader:             &NetworkProfileGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -75,13 +82,12 @@ func (a *Client) NetworkProfileGetUsingGET(params *NetworkProfileGetUsingGETPara
 
   List network profile
 */
-func (a *Client) NetworkProfileListUsingGET(params *NetworkProfileListUsingGETParams) (*NetworkProfileListUsingGETOK, error) {
+func (a *Client) NetworkProfileListUsingGET(params *NetworkProfileListUsingGETParams, opts ...ClientOption) (*NetworkProfileListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewNetworkProfileListUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "networkProfileListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vra/networkprofiles",
@@ -92,7 +98,12 @@ func (a *Client) NetworkProfileListUsingGET(params *NetworkProfileListUsingGETPa
 		Reader:             &NetworkProfileListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

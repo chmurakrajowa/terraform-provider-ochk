@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -38,7 +40,6 @@ func (m *ElkResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *ElkResponse) validateHits(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Hits) { // not required
 		return nil
 	}
@@ -47,6 +48,38 @@ func (m *ElkResponse) validateHits(formats strfmt.Registry) error {
 		if err := m.Hits.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("hits")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("hits")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this elk response based on the context it is used
+func (m *ElkResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateHits(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ElkResponse) contextValidateHits(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Hits != nil {
+		if err := m.Hits.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("hits")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("hits")
 			}
 			return err
 		}

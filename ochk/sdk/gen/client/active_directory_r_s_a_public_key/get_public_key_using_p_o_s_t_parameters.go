@@ -18,59 +18,73 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewGetPublicKeyUsingPOSTParams creates a new GetPublicKeyUsingPOSTParams object
-// with the default values initialized.
+// NewGetPublicKeyUsingPOSTParams creates a new GetPublicKeyUsingPOSTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetPublicKeyUsingPOSTParams() *GetPublicKeyUsingPOSTParams {
-	var ()
 	return &GetPublicKeyUsingPOSTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetPublicKeyUsingPOSTParamsWithTimeout creates a new GetPublicKeyUsingPOSTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetPublicKeyUsingPOSTParamsWithTimeout(timeout time.Duration) *GetPublicKeyUsingPOSTParams {
-	var ()
 	return &GetPublicKeyUsingPOSTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetPublicKeyUsingPOSTParamsWithContext creates a new GetPublicKeyUsingPOSTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetPublicKeyUsingPOSTParamsWithContext(ctx context.Context) *GetPublicKeyUsingPOSTParams {
-	var ()
 	return &GetPublicKeyUsingPOSTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetPublicKeyUsingPOSTParamsWithHTTPClient creates a new GetPublicKeyUsingPOSTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetPublicKeyUsingPOSTParamsWithHTTPClient(client *http.Client) *GetPublicKeyUsingPOSTParams {
-	var ()
 	return &GetPublicKeyUsingPOSTParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetPublicKeyUsingPOSTParams contains all the parameters to send to the API endpoint
-for the get public key using p o s t operation typically these are written to a http.Request
+/* GetPublicKeyUsingPOSTParams contains all the parameters to send to the API endpoint
+   for the get public key using p o s t operation.
+
+   Typically these are written to a http.Request.
 */
 type GetPublicKeyUsingPOSTParams struct {
 
-	/*GetPublicKeyRequest
-	  getPublicKeyRequest
+	/* GetPublicKeyRequest.
 
+	   getPublicKeyRequest
 	*/
 	GetPublicKeyRequest *models.GetPublicKeyRequest
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get public key using p o s t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetPublicKeyUsingPOSTParams) WithDefaults() *GetPublicKeyUsingPOSTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get public key using p o s t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetPublicKeyUsingPOSTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get public key using p o s t params
@@ -124,7 +138,6 @@ func (o *GetPublicKeyUsingPOSTParams) WriteToRequest(r runtime.ClientRequest, re
 		return err
 	}
 	var res []error
-
 	if o.GetPublicKeyRequest != nil {
 		if err := r.SetBodyParam(o.GetPublicKeyRequest); err != nil {
 			return err

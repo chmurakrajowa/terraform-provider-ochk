@@ -232,7 +232,9 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 
 	if Nat.NatType == "MANUAL" {
 		if Nat.Description == "UNKNOWN" || Nat.Description == "" {
-			d.Set("description", "")
+			if err := d.Set("description", ""); err != nil {
+				return diag.Errorf("error setting description: %+v", err)
+			}
 		} else {
 			if err := d.Set("description", Nat.Description); err != nil {
 				return diag.Errorf("error setting description: %+v", err)
@@ -369,8 +371,7 @@ func mapResourceDataToAutoNat(d *schema.ResourceData) *models.NATRuleInstance {
 }
 
 func mapResourceDataToManualNat(d *schema.ResourceData) *models.NATRuleInstance {
-	var publicPriorityInt64 int64
-	publicPriorityInt64 = int64(d.Get("priority").(int))
+	var publicPriorityInt64 = int64(d.Get("priority").(int))
 
 	natManualRule := &models.NATRuleInstance{
 		DisplayName:        d.Get("display_name").(string),

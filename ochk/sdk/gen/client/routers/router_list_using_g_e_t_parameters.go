@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewRouterListUsingGETParams creates a new RouterListUsingGETParams object
-// with the default values initialized.
+// NewRouterListUsingGETParams creates a new RouterListUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewRouterListUsingGETParams() *RouterListUsingGETParams {
-	var ()
 	return &RouterListUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewRouterListUsingGETParamsWithTimeout creates a new RouterListUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewRouterListUsingGETParamsWithTimeout(timeout time.Duration) *RouterListUsingGETParams {
-	var ()
 	return &RouterListUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewRouterListUsingGETParamsWithContext creates a new RouterListUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewRouterListUsingGETParamsWithContext(ctx context.Context) *RouterListUsingGETParams {
-	var ()
 	return &RouterListUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewRouterListUsingGETParamsWithHTTPClient creates a new RouterListUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewRouterListUsingGETParamsWithHTTPClient(client *http.Client) *RouterListUsingGETParams {
-	var ()
 	return &RouterListUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*RouterListUsingGETParams contains all the parameters to send to the API endpoint
-for the router list using g e t operation typically these are written to a http.Request
+/* RouterListUsingGETParams contains all the parameters to send to the API endpoint
+   for the router list using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type RouterListUsingGETParams struct {
 
-	/*DisplayName
-	  displayName
+	/* DisplayName.
 
+	   displayName
 	*/
 	DisplayName *string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the router list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *RouterListUsingGETParams) WithDefaults() *RouterListUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the router list using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *RouterListUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the router list using g e t params
@@ -127,16 +141,17 @@ func (o *RouterListUsingGETParams) WriteToRequest(r runtime.ClientRequest, reg s
 
 		// query param displayName
 		var qrDisplayName string
+
 		if o.DisplayName != nil {
 			qrDisplayName = *o.DisplayName
 		}
 		qDisplayName := qrDisplayName
 		if qDisplayName != "" {
+
 			if err := r.SetQueryParam("displayName", qDisplayName); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewNatRuleDeleteUsingDELETEParams creates a new NatRuleDeleteUsingDELETEParams object
-// with the default values initialized.
+// NewNatRuleDeleteUsingDELETEParams creates a new NatRuleDeleteUsingDELETEParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewNatRuleDeleteUsingDELETEParams() *NatRuleDeleteUsingDELETEParams {
-	var ()
 	return &NatRuleDeleteUsingDELETEParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewNatRuleDeleteUsingDELETEParamsWithTimeout creates a new NatRuleDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewNatRuleDeleteUsingDELETEParamsWithTimeout(timeout time.Duration) *NatRuleDeleteUsingDELETEParams {
-	var ()
 	return &NatRuleDeleteUsingDELETEParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewNatRuleDeleteUsingDELETEParamsWithContext creates a new NatRuleDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewNatRuleDeleteUsingDELETEParamsWithContext(ctx context.Context) *NatRuleDeleteUsingDELETEParams {
-	var ()
 	return &NatRuleDeleteUsingDELETEParams{
-
 		Context: ctx,
 	}
 }
 
 // NewNatRuleDeleteUsingDELETEParamsWithHTTPClient creates a new NatRuleDeleteUsingDELETEParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewNatRuleDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) *NatRuleDeleteUsingDELETEParams {
-	var ()
 	return &NatRuleDeleteUsingDELETEParams{
 		HTTPClient: client,
 	}
 }
 
-/*NatRuleDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-for the nat rule delete using d e l e t e operation typically these are written to a http.Request
+/* NatRuleDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
+   for the nat rule delete using d e l e t e operation.
+
+   Typically these are written to a http.Request.
 */
 type NatRuleDeleteUsingDELETEParams struct {
 
-	/*RuleID
-	  ruleId
+	/* RuleID.
 
+	   ruleId
 	*/
 	RuleID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the nat rule delete using d e l e t e params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NatRuleDeleteUsingDELETEParams) WithDefaults() *NatRuleDeleteUsingDELETEParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the nat rule delete using d e l e t e params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *NatRuleDeleteUsingDELETEParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the nat rule delete using d e l e t e params

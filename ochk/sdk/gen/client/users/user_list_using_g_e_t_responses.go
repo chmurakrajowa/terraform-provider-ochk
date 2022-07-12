@@ -35,9 +35,8 @@ func (o *UserListUsingGETReader) ReadResponse(response runtime.ClientResponse, c
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewUserListUsingGETOK() *UserListUsingGETOK {
 	return &UserListUsingGETOK{}
 }
 
-/*UserListUsingGETOK handles this case with default header values.
+/* UserListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type UserListUsingGETOK struct {
 func (o *UserListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /users][%d] userListUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *UserListUsingGETOK) GetPayload() *models.UserListResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewUserListUsingGETBadRequest() *UserListUsingGETBadRequest {
 	return &UserListUsingGETBadRequest{}
 }
 
-/*UserListUsingGETBadRequest handles this case with default header values.
+/* UserListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type UserListUsingGETBadRequest struct {
 func (o *UserListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /users][%d] userListUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *UserListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

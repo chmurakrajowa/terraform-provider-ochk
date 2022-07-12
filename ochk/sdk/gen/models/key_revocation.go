@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/go-openapi/errors"
@@ -83,7 +84,6 @@ func (m *KeyRevocation) validateReasonEnum(path, location string, value string) 
 }
 
 func (m *KeyRevocation) validateReason(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Reason) { // not required
 		return nil
 	}
@@ -93,6 +93,11 @@ func (m *KeyRevocation) validateReason(formats strfmt.Registry) error {
 		return err
 	}
 
+	return nil
+}
+
+// ContextValidate validates this key revocation based on context it is used
+func (m *KeyRevocation) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

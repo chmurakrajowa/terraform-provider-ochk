@@ -41,9 +41,8 @@ func (o *SystemTagCreateUsingPUTReader) ReadResponse(response runtime.ClientResp
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewSystemTagCreateUsingPUTOK() *SystemTagCreateUsingPUTOK {
 	return &SystemTagCreateUsingPUTOK{}
 }
 
-/*SystemTagCreateUsingPUTOK handles this case with default header values.
+/* SystemTagCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type SystemTagCreateUsingPUTOK struct {
 func (o *SystemTagCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /tags/systemTags][%d] systemTagCreateUsingPUTOK  %+v", 200, o.Payload)
 }
-
 func (o *SystemTagCreateUsingPUTOK) GetPayload() *models.SystemTagCreateResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewSystemTagCreateUsingPUTCreated() *SystemTagCreateUsingPUTCreated {
 	return &SystemTagCreateUsingPUTCreated{}
 }
 
-/*SystemTagCreateUsingPUTCreated handles this case with default header values.
+/* SystemTagCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -96,7 +94,6 @@ type SystemTagCreateUsingPUTCreated struct {
 func (o *SystemTagCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /tags/systemTags][%d] systemTagCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
-
 func (o *SystemTagCreateUsingPUTCreated) GetPayload() *models.SystemTagCreateResponse {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewSystemTagCreateUsingPUTBadRequest() *SystemTagCreateUsingPUTBadRequest {
 	return &SystemTagCreateUsingPUTBadRequest{}
 }
 
-/*SystemTagCreateUsingPUTBadRequest handles this case with default header values.
+/* SystemTagCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -129,7 +126,6 @@ type SystemTagCreateUsingPUTBadRequest struct {
 func (o *SystemTagCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /tags/systemTags][%d] systemTagCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *SystemTagCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

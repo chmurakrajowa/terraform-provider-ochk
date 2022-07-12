@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -57,7 +59,6 @@ func (m *UpdateUserInstanceResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *UpdateUserInstanceResponse) validateRequestInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.RequestInstance) { // not required
 		return nil
 	}
@@ -66,6 +67,8 @@ func (m *UpdateUserInstanceResponse) validateRequestInstance(formats strfmt.Regi
 		if err := m.RequestInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
 			}
 			return err
 		}
@@ -75,7 +78,6 @@ func (m *UpdateUserInstanceResponse) validateRequestInstance(formats strfmt.Regi
 }
 
 func (m *UpdateUserInstanceResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
@@ -88,7 +90,6 @@ func (m *UpdateUserInstanceResponse) validateTimestamp(formats strfmt.Registry) 
 }
 
 func (m *UpdateUserInstanceResponse) validateUserInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.UserInstance) { // not required
 		return nil
 	}
@@ -97,6 +98,58 @@ func (m *UpdateUserInstanceResponse) validateUserInstance(formats strfmt.Registr
 		if err := m.UserInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("userInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("userInstance")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update user instance response based on the context it is used
+func (m *UpdateUserInstanceResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateRequestInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateUserInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *UpdateUserInstanceResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RequestInstance != nil {
+		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("requestInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("requestInstance")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *UpdateUserInstanceResponse) contextValidateUserInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.UserInstance != nil {
+		if err := m.UserInstance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("userInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("userInstance")
 			}
 			return err
 		}

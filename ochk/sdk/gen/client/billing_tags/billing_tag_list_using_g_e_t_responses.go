@@ -35,9 +35,8 @@ func (o *BillingTagListUsingGETReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewBillingTagListUsingGETOK() *BillingTagListUsingGETOK {
 	return &BillingTagListUsingGETOK{}
 }
 
-/*BillingTagListUsingGETOK handles this case with default header values.
+/* BillingTagListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type BillingTagListUsingGETOK struct {
 func (o *BillingTagListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /tags/billingTags][%d] billingTagListUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *BillingTagListUsingGETOK) GetPayload() *models.BillingTagListResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewBillingTagListUsingGETBadRequest() *BillingTagListUsingGETBadRequest {
 	return &BillingTagListUsingGETBadRequest{}
 }
 
-/*BillingTagListUsingGETBadRequest handles this case with default header values.
+/* BillingTagListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type BillingTagListUsingGETBadRequest struct {
 func (o *BillingTagListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /tags/billingTags][%d] billingTagListUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *BillingTagListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

@@ -35,9 +35,8 @@ func (o *ListADUsersUsingGETReader) ReadResponse(response runtime.ClientResponse
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewListADUsersUsingGETOK() *ListADUsersUsingGETOK {
 	return &ListADUsersUsingGETOK{}
 }
 
-/*ListADUsersUsingGETOK handles this case with default header values.
+/* ListADUsersUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type ListADUsersUsingGETOK struct {
 func (o *ListADUsersUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /ad/integration/users][%d] listADUsersUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *ListADUsersUsingGETOK) GetPayload() *models.UserInstanceListResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewListADUsersUsingGETBadRequest() *ListADUsersUsingGETBadRequest {
 	return &ListADUsersUsingGETBadRequest{}
 }
 
-/*ListADUsersUsingGETBadRequest handles this case with default header values.
+/* ListADUsersUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */

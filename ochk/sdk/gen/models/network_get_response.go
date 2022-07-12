@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -50,7 +52,6 @@ func (m *NetworkGetResponse) Validate(formats strfmt.Registry) error {
 }
 
 func (m *NetworkGetResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
@@ -63,7 +64,6 @@ func (m *NetworkGetResponse) validateTimestamp(formats strfmt.Registry) error {
 }
 
 func (m *NetworkGetResponse) validateVcsNetworkInstance(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.VcsNetworkInstance) { // not required
 		return nil
 	}
@@ -72,6 +72,38 @@ func (m *NetworkGetResponse) validateVcsNetworkInstance(formats strfmt.Registry)
 		if err := m.VcsNetworkInstance.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("vcsNetworkInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("vcsNetworkInstance")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this network get response based on the context it is used
+func (m *NetworkGetResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateVcsNetworkInstance(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *NetworkGetResponse) contextValidateVcsNetworkInstance(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.VcsNetworkInstance != nil {
+		if err := m.VcsNetworkInstance.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("vcsNetworkInstance")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("vcsNetworkInstance")
 			}
 			return err
 		}

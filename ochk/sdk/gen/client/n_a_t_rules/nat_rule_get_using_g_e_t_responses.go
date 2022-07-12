@@ -41,9 +41,8 @@ func (o *NatRuleGetUsingGETReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -52,7 +51,7 @@ func NewNatRuleGetUsingGETOK() *NatRuleGetUsingGETOK {
 	return &NatRuleGetUsingGETOK{}
 }
 
-/*NatRuleGetUsingGETOK handles this case with default header values.
+/* NatRuleGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -63,7 +62,6 @@ type NatRuleGetUsingGETOK struct {
 func (o *NatRuleGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/nat/rules/{ruleId}][%d] natRuleGetUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *NatRuleGetUsingGETOK) GetPayload() *models.NATRuleGetResponse {
 	return o.Payload
 }
@@ -85,7 +83,7 @@ func NewNatRuleGetUsingGETBadRequest() *NatRuleGetUsingGETBadRequest {
 	return &NatRuleGetUsingGETBadRequest{}
 }
 
-/*NatRuleGetUsingGETBadRequest handles this case with default header values.
+/* NatRuleGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -96,7 +94,6 @@ type NatRuleGetUsingGETBadRequest struct {
 func (o *NatRuleGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/nat/rules/{ruleId}][%d] natRuleGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *NatRuleGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -118,7 +115,7 @@ func NewNatRuleGetUsingGETNotFound() *NatRuleGetUsingGETNotFound {
 	return &NatRuleGetUsingGETNotFound{}
 }
 
-/*NatRuleGetUsingGETNotFound handles this case with default header values.
+/* NatRuleGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */

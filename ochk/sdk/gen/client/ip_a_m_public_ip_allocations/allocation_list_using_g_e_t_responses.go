@@ -35,9 +35,8 @@ func (o *AllocationListUsingGETReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewAllocationListUsingGETOK() *AllocationListUsingGETOK {
 	return &AllocationListUsingGETOK{}
 }
 
-/*AllocationListUsingGETOK handles this case with default header values.
+/* AllocationListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -57,7 +56,6 @@ type AllocationListUsingGETOK struct {
 func (o *AllocationListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /ipam/ipaddress/public/allocation][%d] allocationListUsingGETOK  %+v", 200, o.Payload)
 }
-
 func (o *AllocationListUsingGETOK) GetPayload() *models.PublicIPAllocationListResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewAllocationListUsingGETBadRequest() *AllocationListUsingGETBadRequest {
 	return &AllocationListUsingGETBadRequest{}
 }
 
-/*AllocationListUsingGETBadRequest handles this case with default header values.
+/* AllocationListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */

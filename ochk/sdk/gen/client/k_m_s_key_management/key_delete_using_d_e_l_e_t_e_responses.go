@@ -35,9 +35,8 @@ func (o *KeyDeleteUsingDELETEReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewKeyDeleteUsingDELETEOK() *KeyDeleteUsingDELETEOK {
 	return &KeyDeleteUsingDELETEOK{}
 }
 
-/*KeyDeleteUsingDELETEOK handles this case with default header values.
+/* KeyDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 Entity has been deleted
 */
@@ -57,7 +56,6 @@ type KeyDeleteUsingDELETEOK struct {
 func (o *KeyDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /kms/key/{id}][%d] keyDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
-
 func (o *KeyDeleteUsingDELETEOK) GetPayload() *models.DeleteKmsKeyResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewKeyDeleteUsingDELETEBadRequest() *KeyDeleteUsingDELETEBadRequest {
 	return &KeyDeleteUsingDELETEBadRequest{}
 }
 
-/*KeyDeleteUsingDELETEBadRequest handles this case with default header values.
+/* KeyDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type KeyDeleteUsingDELETEBadRequest struct {
 func (o *KeyDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /kms/key/{id}][%d] keyDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *KeyDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

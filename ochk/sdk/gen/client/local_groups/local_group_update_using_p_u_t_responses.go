@@ -35,9 +35,8 @@ func (o *LocalGroupUpdateUsingPUTReader) ReadResponse(response runtime.ClientRes
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
 }
 
@@ -46,7 +45,7 @@ func NewLocalGroupUpdateUsingPUTOK() *LocalGroupUpdateUsingPUTOK {
 	return &LocalGroupUpdateUsingPUTOK{}
 }
 
-/*LocalGroupUpdateUsingPUTOK handles this case with default header values.
+/* LocalGroupUpdateUsingPUTOK describes a response with status code 200, with default header values.
 
 Entity has been updated
 */
@@ -57,7 +56,6 @@ type LocalGroupUpdateUsingPUTOK struct {
 func (o *LocalGroupUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /groups/local/{groupId}][%d] localGroupUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
-
 func (o *LocalGroupUpdateUsingPUTOK) GetPayload() *models.UpdateLocalGroupResponse {
 	return o.Payload
 }
@@ -79,7 +77,7 @@ func NewLocalGroupUpdateUsingPUTBadRequest() *LocalGroupUpdateUsingPUTBadRequest
 	return &LocalGroupUpdateUsingPUTBadRequest{}
 }
 
-/*LocalGroupUpdateUsingPUTBadRequest handles this case with default header values.
+/* LocalGroupUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -90,7 +88,6 @@ type LocalGroupUpdateUsingPUTBadRequest struct {
 func (o *LocalGroupUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /groups/local/{groupId}][%d] localGroupUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
-
 func (o *LocalGroupUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

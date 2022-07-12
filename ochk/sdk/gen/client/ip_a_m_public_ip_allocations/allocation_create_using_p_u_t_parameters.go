@@ -18,59 +18,73 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
-// NewAllocationCreateUsingPUTParams creates a new AllocationCreateUsingPUTParams object
-// with the default values initialized.
+// NewAllocationCreateUsingPUTParams creates a new AllocationCreateUsingPUTParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewAllocationCreateUsingPUTParams() *AllocationCreateUsingPUTParams {
-	var ()
 	return &AllocationCreateUsingPUTParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewAllocationCreateUsingPUTParamsWithTimeout creates a new AllocationCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewAllocationCreateUsingPUTParamsWithTimeout(timeout time.Duration) *AllocationCreateUsingPUTParams {
-	var ()
 	return &AllocationCreateUsingPUTParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewAllocationCreateUsingPUTParamsWithContext creates a new AllocationCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewAllocationCreateUsingPUTParamsWithContext(ctx context.Context) *AllocationCreateUsingPUTParams {
-	var ()
 	return &AllocationCreateUsingPUTParams{
-
 		Context: ctx,
 	}
 }
 
 // NewAllocationCreateUsingPUTParamsWithHTTPClient creates a new AllocationCreateUsingPUTParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewAllocationCreateUsingPUTParamsWithHTTPClient(client *http.Client) *AllocationCreateUsingPUTParams {
-	var ()
 	return &AllocationCreateUsingPUTParams{
 		HTTPClient: client,
 	}
 }
 
-/*AllocationCreateUsingPUTParams contains all the parameters to send to the API endpoint
-for the allocation create using p u t operation typically these are written to a http.Request
+/* AllocationCreateUsingPUTParams contains all the parameters to send to the API endpoint
+   for the allocation create using p u t operation.
+
+   Typically these are written to a http.Request.
 */
 type AllocationCreateUsingPUTParams struct {
 
-	/*PublicIPAllocation
-	  publicIpAllocation
+	/* PublicIPAllocation.
 
+	   publicIpAllocation
 	*/
 	PublicIPAllocation *models.PublicIPAllocation
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the allocation create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *AllocationCreateUsingPUTParams) WithDefaults() *AllocationCreateUsingPUTParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the allocation create using p u t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *AllocationCreateUsingPUTParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the allocation create using p u t params
@@ -124,7 +138,6 @@ func (o *AllocationCreateUsingPUTParams) WriteToRequest(r runtime.ClientRequest,
 		return err
 	}
 	var res []error
-
 	if o.PublicIPAllocation != nil {
 		if err := r.SetBodyParam(o.PublicIPAllocation); err != nil {
 			return err

@@ -6,6 +6,7 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -52,7 +53,6 @@ func (m *VirtualMachineSummaryReportGetResponse) Validate(formats strfmt.Registr
 }
 
 func (m *VirtualMachineSummaryReportGetResponse) validateTimestamp(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.Timestamp) { // not required
 		return nil
 	}
@@ -65,7 +65,6 @@ func (m *VirtualMachineSummaryReportGetResponse) validateTimestamp(formats strfm
 }
 
 func (m *VirtualMachineSummaryReportGetResponse) validateVirtualMachineOverallReportItemArray(formats strfmt.Registry) error {
-
 	if swag.IsZero(m.VirtualMachineOverallReportItemArray) { // not required
 		return nil
 	}
@@ -79,6 +78,42 @@ func (m *VirtualMachineSummaryReportGetResponse) validateVirtualMachineOverallRe
 			if err := m.VirtualMachineOverallReportItemArray[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("virtualMachineOverallReportItemArray" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("virtualMachineOverallReportItemArray" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this virtual machine summary report get response based on the context it is used
+func (m *VirtualMachineSummaryReportGetResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateVirtualMachineOverallReportItemArray(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *VirtualMachineSummaryReportGetResponse) contextValidateVirtualMachineOverallReportItemArray(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.VirtualMachineOverallReportItemArray); i++ {
+
+		if m.VirtualMachineOverallReportItemArray[i] != nil {
+			if err := m.VirtualMachineOverallReportItemArray[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("virtualMachineOverallReportItemArray" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("virtualMachineOverallReportItemArray" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

@@ -25,17 +25,20 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption is the option for Client methods
+type ClientOption func(*runtime.ClientOperation)
+
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateADGroupUsingPUT(params *CreateADGroupUsingPUTParams) (*CreateADGroupUsingPUTOK, *CreateADGroupUsingPUTCreated, error)
+	CreateADGroupUsingPUT(params *CreateADGroupUsingPUTParams, opts ...ClientOption) (*CreateADGroupUsingPUTOK, *CreateADGroupUsingPUTCreated, error)
 
-	DeleteADGroupUsingDELETE(params *DeleteADGroupUsingDELETEParams) (*DeleteADGroupUsingDELETEOK, error)
+	DeleteADGroupUsingDELETE(params *DeleteADGroupUsingDELETEParams, opts ...ClientOption) (*DeleteADGroupUsingDELETEOK, error)
 
-	GetADGroupUsingGET(params *GetADGroupUsingGETParams) (*GetADGroupUsingGETOK, error)
+	GetADGroupUsingGET(params *GetADGroupUsingGETParams, opts ...ClientOption) (*GetADGroupUsingGETOK, error)
 
-	ListADGroupUsingGET(params *ListADGroupUsingGETParams) (*ListADGroupUsingGETOK, error)
+	ListADGroupUsingGET(params *ListADGroupUsingGETParams, opts ...ClientOption) (*ListADGroupUsingGETOK, error)
 
-	UpdateADGroupUsingPUT(params *UpdateADGroupUsingPUTParams) (*UpdateADGroupUsingPUTOK, error)
+	UpdateADGroupUsingPUT(params *UpdateADGroupUsingPUTParams, opts ...ClientOption) (*UpdateADGroupUsingPUTOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -45,13 +48,12 @@ type ClientService interface {
 
   Create group
 */
-func (a *Client) CreateADGroupUsingPUT(params *CreateADGroupUsingPUTParams) (*CreateADGroupUsingPUTOK, *CreateADGroupUsingPUTCreated, error) {
+func (a *Client) CreateADGroupUsingPUT(params *CreateADGroupUsingPUTParams, opts ...ClientOption) (*CreateADGroupUsingPUTOK, *CreateADGroupUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateADGroupUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "createADGroupUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/ad/integration/groups",
@@ -62,7 +64,12 @@ func (a *Client) CreateADGroupUsingPUT(params *CreateADGroupUsingPUTParams) (*Cr
 		Reader:             &CreateADGroupUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -82,13 +89,12 @@ func (a *Client) CreateADGroupUsingPUT(params *CreateADGroupUsingPUTParams) (*Cr
 
   Delete group
 */
-func (a *Client) DeleteADGroupUsingDELETE(params *DeleteADGroupUsingDELETEParams) (*DeleteADGroupUsingDELETEOK, error) {
+func (a *Client) DeleteADGroupUsingDELETE(params *DeleteADGroupUsingDELETEParams, opts ...ClientOption) (*DeleteADGroupUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteADGroupUsingDELETEParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "deleteADGroupUsingDELETE",
 		Method:             "DELETE",
 		PathPattern:        "/ad/integration/groups/{samAccountName}",
@@ -99,7 +105,12 @@ func (a *Client) DeleteADGroupUsingDELETE(params *DeleteADGroupUsingDELETEParams
 		Reader:             &DeleteADGroupUsingDELETEReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -118,13 +129,12 @@ func (a *Client) DeleteADGroupUsingDELETE(params *DeleteADGroupUsingDELETEParams
 
   Get group info
 */
-func (a *Client) GetADGroupUsingGET(params *GetADGroupUsingGETParams) (*GetADGroupUsingGETOK, error) {
+func (a *Client) GetADGroupUsingGET(params *GetADGroupUsingGETParams, opts ...ClientOption) (*GetADGroupUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetADGroupUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "getADGroupUsingGET",
 		Method:             "GET",
 		PathPattern:        "/ad/integration/groups/{samAccountName}",
@@ -135,7 +145,12 @@ func (a *Client) GetADGroupUsingGET(params *GetADGroupUsingGETParams) (*GetADGro
 		Reader:             &GetADGroupUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -154,13 +169,12 @@ func (a *Client) GetADGroupUsingGET(params *GetADGroupUsingGETParams) (*GetADGro
 
   List groups
 */
-func (a *Client) ListADGroupUsingGET(params *ListADGroupUsingGETParams) (*ListADGroupUsingGETOK, error) {
+func (a *Client) ListADGroupUsingGET(params *ListADGroupUsingGETParams, opts ...ClientOption) (*ListADGroupUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListADGroupUsingGETParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "listADGroupUsingGET",
 		Method:             "GET",
 		PathPattern:        "/ad/integration/groups",
@@ -171,7 +185,12 @@ func (a *Client) ListADGroupUsingGET(params *ListADGroupUsingGETParams) (*ListAD
 		Reader:             &ListADGroupUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
@@ -190,13 +209,12 @@ func (a *Client) ListADGroupUsingGET(params *ListADGroupUsingGETParams) (*ListAD
 
   Update group
 */
-func (a *Client) UpdateADGroupUsingPUT(params *UpdateADGroupUsingPUTParams) (*UpdateADGroupUsingPUTOK, error) {
+func (a *Client) UpdateADGroupUsingPUT(params *UpdateADGroupUsingPUTParams, opts ...ClientOption) (*UpdateADGroupUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateADGroupUsingPUTParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "updateADGroupUsingPUT",
 		Method:             "PUT",
 		PathPattern:        "/ad/integration/groups/{samAccountName}",
@@ -207,7 +225,12 @@ func (a *Client) UpdateADGroupUsingPUT(params *UpdateADGroupUsingPUTParams) (*Up
 		Reader:             &UpdateADGroupUsingPUTReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}

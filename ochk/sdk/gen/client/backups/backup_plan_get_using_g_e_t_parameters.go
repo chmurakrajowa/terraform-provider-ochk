@@ -16,59 +16,73 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewBackupPlanGetUsingGETParams creates a new BackupPlanGetUsingGETParams object
-// with the default values initialized.
+// NewBackupPlanGetUsingGETParams creates a new BackupPlanGetUsingGETParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewBackupPlanGetUsingGETParams() *BackupPlanGetUsingGETParams {
-	var ()
 	return &BackupPlanGetUsingGETParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewBackupPlanGetUsingGETParamsWithTimeout creates a new BackupPlanGetUsingGETParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewBackupPlanGetUsingGETParamsWithTimeout(timeout time.Duration) *BackupPlanGetUsingGETParams {
-	var ()
 	return &BackupPlanGetUsingGETParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewBackupPlanGetUsingGETParamsWithContext creates a new BackupPlanGetUsingGETParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewBackupPlanGetUsingGETParamsWithContext(ctx context.Context) *BackupPlanGetUsingGETParams {
-	var ()
 	return &BackupPlanGetUsingGETParams{
-
 		Context: ctx,
 	}
 }
 
 // NewBackupPlanGetUsingGETParamsWithHTTPClient creates a new BackupPlanGetUsingGETParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewBackupPlanGetUsingGETParamsWithHTTPClient(client *http.Client) *BackupPlanGetUsingGETParams {
-	var ()
 	return &BackupPlanGetUsingGETParams{
 		HTTPClient: client,
 	}
 }
 
-/*BackupPlanGetUsingGETParams contains all the parameters to send to the API endpoint
-for the backup plan get using g e t operation typically these are written to a http.Request
+/* BackupPlanGetUsingGETParams contains all the parameters to send to the API endpoint
+   for the backup plan get using g e t operation.
+
+   Typically these are written to a http.Request.
 */
 type BackupPlanGetUsingGETParams struct {
 
-	/*BackupPlanID
-	  backupPlanId
+	/* BackupPlanID.
 
+	   backupPlanId
 	*/
 	BackupPlanID string
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the backup plan get using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *BackupPlanGetUsingGETParams) WithDefaults() *BackupPlanGetUsingGETParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the backup plan get using g e t params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *BackupPlanGetUsingGETParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the backup plan get using g e t params
