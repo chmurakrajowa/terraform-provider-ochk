@@ -51,7 +51,8 @@ func NewGfwRuleDeleteUsingDELETEOK() *GfwRuleDeleteUsingDELETEOK {
 	return &GfwRuleDeleteUsingDELETEOK{}
 }
 
-/* GfwRuleDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*
+GfwRuleDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type GfwRuleDeleteUsingDELETEOK struct {
 	Payload *models.DeleteGFWRuleResponse
 }
 
+// IsSuccess returns true when this gfw rule delete using d e l e t e o k response has a 2xx status code
+func (o *GfwRuleDeleteUsingDELETEOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this gfw rule delete using d e l e t e o k response has a 3xx status code
+func (o *GfwRuleDeleteUsingDELETEOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this gfw rule delete using d e l e t e o k response has a 4xx status code
+func (o *GfwRuleDeleteUsingDELETEOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this gfw rule delete using d e l e t e o k response has a 5xx status code
+func (o *GfwRuleDeleteUsingDELETEOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this gfw rule delete using d e l e t e o k response a status code equal to that given
+func (o *GfwRuleDeleteUsingDELETEOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the gfw rule delete using d e l e t e o k response
+func (o *GfwRuleDeleteUsingDELETEOK) Code() int {
+	return 200
+}
+
 func (o *GfwRuleDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
+func (o *GfwRuleDeleteUsingDELETEOK) String() string {
+	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleDeleteUsingDELETEOK  %+v", 200, o.Payload)
+}
+
 func (o *GfwRuleDeleteUsingDELETEOK) GetPayload() *models.DeleteGFWRuleResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewGfwRuleDeleteUsingDELETECreated() *GfwRuleDeleteUsingDELETECreated {
 	return &GfwRuleDeleteUsingDELETECreated{}
 }
 
-/* GfwRuleDeleteUsingDELETECreated describes a response with status code 201, with default header values.
+/*
+GfwRuleDeleteUsingDELETECreated describes a response with status code 201, with default header values.
 
 Entity has been deleted
 */
@@ -91,9 +128,44 @@ type GfwRuleDeleteUsingDELETECreated struct {
 	Payload *models.DeleteGFWRuleResponse
 }
 
+// IsSuccess returns true when this gfw rule delete using d e l e t e created response has a 2xx status code
+func (o *GfwRuleDeleteUsingDELETECreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this gfw rule delete using d e l e t e created response has a 3xx status code
+func (o *GfwRuleDeleteUsingDELETECreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this gfw rule delete using d e l e t e created response has a 4xx status code
+func (o *GfwRuleDeleteUsingDELETECreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this gfw rule delete using d e l e t e created response has a 5xx status code
+func (o *GfwRuleDeleteUsingDELETECreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this gfw rule delete using d e l e t e created response a status code equal to that given
+func (o *GfwRuleDeleteUsingDELETECreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the gfw rule delete using d e l e t e created response
+func (o *GfwRuleDeleteUsingDELETECreated) Code() int {
+	return 201
+}
+
 func (o *GfwRuleDeleteUsingDELETECreated) Error() string {
 	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleDeleteUsingDELETECreated  %+v", 201, o.Payload)
 }
+
+func (o *GfwRuleDeleteUsingDELETECreated) String() string {
+	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleDeleteUsingDELETECreated  %+v", 201, o.Payload)
+}
+
 func (o *GfwRuleDeleteUsingDELETECreated) GetPayload() *models.DeleteGFWRuleResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewGfwRuleDeleteUsingDELETEBadRequest() *GfwRuleDeleteUsingDELETEBadRequest
 	return &GfwRuleDeleteUsingDELETEBadRequest{}
 }
 
-/* GfwRuleDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*
+GfwRuleDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type GfwRuleDeleteUsingDELETEBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this gfw rule delete using d e l e t e bad request response has a 2xx status code
+func (o *GfwRuleDeleteUsingDELETEBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this gfw rule delete using d e l e t e bad request response has a 3xx status code
+func (o *GfwRuleDeleteUsingDELETEBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this gfw rule delete using d e l e t e bad request response has a 4xx status code
+func (o *GfwRuleDeleteUsingDELETEBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this gfw rule delete using d e l e t e bad request response has a 5xx status code
+func (o *GfwRuleDeleteUsingDELETEBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this gfw rule delete using d e l e t e bad request response a status code equal to that given
+func (o *GfwRuleDeleteUsingDELETEBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the gfw rule delete using d e l e t e bad request response
+func (o *GfwRuleDeleteUsingDELETEBadRequest) Code() int {
+	return 400
+}
+
 func (o *GfwRuleDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *GfwRuleDeleteUsingDELETEBadRequest) String() string {
+	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *GfwRuleDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

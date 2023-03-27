@@ -2,13 +2,11 @@ package ochk
 
 import (
 	"context"
-	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -33,83 +31,22 @@ func resourceVirtualNetwork() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 
-		CustomizeDiff: customdiff.IfValue("ipam_enabled",
-			func(ctx context.Context, value, meta interface{}) bool {
-				return !value.(bool)
-			},
-			customdiff.All(
-				customdiff.ValidateValue("primary_dns_address", func(ctx context.Context, value, meta interface{}) error {
-					if val := value.(string); val != "" {
-						return fmt.Errorf("cannot provide primary_dns_address value when ipam_enabled = false")
-					}
-					return nil
-				}),
-				customdiff.ValidateValue("secondary_dns_address", func(ctx context.Context, value, meta interface{}) error {
-					if val := value.(string); val != "" {
-						return fmt.Errorf("cannot provide secondary_dns_address value when ipam_enabled = false")
-					}
-					return nil
-				}),
-				customdiff.ValidateValue("dns_suffix", func(ctx context.Context, value, meta interface{}) error {
-					if val := value.(string); val != "" {
-						return fmt.Errorf("cannot provide dns_suffix value when ipam_enabled = false")
-					}
-					return nil
-				}),
-				customdiff.ValidateValue("dns_search_suffix", func(ctx context.Context, value, meta interface{}) error {
-					if val := value.(string); val != "" {
-						return fmt.Errorf("cannot provide dns_search_suffix value when ipam_enabled = false")
-					}
-					return nil
-				}),
-				customdiff.ValidateValue("primary_wins_address", func(ctx context.Context, value, meta interface{}) error {
-					if val := value.(string); val != "" {
-						return fmt.Errorf("cannot provide primary_wins_address value when ipam_enabled = false")
-					}
-					return nil
-				}),
-				customdiff.ValidateValue("secondary_wins_address", func(ctx context.Context, value, meta interface{}) error {
-					if val := value.(string); val != "" {
-						return fmt.Errorf("cannot provide secondary_wins_address value when ipam_enabled = false")
-					}
-					return nil
-				}),
-			)),
 		Schema: map[string]*schema.Schema{
 			"display_name": {
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
 			},
+			"folder_path": {
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "/",
+			},
 			"ipam_enabled": {
 				Type:     schema.TypeBool,
 				Optional: true,
 				Default:  false,
 				ForceNew: true,
-			},
-			"primary_dns_address": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"secondary_dns_address": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"dns_suffix": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"dns_search_suffix": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"primary_wins_address": {
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"secondary_wins_address": {
-				Type:     schema.TypeString,
-				Optional: true,
 			},
 			"gateway_address": {
 				Type:     schema.TypeString,
@@ -128,15 +65,13 @@ func resourceVirtualNetwork() *schema.Resource {
 				Optional: true,
 				ForceNew: true,
 			},
-			"router": {
+			"vpc_id": {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"subtenants": {
-				Type:     schema.TypeSet,
+			"project_id": {
+				Type:     schema.TypeString,
 				Required: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
-				MinItems: 1,
 			},
 		},
 	}
@@ -188,36 +123,30 @@ func mapVirtualNetworkToResourceData(d *schema.ResourceData, virtualNetwork *mod
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
+	if err := d.Set("project_id", virtualNetwork.ProjectID); err != nil {
+		return diag.Errorf("error setting project_id: %+v", err)
+	}
+
+	if err := d.Set("folder_path", virtualNetwork.FolderPath); err != nil {
+		return diag.Errorf("error setting folder_path: %+v", err)
+	}
+
 	if err := d.Set("ipam_enabled", virtualNetwork.IpamEnabled); err != nil {
 		return diag.Errorf("error setting ipam_enabled: %+v", err)
 	}
-	if err := d.Set("primary_dns_address", virtualNetwork.PrimaryDNSAddress); err != nil {
-		return diag.Errorf("error setting primary_dns_address: %+v", err)
-	}
-	if err := d.Set("secondary_dns_address", virtualNetwork.SecondaryDNSAddress); err != nil {
-		return diag.Errorf("error setting secondary_dns_address: %+v", err)
-	}
-	if err := d.Set("dns_suffix", virtualNetwork.DNSSuffix); err != nil {
-		return diag.Errorf("error setting dns_suffix: %+v", err)
-	}
-	if err := d.Set("dns_search_suffix", virtualNetwork.DNSSearchSuffix); err != nil {
-		return diag.Errorf("error setting dns_search_suffix: %+v", err)
-	}
-	if err := d.Set("primary_wins_address", virtualNetwork.PrimaryWinsAddress); err != nil {
-		return diag.Errorf("error setting primary_wins_address: %+v", err)
-	}
-	if err := d.Set("secondary_wins_address", virtualNetwork.SecondaryWinsAddress); err != nil {
-		return diag.Errorf("error setting secondary_wins_address: %+v", err)
-	}
+
 	if err := d.Set("gateway_address", virtualNetwork.GatewayAddress); err != nil {
 		return diag.Errorf("error setting gateway_address: %+v", err)
 	}
+
 	if err := d.Set("subnet_mask", virtualNetwork.SubnetMask); err != nil {
 		return diag.Errorf("error setting subnet_mask: %+v", err)
 	}
-	if err := d.Set("router", virtualNetwork.RouterRefID); err != nil {
-		return diag.Errorf("error setting router: %+v", err)
+
+	if err := d.Set("vpc_id", virtualNetwork.RouterRefID); err != nil {
+		return diag.Errorf("error setting vpc: %+v", err)
 	}
+
 	if virtualNetwork.Subnet != nil {
 		if err := d.Set("subnet_gateway_address_cidr", virtualNetwork.Subnet.GatewayAddressCIDR); err != nil {
 			return diag.Errorf("error setting subnet_gateway_address_cidr: %+v", err)
@@ -225,10 +154,6 @@ func mapVirtualNetworkToResourceData(d *schema.ResourceData, virtualNetwork *mod
 		if err := d.Set("subnet_network_cidr", virtualNetwork.Subnet.NetworkCIDR); err != nil {
 			return diag.Errorf("error setting subnet_network_cidr: %+v", err)
 		}
-	}
-
-	if err := d.Set("subtenants", flattenStringSlice(virtualNetwork.SubtenantRefIds)); err != nil {
-		return diag.Errorf("error setting subtenants: %+v", err)
 	}
 
 	return nil
@@ -279,19 +204,13 @@ func resourceVirtualNetworkDelete(ctx context.Context, d *schema.ResourceData, m
 
 func mapResourceDataToVirtualNetwork(d *schema.ResourceData) *models.VirtualNetworkInstance {
 	virtualNetworkInstance := models.VirtualNetworkInstance{
-		DisplayName:          d.Get("display_name").(string),
-		DNSSearchSuffix:      d.Get("dns_search_suffix").(string),
-		DNSSuffix:            d.Get("dns_suffix").(string),
-		GatewayAddress:       d.Get("gateway_address").(string),
-		IpamEnabled:          d.Get("ipam_enabled").(bool),
-		PrimaryDNSAddress:    d.Get("primary_dns_address").(string),
-		PrimaryWinsAddress:   d.Get("primary_wins_address").(string),
-		RouterRefID:          d.Get("router").(string),
-		SecondaryDNSAddress:  d.Get("secondary_dns_address").(string),
-		SecondaryWinsAddress: d.Get("secondary_wins_address").(string),
-		SubnetMask:           d.Get("subnet_mask").(string),
-		SubtenantRefIds:      transformSetToStringSlice(d.Get("subtenants").(*schema.Set)),
-		VirtualNetworkID:     d.Id(),
+		DisplayName:      d.Get("display_name").(string),
+		GatewayAddress:   d.Get("gateway_address").(string),
+		IpamEnabled:      d.Get("ipam_enabled").(bool),
+		RouterRefID:      d.Get("vpc_id").(string),
+		SubnetMask:       d.Get("subnet_mask").(string),
+		ProjectID:        d.Get("project_id").(string),
+		VirtualNetworkID: d.Id(),
 	}
 
 	subnetGatewayAddressCidr, subnetGatewayAddressCidrOk := d.GetOk("subnet_gateway_address_cidr")

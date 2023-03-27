@@ -8,7 +8,6 @@ package models
 import (
 	"context"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -18,97 +17,20 @@ import (
 // swagger:model UserInstance
 type UserInstance struct {
 
-	// description
-	Description string `json:"description,omitempty"`
-
-	// disabled
-	Disabled bool `json:"disabled,omitempty"`
-
-	// email address
-	EmailAddress string `json:"emailAddress,omitempty"`
-
-	// first name
-	FirstName string `json:"firstName,omitempty"`
-
-	// last name
-	LastName string `json:"lastName,omitempty"`
-
-	// locked
-	Locked bool `json:"locked,omitempty"`
-
-	// name
-	Name string `json:"name,omitempty"`
-
-	// principal Id
-	PrincipalID *PrincipalID `json:"principalId,omitempty"`
-
 	// user Id
 	UserID string `json:"userId,omitempty"`
 
-	// user principal name
-	UserPrincipalName string `json:"userPrincipalName,omitempty"`
+	// user name
+	UserName string `json:"userName,omitempty"`
 }
 
 // Validate validates this user instance
 func (m *UserInstance) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validatePrincipalID(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
 	return nil
 }
 
-func (m *UserInstance) validatePrincipalID(formats strfmt.Registry) error {
-	if swag.IsZero(m.PrincipalID) { // not required
-		return nil
-	}
-
-	if m.PrincipalID != nil {
-		if err := m.PrincipalID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("principalId")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("principalId")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this user instance based on the context it is used
+// ContextValidate validates this user instance based on context it is used
 func (m *UserInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidatePrincipalID(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *UserInstance) contextValidatePrincipalID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.PrincipalID != nil {
-		if err := m.PrincipalID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("principalId")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("principalId")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 

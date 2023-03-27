@@ -45,7 +45,8 @@ func NewRouterListUsingGETOK() *RouterListUsingGETOK {
 	return &RouterListUsingGETOK{}
 }
 
-/* RouterListUsingGETOK describes a response with status code 200, with default header values.
+/*
+RouterListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type RouterListUsingGETOK struct {
 	Payload *models.RouterListResponse
 }
 
+// IsSuccess returns true when this router list using g e t o k response has a 2xx status code
+func (o *RouterListUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this router list using g e t o k response has a 3xx status code
+func (o *RouterListUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this router list using g e t o k response has a 4xx status code
+func (o *RouterListUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this router list using g e t o k response has a 5xx status code
+func (o *RouterListUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this router list using g e t o k response a status code equal to that given
+func (o *RouterListUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the router list using g e t o k response
+func (o *RouterListUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *RouterListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/routers][%d] routerListUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *RouterListUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /network/routers][%d] routerListUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *RouterListUsingGETOK) GetPayload() *models.RouterListResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewRouterListUsingGETBadRequest() *RouterListUsingGETBadRequest {
 	return &RouterListUsingGETBadRequest{}
 }
 
-/* RouterListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+RouterListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type RouterListUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this router list using g e t bad request response has a 2xx status code
+func (o *RouterListUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this router list using g e t bad request response has a 3xx status code
+func (o *RouterListUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this router list using g e t bad request response has a 4xx status code
+func (o *RouterListUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this router list using g e t bad request response has a 5xx status code
+func (o *RouterListUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this router list using g e t bad request response a status code equal to that given
+func (o *RouterListUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the router list using g e t bad request response
+func (o *RouterListUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *RouterListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/routers][%d] routerListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *RouterListUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /network/routers][%d] routerListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *RouterListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

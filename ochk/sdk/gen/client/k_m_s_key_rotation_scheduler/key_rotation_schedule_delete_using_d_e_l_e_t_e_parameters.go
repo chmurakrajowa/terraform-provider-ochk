@@ -52,10 +52,12 @@ func NewKeyRotationScheduleDeleteUsingDELETEParamsWithHTTPClient(client *http.Cl
 	}
 }
 
-/* KeyRotationScheduleDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-   for the key rotation schedule delete using d e l e t e operation.
+/*
+KeyRotationScheduleDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the key rotation schedule delete using d e l e t e operation.
+
+	Typically these are written to a http.Request.
 */
 type KeyRotationScheduleDeleteUsingDELETEParams struct {
 

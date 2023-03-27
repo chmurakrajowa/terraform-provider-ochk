@@ -52,10 +52,12 @@ func NewAllocationListUsingGETParamsWithHTTPClient(client *http.Client) *Allocat
 	}
 }
 
-/* AllocationListUsingGETParams contains all the parameters to send to the API endpoint
-   for the allocation list using g e t operation.
+/*
+AllocationListUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the allocation list using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type AllocationListUsingGETParams struct {
 

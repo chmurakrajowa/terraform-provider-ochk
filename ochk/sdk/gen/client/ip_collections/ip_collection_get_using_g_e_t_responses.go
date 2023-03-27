@@ -51,7 +51,8 @@ func NewIPCollectionGetUsingGETOK() *IPCollectionGetUsingGETOK {
 	return &IPCollectionGetUsingGETOK{}
 }
 
-/* IPCollectionGetUsingGETOK describes a response with status code 200, with default header values.
+/*
+IPCollectionGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type IPCollectionGetUsingGETOK struct {
 	Payload *models.IPCollectionResponse
 }
 
+// IsSuccess returns true when this ip collection get using g e t o k response has a 2xx status code
+func (o *IPCollectionGetUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this ip collection get using g e t o k response has a 3xx status code
+func (o *IPCollectionGetUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this ip collection get using g e t o k response has a 4xx status code
+func (o *IPCollectionGetUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this ip collection get using g e t o k response has a 5xx status code
+func (o *IPCollectionGetUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this ip collection get using g e t o k response a status code equal to that given
+func (o *IPCollectionGetUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the ip collection get using g e t o k response
+func (o *IPCollectionGetUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *IPCollectionGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /ipcs/{ipCollectionId}][%d] ipCollectionGetUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *IPCollectionGetUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /ipcs/{ipCollectionId}][%d] ipCollectionGetUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *IPCollectionGetUsingGETOK) GetPayload() *models.IPCollectionResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewIPCollectionGetUsingGETBadRequest() *IPCollectionGetUsingGETBadRequest {
 	return &IPCollectionGetUsingGETBadRequest{}
 }
 
-/* IPCollectionGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+IPCollectionGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -91,9 +128,44 @@ type IPCollectionGetUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this ip collection get using g e t bad request response has a 2xx status code
+func (o *IPCollectionGetUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this ip collection get using g e t bad request response has a 3xx status code
+func (o *IPCollectionGetUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this ip collection get using g e t bad request response has a 4xx status code
+func (o *IPCollectionGetUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this ip collection get using g e t bad request response has a 5xx status code
+func (o *IPCollectionGetUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this ip collection get using g e t bad request response a status code equal to that given
+func (o *IPCollectionGetUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the ip collection get using g e t bad request response
+func (o *IPCollectionGetUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *IPCollectionGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /ipcs/{ipCollectionId}][%d] ipCollectionGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *IPCollectionGetUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /ipcs/{ipCollectionId}][%d] ipCollectionGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *IPCollectionGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,14 +187,49 @@ func NewIPCollectionGetUsingGETNotFound() *IPCollectionGetUsingGETNotFound {
 	return &IPCollectionGetUsingGETNotFound{}
 }
 
-/* IPCollectionGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*
+IPCollectionGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */
 type IPCollectionGetUsingGETNotFound struct {
 }
 
+// IsSuccess returns true when this ip collection get using g e t not found response has a 2xx status code
+func (o *IPCollectionGetUsingGETNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this ip collection get using g e t not found response has a 3xx status code
+func (o *IPCollectionGetUsingGETNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this ip collection get using g e t not found response has a 4xx status code
+func (o *IPCollectionGetUsingGETNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this ip collection get using g e t not found response has a 5xx status code
+func (o *IPCollectionGetUsingGETNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this ip collection get using g e t not found response a status code equal to that given
+func (o *IPCollectionGetUsingGETNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the ip collection get using g e t not found response
+func (o *IPCollectionGetUsingGETNotFound) Code() int {
+	return 404
+}
+
 func (o *IPCollectionGetUsingGETNotFound) Error() string {
+	return fmt.Sprintf("[GET /ipcs/{ipCollectionId}][%d] ipCollectionGetUsingGETNotFound ", 404)
+}
+
+func (o *IPCollectionGetUsingGETNotFound) String() string {
 	return fmt.Sprintf("[GET /ipcs/{ipCollectionId}][%d] ipCollectionGetUsingGETNotFound ", 404)
 }
 

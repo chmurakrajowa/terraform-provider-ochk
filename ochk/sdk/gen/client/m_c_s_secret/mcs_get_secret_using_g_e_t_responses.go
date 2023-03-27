@@ -45,7 +45,8 @@ func NewMcsGetSecretUsingGETOK() *McsGetSecretUsingGETOK {
 	return &McsGetSecretUsingGETOK{}
 }
 
-/* McsGetSecretUsingGETOK describes a response with status code 200, with default header values.
+/*
+McsGetSecretUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type McsGetSecretUsingGETOK struct {
 	Payload *models.McsSecretGetResponse
 }
 
+// IsSuccess returns true when this mcs get secret using g e t o k response has a 2xx status code
+func (o *McsGetSecretUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this mcs get secret using g e t o k response has a 3xx status code
+func (o *McsGetSecretUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this mcs get secret using g e t o k response has a 4xx status code
+func (o *McsGetSecretUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this mcs get secret using g e t o k response has a 5xx status code
+func (o *McsGetSecretUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this mcs get secret using g e t o k response a status code equal to that given
+func (o *McsGetSecretUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the mcs get secret using g e t o k response
+func (o *McsGetSecretUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *McsGetSecretUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /mcs/secret][%d] mcsGetSecretUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *McsGetSecretUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /mcs/secret][%d] mcsGetSecretUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *McsGetSecretUsingGETOK) GetPayload() *models.McsSecretGetResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewMcsGetSecretUsingGETBadRequest() *McsGetSecretUsingGETBadRequest {
 	return &McsGetSecretUsingGETBadRequest{}
 }
 
-/* McsGetSecretUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+McsGetSecretUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type McsGetSecretUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this mcs get secret using g e t bad request response has a 2xx status code
+func (o *McsGetSecretUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this mcs get secret using g e t bad request response has a 3xx status code
+func (o *McsGetSecretUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this mcs get secret using g e t bad request response has a 4xx status code
+func (o *McsGetSecretUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this mcs get secret using g e t bad request response has a 5xx status code
+func (o *McsGetSecretUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this mcs get secret using g e t bad request response a status code equal to that given
+func (o *McsGetSecretUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the mcs get secret using g e t bad request response
+func (o *McsGetSecretUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *McsGetSecretUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /mcs/secret][%d] mcsGetSecretUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *McsGetSecretUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /mcs/secret][%d] mcsGetSecretUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *McsGetSecretUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

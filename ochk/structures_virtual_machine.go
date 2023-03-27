@@ -12,6 +12,24 @@ func virtualDiskHash(v interface{}) int {
 	return schema.HashString(fmt.Sprintf("%d%d", m["controller_id"], m["lun_id"]))
 }
 
+func flattenVirtualMachines(in []*models.VcsVirtualMachineInstance) []map[string]interface{} {
+	if len(in) == 0 {
+		return nil
+	}
+
+	var out []map[string]interface{}
+
+	for _, v := range in {
+		m := make(map[string]interface{})
+		m["virtual_machine_id"] = v.VirtualMachineID
+		m["display_name"] = v.VirtualMachineName
+		m["folder_path"] = v.FolderPath
+		m["project_id"] = v.ProjectID
+		out = append(out, m)
+	}
+	return out
+}
+
 func flattenDeploymentParams(in []*models.DeploymentParam) []map[string]interface{} {
 	if len(in) == 0 {
 		return nil
@@ -176,68 +194,36 @@ func expandBackupListsFromIDs(in []interface{}) []*models.BackupList {
 	return out
 }
 
-func flattenSystemTagsListsFromIDs(m []*models.SystemTag) *schema.Set {
+func flattenTagsListsFromIDs(m []*models.Tag) *schema.Set {
+
 	s := &schema.Set{
 		F: schema.HashString,
 	}
 
 	for _, v := range m {
-		s.Add(fmt.Sprint(v.SystemTagID))
+		s.Add(fmt.Sprint(v.TagID))
 	}
 
 	return s
 }
 
-func expandSystemTagsListsFromIDs(in []interface{}) []*models.SystemTag {
-	if len(in) == 0 {
-		return nil
-	}
+func expandTagsListsFromIDs(in []interface{}) []*models.Tag {
 
-	var out = make([]*models.SystemTag, len(in))
+	var out = make([]*models.Tag, len(in))
 
 	for i, v := range in {
 
-		var systemTagIDInt32 int32
-		fmt.Sscan(v.(string), &systemTagIDInt32)
-
-		SystemTagInstance := &models.SystemTag{
-			SystemTagID: systemTagIDInt32,
+		var tagIDInt32 int32
+		_, err := fmt.Sscan(v.(string), &tagIDInt32)
+		if err != nil {
+			return nil
 		}
 
-		out[i] = SystemTagInstance
-	}
-	return out
-}
-
-func flattenBillingTagsListsFromIDs(m []*models.BillingTag) *schema.Set {
-	s := &schema.Set{
-		F: schema.HashString,
-	}
-
-	for _, v := range m {
-		s.Add(fmt.Sprint(v.BillingTagID))
-	}
-
-	return s
-}
-
-func expandBillingTagsListsFromIDs(in []interface{}) []*models.BillingTag {
-	if len(in) == 0 {
-		return nil
-	}
-
-	var out = make([]*models.BillingTag, len(in))
-
-	for i, v := range in {
-
-		var billingTagIDInt32 int32
-		fmt.Sscan(v.(string), &billingTagIDInt32)
-
-		BillingTagInstance := &models.BillingTag{
-			BillingTagID: billingTagIDInt32,
+		TagInstance := &models.Tag{
+			TagID: tagIDInt32,
 		}
 
-		out[i] = BillingTagInstance
+		out[i] = TagInstance
 	}
 	return out
 }

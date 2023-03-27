@@ -52,10 +52,12 @@ func NewDfwRuleDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) *DfwRu
 	}
 }
 
-/* DfwRuleDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-   for the dfw rule delete using d e l e t e operation.
+/*
+DfwRuleDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the dfw rule delete using d e l e t e operation.
+
+	Typically these are written to a http.Request.
 */
 type DfwRuleDeleteUsingDELETEParams struct {
 

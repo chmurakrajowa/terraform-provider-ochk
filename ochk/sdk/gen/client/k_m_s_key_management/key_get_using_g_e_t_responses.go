@@ -51,7 +51,8 @@ func NewKeyGetUsingGETOK() *KeyGetUsingGETOK {
 	return &KeyGetUsingGETOK{}
 }
 
-/* KeyGetUsingGETOK describes a response with status code 200, with default header values.
+/*
+KeyGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type KeyGetUsingGETOK struct {
 	Payload *models.KeyGetResponse
 }
 
+// IsSuccess returns true when this key get using g e t o k response has a 2xx status code
+func (o *KeyGetUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this key get using g e t o k response has a 3xx status code
+func (o *KeyGetUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key get using g e t o k response has a 4xx status code
+func (o *KeyGetUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this key get using g e t o k response has a 5xx status code
+func (o *KeyGetUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key get using g e t o k response a status code equal to that given
+func (o *KeyGetUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the key get using g e t o k response
+func (o *KeyGetUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *KeyGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /kms/key/{id}][%d] keyGetUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *KeyGetUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /kms/key/{id}][%d] keyGetUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *KeyGetUsingGETOK) GetPayload() *models.KeyGetResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewKeyGetUsingGETBadRequest() *KeyGetUsingGETBadRequest {
 	return &KeyGetUsingGETBadRequest{}
 }
 
-/* KeyGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+KeyGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -91,9 +128,44 @@ type KeyGetUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this key get using g e t bad request response has a 2xx status code
+func (o *KeyGetUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this key get using g e t bad request response has a 3xx status code
+func (o *KeyGetUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key get using g e t bad request response has a 4xx status code
+func (o *KeyGetUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this key get using g e t bad request response has a 5xx status code
+func (o *KeyGetUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key get using g e t bad request response a status code equal to that given
+func (o *KeyGetUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the key get using g e t bad request response
+func (o *KeyGetUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *KeyGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /kms/key/{id}][%d] keyGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *KeyGetUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /kms/key/{id}][%d] keyGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *KeyGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,14 +187,49 @@ func NewKeyGetUsingGETNotFound() *KeyGetUsingGETNotFound {
 	return &KeyGetUsingGETNotFound{}
 }
 
-/* KeyGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*
+KeyGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */
 type KeyGetUsingGETNotFound struct {
 }
 
+// IsSuccess returns true when this key get using g e t not found response has a 2xx status code
+func (o *KeyGetUsingGETNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this key get using g e t not found response has a 3xx status code
+func (o *KeyGetUsingGETNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key get using g e t not found response has a 4xx status code
+func (o *KeyGetUsingGETNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this key get using g e t not found response has a 5xx status code
+func (o *KeyGetUsingGETNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key get using g e t not found response a status code equal to that given
+func (o *KeyGetUsingGETNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the key get using g e t not found response
+func (o *KeyGetUsingGETNotFound) Code() int {
+	return 404
+}
+
 func (o *KeyGetUsingGETNotFound) Error() string {
+	return fmt.Sprintf("[GET /kms/key/{id}][%d] keyGetUsingGETNotFound ", 404)
+}
+
+func (o *KeyGetUsingGETNotFound) String() string {
 	return fmt.Sprintf("[GET /kms/key/{id}][%d] keyGetUsingGETNotFound ", 404)
 }
 

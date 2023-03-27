@@ -54,10 +54,12 @@ func NewKeyRotationScheduleCreateUsingPUTParamsWithHTTPClient(client *http.Clien
 	}
 }
 
-/* KeyRotationScheduleCreateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the key rotation schedule create using p u t operation.
+/*
+KeyRotationScheduleCreateUsingPUTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the key rotation schedule create using p u t operation.
+
+	Typically these are written to a http.Request.
 */
 type KeyRotationScheduleCreateUsingPUTParams struct {
 

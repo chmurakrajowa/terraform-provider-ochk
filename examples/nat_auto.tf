@@ -1,9 +1,11 @@
-data "ochk_virtual_network" "auto-nat" {
-    display_name = "bypasstest"
-}
-
+/*
 data "ochk_auto_nat" "auto-nat" {
-  display_name = "bypasstest"
+  display_name = "UITestNAT01"
+}
+*/
+
+data "ochk_auto_nats" "auto_nats" {
+
 }
 
 /*

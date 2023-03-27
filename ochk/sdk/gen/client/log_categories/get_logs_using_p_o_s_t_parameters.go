@@ -15,8 +15,6 @@ import (
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 )
 
 // NewGetLogsUsingPOSTParams creates a new GetLogsUsingPOSTParams object,
@@ -55,10 +53,12 @@ func NewGetLogsUsingPOSTParamsWithHTTPClient(client *http.Client) *GetLogsUsingP
 	}
 }
 
-/* GetLogsUsingPOSTParams contains all the parameters to send to the API endpoint
-   for the get logs using p o s t operation.
+/*
+GetLogsUsingPOSTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get logs using p o s t operation.
+
+	Typically these are written to a http.Request.
 */
 type GetLogsUsingPOSTParams struct {
 
@@ -70,14 +70,6 @@ type GetLogsUsingPOSTParams struct {
 	*/
 	DataSize int32
 
-	/* LastIndex.
-
-	   lastIndex
-
-	   Format: int64
-	*/
-	LastIndex int64
-
 	/* LogCategoryID.
 
 	   logCategoryId
@@ -86,11 +78,11 @@ type GetLogsUsingPOSTParams struct {
 	*/
 	LogCategoryID int32
 
-	/* QueryFilter.
+	/* SerializedDslQuery.
 
-	   queryFilter
+	   serializedDslQuery
 	*/
-	QueryFilter *models.QueryFilter
+	SerializedDslQuery string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -156,17 +148,6 @@ func (o *GetLogsUsingPOSTParams) SetDataSize(dataSize int32) {
 	o.DataSize = dataSize
 }
 
-// WithLastIndex adds the lastIndex to the get logs using p o s t params
-func (o *GetLogsUsingPOSTParams) WithLastIndex(lastIndex int64) *GetLogsUsingPOSTParams {
-	o.SetLastIndex(lastIndex)
-	return o
-}
-
-// SetLastIndex adds the lastIndex to the get logs using p o s t params
-func (o *GetLogsUsingPOSTParams) SetLastIndex(lastIndex int64) {
-	o.LastIndex = lastIndex
-}
-
 // WithLogCategoryID adds the logCategoryID to the get logs using p o s t params
 func (o *GetLogsUsingPOSTParams) WithLogCategoryID(logCategoryID int32) *GetLogsUsingPOSTParams {
 	o.SetLogCategoryID(logCategoryID)
@@ -178,15 +159,15 @@ func (o *GetLogsUsingPOSTParams) SetLogCategoryID(logCategoryID int32) {
 	o.LogCategoryID = logCategoryID
 }
 
-// WithQueryFilter adds the queryFilter to the get logs using p o s t params
-func (o *GetLogsUsingPOSTParams) WithQueryFilter(queryFilter *models.QueryFilter) *GetLogsUsingPOSTParams {
-	o.SetQueryFilter(queryFilter)
+// WithSerializedDslQuery adds the serializedDslQuery to the get logs using p o s t params
+func (o *GetLogsUsingPOSTParams) WithSerializedDslQuery(serializedDslQuery string) *GetLogsUsingPOSTParams {
+	o.SetSerializedDslQuery(serializedDslQuery)
 	return o
 }
 
-// SetQueryFilter adds the queryFilter to the get logs using p o s t params
-func (o *GetLogsUsingPOSTParams) SetQueryFilter(queryFilter *models.QueryFilter) {
-	o.QueryFilter = queryFilter
+// SetSerializedDslQuery adds the serializedDslQuery to the get logs using p o s t params
+func (o *GetLogsUsingPOSTParams) SetSerializedDslQuery(serializedDslQuery string) {
+	o.SerializedDslQuery = serializedDslQuery
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -207,24 +188,12 @@ func (o *GetLogsUsingPOSTParams) WriteToRequest(r runtime.ClientRequest, reg str
 		}
 	}
 
-	// query param lastIndex
-	qrLastIndex := o.LastIndex
-	qLastIndex := swag.FormatInt64(qrLastIndex)
-	if qLastIndex != "" {
-
-		if err := r.SetQueryParam("lastIndex", qLastIndex); err != nil {
-			return err
-		}
-	}
-
 	// path param logCategoryId
 	if err := r.SetPathParam("logCategoryId", swag.FormatInt32(o.LogCategoryID)); err != nil {
 		return err
 	}
-	if o.QueryFilter != nil {
-		if err := r.SetBodyParam(o.QueryFilter); err != nil {
-			return err
-		}
+	if err := r.SetBodyParam(o.SerializedDslQuery); err != nil {
+		return err
 	}
 
 	if len(res) > 0 {

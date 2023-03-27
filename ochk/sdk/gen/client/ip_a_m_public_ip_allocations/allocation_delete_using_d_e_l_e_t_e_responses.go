@@ -45,7 +45,8 @@ func NewAllocationDeleteUsingDELETEOK() *AllocationDeleteUsingDELETEOK {
 	return &AllocationDeleteUsingDELETEOK{}
 }
 
-/* AllocationDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*
+AllocationDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type AllocationDeleteUsingDELETEOK struct {
 	Payload *models.DeletePublicIPAllocationResponse
 }
 
+// IsSuccess returns true when this allocation delete using d e l e t e o k response has a 2xx status code
+func (o *AllocationDeleteUsingDELETEOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this allocation delete using d e l e t e o k response has a 3xx status code
+func (o *AllocationDeleteUsingDELETEOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this allocation delete using d e l e t e o k response has a 4xx status code
+func (o *AllocationDeleteUsingDELETEOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this allocation delete using d e l e t e o k response has a 5xx status code
+func (o *AllocationDeleteUsingDELETEOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this allocation delete using d e l e t e o k response a status code equal to that given
+func (o *AllocationDeleteUsingDELETEOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the allocation delete using d e l e t e o k response
+func (o *AllocationDeleteUsingDELETEOK) Code() int {
+	return 200
+}
+
 func (o *AllocationDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /ipam/ipaddress/public/allocation/{allocationId}][%d] allocationDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
+func (o *AllocationDeleteUsingDELETEOK) String() string {
+	return fmt.Sprintf("[DELETE /ipam/ipaddress/public/allocation/{allocationId}][%d] allocationDeleteUsingDELETEOK  %+v", 200, o.Payload)
+}
+
 func (o *AllocationDeleteUsingDELETEOK) GetPayload() *models.DeletePublicIPAllocationResponse {
 	return o.Payload
 }
@@ -77,14 +113,49 @@ func NewAllocationDeleteUsingDELETEBadRequest() *AllocationDeleteUsingDELETEBadR
 	return &AllocationDeleteUsingDELETEBadRequest{}
 }
 
-/* AllocationDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*
+AllocationDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
 type AllocationDeleteUsingDELETEBadRequest struct {
 }
 
+// IsSuccess returns true when this allocation delete using d e l e t e bad request response has a 2xx status code
+func (o *AllocationDeleteUsingDELETEBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this allocation delete using d e l e t e bad request response has a 3xx status code
+func (o *AllocationDeleteUsingDELETEBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this allocation delete using d e l e t e bad request response has a 4xx status code
+func (o *AllocationDeleteUsingDELETEBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this allocation delete using d e l e t e bad request response has a 5xx status code
+func (o *AllocationDeleteUsingDELETEBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this allocation delete using d e l e t e bad request response a status code equal to that given
+func (o *AllocationDeleteUsingDELETEBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the allocation delete using d e l e t e bad request response
+func (o *AllocationDeleteUsingDELETEBadRequest) Code() int {
+	return 400
+}
+
 func (o *AllocationDeleteUsingDELETEBadRequest) Error() string {
+	return fmt.Sprintf("[DELETE /ipam/ipaddress/public/allocation/{allocationId}][%d] allocationDeleteUsingDELETEBadRequest ", 400)
+}
+
+func (o *AllocationDeleteUsingDELETEBadRequest) String() string {
 	return fmt.Sprintf("[DELETE /ipam/ipaddress/public/allocation/{allocationId}][%d] allocationDeleteUsingDELETEBadRequest ", 400)
 }
 

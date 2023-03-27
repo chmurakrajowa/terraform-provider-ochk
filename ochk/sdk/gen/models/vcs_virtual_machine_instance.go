@@ -27,8 +27,8 @@ type VcsVirtualMachineInstance struct {
 	// backup list collection
 	BackupListCollection []*BackupList `json:"backupListCollection"`
 
-	// billing tags
-	BillingTags []*BillingTag `json:"billingTags"`
+	// cpu count
+	CPUCount int32 `json:"cpuCount,omitempty"`
 
 	// created by
 	CreatedBy string `json:"createdBy,omitempty"`
@@ -43,8 +43,17 @@ type VcsVirtualMachineInstance struct {
 	// deployment params
 	DeploymentParams []*DeploymentParam `json:"deploymentParams"`
 
+	// dns search suffix
+	DNSSearchSuffix string `json:"dnsSearchSuffix,omitempty"`
+
+	// dns suffix
+	DNSSuffix string `json:"dnsSuffix,omitempty"`
+
 	// encryption instance
 	EncryptionInstance *EncryptionInstance `json:"encryptionInstance,omitempty"`
+
+	// folder path
+	FolderPath string `json:"folderPath,omitempty"`
 
 	// initial password
 	InitialPassword string `json:"initialPassword,omitempty"`
@@ -60,6 +69,9 @@ type VcsVirtualMachineInstance struct {
 
 	// lic settings
 	LicSettings *LicSettings `json:"licSettings,omitempty"`
+
+	// memory size m b
+	MemorySizeMB int32 `json:"memorySizeMB,omitempty"`
 
 	// modification date
 	// Format: date-time
@@ -82,9 +94,20 @@ type VcsVirtualMachineInstance struct {
 	// Enum: [poweredOff poweredOn suspended]
 	PowerState string `json:"powerState,omitempty"`
 
-	// resource profile
-	// Enum: [CUSTOM SIZE_L SIZE_M SIZE_S SIZE_XL SIZE_XS]
-	ResourceProfile string `json:"resourceProfile,omitempty"`
+	// primary Dns address
+	PrimaryDNSAddress string `json:"primaryDnsAddress,omitempty"`
+
+	// primary wins address
+	PrimaryWinsAddress string `json:"primaryWinsAddress,omitempty"`
+
+	// project Id
+	ProjectID string `json:"projectId,omitempty"`
+
+	// secondary Dns address
+	SecondaryDNSAddress string `json:"secondaryDnsAddress,omitempty"`
+
+	// secondary wins address
+	SecondaryWinsAddress string `json:"secondaryWinsAddress,omitempty"`
 
 	// ssh key
 	SSHKey string `json:"sshKey,omitempty"`
@@ -93,11 +116,8 @@ type VcsVirtualMachineInstance struct {
 	// Enum: [ENTERPRISE STANDARD_W1 STANDARD_W2]
 	StoragePolicy string `json:"storagePolicy,omitempty"`
 
-	// subtenant ref Id
-	SubtenantRefID string `json:"subtenantRefId,omitempty"`
-
-	// system tags
-	SystemTags []*SystemTag `json:"systemTags"`
+	// tags
+	Tags []*Tag `json:"tags"`
 
 	// virtual machine Id
 	VirtualMachineID string `json:"virtualMachineId,omitempty"`
@@ -118,10 +138,6 @@ func (m *VcsVirtualMachineInstance) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateBackupListCollection(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateBillingTags(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -165,15 +181,11 @@ func (m *VcsVirtualMachineInstance) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateResourceProfile(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateStoragePolicy(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateSystemTags(formats); err != nil {
+	if err := m.validateTags(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -229,32 +241,6 @@ func (m *VcsVirtualMachineInstance) validateBackupListCollection(formats strfmt.
 					return ve.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *VcsVirtualMachineInstance) validateBillingTags(formats strfmt.Registry) error {
-	if swag.IsZero(m.BillingTags) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.BillingTags); i++ {
-		if swag.IsZero(m.BillingTags[i]) { // not required
-			continue
-		}
-
-		if m.BillingTags[i] != nil {
-			if err := m.BillingTags[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("billingTags" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("billingTags" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -497,60 +483,6 @@ func (m *VcsVirtualMachineInstance) validatePowerState(formats strfmt.Registry) 
 	return nil
 }
 
-var vcsVirtualMachineInstanceTypeResourceProfilePropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["CUSTOM","SIZE_L","SIZE_M","SIZE_S","SIZE_XL","SIZE_XS"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		vcsVirtualMachineInstanceTypeResourceProfilePropEnum = append(vcsVirtualMachineInstanceTypeResourceProfilePropEnum, v)
-	}
-}
-
-const (
-
-	// VcsVirtualMachineInstanceResourceProfileCUSTOM captures enum value "CUSTOM"
-	VcsVirtualMachineInstanceResourceProfileCUSTOM string = "CUSTOM"
-
-	// VcsVirtualMachineInstanceResourceProfileSIZEL captures enum value "SIZE_L"
-	VcsVirtualMachineInstanceResourceProfileSIZEL string = "SIZE_L"
-
-	// VcsVirtualMachineInstanceResourceProfileSIZEM captures enum value "SIZE_M"
-	VcsVirtualMachineInstanceResourceProfileSIZEM string = "SIZE_M"
-
-	// VcsVirtualMachineInstanceResourceProfileSIZES captures enum value "SIZE_S"
-	VcsVirtualMachineInstanceResourceProfileSIZES string = "SIZE_S"
-
-	// VcsVirtualMachineInstanceResourceProfileSIZEXL captures enum value "SIZE_XL"
-	VcsVirtualMachineInstanceResourceProfileSIZEXL string = "SIZE_XL"
-
-	// VcsVirtualMachineInstanceResourceProfileSIZEXS captures enum value "SIZE_XS"
-	VcsVirtualMachineInstanceResourceProfileSIZEXS string = "SIZE_XS"
-)
-
-// prop value enum
-func (m *VcsVirtualMachineInstance) validateResourceProfileEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, vcsVirtualMachineInstanceTypeResourceProfilePropEnum, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (m *VcsVirtualMachineInstance) validateResourceProfile(formats strfmt.Registry) error {
-	if swag.IsZero(m.ResourceProfile) { // not required
-		return nil
-	}
-
-	// value enum
-	if err := m.validateResourceProfileEnum("resourceProfile", "body", m.ResourceProfile); err != nil {
-		return err
-	}
-
-	return nil
-}
-
 var vcsVirtualMachineInstanceTypeStoragePolicyPropEnum []interface{}
 
 func init() {
@@ -596,22 +528,22 @@ func (m *VcsVirtualMachineInstance) validateStoragePolicy(formats strfmt.Registr
 	return nil
 }
 
-func (m *VcsVirtualMachineInstance) validateSystemTags(formats strfmt.Registry) error {
-	if swag.IsZero(m.SystemTags) { // not required
+func (m *VcsVirtualMachineInstance) validateTags(formats strfmt.Registry) error {
+	if swag.IsZero(m.Tags) { // not required
 		return nil
 	}
 
-	for i := 0; i < len(m.SystemTags); i++ {
-		if swag.IsZero(m.SystemTags[i]) { // not required
+	for i := 0; i < len(m.Tags); i++ {
+		if swag.IsZero(m.Tags[i]) { // not required
 			continue
 		}
 
-		if m.SystemTags[i] != nil {
-			if err := m.SystemTags[i].Validate(formats); err != nil {
+		if m.Tags[i] != nil {
+			if err := m.Tags[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("systemTags" + "." + strconv.Itoa(i))
+					return ve.ValidateName("tags" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("systemTags" + "." + strconv.Itoa(i))
+					return ce.ValidateName("tags" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -660,10 +592,6 @@ func (m *VcsVirtualMachineInstance) ContextValidate(ctx context.Context, formats
 		res = append(res, err)
 	}
 
-	if err := m.contextValidateBillingTags(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.contextValidateDeploymentInstance(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -688,7 +616,7 @@ func (m *VcsVirtualMachineInstance) ContextValidate(ctx context.Context, formats
 		res = append(res, err)
 	}
 
-	if err := m.contextValidateSystemTags(ctx, formats); err != nil {
+	if err := m.contextValidateTags(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -732,26 +660,6 @@ func (m *VcsVirtualMachineInstance) contextValidateBackupListCollection(ctx cont
 					return ve.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("backupListCollection" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *VcsVirtualMachineInstance) contextValidateBillingTags(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.BillingTags); i++ {
-
-		if m.BillingTags[i] != nil {
-			if err := m.BillingTags[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("billingTags" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("billingTags" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -862,16 +770,16 @@ func (m *VcsVirtualMachineInstance) contextValidateOsVirtualDiskDevice(ctx conte
 	return nil
 }
 
-func (m *VcsVirtualMachineInstance) contextValidateSystemTags(ctx context.Context, formats strfmt.Registry) error {
+func (m *VcsVirtualMachineInstance) contextValidateTags(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.SystemTags); i++ {
+	for i := 0; i < len(m.Tags); i++ {
 
-		if m.SystemTags[i] != nil {
-			if err := m.SystemTags[i].ContextValidate(ctx, formats); err != nil {
+		if m.Tags[i] != nil {
+			if err := m.Tags[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("systemTags" + "." + strconv.Itoa(i))
+					return ve.ValidateName("tags" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("systemTags" + "." + strconv.Itoa(i))
+					return ce.ValidateName("tags" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

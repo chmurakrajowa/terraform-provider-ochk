@@ -5,49 +5,84 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client"
-	vidmcontroller "github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/v_id_m"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/w_s_o2_logout_token"
+	wso2controller "github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/w_s_o2_token"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/runtime/logger"
 	"github.com/go-openapi/strfmt"
-	"log"
 	"net/http"
 	"sync"
 	"time"
 )
 
 type Client struct {
-	FirewallEWRules FirewallEWRulesProxy
-	FirewallSNRules FirewallSNRulesProxy
-	LogicalPorts    LogicalPortsProxy
-	Requests        RequestsProxy
-	Routers         RoutersProxy
-	SecurityGroups  SecurityGroupsProxy
-	Services        ServicesProxy
-	Subtenants      SubtenantsProxy
-	Users           ADUsersProxy
-	Groups          GroupsProxy
-	LocalGroups     LocalGroupsProxy
-	VirtualMachines VirtualMachinesProxy
-	VirtualNetworks VirtualNetworksProxy
-	IPCollections   IPCollectionsProxy
-	Deployments     DeploymentsProxy
-	CustomServices  CustomServicesProxy
-	KMSKeys         KMSKeysProxy
-	BackupPlans     BackupPlansProxy
-	BackupLists     BackupListsProxy
-	BillingTags     BillingTagsProxy
-	SystemTags      SystemTagsProxy
-	Nats            NatProxy
+	FirewallEWRules    FirewallEWRulesProxy
+	FirewallSNRules    FirewallSNRulesProxy
+	Requests           RequestsProxy
+	Routers            RoutersProxy
+	SecurityGroups     SecurityGroupsProxy
+	Services           ServicesProxy
+	Projects           ProjectsProxy
+	VirtualMachines    VirtualMachinesProxy
+	VirtualNetworks    VirtualNetworksProxy
+	IPCollections      IPCollectionsProxy
+	Deployments        DeploymentsProxy
+	CustomServices     CustomServicesProxy
+	KMSKeys            KMSKeysProxy
+	BackupPlans        BackupPlansProxy
+	BackupLists        BackupListsProxy
+	Tags               TagsProxy
+	Nats               NatProxy
+	Folders            FoldersProxy
+	PublicIPAddresses  PublicIPAddressProxy
+	key                string
+	apiClientTransport httptransport.Runtime
 }
 
 var clientMutex sync.Mutex
 
-func NewClient(ctx context.Context, host string, tenant string, username string, password string, insecure bool, debugLogFile string) (*Client, error) {
+func Logout() error {
+
 	clientMutex.Lock()
 	defer clientMutex.Unlock()
 
-	if c := getClientFromCache(host, tenant, username, insecure, debugLogFile); c != nil {
+	for key, caschedClient := range clientCache {
+
+		ochkClient := client.New(&caschedClient.c.apiClientTransport, strfmt.Default)
+
+		httpClient := &http.Client{
+			Transport: &http.Transport{
+				TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+			},
+		}
+
+		params := w_s_o2_logout_token.LogoutTokenUsingPOSTParams{
+			Context:    *caschedClient.ctx,
+			HTTPClient: httpClient,
+		}
+
+		authResponse, err := ochkClient.WsO2LogoutToken.LogoutTokenUsingPOST(&params)
+		if err != nil {
+			return fmt.Errorf("error while logout: %+v", err)
+		}
+
+		if !authResponse.Payload.Success {
+			return fmt.Errorf("logout token failed: %s", authResponse.Payload.Messages)
+		}
+		delete(clientCache, key)
+
+	}
+
+	return nil
+}
+
+func NewClient(ctx context.Context, host string, platform string, username string, password string, insecure bool, debugLogFile string) (*Client, error) {
+
+	clientMutex.Lock()
+	defer clientMutex.Unlock()
+
+	if c := getClientFromCache(host, platform, username, insecure, debugLogFile); c != nil {
 		return c, nil
 	}
 
@@ -78,9 +113,9 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 
 	ochkClient := client.New(apiClientTransport, strfmt.Default)
 
-	params := vidmcontroller.GetTokenUsingPOSTParams{
-		VidmTokenRequest: &models.VIDMTokenRequest{
-			Tenant:   tenant,
+	params := wso2controller.GetTokenUsingPOSTParams{
+		WsoTokenRequest: &models.WSOTokenRequest{
+			Platform: platform,
 			Password: password,
 			Username: username,
 		},
@@ -88,7 +123,7 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 		HTTPClient: httpClient,
 	}
 
-	authResponse, err := ochkClient.VIDm.GetTokenUsingPOST(&params)
+	authResponse, err := ochkClient.WsO2Token.GetTokenUsingPOST(&params)
 	if err != nil {
 		return nil, fmt.Errorf("error while retrieving auth token: %+v", err)
 	}
@@ -102,7 +137,7 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 	if defaultLogger != nil {
 		apiClientAuthTransport.SetLogger(defaultLogger)
 	}
-	apiClientAuthTransport.DefaultAuthentication = httptransport.APIKeyAuth("token", "header", authResponse.Payload.Token)
+	apiClientAuthTransport.DefaultAuthentication = httptransport.APIKeyAuth("Authorization", "header", authResponse.Payload.Token)
 
 	authClient := client.New(apiClientAuthTransport, strfmt.Default)
 
@@ -131,25 +166,9 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 			httpClient: httpClient,
 			service:    authClient.VirtualMachines,
 		},
-		LogicalPorts: LogicalPortsProxy{
+		Projects: ProjectsProxy{
 			httpClient: httpClient,
-			service:    authClient.LogicalPorts,
-		},
-		Users: ADUsersProxy{
-			httpClient: httpClient,
-			service:    authClient.ActiveDirectoryUsers,
-		},
-		Groups: GroupsProxy{
-			httpClient: httpClient,
-			service:    authClient.Groups,
-		},
-		LocalGroups: LocalGroupsProxy{
-			httpClient: httpClient,
-			service:    authClient.LocalGroups,
-		},
-		Subtenants: SubtenantsProxy{
-			httpClient: httpClient,
-			service:    authClient.Subtenants,
+			service:    authClient.Projects,
 		},
 		VirtualNetworks: VirtualNetworksProxy{
 			httpClient: httpClient,
@@ -183,59 +202,71 @@ func NewClient(ctx context.Context, host string, tenant string, username string,
 			httpClient: httpClient,
 			service:    authClient.Backups,
 		},
-		BillingTags: BillingTagsProxy{
+		Tags: TagsProxy{
 			httpClient: httpClient,
-			service:    authClient.BillingTags,
-		},
-		SystemTags: SystemTagsProxy{
-			httpClient: httpClient,
-			service:    authClient.SystemTags,
+			service:    authClient.Tags,
 		},
 		Nats: NatProxy{
 			httpClient: httpClient,
 			service:    authClient.NatRules,
 		},
+		Folders: FoldersProxy{
+			httpClient: httpClient,
+			service:    authClient.Folder,
+		},
+		PublicIPAddresses: PublicIPAddressProxy{
+			httpClient: httpClient,
+			service:    authClient.IPamPublicIPAllocations,
+		},
 	}
 
-	cacheClient(c, host, tenant, username, insecure, debugLogFile)
-
+	c.apiClientTransport = *apiClientAuthTransport
+	c.key = cacheClient(c, host, platform, username, insecure, debugLogFile, &ctx)
 	return c, nil
 }
 
 type cachedClient struct {
 	c         *Client
 	cacheTime time.Time
+	ctx       *context.Context
 }
 
 var clientCacheLifetime = time.Minute * 5
 var clientCache = map[string]cachedClient{}
 
-func clientCacheKey(host string, tenant string, username string, insecure bool, file string) string {
-	return fmt.Sprintf("%s_%s_%s_%t_%s", host, tenant, username, insecure, file)
+func clientCacheKey(host string, platform string, username string, insecure bool, file string) string {
+	return fmt.Sprintf("%s_%s_%s_%t_%s", host, platform, username, insecure, file)
 }
 
-func getClientFromCache(host string, tenant string, username string, insecure bool, file string) *Client {
-	key := clientCacheKey(host, tenant, username, insecure, file)
+func getClientFromCacheByKey(key string) *Client {
 	if clientFromCache, ok := clientCache[key]; ok {
 		if time.Since(clientFromCache.cacheTime) > clientCacheLifetime {
-			log.Printf("Evicting expired client from cache by key: %s", key)
+			//log.Printf("Evicting expired client from cache by key: %s", key)
 			return nil
 		}
 
-		log.Printf("Returning client from cache by key: %s", key)
+		//log.Printf("Returning client from cache by key: %s", key)
 		return clientFromCache.c
 	}
 
 	return nil
 }
 
-func cacheClient(c *Client, host string, tenant string, username string, insecure bool, debugLogFile string) {
-	key := clientCacheKey(host, tenant, username, insecure, debugLogFile)
-	log.Printf("Putting client into cache by key: %s", key)
+func getClientFromCache(host string, platform string, username string, insecure bool, file string) *Client {
+	key := clientCacheKey(host, platform, username, insecure, file)
+	return getClientFromCacheByKey(key)
+
+}
+
+func cacheClient(c *Client, host string, platform string, username string, insecure bool, debugLogFile string, context *context.Context) string {
+	key := clientCacheKey(host, platform, username, insecure, debugLogFile)
+	//log.Printf("Putting client into cache by key: %s", key)
 	clientCache[key] = cachedClient{
 		c:         c,
 		cacheTime: time.Now(),
+		ctx:       context,
 	}
+	return key
 }
 
 func mapToSchemes(insecure bool) []string {

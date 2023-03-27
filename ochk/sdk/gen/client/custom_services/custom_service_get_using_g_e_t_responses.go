@@ -51,7 +51,8 @@ func NewCustomServiceGetUsingGETOK() *CustomServiceGetUsingGETOK {
 	return &CustomServiceGetUsingGETOK{}
 }
 
-/* CustomServiceGetUsingGETOK describes a response with status code 200, with default header values.
+/*
+CustomServiceGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type CustomServiceGetUsingGETOK struct {
 	Payload *models.CustomServiceGetResponse
 }
 
+// IsSuccess returns true when this custom service get using g e t o k response has a 2xx status code
+func (o *CustomServiceGetUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this custom service get using g e t o k response has a 3xx status code
+func (o *CustomServiceGetUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this custom service get using g e t o k response has a 4xx status code
+func (o *CustomServiceGetUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this custom service get using g e t o k response has a 5xx status code
+func (o *CustomServiceGetUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this custom service get using g e t o k response a status code equal to that given
+func (o *CustomServiceGetUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the custom service get using g e t o k response
+func (o *CustomServiceGetUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *CustomServiceGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/custom-services/{serviceId}][%d] customServiceGetUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *CustomServiceGetUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /network/custom-services/{serviceId}][%d] customServiceGetUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *CustomServiceGetUsingGETOK) GetPayload() *models.CustomServiceGetResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewCustomServiceGetUsingGETBadRequest() *CustomServiceGetUsingGETBadRequest
 	return &CustomServiceGetUsingGETBadRequest{}
 }
 
-/* CustomServiceGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+CustomServiceGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -91,9 +128,44 @@ type CustomServiceGetUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this custom service get using g e t bad request response has a 2xx status code
+func (o *CustomServiceGetUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this custom service get using g e t bad request response has a 3xx status code
+func (o *CustomServiceGetUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this custom service get using g e t bad request response has a 4xx status code
+func (o *CustomServiceGetUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this custom service get using g e t bad request response has a 5xx status code
+func (o *CustomServiceGetUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this custom service get using g e t bad request response a status code equal to that given
+func (o *CustomServiceGetUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the custom service get using g e t bad request response
+func (o *CustomServiceGetUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *CustomServiceGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/custom-services/{serviceId}][%d] customServiceGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *CustomServiceGetUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /network/custom-services/{serviceId}][%d] customServiceGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *CustomServiceGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,14 +187,49 @@ func NewCustomServiceGetUsingGETNotFound() *CustomServiceGetUsingGETNotFound {
 	return &CustomServiceGetUsingGETNotFound{}
 }
 
-/* CustomServiceGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*
+CustomServiceGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */
 type CustomServiceGetUsingGETNotFound struct {
 }
 
+// IsSuccess returns true when this custom service get using g e t not found response has a 2xx status code
+func (o *CustomServiceGetUsingGETNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this custom service get using g e t not found response has a 3xx status code
+func (o *CustomServiceGetUsingGETNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this custom service get using g e t not found response has a 4xx status code
+func (o *CustomServiceGetUsingGETNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this custom service get using g e t not found response has a 5xx status code
+func (o *CustomServiceGetUsingGETNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this custom service get using g e t not found response a status code equal to that given
+func (o *CustomServiceGetUsingGETNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the custom service get using g e t not found response
+func (o *CustomServiceGetUsingGETNotFound) Code() int {
+	return 404
+}
+
 func (o *CustomServiceGetUsingGETNotFound) Error() string {
+	return fmt.Sprintf("[GET /network/custom-services/{serviceId}][%d] customServiceGetUsingGETNotFound ", 404)
+}
+
+func (o *CustomServiceGetUsingGETNotFound) String() string {
 	return fmt.Sprintf("[GET /network/custom-services/{serviceId}][%d] customServiceGetUsingGETNotFound ", 404)
 }
 

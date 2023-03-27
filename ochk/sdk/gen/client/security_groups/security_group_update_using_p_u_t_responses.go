@@ -51,7 +51,8 @@ func NewSecurityGroupUpdateUsingPUTOK() *SecurityGroupUpdateUsingPUTOK {
 	return &SecurityGroupUpdateUsingPUTOK{}
 }
 
-/* SecurityGroupUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+SecurityGroupUpdateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type SecurityGroupUpdateUsingPUTOK struct {
 	Payload *models.UpdateSecurityGroupResponse
 }
 
+// IsSuccess returns true when this security group update using p u t o k response has a 2xx status code
+func (o *SecurityGroupUpdateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this security group update using p u t o k response has a 3xx status code
+func (o *SecurityGroupUpdateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this security group update using p u t o k response has a 4xx status code
+func (o *SecurityGroupUpdateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this security group update using p u t o k response has a 5xx status code
+func (o *SecurityGroupUpdateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this security group update using p u t o k response a status code equal to that given
+func (o *SecurityGroupUpdateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the security group update using p u t o k response
+func (o *SecurityGroupUpdateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *SecurityGroupUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/security-groups/{groupId}][%d] securityGroupUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *SecurityGroupUpdateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /network/security-groups/{groupId}][%d] securityGroupUpdateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *SecurityGroupUpdateUsingPUTOK) GetPayload() *models.UpdateSecurityGroupResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewSecurityGroupUpdateUsingPUTCreated() *SecurityGroupUpdateUsingPUTCreated
 	return &SecurityGroupUpdateUsingPUTCreated{}
 }
 
-/* SecurityGroupUpdateUsingPUTCreated describes a response with status code 201, with default header values.
+/*
+SecurityGroupUpdateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been updated
 */
@@ -91,9 +128,44 @@ type SecurityGroupUpdateUsingPUTCreated struct {
 	Payload *models.UpdateSecurityGroupResponse
 }
 
+// IsSuccess returns true when this security group update using p u t created response has a 2xx status code
+func (o *SecurityGroupUpdateUsingPUTCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this security group update using p u t created response has a 3xx status code
+func (o *SecurityGroupUpdateUsingPUTCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this security group update using p u t created response has a 4xx status code
+func (o *SecurityGroupUpdateUsingPUTCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this security group update using p u t created response has a 5xx status code
+func (o *SecurityGroupUpdateUsingPUTCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this security group update using p u t created response a status code equal to that given
+func (o *SecurityGroupUpdateUsingPUTCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the security group update using p u t created response
+func (o *SecurityGroupUpdateUsingPUTCreated) Code() int {
+	return 201
+}
+
 func (o *SecurityGroupUpdateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/security-groups/{groupId}][%d] securityGroupUpdateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
+func (o *SecurityGroupUpdateUsingPUTCreated) String() string {
+	return fmt.Sprintf("[PUT /network/security-groups/{groupId}][%d] securityGroupUpdateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
 func (o *SecurityGroupUpdateUsingPUTCreated) GetPayload() *models.UpdateSecurityGroupResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewSecurityGroupUpdateUsingPUTBadRequest() *SecurityGroupUpdateUsingPUTBadR
 	return &SecurityGroupUpdateUsingPUTBadRequest{}
 }
 
-/* SecurityGroupUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+SecurityGroupUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type SecurityGroupUpdateUsingPUTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this security group update using p u t bad request response has a 2xx status code
+func (o *SecurityGroupUpdateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this security group update using p u t bad request response has a 3xx status code
+func (o *SecurityGroupUpdateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this security group update using p u t bad request response has a 4xx status code
+func (o *SecurityGroupUpdateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this security group update using p u t bad request response has a 5xx status code
+func (o *SecurityGroupUpdateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this security group update using p u t bad request response a status code equal to that given
+func (o *SecurityGroupUpdateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the security group update using p u t bad request response
+func (o *SecurityGroupUpdateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *SecurityGroupUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/security-groups/{groupId}][%d] securityGroupUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *SecurityGroupUpdateUsingPUTBadRequest) String() string {
+	return fmt.Sprintf("[PUT /network/security-groups/{groupId}][%d] securityGroupUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *SecurityGroupUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

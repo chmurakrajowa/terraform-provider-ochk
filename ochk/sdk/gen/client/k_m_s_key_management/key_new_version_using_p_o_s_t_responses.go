@@ -51,7 +51,8 @@ func NewKeyNewVersionUsingPOSTOK() *KeyNewVersionUsingPOSTOK {
 	return &KeyNewVersionUsingPOSTOK{}
 }
 
-/* KeyNewVersionUsingPOSTOK describes a response with status code 200, with default header values.
+/*
+KeyNewVersionUsingPOSTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type KeyNewVersionUsingPOSTOK struct {
 	Payload *models.CreateNewKmsKeyVersionResponse
 }
 
+// IsSuccess returns true when this key new version using p o s t o k response has a 2xx status code
+func (o *KeyNewVersionUsingPOSTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this key new version using p o s t o k response has a 3xx status code
+func (o *KeyNewVersionUsingPOSTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key new version using p o s t o k response has a 4xx status code
+func (o *KeyNewVersionUsingPOSTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this key new version using p o s t o k response has a 5xx status code
+func (o *KeyNewVersionUsingPOSTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key new version using p o s t o k response a status code equal to that given
+func (o *KeyNewVersionUsingPOSTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the key new version using p o s t o k response
+func (o *KeyNewVersionUsingPOSTOK) Code() int {
+	return 200
+}
+
 func (o *KeyNewVersionUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /kms/key/{id}/versions][%d] keyNewVersionUsingPOSTOK  %+v", 200, o.Payload)
 }
+
+func (o *KeyNewVersionUsingPOSTOK) String() string {
+	return fmt.Sprintf("[POST /kms/key/{id}/versions][%d] keyNewVersionUsingPOSTOK  %+v", 200, o.Payload)
+}
+
 func (o *KeyNewVersionUsingPOSTOK) GetPayload() *models.CreateNewKmsKeyVersionResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewKeyNewVersionUsingPOSTCreated() *KeyNewVersionUsingPOSTCreated {
 	return &KeyNewVersionUsingPOSTCreated{}
 }
 
-/* KeyNewVersionUsingPOSTCreated describes a response with status code 201, with default header values.
+/*
+KeyNewVersionUsingPOSTCreated describes a response with status code 201, with default header values.
 
 New key version has been created.
 */
@@ -91,9 +128,44 @@ type KeyNewVersionUsingPOSTCreated struct {
 	Payload *models.CreateNewKmsKeyVersionResponse
 }
 
+// IsSuccess returns true when this key new version using p o s t created response has a 2xx status code
+func (o *KeyNewVersionUsingPOSTCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this key new version using p o s t created response has a 3xx status code
+func (o *KeyNewVersionUsingPOSTCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key new version using p o s t created response has a 4xx status code
+func (o *KeyNewVersionUsingPOSTCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this key new version using p o s t created response has a 5xx status code
+func (o *KeyNewVersionUsingPOSTCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key new version using p o s t created response a status code equal to that given
+func (o *KeyNewVersionUsingPOSTCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the key new version using p o s t created response
+func (o *KeyNewVersionUsingPOSTCreated) Code() int {
+	return 201
+}
+
 func (o *KeyNewVersionUsingPOSTCreated) Error() string {
 	return fmt.Sprintf("[POST /kms/key/{id}/versions][%d] keyNewVersionUsingPOSTCreated  %+v", 201, o.Payload)
 }
+
+func (o *KeyNewVersionUsingPOSTCreated) String() string {
+	return fmt.Sprintf("[POST /kms/key/{id}/versions][%d] keyNewVersionUsingPOSTCreated  %+v", 201, o.Payload)
+}
+
 func (o *KeyNewVersionUsingPOSTCreated) GetPayload() *models.CreateNewKmsKeyVersionResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewKeyNewVersionUsingPOSTBadRequest() *KeyNewVersionUsingPOSTBadRequest {
 	return &KeyNewVersionUsingPOSTBadRequest{}
 }
 
-/* KeyNewVersionUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*
+KeyNewVersionUsingPOSTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type KeyNewVersionUsingPOSTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this key new version using p o s t bad request response has a 2xx status code
+func (o *KeyNewVersionUsingPOSTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this key new version using p o s t bad request response has a 3xx status code
+func (o *KeyNewVersionUsingPOSTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key new version using p o s t bad request response has a 4xx status code
+func (o *KeyNewVersionUsingPOSTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this key new version using p o s t bad request response has a 5xx status code
+func (o *KeyNewVersionUsingPOSTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key new version using p o s t bad request response a status code equal to that given
+func (o *KeyNewVersionUsingPOSTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the key new version using p o s t bad request response
+func (o *KeyNewVersionUsingPOSTBadRequest) Code() int {
+	return 400
+}
+
 func (o *KeyNewVersionUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /kms/key/{id}/versions][%d] keyNewVersionUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *KeyNewVersionUsingPOSTBadRequest) String() string {
+	return fmt.Sprintf("[POST /kms/key/{id}/versions][%d] keyNewVersionUsingPOSTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *KeyNewVersionUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

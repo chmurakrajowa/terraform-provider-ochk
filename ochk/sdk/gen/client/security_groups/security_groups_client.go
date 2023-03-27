@@ -44,9 +44,9 @@ type ClientService interface {
 }
 
 /*
-  SecurityGroupCreateUsingPUT creates
+SecurityGroupCreateUsingPUT creates
 
-  Create security group in NSX-T
+Create security group in NSX-T
 */
 func (a *Client) SecurityGroupCreateUsingPUT(params *SecurityGroupCreateUsingPUTParams, opts ...ClientOption) (*SecurityGroupCreateUsingPUTOK, *SecurityGroupCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
@@ -85,9 +85,9 @@ func (a *Client) SecurityGroupCreateUsingPUT(params *SecurityGroupCreateUsingPUT
 }
 
 /*
-  SecurityGroupDeleteUsingDELETE deletes
+SecurityGroupDeleteUsingDELETE deletes
 
-  Delete security group from NSX-T
+Delete security group from NSX-T
 */
 func (a *Client) SecurityGroupDeleteUsingDELETE(params *SecurityGroupDeleteUsingDELETEParams, opts ...ClientOption) (*SecurityGroupDeleteUsingDELETEOK, *SecurityGroupDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
@@ -126,9 +126,9 @@ func (a *Client) SecurityGroupDeleteUsingDELETE(params *SecurityGroupDeleteUsing
 }
 
 /*
-  SecurityGroupGetUsingGET gets
+SecurityGroupGetUsingGET gets
 
-  Get security group from NSX-T
+Get security group from NSX-T
 */
 func (a *Client) SecurityGroupGetUsingGET(params *SecurityGroupGetUsingGETParams, opts ...ClientOption) (*SecurityGroupGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -166,9 +166,9 @@ func (a *Client) SecurityGroupGetUsingGET(params *SecurityGroupGetUsingGETParams
 }
 
 /*
-  SecurityGroupListUsingGET lists
+SecurityGroupListUsingGET lists
 
-  List security groups from NSX-T
+List security groups from NSX-T
 */
 func (a *Client) SecurityGroupListUsingGET(params *SecurityGroupListUsingGETParams, opts ...ClientOption) (*SecurityGroupListUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -206,9 +206,9 @@ func (a *Client) SecurityGroupListUsingGET(params *SecurityGroupListUsingGETPara
 }
 
 /*
-  SecurityGroupUpdateUsingPUT updates
+SecurityGroupUpdateUsingPUT updates
 
-  Update security group from NSX-T
+Update security group from NSX-T
 */
 func (a *Client) SecurityGroupUpdateUsingPUT(params *SecurityGroupUpdateUsingPUTParams, opts ...ClientOption) (*SecurityGroupUpdateUsingPUTOK, *SecurityGroupUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending

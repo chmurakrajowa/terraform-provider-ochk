@@ -45,7 +45,8 @@ func NewKeyRevokeUsingPOSTOK() *KeyRevokeUsingPOSTOK {
 	return &KeyRevokeUsingPOSTOK{}
 }
 
-/* KeyRevokeUsingPOSTOK describes a response with status code 200, with default header values.
+/*
+KeyRevokeUsingPOSTOK describes a response with status code 200, with default header values.
 
 Key has been revoked.
 */
@@ -53,9 +54,44 @@ type KeyRevokeUsingPOSTOK struct {
 	Payload *models.RevokeKmsKeyResponse
 }
 
+// IsSuccess returns true when this key revoke using p o s t o k response has a 2xx status code
+func (o *KeyRevokeUsingPOSTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this key revoke using p o s t o k response has a 3xx status code
+func (o *KeyRevokeUsingPOSTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key revoke using p o s t o k response has a 4xx status code
+func (o *KeyRevokeUsingPOSTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this key revoke using p o s t o k response has a 5xx status code
+func (o *KeyRevokeUsingPOSTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key revoke using p o s t o k response a status code equal to that given
+func (o *KeyRevokeUsingPOSTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the key revoke using p o s t o k response
+func (o *KeyRevokeUsingPOSTOK) Code() int {
+	return 200
+}
+
 func (o *KeyRevokeUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /kms/key/{id}/revoke][%d] keyRevokeUsingPOSTOK  %+v", 200, o.Payload)
 }
+
+func (o *KeyRevokeUsingPOSTOK) String() string {
+	return fmt.Sprintf("[POST /kms/key/{id}/revoke][%d] keyRevokeUsingPOSTOK  %+v", 200, o.Payload)
+}
+
 func (o *KeyRevokeUsingPOSTOK) GetPayload() *models.RevokeKmsKeyResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewKeyRevokeUsingPOSTBadRequest() *KeyRevokeUsingPOSTBadRequest {
 	return &KeyRevokeUsingPOSTBadRequest{}
 }
 
-/* KeyRevokeUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*
+KeyRevokeUsingPOSTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type KeyRevokeUsingPOSTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this key revoke using p o s t bad request response has a 2xx status code
+func (o *KeyRevokeUsingPOSTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this key revoke using p o s t bad request response has a 3xx status code
+func (o *KeyRevokeUsingPOSTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key revoke using p o s t bad request response has a 4xx status code
+func (o *KeyRevokeUsingPOSTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this key revoke using p o s t bad request response has a 5xx status code
+func (o *KeyRevokeUsingPOSTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key revoke using p o s t bad request response a status code equal to that given
+func (o *KeyRevokeUsingPOSTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the key revoke using p o s t bad request response
+func (o *KeyRevokeUsingPOSTBadRequest) Code() int {
+	return 400
+}
+
 func (o *KeyRevokeUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /kms/key/{id}/revoke][%d] keyRevokeUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *KeyRevokeUsingPOSTBadRequest) String() string {
+	return fmt.Sprintf("[POST /kms/key/{id}/revoke][%d] keyRevokeUsingPOSTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *KeyRevokeUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

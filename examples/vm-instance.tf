@@ -1,9 +1,54 @@
 /*
-data "ochk_virtual_machine" "test" {
-  display_name = "${var.test-data-prefix}-vm"
+data "ochk_virtual_machines" "virtual_machines" {
+
 }
 */
 
+data "ochk_deployment_types" "dep_types" {
+
+}
+
+data "ochk_deployment_params_types" "dep_types" {
+
+}
+
+data "ochk_deployments" "ovf" {
+  deployment_type = "ISO"
+}
+
+/*
+data "ochk_virtual_machine" "test" {
+  display_name = data.ochk_virtual_machines.virtual_machines.virtual_machines[0].display_name
+}
+*/
+
+data "ochk_deployment" "centos" {
+  display_name = "CentOS 7"
+}
+
+/*
+resource "ochk_virtual_machine" "default" {
+  display_name = "${var.test-data-prefix}-vm"
+  deployment_id = data.ochk_deployment.centos.id
+  initial_password = var.initial_password_for_vm
+
+  power_state = "poweredOn"
+  memory_size_mb = 4096
+  cpu_count = 2
+  storage_policy = "STANDARD_W1"
+  project_id = data.ochk_project.project_for_vm.id
+  folder_path = "/radek"
+  virtual_disk {
+    size_mb = 40960
+  }
+  virtual_network_devices {
+    virtual_network_id = ochk_virtual_network.network_for_vm.id
+  }
+}
+*/
+
+
+/*
 resource "ochk_virtual_machine" "default" {
   display_name = "${var.test-data-prefix}-vm"
   deployment_id = "6bbd31ee-9144-4f14-af36-549065112cb9"
@@ -12,7 +57,7 @@ resource "ochk_virtual_machine" "default" {
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
   storage_policy = "STANDARD_W1"
-  subtenant_id = ochk_subtenant.sub-1.id
+  project_id = data.ochk_project.project_for_vm.id
 
   virtual_network_devices {
     virtual_network_id = "b6529fce-d950-4a73-9915-7dc031293196"
@@ -76,7 +121,7 @@ resource "ochk_virtual_machine" "ssh-key" {
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
   storage_policy = "STANDARD"
-  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+  project_id = data.ochk_project.project_for_vm.id
 
   virtual_network_devices {
     virtual_network_id = ochk_virtual_network.network_for_vm.id
@@ -97,7 +142,7 @@ resource "ochk_virtual_machine" "tags" {
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
   storage_policy = "STANDARD"
-  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+  project_id = data.ochk_project.project_for_vm.id
 
   virtual_network_devices {
     virtual_network_id = ochk_virtual_network.network_for_vm.id
@@ -124,7 +169,7 @@ resource "ochk_virtual_machine" "backup-list" {
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
   storage_policy = "STANDARD"
-  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+  project_id = data.ochk_project.project_for_vm.id
 
   virtual_network_devices {
     virtual_network_id = ochk_virtual_network.network_for_vm.id
@@ -146,7 +191,7 @@ resource "ochk_virtual_machine" "default" {
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
   storage_policy = "STANDARD"
-  subtenant_id = ochk_subtenant.subtenant-1.id
+  project_id = ochk_project.project-1.id
 
   virtual_network_devices {
     virtual_network_id = ochk_virtual_network.network_for_vm.id
@@ -177,7 +222,7 @@ resource "ochk_virtual_machine" "iso" {
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
   storage_policy = "STANDARD"
-  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+  project_id = data.ochk_project.project_for_vm.id
 
   virtual_network_devices {
     virtual_network_id = ochk_virtual_network.network_for_vm.id
@@ -195,7 +240,7 @@ resource "ochk_virtual_machine" "ovf" {
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
   storage_policy = "STANDARD"
-  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+  project_id = data.ochk_project.project_for_vm.id
 
   virtual_network_devices {
     virtual_network_id = ochk_virtual_network.network_for_vm.id
@@ -216,7 +261,7 @@ resource "ochk_virtual_machine" "encrypted" {
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
   storage_policy = "STANDARD"
-  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+  project_id = data.ochk_project.project_for_vm.id
 
   virtual_network_devices {
     virtual_network_id = ochk_virtual_network.network_for_vm.id
@@ -236,7 +281,7 @@ resource "ochk_virtual_machine" "encrypted-with-own-encrypted-key" {
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
   storage_policy = "STANDARD"
-  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+  project_id = data.ochk_project.project_for_vm.id
 
   virtual_network_devices {
     virtual_network_id = ochk_virtual_network.network_for_vm.id
@@ -255,7 +300,7 @@ resource "ochk_virtual_machine" "encrypted-managed2" {
   power_state = "poweredOn"
   resource_profile = "SIZE_S"
   storage_policy = "STANDARD"
-  subtenant_id = data.ochk_subtenant.subtenant_for_vm.id
+  project_id = data.ochk_project.project_for_vm.id
 
   virtual_network_devices {
     virtual_network_id =ochk_virtual_network.network_for_vm.id

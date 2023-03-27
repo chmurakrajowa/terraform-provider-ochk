@@ -38,9 +38,9 @@ type ClientService interface {
 }
 
 /*
-  DeploymentGetUsingGET gets
+DeploymentGetUsingGET gets
 
-  Get deployment object
+Get deployment object
 */
 func (a *Client) DeploymentGetUsingGET(params *DeploymentGetUsingGETParams, opts ...ClientOption) (*DeploymentGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -78,9 +78,9 @@ func (a *Client) DeploymentGetUsingGET(params *DeploymentGetUsingGETParams, opts
 }
 
 /*
-  DeploymentListUsingGET lists
+DeploymentListUsingGET lists
 
-  List deployments from server
+List deployments from server
 */
 func (a *Client) DeploymentListUsingGET(params *DeploymentListUsingGETParams, opts ...ClientOption) (*DeploymentListUsingGETOK, error) {
 	// TODO: Validate the params before sending

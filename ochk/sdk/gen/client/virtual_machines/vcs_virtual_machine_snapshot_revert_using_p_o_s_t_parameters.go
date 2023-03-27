@@ -52,10 +52,12 @@ func NewVcsVirtualMachineSnapshotRevertUsingPOSTParamsWithHTTPClient(client *htt
 	}
 }
 
-/* VcsVirtualMachineSnapshotRevertUsingPOSTParams contains all the parameters to send to the API endpoint
-   for the vcs virtual machine snapshot revert using p o s t operation.
+/*
+VcsVirtualMachineSnapshotRevertUsingPOSTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the vcs virtual machine snapshot revert using p o s t operation.
+
+	Typically these are written to a http.Request.
 */
 type VcsVirtualMachineSnapshotRevertUsingPOSTParams struct {
 

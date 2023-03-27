@@ -51,7 +51,8 @@ func NewAvailablePublicIPGetUsingGETOK() *AvailablePublicIPGetUsingGETOK {
 	return &AvailablePublicIPGetUsingGETOK{}
 }
 
-/* AvailablePublicIPGetUsingGETOK describes a response with status code 200, with default header values.
+/*
+AvailablePublicIPGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type AvailablePublicIPGetUsingGETOK struct {
 	Payload *models.AvailablePublicIPGetResponse
 }
 
+// IsSuccess returns true when this available public Ip get using g e t o k response has a 2xx status code
+func (o *AvailablePublicIPGetUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this available public Ip get using g e t o k response has a 3xx status code
+func (o *AvailablePublicIPGetUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this available public Ip get using g e t o k response has a 4xx status code
+func (o *AvailablePublicIPGetUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this available public Ip get using g e t o k response has a 5xx status code
+func (o *AvailablePublicIPGetUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this available public Ip get using g e t o k response a status code equal to that given
+func (o *AvailablePublicIPGetUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the available public Ip get using g e t o k response
+func (o *AvailablePublicIPGetUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *AvailablePublicIPGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /ipam/ipaddress/public/available][%d] availablePublicIpGetUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *AvailablePublicIPGetUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /ipam/ipaddress/public/available][%d] availablePublicIpGetUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *AvailablePublicIPGetUsingGETOK) GetPayload() *models.AvailablePublicIPGetResponse {
 	return o.Payload
 }
@@ -83,14 +119,49 @@ func NewAvailablePublicIPGetUsingGETBadRequest() *AvailablePublicIPGetUsingGETBa
 	return &AvailablePublicIPGetUsingGETBadRequest{}
 }
 
-/* AvailablePublicIPGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+AvailablePublicIPGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
 type AvailablePublicIPGetUsingGETBadRequest struct {
 }
 
+// IsSuccess returns true when this available public Ip get using g e t bad request response has a 2xx status code
+func (o *AvailablePublicIPGetUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this available public Ip get using g e t bad request response has a 3xx status code
+func (o *AvailablePublicIPGetUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this available public Ip get using g e t bad request response has a 4xx status code
+func (o *AvailablePublicIPGetUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this available public Ip get using g e t bad request response has a 5xx status code
+func (o *AvailablePublicIPGetUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this available public Ip get using g e t bad request response a status code equal to that given
+func (o *AvailablePublicIPGetUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the available public Ip get using g e t bad request response
+func (o *AvailablePublicIPGetUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *AvailablePublicIPGetUsingGETBadRequest) Error() string {
+	return fmt.Sprintf("[GET /ipam/ipaddress/public/available][%d] availablePublicIpGetUsingGETBadRequest ", 400)
+}
+
+func (o *AvailablePublicIPGetUsingGETBadRequest) String() string {
 	return fmt.Sprintf("[GET /ipam/ipaddress/public/available][%d] availablePublicIpGetUsingGETBadRequest ", 400)
 }
 
@@ -104,14 +175,49 @@ func NewAvailablePublicIPGetUsingGETNotFound() *AvailablePublicIPGetUsingGETNotF
 	return &AvailablePublicIPGetUsingGETNotFound{}
 }
 
-/* AvailablePublicIPGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*
+AvailablePublicIPGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */
 type AvailablePublicIPGetUsingGETNotFound struct {
 }
 
+// IsSuccess returns true when this available public Ip get using g e t not found response has a 2xx status code
+func (o *AvailablePublicIPGetUsingGETNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this available public Ip get using g e t not found response has a 3xx status code
+func (o *AvailablePublicIPGetUsingGETNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this available public Ip get using g e t not found response has a 4xx status code
+func (o *AvailablePublicIPGetUsingGETNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this available public Ip get using g e t not found response has a 5xx status code
+func (o *AvailablePublicIPGetUsingGETNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this available public Ip get using g e t not found response a status code equal to that given
+func (o *AvailablePublicIPGetUsingGETNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the available public Ip get using g e t not found response
+func (o *AvailablePublicIPGetUsingGETNotFound) Code() int {
+	return 404
+}
+
 func (o *AvailablePublicIPGetUsingGETNotFound) Error() string {
+	return fmt.Sprintf("[GET /ipam/ipaddress/public/available][%d] availablePublicIpGetUsingGETNotFound ", 404)
+}
+
+func (o *AvailablePublicIPGetUsingGETNotFound) String() string {
 	return fmt.Sprintf("[GET /ipam/ipaddress/public/available][%d] availablePublicIpGetUsingGETNotFound ", 404)
 }
 

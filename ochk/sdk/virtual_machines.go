@@ -8,6 +8,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
+	"sync"
 )
 
 type VirtualMachinesProxy struct {
@@ -26,7 +27,11 @@ func (p *VirtualMachinesProxy) Create(ctx context.Context, virtualMachine *model
 		HTTPClient:     p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	_, put, err := p.service.VcsVirtualMachineCreateUsingPUT(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while creating virtual machine: %w", err)
 	}
@@ -49,8 +54,11 @@ func (p *VirtualMachinesProxy) Update(ctx context.Context, virtualMachine *model
 		Context:          ctx,
 		HTTPClient:       p.httpClient,
 	}
-
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	put, err := p.service.VcsVirtualMachineUpdateUsingPUT(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying virtual machine: %w", err)
 	}
@@ -63,15 +71,19 @@ func (p *VirtualMachinesProxy) Update(ctx context.Context, virtualMachine *model
 }
 
 func (p *VirtualMachinesProxy) Read(ctx context.Context, VirtualMachineID string) (*models.VcsVirtualMachineInstance, error) {
-	params := &virtual_machines.VcsVirtualMachineGroupGetUsingGET1Params{
+	params := &virtual_machines.VcsVirtualMachineGetUsingGETParams{
 		VirtualMachineID: VirtualMachineID,
 		Context:          ctx,
 		HTTPClient:       p.httpClient,
 	}
 
-	response, err := p.service.VcsVirtualMachineGroupGetUsingGET1(params)
+	mutex := sync.Mutex{}
+	mutex.Lock()
+	response, err := p.service.VcsVirtualMachineGetUsingGET(params)
+	mutex.Unlock()
+
 	if err != nil {
-		var notFound *virtual_machines.VcsVirtualMachineGroupGetUsingGET1NotFound
+		var notFound *virtual_machines.VcsVirtualMachineGetUsingGETNotFound
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
 		}
@@ -87,13 +99,39 @@ func (p *VirtualMachinesProxy) Read(ctx context.Context, VirtualMachineID string
 }
 
 func (p *VirtualMachinesProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.VcsVirtualMachineInstance, error) {
-	params := &virtual_machines.VcsVirtualMachineListUsingGET1Params{
+	params := &virtual_machines.VcsVirtualMachineListUsingGETParams{
 		DisplayName: &displayName,
 		Context:     ctx,
 		HTTPClient:  p.httpClient,
 	}
 
-	response, err := p.service.VcsVirtualMachineListUsingGET1(params)
+	mutex := sync.Mutex{}
+	mutex.Lock()
+	response, err := p.service.VcsVirtualMachineListUsingGET(params)
+	mutex.Unlock()
+
+	if err != nil {
+		return nil, fmt.Errorf("error while listing virtual machines: %w", err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("listing virtual machines failed: %s", response.Payload.Messages)
+	}
+
+	return response.Payload.VcsVirtualMachineInstanceCollection, nil
+}
+
+func (p *VirtualMachinesProxy) List(ctx context.Context) ([]*models.VcsVirtualMachineInstance, error) {
+	params := &virtual_machines.VcsVirtualMachineListUsingGETParams{
+		Context:    ctx,
+		HTTPClient: p.httpClient,
+	}
+
+	mutex := sync.Mutex{}
+	mutex.Lock()
+	response, err := p.service.VcsVirtualMachineListUsingGET(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while listing virtual machines: %w", err)
 	}
@@ -113,6 +151,7 @@ func (p *VirtualMachinesProxy) Delete(ctx context.Context, virtualMachineID stri
 	}
 
 	response, err := p.service.VcsVirtualMachineDeleteUsingDELETE(params)
+
 	if err != nil {
 		var badRequest *virtual_machines.VcsVirtualMachineDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {

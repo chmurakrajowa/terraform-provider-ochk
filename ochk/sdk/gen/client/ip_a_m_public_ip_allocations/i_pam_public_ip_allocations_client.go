@@ -44,9 +44,9 @@ type ClientService interface {
 }
 
 /*
-  AllocationCreateUsingPUT creates
+AllocationCreateUsingPUT creates
 
-  Create public IP allocation object
+Create public IP allocation object
 */
 func (a *Client) AllocationCreateUsingPUT(params *AllocationCreateUsingPUTParams, opts ...ClientOption) (*AllocationCreateUsingPUTOK, *AllocationCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
@@ -85,9 +85,9 @@ func (a *Client) AllocationCreateUsingPUT(params *AllocationCreateUsingPUTParams
 }
 
 /*
-  AllocationDeleteUsingDELETE deletes
+AllocationDeleteUsingDELETE deletes
 
-  Delete public IP allocation object
+Delete public IP allocation object
 */
 func (a *Client) AllocationDeleteUsingDELETE(params *AllocationDeleteUsingDELETEParams, opts ...ClientOption) (*AllocationDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
@@ -125,9 +125,9 @@ func (a *Client) AllocationDeleteUsingDELETE(params *AllocationDeleteUsingDELETE
 }
 
 /*
-  AllocationGetUsingGET gets
+AllocationGetUsingGET gets
 
-  Get allocation of public IP
+Get allocation of public IP
 */
 func (a *Client) AllocationGetUsingGET(params *AllocationGetUsingGETParams, opts ...ClientOption) (*AllocationGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -165,9 +165,9 @@ func (a *Client) AllocationGetUsingGET(params *AllocationGetUsingGETParams, opts
 }
 
 /*
-  AllocationListUsingGET lists
+AllocationListUsingGET lists
 
-  List allocations of public IPs
+List allocations of public IPs
 */
 func (a *Client) AllocationListUsingGET(params *AllocationListUsingGETParams, opts ...ClientOption) (*AllocationListUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -205,9 +205,9 @@ func (a *Client) AllocationListUsingGET(params *AllocationListUsingGETParams, op
 }
 
 /*
-  AllocationUpdateUsingPUT updates
+AllocationUpdateUsingPUT updates
 
-  Update public IP allocation object
+Update public IP allocation object
 */
 func (a *Client) AllocationUpdateUsingPUT(params *AllocationUpdateUsingPUTParams, opts ...ClientOption) (*AllocationUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending

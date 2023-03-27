@@ -7,13 +7,11 @@ package models
 
 import (
 	"context"
-	"encoding/json"
 	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // GroupInstance GroupInstance
@@ -21,61 +19,34 @@ import (
 // swagger:model GroupInstance
 type GroupInstance struct {
 
-	// description
-	Description string `json:"description,omitempty"`
-
-	// domain
-	Domain string `json:"domain,omitempty"`
-
-	// email address
-	EmailAddress string `json:"emailAddress,omitempty"`
-
-	// fqdn
-	Fqdn string `json:"fqdn,omitempty"`
+	// dn
+	Dn string `json:"dn,omitempty"`
 
 	// group Id
 	GroupID string `json:"groupId,omitempty"`
 
-	// group instance list
-	GroupInstanceList []*GroupInstance `json:"groupInstanceList"`
-
-	// group type
-	// Enum: [CUSTOM SSO]
-	GroupType string `json:"groupType,omitempty"`
+	// groups
+	Groups []*GroupInstance `json:"groups"`
 
 	// name
 	Name string `json:"name,omitempty"`
 
-	// netbios
-	Netbios string `json:"netbios,omitempty"`
+	// sam account name
+	SamAccountName string `json:"samAccountName,omitempty"`
 
-	// principal Id
-	PrincipalID *PrincipalID `json:"principalId,omitempty"`
-
-	// principal name
-	PrincipalName string `json:"principalName,omitempty"`
-
-	// user instance list
-	UserInstanceList []*UserInstance `json:"userInstanceList"`
+	// users
+	Users []*UserInstance `json:"users"`
 }
 
 // Validate validates this group instance
 func (m *GroupInstance) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateGroupInstanceList(formats); err != nil {
+	if err := m.validateGroups(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateGroupType(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validatePrincipalID(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateUserInstanceList(formats); err != nil {
+	if err := m.validateUsers(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -85,22 +56,22 @@ func (m *GroupInstance) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *GroupInstance) validateGroupInstanceList(formats strfmt.Registry) error {
-	if swag.IsZero(m.GroupInstanceList) { // not required
+func (m *GroupInstance) validateGroups(formats strfmt.Registry) error {
+	if swag.IsZero(m.Groups) { // not required
 		return nil
 	}
 
-	for i := 0; i < len(m.GroupInstanceList); i++ {
-		if swag.IsZero(m.GroupInstanceList[i]) { // not required
+	for i := 0; i < len(m.Groups); i++ {
+		if swag.IsZero(m.Groups[i]) { // not required
 			continue
 		}
 
-		if m.GroupInstanceList[i] != nil {
-			if err := m.GroupInstanceList[i].Validate(formats); err != nil {
+		if m.Groups[i] != nil {
+			if err := m.Groups[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("groupInstanceList" + "." + strconv.Itoa(i))
+					return ve.ValidateName("groups" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("groupInstanceList" + "." + strconv.Itoa(i))
+					return ce.ValidateName("groups" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -111,83 +82,22 @@ func (m *GroupInstance) validateGroupInstanceList(formats strfmt.Registry) error
 	return nil
 }
 
-var groupInstanceTypeGroupTypePropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["CUSTOM","SSO"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		groupInstanceTypeGroupTypePropEnum = append(groupInstanceTypeGroupTypePropEnum, v)
-	}
-}
-
-const (
-
-	// GroupInstanceGroupTypeCUSTOM captures enum value "CUSTOM"
-	GroupInstanceGroupTypeCUSTOM string = "CUSTOM"
-
-	// GroupInstanceGroupTypeSSO captures enum value "SSO"
-	GroupInstanceGroupTypeSSO string = "SSO"
-)
-
-// prop value enum
-func (m *GroupInstance) validateGroupTypeEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, groupInstanceTypeGroupTypePropEnum, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (m *GroupInstance) validateGroupType(formats strfmt.Registry) error {
-	if swag.IsZero(m.GroupType) { // not required
+func (m *GroupInstance) validateUsers(formats strfmt.Registry) error {
+	if swag.IsZero(m.Users) { // not required
 		return nil
 	}
 
-	// value enum
-	if err := m.validateGroupTypeEnum("groupType", "body", m.GroupType); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *GroupInstance) validatePrincipalID(formats strfmt.Registry) error {
-	if swag.IsZero(m.PrincipalID) { // not required
-		return nil
-	}
-
-	if m.PrincipalID != nil {
-		if err := m.PrincipalID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("principalId")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("principalId")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *GroupInstance) validateUserInstanceList(formats strfmt.Registry) error {
-	if swag.IsZero(m.UserInstanceList) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.UserInstanceList); i++ {
-		if swag.IsZero(m.UserInstanceList[i]) { // not required
+	for i := 0; i < len(m.Users); i++ {
+		if swag.IsZero(m.Users[i]) { // not required
 			continue
 		}
 
-		if m.UserInstanceList[i] != nil {
-			if err := m.UserInstanceList[i].Validate(formats); err != nil {
+		if m.Users[i] != nil {
+			if err := m.Users[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("userInstanceList" + "." + strconv.Itoa(i))
+					return ve.ValidateName("users" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("userInstanceList" + "." + strconv.Itoa(i))
+					return ce.ValidateName("users" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -202,15 +112,11 @@ func (m *GroupInstance) validateUserInstanceList(formats strfmt.Registry) error 
 func (m *GroupInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.contextValidateGroupInstanceList(ctx, formats); err != nil {
+	if err := m.contextValidateGroups(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.contextValidatePrincipalID(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateUserInstanceList(ctx, formats); err != nil {
+	if err := m.contextValidateUsers(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -220,16 +126,16 @@ func (m *GroupInstance) ContextValidate(ctx context.Context, formats strfmt.Regi
 	return nil
 }
 
-func (m *GroupInstance) contextValidateGroupInstanceList(ctx context.Context, formats strfmt.Registry) error {
+func (m *GroupInstance) contextValidateGroups(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.GroupInstanceList); i++ {
+	for i := 0; i < len(m.Groups); i++ {
 
-		if m.GroupInstanceList[i] != nil {
-			if err := m.GroupInstanceList[i].ContextValidate(ctx, formats); err != nil {
+		if m.Groups[i] != nil {
+			if err := m.Groups[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("groupInstanceList" + "." + strconv.Itoa(i))
+					return ve.ValidateName("groups" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("groupInstanceList" + "." + strconv.Itoa(i))
+					return ce.ValidateName("groups" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -240,32 +146,16 @@ func (m *GroupInstance) contextValidateGroupInstanceList(ctx context.Context, fo
 	return nil
 }
 
-func (m *GroupInstance) contextValidatePrincipalID(ctx context.Context, formats strfmt.Registry) error {
+func (m *GroupInstance) contextValidateUsers(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.PrincipalID != nil {
-		if err := m.PrincipalID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("principalId")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("principalId")
-			}
-			return err
-		}
-	}
+	for i := 0; i < len(m.Users); i++ {
 
-	return nil
-}
-
-func (m *GroupInstance) contextValidateUserInstanceList(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.UserInstanceList); i++ {
-
-		if m.UserInstanceList[i] != nil {
-			if err := m.UserInstanceList[i].ContextValidate(ctx, formats); err != nil {
+		if m.Users[i] != nil {
+			if err := m.Users[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("userInstanceList" + "." + strconv.Itoa(i))
+					return ve.ValidateName("users" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("userInstanceList" + "." + strconv.Itoa(i))
+					return ce.ValidateName("users" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

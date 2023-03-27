@@ -54,10 +54,12 @@ func NewRouterCreateUsingPUTParamsWithHTTPClient(client *http.Client) *RouterCre
 	}
 }
 
-/* RouterCreateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the router create using p u t operation.
+/*
+RouterCreateUsingPUTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the router create using p u t operation.
+
+	Typically these are written to a http.Request.
 */
 type RouterCreateUsingPUTParams struct {
 

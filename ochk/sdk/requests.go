@@ -63,6 +63,7 @@ func (p *RequestsProxy) Read(ctx context.Context, requestID string) (*models.Req
 	}
 
 	response, err := p.service.RequestGetUsingGET(params)
+
 	if err != nil {
 		var notFound *requests.RequestGetUsingGETNotFound
 		if ok := errors.As(err, &notFound); ok {

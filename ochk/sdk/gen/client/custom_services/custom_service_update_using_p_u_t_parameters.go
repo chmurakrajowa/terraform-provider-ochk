@@ -54,10 +54,12 @@ func NewCustomServiceUpdateUsingPUTParamsWithHTTPClient(client *http.Client) *Cu
 	}
 }
 
-/* CustomServiceUpdateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the custom service update using p u t operation.
+/*
+CustomServiceUpdateUsingPUTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the custom service update using p u t operation.
+
+	Typically these are written to a http.Request.
 */
 type CustomServiceUpdateUsingPUTParams struct {
 

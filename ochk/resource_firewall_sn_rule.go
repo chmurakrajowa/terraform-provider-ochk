@@ -34,11 +34,15 @@ func resourceFirewallSNRule() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
-			"router_id": {
+			"vpc_id": {
 				Type:     schema.TypeString,
 				Required: true,
 			},
 			"display_name": {
+				Type:     schema.TypeString,
+				Required: true,
+			},
+			"project_id": {
 				Type:     schema.TypeString,
 				Required: true,
 			},
@@ -109,14 +113,14 @@ func resourceFirewallSNRule() *schema.Resource {
 	}
 }
 
-func firewallSNRuleStateContextImport(ctx context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+func firewallSNRuleStateContextImport(_ context.Context, d *schema.ResourceData, _ interface{}) ([]*schema.ResourceData, error) {
 	parts := strings.SplitN(d.Id(), "/", 2)
 	if len(parts) != 2 || parts[0] == "" || parts[1] == "" {
-		return nil, fmt.Errorf("unexpected format of ID (%s), expected format: router_id/rule_id", d.Id())
+		return nil, fmt.Errorf("unexpected format of ID (%s), expected format: vpc_id/rule_id", d.Id())
 	}
 	d.SetId(parts[1])
-	if err := d.Set("router_id", parts[0]); err != nil {
-		return nil, fmt.Errorf("cannot set router_id: (%s)", parts[0])
+	if err := d.Set("vpc_id", parts[0]); err != nil {
+		return nil, fmt.Errorf("cannot set vpc_id: (%s)", parts[0])
 	}
 	return []*schema.ResourceData{d}, nil
 }
@@ -124,7 +128,7 @@ func firewallSNRuleStateContextImport(ctx context.Context, d *schema.ResourceDat
 func resourceFirewallSNRuleCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallSNRules
 
-	routerID := d.Get("router_id").(string)
+	routerID := d.Get("vpc_id").(string)
 
 	rule := mapResourceDataToGFWRule(d)
 
@@ -141,7 +145,7 @@ func resourceFirewallSNRuleCreate(ctx context.Context, d *schema.ResourceData, m
 func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallSNRules
 
-	routerID := d.Get("router_id").(string)
+	routerID := d.Get("vpc_id").(string)
 
 	firewallSNRule, err := proxy.Read(ctx, routerID, d.Id())
 	if err != nil {
@@ -154,12 +158,16 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error while reading firewall SN rule: %+v", err)
 	}
 
-	if err := d.Set("router_id", flattenRouterInstancesFromScope(firewallSNRule.Scope)); err != nil {
-		return diag.Errorf("error setting router_id: %+v", err)
+	if err := d.Set("vpc_id", flattenRouterInstancesFromScope(firewallSNRule.Scope)); err != nil {
+		return diag.Errorf("error setting vpc_id: %+v", err)
 	}
 
 	if err := d.Set("display_name", firewallSNRule.DisplayName); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
+	}
+
+	if err := d.Set("project_id", firewallSNRule.ProjectID); err != nil {
+		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
 	if err := d.Set("action", firewallSNRule.Action); err != nil {
@@ -182,8 +190,10 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting services: %+v", err)
 	}
 
-	if err := d.Set("custom_services", flattenCustomServicesFromIDs(firewallSNRule.CustomServices)); err != nil {
-		return diag.Errorf("error setting custom services: %+v", err)
+	if len(firewallSNRule.CustomServices) > 0 {
+		if err := d.Set("custom_services", flattenCustomServicesFromIDs(firewallSNRule.CustomServices)); err != nil {
+			return diag.Errorf("error setting custom services: %+v", err)
+		}
 	}
 
 	if err := d.Set("source", flattenSecurityGroupFromIDs(firewallSNRule.Source)); err != nil {
@@ -225,7 +235,7 @@ func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 		return nil
 	}
 
-	routerID := d.Get("router_id").(string)
+	routerID := d.Get("vpc_id").(string)
 
 	rule := mapResourceDataToGFWRule(d)
 	rule.RuleID = d.Id()
@@ -241,6 +251,7 @@ func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GFWRule {
 	rule := &models.GFWRule{
 		DisplayName: d.Get("display_name").(string),
+		ProjectID:   d.Get("project_id").(string),
 		Action:      d.Get("action").(string),
 		Direction:   d.Get("direction").(string),
 		Disabled:    d.Get("disabled").(bool),
@@ -264,11 +275,11 @@ func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GFWRule {
 		rule.Destination = expandSecurityGroupFromIDs(destination.(*schema.Set).List())
 	}
 
-	if router_id, ok := d.GetOk("router_id"); ok {
+	if routerId, ok := d.GetOk("vpc_id"); ok {
 
 		var RouterInstanceList = make([]*models.RouterInstance, 1)
 		routerInstanceId := &models.RouterInstance{
-			RouterID: router_id.(string),
+			RouterID: routerId.(string),
 		}
 		RouterInstanceList[0] = routerInstanceId
 		rule.Scope = RouterInstanceList
@@ -284,7 +295,7 @@ func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GFWRule {
 func resourceFirewallSNRuleDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallSNRules
 
-	routerID := d.Get("router_id").(string)
+	routerID := d.Get("vpc_id").(string)
 
 	err := proxy.Delete(ctx, routerID, d.Id())
 	if err != nil {

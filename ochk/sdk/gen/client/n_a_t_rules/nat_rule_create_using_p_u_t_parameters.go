@@ -54,10 +54,12 @@ func NewNatRuleCreateUsingPUTParamsWithHTTPClient(client *http.Client) *NatRuleC
 	}
 }
 
-/* NatRuleCreateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the nat rule create using p u t operation.
+/*
+NatRuleCreateUsingPUTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the nat rule create using p u t operation.
+
+	Typically these are written to a http.Request.
 */
 type NatRuleCreateUsingPUTParams struct {
 

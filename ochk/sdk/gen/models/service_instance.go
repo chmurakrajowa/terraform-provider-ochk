@@ -26,6 +26,9 @@ type ServiceInstance struct {
 	// Format: date-time
 	CreationDate *strfmt.DateTime `json:"creationDate,omitempty"`
 
+	// description
+	Description string `json:"description,omitempty"`
+
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
 

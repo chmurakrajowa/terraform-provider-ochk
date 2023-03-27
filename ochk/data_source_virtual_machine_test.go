@@ -10,10 +10,14 @@ type VirtualMachineDataSourceTestData struct {
 	DisplayName  string
 }
 
-func (c *VirtualMachineDataSourceTestData) ToString() string {
+func (c *VirtualMachineDataSourceTestData) ToString(projectName string) string {
 	return executeTemplateToString(`
 data "ochk_virtual_machine" "{{ .ResourceName}}" {
   display_name = "{{ .DisplayName}}"
+}
+
+data "ochk_project" "project`+projectName+`-1" {
+	 display_name = "`+testData.Project1Name+`"
 }
 `, c)
 }
@@ -32,9 +36,11 @@ func TestAccVirtualMachineDataSource_read(t *testing.T) {
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: virtualMachine.ToString(),
+				Config: virtualMachine.ToString("-vm"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(virtualMachine.FullResourceName(), "display_name", virtualMachine.DisplayName),
+					resource.TestCheckResourceAttr(virtualMachine.FullResourceName(), "folder_path", "/"),
+					resource.TestCheckResourceAttrPair(virtualMachine.FullResourceName(), "project_id", "data.ochk_project.project-vm-1", "id"),
 				),
 			},
 		},

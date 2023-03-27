@@ -36,6 +36,11 @@ func resourceCustomService() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"project_id": {
+				Type:     schema.TypeString,
+				Required: true,
+				ForceNew: true,
+			},
 			"ports": {
 				Type:     schema.TypeList,
 				MinItems: 1,
@@ -118,6 +123,10 @@ func resourceCustomServiceRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
+	if err := d.Set("project_id", customService.ProjectID); err != nil {
+		return diag.Errorf("error setting project_id: %+v", err)
+	}
+
 	if err := d.Set("ports", flattenCustomServicePorts(customService.L4PortSetEntries)); err != nil {
 		return diag.Errorf("error setting members: %+v", err)
 	}
@@ -175,6 +184,7 @@ func resourceCustomServiceDelete(ctx context.Context, d *schema.ResourceData, me
 func mapResourceDataToCustomService(d *schema.ResourceData) *models.CustomServiceInstance {
 	return &models.CustomServiceInstance{
 		DisplayName:      d.Get("display_name").(string),
+		ProjectID:        d.Get("project_id").(string),
 		L4PortSetEntries: expandCustomServicePorts(d.Get("ports").([]interface{})),
 	}
 }

@@ -51,7 +51,8 @@ func NewRouterGetUsingGETOK() *RouterGetUsingGETOK {
 	return &RouterGetUsingGETOK{}
 }
 
-/* RouterGetUsingGETOK describes a response with status code 200, with default header values.
+/*
+RouterGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type RouterGetUsingGETOK struct {
 	Payload *models.RouterGetResponse
 }
 
+// IsSuccess returns true when this router get using g e t o k response has a 2xx status code
+func (o *RouterGetUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this router get using g e t o k response has a 3xx status code
+func (o *RouterGetUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this router get using g e t o k response has a 4xx status code
+func (o *RouterGetUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this router get using g e t o k response has a 5xx status code
+func (o *RouterGetUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this router get using g e t o k response a status code equal to that given
+func (o *RouterGetUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the router get using g e t o k response
+func (o *RouterGetUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *RouterGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/routers/{routerId}][%d] routerGetUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *RouterGetUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /network/routers/{routerId}][%d] routerGetUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *RouterGetUsingGETOK) GetPayload() *models.RouterGetResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewRouterGetUsingGETBadRequest() *RouterGetUsingGETBadRequest {
 	return &RouterGetUsingGETBadRequest{}
 }
 
-/* RouterGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+RouterGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -91,9 +128,44 @@ type RouterGetUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this router get using g e t bad request response has a 2xx status code
+func (o *RouterGetUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this router get using g e t bad request response has a 3xx status code
+func (o *RouterGetUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this router get using g e t bad request response has a 4xx status code
+func (o *RouterGetUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this router get using g e t bad request response has a 5xx status code
+func (o *RouterGetUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this router get using g e t bad request response a status code equal to that given
+func (o *RouterGetUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the router get using g e t bad request response
+func (o *RouterGetUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *RouterGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/routers/{routerId}][%d] routerGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *RouterGetUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /network/routers/{routerId}][%d] routerGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *RouterGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,14 +187,49 @@ func NewRouterGetUsingGETNotFound() *RouterGetUsingGETNotFound {
 	return &RouterGetUsingGETNotFound{}
 }
 
-/* RouterGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*
+RouterGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */
 type RouterGetUsingGETNotFound struct {
 }
 
+// IsSuccess returns true when this router get using g e t not found response has a 2xx status code
+func (o *RouterGetUsingGETNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this router get using g e t not found response has a 3xx status code
+func (o *RouterGetUsingGETNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this router get using g e t not found response has a 4xx status code
+func (o *RouterGetUsingGETNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this router get using g e t not found response has a 5xx status code
+func (o *RouterGetUsingGETNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this router get using g e t not found response a status code equal to that given
+func (o *RouterGetUsingGETNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the router get using g e t not found response
+func (o *RouterGetUsingGETNotFound) Code() int {
+	return 404
+}
+
 func (o *RouterGetUsingGETNotFound) Error() string {
+	return fmt.Sprintf("[GET /network/routers/{routerId}][%d] routerGetUsingGETNotFound ", 404)
+}
+
+func (o *RouterGetUsingGETNotFound) String() string {
 	return fmt.Sprintf("[GET /network/routers/{routerId}][%d] routerGetUsingGETNotFound ", 404)
 }
 

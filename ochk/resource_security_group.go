@@ -36,6 +36,11 @@ func resourceSecurityGroup() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"project_id": {
+				Type:     schema.TypeString,
+				Required: true,
+				ForceNew: true,
+			},
 			"members": {
 				Type:     schema.TypeSet,
 				MinItems: 1,
@@ -110,6 +115,10 @@ func resourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
+	if err := d.Set("project_id", securityGroup.ProjectID); err != nil {
+		return diag.Errorf("error setting project_id: %+v", err)
+	}
+
 	if err := d.Set("members", flattenSecurityGroupMembers(securityGroup.Members)); err != nil {
 		return diag.Errorf("error setting members: %+v", err)
 	}
@@ -167,6 +176,7 @@ func resourceSecurityGroupDelete(ctx context.Context, d *schema.ResourceData, me
 func mapResourceDataToSecurityGroup(d *schema.ResourceData) *models.SecurityGroup {
 	return &models.SecurityGroup{
 		DisplayName: d.Get("display_name").(string),
+		ProjectID:   d.Get("project_id").(string),
 		Members:     expandSecurityGroupMembers(d.Get("members").(*schema.Set).List()),
 	}
 }

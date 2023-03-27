@@ -52,10 +52,12 @@ func NewIPCollectionListUsingGETParamsWithHTTPClient(client *http.Client) *IPCol
 	}
 }
 
-/* IPCollectionListUsingGETParams contains all the parameters to send to the API endpoint
-   for the ip collection list using g e t operation.
+/*
+IPCollectionListUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the ip collection list using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type IPCollectionListUsingGETParams struct {
 

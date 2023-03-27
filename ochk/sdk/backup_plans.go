@@ -7,6 +7,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/backups"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"net/http"
+	"sync"
 )
 
 type BackupPlansProxy struct {
@@ -21,7 +22,10 @@ func (p *BackupPlansProxy) Read(ctx context.Context, packupPlanID string) (*mode
 		HTTPClient:   p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.BackupPlanGetUsingGET(params)
+	mutex.Unlock()
 
 	if err != nil {
 		var notFound *backups.BackupPlanGetUsingGETNotFound
@@ -45,6 +49,28 @@ func (p *BackupPlansProxy) ListBackupPlanByName(ctx context.Context, backupPlanN
 		BackupPlanName: &backupPlanName,
 		Context:        ctx,
 		HTTPClient:     p.httpClient,
+	}
+
+	mutex := sync.Mutex{}
+	mutex.Lock()
+	response, err := p.service.BackupPlanListUsingGET(params)
+	mutex.Unlock()
+
+	if err != nil {
+		return nil, fmt.Errorf("error while listing backup plans: %w", err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("Listing backup plans failed: %s", response.Payload.Messages)
+	}
+
+	return response.Payload.BackupPlanCollection, nil
+}
+
+func (p *BackupPlansProxy) ListBackupPlans(ctx context.Context) ([]*models.BackupPlan, error) {
+	params := &backups.BackupPlanListUsingGETParams{
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	response, err := p.service.BackupPlanListUsingGET(params)

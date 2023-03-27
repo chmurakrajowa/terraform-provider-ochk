@@ -23,7 +23,6 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported:
- * `display_name` - Virtual machine display name.
- * `host_id` - Virtual representation of the computing and memory resources of a physical machine running
-    
+* `project_id` - Project id to which virtual machine is assigned.
+* `folder_path` - Virtual machine folder path, default: `/`.
  

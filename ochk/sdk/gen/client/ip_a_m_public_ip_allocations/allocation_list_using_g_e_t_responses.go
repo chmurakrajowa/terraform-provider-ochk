@@ -45,7 +45,8 @@ func NewAllocationListUsingGETOK() *AllocationListUsingGETOK {
 	return &AllocationListUsingGETOK{}
 }
 
-/* AllocationListUsingGETOK describes a response with status code 200, with default header values.
+/*
+AllocationListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type AllocationListUsingGETOK struct {
 	Payload *models.PublicIPAllocationListResponse
 }
 
+// IsSuccess returns true when this allocation list using g e t o k response has a 2xx status code
+func (o *AllocationListUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this allocation list using g e t o k response has a 3xx status code
+func (o *AllocationListUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this allocation list using g e t o k response has a 4xx status code
+func (o *AllocationListUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this allocation list using g e t o k response has a 5xx status code
+func (o *AllocationListUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this allocation list using g e t o k response a status code equal to that given
+func (o *AllocationListUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the allocation list using g e t o k response
+func (o *AllocationListUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *AllocationListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /ipam/ipaddress/public/allocation][%d] allocationListUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *AllocationListUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /ipam/ipaddress/public/allocation][%d] allocationListUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *AllocationListUsingGETOK) GetPayload() *models.PublicIPAllocationListResponse {
 	return o.Payload
 }
@@ -77,14 +113,49 @@ func NewAllocationListUsingGETBadRequest() *AllocationListUsingGETBadRequest {
 	return &AllocationListUsingGETBadRequest{}
 }
 
-/* AllocationListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+AllocationListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
 type AllocationListUsingGETBadRequest struct {
 }
 
+// IsSuccess returns true when this allocation list using g e t bad request response has a 2xx status code
+func (o *AllocationListUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this allocation list using g e t bad request response has a 3xx status code
+func (o *AllocationListUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this allocation list using g e t bad request response has a 4xx status code
+func (o *AllocationListUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this allocation list using g e t bad request response has a 5xx status code
+func (o *AllocationListUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this allocation list using g e t bad request response a status code equal to that given
+func (o *AllocationListUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the allocation list using g e t bad request response
+func (o *AllocationListUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *AllocationListUsingGETBadRequest) Error() string {
+	return fmt.Sprintf("[GET /ipam/ipaddress/public/allocation][%d] allocationListUsingGETBadRequest ", 400)
+}
+
+func (o *AllocationListUsingGETBadRequest) String() string {
 	return fmt.Sprintf("[GET /ipam/ipaddress/public/allocation][%d] allocationListUsingGETBadRequest ", 400)
 }
 

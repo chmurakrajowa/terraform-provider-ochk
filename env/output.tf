@@ -2,24 +2,24 @@ output "ip_collection" {
   value = ochk_ip_collection.default
 }
 
-output "subtenant_1" {
-  value = ochk_subtenant.subtenant-1
+output "project_1" {
+  value = ochk_project.project-1
 }
 
-output "subtenant_2" {
-  value = ochk_subtenant.subtenant-2
+output "project_2" {
+  value = ochk_project.project-2
 }
 
 output "subtenant_3" {
-  value = ochk_subtenant.subtenant-3
+  value = ochk_project.project-3
 }
 
 output "subtenant_4" {
-  value = ochk_subtenant.subtenant-4
+  value = ochk_project.project-4
 }
 
 output "network" {
-  value = ochk_virtual_network.subtenant-network
+  value = ochk_virtual_network.project-network
 }
 
 output "vnet" {
@@ -38,12 +38,8 @@ output "custom-service-2" {
   value = ochk_custom_service.web_servers_http
 }
 
-output "billing-tag" {
-  value = ochk_billing_tag.res-bt1
-}
-
-output "system-tag" {
-  value = ochk_system_tag.res-st1
+output "tag" {
+  value = ochk_tag.res-bt1
 }
 
 output "auto-nat" {

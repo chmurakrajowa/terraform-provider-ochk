@@ -52,10 +52,12 @@ func NewDfwRuleGetUsingGETParamsWithHTTPClient(client *http.Client) *DfwRuleGetU
 	}
 }
 
-/* DfwRuleGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the dfw rule get using g e t operation.
+/*
+DfwRuleGetUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the dfw rule get using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type DfwRuleGetUsingGETParams struct {
 

@@ -22,6 +22,7 @@ func (p *DeploymentsProxy) Read(ctx context.Context, deploymentID string) (*mode
 	}
 
 	response, err := p.service.DeploymentGetUsingGET(params)
+
 	if err != nil {
 		var notFound *deployments.DeploymentGetUsingGETNotFound
 		if ok := errors.As(err, &notFound); ok {
@@ -52,6 +53,24 @@ func (p *DeploymentsProxy) ListByDisplayName(ctx context.Context, displayName st
 
 	if !response.Payload.Success {
 		return nil, fmt.Errorf("listing deployments by display name %s failed: %s", displayName, response.Payload.Messages)
+	}
+
+	return response.Payload.DeploymentInstanceCollection, nil
+}
+
+func (p *DeploymentsProxy) List(ctx context.Context) ([]*models.DeploymentInstance, error) {
+	params := &deployments.DeploymentListUsingGETParams{
+		Context:    ctx,
+		HTTPClient: p.httpClient,
+	}
+
+	response, err := p.service.DeploymentListUsingGET(params)
+	if err != nil {
+		return nil, fmt.Errorf("error while listing deployments: %w", err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("listing deployments failed: %s", response.Payload.Messages)
 	}
 
 	return response.Payload.DeploymentInstanceCollection, nil

@@ -51,7 +51,8 @@ func NewRouterUpdateUsingPUTOK() *RouterUpdateUsingPUTOK {
 	return &RouterUpdateUsingPUTOK{}
 }
 
-/* RouterUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+RouterUpdateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type RouterUpdateUsingPUTOK struct {
 	Payload *models.UpdateRouterResponse
 }
 
+// IsSuccess returns true when this router update using p u t o k response has a 2xx status code
+func (o *RouterUpdateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this router update using p u t o k response has a 3xx status code
+func (o *RouterUpdateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this router update using p u t o k response has a 4xx status code
+func (o *RouterUpdateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this router update using p u t o k response has a 5xx status code
+func (o *RouterUpdateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this router update using p u t o k response a status code equal to that given
+func (o *RouterUpdateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the router update using p u t o k response
+func (o *RouterUpdateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *RouterUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}][%d] routerUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *RouterUpdateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /network/routers/{routerId}][%d] routerUpdateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *RouterUpdateUsingPUTOK) GetPayload() *models.UpdateRouterResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewRouterUpdateUsingPUTCreated() *RouterUpdateUsingPUTCreated {
 	return &RouterUpdateUsingPUTCreated{}
 }
 
-/* RouterUpdateUsingPUTCreated describes a response with status code 201, with default header values.
+/*
+RouterUpdateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been updated
 */
@@ -91,9 +128,44 @@ type RouterUpdateUsingPUTCreated struct {
 	Payload *models.UpdateRouterResponse
 }
 
+// IsSuccess returns true when this router update using p u t created response has a 2xx status code
+func (o *RouterUpdateUsingPUTCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this router update using p u t created response has a 3xx status code
+func (o *RouterUpdateUsingPUTCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this router update using p u t created response has a 4xx status code
+func (o *RouterUpdateUsingPUTCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this router update using p u t created response has a 5xx status code
+func (o *RouterUpdateUsingPUTCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this router update using p u t created response a status code equal to that given
+func (o *RouterUpdateUsingPUTCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the router update using p u t created response
+func (o *RouterUpdateUsingPUTCreated) Code() int {
+	return 201
+}
+
 func (o *RouterUpdateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}][%d] routerUpdateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
+func (o *RouterUpdateUsingPUTCreated) String() string {
+	return fmt.Sprintf("[PUT /network/routers/{routerId}][%d] routerUpdateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
 func (o *RouterUpdateUsingPUTCreated) GetPayload() *models.UpdateRouterResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewRouterUpdateUsingPUTBadRequest() *RouterUpdateUsingPUTBadRequest {
 	return &RouterUpdateUsingPUTBadRequest{}
 }
 
-/* RouterUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+RouterUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type RouterUpdateUsingPUTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this router update using p u t bad request response has a 2xx status code
+func (o *RouterUpdateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this router update using p u t bad request response has a 3xx status code
+func (o *RouterUpdateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this router update using p u t bad request response has a 4xx status code
+func (o *RouterUpdateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this router update using p u t bad request response has a 5xx status code
+func (o *RouterUpdateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this router update using p u t bad request response a status code equal to that given
+func (o *RouterUpdateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the router update using p u t bad request response
+func (o *RouterUpdateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *RouterUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}][%d] routerUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *RouterUpdateUsingPUTBadRequest) String() string {
+	return fmt.Sprintf("[PUT /network/routers/{routerId}][%d] routerUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *RouterUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

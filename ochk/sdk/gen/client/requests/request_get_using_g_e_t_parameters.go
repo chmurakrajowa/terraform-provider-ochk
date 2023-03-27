@@ -52,10 +52,12 @@ func NewRequestGetUsingGETParamsWithHTTPClient(client *http.Client) *RequestGetU
 	}
 }
 
-/* RequestGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the request get using g e t operation.
+/*
+RequestGetUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the request get using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type RequestGetUsingGETParams struct {
 

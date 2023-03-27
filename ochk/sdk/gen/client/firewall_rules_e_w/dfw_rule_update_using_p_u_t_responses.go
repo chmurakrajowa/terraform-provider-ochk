@@ -51,7 +51,8 @@ func NewDfwRuleUpdateUsingPUTOK() *DfwRuleUpdateUsingPUTOK {
 	return &DfwRuleUpdateUsingPUTOK{}
 }
 
-/* DfwRuleUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+DfwRuleUpdateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type DfwRuleUpdateUsingPUTOK struct {
 	Payload *models.UpdateDFWRuleResponse
 }
 
+// IsSuccess returns true when this dfw rule update using p u t o k response has a 2xx status code
+func (o *DfwRuleUpdateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this dfw rule update using p u t o k response has a 3xx status code
+func (o *DfwRuleUpdateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this dfw rule update using p u t o k response has a 4xx status code
+func (o *DfwRuleUpdateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this dfw rule update using p u t o k response has a 5xx status code
+func (o *DfwRuleUpdateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this dfw rule update using p u t o k response a status code equal to that given
+func (o *DfwRuleUpdateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the dfw rule update using p u t o k response
+func (o *DfwRuleUpdateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *DfwRuleUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *DfwRuleUpdateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleUpdateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *DfwRuleUpdateUsingPUTOK) GetPayload() *models.UpdateDFWRuleResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewDfwRuleUpdateUsingPUTCreated() *DfwRuleUpdateUsingPUTCreated {
 	return &DfwRuleUpdateUsingPUTCreated{}
 }
 
-/* DfwRuleUpdateUsingPUTCreated describes a response with status code 201, with default header values.
+/*
+DfwRuleUpdateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been updated
 */
@@ -91,9 +128,44 @@ type DfwRuleUpdateUsingPUTCreated struct {
 	Payload *models.UpdateDFWRuleResponse
 }
 
+// IsSuccess returns true when this dfw rule update using p u t created response has a 2xx status code
+func (o *DfwRuleUpdateUsingPUTCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this dfw rule update using p u t created response has a 3xx status code
+func (o *DfwRuleUpdateUsingPUTCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this dfw rule update using p u t created response has a 4xx status code
+func (o *DfwRuleUpdateUsingPUTCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this dfw rule update using p u t created response has a 5xx status code
+func (o *DfwRuleUpdateUsingPUTCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this dfw rule update using p u t created response a status code equal to that given
+func (o *DfwRuleUpdateUsingPUTCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the dfw rule update using p u t created response
+func (o *DfwRuleUpdateUsingPUTCreated) Code() int {
+	return 201
+}
+
 func (o *DfwRuleUpdateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleUpdateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
+func (o *DfwRuleUpdateUsingPUTCreated) String() string {
+	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleUpdateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
 func (o *DfwRuleUpdateUsingPUTCreated) GetPayload() *models.UpdateDFWRuleResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewDfwRuleUpdateUsingPUTBadRequest() *DfwRuleUpdateUsingPUTBadRequest {
 	return &DfwRuleUpdateUsingPUTBadRequest{}
 }
 
-/* DfwRuleUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+DfwRuleUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type DfwRuleUpdateUsingPUTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this dfw rule update using p u t bad request response has a 2xx status code
+func (o *DfwRuleUpdateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this dfw rule update using p u t bad request response has a 3xx status code
+func (o *DfwRuleUpdateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this dfw rule update using p u t bad request response has a 4xx status code
+func (o *DfwRuleUpdateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this dfw rule update using p u t bad request response has a 5xx status code
+func (o *DfwRuleUpdateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this dfw rule update using p u t bad request response a status code equal to that given
+func (o *DfwRuleUpdateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the dfw rule update using p u t bad request response
+func (o *DfwRuleUpdateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *DfwRuleUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *DfwRuleUpdateUsingPUTBadRequest) String() string {
+	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *DfwRuleUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

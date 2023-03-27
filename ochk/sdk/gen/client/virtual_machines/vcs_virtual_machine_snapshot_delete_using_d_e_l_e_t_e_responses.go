@@ -45,7 +45,8 @@ func NewVcsVirtualMachineSnapshotDeleteUsingDELETEOK() *VcsVirtualMachineSnapsho
 	return &VcsVirtualMachineSnapshotDeleteUsingDELETEOK{}
 }
 
-/* VcsVirtualMachineSnapshotDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*
+VcsVirtualMachineSnapshotDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 Request has been completed successfully
 */
@@ -53,9 +54,44 @@ type VcsVirtualMachineSnapshotDeleteUsingDELETEOK struct {
 	Payload *models.DeleteSnapshotResponse
 }
 
+// IsSuccess returns true when this vcs virtual machine snapshot delete using d e l e t e o k response has a 2xx status code
+func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this vcs virtual machine snapshot delete using d e l e t e o k response has a 3xx status code
+func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this vcs virtual machine snapshot delete using d e l e t e o k response has a 4xx status code
+func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this vcs virtual machine snapshot delete using d e l e t e o k response has a 5xx status code
+func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this vcs virtual machine snapshot delete using d e l e t e o k response a status code equal to that given
+func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the vcs virtual machine snapshot delete using d e l e t e o k response
+func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEOK) Code() int {
+	return 200
+}
+
 func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}][%d] vcsVirtualMachineSnapshotDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
+func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEOK) String() string {
+	return fmt.Sprintf("[DELETE /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}][%d] vcsVirtualMachineSnapshotDeleteUsingDELETEOK  %+v", 200, o.Payload)
+}
+
 func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEOK) GetPayload() *models.DeleteSnapshotResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewVcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest() *VcsVirtualMachin
 	return &VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest{}
 }
 
-/* VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*
+VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this vcs virtual machine snapshot delete using d e l e t e bad request response has a 2xx status code
+func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this vcs virtual machine snapshot delete using d e l e t e bad request response has a 3xx status code
+func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this vcs virtual machine snapshot delete using d e l e t e bad request response has a 4xx status code
+func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this vcs virtual machine snapshot delete using d e l e t e bad request response has a 5xx status code
+func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this vcs virtual machine snapshot delete using d e l e t e bad request response a status code equal to that given
+func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the vcs virtual machine snapshot delete using d e l e t e bad request response
+func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest) Code() int {
+	return 400
+}
+
 func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}][%d] vcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest) String() string {
+	return fmt.Sprintf("[DELETE /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}][%d] vcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *VcsVirtualMachineSnapshotDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

@@ -51,7 +51,8 @@ func NewDeploymentGetUsingGETOK() *DeploymentGetUsingGETOK {
 	return &DeploymentGetUsingGETOK{}
 }
 
-/* DeploymentGetUsingGETOK describes a response with status code 200, with default header values.
+/*
+DeploymentGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type DeploymentGetUsingGETOK struct {
 	Payload *models.DeploymentGetResponse
 }
 
+// IsSuccess returns true when this deployment get using g e t o k response has a 2xx status code
+func (o *DeploymentGetUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this deployment get using g e t o k response has a 3xx status code
+func (o *DeploymentGetUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this deployment get using g e t o k response has a 4xx status code
+func (o *DeploymentGetUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this deployment get using g e t o k response has a 5xx status code
+func (o *DeploymentGetUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this deployment get using g e t o k response a status code equal to that given
+func (o *DeploymentGetUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the deployment get using g e t o k response
+func (o *DeploymentGetUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *DeploymentGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /deployments/{deploymentId}][%d] deploymentGetUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *DeploymentGetUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /deployments/{deploymentId}][%d] deploymentGetUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *DeploymentGetUsingGETOK) GetPayload() *models.DeploymentGetResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewDeploymentGetUsingGETBadRequest() *DeploymentGetUsingGETBadRequest {
 	return &DeploymentGetUsingGETBadRequest{}
 }
 
-/* DeploymentGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+DeploymentGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -91,9 +128,44 @@ type DeploymentGetUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this deployment get using g e t bad request response has a 2xx status code
+func (o *DeploymentGetUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this deployment get using g e t bad request response has a 3xx status code
+func (o *DeploymentGetUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this deployment get using g e t bad request response has a 4xx status code
+func (o *DeploymentGetUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this deployment get using g e t bad request response has a 5xx status code
+func (o *DeploymentGetUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this deployment get using g e t bad request response a status code equal to that given
+func (o *DeploymentGetUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the deployment get using g e t bad request response
+func (o *DeploymentGetUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *DeploymentGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /deployments/{deploymentId}][%d] deploymentGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *DeploymentGetUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /deployments/{deploymentId}][%d] deploymentGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *DeploymentGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,14 +187,49 @@ func NewDeploymentGetUsingGETNotFound() *DeploymentGetUsingGETNotFound {
 	return &DeploymentGetUsingGETNotFound{}
 }
 
-/* DeploymentGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*
+DeploymentGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */
 type DeploymentGetUsingGETNotFound struct {
 }
 
+// IsSuccess returns true when this deployment get using g e t not found response has a 2xx status code
+func (o *DeploymentGetUsingGETNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this deployment get using g e t not found response has a 3xx status code
+func (o *DeploymentGetUsingGETNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this deployment get using g e t not found response has a 4xx status code
+func (o *DeploymentGetUsingGETNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this deployment get using g e t not found response has a 5xx status code
+func (o *DeploymentGetUsingGETNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this deployment get using g e t not found response a status code equal to that given
+func (o *DeploymentGetUsingGETNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the deployment get using g e t not found response
+func (o *DeploymentGetUsingGETNotFound) Code() int {
+	return 404
+}
+
 func (o *DeploymentGetUsingGETNotFound) Error() string {
+	return fmt.Sprintf("[GET /deployments/{deploymentId}][%d] deploymentGetUsingGETNotFound ", 404)
+}
+
+func (o *DeploymentGetUsingGETNotFound) String() string {
 	return fmt.Sprintf("[GET /deployments/{deploymentId}][%d] deploymentGetUsingGETNotFound ", 404)
 }
 

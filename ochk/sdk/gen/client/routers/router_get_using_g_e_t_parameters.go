@@ -52,10 +52,12 @@ func NewRouterGetUsingGETParamsWithHTTPClient(client *http.Client) *RouterGetUsi
 	}
 }
 
-/* RouterGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the router get using g e t operation.
+/*
+RouterGetUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the router get using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type RouterGetUsingGETParams struct {
 

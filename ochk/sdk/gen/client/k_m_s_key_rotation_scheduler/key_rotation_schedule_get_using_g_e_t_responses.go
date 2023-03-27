@@ -51,7 +51,8 @@ func NewKeyRotationScheduleGetUsingGETOK() *KeyRotationScheduleGetUsingGETOK {
 	return &KeyRotationScheduleGetUsingGETOK{}
 }
 
-/* KeyRotationScheduleGetUsingGETOK describes a response with status code 200, with default header values.
+/*
+KeyRotationScheduleGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type KeyRotationScheduleGetUsingGETOK struct {
 	Payload *models.KeyRotationScheduleGetResponse
 }
 
+// IsSuccess returns true when this key rotation schedule get using g e t o k response has a 2xx status code
+func (o *KeyRotationScheduleGetUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this key rotation schedule get using g e t o k response has a 3xx status code
+func (o *KeyRotationScheduleGetUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key rotation schedule get using g e t o k response has a 4xx status code
+func (o *KeyRotationScheduleGetUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this key rotation schedule get using g e t o k response has a 5xx status code
+func (o *KeyRotationScheduleGetUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key rotation schedule get using g e t o k response a status code equal to that given
+func (o *KeyRotationScheduleGetUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the key rotation schedule get using g e t o k response
+func (o *KeyRotationScheduleGetUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *KeyRotationScheduleGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /kms/schedule/{keyId}][%d] keyRotationScheduleGetUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *KeyRotationScheduleGetUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /kms/schedule/{keyId}][%d] keyRotationScheduleGetUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *KeyRotationScheduleGetUsingGETOK) GetPayload() *models.KeyRotationScheduleGetResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewKeyRotationScheduleGetUsingGETBadRequest() *KeyRotationScheduleGetUsingG
 	return &KeyRotationScheduleGetUsingGETBadRequest{}
 }
 
-/* KeyRotationScheduleGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+KeyRotationScheduleGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -91,9 +128,44 @@ type KeyRotationScheduleGetUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this key rotation schedule get using g e t bad request response has a 2xx status code
+func (o *KeyRotationScheduleGetUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this key rotation schedule get using g e t bad request response has a 3xx status code
+func (o *KeyRotationScheduleGetUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key rotation schedule get using g e t bad request response has a 4xx status code
+func (o *KeyRotationScheduleGetUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this key rotation schedule get using g e t bad request response has a 5xx status code
+func (o *KeyRotationScheduleGetUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key rotation schedule get using g e t bad request response a status code equal to that given
+func (o *KeyRotationScheduleGetUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the key rotation schedule get using g e t bad request response
+func (o *KeyRotationScheduleGetUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *KeyRotationScheduleGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /kms/schedule/{keyId}][%d] keyRotationScheduleGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *KeyRotationScheduleGetUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /kms/schedule/{keyId}][%d] keyRotationScheduleGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *KeyRotationScheduleGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,14 +187,49 @@ func NewKeyRotationScheduleGetUsingGETNotFound() *KeyRotationScheduleGetUsingGET
 	return &KeyRotationScheduleGetUsingGETNotFound{}
 }
 
-/* KeyRotationScheduleGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*
+KeyRotationScheduleGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */
 type KeyRotationScheduleGetUsingGETNotFound struct {
 }
 
+// IsSuccess returns true when this key rotation schedule get using g e t not found response has a 2xx status code
+func (o *KeyRotationScheduleGetUsingGETNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this key rotation schedule get using g e t not found response has a 3xx status code
+func (o *KeyRotationScheduleGetUsingGETNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key rotation schedule get using g e t not found response has a 4xx status code
+func (o *KeyRotationScheduleGetUsingGETNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this key rotation schedule get using g e t not found response has a 5xx status code
+func (o *KeyRotationScheduleGetUsingGETNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key rotation schedule get using g e t not found response a status code equal to that given
+func (o *KeyRotationScheduleGetUsingGETNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the key rotation schedule get using g e t not found response
+func (o *KeyRotationScheduleGetUsingGETNotFound) Code() int {
+	return 404
+}
+
 func (o *KeyRotationScheduleGetUsingGETNotFound) Error() string {
+	return fmt.Sprintf("[GET /kms/schedule/{keyId}][%d] keyRotationScheduleGetUsingGETNotFound ", 404)
+}
+
+func (o *KeyRotationScheduleGetUsingGETNotFound) String() string {
 	return fmt.Sprintf("[GET /kms/schedule/{keyId}][%d] keyRotationScheduleGetUsingGETNotFound ", 404)
 }
 

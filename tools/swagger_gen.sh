@@ -9,6 +9,7 @@ SWAGGER_BIN="$(go env GOPATH)/bin/swagger"
 
 if [[ ! -f "${SWAGGER}" ]]; then
   echo "Install swagger"
+  go get github.com/go-swagger/go-swagger/cmd/swagger
   go install github.com/go-swagger/go-swagger/cmd/swagger
 fi
 

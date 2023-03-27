@@ -11,18 +11,18 @@ func dataSourceFirewallEWRule() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceFirewallEWRuleRead,
 
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
-
 		Schema: map[string]*schema.Schema{
-			"router_id": {
+			"vpc_id": {
 				Type:     schema.TypeString,
 				Required: true,
 			},
 			"display_name": {
 				Type:     schema.TypeString,
 				Required: true,
+			},
+			"project_id": {
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"action": {
 				Type:     schema.TypeString,
@@ -88,7 +88,7 @@ func dataSourceFirewallEWRule() *schema.Resource {
 func dataSourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallEWRules
 
-	routerID := d.Get("router_id").(string)
+	routerID := d.Get("vpc_id").(string)
 
 	displayName := d.Get("display_name").(string)
 
@@ -110,6 +110,10 @@ func dataSourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, m
 
 	if err := d.Set("display_name", firewallEWRules[0].DisplayName); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
+	}
+
+	if err := d.Set("project_id", firewallEWRules[0].ProjectID); err != nil {
+		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
 	if err := d.Set("action", firewallEWRules[0].Action); err != nil {

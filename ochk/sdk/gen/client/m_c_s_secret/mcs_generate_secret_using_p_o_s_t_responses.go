@@ -45,7 +45,8 @@ func NewMcsGenerateSecretUsingPOSTOK() *McsGenerateSecretUsingPOSTOK {
 	return &McsGenerateSecretUsingPOSTOK{}
 }
 
-/* McsGenerateSecretUsingPOSTOK describes a response with status code 200, with default header values.
+/*
+McsGenerateSecretUsingPOSTOK describes a response with status code 200, with default header values.
 
 Request has been completed successfully
 */
@@ -53,9 +54,44 @@ type McsGenerateSecretUsingPOSTOK struct {
 	Payload *models.McsSecretGenerateResponse
 }
 
+// IsSuccess returns true when this mcs generate secret using p o s t o k response has a 2xx status code
+func (o *McsGenerateSecretUsingPOSTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this mcs generate secret using p o s t o k response has a 3xx status code
+func (o *McsGenerateSecretUsingPOSTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this mcs generate secret using p o s t o k response has a 4xx status code
+func (o *McsGenerateSecretUsingPOSTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this mcs generate secret using p o s t o k response has a 5xx status code
+func (o *McsGenerateSecretUsingPOSTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this mcs generate secret using p o s t o k response a status code equal to that given
+func (o *McsGenerateSecretUsingPOSTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the mcs generate secret using p o s t o k response
+func (o *McsGenerateSecretUsingPOSTOK) Code() int {
+	return 200
+}
+
 func (o *McsGenerateSecretUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /mcs/secret/generate][%d] mcsGenerateSecretUsingPOSTOK  %+v", 200, o.Payload)
 }
+
+func (o *McsGenerateSecretUsingPOSTOK) String() string {
+	return fmt.Sprintf("[POST /mcs/secret/generate][%d] mcsGenerateSecretUsingPOSTOK  %+v", 200, o.Payload)
+}
+
 func (o *McsGenerateSecretUsingPOSTOK) GetPayload() *models.McsSecretGenerateResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewMcsGenerateSecretUsingPOSTBadRequest() *McsGenerateSecretUsingPOSTBadReq
 	return &McsGenerateSecretUsingPOSTBadRequest{}
 }
 
-/* McsGenerateSecretUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*
+McsGenerateSecretUsingPOSTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type McsGenerateSecretUsingPOSTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this mcs generate secret using p o s t bad request response has a 2xx status code
+func (o *McsGenerateSecretUsingPOSTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this mcs generate secret using p o s t bad request response has a 3xx status code
+func (o *McsGenerateSecretUsingPOSTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this mcs generate secret using p o s t bad request response has a 4xx status code
+func (o *McsGenerateSecretUsingPOSTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this mcs generate secret using p o s t bad request response has a 5xx status code
+func (o *McsGenerateSecretUsingPOSTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this mcs generate secret using p o s t bad request response a status code equal to that given
+func (o *McsGenerateSecretUsingPOSTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the mcs generate secret using p o s t bad request response
+func (o *McsGenerateSecretUsingPOSTBadRequest) Code() int {
+	return 400
+}
+
 func (o *McsGenerateSecretUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /mcs/secret/generate][%d] mcsGenerateSecretUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *McsGenerateSecretUsingPOSTBadRequest) String() string {
+	return fmt.Sprintf("[POST /mcs/secret/generate][%d] mcsGenerateSecretUsingPOSTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *McsGenerateSecretUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

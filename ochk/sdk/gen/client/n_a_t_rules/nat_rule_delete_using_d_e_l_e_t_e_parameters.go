@@ -52,10 +52,12 @@ func NewNatRuleDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) *NatRu
 	}
 }
 
-/* NatRuleDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-   for the nat rule delete using d e l e t e operation.
+/*
+NatRuleDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the nat rule delete using d e l e t e operation.
+
+	Typically these are written to a http.Request.
 */
 type NatRuleDeleteUsingDELETEParams struct {
 

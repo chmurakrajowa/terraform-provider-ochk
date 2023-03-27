@@ -1,31 +1,25 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
-	"log"
 )
 
 func main() {
-	var debugMode bool
+	defer sdk.Logout()
+	var debug bool
 
-	flag.BoolVar(&debugMode, "debuggable", false, "set to true to run the provider with support for debuggers like delve")
+	flag.BoolVar(&debug, "debug", false, "set to true to run the provider with support for debuggers like delve")
 	flag.Parse()
 
-	if debugMode {
-		err := plugin.Debug(context.Background(), "registry.terraform.io/ochk/ochk",
-			&plugin.ServeOpts{
-				ProviderFunc: ochk.Provider,
-			})
-		if err != nil {
-			log.Println(err.Error())
-		}
-	} else {
-		plugin.Serve(
-			&plugin.ServeOpts{
-				ProviderFunc: ochk.Provider,
-			})
+	opts := &plugin.ServeOpts{
+		Debug:        debug,
+		ProviderAddr: "registry.terraform.io/ochk/ochk",
+		ProviderFunc: ochk.Provider,
 	}
+
+	plugin.Serve(opts)
+
 }

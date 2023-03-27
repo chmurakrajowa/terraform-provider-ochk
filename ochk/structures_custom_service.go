@@ -18,7 +18,6 @@ func flattenCustomServicePorts(in []*models.L4PortSetEntry) []interface{} {
 		m["protocol"] = v.L4Protocol
 		m["source"] = flattenStringSlice(v.SourcePorts)
 		m["destination"] = flattenStringSlice(v.DestinationPorts)
-
 		out = append(out, m)
 	}
 
@@ -73,5 +72,22 @@ func expandCustomServicesFromIDs(in []interface{}) []*models.CustomServiceInstan
 		out[i] = service
 	}
 
+	return out
+}
+
+func flattenCustomServices(in []*models.CustomServiceInstance) []map[string]interface{} {
+	if len(in) == 0 {
+		return nil
+	}
+
+	var out []map[string]interface{}
+
+	for _, v := range in {
+		m := make(map[string]interface{})
+		m["custom_service_id"] = v.ServiceID
+		m["display_name"] = v.DisplayName
+		m["project_id"] = v.ProjectID
+		out = append(out, m)
+	}
 	return out
 }

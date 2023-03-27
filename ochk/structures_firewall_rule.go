@@ -32,3 +32,37 @@ func expandFirewallRulePosition(in []interface{}) *models.Position {
 		ReviseOperation: position["revise_operation"].(string),
 	}
 }
+
+func flattenFirewallEWRulesLists(in []*models.DFWRule) []map[string]interface{} {
+	if len(in) == 0 {
+		return nil
+	}
+
+	var out []map[string]interface{}
+
+	for _, v := range in {
+		m := make(map[string]interface{})
+		m["firewall_ew_rule_id"] = v.RuleID
+		m["display_name"] = v.DisplayName
+		m["project_id"] = v.ProjectID
+		out = append(out, m)
+	}
+	return out
+}
+
+func flattenFirewallSNRulesLists(in []*models.GFWRule) []map[string]interface{} {
+	if len(in) == 0 {
+		return nil
+	}
+
+	var out []map[string]interface{}
+
+	for _, v := range in {
+		m := make(map[string]interface{})
+		m["firewall_sn_rule_id"] = v.RuleID
+		m["display_name"] = v.DisplayName
+		m["project_id"] = v.ProjectID
+		out = append(out, m)
+	}
+	return out
+}

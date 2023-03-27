@@ -54,10 +54,12 @@ func NewVirtualNetworkCreateUsingPUTParamsWithHTTPClient(client *http.Client) *V
 	}
 }
 
-/* VirtualNetworkCreateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the virtual network create using p u t operation.
+/*
+VirtualNetworkCreateUsingPUTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the virtual network create using p u t operation.
+
+	Typically these are written to a http.Request.
 */
 type VirtualNetworkCreateUsingPUTParams struct {
 

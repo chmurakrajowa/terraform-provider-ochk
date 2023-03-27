@@ -22,9 +22,11 @@ type VirtualMachineTestData struct {
 	DeploymentID           string
 	InitialPassword        string
 	PowerState             string
-	ResourceProfile        string
+	VirtualDiskSizeMB      string
+	MemorySizeMb           string
+	CpuCount               string
 	StoragePolicy          string
-	SubtenantID            string
+	ProjectID              string
 	AdditionalVirtualDisks []VirtualDiskTestData
 	VirtualDiskDevice      *VirtualDiskTestData
 	VirtualNetworkDevices  []struct {
@@ -34,18 +36,42 @@ type VirtualMachineTestData struct {
 	EncryptionKeyID                string
 	EncryptionPrivateKeyIDToUnwrap string
 	EncryptionRecrypt              string
+
+	PrimaryDNSAddress    string
+	SecondaryDNSAddress  string
+	DNSSuffix            string
+	DNSSearchSuffix      string
+	PrimaryWinsAddress   string
+	SecondaryWinsAddress string
 }
 
 func (c *VirtualMachineTestData) ToString() string {
 	return executeTemplateToString(`
+data "ochk_backup_plan" "backup_plan" {
+  display_name = "`+testData.BackupPlanName+`"
+}
+
+data "ochk_backup_list" "backup_list" {
+  display_name = "`+testData.BackupListName+`"
+  backup_plan_id = data.ochk_backup_plan.backup_plan.id
+}
+
+data "ochk_tag" "vm-tag" {
+	display_name = "`+testData.TagName+`"
+}
+
 resource "ochk_virtual_machine" "{{ .ResourceName}}" {
 	display_name = "{{.DisplayName}}"
 	deployment_id = {{ StringTFValue .DeploymentID }}
 	initial_password = "{{.InitialPassword}}"
 	power_state  = "{{.PowerState}}"
-	resource_profile  = "{{.ResourceProfile}}"
+	cpu_count = {{.CpuCount}}
+	memory_size_mb = {{.MemorySizeMb}}
+	virtual_disk {
+		size_mb = {{.VirtualDiskSizeMB}}
+	}
 	storage_policy  = "{{.StoragePolicy}}"
-	subtenant_id  = {{ StringTFValue .SubtenantID}}
+	project_id  = {{ StringTFValue .ProjectID}}
 	{{range .VirtualNetworkDevices}}
 	virtual_network_devices {
 		virtual_network_id = {{ StringTFValue .VirtualNetworkID }}
@@ -68,7 +94,22 @@ resource "ochk_virtual_machine" "{{ .ResourceName}}" {
 	}
 	{{end}}
 	encryption = {{ .Encryption }}
-	
+
+  	tags = [
+    	data.ochk_tag.vm-tag.id
+  	]
+
+  	backup_lists = [
+    	data.ochk_backup_list.backup_list.id
+  	]
+
+	dns_search_suffix = "{{ .DNSSearchSuffix }}"
+	dns_suffix = "{{ .DNSSuffix }}"
+	primary_dns_address = "{{ .PrimaryDNSAddress }}"
+	primary_wins_address = "{{ .PrimaryWinsAddress }}"
+	secondary_dns_address = "{{ .SecondaryDNSAddress }}"
+	secondary_wins_address = "{{ .SecondaryWinsAddress }}"
+
 	{{if .EncryptionKeyID }}
 	encryption_key_id = {{ StringTFValue .EncryptionKeyID }}
 	{{end}}
@@ -87,9 +128,9 @@ func (c *VirtualMachineTestData) FullResourceName() string {
 }
 
 func TestAccVirtualMachineResource_create_update_minimal(t *testing.T) {
-	subtenant1 := SubtenantDataSourceTestData{
-		ResourceName: "subtenant1",
-		Name:         testData.SubtenantForVMName,
+	project1 := ProjectDataSourceTestData{
+		ResourceName: "project1",
+		DisplayName:  testData.ProjectForVMName,
 	}
 
 	deployment := DeploymentDataSourceTestData{
@@ -103,14 +144,16 @@ func TestAccVirtualMachineResource_create_update_minimal(t *testing.T) {
 	}
 
 	virtualMachine := VirtualMachineTestData{
-		ResourceName:    "default",
-		DisplayName:     generateShortRandName(devTestDataPrefix),
-		DeploymentID:    testDataResourceID(&deployment),
-		InitialPassword: "50b90880f9f",
-		PowerState:      "poweredOn",
-		ResourceProfile: "SIZE_S",
-		StoragePolicy:   "STANDARD_W1",
-		SubtenantID:     testDataResourceID(&subtenant1),
+		ResourceName:      "default",
+		DisplayName:       generateShortRandName(devTestDataPrefix),
+		DeploymentID:      testDataResourceID(&deployment),
+		InitialPassword:   "50b90880f9f",
+		PowerState:        "poweredOn",
+		VirtualDiskSizeMB: "40960",
+		CpuCount:          "2",
+		MemorySizeMb:      "4096",
+		StoragePolicy:     "STANDARD_W1",
+		ProjectID:         testDataResourceID(&project1),
 		VirtualNetworkDevices: []struct{ VirtualNetworkID string }{
 			{VirtualNetworkID: testDataResourceID(&vnet1)},
 		},
@@ -128,14 +171,21 @@ func TestAccVirtualMachineResource_create_update_minimal(t *testing.T) {
 				DeviceType:   "SCSI",
 			},
 		},
+		PrimaryDNSAddress:    "192.168.1.6",
+		SecondaryDNSAddress:  "192.168.1.2",
+		DNSSuffix:            "test.lcl",
+		DNSSearchSuffix:      "test.lcl,prod.lcl",
+		PrimaryWinsAddress:   "192.168.1.3",
+		SecondaryWinsAddress: "192.168.1.3",
 	}
 
-	configInitial := deployment.ToString() + subtenant1.ToString() + vnet1.ToString() + virtualMachine.ToString()
-
+	configInitial := deployment.ToString() + project1.ToString() + vnet1.ToString("-vm-in") + virtualMachine.ToString()
 	virtualMachineUpdated := virtualMachine
 	virtualMachineUpdated.DisplayName += "upd"
 	virtualMachineUpdated.StoragePolicy = "ENTERPRISE"
-	virtualMachineUpdated.ResourceProfile = "SIZE_M"
+	virtualMachineUpdated.CpuCount = "4"
+	virtualMachineUpdated.MemorySizeMb = "8192"
+	virtualMachineUpdated.VirtualDiskSizeMB = "81920"
 	//FIXME backend does not support this yet
 	//virtualMachineUpdated.PowerState = "poweredOff"
 	virtualMachineUpdated.AdditionalVirtualDisks = []VirtualDiskTestData{
@@ -158,7 +208,7 @@ func TestAccVirtualMachineResource_create_update_minimal(t *testing.T) {
 			DeviceType:   "SCSI",
 		},
 	}
-	configUpdated := deployment.ToString() + subtenant1.ToString() + vnet1.ToString() + virtualMachineUpdated.ToString()
+	configUpdated := deployment.ToString() + project1.ToString() + vnet1.ToString("-vm-upt") + virtualMachineUpdated.ToString()
 
 	resourceName := virtualMachine.FullResourceName()
 	resource.ParallelTest(t, resource.TestCase{
@@ -171,9 +221,20 @@ func TestAccVirtualMachineResource_create_update_minimal(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "display_name", virtualMachine.DisplayName),
 					resource.TestCheckResourceAttrPair(resourceName, "deployment_id", deployment.FullResourceName(), "id"),
 					resource.TestCheckResourceAttr(resourceName, "power_state", virtualMachine.PowerState),
-					resource.TestCheckResourceAttr(resourceName, "resource_profile", virtualMachine.ResourceProfile),
+					resource.TestCheckResourceAttr(resourceName, "cpu_count", "2"),
+					resource.TestCheckResourceAttr(resourceName, "memory_size_mb", "4096"),
+					resource.TestCheckResourceAttr(resourceName, "virtual_disk.0.size_mb", "40960"),
 					resource.TestCheckResourceAttr(resourceName, "storage_policy", virtualMachine.StoragePolicy),
-					resource.TestCheckResourceAttrPair(resourceName, "subtenant_id", subtenant1.FullResourceName(), "id"),
+					resource.TestCheckResourceAttr(resourceName, "initial_password", "<hidden>"),
+					resource.TestCheckResourceAttr(resourceName, "primary_dns_address", virtualMachine.PrimaryDNSAddress),
+					resource.TestCheckResourceAttr(resourceName, "secondary_dns_address", virtualMachine.SecondaryDNSAddress),
+					resource.TestCheckResourceAttr(resourceName, "dns_suffix", virtualMachine.DNSSuffix),
+					resource.TestCheckResourceAttr(resourceName, "dns_search_suffix", virtualMachine.DNSSearchSuffix),
+					resource.TestCheckResourceAttr(resourceName, "primary_wins_address", virtualMachine.PrimaryWinsAddress),
+					resource.TestCheckResourceAttr(resourceName, "secondary_wins_address", virtualMachine.SecondaryWinsAddress),
+					resource.TestCheckResourceAttrPair(resourceName, "project_id", project1.FullResourceName(), "id"),
+					resource.TestCheckResourceAttrPair(resourceName, "backup_lists.0", "data.ochk_backup_list.backup_list", "id"),
+					resource.TestCheckResourceAttrPair(resourceName, "tags.0", "data.ochk_tag.vm-tag", "id"),
 					resource.TestCheckResourceAttrPair(resourceName, "virtual_network_devices.0.virtual_network_id", vnet1.FullResourceName(), "id"),
 					resource.TestCheckResourceAttrSet(resourceName, "virtual_network_devices.0.device_id"),
 					resource.TestCheckResourceAttrSet(resourceName, "virtual_disk.0.controller_id"),
@@ -205,9 +266,11 @@ func TestAccVirtualMachineResource_create_update_minimal(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "display_name", virtualMachineUpdated.DisplayName),
 					resource.TestCheckResourceAttrPair(resourceName, "deployment_id", deployment.FullResourceName(), "id"),
 					resource.TestCheckResourceAttr(resourceName, "power_state", virtualMachineUpdated.PowerState),
-					resource.TestCheckResourceAttr(resourceName, "resource_profile", virtualMachineUpdated.ResourceProfile),
+					resource.TestCheckResourceAttr(resourceName, "cpu_count", "4"),
+					resource.TestCheckResourceAttr(resourceName, "memory_size_mb", "8192"),
+					resource.TestCheckResourceAttr(resourceName, "virtual_disk.0.size_mb", "81920"),
 					resource.TestCheckResourceAttr(resourceName, "storage_policy", virtualMachineUpdated.StoragePolicy),
-					resource.TestCheckResourceAttrPair(resourceName, "subtenant_id", subtenant1.FullResourceName(), "id"),
+					resource.TestCheckResourceAttrPair(resourceName, "project_id", project1.FullResourceName(), "id"),
 					resource.TestCheckResourceAttrPair(resourceName, "virtual_network_devices.0.virtual_network_id", vnet1.FullResourceName(), "id"),
 					resource.TestCheckResourceAttrSet(resourceName, "virtual_network_devices.0.device_id"),
 					resource.TestCheckResourceAttrSet(resourceName, "virtual_disk.0.controller_id"),
@@ -240,9 +303,9 @@ func TestAccVirtualMachineResource_create_update_minimal(t *testing.T) {
 }
 
 func TestAccVirtualMachineResource_create_with_managed_encryption(t *testing.T) {
-	subtenant1 := SubtenantDataSourceTestData{
-		ResourceName: "subtenant1",
-		Name:         testData.SubtenantForVMName,
+	project1 := ProjectDataSourceTestData{
+		ResourceName: "project1",
+		DisplayName:  testData.ProjectForVMName,
 	}
 
 	deployment := DeploymentDataSourceTestData{
@@ -264,27 +327,28 @@ func TestAccVirtualMachineResource_create_with_managed_encryption(t *testing.T) 
 	}
 
 	virtualMachine := VirtualMachineTestData{
-		ResourceName:    "default",
-		DisplayName:     generateShortRandName(devTestDataPrefix),
-		DeploymentID:    testDataResourceID(&deployment),
-		InitialPassword: "50b90880f9f",
-		PowerState:      "poweredOn",
-		ResourceProfile: "SIZE_S",
-		StoragePolicy:   "STANDARD_W1",
-		SubtenantID:     testDataResourceID(&subtenant1),
+		ResourceName:      "default",
+		DisplayName:       generateShortRandName(devTestDataPrefix),
+		DeploymentID:      testDataResourceID(&deployment),
+		InitialPassword:   "50b90880f9f",
+		PowerState:        "poweredOn",
+		CpuCount:          "2",
+		MemorySizeMb:      "4096",
+		VirtualDiskSizeMB: "40960",
+		StoragePolicy:     "STANDARD_W1",
+		ProjectID:         testDataResourceID(&project1),
 		VirtualNetworkDevices: []struct{ VirtualNetworkID string }{
 			{VirtualNetworkID: testDataResourceID(&vnet1)},
 		},
 		Encryption: true,
 	}
 
-	configInitial := deployment.ToString() + subtenant1.ToString() + vnet1.ToString() + kmsAESKey.ToString() + virtualMachine.ToString()
-
+	configInitial := deployment.ToString() + project1.ToString() + vnet1.ToString("-vm-m-in") + kmsAESKey.ToString() + virtualMachine.ToString()
 	virtualMachineUpdated := virtualMachine
 	virtualMachineUpdated.EncryptionKeyID = testDataResourceID(&kmsAESKey)
 	virtualMachineUpdated.EncryptionRecrypt = "SHALLOW"
 
-	configUpdated := deployment.ToString() + subtenant1.ToString() + vnet1.ToString() + kmsAESKey.ToString() + virtualMachineUpdated.ToString()
+	configUpdated := deployment.ToString() + project1.ToString() + vnet1.ToString("-vm-m-up") + kmsAESKey.ToString() + virtualMachineUpdated.ToString()
 
 	resourceName := virtualMachine.FullResourceName()
 	resource.ParallelTest(t, resource.TestCase{
@@ -293,11 +357,11 @@ func TestAccVirtualMachineResource_create_with_managed_encryption(t *testing.T) 
 		Steps: []resource.TestStep{
 			{
 				Config: configInitial,
-				Check:  virtualMachineChecks(resourceName, virtualMachine, subtenant1, deployment, vnet1),
+				Check:  virtualMachineChecks(resourceName, virtualMachine, project1, deployment, vnet1),
 			},
 			{
 				Config: configUpdated,
-				Check:  virtualMachineChecks(resourceName, virtualMachineUpdated, subtenant1, deployment, vnet1),
+				Check:  virtualMachineChecks(resourceName, virtualMachineUpdated, project1, deployment, vnet1),
 			},
 		},
 		CheckDestroy: testAccVirtualMachineResourceNotExists(virtualMachine.DisplayName),
@@ -305,9 +369,9 @@ func TestAccVirtualMachineResource_create_with_managed_encryption(t *testing.T) 
 }
 
 func TestAccVirtualMachineResource_create_with_own_encryption(t *testing.T) {
-	subtenant1 := SubtenantDataSourceTestData{
-		ResourceName: "subtenant1",
-		Name:         testData.SubtenantForVMName,
+	project1 := ProjectDataSourceTestData{
+		ResourceName: "project1",
+		DisplayName:  testData.ProjectForVMName,
 	}
 
 	deployment := DeploymentDataSourceTestData{
@@ -329,14 +393,16 @@ func TestAccVirtualMachineResource_create_with_own_encryption(t *testing.T) {
 	}
 
 	virtualMachine := VirtualMachineTestData{
-		ResourceName:    "default",
-		DisplayName:     generateShortRandName(devTestDataPrefix),
-		DeploymentID:    testDataResourceID(&deployment),
-		InitialPassword: "50b90880f9f",
-		PowerState:      "poweredOn",
-		ResourceProfile: "SIZE_S",
-		StoragePolicy:   "STANDARD_W1",
-		SubtenantID:     testDataResourceID(&subtenant1),
+		ResourceName:      "default",
+		DisplayName:       generateShortRandName(devTestDataPrefix),
+		DeploymentID:      testDataResourceID(&deployment),
+		InitialPassword:   "50b90880f9f",
+		PowerState:        "poweredOn",
+		CpuCount:          "2",
+		MemorySizeMb:      "4096",
+		VirtualDiskSizeMB: "40960",
+		StoragePolicy:     "STANDARD_W1",
+		ProjectID:         testDataResourceID(&project1),
 		VirtualNetworkDevices: []struct{ VirtualNetworkID string }{
 			{VirtualNetworkID: testDataResourceID(&vnet1)},
 		},
@@ -344,13 +410,13 @@ func TestAccVirtualMachineResource_create_with_own_encryption(t *testing.T) {
 		EncryptionKeyID: testDataResourceID(&kmsAESKey),
 	}
 
-	configInitial := deployment.ToString() + subtenant1.ToString() + vnet1.ToString() + kmsAESKey.ToString() + virtualMachine.ToString()
+	configInitial := deployment.ToString() + project1.ToString() + vnet1.ToString("-vm-enc-in") + kmsAESKey.ToString() + virtualMachine.ToString()
 
 	virtualMachineUpdated := virtualMachine
 	virtualMachineUpdated.EncryptionKeyID = ""
 	virtualMachineUpdated.EncryptionRecrypt = "SHALLOW"
 
-	configUpdated := deployment.ToString() + subtenant1.ToString() + vnet1.ToString() + kmsAESKey.ToString() + virtualMachineUpdated.ToString()
+	configUpdated := deployment.ToString() + project1.ToString() + vnet1.ToString("-vm-enc-up") + kmsAESKey.ToString() + virtualMachineUpdated.ToString()
 
 	resourceName := virtualMachine.FullResourceName()
 	resource.ParallelTest(t, resource.TestCase{
@@ -359,24 +425,28 @@ func TestAccVirtualMachineResource_create_with_own_encryption(t *testing.T) {
 		Steps: []resource.TestStep{
 			{
 				Config: configInitial,
-				Check:  virtualMachineChecks(resourceName, virtualMachine, subtenant1, deployment, vnet1),
+				Check:  virtualMachineChecks(resourceName, virtualMachine, project1, deployment, vnet1),
 			},
 			{
 				Config: configUpdated,
-				Check:  virtualMachineChecks(resourceName, virtualMachineUpdated, subtenant1, deployment, vnet1),
+				Check:  virtualMachineChecks(resourceName, virtualMachineUpdated, project1, deployment, vnet1),
 			},
 		},
 		CheckDestroy: testAccVirtualMachineResourceNotExists(virtualMachine.DisplayName),
 	})
 }
-func virtualMachineChecks(resourceName string, vm VirtualMachineTestData, subtenant SubtenantDataSourceTestData, deployment DeploymentDataSourceTestData, vnet VirtualNetworkDataSourceTestData) resource.TestCheckFunc {
+func virtualMachineChecks(resourceName string, vm VirtualMachineTestData, project ProjectDataSourceTestData, deployment DeploymentDataSourceTestData, vnet VirtualNetworkDataSourceTestData) resource.TestCheckFunc {
 	return resource.ComposeAggregateTestCheckFunc(
 		resource.TestCheckResourceAttr(resourceName, "display_name", vm.DisplayName),
 		resource.TestCheckResourceAttrPair(resourceName, "deployment_id", deployment.FullResourceName(), "id"),
 		resource.TestCheckResourceAttr(resourceName, "power_state", vm.PowerState),
-		resource.TestCheckResourceAttr(resourceName, "resource_profile", vm.ResourceProfile),
+		resource.TestCheckResourceAttr(resourceName, "initial_password", "<hidden>"),
+		resource.TestCheckResourceAttr(resourceName, "cpu_count", vm.CpuCount),
+		resource.TestCheckResourceAttr(resourceName, "memory_size_mb", vm.MemorySizeMb),
+		resource.TestCheckResourceAttr(resourceName, "virtual_disk.0.size_mb", vm.VirtualDiskSizeMB),
+		resource.TestCheckResourceAttr(resourceName, "folder_path", "/"),
 		resource.TestCheckResourceAttr(resourceName, "storage_policy", vm.StoragePolicy),
-		resource.TestCheckResourceAttrPair(resourceName, "subtenant_id", subtenant.FullResourceName(), "id"),
+		resource.TestCheckResourceAttrPair(resourceName, "project_id", project.FullResourceName(), "id"),
 		resource.TestCheckResourceAttrPair(resourceName, "virtual_network_devices.0.virtual_network_id", vnet.FullResourceName(), "id"),
 		resource.TestCheckResourceAttrSet(resourceName, "virtual_network_devices.0.device_id"),
 		resource.TestCheckResourceAttrSet(resourceName, "virtual_disk.0.controller_id"),

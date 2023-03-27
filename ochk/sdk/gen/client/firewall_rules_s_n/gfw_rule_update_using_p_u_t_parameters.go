@@ -54,10 +54,12 @@ func NewGfwRuleUpdateUsingPUTParamsWithHTTPClient(client *http.Client) *GfwRuleU
 	}
 }
 
-/* GfwRuleUpdateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the gfw rule update using p u t operation.
+/*
+GfwRuleUpdateUsingPUTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the gfw rule update using p u t operation.
+
+	Typically these are written to a http.Request.
 */
 type GfwRuleUpdateUsingPUTParams struct {
 

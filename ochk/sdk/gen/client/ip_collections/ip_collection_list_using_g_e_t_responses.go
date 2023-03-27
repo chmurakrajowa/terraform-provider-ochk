@@ -45,7 +45,8 @@ func NewIPCollectionListUsingGETOK() *IPCollectionListUsingGETOK {
 	return &IPCollectionListUsingGETOK{}
 }
 
-/* IPCollectionListUsingGETOK describes a response with status code 200, with default header values.
+/*
+IPCollectionListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type IPCollectionListUsingGETOK struct {
 	Payload *models.IPCollectionListResponse
 }
 
+// IsSuccess returns true when this ip collection list using g e t o k response has a 2xx status code
+func (o *IPCollectionListUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this ip collection list using g e t o k response has a 3xx status code
+func (o *IPCollectionListUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this ip collection list using g e t o k response has a 4xx status code
+func (o *IPCollectionListUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this ip collection list using g e t o k response has a 5xx status code
+func (o *IPCollectionListUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this ip collection list using g e t o k response a status code equal to that given
+func (o *IPCollectionListUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the ip collection list using g e t o k response
+func (o *IPCollectionListUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *IPCollectionListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /ipcs][%d] ipCollectionListUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *IPCollectionListUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /ipcs][%d] ipCollectionListUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *IPCollectionListUsingGETOK) GetPayload() *models.IPCollectionListResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewIPCollectionListUsingGETBadRequest() *IPCollectionListUsingGETBadRequest
 	return &IPCollectionListUsingGETBadRequest{}
 }
 
-/* IPCollectionListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+IPCollectionListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type IPCollectionListUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this ip collection list using g e t bad request response has a 2xx status code
+func (o *IPCollectionListUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this ip collection list using g e t bad request response has a 3xx status code
+func (o *IPCollectionListUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this ip collection list using g e t bad request response has a 4xx status code
+func (o *IPCollectionListUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this ip collection list using g e t bad request response has a 5xx status code
+func (o *IPCollectionListUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this ip collection list using g e t bad request response a status code equal to that given
+func (o *IPCollectionListUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the ip collection list using g e t bad request response
+func (o *IPCollectionListUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *IPCollectionListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /ipcs][%d] ipCollectionListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *IPCollectionListUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /ipcs][%d] ipCollectionListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *IPCollectionListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

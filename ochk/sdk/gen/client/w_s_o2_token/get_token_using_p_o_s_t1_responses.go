@@ -45,7 +45,8 @@ func NewGetTokenUsingPOST1OK() *GetTokenUsingPOST1OK {
 	return &GetTokenUsingPOST1OK{}
 }
 
-/* GetTokenUsingPOST1OK describes a response with status code 200, with default header values.
+/*
+GetTokenUsingPOST1OK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type GetTokenUsingPOST1OK struct {
 	Payload *models.WSOTokenResponse
 }
 
-func (o *GetTokenUsingPOST1OK) Error() string {
-	return fmt.Sprintf("[POST /wso2/token][%d] getTokenUsingPOST1OK  %+v", 200, o.Payload)
+// IsSuccess returns true when this get token using p o s t1 o k response has a 2xx status code
+func (o *GetTokenUsingPOST1OK) IsSuccess() bool {
+	return true
 }
+
+// IsRedirect returns true when this get token using p o s t1 o k response has a 3xx status code
+func (o *GetTokenUsingPOST1OK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get token using p o s t1 o k response has a 4xx status code
+func (o *GetTokenUsingPOST1OK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get token using p o s t1 o k response has a 5xx status code
+func (o *GetTokenUsingPOST1OK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get token using p o s t1 o k response a status code equal to that given
+func (o *GetTokenUsingPOST1OK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get token using p o s t1 o k response
+func (o *GetTokenUsingPOST1OK) Code() int {
+	return 200
+}
+
+func (o *GetTokenUsingPOST1OK) Error() string {
+	return fmt.Sprintf("[POST /wso2/ui/token][%d] getTokenUsingPOST1OK  %+v", 200, o.Payload)
+}
+
+func (o *GetTokenUsingPOST1OK) String() string {
+	return fmt.Sprintf("[POST /wso2/ui/token][%d] getTokenUsingPOST1OK  %+v", 200, o.Payload)
+}
+
 func (o *GetTokenUsingPOST1OK) GetPayload() *models.WSOTokenResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewGetTokenUsingPOST1BadRequest() *GetTokenUsingPOST1BadRequest {
 	return &GetTokenUsingPOST1BadRequest{}
 }
 
-/* GetTokenUsingPOST1BadRequest describes a response with status code 400, with default header values.
+/*
+GetTokenUsingPOST1BadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type GetTokenUsingPOST1BadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
-func (o *GetTokenUsingPOST1BadRequest) Error() string {
-	return fmt.Sprintf("[POST /wso2/token][%d] getTokenUsingPOST1BadRequest  %+v", 400, o.Payload)
+// IsSuccess returns true when this get token using p o s t1 bad request response has a 2xx status code
+func (o *GetTokenUsingPOST1BadRequest) IsSuccess() bool {
+	return false
 }
+
+// IsRedirect returns true when this get token using p o s t1 bad request response has a 3xx status code
+func (o *GetTokenUsingPOST1BadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get token using p o s t1 bad request response has a 4xx status code
+func (o *GetTokenUsingPOST1BadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get token using p o s t1 bad request response has a 5xx status code
+func (o *GetTokenUsingPOST1BadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get token using p o s t1 bad request response a status code equal to that given
+func (o *GetTokenUsingPOST1BadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the get token using p o s t1 bad request response
+func (o *GetTokenUsingPOST1BadRequest) Code() int {
+	return 400
+}
+
+func (o *GetTokenUsingPOST1BadRequest) Error() string {
+	return fmt.Sprintf("[POST /wso2/ui/token][%d] getTokenUsingPOST1BadRequest  %+v", 400, o.Payload)
+}
+
+func (o *GetTokenUsingPOST1BadRequest) String() string {
+	return fmt.Sprintf("[POST /wso2/ui/token][%d] getTokenUsingPOST1BadRequest  %+v", 400, o.Payload)
+}
+
 func (o *GetTokenUsingPOST1BadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

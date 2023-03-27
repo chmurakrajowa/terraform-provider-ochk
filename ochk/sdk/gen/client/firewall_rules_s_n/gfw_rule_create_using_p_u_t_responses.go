@@ -51,7 +51,8 @@ func NewGfwRuleCreateUsingPUTOK() *GfwRuleCreateUsingPUTOK {
 	return &GfwRuleCreateUsingPUTOK{}
 }
 
-/* GfwRuleCreateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+GfwRuleCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type GfwRuleCreateUsingPUTOK struct {
 	Payload *models.CreateGFWRuleResponse
 }
 
+// IsSuccess returns true when this gfw rule create using p u t o k response has a 2xx status code
+func (o *GfwRuleCreateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this gfw rule create using p u t o k response has a 3xx status code
+func (o *GfwRuleCreateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this gfw rule create using p u t o k response has a 4xx status code
+func (o *GfwRuleCreateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this gfw rule create using p u t o k response has a 5xx status code
+func (o *GfwRuleCreateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this gfw rule create using p u t o k response a status code equal to that given
+func (o *GfwRuleCreateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the gfw rule create using p u t o k response
+func (o *GfwRuleCreateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *GfwRuleCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/s-n][%d] gfwRuleCreateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *GfwRuleCreateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/s-n][%d] gfwRuleCreateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *GfwRuleCreateUsingPUTOK) GetPayload() *models.CreateGFWRuleResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewGfwRuleCreateUsingPUTCreated() *GfwRuleCreateUsingPUTCreated {
 	return &GfwRuleCreateUsingPUTCreated{}
 }
 
-/* GfwRuleCreateUsingPUTCreated describes a response with status code 201, with default header values.
+/*
+GfwRuleCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -91,9 +128,44 @@ type GfwRuleCreateUsingPUTCreated struct {
 	Payload *models.CreateGFWRuleResponse
 }
 
+// IsSuccess returns true when this gfw rule create using p u t created response has a 2xx status code
+func (o *GfwRuleCreateUsingPUTCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this gfw rule create using p u t created response has a 3xx status code
+func (o *GfwRuleCreateUsingPUTCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this gfw rule create using p u t created response has a 4xx status code
+func (o *GfwRuleCreateUsingPUTCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this gfw rule create using p u t created response has a 5xx status code
+func (o *GfwRuleCreateUsingPUTCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this gfw rule create using p u t created response a status code equal to that given
+func (o *GfwRuleCreateUsingPUTCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the gfw rule create using p u t created response
+func (o *GfwRuleCreateUsingPUTCreated) Code() int {
+	return 201
+}
+
 func (o *GfwRuleCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/s-n][%d] gfwRuleCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
+func (o *GfwRuleCreateUsingPUTCreated) String() string {
+	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/s-n][%d] gfwRuleCreateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
 func (o *GfwRuleCreateUsingPUTCreated) GetPayload() *models.CreateGFWRuleResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewGfwRuleCreateUsingPUTBadRequest() *GfwRuleCreateUsingPUTBadRequest {
 	return &GfwRuleCreateUsingPUTBadRequest{}
 }
 
-/* GfwRuleCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+GfwRuleCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type GfwRuleCreateUsingPUTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this gfw rule create using p u t bad request response has a 2xx status code
+func (o *GfwRuleCreateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this gfw rule create using p u t bad request response has a 3xx status code
+func (o *GfwRuleCreateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this gfw rule create using p u t bad request response has a 4xx status code
+func (o *GfwRuleCreateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this gfw rule create using p u t bad request response has a 5xx status code
+func (o *GfwRuleCreateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this gfw rule create using p u t bad request response a status code equal to that given
+func (o *GfwRuleCreateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the gfw rule create using p u t bad request response
+func (o *GfwRuleCreateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *GfwRuleCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/s-n][%d] gfwRuleCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *GfwRuleCreateUsingPUTBadRequest) String() string {
+	return fmt.Sprintf("[PUT /network/routers/{routerId}/rules/s-n][%d] gfwRuleCreateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *GfwRuleCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

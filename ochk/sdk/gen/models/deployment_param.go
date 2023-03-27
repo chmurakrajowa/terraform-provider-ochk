@@ -24,7 +24,7 @@ type DeploymentParam struct {
 	ParamName string `json:"paramName,omitempty"`
 
 	// param type
-	// Enum: [HOST_NAME LOGIN_PASSWORD LOGIN_SSH_KEY LOGIN_USERNAME NET_DNS_PRIMARY NET_DNS_SEARCH NET_DNS_SECONDARY NET_DNS_SUFFIX NET_IP_ADDR_01 NET_IP_BROADCAST_01 NET_IP_GATEWAY_01 NET_IP_MASK_01 NET_WINS_ALTENATIVE NET_WINS_PREFERRED]
+	// Enum: [HOST_NAME LOGIN_PASSWORD LOGIN_SSH_KEY LOGIN_USERNAME NET_DNS_PRIMARY NET_DNS_SEARCH NET_DNS_SECONDARY NET_DNS_SUFFIX NET_IP_ADDR_01 NET_IP_BROADCAST_01 NET_IP_GATEWAY_01 NET_IP_MASK_01 NET_WINS_ALTERNATIVE NET_WINS_PREFERRED]
 	ParamType string `json:"paramType,omitempty"`
 
 	// param value
@@ -49,7 +49,7 @@ var deploymentParamTypeParamTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["HOST_NAME","LOGIN_PASSWORD","LOGIN_SSH_KEY","LOGIN_USERNAME","NET_DNS_PRIMARY","NET_DNS_SEARCH","NET_DNS_SECONDARY","NET_DNS_SUFFIX","NET_IP_ADDR_01","NET_IP_BROADCAST_01","NET_IP_GATEWAY_01","NET_IP_MASK_01","NET_WINS_ALTENATIVE","NET_WINS_PREFERRED"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["HOST_NAME","LOGIN_PASSWORD","LOGIN_SSH_KEY","LOGIN_USERNAME","NET_DNS_PRIMARY","NET_DNS_SEARCH","NET_DNS_SECONDARY","NET_DNS_SUFFIX","NET_IP_ADDR_01","NET_IP_BROADCAST_01","NET_IP_GATEWAY_01","NET_IP_MASK_01","NET_WINS_ALTERNATIVE","NET_WINS_PREFERRED"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -95,8 +95,8 @@ const (
 	// DeploymentParamParamTypeNETIPMASK01 captures enum value "NET_IP_MASK_01"
 	DeploymentParamParamTypeNETIPMASK01 string = "NET_IP_MASK_01"
 
-	// DeploymentParamParamTypeNETWINSALTENATIVE captures enum value "NET_WINS_ALTENATIVE"
-	DeploymentParamParamTypeNETWINSALTENATIVE string = "NET_WINS_ALTENATIVE"
+	// DeploymentParamParamTypeNETWINSALTERNATIVE captures enum value "NET_WINS_ALTERNATIVE"
+	DeploymentParamParamTypeNETWINSALTERNATIVE string = "NET_WINS_ALTERNATIVE"
 
 	// DeploymentParamParamTypeNETWINSPREFERRED captures enum value "NET_WINS_PREFERRED"
 	DeploymentParamParamTypeNETWINSPREFERRED string = "NET_WINS_PREFERRED"

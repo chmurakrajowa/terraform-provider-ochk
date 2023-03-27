@@ -52,10 +52,12 @@ func NewIpamServiceGetUsingGETParamsWithHTTPClient(client *http.Client) *IpamSer
 	}
 }
 
-/* IpamServiceGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the ipam service get using g e t operation.
+/*
+IpamServiceGetUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the ipam service get using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type IpamServiceGetUsingGETParams struct {
 

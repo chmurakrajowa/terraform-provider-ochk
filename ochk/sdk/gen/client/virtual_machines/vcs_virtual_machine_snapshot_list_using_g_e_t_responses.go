@@ -45,7 +45,8 @@ func NewVcsVirtualMachineSnapshotListUsingGETOK() *VcsVirtualMachineSnapshotList
 	return &VcsVirtualMachineSnapshotListUsingGETOK{}
 }
 
-/* VcsVirtualMachineSnapshotListUsingGETOK describes a response with status code 200, with default header values.
+/*
+VcsVirtualMachineSnapshotListUsingGETOK describes a response with status code 200, with default header values.
 
 Request has been completed successfully
 */
@@ -53,9 +54,44 @@ type VcsVirtualMachineSnapshotListUsingGETOK struct {
 	Payload *models.SnapshotListResponse
 }
 
+// IsSuccess returns true when this vcs virtual machine snapshot list using g e t o k response has a 2xx status code
+func (o *VcsVirtualMachineSnapshotListUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this vcs virtual machine snapshot list using g e t o k response has a 3xx status code
+func (o *VcsVirtualMachineSnapshotListUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this vcs virtual machine snapshot list using g e t o k response has a 4xx status code
+func (o *VcsVirtualMachineSnapshotListUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this vcs virtual machine snapshot list using g e t o k response has a 5xx status code
+func (o *VcsVirtualMachineSnapshotListUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this vcs virtual machine snapshot list using g e t o k response a status code equal to that given
+func (o *VcsVirtualMachineSnapshotListUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the vcs virtual machine snapshot list using g e t o k response
+func (o *VcsVirtualMachineSnapshotListUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *VcsVirtualMachineSnapshotListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /vcs/virtual-machines/{virtualMachineId}/snapshots][%d] vcsVirtualMachineSnapshotListUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *VcsVirtualMachineSnapshotListUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /vcs/virtual-machines/{virtualMachineId}/snapshots][%d] vcsVirtualMachineSnapshotListUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *VcsVirtualMachineSnapshotListUsingGETOK) GetPayload() *models.SnapshotListResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewVcsVirtualMachineSnapshotListUsingGETBadRequest() *VcsVirtualMachineSnap
 	return &VcsVirtualMachineSnapshotListUsingGETBadRequest{}
 }
 
-/* VcsVirtualMachineSnapshotListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+VcsVirtualMachineSnapshotListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type VcsVirtualMachineSnapshotListUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this vcs virtual machine snapshot list using g e t bad request response has a 2xx status code
+func (o *VcsVirtualMachineSnapshotListUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this vcs virtual machine snapshot list using g e t bad request response has a 3xx status code
+func (o *VcsVirtualMachineSnapshotListUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this vcs virtual machine snapshot list using g e t bad request response has a 4xx status code
+func (o *VcsVirtualMachineSnapshotListUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this vcs virtual machine snapshot list using g e t bad request response has a 5xx status code
+func (o *VcsVirtualMachineSnapshotListUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this vcs virtual machine snapshot list using g e t bad request response a status code equal to that given
+func (o *VcsVirtualMachineSnapshotListUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the vcs virtual machine snapshot list using g e t bad request response
+func (o *VcsVirtualMachineSnapshotListUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *VcsVirtualMachineSnapshotListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /vcs/virtual-machines/{virtualMachineId}/snapshots][%d] vcsVirtualMachineSnapshotListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *VcsVirtualMachineSnapshotListUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /vcs/virtual-machines/{virtualMachineId}/snapshots][%d] vcsVirtualMachineSnapshotListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *VcsVirtualMachineSnapshotListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

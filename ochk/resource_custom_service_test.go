@@ -13,6 +13,7 @@ type CustomServiceTestData struct {
 	ResourceName string
 	DisplayName  string
 	Ports        []CustomServicePortTestData
+	ProjectID    string
 }
 
 type CustomServicePortTestData struct {
@@ -23,8 +24,14 @@ type CustomServicePortTestData struct {
 
 func (c *CustomServiceTestData) ToString() string {
 	return executeTemplateToString(`
+
+data "ochk_project" "project-cs-1" {
+  display_name = "`+testData.Project1Name+`"
+}
+
 resource "ochk_custom_service" "{{ .ResourceName}}" {
   display_name = "{{ .DisplayName}}"
+  project_id = data.ochk_project.project-cs-1.id
 
   {{range $port := .Ports}}
   ports {
@@ -82,6 +89,7 @@ func TestAccCustomServiceResource_create(t *testing.T) {
 				Config: customService.ToString(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(customServiceResourceName, "display_name", customService.DisplayName),
+					resource.TestCheckResourceAttrPair(customServiceResourceName, "project_id", "data.ochk_project.project-cs-1", "id"),
 					resource.TestCheckResourceAttrSet(customServiceResourceName, "ports.0.id"),
 					resource.TestCheckResourceAttr(customServiceResourceName, "ports.0.protocol", customService.Ports[0].Protocol),
 					testStringInSet(customServiceResourceName, "ports.0.source", customService.Ports[0].Source[0]),
@@ -107,6 +115,7 @@ func TestAccCustomServiceResource_create(t *testing.T) {
 				Config: customServiceUpdated.ToString(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(customServiceResourceName, "display_name", customServiceUpdated.DisplayName),
+					resource.TestCheckResourceAttrPair(customServiceResourceName, "project_id", "data.ochk_project.project-cs-1", "id"),
 					resource.TestCheckResourceAttrSet(customServiceResourceName, "ports.0.id"),
 					resource.TestCheckResourceAttr(customServiceResourceName, "ports.0.protocol", customServiceUpdated.Ports[0].Protocol),
 					testStringInSet(customServiceResourceName, "ports.0.source", customServiceUpdated.Ports[0].Source[0]),

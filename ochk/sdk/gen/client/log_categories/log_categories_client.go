@@ -32,6 +32,8 @@ type ClientOption func(*runtime.ClientOperation)
 type ClientService interface {
 	GetLogsUsingPOST(params *GetLogsUsingPOSTParams, opts ...ClientOption) (*GetLogsUsingPOSTOK, error)
 
+	GetLogsUsingPOST1(params *GetLogsUsingPOST1Params, opts ...ClientOption) (*GetLogsUsingPOST1OK, error)
+
 	LogCategoriesListUsingGET(params *LogCategoriesListUsingGETParams, opts ...ClientOption) (*LogCategoriesListUsingGETOK, error)
 
 	LogCategoryGetUsingGET(params *LogCategoryGetUsingGETParams, opts ...ClientOption) (*LogCategoryGetUsingGETOK, error)
@@ -42,9 +44,9 @@ type ClientService interface {
 }
 
 /*
-  GetLogsUsingPOST gets logs
+GetLogsUsingPOST gets logs by d s l query
 
-  Get logs
+Get logs by DSL query
 */
 func (a *Client) GetLogsUsingPOST(params *GetLogsUsingPOSTParams, opts ...ClientOption) (*GetLogsUsingPOSTOK, error) {
 	// TODO: Validate the params before sending
@@ -54,7 +56,7 @@ func (a *Client) GetLogsUsingPOST(params *GetLogsUsingPOSTParams, opts ...Client
 	op := &runtime.ClientOperation{
 		ID:                 "getLogsUsingPOST",
 		Method:             "POST",
-		PathPattern:        "/log/categories/{logCategoryId}/generate",
+		PathPattern:        "/log/categories/{logCategoryId}/generatebydsl",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -82,9 +84,49 @@ func (a *Client) GetLogsUsingPOST(params *GetLogsUsingPOSTParams, opts ...Client
 }
 
 /*
-  LogCategoriesListUsingGET lists
+GetLogsUsingPOST1 gets logs
 
-  List log categories
+Get logs
+*/
+func (a *Client) GetLogsUsingPOST1(params *GetLogsUsingPOST1Params, opts ...ClientOption) (*GetLogsUsingPOST1OK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetLogsUsingPOST1Params()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getLogsUsingPOST_1",
+		Method:             "POST",
+		PathPattern:        "/log/categories/{logCategoryId}/generate",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &GetLogsUsingPOST1Reader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetLogsUsingPOST1OK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getLogsUsingPOST_1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+LogCategoriesListUsingGET lists
+
+List log categories
 */
 func (a *Client) LogCategoriesListUsingGET(params *LogCategoriesListUsingGETParams, opts ...ClientOption) (*LogCategoriesListUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -122,9 +164,9 @@ func (a *Client) LogCategoriesListUsingGET(params *LogCategoriesListUsingGETPara
 }
 
 /*
-  LogCategoryGetUsingGET gets
+LogCategoryGetUsingGET gets
 
-  Get log category
+Get log category
 */
 func (a *Client) LogCategoryGetUsingGET(params *LogCategoryGetUsingGETParams, opts ...ClientOption) (*LogCategoryGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -162,9 +204,9 @@ func (a *Client) LogCategoryGetUsingGET(params *LogCategoryGetUsingGETParams, op
 }
 
 /*
-  LogCategoryUpdateUsingPUT updates
+LogCategoryUpdateUsingPUT updates
 
-  Update log category
+Update log category
 */
 func (a *Client) LogCategoryUpdateUsingPUT(params *LogCategoryUpdateUsingPUTParams, opts ...ClientOption) (*LogCategoryUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending

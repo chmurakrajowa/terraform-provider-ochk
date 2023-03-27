@@ -52,10 +52,12 @@ func NewMcsGetSecretUsingGETParamsWithHTTPClient(client *http.Client) *McsGetSec
 	}
 }
 
-/* McsGetSecretUsingGETParams contains all the parameters to send to the API endpoint
-   for the mcs get secret using g e t operation.
+/*
+McsGetSecretUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the mcs get secret using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type McsGetSecretUsingGETParams struct {
 

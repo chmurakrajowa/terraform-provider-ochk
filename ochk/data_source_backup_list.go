@@ -18,7 +18,7 @@ func dataSourceBackupList() *schema.Resource {
 			},
 			"backup_plan_id": {
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 		},
 	}

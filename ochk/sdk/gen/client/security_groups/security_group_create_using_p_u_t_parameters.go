@@ -54,10 +54,12 @@ func NewSecurityGroupCreateUsingPUTParamsWithHTTPClient(client *http.Client) *Se
 	}
 }
 
-/* SecurityGroupCreateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the security group create using p u t operation.
+/*
+SecurityGroupCreateUsingPUTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the security group create using p u t operation.
+
+	Typically these are written to a http.Request.
 */
 type SecurityGroupCreateUsingPUTParams struct {
 

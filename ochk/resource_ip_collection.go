@@ -36,6 +36,11 @@ func resourceIPCollection() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"project_id": {
+				Type:     schema.TypeString,
+				Required: true,
+				ForceNew: true,
+			},
 			"ip_addresses": {
 				Type:     schema.TypeSet,
 				Required: true,
@@ -99,6 +104,10 @@ func resourceIPCollectionRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
+	if err := d.Set("project_id", ipCollection.ProjectID); err != nil {
+		return diag.Errorf("error setting project_id: %+v", err)
+	}
+
 	if err := d.Set("created_by", ipCollection.CreatedBy); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
@@ -152,6 +161,7 @@ func resourceIPCollectionDelete(ctx context.Context, d *schema.ResourceData, met
 func mapResourceDataToIPCollection(d *schema.ResourceData) *models.IPCollection {
 	return &models.IPCollection{
 		DisplayName:           d.Get("display_name").(string),
+		ProjectID:             d.Get("project_id").(string),
 		IPCollectionAddresses: transformSetToStringSlice(d.Get("ip_addresses").(*schema.Set)),
 	}
 }

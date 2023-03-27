@@ -55,10 +55,12 @@ func NewLogCategoryUpdateUsingPUTParamsWithHTTPClient(client *http.Client) *LogC
 	}
 }
 
-/* LogCategoryUpdateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the log category update using p u t operation.
+/*
+LogCategoryUpdateUsingPUTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the log category update using p u t operation.
+
+	Typically these are written to a http.Request.
 */
 type LogCategoryUpdateUsingPUTParams struct {
 

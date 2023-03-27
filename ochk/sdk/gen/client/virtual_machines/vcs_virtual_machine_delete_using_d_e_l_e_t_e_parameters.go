@@ -52,10 +52,12 @@ func NewVcsVirtualMachineDeleteUsingDELETEParamsWithHTTPClient(client *http.Clie
 	}
 }
 
-/* VcsVirtualMachineDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-   for the vcs virtual machine delete using d e l e t e operation.
+/*
+VcsVirtualMachineDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the vcs virtual machine delete using d e l e t e operation.
+
+	Typically these are written to a http.Request.
 */
 type VcsVirtualMachineDeleteUsingDELETEParams struct {
 

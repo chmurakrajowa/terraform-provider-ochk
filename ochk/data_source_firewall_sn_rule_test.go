@@ -15,18 +15,22 @@ type FirewallRuleSNDataSourceTestData struct {
 func (c *FirewallRuleSNDataSourceTestData) ToString() string {
 	return executeTemplateToString(`
 
-data "ochk_router" "vrf" {
+data "ochk_vrf" "vrf" {
 	display_name = "{{ .VRFName}}"
 }	
 
-data "ochk_router" "vpc" {
+data "ochk_project" "project-1" {
+  display_name = "`+testData.Project1Name+`"
+}
+
+data "ochk_vpc" "vpc" {
   display_name = "{{ .VPCName}}"
-  parent_router_id = data.ochk_router.vrf.id
+  vrf_id = data.ochk_vrf.vrf.id
 }
 
 data "ochk_firewall_sn_rule" "{{ .ResourceName}}" {
   display_name = "{{ .DisplayName}}"
-  router_id = data.ochk_router.vpc.id
+  vpc_id = data.ochk_vpc.vpc.id
 }
 `, c)
 }
@@ -36,6 +40,9 @@ func (c *FirewallRuleSNDataSourceTestData) FullResourceName() string {
 }
 
 func TestAccFirewallRuleSNDataSource_read(t *testing.T) {
+	dataSourceProject := "data.ochk_project.project-1"
+	dataSourceVpc := "data.ochk_vpc.vpc"
+
 	FirewallRule := &FirewallRuleSNDataSourceTestData{
 		ResourceName: "default",
 		DisplayName:  testData.FirewallSNRuleName,
@@ -50,7 +57,8 @@ func TestAccFirewallRuleSNDataSource_read(t *testing.T) {
 				Config: FirewallRule.ToString(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(FirewallRule.FullResourceName(), "display_name", FirewallRule.DisplayName),
-					//resource.TestCheckResourceAttrSet(FirewallRule.FullResourceName(), "router_id"),
+					resource.TestCheckResourceAttrPair(FirewallRule.FullResourceName(), "vpc_id", dataSourceVpc, "id"),
+					resource.TestCheckResourceAttrPair(FirewallRule.FullResourceName(), "project_id", dataSourceProject, "id"),
 					resource.TestCheckResourceAttrSet(FirewallRule.FullResourceName(), "action"),
 					resource.TestCheckResourceAttrSet(FirewallRule.FullResourceName(), "direction"),
 					resource.TestCheckResourceAttrSet(FirewallRule.FullResourceName(), "disabled"),

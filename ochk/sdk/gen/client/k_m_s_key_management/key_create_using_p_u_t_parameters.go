@@ -54,10 +54,12 @@ func NewKeyCreateUsingPUTParamsWithHTTPClient(client *http.Client) *KeyCreateUsi
 	}
 }
 
-/* KeyCreateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the key create using p u t operation.
+/*
+KeyCreateUsingPUTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the key create using p u t operation.
+
+	Typically these are written to a http.Request.
 */
 type KeyCreateUsingPUTParams struct {
 

@@ -45,7 +45,8 @@ func NewLogCategoriesListUsingGETOK() *LogCategoriesListUsingGETOK {
 	return &LogCategoriesListUsingGETOK{}
 }
 
-/* LogCategoriesListUsingGETOK describes a response with status code 200, with default header values.
+/*
+LogCategoriesListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type LogCategoriesListUsingGETOK struct {
 	Payload *models.LogCategoryListResponse
 }
 
+// IsSuccess returns true when this log categories list using g e t o k response has a 2xx status code
+func (o *LogCategoriesListUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this log categories list using g e t o k response has a 3xx status code
+func (o *LogCategoriesListUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this log categories list using g e t o k response has a 4xx status code
+func (o *LogCategoriesListUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this log categories list using g e t o k response has a 5xx status code
+func (o *LogCategoriesListUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this log categories list using g e t o k response a status code equal to that given
+func (o *LogCategoriesListUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the log categories list using g e t o k response
+func (o *LogCategoriesListUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *LogCategoriesListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /log/categories][%d] logCategoriesListUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *LogCategoriesListUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /log/categories][%d] logCategoriesListUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *LogCategoriesListUsingGETOK) GetPayload() *models.LogCategoryListResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewLogCategoriesListUsingGETBadRequest() *LogCategoriesListUsingGETBadReque
 	return &LogCategoriesListUsingGETBadRequest{}
 }
 
-/* LogCategoriesListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+LogCategoriesListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type LogCategoriesListUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this log categories list using g e t bad request response has a 2xx status code
+func (o *LogCategoriesListUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this log categories list using g e t bad request response has a 3xx status code
+func (o *LogCategoriesListUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this log categories list using g e t bad request response has a 4xx status code
+func (o *LogCategoriesListUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this log categories list using g e t bad request response has a 5xx status code
+func (o *LogCategoriesListUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this log categories list using g e t bad request response a status code equal to that given
+func (o *LogCategoriesListUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the log categories list using g e t bad request response
+func (o *LogCategoriesListUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *LogCategoriesListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /log/categories][%d] logCategoriesListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *LogCategoriesListUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /log/categories][%d] logCategoriesListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *LogCategoriesListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

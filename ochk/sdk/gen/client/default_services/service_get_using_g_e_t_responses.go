@@ -51,7 +51,8 @@ func NewServiceGetUsingGETOK() *ServiceGetUsingGETOK {
 	return &ServiceGetUsingGETOK{}
 }
 
-/* ServiceGetUsingGETOK describes a response with status code 200, with default header values.
+/*
+ServiceGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type ServiceGetUsingGETOK struct {
 	Payload *models.ServiceGetResponse
 }
 
+// IsSuccess returns true when this service get using g e t o k response has a 2xx status code
+func (o *ServiceGetUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this service get using g e t o k response has a 3xx status code
+func (o *ServiceGetUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this service get using g e t o k response has a 4xx status code
+func (o *ServiceGetUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this service get using g e t o k response has a 5xx status code
+func (o *ServiceGetUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this service get using g e t o k response a status code equal to that given
+func (o *ServiceGetUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the service get using g e t o k response
+func (o *ServiceGetUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *ServiceGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/default-services/{serviceId}][%d] serviceGetUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *ServiceGetUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /network/default-services/{serviceId}][%d] serviceGetUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *ServiceGetUsingGETOK) GetPayload() *models.ServiceGetResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewServiceGetUsingGETBadRequest() *ServiceGetUsingGETBadRequest {
 	return &ServiceGetUsingGETBadRequest{}
 }
 
-/* ServiceGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+ServiceGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -91,9 +128,44 @@ type ServiceGetUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this service get using g e t bad request response has a 2xx status code
+func (o *ServiceGetUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this service get using g e t bad request response has a 3xx status code
+func (o *ServiceGetUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this service get using g e t bad request response has a 4xx status code
+func (o *ServiceGetUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this service get using g e t bad request response has a 5xx status code
+func (o *ServiceGetUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this service get using g e t bad request response a status code equal to that given
+func (o *ServiceGetUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the service get using g e t bad request response
+func (o *ServiceGetUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *ServiceGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/default-services/{serviceId}][%d] serviceGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *ServiceGetUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /network/default-services/{serviceId}][%d] serviceGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *ServiceGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,14 +187,49 @@ func NewServiceGetUsingGETNotFound() *ServiceGetUsingGETNotFound {
 	return &ServiceGetUsingGETNotFound{}
 }
 
-/* ServiceGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*
+ServiceGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */
 type ServiceGetUsingGETNotFound struct {
 }
 
+// IsSuccess returns true when this service get using g e t not found response has a 2xx status code
+func (o *ServiceGetUsingGETNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this service get using g e t not found response has a 3xx status code
+func (o *ServiceGetUsingGETNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this service get using g e t not found response has a 4xx status code
+func (o *ServiceGetUsingGETNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this service get using g e t not found response has a 5xx status code
+func (o *ServiceGetUsingGETNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this service get using g e t not found response a status code equal to that given
+func (o *ServiceGetUsingGETNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the service get using g e t not found response
+func (o *ServiceGetUsingGETNotFound) Code() int {
+	return 404
+}
+
 func (o *ServiceGetUsingGETNotFound) Error() string {
+	return fmt.Sprintf("[GET /network/default-services/{serviceId}][%d] serviceGetUsingGETNotFound ", 404)
+}
+
+func (o *ServiceGetUsingGETNotFound) String() string {
 	return fmt.Sprintf("[GET /network/default-services/{serviceId}][%d] serviceGetUsingGETNotFound ", 404)
 }
 

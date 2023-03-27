@@ -51,7 +51,8 @@ func NewCustomServiceCreateUsingPUTOK() *CustomServiceCreateUsingPUTOK {
 	return &CustomServiceCreateUsingPUTOK{}
 }
 
-/* CustomServiceCreateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+CustomServiceCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type CustomServiceCreateUsingPUTOK struct {
 	Payload *models.CreateCustomServiceResponse
 }
 
+// IsSuccess returns true when this custom service create using p u t o k response has a 2xx status code
+func (o *CustomServiceCreateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this custom service create using p u t o k response has a 3xx status code
+func (o *CustomServiceCreateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this custom service create using p u t o k response has a 4xx status code
+func (o *CustomServiceCreateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this custom service create using p u t o k response has a 5xx status code
+func (o *CustomServiceCreateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this custom service create using p u t o k response a status code equal to that given
+func (o *CustomServiceCreateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the custom service create using p u t o k response
+func (o *CustomServiceCreateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *CustomServiceCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/custom-services][%d] customServiceCreateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *CustomServiceCreateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /network/custom-services][%d] customServiceCreateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *CustomServiceCreateUsingPUTOK) GetPayload() *models.CreateCustomServiceResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewCustomServiceCreateUsingPUTCreated() *CustomServiceCreateUsingPUTCreated
 	return &CustomServiceCreateUsingPUTCreated{}
 }
 
-/* CustomServiceCreateUsingPUTCreated describes a response with status code 201, with default header values.
+/*
+CustomServiceCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -91,9 +128,44 @@ type CustomServiceCreateUsingPUTCreated struct {
 	Payload *models.CreateCustomServiceResponse
 }
 
+// IsSuccess returns true when this custom service create using p u t created response has a 2xx status code
+func (o *CustomServiceCreateUsingPUTCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this custom service create using p u t created response has a 3xx status code
+func (o *CustomServiceCreateUsingPUTCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this custom service create using p u t created response has a 4xx status code
+func (o *CustomServiceCreateUsingPUTCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this custom service create using p u t created response has a 5xx status code
+func (o *CustomServiceCreateUsingPUTCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this custom service create using p u t created response a status code equal to that given
+func (o *CustomServiceCreateUsingPUTCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the custom service create using p u t created response
+func (o *CustomServiceCreateUsingPUTCreated) Code() int {
+	return 201
+}
+
 func (o *CustomServiceCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/custom-services][%d] customServiceCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
+func (o *CustomServiceCreateUsingPUTCreated) String() string {
+	return fmt.Sprintf("[PUT /network/custom-services][%d] customServiceCreateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
 func (o *CustomServiceCreateUsingPUTCreated) GetPayload() *models.CreateCustomServiceResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewCustomServiceCreateUsingPUTBadRequest() *CustomServiceCreateUsingPUTBadR
 	return &CustomServiceCreateUsingPUTBadRequest{}
 }
 
-/* CustomServiceCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+CustomServiceCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type CustomServiceCreateUsingPUTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this custom service create using p u t bad request response has a 2xx status code
+func (o *CustomServiceCreateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this custom service create using p u t bad request response has a 3xx status code
+func (o *CustomServiceCreateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this custom service create using p u t bad request response has a 4xx status code
+func (o *CustomServiceCreateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this custom service create using p u t bad request response has a 5xx status code
+func (o *CustomServiceCreateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this custom service create using p u t bad request response a status code equal to that given
+func (o *CustomServiceCreateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the custom service create using p u t bad request response
+func (o *CustomServiceCreateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *CustomServiceCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/custom-services][%d] customServiceCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *CustomServiceCreateUsingPUTBadRequest) String() string {
+	return fmt.Sprintf("[PUT /network/custom-services][%d] customServiceCreateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *CustomServiceCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

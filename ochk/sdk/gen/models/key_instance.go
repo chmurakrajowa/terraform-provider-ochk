@@ -21,12 +21,18 @@ import (
 // swagger:model KeyInstance
 type KeyInstance struct {
 
+	// account
+	Account string `json:"account,omitempty"`
+
 	// activation date
 	// Format: date-time
 	ActivationDate *strfmt.DateTime `json:"activationDate,omitempty"`
 
 	// algorithm
 	Algorithm string `json:"algorithm,omitempty"`
+
+	// application
+	Application string `json:"application,omitempty"`
 
 	// created at
 	// Format: date-time
@@ -35,20 +41,41 @@ type KeyInstance struct {
 	// default i v
 	DefaultIV string `json:"defaultIV,omitempty"`
 
+	// dev account
+	DevAccount string `json:"devAccount,omitempty"`
+
+	// empty material
+	EmptyMaterial bool `json:"emptyMaterial,omitempty"`
+
 	// id
 	ID string `json:"id,omitempty"`
 
 	// key usage list
 	KeyUsageList []string `json:"keyUsageList"`
 
+	// managed
+	Managed bool `json:"managed,omitempty"`
+
 	// material
 	Material string `json:"material,omitempty"`
+
+	// muid
+	Muid string `json:"muid,omitempty"`
 
 	// name
 	Name string `json:"name,omitempty"`
 
+	// never exportable
+	NeverExportable bool `json:"neverExportable,omitempty"`
+
+	// never exported
+	NeverExported bool `json:"neverExported,omitempty"`
+
 	// object type
 	ObjectType string `json:"objectType,omitempty"`
+
+	// publickey
+	Publickey string `json:"publickey,omitempty"`
 
 	// revocation reason
 	// Enum: [AffiliationChanged CACompromise CessationOfOperation KeyCompromise PrivilegeWithdrawn Superseded Unspecified]
@@ -65,6 +92,28 @@ type KeyInstance struct {
 
 	// state
 	State string `json:"state,omitempty"`
+
+	// undeletable
+	Undeletable bool `json:"undeletable,omitempty"`
+
+	// unexportable
+	Unexportable bool `json:"unexportable,omitempty"`
+
+	// updated at
+	// Format: date-time
+	UpdatedAt *strfmt.DateTime `json:"updatedAt,omitempty"`
+
+	// uri
+	URI string `json:"uri,omitempty"`
+
+	// usage
+	Usage string `json:"usage,omitempty"`
+
+	// usage mask
+	UsageMask int32 `json:"usageMask,omitempty"`
+
+	// uuid
+	UUID string `json:"uuid,omitempty"`
 
 	// version
 	Version int32 `json:"version,omitempty"`
@@ -87,6 +136,10 @@ func (m *KeyInstance) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateRevocationReason(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateUpdatedAt(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -207,6 +260,18 @@ func (m *KeyInstance) validateRevocationReason(formats strfmt.Registry) error {
 
 	// value enum
 	if err := m.validateRevocationReasonEnum("revocationReason", "body", m.RevocationReason); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *KeyInstance) validateUpdatedAt(formats strfmt.Registry) error {
+	if swag.IsZero(m.UpdatedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updatedAt", "body", "date-time", m.UpdatedAt.String(), formats); err != nil {
 		return err
 	}
 

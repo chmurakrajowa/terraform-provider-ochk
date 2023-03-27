@@ -12,14 +12,14 @@ import (
 func testAccirewallSNRuleCreateResourceId(firewallRuleResourceName string) resource.ImportStateIdFunc {
 	return func(s *terraform.State) (string, error) {
 		firewallRuleResource := s.RootModule().Resources[firewallRuleResourceName]
-		resourceID := firewallRuleResource.Primary.Attributes["router_id"] + "/" + firewallRuleResource.Primary.ID
+		resourceID := firewallRuleResource.Primary.Attributes["vpc_id"] + "/" + firewallRuleResource.Primary.ID
 		return resourceID, nil
 	}
 }
 
 func TestAccFirewallSNRuleResource_create_update(t *testing.T) {
 	resourceName := "ochk_firewall_sn_rule.default"
-	dataSourceRouter := "data.ochk_router.default"
+	dataSourceRouter := "data.ochk_vpc.default"
 	dataSourceService := "data.ochk_service.http"
 	resourceRuleSource := "ochk_security_group.source"
 	resourceRuleDestination := "ochk_security_group.destination"
@@ -37,8 +37,9 @@ func TestAccFirewallSNRuleResource_create_update(t *testing.T) {
 				Config: testAccFirewallSNRuleResourceConfig(routerName, sourceDisplayName, destinationDisplayName) +
 					testAccFirewallSNRuleResourceConfigWithPriority(ruleDisplayName, 100, "data.ochk_custom_service.custom_service1.id"),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttrPair(resourceName, "router_id", dataSourceRouter, "id"),
+					resource.TestCheckResourceAttrPair(resourceName, "vpc_id", dataSourceRouter, "id"),
 					resource.TestCheckResourceAttr(resourceName, "display_name", ruleDisplayName),
+					resource.TestCheckResourceAttrPair(resourceName, "project_id", "data.ochk_project.project-1-"+routerName, "id"),
 					resource.TestCheckResourceAttr(resourceName, "action", "ALLOW"),
 					resource.TestCheckResourceAttr(resourceName, "direction", "IN_OUT"),
 					resource.TestCheckResourceAttr(resourceName, "ip_protocol", "IPV4_IPV6"),
@@ -70,8 +71,17 @@ locals {
 	routerDisplayName = %[1]q
 }
 
-data "ochk_router" "default" {
+data "ochk_project" "project-1-%[1]s" {
+  display_name = "`+testData.Project1Name+`"
+}
+
+data "ochk_vrf" "vrf" {
+	display_name = %[7]q
+}
+
+data "ochk_vpc" "default" {
   display_name = local.routerDisplayName
+  vrf_id = data.ochk_vrf.vrf.id
 }
 
 data "ochk_service" "http" {
@@ -92,6 +102,7 @@ data "ochk_custom_service" "custom_service2" {
 
 resource "ochk_security_group" "source" {
   display_name = %[2]q
+  project_id = data.ochk_project.project-1-%[1]s.id
 
   members {
     id = data.ochk_virtual_machine.default.id
@@ -101,27 +112,43 @@ resource "ochk_security_group" "source" {
 
 resource "ochk_security_group" "destination" {
   display_name = %[3]q
+  project_id = data.ochk_project.project-1-%[1]s.id
   
   members {
     id = data.ochk_virtual_machine.default.id
     type = "VIRTUAL_MACHINE"
   }
 }
-`, router, source, destination, testData.VirtualMachineDisplayName, testData.CustomService1DisplayName, testData.CustomService2DisplayName)
+`, router, source, destination, testData.VirtualMachineDisplayName, testData.CustomService1DisplayName, testData.CustomService2DisplayName, testData.VRF)
 }
 
 func testAccFirewallSNRuleResourceConfigWithPriority(displayName string, priority int64, customServiceResourceID string) string {
 	return fmt.Sprintf(`
+
+data "ochk_vrf" "vrf-%[1]s" {
+	display_name = %[4]q
+}
+
+data "ochk_project" "project-1-%[1]s" {
+  display_name = "`+testData.Project1Name+`"
+}
+
+data "ochk_vpc" "default-%[1]s" {
+  display_name = local.routerDisplayName
+  vrf_id = data.ochk_vrf.vrf-%[1]s.id
+}
+
 resource "ochk_firewall_sn_rule" "default" {
   display_name = %[1]q
-  router_id = data.ochk_router.default.id
+  vpc_id = data.ochk_vpc.default-%[1]s.id
+  project_id = data.ochk_project.project-1-%[1]s.id
   services = [data.ochk_service.http.id]
   custom_services = [%[3]s]
   source = [ochk_security_group.source.id]
   destination = [ochk_security_group.destination.id]
   priority = %[2]d
 }
-`, displayName, priority, customServiceResourceID)
+`, displayName, priority, customServiceResourceID, testData.VRF)
 }
 
 func testAccFirewallSNRuleResourceNotExists(displayName string) resource.TestCheckFunc {

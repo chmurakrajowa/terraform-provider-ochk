@@ -45,7 +45,8 @@ func NewKeyRotationScheduleUpdateUsingPUTOK() *KeyRotationScheduleUpdateUsingPUT
 	return &KeyRotationScheduleUpdateUsingPUTOK{}
 }
 
-/* KeyRotationScheduleUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+KeyRotationScheduleUpdateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type KeyRotationScheduleUpdateUsingPUTOK struct {
 	Payload *models.UpdateKeyRotationScheduleResponse
 }
 
+// IsSuccess returns true when this key rotation schedule update using p u t o k response has a 2xx status code
+func (o *KeyRotationScheduleUpdateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this key rotation schedule update using p u t o k response has a 3xx status code
+func (o *KeyRotationScheduleUpdateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key rotation schedule update using p u t o k response has a 4xx status code
+func (o *KeyRotationScheduleUpdateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this key rotation schedule update using p u t o k response has a 5xx status code
+func (o *KeyRotationScheduleUpdateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key rotation schedule update using p u t o k response a status code equal to that given
+func (o *KeyRotationScheduleUpdateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the key rotation schedule update using p u t o k response
+func (o *KeyRotationScheduleUpdateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *KeyRotationScheduleUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /kms/schedule/{keyId}][%d] keyRotationScheduleUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *KeyRotationScheduleUpdateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /kms/schedule/{keyId}][%d] keyRotationScheduleUpdateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *KeyRotationScheduleUpdateUsingPUTOK) GetPayload() *models.UpdateKeyRotationScheduleResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewKeyRotationScheduleUpdateUsingPUTBadRequest() *KeyRotationScheduleUpdate
 	return &KeyRotationScheduleUpdateUsingPUTBadRequest{}
 }
 
-/* KeyRotationScheduleUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+KeyRotationScheduleUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type KeyRotationScheduleUpdateUsingPUTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this key rotation schedule update using p u t bad request response has a 2xx status code
+func (o *KeyRotationScheduleUpdateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this key rotation schedule update using p u t bad request response has a 3xx status code
+func (o *KeyRotationScheduleUpdateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key rotation schedule update using p u t bad request response has a 4xx status code
+func (o *KeyRotationScheduleUpdateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this key rotation schedule update using p u t bad request response has a 5xx status code
+func (o *KeyRotationScheduleUpdateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key rotation schedule update using p u t bad request response a status code equal to that given
+func (o *KeyRotationScheduleUpdateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the key rotation schedule update using p u t bad request response
+func (o *KeyRotationScheduleUpdateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *KeyRotationScheduleUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /kms/schedule/{keyId}][%d] keyRotationScheduleUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *KeyRotationScheduleUpdateUsingPUTBadRequest) String() string {
+	return fmt.Sprintf("[PUT /kms/schedule/{keyId}][%d] keyRotationScheduleUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *KeyRotationScheduleUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

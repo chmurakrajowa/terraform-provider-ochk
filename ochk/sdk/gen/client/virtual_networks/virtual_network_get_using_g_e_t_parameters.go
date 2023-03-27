@@ -52,10 +52,12 @@ func NewVirtualNetworkGetUsingGETParamsWithHTTPClient(client *http.Client) *Virt
 	}
 }
 
-/* VirtualNetworkGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the virtual network get using g e t operation.
+/*
+VirtualNetworkGetUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the virtual network get using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type VirtualNetworkGetUsingGETParams struct {
 

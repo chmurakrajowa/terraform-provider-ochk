@@ -54,10 +54,12 @@ func NewKeyRevokeUsingPOSTParamsWithHTTPClient(client *http.Client) *KeyRevokeUs
 	}
 }
 
-/* KeyRevokeUsingPOSTParams contains all the parameters to send to the API endpoint
-   for the key revoke using p o s t operation.
+/*
+KeyRevokeUsingPOSTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the key revoke using p o s t operation.
+
+	Typically these are written to a http.Request.
 */
 type KeyRevokeUsingPOSTParams struct {
 

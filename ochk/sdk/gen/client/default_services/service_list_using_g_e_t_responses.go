@@ -45,7 +45,8 @@ func NewServiceListUsingGETOK() *ServiceListUsingGETOK {
 	return &ServiceListUsingGETOK{}
 }
 
-/* ServiceListUsingGETOK describes a response with status code 200, with default header values.
+/*
+ServiceListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type ServiceListUsingGETOK struct {
 	Payload *models.ServiceListResponse
 }
 
+// IsSuccess returns true when this service list using g e t o k response has a 2xx status code
+func (o *ServiceListUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this service list using g e t o k response has a 3xx status code
+func (o *ServiceListUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this service list using g e t o k response has a 4xx status code
+func (o *ServiceListUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this service list using g e t o k response has a 5xx status code
+func (o *ServiceListUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this service list using g e t o k response a status code equal to that given
+func (o *ServiceListUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the service list using g e t o k response
+func (o *ServiceListUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *ServiceListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/default-services][%d] serviceListUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *ServiceListUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /network/default-services][%d] serviceListUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *ServiceListUsingGETOK) GetPayload() *models.ServiceListResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewServiceListUsingGETBadRequest() *ServiceListUsingGETBadRequest {
 	return &ServiceListUsingGETBadRequest{}
 }
 
-/* ServiceListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+ServiceListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type ServiceListUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this service list using g e t bad request response has a 2xx status code
+func (o *ServiceListUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this service list using g e t bad request response has a 3xx status code
+func (o *ServiceListUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this service list using g e t bad request response has a 4xx status code
+func (o *ServiceListUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this service list using g e t bad request response has a 5xx status code
+func (o *ServiceListUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this service list using g e t bad request response a status code equal to that given
+func (o *ServiceListUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the service list using g e t bad request response
+func (o *ServiceListUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *ServiceListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/default-services][%d] serviceListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *ServiceListUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /network/default-services][%d] serviceListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *ServiceListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

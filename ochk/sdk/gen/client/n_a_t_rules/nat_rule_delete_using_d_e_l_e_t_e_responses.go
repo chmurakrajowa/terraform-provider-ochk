@@ -45,7 +45,8 @@ func NewNatRuleDeleteUsingDELETEOK() *NatRuleDeleteUsingDELETEOK {
 	return &NatRuleDeleteUsingDELETEOK{}
 }
 
-/* NatRuleDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*
+NatRuleDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 Entity has been deleted
 */
@@ -53,9 +54,44 @@ type NatRuleDeleteUsingDELETEOK struct {
 	Payload *models.DeleteNATRuleResponse
 }
 
+// IsSuccess returns true when this nat rule delete using d e l e t e o k response has a 2xx status code
+func (o *NatRuleDeleteUsingDELETEOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this nat rule delete using d e l e t e o k response has a 3xx status code
+func (o *NatRuleDeleteUsingDELETEOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this nat rule delete using d e l e t e o k response has a 4xx status code
+func (o *NatRuleDeleteUsingDELETEOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this nat rule delete using d e l e t e o k response has a 5xx status code
+func (o *NatRuleDeleteUsingDELETEOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this nat rule delete using d e l e t e o k response a status code equal to that given
+func (o *NatRuleDeleteUsingDELETEOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the nat rule delete using d e l e t e o k response
+func (o *NatRuleDeleteUsingDELETEOK) Code() int {
+	return 200
+}
+
 func (o *NatRuleDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /network/nat/rules/{ruleId}][%d] natRuleDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
+func (o *NatRuleDeleteUsingDELETEOK) String() string {
+	return fmt.Sprintf("[DELETE /network/nat/rules/{ruleId}][%d] natRuleDeleteUsingDELETEOK  %+v", 200, o.Payload)
+}
+
 func (o *NatRuleDeleteUsingDELETEOK) GetPayload() *models.DeleteNATRuleResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewNatRuleDeleteUsingDELETEBadRequest() *NatRuleDeleteUsingDELETEBadRequest
 	return &NatRuleDeleteUsingDELETEBadRequest{}
 }
 
-/* NatRuleDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*
+NatRuleDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type NatRuleDeleteUsingDELETEBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this nat rule delete using d e l e t e bad request response has a 2xx status code
+func (o *NatRuleDeleteUsingDELETEBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this nat rule delete using d e l e t e bad request response has a 3xx status code
+func (o *NatRuleDeleteUsingDELETEBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this nat rule delete using d e l e t e bad request response has a 4xx status code
+func (o *NatRuleDeleteUsingDELETEBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this nat rule delete using d e l e t e bad request response has a 5xx status code
+func (o *NatRuleDeleteUsingDELETEBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this nat rule delete using d e l e t e bad request response a status code equal to that given
+func (o *NatRuleDeleteUsingDELETEBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the nat rule delete using d e l e t e bad request response
+func (o *NatRuleDeleteUsingDELETEBadRequest) Code() int {
+	return 400
+}
+
 func (o *NatRuleDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /network/nat/rules/{ruleId}][%d] natRuleDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *NatRuleDeleteUsingDELETEBadRequest) String() string {
+	return fmt.Sprintf("[DELETE /network/nat/rules/{ruleId}][%d] natRuleDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *NatRuleDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

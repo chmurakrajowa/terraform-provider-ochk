@@ -8,6 +8,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
+	"sync"
 )
 
 type CustomServicesProxy struct {
@@ -26,7 +27,10 @@ func (p *CustomServicesProxy) Create(ctx context.Context, customService *models.
 		HTTPClient:            p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	_, put, err := p.service.CustomServiceCreateUsingPUT(params)
+	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while creating custom service: %w", err)
 	}
@@ -50,7 +54,10 @@ func (p *CustomServicesProxy) Update(ctx context.Context, customService *models.
 		HTTPClient:            p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	put, _, err := p.service.CustomServiceUpdateUsingPUT(params)
+	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying custom service: %w", err)
 	}
@@ -70,6 +77,7 @@ func (p *CustomServicesProxy) Read(ctx context.Context, customServiceID string) 
 	}
 
 	response, err := p.service.CustomServiceGetUsingGET(params)
+
 	if err != nil {
 		var notFound *custom_services.CustomServiceGetUsingGETNotFound
 		if ok := errors.As(err, &notFound); ok {
@@ -91,6 +99,24 @@ func (p *CustomServicesProxy) ListByDisplayName(ctx context.Context, displayName
 		DisplayName: &displayName,
 		Context:     ctx,
 		HTTPClient:  p.httpClient,
+	}
+
+	response, err := p.service.CustomServiceListUsingGET(params)
+	if err != nil {
+		return nil, fmt.Errorf("error while listing custom services: %w", err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("listing custom services failed: %s", response.Payload.Messages)
+	}
+
+	return response.Payload.CustomServiceInstanceCollection, nil
+}
+
+func (p *CustomServicesProxy) ListCustomServices(ctx context.Context) ([]*models.CustomServiceInstance, error) {
+	params := &custom_services.CustomServiceListUsingGETParams{
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	response, err := p.service.CustomServiceListUsingGET(params)

@@ -52,10 +52,12 @@ func NewKeyRotationScheduleGetUsingGETParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* KeyRotationScheduleGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the key rotation schedule get using g e t operation.
+/*
+KeyRotationScheduleGetUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the key rotation schedule get using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type KeyRotationScheduleGetUsingGETParams struct {
 

@@ -36,9 +36,9 @@ type ClientService interface {
 }
 
 /*
-  GetPublicKeyUsingPOST gets public key
+GetPublicKeyUsingPOST gets public key
 
-  Get public key
+Get public key
 */
 func (a *Client) GetPublicKeyUsingPOST(params *GetPublicKeyUsingPOSTParams, opts ...ClientOption) (*GetPublicKeyUsingPOSTOK, error) {
 	// TODO: Validate the params before sending

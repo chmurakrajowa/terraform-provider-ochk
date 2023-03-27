@@ -37,6 +37,8 @@ func TestAccDeploymentDataSource_read(t *testing.T) {
 				Config: deployment.ToString(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", testData.Deployment1DisplayName),
+					resource.TestCheckResourceAttr(resourceName, "deployment_type", "TEMPLATE"),
+					resource.TestCheckResourceAttrSet(resourceName, "initial_size_mb"),
 				),
 			},
 		},

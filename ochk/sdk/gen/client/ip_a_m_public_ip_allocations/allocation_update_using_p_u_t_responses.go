@@ -45,7 +45,8 @@ func NewAllocationUpdateUsingPUTOK() *AllocationUpdateUsingPUTOK {
 	return &AllocationUpdateUsingPUTOK{}
 }
 
-/* AllocationUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+AllocationUpdateUsingPUTOK describes a response with status code 200, with default header values.
 
 Entity has been created
 */
@@ -53,9 +54,44 @@ type AllocationUpdateUsingPUTOK struct {
 	Payload *models.UpdatePublicIPAllocationResponse
 }
 
+// IsSuccess returns true when this allocation update using p u t o k response has a 2xx status code
+func (o *AllocationUpdateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this allocation update using p u t o k response has a 3xx status code
+func (o *AllocationUpdateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this allocation update using p u t o k response has a 4xx status code
+func (o *AllocationUpdateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this allocation update using p u t o k response has a 5xx status code
+func (o *AllocationUpdateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this allocation update using p u t o k response a status code equal to that given
+func (o *AllocationUpdateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the allocation update using p u t o k response
+func (o *AllocationUpdateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *AllocationUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /ipam/ipaddress/public/allocation/{allocationId}][%d] allocationUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *AllocationUpdateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /ipam/ipaddress/public/allocation/{allocationId}][%d] allocationUpdateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *AllocationUpdateUsingPUTOK) GetPayload() *models.UpdatePublicIPAllocationResponse {
 	return o.Payload
 }
@@ -77,14 +113,49 @@ func NewAllocationUpdateUsingPUTBadRequest() *AllocationUpdateUsingPUTBadRequest
 	return &AllocationUpdateUsingPUTBadRequest{}
 }
 
-/* AllocationUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+AllocationUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
 type AllocationUpdateUsingPUTBadRequest struct {
 }
 
+// IsSuccess returns true when this allocation update using p u t bad request response has a 2xx status code
+func (o *AllocationUpdateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this allocation update using p u t bad request response has a 3xx status code
+func (o *AllocationUpdateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this allocation update using p u t bad request response has a 4xx status code
+func (o *AllocationUpdateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this allocation update using p u t bad request response has a 5xx status code
+func (o *AllocationUpdateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this allocation update using p u t bad request response a status code equal to that given
+func (o *AllocationUpdateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the allocation update using p u t bad request response
+func (o *AllocationUpdateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *AllocationUpdateUsingPUTBadRequest) Error() string {
+	return fmt.Sprintf("[PUT /ipam/ipaddress/public/allocation/{allocationId}][%d] allocationUpdateUsingPUTBadRequest ", 400)
+}
+
+func (o *AllocationUpdateUsingPUTBadRequest) String() string {
 	return fmt.Sprintf("[PUT /ipam/ipaddress/public/allocation/{allocationId}][%d] allocationUpdateUsingPUTBadRequest ", 400)
 }
 

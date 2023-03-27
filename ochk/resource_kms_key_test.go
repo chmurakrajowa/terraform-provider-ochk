@@ -66,6 +66,11 @@ func TestAccKMSKeyResource_create_update(t *testing.T) {
 				),
 			},
 			{
+				ResourceName:      KMSKeyResourceName,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+			{
 				Config: kmsKeyUpdated.ToString(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(KMSKeyResourceName, "display_name", kmsKeyUpdated.DisplayName),

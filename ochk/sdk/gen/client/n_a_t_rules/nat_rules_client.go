@@ -44,9 +44,9 @@ type ClientService interface {
 }
 
 /*
-  NatRuleCreateUsingPUT creates
+NatRuleCreateUsingPUT creates
 
-  Create NAT rule
+Create NAT rule
 */
 func (a *Client) NatRuleCreateUsingPUT(params *NatRuleCreateUsingPUTParams, opts ...ClientOption) (*NatRuleCreateUsingPUTOK, *NatRuleCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
@@ -85,9 +85,9 @@ func (a *Client) NatRuleCreateUsingPUT(params *NatRuleCreateUsingPUTParams, opts
 }
 
 /*
-  NatRuleDeleteUsingDELETE deletes
+NatRuleDeleteUsingDELETE deletes
 
-  Delete NAT rule
+Delete NAT rule
 */
 func (a *Client) NatRuleDeleteUsingDELETE(params *NatRuleDeleteUsingDELETEParams, opts ...ClientOption) (*NatRuleDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
@@ -125,9 +125,9 @@ func (a *Client) NatRuleDeleteUsingDELETE(params *NatRuleDeleteUsingDELETEParams
 }
 
 /*
-  NatRuleGetUsingGET gets
+NatRuleGetUsingGET gets
 
-  Get NAT rule
+Get NAT rule
 */
 func (a *Client) NatRuleGetUsingGET(params *NatRuleGetUsingGETParams, opts ...ClientOption) (*NatRuleGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -165,9 +165,9 @@ func (a *Client) NatRuleGetUsingGET(params *NatRuleGetUsingGETParams, opts ...Cl
 }
 
 /*
-  NatRuleListUsingGET lists
+NatRuleListUsingGET lists
 
-  List NAT rules
+List NAT rules
 */
 func (a *Client) NatRuleListUsingGET(params *NatRuleListUsingGETParams, opts ...ClientOption) (*NatRuleListUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -205,9 +205,9 @@ func (a *Client) NatRuleListUsingGET(params *NatRuleListUsingGETParams, opts ...
 }
 
 /*
-  NatRuleUpdateUsingPUT updates
+NatRuleUpdateUsingPUT updates
 
-  Update NAT rule
+Update NAT rule
 */
 func (a *Client) NatRuleUpdateUsingPUT(params *NatRuleUpdateUsingPUTParams, opts ...ClientOption) (*NatRuleUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending

@@ -51,7 +51,8 @@ func NewCustomServiceDeleteUsingDELETEOK() *CustomServiceDeleteUsingDELETEOK {
 	return &CustomServiceDeleteUsingDELETEOK{}
 }
 
-/* CustomServiceDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*
+CustomServiceDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type CustomServiceDeleteUsingDELETEOK struct {
 	Payload *models.DeleteCustomServiceResponse
 }
 
+// IsSuccess returns true when this custom service delete using d e l e t e o k response has a 2xx status code
+func (o *CustomServiceDeleteUsingDELETEOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this custom service delete using d e l e t e o k response has a 3xx status code
+func (o *CustomServiceDeleteUsingDELETEOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this custom service delete using d e l e t e o k response has a 4xx status code
+func (o *CustomServiceDeleteUsingDELETEOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this custom service delete using d e l e t e o k response has a 5xx status code
+func (o *CustomServiceDeleteUsingDELETEOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this custom service delete using d e l e t e o k response a status code equal to that given
+func (o *CustomServiceDeleteUsingDELETEOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the custom service delete using d e l e t e o k response
+func (o *CustomServiceDeleteUsingDELETEOK) Code() int {
+	return 200
+}
+
 func (o *CustomServiceDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /network/custom-services/{serviceId}][%d] customServiceDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
+func (o *CustomServiceDeleteUsingDELETEOK) String() string {
+	return fmt.Sprintf("[DELETE /network/custom-services/{serviceId}][%d] customServiceDeleteUsingDELETEOK  %+v", 200, o.Payload)
+}
+
 func (o *CustomServiceDeleteUsingDELETEOK) GetPayload() *models.DeleteCustomServiceResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewCustomServiceDeleteUsingDELETECreated() *CustomServiceDeleteUsingDELETEC
 	return &CustomServiceDeleteUsingDELETECreated{}
 }
 
-/* CustomServiceDeleteUsingDELETECreated describes a response with status code 201, with default header values.
+/*
+CustomServiceDeleteUsingDELETECreated describes a response with status code 201, with default header values.
 
 Entity has been deleted
 */
@@ -91,9 +128,44 @@ type CustomServiceDeleteUsingDELETECreated struct {
 	Payload *models.DeleteCustomServiceResponse
 }
 
+// IsSuccess returns true when this custom service delete using d e l e t e created response has a 2xx status code
+func (o *CustomServiceDeleteUsingDELETECreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this custom service delete using d e l e t e created response has a 3xx status code
+func (o *CustomServiceDeleteUsingDELETECreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this custom service delete using d e l e t e created response has a 4xx status code
+func (o *CustomServiceDeleteUsingDELETECreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this custom service delete using d e l e t e created response has a 5xx status code
+func (o *CustomServiceDeleteUsingDELETECreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this custom service delete using d e l e t e created response a status code equal to that given
+func (o *CustomServiceDeleteUsingDELETECreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the custom service delete using d e l e t e created response
+func (o *CustomServiceDeleteUsingDELETECreated) Code() int {
+	return 201
+}
+
 func (o *CustomServiceDeleteUsingDELETECreated) Error() string {
 	return fmt.Sprintf("[DELETE /network/custom-services/{serviceId}][%d] customServiceDeleteUsingDELETECreated  %+v", 201, o.Payload)
 }
+
+func (o *CustomServiceDeleteUsingDELETECreated) String() string {
+	return fmt.Sprintf("[DELETE /network/custom-services/{serviceId}][%d] customServiceDeleteUsingDELETECreated  %+v", 201, o.Payload)
+}
+
 func (o *CustomServiceDeleteUsingDELETECreated) GetPayload() *models.DeleteCustomServiceResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewCustomServiceDeleteUsingDELETEBadRequest() *CustomServiceDeleteUsingDELE
 	return &CustomServiceDeleteUsingDELETEBadRequest{}
 }
 
-/* CustomServiceDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*
+CustomServiceDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type CustomServiceDeleteUsingDELETEBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this custom service delete using d e l e t e bad request response has a 2xx status code
+func (o *CustomServiceDeleteUsingDELETEBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this custom service delete using d e l e t e bad request response has a 3xx status code
+func (o *CustomServiceDeleteUsingDELETEBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this custom service delete using d e l e t e bad request response has a 4xx status code
+func (o *CustomServiceDeleteUsingDELETEBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this custom service delete using d e l e t e bad request response has a 5xx status code
+func (o *CustomServiceDeleteUsingDELETEBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this custom service delete using d e l e t e bad request response a status code equal to that given
+func (o *CustomServiceDeleteUsingDELETEBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the custom service delete using d e l e t e bad request response
+func (o *CustomServiceDeleteUsingDELETEBadRequest) Code() int {
+	return 400
+}
+
 func (o *CustomServiceDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /network/custom-services/{serviceId}][%d] customServiceDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *CustomServiceDeleteUsingDELETEBadRequest) String() string {
+	return fmt.Sprintf("[DELETE /network/custom-services/{serviceId}][%d] customServiceDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *CustomServiceDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

@@ -44,9 +44,9 @@ type ClientService interface {
 }
 
 /*
-  IPCollectionCreateUsingPUT creates
+IPCollectionCreateUsingPUT creates
 
-  Create Ip collection
+Create Ip collection
 */
 func (a *Client) IPCollectionCreateUsingPUT(params *IPCollectionCreateUsingPUTParams, opts ...ClientOption) (*IPCollectionCreateUsingPUTOK, *IPCollectionCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
@@ -85,9 +85,9 @@ func (a *Client) IPCollectionCreateUsingPUT(params *IPCollectionCreateUsingPUTPa
 }
 
 /*
-  IPCollectionDeleteUsingDELETE deletes
+IPCollectionDeleteUsingDELETE deletes
 
-  Delete ip collection
+Delete ip collection
 */
 func (a *Client) IPCollectionDeleteUsingDELETE(params *IPCollectionDeleteUsingDELETEParams, opts ...ClientOption) (*IPCollectionDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
@@ -125,9 +125,9 @@ func (a *Client) IPCollectionDeleteUsingDELETE(params *IPCollectionDeleteUsingDE
 }
 
 /*
-  IPCollectionGetUsingGET gets
+IPCollectionGetUsingGET gets
 
-  Get ip collection
+Get ip collection
 */
 func (a *Client) IPCollectionGetUsingGET(params *IPCollectionGetUsingGETParams, opts ...ClientOption) (*IPCollectionGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -165,9 +165,9 @@ func (a *Client) IPCollectionGetUsingGET(params *IPCollectionGetUsingGETParams, 
 }
 
 /*
-  IPCollectionListUsingGET lists
+IPCollectionListUsingGET lists
 
-  List ip collection
+List ip collection
 */
 func (a *Client) IPCollectionListUsingGET(params *IPCollectionListUsingGETParams, opts ...ClientOption) (*IPCollectionListUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -205,9 +205,9 @@ func (a *Client) IPCollectionListUsingGET(params *IPCollectionListUsingGETParams
 }
 
 /*
-  IPCollectionUpdateUsingPUT updates
+IPCollectionUpdateUsingPUT updates
 
-  Update ip collection
+Update ip collection
 */
 func (a *Client) IPCollectionUpdateUsingPUT(params *IPCollectionUpdateUsingPUTParams, opts ...ClientOption) (*IPCollectionUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending

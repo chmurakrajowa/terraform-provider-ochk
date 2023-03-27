@@ -36,9 +36,9 @@ type ClientService interface {
 }
 
 /*
-  SyncUsingPOST syncs
+SyncUsingPOST syncs
 
-  Sync
+Sync
 */
 func (a *Client) SyncUsingPOST(params *SyncUsingPOSTParams, opts ...ClientOption) (*SyncUsingPOSTOK, *SyncUsingPOSTCreated, error) {
 	// TODO: Validate the params before sending

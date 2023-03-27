@@ -8,6 +8,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
+	"sync"
 )
 
 type RoutersProxy struct {
@@ -22,7 +23,11 @@ func (p *RoutersProxy) Read(ctx context.Context, routerID string) (*models.Route
 		HTTPClient: p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.RouterGetUsingGET(params)
+	mutex.Unlock()
+
 	if err != nil {
 		var notFound *routers.RouterGetUsingGETNotFound
 		if ok := errors.As(err, &notFound); ok {
@@ -46,7 +51,33 @@ func (p *RoutersProxy) ListByDisplayName(ctx context.Context, displayName string
 		HTTPClient:  p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.RouterListUsingGET(params)
+	mutex.Unlock()
+
+	if err != nil {
+		return nil, fmt.Errorf("error while listing routers: %w", err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("listing routers failed: %s", response.Payload.Messages)
+	}
+
+	return response.Payload.RouterCollection, nil
+}
+
+func (p *RoutersProxy) List(ctx context.Context) ([]*models.RouterInstance, error) {
+	params := &routers.RouterListUsingGETParams{
+		Context:    ctx,
+		HTTPClient: p.httpClient,
+	}
+
+	mutex := sync.Mutex{}
+	mutex.Lock()
+	response, err := p.service.RouterListUsingGET(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while listing routers: %w", err)
 	}
@@ -69,7 +100,11 @@ func (p *RoutersProxy) Create(ctx context.Context, Router *models.RouterInstance
 		HTTPClient:     p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	_, put, err := p.service.RouterCreateUsingPUT(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while creating router: %w", err)
 	}
@@ -93,7 +128,11 @@ func (p *RoutersProxy) Update(ctx context.Context, Router *models.RouterInstance
 		HTTPClient:     p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	put, _, err := p.service.RouterUpdateUsingPUT(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying router: %w", err)
 	}
@@ -125,6 +164,7 @@ func (p *RoutersProxy) Delete(ctx context.Context, RouterID string) error {
 	}
 
 	response, _, err := p.service.RouterDeleteUsingDELETE(params)
+
 	if err != nil {
 		var badRequest *routers.RouterDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {

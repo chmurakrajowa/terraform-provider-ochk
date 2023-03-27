@@ -47,6 +47,9 @@ type NATRuleInstance struct {
 	// Enum: [BYPASS MATCH_EXTERNAL_ADDRESS MATCH_INTERNAL_ADDRESS]
 	FirewallMatch string `json:"firewallMatch,omitempty"`
 
+	// logging
+	Logging bool `json:"logging,omitempty"`
+
 	// modification date
 	// Format: date-time
 	ModificationDate *strfmt.DateTime `json:"modificationDate,omitempty"`

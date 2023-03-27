@@ -51,7 +51,8 @@ func NewGfwRuleGetUsingGETOK() *GfwRuleGetUsingGETOK {
 	return &GfwRuleGetUsingGETOK{}
 }
 
-/* GfwRuleGetUsingGETOK describes a response with status code 200, with default header values.
+/*
+GfwRuleGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type GfwRuleGetUsingGETOK struct {
 	Payload *models.GFWRuleGetResponse
 }
 
+// IsSuccess returns true when this gfw rule get using g e t o k response has a 2xx status code
+func (o *GfwRuleGetUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this gfw rule get using g e t o k response has a 3xx status code
+func (o *GfwRuleGetUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this gfw rule get using g e t o k response has a 4xx status code
+func (o *GfwRuleGetUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this gfw rule get using g e t o k response has a 5xx status code
+func (o *GfwRuleGetUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this gfw rule get using g e t o k response a status code equal to that given
+func (o *GfwRuleGetUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the gfw rule get using g e t o k response
+func (o *GfwRuleGetUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *GfwRuleGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleGetUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *GfwRuleGetUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleGetUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *GfwRuleGetUsingGETOK) GetPayload() *models.GFWRuleGetResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewGfwRuleGetUsingGETBadRequest() *GfwRuleGetUsingGETBadRequest {
 	return &GfwRuleGetUsingGETBadRequest{}
 }
 
-/* GfwRuleGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+GfwRuleGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -91,9 +128,44 @@ type GfwRuleGetUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this gfw rule get using g e t bad request response has a 2xx status code
+func (o *GfwRuleGetUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this gfw rule get using g e t bad request response has a 3xx status code
+func (o *GfwRuleGetUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this gfw rule get using g e t bad request response has a 4xx status code
+func (o *GfwRuleGetUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this gfw rule get using g e t bad request response has a 5xx status code
+func (o *GfwRuleGetUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this gfw rule get using g e t bad request response a status code equal to that given
+func (o *GfwRuleGetUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the gfw rule get using g e t bad request response
+func (o *GfwRuleGetUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *GfwRuleGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *GfwRuleGetUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *GfwRuleGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
@@ -115,14 +187,49 @@ func NewGfwRuleGetUsingGETNotFound() *GfwRuleGetUsingGETNotFound {
 	return &GfwRuleGetUsingGETNotFound{}
 }
 
-/* GfwRuleGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*
+GfwRuleGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */
 type GfwRuleGetUsingGETNotFound struct {
 }
 
+// IsSuccess returns true when this gfw rule get using g e t not found response has a 2xx status code
+func (o *GfwRuleGetUsingGETNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this gfw rule get using g e t not found response has a 3xx status code
+func (o *GfwRuleGetUsingGETNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this gfw rule get using g e t not found response has a 4xx status code
+func (o *GfwRuleGetUsingGETNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this gfw rule get using g e t not found response has a 5xx status code
+func (o *GfwRuleGetUsingGETNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this gfw rule get using g e t not found response a status code equal to that given
+func (o *GfwRuleGetUsingGETNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the gfw rule get using g e t not found response
+func (o *GfwRuleGetUsingGETNotFound) Code() int {
+	return 404
+}
+
 func (o *GfwRuleGetUsingGETNotFound) Error() string {
+	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleGetUsingGETNotFound ", 404)
+}
+
+func (o *GfwRuleGetUsingGETNotFound) String() string {
 	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/s-n/{ruleId}][%d] gfwRuleGetUsingGETNotFound ", 404)
 }
 

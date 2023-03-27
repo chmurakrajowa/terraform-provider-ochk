@@ -45,7 +45,8 @@ func NewBackupPlanListUsingGETOK() *BackupPlanListUsingGETOK {
 	return &BackupPlanListUsingGETOK{}
 }
 
-/* BackupPlanListUsingGETOK describes a response with status code 200, with default header values.
+/*
+BackupPlanListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type BackupPlanListUsingGETOK struct {
 	Payload *models.BackupPlanListResponse
 }
 
+// IsSuccess returns true when this backup plan list using g e t o k response has a 2xx status code
+func (o *BackupPlanListUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this backup plan list using g e t o k response has a 3xx status code
+func (o *BackupPlanListUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this backup plan list using g e t o k response has a 4xx status code
+func (o *BackupPlanListUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this backup plan list using g e t o k response has a 5xx status code
+func (o *BackupPlanListUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this backup plan list using g e t o k response a status code equal to that given
+func (o *BackupPlanListUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the backup plan list using g e t o k response
+func (o *BackupPlanListUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *BackupPlanListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /backups/plans][%d] backupPlanListUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *BackupPlanListUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /backups/plans][%d] backupPlanListUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *BackupPlanListUsingGETOK) GetPayload() *models.BackupPlanListResponse {
 	return o.Payload
 }
@@ -77,14 +113,49 @@ func NewBackupPlanListUsingGETBadRequest() *BackupPlanListUsingGETBadRequest {
 	return &BackupPlanListUsingGETBadRequest{}
 }
 
-/* BackupPlanListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+BackupPlanListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
 type BackupPlanListUsingGETBadRequest struct {
 }
 
+// IsSuccess returns true when this backup plan list using g e t bad request response has a 2xx status code
+func (o *BackupPlanListUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this backup plan list using g e t bad request response has a 3xx status code
+func (o *BackupPlanListUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this backup plan list using g e t bad request response has a 4xx status code
+func (o *BackupPlanListUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this backup plan list using g e t bad request response has a 5xx status code
+func (o *BackupPlanListUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this backup plan list using g e t bad request response a status code equal to that given
+func (o *BackupPlanListUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the backup plan list using g e t bad request response
+func (o *BackupPlanListUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *BackupPlanListUsingGETBadRequest) Error() string {
+	return fmt.Sprintf("[GET /backups/plans][%d] backupPlanListUsingGETBadRequest ", 400)
+}
+
+func (o *BackupPlanListUsingGETBadRequest) String() string {
 	return fmt.Sprintf("[GET /backups/plans][%d] backupPlanListUsingGETBadRequest ", 400)
 }
 

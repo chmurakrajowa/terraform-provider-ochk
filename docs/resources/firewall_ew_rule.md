@@ -9,8 +9,17 @@ Resource for managing firewall EW Rules to control incoming and outgoing network
 ## Example Usage
 
 ```hcl
-data "ochk_security_policy" "default" {
-  display_name = "devel"
+data "ochk_vrf" "vrf" {
+  display_name = "T0"
+}
+
+data "ochk_project" "project" {
+  display_name = "example_project"
+}
+
+data "ochk_vpc" "vpc" {
+  display_name = "VPC1"
+  vrf_id = data.ochk_vrf.vrf.id
 }
 
 data "ochk_service" "http" {
@@ -19,16 +28,26 @@ data "ochk_service" "http" {
 
 data "ochk_custom_service" "web-servers" {
   display_name = "web-servers"
+  project_id = data.ochk_project.project.id
+}
+
+data "ochk_security_group" "source" {
+  display_name = "security-group-name-src"
+}
+
+data "ochk_security_group" "destination" {
+  display_name = "security-group-name-dst"
 }
 
 resource "ochk_firewall_ew_rule" "fw-ew2" {
   display_name = "tf-fw-ew-http"
-  router_id = data.ochk_router.subtenant-vpc1234.id
+  project_id = data.ochk_project.project.id
+  vpc_id = data.ochk_vpc.vpc.id
   services = [data.ochk_service.http.id]
   custom_services = [data.ochk_custom_service.web-servers.id]
 
-  source = [ochk_security_group.source.id]
-  destination = [ochk_security_group.destination.id]
+  source = [data.ochk_security_group.source.id]
+  destination = [data.ochk_security_group.destination.id]
 
   action = "ALLOW"
   ip_protocol = "IPV4_IPV6"
@@ -41,8 +60,9 @@ resource "ochk_firewall_ew_rule" "fw-ew2" {
 
 The following arguments are supported:
 
-* `router_id` - (Required) Identifier of vpc id.
+* `vpc_id` - (Required) Identifier of vpc id.
 * `display_name` - (Required) The Firewall EW Rule name.
+* `project_id` - (Required) Project id to which Rule is assigned.
 * `action` - (Optional) Action to control the traffic between the source and the target. It is possible to open the traffic between the source and target with the ALLOW rule, cut the traffic between the source and target with the DROP rule, and reject the connection between the source and target with the REJECT rule. Allowed values: `ALLOW`, `DROP`, `REJECT`. Default value: `ALLOW`.
 * `direction` - (Optional) The traffic direction that the firewall rule applies to. Allowed values: `IN`, `IN_OUT`, `OUT`. Default value: `IN_OUT`.
 * `disabled` - (Optional) Sets this rule to be disabled. Default: false

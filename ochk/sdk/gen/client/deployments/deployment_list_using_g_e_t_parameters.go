@@ -52,10 +52,12 @@ func NewDeploymentListUsingGETParamsWithHTTPClient(client *http.Client) *Deploym
 	}
 }
 
-/* DeploymentListUsingGETParams contains all the parameters to send to the API endpoint
-   for the deployment list using g e t operation.
+/*
+DeploymentListUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the deployment list using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type DeploymentListUsingGETParams struct {
 

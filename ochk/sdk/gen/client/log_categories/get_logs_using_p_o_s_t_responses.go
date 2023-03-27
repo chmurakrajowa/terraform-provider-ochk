@@ -45,7 +45,8 @@ func NewGetLogsUsingPOSTOK() *GetLogsUsingPOSTOK {
 	return &GetLogsUsingPOSTOK{}
 }
 
-/* GetLogsUsingPOSTOK describes a response with status code 200, with default header values.
+/*
+GetLogsUsingPOSTOK describes a response with status code 200, with default header values.
 
 Request has been completed successfully
 */
@@ -53,9 +54,44 @@ type GetLogsUsingPOSTOK struct {
 	Payload *models.GetLogsResponse
 }
 
-func (o *GetLogsUsingPOSTOK) Error() string {
-	return fmt.Sprintf("[POST /log/categories/{logCategoryId}/generate][%d] getLogsUsingPOSTOK  %+v", 200, o.Payload)
+// IsSuccess returns true when this get logs using p o s t o k response has a 2xx status code
+func (o *GetLogsUsingPOSTOK) IsSuccess() bool {
+	return true
 }
+
+// IsRedirect returns true when this get logs using p o s t o k response has a 3xx status code
+func (o *GetLogsUsingPOSTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get logs using p o s t o k response has a 4xx status code
+func (o *GetLogsUsingPOSTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get logs using p o s t o k response has a 5xx status code
+func (o *GetLogsUsingPOSTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get logs using p o s t o k response a status code equal to that given
+func (o *GetLogsUsingPOSTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get logs using p o s t o k response
+func (o *GetLogsUsingPOSTOK) Code() int {
+	return 200
+}
+
+func (o *GetLogsUsingPOSTOK) Error() string {
+	return fmt.Sprintf("[POST /log/categories/{logCategoryId}/generatebydsl][%d] getLogsUsingPOSTOK  %+v", 200, o.Payload)
+}
+
+func (o *GetLogsUsingPOSTOK) String() string {
+	return fmt.Sprintf("[POST /log/categories/{logCategoryId}/generatebydsl][%d] getLogsUsingPOSTOK  %+v", 200, o.Payload)
+}
+
 func (o *GetLogsUsingPOSTOK) GetPayload() *models.GetLogsResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewGetLogsUsingPOSTBadRequest() *GetLogsUsingPOSTBadRequest {
 	return &GetLogsUsingPOSTBadRequest{}
 }
 
-/* GetLogsUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*
+GetLogsUsingPOSTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type GetLogsUsingPOSTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
-func (o *GetLogsUsingPOSTBadRequest) Error() string {
-	return fmt.Sprintf("[POST /log/categories/{logCategoryId}/generate][%d] getLogsUsingPOSTBadRequest  %+v", 400, o.Payload)
+// IsSuccess returns true when this get logs using p o s t bad request response has a 2xx status code
+func (o *GetLogsUsingPOSTBadRequest) IsSuccess() bool {
+	return false
 }
+
+// IsRedirect returns true when this get logs using p o s t bad request response has a 3xx status code
+func (o *GetLogsUsingPOSTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get logs using p o s t bad request response has a 4xx status code
+func (o *GetLogsUsingPOSTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get logs using p o s t bad request response has a 5xx status code
+func (o *GetLogsUsingPOSTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get logs using p o s t bad request response a status code equal to that given
+func (o *GetLogsUsingPOSTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the get logs using p o s t bad request response
+func (o *GetLogsUsingPOSTBadRequest) Code() int {
+	return 400
+}
+
+func (o *GetLogsUsingPOSTBadRequest) Error() string {
+	return fmt.Sprintf("[POST /log/categories/{logCategoryId}/generatebydsl][%d] getLogsUsingPOSTBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *GetLogsUsingPOSTBadRequest) String() string {
+	return fmt.Sprintf("[POST /log/categories/{logCategoryId}/generatebydsl][%d] getLogsUsingPOSTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *GetLogsUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

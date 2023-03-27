@@ -7,6 +7,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/k_m_s_key_management"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"net/http"
+	"sync"
 )
 
 type KMSKeysProxy struct {
@@ -21,7 +22,10 @@ func (p *KMSKeysProxy) Create(ctx context.Context, keyInstance *models.KeyInstan
 		HTTPClient:  p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	_, post, err := p.service.KeyCreateUsingPUT(params)
+	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while creating KMS key: %w", err)
 	}
@@ -40,7 +44,11 @@ func (p *KMSKeysProxy) Import(ctx context.Context, keyImport *models.KeyImport) 
 		HTTPClient: p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	_, post, err := p.service.KeyImportUsingPOST(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while importing KMS key: %w", err)
 	}
@@ -59,7 +67,11 @@ func (p *KMSKeysProxy) Read(ctx context.Context, keyID string) (*models.KeyInsta
 		HTTPClient: p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.KeyGetUsingGET(params)
+	mutex.Unlock()
+
 	if err != nil {
 		var notFound *k_m_s_key_management.KeyGetUsingGETNotFound
 		if ok := errors.As(err, &notFound); ok {
@@ -83,7 +95,33 @@ func (p *KMSKeysProxy) ListByDisplayName(ctx context.Context, displayName string
 		HTTPClient:  p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.KeyListUsingGET(params)
+	mutex.Unlock()
+
+	if err != nil {
+		return nil, fmt.Errorf("error while listing KMS keys: %w", err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("listing KMS keys failed: %s", response.Payload.Messages)
+	}
+
+	return response.Payload.KeyInstanceCollection, nil
+}
+
+func (p *KMSKeysProxy) List(ctx context.Context) ([]*models.KeyInstance, error) {
+	params := &k_m_s_key_management.KeyListUsingGETParams{
+		Context:    ctx,
+		HTTPClient: p.httpClient,
+	}
+
+	mutex := sync.Mutex{}
+	mutex.Lock()
+	response, err := p.service.KeyListUsingGET(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while listing KMS keys: %w", err)
 	}
@@ -103,6 +141,7 @@ func (p *KMSKeysProxy) Delete(ctx context.Context, keyID string) error {
 	}
 
 	response, err := p.service.KeyDeleteUsingDELETE(params)
+
 	if err != nil {
 		var badRequest *k_m_s_key_management.KeyDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {

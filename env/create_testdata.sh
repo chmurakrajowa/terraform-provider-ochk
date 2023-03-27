@@ -1,16 +1,16 @@
 #!/bin/bash
-DEPLOYMENT_NAME="CentOS 7"
+DEPLOYMENT_TYPE="TEMPLATE"
 
 
-TEST_DATA_FILE="testdata.json"
+TEST_DATA_FILE="predefined-resources.json"
 rm ./$TEST_DATA_FILE
 rm ./"$0.log"
 
 get_token() {
   echo "Reading Bearer Token"
   echo "--- Reading Bearer Token" >> "$0.log"
-  BODY="{\"username\":\"$USERNAME\",\"password\":\"$PASSWORD\",\"tenant\":\"$TENANT\"}"
-  TOKEN_RES=$(curl --silent -X POST --header 'Content-Type: application/json' --data $BODY "https://$HOST/vidm/token" --insecure)
+  BODY="{\"username\":\"$USERNAME\",\"password\":\"$PASSWORD\",\"platform\":\"$PLATFORM\"}"
+  TOKEN_RES=$(curl --silent -X POST --header 'Content-Type: application/json' --data $BODY "https://$HOST/wso2/token" --insecure)
   TOKEN=$(echo $TOKEN_RES| jq -r '.token')
   if [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ]; then
     echo "Wrong login. Token is empty. Check configuration file for properly login parameters and network connection"
@@ -25,7 +25,7 @@ get_token() {
 
 get_logical_ports() {
   BACKUP_PLAN_ID=$1
-  HEADER="token:\"$TOKEN\""
+  HEADER="Authorization:$TOKEN"
   ENDPOINT="network/logical-ports"
 
   local LIST=$(curl --silent -X GET --header $HEADER https://$HOST/$ENDPOINT --insecure)
@@ -38,7 +38,7 @@ get_logical_ports() {
 }
 
 get_nat_public_ip_addr() {
-  HEADER="token:\"$TOKEN\""
+  HEADER="Authorization:$TOKEN"
   ENDPOINT="ipam/ipaddress/public/allocation"
   local LIST=$(curl --silent -X GET --header $HEADER https://$HOST/$ENDPOINT --insecure)
   #echo $LIST |jq -r  '.publicIpAllocationCollection[] | "\(.publicIpAddress.ipAddress)|\(.serviceList[].name)" ' | grep "NAT"
@@ -51,10 +51,10 @@ get_nat_public_ip_addr() {
 }
 
 get_deployment() {
-  HEADER="token:\"$TOKEN\""
+  HEADER="Authorization:$TOKEN"
   ENDPOINT="deployments"
   local LIST=$(curl --silent -X GET --header $HEADER https://$HOST/$ENDPOINT --insecure)
-  echo $LIST |jq -r '.deploymentInstanceCollection[] | "\(.deploymentId)|\(.displayName)" ' | grep "|$DEPLOYMENT_NAME"
+  echo $LIST |jq -r '.deploymentInstanceCollection[] | "\(.deploymentId)|\(.deploymentType)|\(.displayName)" ' | grep "|$DEPLOYMENT_TYPE"
 
   echo "curl GET https://$HOST/$ENDPOINT" >> "$0.log"
   echo "HEAD: $HEADER" >> "$0.log"
@@ -63,7 +63,7 @@ get_deployment() {
 }
 
 get_vrf() {
-  HEADER="token:\"$TOKEN\""
+  HEADER="Authorization:$TOKEN"
   ENDPOINT="network/routers"
   local LIST=$(curl --silent -X GET --header $HEADER https://$HOST/$ENDPOINT --insecure)
   echo $LIST |jq -r  '.routerCollection[] | select(.routerType=="TIER0") | "\(.routerId)|\(.displayName)" '
@@ -76,7 +76,7 @@ get_vrf() {
 
 get_backup_list() {
   BACKUP_PLAN_ID=$1
-  HEADER="token:\"$TOKEN\""
+  HEADER="Authorization:$TOKEN"
   ENDPOINT="backups/plans/$BACKUP_PLAN_ID/lists"
 
   local LIST=$(curl --silent -X GET --header $HEADER https://$HOST/$ENDPOINT --insecure)
@@ -89,7 +89,7 @@ get_backup_list() {
 }
 
 get_backup_plans() {
-  HEADER="token:\"$TOKEN\""
+  HEADER="Authorization:$TOKEN"
   ENDPOINT="backups/plans"
 
   local LIST=$(curl --silent -X GET --header $HEADER https://$HOST/$ENDPOINT --insecure)
@@ -121,19 +121,6 @@ add_backup_plan() {
       break
     done
    break
-  done
-}
-
-add_logical_port() {
- get_logical_ports | while read LogicalPort ; do
-    UUID=$(echo `expr "$LogicalPort" : '\(.*\)|'`)
-    NAME=$(echo `expr "$LogicalPort" : '.*|\(.*\)'`)
-    echo "=== Found LogicalPort: $NAME ($UUID)"
-    echo "{
-	\"Name\": \"LogicalPort1DisplayName\",
-	\"Text\": \"$NAME\"
-}" >>$TEST_DATA_FILE
-    break
   done
 }
 
@@ -197,14 +184,6 @@ fi
 VAL=$(add_backup_plan)
 if [ "$VAL" = "" ]; then
   echo "!!! Backup plan not found"
-else
-  echo "$VAL"
-fi
-
-## Logical port
-VAL=$(add_logical_port)
-if [ "$VAL" = "" ]; then
-  echo "!!! Logical port not found"
 else
   echo "$VAL"
 fi

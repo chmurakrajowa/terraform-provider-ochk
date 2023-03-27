@@ -36,9 +36,9 @@ type ClientService interface {
 }
 
 /*
-  AvailablePublicIPGetUsingGET gets
+AvailablePublicIPGetUsingGET gets
 
-  Get IPAM service
+Get IPAM service
 */
 func (a *Client) AvailablePublicIPGetUsingGET(params *AvailablePublicIPGetUsingGETParams, opts ...ClientOption) (*AvailablePublicIPGetUsingGETOK, error) {
 	// TODO: Validate the params before sending

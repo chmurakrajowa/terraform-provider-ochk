@@ -52,10 +52,12 @@ func NewBackupListListUsingGETParamsWithHTTPClient(client *http.Client) *BackupL
 	}
 }
 
-/* BackupListListUsingGETParams contains all the parameters to send to the API endpoint
-   for the backup list list using g e t operation.
+/*
+BackupListListUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the backup list list using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type BackupListListUsingGETParams struct {
 

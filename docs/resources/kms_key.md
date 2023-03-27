@@ -6,7 +6,7 @@ page_title: "KMS encryption key resource"
 
 Resource for managing KMS encryption keys. Currently, `ochk_kms_key` resource supports only creating, importing and deleting keys.
 
-Created/imported key always has version set to 0.
+Created/uploaded key always has version set to 0.
 
 It is not possible to update a key or create new key version. Any updates will recreate key resource.
   
@@ -24,8 +24,8 @@ resource "ochk_kms_key" "rsa" {
 Creates a new RSA key with version = 0. 
 
 ```hcl
-resource "ochk_kms_key" "aes-imported" {
-  display_name = "aes-imported"
+resource "ochk_kms_key" "aes-uploaded" {
+  display_name = "aes-uploaded"
   key_usage = ["ENCRYPT", "DECRYPT"]
   algorithm = "AES"
   size = 256
@@ -33,11 +33,11 @@ resource "ochk_kms_key" "aes-imported" {
 }
 ```
 
-Imports a new AES key with version = 0.
+Upload a new AES key with version = 0.
 
 ```hcl
-resource "ochk_kms_key" "rsa-imported" {
-  display_name = "rsa-imported"
+resource "ochk_kms_key" "rsa-uploaded" {
+  display_name = "rsa-uploaded"
   key_usage = ["ENCRYPT", "DECRYPT"]
   algorithm = "RSA"
   size = 2048
@@ -51,18 +51,18 @@ f+tbtBTGwWuat2UiPUgWfDtNiqHeK8CTWZuGFyITxF8n2iiQM9CTcR8AJUkp08Fn
 EOT
 }
 
-resource "ochk_kms_key" "aes-enc-imported" {
+resource "ochk_kms_key" "aes-enc-uploaded" {
   display_name = "aes-encrypted"
   key_usage = ["ENCRYPT", "DECRYPT"]
   algorithm = "AES"
   size = 256
   material = "IgQEzbAU/oCTkXyrRZ6zKEna3aNQv+[...]dhrXbX/yA6JIw=="
-  private_key_id_to_unwrap = ochk_kms_key.rsa-imported.id
+  private_key_id_to_unwrap = ochk_kms_key.rsa-uploaded.id
 }
 
 ```
 
-Imports a new RSA key encrypted with other symmetric key.
+Upload a new RSA key encrypted with other symmetric key.
 
 ## Argument Reference
 
@@ -73,7 +73,7 @@ The following arguments are supported:
 * `algorithm` - (Required) Encryption algorithm, values: `AES`, `RSA`.
 * `size` - (Required) Size of the key in bits.
 * `private_key_id_to_unwrap` - (Optional) Id of the RSA private key that we used to secure the cryptographic material. Use `ochk_kms_key` data source to get key id.
-* `material` - (Optional) Imported cryptographic material, the format depends on the selected key type. AES keys are encoded in Base64, RSA keys are in PEM format.
+* `material` - (Optional) Uploaded cryptographic material, the format depends on the selected key type. AES keys are encoded in Base64, RSA keys are in PEM format.
 * `version` - (Required) Version of the key.
 
 ## Attribute Reference
