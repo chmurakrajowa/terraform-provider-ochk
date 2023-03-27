@@ -45,7 +45,8 @@ func NewCustomServiceListUsingGETOK() *CustomServiceListUsingGETOK {
 	return &CustomServiceListUsingGETOK{}
 }
 
-/* CustomServiceListUsingGETOK describes a response with status code 200, with default header values.
+/*
+CustomServiceListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type CustomServiceListUsingGETOK struct {
 	Payload *models.CustomServiceListResponse
 }
 
+// IsSuccess returns true when this custom service list using g e t o k response has a 2xx status code
+func (o *CustomServiceListUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this custom service list using g e t o k response has a 3xx status code
+func (o *CustomServiceListUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this custom service list using g e t o k response has a 4xx status code
+func (o *CustomServiceListUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this custom service list using g e t o k response has a 5xx status code
+func (o *CustomServiceListUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this custom service list using g e t o k response a status code equal to that given
+func (o *CustomServiceListUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the custom service list using g e t o k response
+func (o *CustomServiceListUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *CustomServiceListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/custom-services][%d] customServiceListUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *CustomServiceListUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /network/custom-services][%d] customServiceListUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *CustomServiceListUsingGETOK) GetPayload() *models.CustomServiceListResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewCustomServiceListUsingGETBadRequest() *CustomServiceListUsingGETBadReque
 	return &CustomServiceListUsingGETBadRequest{}
 }
 
-/* CustomServiceListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+CustomServiceListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type CustomServiceListUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this custom service list using g e t bad request response has a 2xx status code
+func (o *CustomServiceListUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this custom service list using g e t bad request response has a 3xx status code
+func (o *CustomServiceListUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this custom service list using g e t bad request response has a 4xx status code
+func (o *CustomServiceListUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this custom service list using g e t bad request response has a 5xx status code
+func (o *CustomServiceListUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this custom service list using g e t bad request response a status code equal to that given
+func (o *CustomServiceListUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the custom service list using g e t bad request response
+func (o *CustomServiceListUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *CustomServiceListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/custom-services][%d] customServiceListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *CustomServiceListUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /network/custom-services][%d] customServiceListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *CustomServiceListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

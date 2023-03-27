@@ -13,9 +13,10 @@ func TestAccIPCollectionDataSource_read(t *testing.T) {
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccIPCollectionDataSourceConfig(testData.IPCollection1DisplayName),
+				Config: testAccIPCollectionDataSourceConfig(testData.IPCollection1DisplayName, testData.Project1Name),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", testData.IPCollection1DisplayName),
+					resource.TestCheckResourceAttrPair(resourceName, "project_id", "data.ochk_project.project-ipc-1", "id"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
@@ -27,10 +28,14 @@ func TestAccIPCollectionDataSource_read(t *testing.T) {
 	})
 }
 
-func testAccIPCollectionDataSourceConfig(displayName string) string {
+func testAccIPCollectionDataSourceConfig(displayName string, projectName string) string {
 	return fmt.Sprintf(`
 data "ochk_ip_collection" "example" {
   display_name = %[1]q
 }
-`, displayName)
+
+data "ochk_project" "project-ipc-1" {
+	 display_name = %[2]q
+}
+`, displayName, projectName)
 }

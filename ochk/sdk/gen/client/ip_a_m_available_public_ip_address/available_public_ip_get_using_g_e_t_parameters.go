@@ -52,10 +52,12 @@ func NewAvailablePublicIPGetUsingGETParamsWithHTTPClient(client *http.Client) *A
 	}
 }
 
-/* AvailablePublicIPGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the available public IP get using g e t operation.
+/*
+AvailablePublicIPGetUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the available public IP get using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type AvailablePublicIPGetUsingGETParams struct {
 	timeout    time.Duration

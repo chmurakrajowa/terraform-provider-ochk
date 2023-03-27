@@ -17,6 +17,7 @@ func TestAccSecurityGroupDataSource_read(t *testing.T) {
 				Config: testAccSecurityGroupDataSourceConfig(displayName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", displayName),
+					resource.TestCheckResourceAttrPair(resourceName, "project_id", "data.ochk_project.project-sg-1", "id"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_by"),
 					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
@@ -36,8 +37,13 @@ data "ochk_virtual_machine" "default" {
 	display_name = %[2]q
 }
 
+data "ochk_project" "project-sg-1" {
+  display_name = "`+testData.Project1Name+`"
+}
+
 resource "ochk_security_group" "one_member" {
   display_name = %[1]q
+  project_id = data.ochk_project.project-sg-1.id
 
   members {
     id = data.ochk_virtual_machine.default.id
@@ -48,6 +54,7 @@ resource "ochk_security_group" "one_member" {
 data "ochk_security_group" "one_member" {
   display_name = ochk_security_group.one_member.display_name
   depends_on = [ochk_security_group.one_member]
+  project_id = data.ochk_project.project-sg-1.id
 }
 `, displayName, testData.VirtualMachineDisplayName)
 }

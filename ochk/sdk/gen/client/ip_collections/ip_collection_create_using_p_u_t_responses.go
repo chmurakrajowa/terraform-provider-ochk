@@ -51,7 +51,8 @@ func NewIPCollectionCreateUsingPUTOK() *IPCollectionCreateUsingPUTOK {
 	return &IPCollectionCreateUsingPUTOK{}
 }
 
-/* IPCollectionCreateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+IPCollectionCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type IPCollectionCreateUsingPUTOK struct {
 	Payload *models.IPCollectionCreateResponse
 }
 
+// IsSuccess returns true when this ip collection create using p u t o k response has a 2xx status code
+func (o *IPCollectionCreateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this ip collection create using p u t o k response has a 3xx status code
+func (o *IPCollectionCreateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this ip collection create using p u t o k response has a 4xx status code
+func (o *IPCollectionCreateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this ip collection create using p u t o k response has a 5xx status code
+func (o *IPCollectionCreateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this ip collection create using p u t o k response a status code equal to that given
+func (o *IPCollectionCreateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the ip collection create using p u t o k response
+func (o *IPCollectionCreateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *IPCollectionCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /ipcs][%d] ipCollectionCreateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *IPCollectionCreateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /ipcs][%d] ipCollectionCreateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *IPCollectionCreateUsingPUTOK) GetPayload() *models.IPCollectionCreateResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewIPCollectionCreateUsingPUTCreated() *IPCollectionCreateUsingPUTCreated {
 	return &IPCollectionCreateUsingPUTCreated{}
 }
 
-/* IPCollectionCreateUsingPUTCreated describes a response with status code 201, with default header values.
+/*
+IPCollectionCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -91,9 +128,44 @@ type IPCollectionCreateUsingPUTCreated struct {
 	Payload *models.IPCollectionCreateResponse
 }
 
+// IsSuccess returns true when this ip collection create using p u t created response has a 2xx status code
+func (o *IPCollectionCreateUsingPUTCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this ip collection create using p u t created response has a 3xx status code
+func (o *IPCollectionCreateUsingPUTCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this ip collection create using p u t created response has a 4xx status code
+func (o *IPCollectionCreateUsingPUTCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this ip collection create using p u t created response has a 5xx status code
+func (o *IPCollectionCreateUsingPUTCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this ip collection create using p u t created response a status code equal to that given
+func (o *IPCollectionCreateUsingPUTCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the ip collection create using p u t created response
+func (o *IPCollectionCreateUsingPUTCreated) Code() int {
+	return 201
+}
+
 func (o *IPCollectionCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /ipcs][%d] ipCollectionCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
+func (o *IPCollectionCreateUsingPUTCreated) String() string {
+	return fmt.Sprintf("[PUT /ipcs][%d] ipCollectionCreateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
 func (o *IPCollectionCreateUsingPUTCreated) GetPayload() *models.IPCollectionCreateResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewIPCollectionCreateUsingPUTBadRequest() *IPCollectionCreateUsingPUTBadReq
 	return &IPCollectionCreateUsingPUTBadRequest{}
 }
 
-/* IPCollectionCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+IPCollectionCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type IPCollectionCreateUsingPUTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this ip collection create using p u t bad request response has a 2xx status code
+func (o *IPCollectionCreateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this ip collection create using p u t bad request response has a 3xx status code
+func (o *IPCollectionCreateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this ip collection create using p u t bad request response has a 4xx status code
+func (o *IPCollectionCreateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this ip collection create using p u t bad request response has a 5xx status code
+func (o *IPCollectionCreateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this ip collection create using p u t bad request response a status code equal to that given
+func (o *IPCollectionCreateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the ip collection create using p u t bad request response
+func (o *IPCollectionCreateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *IPCollectionCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /ipcs][%d] ipCollectionCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *IPCollectionCreateUsingPUTBadRequest) String() string {
+	return fmt.Sprintf("[PUT /ipcs][%d] ipCollectionCreateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *IPCollectionCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

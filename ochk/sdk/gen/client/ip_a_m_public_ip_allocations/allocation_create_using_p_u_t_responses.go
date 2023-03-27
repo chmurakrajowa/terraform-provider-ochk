@@ -51,7 +51,8 @@ func NewAllocationCreateUsingPUTOK() *AllocationCreateUsingPUTOK {
 	return &AllocationCreateUsingPUTOK{}
 }
 
-/* AllocationCreateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+AllocationCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type AllocationCreateUsingPUTOK struct {
 	Payload *models.CreatePublicIPAllocationResponse
 }
 
+// IsSuccess returns true when this allocation create using p u t o k response has a 2xx status code
+func (o *AllocationCreateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this allocation create using p u t o k response has a 3xx status code
+func (o *AllocationCreateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this allocation create using p u t o k response has a 4xx status code
+func (o *AllocationCreateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this allocation create using p u t o k response has a 5xx status code
+func (o *AllocationCreateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this allocation create using p u t o k response a status code equal to that given
+func (o *AllocationCreateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the allocation create using p u t o k response
+func (o *AllocationCreateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *AllocationCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /ipam/ipaddress/public/allocation][%d] allocationCreateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *AllocationCreateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /ipam/ipaddress/public/allocation][%d] allocationCreateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *AllocationCreateUsingPUTOK) GetPayload() *models.CreatePublicIPAllocationResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewAllocationCreateUsingPUTCreated() *AllocationCreateUsingPUTCreated {
 	return &AllocationCreateUsingPUTCreated{}
 }
 
-/* AllocationCreateUsingPUTCreated describes a response with status code 201, with default header values.
+/*
+AllocationCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -91,9 +128,44 @@ type AllocationCreateUsingPUTCreated struct {
 	Payload *models.CreatePublicIPAllocationResponse
 }
 
+// IsSuccess returns true when this allocation create using p u t created response has a 2xx status code
+func (o *AllocationCreateUsingPUTCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this allocation create using p u t created response has a 3xx status code
+func (o *AllocationCreateUsingPUTCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this allocation create using p u t created response has a 4xx status code
+func (o *AllocationCreateUsingPUTCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this allocation create using p u t created response has a 5xx status code
+func (o *AllocationCreateUsingPUTCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this allocation create using p u t created response a status code equal to that given
+func (o *AllocationCreateUsingPUTCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the allocation create using p u t created response
+func (o *AllocationCreateUsingPUTCreated) Code() int {
+	return 201
+}
+
 func (o *AllocationCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /ipam/ipaddress/public/allocation][%d] allocationCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
+func (o *AllocationCreateUsingPUTCreated) String() string {
+	return fmt.Sprintf("[PUT /ipam/ipaddress/public/allocation][%d] allocationCreateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
 func (o *AllocationCreateUsingPUTCreated) GetPayload() *models.CreatePublicIPAllocationResponse {
 	return o.Payload
 }
@@ -115,14 +187,49 @@ func NewAllocationCreateUsingPUTBadRequest() *AllocationCreateUsingPUTBadRequest
 	return &AllocationCreateUsingPUTBadRequest{}
 }
 
-/* AllocationCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+AllocationCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
 type AllocationCreateUsingPUTBadRequest struct {
 }
 
+// IsSuccess returns true when this allocation create using p u t bad request response has a 2xx status code
+func (o *AllocationCreateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this allocation create using p u t bad request response has a 3xx status code
+func (o *AllocationCreateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this allocation create using p u t bad request response has a 4xx status code
+func (o *AllocationCreateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this allocation create using p u t bad request response has a 5xx status code
+func (o *AllocationCreateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this allocation create using p u t bad request response a status code equal to that given
+func (o *AllocationCreateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the allocation create using p u t bad request response
+func (o *AllocationCreateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *AllocationCreateUsingPUTBadRequest) Error() string {
+	return fmt.Sprintf("[PUT /ipam/ipaddress/public/allocation][%d] allocationCreateUsingPUTBadRequest ", 400)
+}
+
+func (o *AllocationCreateUsingPUTBadRequest) String() string {
 	return fmt.Sprintf("[PUT /ipam/ipaddress/public/allocation][%d] allocationCreateUsingPUTBadRequest ", 400)
 }
 

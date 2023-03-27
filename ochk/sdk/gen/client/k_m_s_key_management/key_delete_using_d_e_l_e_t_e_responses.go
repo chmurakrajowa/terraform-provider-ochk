@@ -45,7 +45,8 @@ func NewKeyDeleteUsingDELETEOK() *KeyDeleteUsingDELETEOK {
 	return &KeyDeleteUsingDELETEOK{}
 }
 
-/* KeyDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*
+KeyDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 Entity has been deleted
 */
@@ -53,9 +54,44 @@ type KeyDeleteUsingDELETEOK struct {
 	Payload *models.DeleteKmsKeyResponse
 }
 
+// IsSuccess returns true when this key delete using d e l e t e o k response has a 2xx status code
+func (o *KeyDeleteUsingDELETEOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this key delete using d e l e t e o k response has a 3xx status code
+func (o *KeyDeleteUsingDELETEOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key delete using d e l e t e o k response has a 4xx status code
+func (o *KeyDeleteUsingDELETEOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this key delete using d e l e t e o k response has a 5xx status code
+func (o *KeyDeleteUsingDELETEOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key delete using d e l e t e o k response a status code equal to that given
+func (o *KeyDeleteUsingDELETEOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the key delete using d e l e t e o k response
+func (o *KeyDeleteUsingDELETEOK) Code() int {
+	return 200
+}
+
 func (o *KeyDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /kms/key/{id}][%d] keyDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
+func (o *KeyDeleteUsingDELETEOK) String() string {
+	return fmt.Sprintf("[DELETE /kms/key/{id}][%d] keyDeleteUsingDELETEOK  %+v", 200, o.Payload)
+}
+
 func (o *KeyDeleteUsingDELETEOK) GetPayload() *models.DeleteKmsKeyResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewKeyDeleteUsingDELETEBadRequest() *KeyDeleteUsingDELETEBadRequest {
 	return &KeyDeleteUsingDELETEBadRequest{}
 }
 
-/* KeyDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*
+KeyDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type KeyDeleteUsingDELETEBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this key delete using d e l e t e bad request response has a 2xx status code
+func (o *KeyDeleteUsingDELETEBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this key delete using d e l e t e bad request response has a 3xx status code
+func (o *KeyDeleteUsingDELETEBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key delete using d e l e t e bad request response has a 4xx status code
+func (o *KeyDeleteUsingDELETEBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this key delete using d e l e t e bad request response has a 5xx status code
+func (o *KeyDeleteUsingDELETEBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key delete using d e l e t e bad request response a status code equal to that given
+func (o *KeyDeleteUsingDELETEBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the key delete using d e l e t e bad request response
+func (o *KeyDeleteUsingDELETEBadRequest) Code() int {
+	return 400
+}
+
 func (o *KeyDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /kms/key/{id}][%d] keyDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *KeyDeleteUsingDELETEBadRequest) String() string {
+	return fmt.Sprintf("[DELETE /kms/key/{id}][%d] keyDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *KeyDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

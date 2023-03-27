@@ -45,7 +45,8 @@ func NewIPCollectionDeleteUsingDELETEOK() *IPCollectionDeleteUsingDELETEOK {
 	return &IPCollectionDeleteUsingDELETEOK{}
 }
 
-/* IPCollectionDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*
+IPCollectionDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type IPCollectionDeleteUsingDELETEOK struct {
 	Payload *models.IPCollectionDeleteResponse
 }
 
+// IsSuccess returns true when this ip collection delete using d e l e t e o k response has a 2xx status code
+func (o *IPCollectionDeleteUsingDELETEOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this ip collection delete using d e l e t e o k response has a 3xx status code
+func (o *IPCollectionDeleteUsingDELETEOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this ip collection delete using d e l e t e o k response has a 4xx status code
+func (o *IPCollectionDeleteUsingDELETEOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this ip collection delete using d e l e t e o k response has a 5xx status code
+func (o *IPCollectionDeleteUsingDELETEOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this ip collection delete using d e l e t e o k response a status code equal to that given
+func (o *IPCollectionDeleteUsingDELETEOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the ip collection delete using d e l e t e o k response
+func (o *IPCollectionDeleteUsingDELETEOK) Code() int {
+	return 200
+}
+
 func (o *IPCollectionDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /ipcs/{ipCollectionId}][%d] ipCollectionDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
+func (o *IPCollectionDeleteUsingDELETEOK) String() string {
+	return fmt.Sprintf("[DELETE /ipcs/{ipCollectionId}][%d] ipCollectionDeleteUsingDELETEOK  %+v", 200, o.Payload)
+}
+
 func (o *IPCollectionDeleteUsingDELETEOK) GetPayload() *models.IPCollectionDeleteResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewIPCollectionDeleteUsingDELETEBadRequest() *IPCollectionDeleteUsingDELETE
 	return &IPCollectionDeleteUsingDELETEBadRequest{}
 }
 
-/* IPCollectionDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*
+IPCollectionDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type IPCollectionDeleteUsingDELETEBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this ip collection delete using d e l e t e bad request response has a 2xx status code
+func (o *IPCollectionDeleteUsingDELETEBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this ip collection delete using d e l e t e bad request response has a 3xx status code
+func (o *IPCollectionDeleteUsingDELETEBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this ip collection delete using d e l e t e bad request response has a 4xx status code
+func (o *IPCollectionDeleteUsingDELETEBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this ip collection delete using d e l e t e bad request response has a 5xx status code
+func (o *IPCollectionDeleteUsingDELETEBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this ip collection delete using d e l e t e bad request response a status code equal to that given
+func (o *IPCollectionDeleteUsingDELETEBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the ip collection delete using d e l e t e bad request response
+func (o *IPCollectionDeleteUsingDELETEBadRequest) Code() int {
+	return 400
+}
+
 func (o *IPCollectionDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /ipcs/{ipCollectionId}][%d] ipCollectionDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *IPCollectionDeleteUsingDELETEBadRequest) String() string {
+	return fmt.Sprintf("[DELETE /ipcs/{ipCollectionId}][%d] ipCollectionDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *IPCollectionDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

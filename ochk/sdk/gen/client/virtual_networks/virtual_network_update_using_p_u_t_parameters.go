@@ -54,10 +54,12 @@ func NewVirtualNetworkUpdateUsingPUTParamsWithHTTPClient(client *http.Client) *V
 	}
 }
 
-/* VirtualNetworkUpdateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the virtual network update using p u t operation.
+/*
+VirtualNetworkUpdateUsingPUTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the virtual network update using p u t operation.
+
+	Typically these are written to a http.Request.
 */
 type VirtualNetworkUpdateUsingPUTParams struct {
 

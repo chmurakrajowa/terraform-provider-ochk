@@ -14,6 +14,7 @@ import (
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewCustomServiceDeleteUsingDELETEParams creates a new CustomServiceDeleteUsingDELETEParams object,
@@ -52,12 +53,20 @@ func NewCustomServiceDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* CustomServiceDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-   for the custom service delete using d e l e t e operation.
+/*
+CustomServiceDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the custom service delete using d e l e t e operation.
+
+	Typically these are written to a http.Request.
 */
 type CustomServiceDeleteUsingDELETEParams struct {
+
+	/* Force.
+
+	   force
+	*/
+	Force *bool
 
 	/* ServiceID.
 
@@ -118,6 +127,17 @@ func (o *CustomServiceDeleteUsingDELETEParams) SetHTTPClient(client *http.Client
 	o.HTTPClient = client
 }
 
+// WithForce adds the force to the custom service delete using d e l e t e params
+func (o *CustomServiceDeleteUsingDELETEParams) WithForce(force *bool) *CustomServiceDeleteUsingDELETEParams {
+	o.SetForce(force)
+	return o
+}
+
+// SetForce adds the force to the custom service delete using d e l e t e params
+func (o *CustomServiceDeleteUsingDELETEParams) SetForce(force *bool) {
+	o.Force = force
+}
+
 // WithServiceID adds the serviceID to the custom service delete using d e l e t e params
 func (o *CustomServiceDeleteUsingDELETEParams) WithServiceID(serviceID string) *CustomServiceDeleteUsingDELETEParams {
 	o.SetServiceID(serviceID)
@@ -136,6 +156,23 @@ func (o *CustomServiceDeleteUsingDELETEParams) WriteToRequest(r runtime.ClientRe
 		return err
 	}
 	var res []error
+
+	if o.Force != nil {
+
+		// query param force
+		var qrForce bool
+
+		if o.Force != nil {
+			qrForce = *o.Force
+		}
+		qForce := swag.FormatBool(qrForce)
+		if qForce != "" {
+
+			if err := r.SetQueryParam("force", qForce); err != nil {
+				return err
+			}
+		}
+	}
 
 	// path param serviceId
 	if err := r.SetPathParam("serviceId", o.ServiceID); err != nil {

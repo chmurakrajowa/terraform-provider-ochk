@@ -8,6 +8,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
+	"sync"
 )
 
 type IPCollectionsProxy struct {
@@ -22,7 +23,11 @@ func (p *IPCollectionsProxy) Read(ctx context.Context, ipCollectionID string) (*
 		HTTPClient:     p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.IPCollectionGetUsingGET(params)
+	mutex.Unlock()
+
 	if err != nil {
 		var notFound *ip_collections.IPCollectionGetUsingGETNotFound
 		if ok := errors.As(err, &notFound); ok {
@@ -46,13 +51,39 @@ func (p *IPCollectionsProxy) ListByDisplayName(ctx context.Context, displayName 
 		HTTPClient:  p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.IPCollectionListUsingGET(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while listing IP collections by display name %s: %w", displayName, err)
 	}
 
 	if !response.Payload.Success {
 		return nil, fmt.Errorf("listing IP collections by display name %s failed: %s", displayName, response.Payload.Messages)
+	}
+
+	return response.Payload.IPCollectionSet, nil
+}
+
+func (p *IPCollectionsProxy) List(ctx context.Context) ([]*models.IPCollection, error) {
+	params := &ip_collections.IPCollectionListUsingGETParams{
+		Context:    ctx,
+		HTTPClient: p.httpClient,
+	}
+
+	mutex := sync.Mutex{}
+	mutex.Lock()
+	response, err := p.service.IPCollectionListUsingGET(params)
+	mutex.Unlock()
+
+	if err != nil {
+		return nil, fmt.Errorf("error while listing IP collections: %w", err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("listing IP collections failed: %s", response.Payload.Messages)
 	}
 
 	return response.Payload.IPCollectionSet, nil
@@ -69,7 +100,11 @@ func (p *IPCollectionsProxy) Create(ctx context.Context, IPCollection *models.IP
 		HTTPClient:   p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	_, put, err := p.service.IPCollectionCreateUsingPUT(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while creating ip collection: %w", err)
 	}
@@ -93,7 +128,11 @@ func (p *IPCollectionsProxy) Update(ctx context.Context, IPCollection *models.IP
 		HTTPClient:     p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	put, err := p.service.IPCollectionUpdateUsingPUT(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying ip collection: %w", err)
 	}
@@ -125,6 +164,7 @@ func (p *IPCollectionsProxy) Delete(ctx context.Context, IPCollectionID string) 
 	}
 
 	response, err := p.service.IPCollectionDeleteUsingDELETE(params)
+
 	if err != nil {
 		var badRequest *ip_collections.IPCollectionDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {

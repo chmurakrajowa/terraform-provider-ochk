@@ -33,3 +33,19 @@ func expandServicesFromIDs(in []interface{}) []*models.ServiceInstance {
 
 	return out
 }
+
+func flattenServices(in []*models.ServiceInstance) []map[string]interface{} {
+	if len(in) == 0 {
+		return nil
+	}
+
+	var out []map[string]interface{}
+
+	for _, v := range in {
+		m := make(map[string]interface{})
+		m["service_id"] = v.ServiceID
+		m["display_name"] = v.DisplayName
+		out = append(out, m)
+	}
+	return out
+}

@@ -51,7 +51,8 @@ func NewSecurityGroupDeleteUsingDELETEOK() *SecurityGroupDeleteUsingDELETEOK {
 	return &SecurityGroupDeleteUsingDELETEOK{}
 }
 
-/* SecurityGroupDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*
+SecurityGroupDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type SecurityGroupDeleteUsingDELETEOK struct {
 	Payload *models.DeleteSecurityGroupResponse
 }
 
+// IsSuccess returns true when this security group delete using d e l e t e o k response has a 2xx status code
+func (o *SecurityGroupDeleteUsingDELETEOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this security group delete using d e l e t e o k response has a 3xx status code
+func (o *SecurityGroupDeleteUsingDELETEOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this security group delete using d e l e t e o k response has a 4xx status code
+func (o *SecurityGroupDeleteUsingDELETEOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this security group delete using d e l e t e o k response has a 5xx status code
+func (o *SecurityGroupDeleteUsingDELETEOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this security group delete using d e l e t e o k response a status code equal to that given
+func (o *SecurityGroupDeleteUsingDELETEOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the security group delete using d e l e t e o k response
+func (o *SecurityGroupDeleteUsingDELETEOK) Code() int {
+	return 200
+}
+
 func (o *SecurityGroupDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /network/security-groups/{groupId}][%d] securityGroupDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
+func (o *SecurityGroupDeleteUsingDELETEOK) String() string {
+	return fmt.Sprintf("[DELETE /network/security-groups/{groupId}][%d] securityGroupDeleteUsingDELETEOK  %+v", 200, o.Payload)
+}
+
 func (o *SecurityGroupDeleteUsingDELETEOK) GetPayload() *models.DeleteSecurityGroupResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewSecurityGroupDeleteUsingDELETECreated() *SecurityGroupDeleteUsingDELETEC
 	return &SecurityGroupDeleteUsingDELETECreated{}
 }
 
-/* SecurityGroupDeleteUsingDELETECreated describes a response with status code 201, with default header values.
+/*
+SecurityGroupDeleteUsingDELETECreated describes a response with status code 201, with default header values.
 
 Entity has been deleted
 */
@@ -91,9 +128,44 @@ type SecurityGroupDeleteUsingDELETECreated struct {
 	Payload *models.DeleteSecurityGroupResponse
 }
 
+// IsSuccess returns true when this security group delete using d e l e t e created response has a 2xx status code
+func (o *SecurityGroupDeleteUsingDELETECreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this security group delete using d e l e t e created response has a 3xx status code
+func (o *SecurityGroupDeleteUsingDELETECreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this security group delete using d e l e t e created response has a 4xx status code
+func (o *SecurityGroupDeleteUsingDELETECreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this security group delete using d e l e t e created response has a 5xx status code
+func (o *SecurityGroupDeleteUsingDELETECreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this security group delete using d e l e t e created response a status code equal to that given
+func (o *SecurityGroupDeleteUsingDELETECreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the security group delete using d e l e t e created response
+func (o *SecurityGroupDeleteUsingDELETECreated) Code() int {
+	return 201
+}
+
 func (o *SecurityGroupDeleteUsingDELETECreated) Error() string {
 	return fmt.Sprintf("[DELETE /network/security-groups/{groupId}][%d] securityGroupDeleteUsingDELETECreated  %+v", 201, o.Payload)
 }
+
+func (o *SecurityGroupDeleteUsingDELETECreated) String() string {
+	return fmt.Sprintf("[DELETE /network/security-groups/{groupId}][%d] securityGroupDeleteUsingDELETECreated  %+v", 201, o.Payload)
+}
+
 func (o *SecurityGroupDeleteUsingDELETECreated) GetPayload() *models.DeleteSecurityGroupResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewSecurityGroupDeleteUsingDELETEBadRequest() *SecurityGroupDeleteUsingDELE
 	return &SecurityGroupDeleteUsingDELETEBadRequest{}
 }
 
-/* SecurityGroupDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*
+SecurityGroupDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type SecurityGroupDeleteUsingDELETEBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this security group delete using d e l e t e bad request response has a 2xx status code
+func (o *SecurityGroupDeleteUsingDELETEBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this security group delete using d e l e t e bad request response has a 3xx status code
+func (o *SecurityGroupDeleteUsingDELETEBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this security group delete using d e l e t e bad request response has a 4xx status code
+func (o *SecurityGroupDeleteUsingDELETEBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this security group delete using d e l e t e bad request response has a 5xx status code
+func (o *SecurityGroupDeleteUsingDELETEBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this security group delete using d e l e t e bad request response a status code equal to that given
+func (o *SecurityGroupDeleteUsingDELETEBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the security group delete using d e l e t e bad request response
+func (o *SecurityGroupDeleteUsingDELETEBadRequest) Code() int {
+	return 400
+}
+
 func (o *SecurityGroupDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /network/security-groups/{groupId}][%d] securityGroupDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *SecurityGroupDeleteUsingDELETEBadRequest) String() string {
+	return fmt.Sprintf("[DELETE /network/security-groups/{groupId}][%d] securityGroupDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *SecurityGroupDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

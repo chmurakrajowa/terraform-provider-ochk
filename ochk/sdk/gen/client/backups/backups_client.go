@@ -42,9 +42,9 @@ type ClientService interface {
 }
 
 /*
-  BackupListGetUsingGET gets backup list get
+BackupListGetUsingGET gets backup list get
 
-  Get backup list
+Get backup list
 */
 func (a *Client) BackupListGetUsingGET(params *BackupListGetUsingGETParams, opts ...ClientOption) (*BackupListGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -82,9 +82,9 @@ func (a *Client) BackupListGetUsingGET(params *BackupListGetUsingGETParams, opts
 }
 
 /*
-  BackupListListUsingGET lists backup lists
+BackupListListUsingGET lists backup lists
 
-  List backup lists
+List backup lists
 */
 func (a *Client) BackupListListUsingGET(params *BackupListListUsingGETParams, opts ...ClientOption) (*BackupListListUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -122,9 +122,9 @@ func (a *Client) BackupListListUsingGET(params *BackupListListUsingGETParams, op
 }
 
 /*
-  BackupPlanGetUsingGET gets backup plan
+BackupPlanGetUsingGET gets backup plan
 
-  Get backup plan
+Get backup plan
 */
 func (a *Client) BackupPlanGetUsingGET(params *BackupPlanGetUsingGETParams, opts ...ClientOption) (*BackupPlanGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -162,9 +162,9 @@ func (a *Client) BackupPlanGetUsingGET(params *BackupPlanGetUsingGETParams, opts
 }
 
 /*
-  BackupPlanListUsingGET lists backup plans
+BackupPlanListUsingGET lists backup plans
 
-  List backup plans
+List backup plans
 */
 func (a *Client) BackupPlanListUsingGET(params *BackupPlanListUsingGETParams, opts ...ClientOption) (*BackupPlanListUsingGETOK, error) {
 	// TODO: Validate the params before sending

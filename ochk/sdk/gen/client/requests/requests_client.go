@@ -38,9 +38,9 @@ type ClientService interface {
 }
 
 /*
-  RequestGetUsingGET gets
+RequestGetUsingGET gets
 
-  Get IaaS requests.
+Get IaaS requests.
 */
 func (a *Client) RequestGetUsingGET(params *RequestGetUsingGETParams, opts ...ClientOption) (*RequestGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -78,9 +78,9 @@ func (a *Client) RequestGetUsingGET(params *RequestGetUsingGETParams, opts ...Cl
 }
 
 /*
-  RequestListUsingGET lists
+RequestListUsingGET lists
 
-  List IaaS requests.
+List IaaS requests.
 */
 func (a *Client) RequestListUsingGET(params *RequestListUsingGETParams, opts ...ClientOption) (*RequestListUsingGETOK, error) {
 	// TODO: Validate the params before sending

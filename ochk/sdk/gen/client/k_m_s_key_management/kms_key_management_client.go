@@ -50,9 +50,9 @@ type ClientService interface {
 }
 
 /*
-  KeyCreateUsingPUT creates
+KeyCreateUsingPUT creates
 
-  Create key (KMS)
+Create key (KMS)
 */
 func (a *Client) KeyCreateUsingPUT(params *KeyCreateUsingPUTParams, opts ...ClientOption) (*KeyCreateUsingPUTOK, *KeyCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
@@ -91,9 +91,9 @@ func (a *Client) KeyCreateUsingPUT(params *KeyCreateUsingPUTParams, opts ...Clie
 }
 
 /*
-  KeyDeleteUsingDELETE deletes
+KeyDeleteUsingDELETE deletes
 
-  Delete key (KMS)
+Delete key (KMS)
 */
 func (a *Client) KeyDeleteUsingDELETE(params *KeyDeleteUsingDELETEParams, opts ...ClientOption) (*KeyDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
@@ -131,9 +131,9 @@ func (a *Client) KeyDeleteUsingDELETE(params *KeyDeleteUsingDELETEParams, opts .
 }
 
 /*
-  KeyExportUsingPOST exports
+KeyExportUsingPOST exports
 
-  Export key (KMS)
+Export key (KMS)
 */
 func (a *Client) KeyExportUsingPOST(params *KeyExportUsingPOSTParams, opts ...ClientOption) (*KeyExportUsingPOSTOK, error) {
 	// TODO: Validate the params before sending
@@ -171,9 +171,9 @@ func (a *Client) KeyExportUsingPOST(params *KeyExportUsingPOSTParams, opts ...Cl
 }
 
 /*
-  KeyGetUsingGET gets
+KeyGetUsingGET gets
 
-  Get KMS key
+Get KMS key
 */
 func (a *Client) KeyGetUsingGET(params *KeyGetUsingGETParams, opts ...ClientOption) (*KeyGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -211,9 +211,9 @@ func (a *Client) KeyGetUsingGET(params *KeyGetUsingGETParams, opts ...ClientOpti
 }
 
 /*
-  KeyImportUsingPOST imports
+KeyImportUsingPOST imports
 
-  Import key (KMS)
+Import key (KMS)
 */
 func (a *Client) KeyImportUsingPOST(params *KeyImportUsingPOSTParams, opts ...ClientOption) (*KeyImportUsingPOSTOK, *KeyImportUsingPOSTCreated, error) {
 	// TODO: Validate the params before sending
@@ -252,9 +252,9 @@ func (a *Client) KeyImportUsingPOST(params *KeyImportUsingPOSTParams, opts ...Cl
 }
 
 /*
-  KeyListUsingGET lists
+KeyListUsingGET lists
 
-  List KMS keys
+List KMS keys
 */
 func (a *Client) KeyListUsingGET(params *KeyListUsingGETParams, opts ...ClientOption) (*KeyListUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -292,9 +292,9 @@ func (a *Client) KeyListUsingGET(params *KeyListUsingGETParams, opts ...ClientOp
 }
 
 /*
-  KeyNewVersionUsingPOST news version
+KeyNewVersionUsingPOST news version
 
-  Create new key version (KMS)
+Create new key version (KMS)
 */
 func (a *Client) KeyNewVersionUsingPOST(params *KeyNewVersionUsingPOSTParams, opts ...ClientOption) (*KeyNewVersionUsingPOSTOK, *KeyNewVersionUsingPOSTCreated, error) {
 	// TODO: Validate the params before sending
@@ -333,9 +333,9 @@ func (a *Client) KeyNewVersionUsingPOST(params *KeyNewVersionUsingPOSTParams, op
 }
 
 /*
-  KeyRevokeUsingPOST revokes
+KeyRevokeUsingPOST revokes
 
-  Revoke key (KMS)
+Revoke key (KMS)
 */
 func (a *Client) KeyRevokeUsingPOST(params *KeyRevokeUsingPOSTParams, opts ...ClientOption) (*KeyRevokeUsingPOSTOK, error) {
 	// TODO: Validate the params before sending

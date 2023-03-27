@@ -21,11 +21,8 @@ type VirtualNetworkInstance struct {
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
 
-	// dns search suffix
-	DNSSearchSuffix string `json:"dnsSearchSuffix,omitempty"`
-
-	// dns suffix
-	DNSSuffix string `json:"dnsSuffix,omitempty"`
+	// folder path
+	FolderPath string `json:"folderPath,omitempty"`
 
 	// gateway address
 	GatewayAddress string `json:"gatewayAddress,omitempty"`
@@ -33,29 +30,17 @@ type VirtualNetworkInstance struct {
 	// ipam enabled
 	IpamEnabled bool `json:"ipamEnabled,omitempty"`
 
-	// primary Dns address
-	PrimaryDNSAddress string `json:"primaryDnsAddress,omitempty"`
-
-	// primary wins address
-	PrimaryWinsAddress string `json:"primaryWinsAddress,omitempty"`
+	// project Id
+	ProjectID string `json:"projectId,omitempty"`
 
 	// router ref Id
 	RouterRefID string `json:"routerRefId,omitempty"`
-
-	// secondary Dns address
-	SecondaryDNSAddress string `json:"secondaryDnsAddress,omitempty"`
-
-	// secondary wins address
-	SecondaryWinsAddress string `json:"secondaryWinsAddress,omitempty"`
 
 	// subnet
 	Subnet *SegmentSubnetInstance `json:"subnet,omitempty"`
 
 	// subnet mask
 	SubnetMask string `json:"subnetMask,omitempty"`
-
-	// subtenant ref ids
-	SubtenantRefIds []string `json:"subtenantRefIds"`
 
 	// virtual network Id
 	VirtualNetworkID string `json:"virtualNetworkId,omitempty"`

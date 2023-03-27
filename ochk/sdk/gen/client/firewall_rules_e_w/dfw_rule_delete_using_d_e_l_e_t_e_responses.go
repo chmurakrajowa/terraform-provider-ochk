@@ -51,7 +51,8 @@ func NewDfwRuleDeleteUsingDELETEOK() *DfwRuleDeleteUsingDELETEOK {
 	return &DfwRuleDeleteUsingDELETEOK{}
 }
 
-/* DfwRuleDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*
+DfwRuleDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type DfwRuleDeleteUsingDELETEOK struct {
 	Payload *models.DeleteDFWRuleResponse
 }
 
+// IsSuccess returns true when this dfw rule delete using d e l e t e o k response has a 2xx status code
+func (o *DfwRuleDeleteUsingDELETEOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this dfw rule delete using d e l e t e o k response has a 3xx status code
+func (o *DfwRuleDeleteUsingDELETEOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this dfw rule delete using d e l e t e o k response has a 4xx status code
+func (o *DfwRuleDeleteUsingDELETEOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this dfw rule delete using d e l e t e o k response has a 5xx status code
+func (o *DfwRuleDeleteUsingDELETEOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this dfw rule delete using d e l e t e o k response a status code equal to that given
+func (o *DfwRuleDeleteUsingDELETEOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the dfw rule delete using d e l e t e o k response
+func (o *DfwRuleDeleteUsingDELETEOK) Code() int {
+	return 200
+}
+
 func (o *DfwRuleDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
+func (o *DfwRuleDeleteUsingDELETEOK) String() string {
+	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleDeleteUsingDELETEOK  %+v", 200, o.Payload)
+}
+
 func (o *DfwRuleDeleteUsingDELETEOK) GetPayload() *models.DeleteDFWRuleResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewDfwRuleDeleteUsingDELETECreated() *DfwRuleDeleteUsingDELETECreated {
 	return &DfwRuleDeleteUsingDELETECreated{}
 }
 
-/* DfwRuleDeleteUsingDELETECreated describes a response with status code 201, with default header values.
+/*
+DfwRuleDeleteUsingDELETECreated describes a response with status code 201, with default header values.
 
 Entity has been deleted
 */
@@ -91,9 +128,44 @@ type DfwRuleDeleteUsingDELETECreated struct {
 	Payload *models.DeleteDFWRuleResponse
 }
 
+// IsSuccess returns true when this dfw rule delete using d e l e t e created response has a 2xx status code
+func (o *DfwRuleDeleteUsingDELETECreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this dfw rule delete using d e l e t e created response has a 3xx status code
+func (o *DfwRuleDeleteUsingDELETECreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this dfw rule delete using d e l e t e created response has a 4xx status code
+func (o *DfwRuleDeleteUsingDELETECreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this dfw rule delete using d e l e t e created response has a 5xx status code
+func (o *DfwRuleDeleteUsingDELETECreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this dfw rule delete using d e l e t e created response a status code equal to that given
+func (o *DfwRuleDeleteUsingDELETECreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the dfw rule delete using d e l e t e created response
+func (o *DfwRuleDeleteUsingDELETECreated) Code() int {
+	return 201
+}
+
 func (o *DfwRuleDeleteUsingDELETECreated) Error() string {
 	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleDeleteUsingDELETECreated  %+v", 201, o.Payload)
 }
+
+func (o *DfwRuleDeleteUsingDELETECreated) String() string {
+	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleDeleteUsingDELETECreated  %+v", 201, o.Payload)
+}
+
 func (o *DfwRuleDeleteUsingDELETECreated) GetPayload() *models.DeleteDFWRuleResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewDfwRuleDeleteUsingDELETEBadRequest() *DfwRuleDeleteUsingDELETEBadRequest
 	return &DfwRuleDeleteUsingDELETEBadRequest{}
 }
 
-/* DfwRuleDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*
+DfwRuleDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type DfwRuleDeleteUsingDELETEBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this dfw rule delete using d e l e t e bad request response has a 2xx status code
+func (o *DfwRuleDeleteUsingDELETEBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this dfw rule delete using d e l e t e bad request response has a 3xx status code
+func (o *DfwRuleDeleteUsingDELETEBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this dfw rule delete using d e l e t e bad request response has a 4xx status code
+func (o *DfwRuleDeleteUsingDELETEBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this dfw rule delete using d e l e t e bad request response has a 5xx status code
+func (o *DfwRuleDeleteUsingDELETEBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this dfw rule delete using d e l e t e bad request response a status code equal to that given
+func (o *DfwRuleDeleteUsingDELETEBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the dfw rule delete using d e l e t e bad request response
+func (o *DfwRuleDeleteUsingDELETEBadRequest) Code() int {
+	return 400
+}
+
 func (o *DfwRuleDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *DfwRuleDeleteUsingDELETEBadRequest) String() string {
+	return fmt.Sprintf("[DELETE /network/routers/{routerId}/rules/e-w/{ruleId}][%d] dfwRuleDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *DfwRuleDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

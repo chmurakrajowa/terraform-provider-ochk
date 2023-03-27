@@ -34,9 +34,13 @@ type ClientService interface {
 
 	VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDeleteUsingDELETEParams, opts ...ClientOption) (*VcsVirtualMachineDeleteUsingDELETEOK, error)
 
-	VcsVirtualMachineGroupGetUsingGET1(params *VcsVirtualMachineGroupGetUsingGET1Params, opts ...ClientOption) (*VcsVirtualMachineGroupGetUsingGET1OK, error)
+	VcsVirtualMachineGetUsingGET(params *VcsVirtualMachineGetUsingGETParams, opts ...ClientOption) (*VcsVirtualMachineGetUsingGETOK, error)
 
-	VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsingGET1Params, opts ...ClientOption) (*VcsVirtualMachineListUsingGET1OK, error)
+	VcsVirtualMachineListUsingGET(params *VcsVirtualMachineListUsingGETParams, opts ...ClientOption) (*VcsVirtualMachineListUsingGETOK, error)
+
+	VcsVirtualMachineRemoveAllSnapshotsUsingPOST(params *VcsVirtualMachineRemoveAllSnapshotsUsingPOSTParams, opts ...ClientOption) (*VcsVirtualMachineRemoveAllSnapshotsUsingPOSTOK, error)
+
+	VcsVirtualMachineResetUsingPOST(params *VcsVirtualMachineResetUsingPOSTParams, opts ...ClientOption) (*VcsVirtualMachineResetUsingPOSTOK, error)
 
 	VcsVirtualMachineSnapshotCreateUsingPUT(params *VcsVirtualMachineSnapshotCreateUsingPUTParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotCreateUsingPUTOK, *VcsVirtualMachineSnapshotCreateUsingPUTCreated, error)
 
@@ -54,9 +58,9 @@ type ClientService interface {
 }
 
 /*
-  VcsVirtualMachineCreateUsingPUT creates
+VcsVirtualMachineCreateUsingPUT creates
 
-  Create vSphere vCenter virtual machine
+Create vSphere vCenter virtual machine
 */
 func (a *Client) VcsVirtualMachineCreateUsingPUT(params *VcsVirtualMachineCreateUsingPUTParams, opts ...ClientOption) (*VcsVirtualMachineCreateUsingPUTOK, *VcsVirtualMachineCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
@@ -95,9 +99,9 @@ func (a *Client) VcsVirtualMachineCreateUsingPUT(params *VcsVirtualMachineCreate
 }
 
 /*
-  VcsVirtualMachineDeleteUsingDELETE deletes
+VcsVirtualMachineDeleteUsingDELETE deletes
 
-  Delete vSphere vCenter virtual machine
+Delete vSphere vCenter virtual machine
 */
 func (a *Client) VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDeleteUsingDELETEParams, opts ...ClientOption) (*VcsVirtualMachineDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
@@ -135,24 +139,24 @@ func (a *Client) VcsVirtualMachineDeleteUsingDELETE(params *VcsVirtualMachineDel
 }
 
 /*
-  VcsVirtualMachineGroupGetUsingGET1 gets
+VcsVirtualMachineGetUsingGET gets
 
-  Get vSphere vCenter virtual machine
+Get vSphere vCenter virtual machine
 */
-func (a *Client) VcsVirtualMachineGroupGetUsingGET1(params *VcsVirtualMachineGroupGetUsingGET1Params, opts ...ClientOption) (*VcsVirtualMachineGroupGetUsingGET1OK, error) {
+func (a *Client) VcsVirtualMachineGetUsingGET(params *VcsVirtualMachineGetUsingGETParams, opts ...ClientOption) (*VcsVirtualMachineGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewVcsVirtualMachineGroupGetUsingGET1Params()
+		params = NewVcsVirtualMachineGetUsingGETParams()
 	}
 	op := &runtime.ClientOperation{
-		ID:                 "vcsVirtualMachineGroupGetUsingGET_1",
+		ID:                 "vcsVirtualMachineGetUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &VcsVirtualMachineGroupGetUsingGET1Reader{formats: a.formats},
+		Reader:             &VcsVirtualMachineGetUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -164,35 +168,35 @@ func (a *Client) VcsVirtualMachineGroupGetUsingGET1(params *VcsVirtualMachineGro
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*VcsVirtualMachineGroupGetUsingGET1OK)
+	success, ok := result.(*VcsVirtualMachineGetUsingGETOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineGroupGetUsingGET_1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineGetUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
-  VcsVirtualMachineListUsingGET1 lists
+VcsVirtualMachineListUsingGET lists
 
-  List vSphere vCenter virtual machines
+List vSphere vCenter virtual machines
 */
-func (a *Client) VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsingGET1Params, opts ...ClientOption) (*VcsVirtualMachineListUsingGET1OK, error) {
+func (a *Client) VcsVirtualMachineListUsingGET(params *VcsVirtualMachineListUsingGETParams, opts ...ClientOption) (*VcsVirtualMachineListUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewVcsVirtualMachineListUsingGET1Params()
+		params = NewVcsVirtualMachineListUsingGETParams()
 	}
 	op := &runtime.ClientOperation{
-		ID:                 "vcsVirtualMachineListUsingGET_1",
+		ID:                 "vcsVirtualMachineListUsingGET",
 		Method:             "GET",
 		PathPattern:        "/vcs/virtual-machines",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &VcsVirtualMachineListUsingGET1Reader{formats: a.formats},
+		Reader:             &VcsVirtualMachineListUsingGETReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -204,20 +208,100 @@ func (a *Client) VcsVirtualMachineListUsingGET1(params *VcsVirtualMachineListUsi
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*VcsVirtualMachineListUsingGET1OK)
+	success, ok := result.(*VcsVirtualMachineListUsingGETOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineListUsingGET_1: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineListUsingGET: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
 /*
-  VcsVirtualMachineSnapshotCreateUsingPUT creates snapshot
+VcsVirtualMachineRemoveAllSnapshotsUsingPOST resets
 
-  Create virtual machine snapshot
+Reset vSphere vCenter virtual machine
+*/
+func (a *Client) VcsVirtualMachineRemoveAllSnapshotsUsingPOST(params *VcsVirtualMachineRemoveAllSnapshotsUsingPOSTParams, opts ...ClientOption) (*VcsVirtualMachineRemoveAllSnapshotsUsingPOSTOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewVcsVirtualMachineRemoveAllSnapshotsUsingPOSTParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "vcsVirtualMachineRemoveAllSnapshotsUsingPOST",
+		Method:             "POST",
+		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}/removeAllSnapshots",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &VcsVirtualMachineRemoveAllSnapshotsUsingPOSTReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*VcsVirtualMachineRemoveAllSnapshotsUsingPOSTOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineRemoveAllSnapshotsUsingPOST: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+VcsVirtualMachineResetUsingPOST resets
+
+Reset vSphere vCenter virtual machine
+*/
+func (a *Client) VcsVirtualMachineResetUsingPOST(params *VcsVirtualMachineResetUsingPOSTParams, opts ...ClientOption) (*VcsVirtualMachineResetUsingPOSTOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewVcsVirtualMachineResetUsingPOSTParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "vcsVirtualMachineResetUsingPOST",
+		Method:             "POST",
+		PathPattern:        "/vcs/virtual-machines/{virtualMachineId}/reset",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &VcsVirtualMachineResetUsingPOSTReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*VcsVirtualMachineResetUsingPOSTOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for vcsVirtualMachineResetUsingPOST: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+VcsVirtualMachineSnapshotCreateUsingPUT creates snapshot
+
+Create virtual machine snapshot
 */
 func (a *Client) VcsVirtualMachineSnapshotCreateUsingPUT(params *VcsVirtualMachineSnapshotCreateUsingPUTParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotCreateUsingPUTOK, *VcsVirtualMachineSnapshotCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
@@ -256,9 +340,9 @@ func (a *Client) VcsVirtualMachineSnapshotCreateUsingPUT(params *VcsVirtualMachi
 }
 
 /*
-  VcsVirtualMachineSnapshotDeleteUsingDELETE deletes snapshot
+VcsVirtualMachineSnapshotDeleteUsingDELETE deletes snapshot
 
-  Delete virtual machine snapshot
+Delete virtual machine snapshot
 */
 func (a *Client) VcsVirtualMachineSnapshotDeleteUsingDELETE(params *VcsVirtualMachineSnapshotDeleteUsingDELETEParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
@@ -296,9 +380,9 @@ func (a *Client) VcsVirtualMachineSnapshotDeleteUsingDELETE(params *VcsVirtualMa
 }
 
 /*
-  VcsVirtualMachineSnapshotGetUsingGET gets snapshot
+VcsVirtualMachineSnapshotGetUsingGET gets snapshot
 
-  Get virtual machine snapshot
+Get virtual machine snapshot
 */
 func (a *Client) VcsVirtualMachineSnapshotGetUsingGET(params *VcsVirtualMachineSnapshotGetUsingGETParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -336,9 +420,9 @@ func (a *Client) VcsVirtualMachineSnapshotGetUsingGET(params *VcsVirtualMachineS
 }
 
 /*
-  VcsVirtualMachineSnapshotListUsingGET lists snapshots
+VcsVirtualMachineSnapshotListUsingGET lists snapshots
 
-  List virtual machine snapshot(s)
+List virtual machine snapshot(s)
 */
 func (a *Client) VcsVirtualMachineSnapshotListUsingGET(params *VcsVirtualMachineSnapshotListUsingGETParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotListUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -376,9 +460,9 @@ func (a *Client) VcsVirtualMachineSnapshotListUsingGET(params *VcsVirtualMachine
 }
 
 /*
-  VcsVirtualMachineSnapshotRevertUsingPOST reverts to snapshot
+VcsVirtualMachineSnapshotRevertUsingPOST reverts to snapshot
 
-  Revert to virtual machine snapshot
+Revert to virtual machine snapshot
 */
 func (a *Client) VcsVirtualMachineSnapshotRevertUsingPOST(params *VcsVirtualMachineSnapshotRevertUsingPOSTParams, opts ...ClientOption) (*VcsVirtualMachineSnapshotRevertUsingPOSTOK, error) {
 	// TODO: Validate the params before sending
@@ -416,9 +500,9 @@ func (a *Client) VcsVirtualMachineSnapshotRevertUsingPOST(params *VcsVirtualMach
 }
 
 /*
-  VcsVirtualMachineUpdateUsingPUT updates
+VcsVirtualMachineUpdateUsingPUT updates
 
-  Update vSphere vCenter virtual machine
+Update vSphere vCenter virtual machine
 */
 func (a *Client) VcsVirtualMachineUpdateUsingPUT(params *VcsVirtualMachineUpdateUsingPUTParams, opts ...ClientOption) (*VcsVirtualMachineUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending

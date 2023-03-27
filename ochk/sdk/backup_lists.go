@@ -7,6 +7,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/backups"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"net/http"
+	"sync"
 )
 
 type BackupListsProxy struct {
@@ -21,6 +22,7 @@ func (p *BackupListsProxy) Read(ctx context.Context, backupPlanID string, backup
 		Context:      ctx,
 		HTTPClient:   p.httpClient,
 	}
+
 	response, err := p.service.BackupListGetUsingGET(params)
 
 	if err != nil {
@@ -48,7 +50,33 @@ func (p *BackupListsProxy) ListBackupListByName(ctx context.Context, backupPlanI
 		HTTPClient:     p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.BackupListListUsingGET(params)
+	mutex.Unlock()
+
+	if err != nil {
+		return nil, fmt.Errorf("error while listing backup list: %w", err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("Listing backup list failed: %s", response.Payload.Messages)
+	}
+
+	return response.Payload.BackupListCollection, nil
+}
+
+func (p *BackupListsProxy) ListBackupList(ctx context.Context, backupPlanID string) ([]*models.BackupList, error) {
+	params := &backups.BackupListListUsingGETParams{
+		BackupPlanID: backupPlanID,
+		Context:      ctx,
+		HTTPClient:   p.httpClient,
+	}
+
+	mutex := sync.Mutex{}
+	mutex.Lock()
+	response, err := p.service.BackupListListUsingGET(params)
+	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing backup list: %w", err)

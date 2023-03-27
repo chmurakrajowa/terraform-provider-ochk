@@ -11,24 +11,18 @@ func dataSourceFirewallSNRule() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceFirewallSNRuleRead,
 
-		Timeouts: &schema.ResourceTimeout{
-			Create: schema.DefaultTimeout(FirewallSNRuleRetryTimeout),
-			Update: schema.DefaultTimeout(FirewallSNRuleRetryTimeout),
-			Delete: schema.DefaultTimeout(FirewallSNRuleRetryTimeout),
-		},
-
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
-
 		Schema: map[string]*schema.Schema{
-			"router_id": {
+			"vpc_id": {
 				Type:     schema.TypeString,
 				Required: true,
 			},
 			"display_name": {
 				Type:     schema.TypeString,
 				Required: true,
+			},
+			"project_id": {
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"action": {
 				Type:     schema.TypeString,
@@ -94,7 +88,7 @@ func dataSourceFirewallSNRule() *schema.Resource {
 func dataSourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallSNRules
 
-	routerID := d.Get("router_id").(string)
+	routerID := d.Get("vpc_id").(string)
 
 	displayName := d.Get("display_name").(string)
 
@@ -113,12 +107,12 @@ func dataSourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, m
 
 	d.SetId(firewallSNRules[0].RuleID)
 
-	if err := d.Set("router_id", flattenRouterInstancesFromScope(firewallSNRules[0].Scope)); err != nil {
-		return diag.Errorf("error setting router_id: %+v", err)
-	}
-
 	if err := d.Set("display_name", firewallSNRules[0].DisplayName); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
+	}
+
+	if err := d.Set("project_id", firewallSNRules[0].ProjectID); err != nil {
+		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
 	if err := d.Set("action", firewallSNRules[0].Action); err != nil {

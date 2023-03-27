@@ -10,13 +10,13 @@ This repository contains Terraform Provider for managing cloud resources in OChK
 <img src="https://chmurakrajowa.pl/img/logotypes/chmura-krajowa-logo.svg" width="200px">
 
 Requirements
-------------
+-------------------------
 
 - [Terraform](https://www.terraform.io/downloads.html) 1.0+
 - [Go](https://golang.org/doc/install) 1.16+ (to build the provider plugin)
 
 Building The Provider
----------------------
+-------------------------
 
 Clone the repository.
 
@@ -32,7 +32,7 @@ $ go build -o examples/ ./...
 ```
 
 Using the provider
-----------------------
+--------------------------
 
 Provide connection details in `terraform.tfvars` file. Password should be set using `OCHK_PASSWORD` environment variable.
 
@@ -66,10 +66,10 @@ In order to run the full suite of Acceptance tests you need to provide connectio
 
 ```sh
 $ export TF_ACC=true
-$ export OCHK_HOST=host
-$ export OCHK_TENANT=tenant
-$ export OCHK_USERNAME=username
-$ export OCHK_PASSWORD=*******
+$ export TF_VAR_host=host
+$ export TF_VAR_platform=platform
+$ export TF_VAR_username=username
+$ export TF_VAR_password=*******
 
 $ go test ./...
 ```

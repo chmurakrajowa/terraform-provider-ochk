@@ -18,11 +18,14 @@ data "ochk_service" "ssh" {
 
 The following arguments are supported:
 
-* `display_name` - (Required) Exact display name of service.
+* `display_name` - (Required) Display name of service.
 
 ## Attribute Reference
 
 The following attributes are exported:
- * `display_name` - Service name. 
+* `created_by` - Who created this resource.
+* `created_at` - When this resource was created.
+* `modified_by` - Who last modified this resource.
+* `modified_at` - When last modification occurred.
     
  

@@ -52,10 +52,12 @@ func NewVirtualNetworkListUsingGETParamsWithHTTPClient(client *http.Client) *Vir
 	}
 }
 
-/* VirtualNetworkListUsingGETParams contains all the parameters to send to the API endpoint
-   for the virtual network list using g e t operation.
+/*
+VirtualNetworkListUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the virtual network list using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type VirtualNetworkListUsingGETParams struct {
 

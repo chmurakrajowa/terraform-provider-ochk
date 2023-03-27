@@ -45,7 +45,8 @@ func NewVcsVirtualMachineUpdateUsingPUTOK() *VcsVirtualMachineUpdateUsingPUTOK {
 	return &VcsVirtualMachineUpdateUsingPUTOK{}
 }
 
-/* VcsVirtualMachineUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+VcsVirtualMachineUpdateUsingPUTOK describes a response with status code 200, with default header values.
 
 Request has been completed successfully
 */
@@ -53,9 +54,44 @@ type VcsVirtualMachineUpdateUsingPUTOK struct {
 	Payload *models.VcsVirtualMachineUpdateResponse
 }
 
+// IsSuccess returns true when this vcs virtual machine update using p u t o k response has a 2xx status code
+func (o *VcsVirtualMachineUpdateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this vcs virtual machine update using p u t o k response has a 3xx status code
+func (o *VcsVirtualMachineUpdateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this vcs virtual machine update using p u t o k response has a 4xx status code
+func (o *VcsVirtualMachineUpdateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this vcs virtual machine update using p u t o k response has a 5xx status code
+func (o *VcsVirtualMachineUpdateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this vcs virtual machine update using p u t o k response a status code equal to that given
+func (o *VcsVirtualMachineUpdateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the vcs virtual machine update using p u t o k response
+func (o *VcsVirtualMachineUpdateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *VcsVirtualMachineUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *VcsVirtualMachineUpdateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineUpdateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *VcsVirtualMachineUpdateUsingPUTOK) GetPayload() *models.VcsVirtualMachineUpdateResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewVcsVirtualMachineUpdateUsingPUTBadRequest() *VcsVirtualMachineUpdateUsin
 	return &VcsVirtualMachineUpdateUsingPUTBadRequest{}
 }
 
-/* VcsVirtualMachineUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+VcsVirtualMachineUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type VcsVirtualMachineUpdateUsingPUTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this vcs virtual machine update using p u t bad request response has a 2xx status code
+func (o *VcsVirtualMachineUpdateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this vcs virtual machine update using p u t bad request response has a 3xx status code
+func (o *VcsVirtualMachineUpdateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this vcs virtual machine update using p u t bad request response has a 4xx status code
+func (o *VcsVirtualMachineUpdateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this vcs virtual machine update using p u t bad request response has a 5xx status code
+func (o *VcsVirtualMachineUpdateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this vcs virtual machine update using p u t bad request response a status code equal to that given
+func (o *VcsVirtualMachineUpdateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the vcs virtual machine update using p u t bad request response
+func (o *VcsVirtualMachineUpdateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *VcsVirtualMachineUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *VcsVirtualMachineUpdateUsingPUTBadRequest) String() string {
+	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *VcsVirtualMachineUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

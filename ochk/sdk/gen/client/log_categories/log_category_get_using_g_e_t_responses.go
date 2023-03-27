@@ -45,7 +45,8 @@ func NewLogCategoryGetUsingGETOK() *LogCategoryGetUsingGETOK {
 	return &LogCategoryGetUsingGETOK{}
 }
 
-/* LogCategoryGetUsingGETOK describes a response with status code 200, with default header values.
+/*
+LogCategoryGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type LogCategoryGetUsingGETOK struct {
 	Payload *models.LogCategoryGetResponse
 }
 
+// IsSuccess returns true when this log category get using g e t o k response has a 2xx status code
+func (o *LogCategoryGetUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this log category get using g e t o k response has a 3xx status code
+func (o *LogCategoryGetUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this log category get using g e t o k response has a 4xx status code
+func (o *LogCategoryGetUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this log category get using g e t o k response has a 5xx status code
+func (o *LogCategoryGetUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this log category get using g e t o k response a status code equal to that given
+func (o *LogCategoryGetUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the log category get using g e t o k response
+func (o *LogCategoryGetUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *LogCategoryGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /log/categories/{logCategoryId}][%d] logCategoryGetUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *LogCategoryGetUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /log/categories/{logCategoryId}][%d] logCategoryGetUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *LogCategoryGetUsingGETOK) GetPayload() *models.LogCategoryGetResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewLogCategoryGetUsingGETBadRequest() *LogCategoryGetUsingGETBadRequest {
 	return &LogCategoryGetUsingGETBadRequest{}
 }
 
-/* LogCategoryGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+LogCategoryGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type LogCategoryGetUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this log category get using g e t bad request response has a 2xx status code
+func (o *LogCategoryGetUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this log category get using g e t bad request response has a 3xx status code
+func (o *LogCategoryGetUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this log category get using g e t bad request response has a 4xx status code
+func (o *LogCategoryGetUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this log category get using g e t bad request response has a 5xx status code
+func (o *LogCategoryGetUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this log category get using g e t bad request response a status code equal to that given
+func (o *LogCategoryGetUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the log category get using g e t bad request response
+func (o *LogCategoryGetUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *LogCategoryGetUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /log/categories/{logCategoryId}][%d] logCategoryGetUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *LogCategoryGetUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /log/categories/{logCategoryId}][%d] logCategoryGetUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *LogCategoryGetUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

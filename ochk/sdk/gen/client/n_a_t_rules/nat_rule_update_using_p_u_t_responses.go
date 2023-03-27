@@ -45,7 +45,8 @@ func NewNatRuleUpdateUsingPUTOK() *NatRuleUpdateUsingPUTOK {
 	return &NatRuleUpdateUsingPUTOK{}
 }
 
-/* NatRuleUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+NatRuleUpdateUsingPUTOK describes a response with status code 200, with default header values.
 
 Entity has been updated
 */
@@ -53,9 +54,44 @@ type NatRuleUpdateUsingPUTOK struct {
 	Payload *models.UpdateNATRuleResponse
 }
 
+// IsSuccess returns true when this nat rule update using p u t o k response has a 2xx status code
+func (o *NatRuleUpdateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this nat rule update using p u t o k response has a 3xx status code
+func (o *NatRuleUpdateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this nat rule update using p u t o k response has a 4xx status code
+func (o *NatRuleUpdateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this nat rule update using p u t o k response has a 5xx status code
+func (o *NatRuleUpdateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this nat rule update using p u t o k response a status code equal to that given
+func (o *NatRuleUpdateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the nat rule update using p u t o k response
+func (o *NatRuleUpdateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *NatRuleUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/nat/rules/{ruleId}][%d] natRuleUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *NatRuleUpdateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /network/nat/rules/{ruleId}][%d] natRuleUpdateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *NatRuleUpdateUsingPUTOK) GetPayload() *models.UpdateNATRuleResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewNatRuleUpdateUsingPUTBadRequest() *NatRuleUpdateUsingPUTBadRequest {
 	return &NatRuleUpdateUsingPUTBadRequest{}
 }
 
-/* NatRuleUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+NatRuleUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type NatRuleUpdateUsingPUTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this nat rule update using p u t bad request response has a 2xx status code
+func (o *NatRuleUpdateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this nat rule update using p u t bad request response has a 3xx status code
+func (o *NatRuleUpdateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this nat rule update using p u t bad request response has a 4xx status code
+func (o *NatRuleUpdateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this nat rule update using p u t bad request response has a 5xx status code
+func (o *NatRuleUpdateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this nat rule update using p u t bad request response a status code equal to that given
+func (o *NatRuleUpdateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the nat rule update using p u t bad request response
+func (o *NatRuleUpdateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *NatRuleUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/nat/rules/{ruleId}][%d] natRuleUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *NatRuleUpdateUsingPUTBadRequest) String() string {
+	return fmt.Sprintf("[PUT /network/nat/rules/{ruleId}][%d] natRuleUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *NatRuleUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

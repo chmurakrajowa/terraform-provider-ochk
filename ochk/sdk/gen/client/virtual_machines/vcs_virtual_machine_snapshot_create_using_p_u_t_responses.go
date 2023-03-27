@@ -51,7 +51,8 @@ func NewVcsVirtualMachineSnapshotCreateUsingPUTOK() *VcsVirtualMachineSnapshotCr
 	return &VcsVirtualMachineSnapshotCreateUsingPUTOK{}
 }
 
-/* VcsVirtualMachineSnapshotCreateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+VcsVirtualMachineSnapshotCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type VcsVirtualMachineSnapshotCreateUsingPUTOK struct {
 	Payload *models.CreateSnapshotResponse
 }
 
+// IsSuccess returns true when this vcs virtual machine snapshot create using p u t o k response has a 2xx status code
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this vcs virtual machine snapshot create using p u t o k response has a 3xx status code
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this vcs virtual machine snapshot create using p u t o k response has a 4xx status code
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this vcs virtual machine snapshot create using p u t o k response has a 5xx status code
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this vcs virtual machine snapshot create using p u t o k response a status code equal to that given
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the vcs virtual machine snapshot create using p u t o k response
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *VcsVirtualMachineSnapshotCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}/snapshots][%d] vcsVirtualMachineSnapshotCreateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}/snapshots][%d] vcsVirtualMachineSnapshotCreateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *VcsVirtualMachineSnapshotCreateUsingPUTOK) GetPayload() *models.CreateSnapshotResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewVcsVirtualMachineSnapshotCreateUsingPUTCreated() *VcsVirtualMachineSnaps
 	return &VcsVirtualMachineSnapshotCreateUsingPUTCreated{}
 }
 
-/* VcsVirtualMachineSnapshotCreateUsingPUTCreated describes a response with status code 201, with default header values.
+/*
+VcsVirtualMachineSnapshotCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -91,9 +128,44 @@ type VcsVirtualMachineSnapshotCreateUsingPUTCreated struct {
 	Payload *models.CreateSnapshotResponse
 }
 
+// IsSuccess returns true when this vcs virtual machine snapshot create using p u t created response has a 2xx status code
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this vcs virtual machine snapshot create using p u t created response has a 3xx status code
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this vcs virtual machine snapshot create using p u t created response has a 4xx status code
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this vcs virtual machine snapshot create using p u t created response has a 5xx status code
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this vcs virtual machine snapshot create using p u t created response a status code equal to that given
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the vcs virtual machine snapshot create using p u t created response
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTCreated) Code() int {
+	return 201
+}
+
 func (o *VcsVirtualMachineSnapshotCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}/snapshots][%d] vcsVirtualMachineSnapshotCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTCreated) String() string {
+	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}/snapshots][%d] vcsVirtualMachineSnapshotCreateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
 func (o *VcsVirtualMachineSnapshotCreateUsingPUTCreated) GetPayload() *models.CreateSnapshotResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewVcsVirtualMachineSnapshotCreateUsingPUTBadRequest() *VcsVirtualMachineSn
 	return &VcsVirtualMachineSnapshotCreateUsingPUTBadRequest{}
 }
 
-/* VcsVirtualMachineSnapshotCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+VcsVirtualMachineSnapshotCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type VcsVirtualMachineSnapshotCreateUsingPUTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this vcs virtual machine snapshot create using p u t bad request response has a 2xx status code
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this vcs virtual machine snapshot create using p u t bad request response has a 3xx status code
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this vcs virtual machine snapshot create using p u t bad request response has a 4xx status code
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this vcs virtual machine snapshot create using p u t bad request response has a 5xx status code
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this vcs virtual machine snapshot create using p u t bad request response a status code equal to that given
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the vcs virtual machine snapshot create using p u t bad request response
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *VcsVirtualMachineSnapshotCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}/snapshots][%d] vcsVirtualMachineSnapshotCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *VcsVirtualMachineSnapshotCreateUsingPUTBadRequest) String() string {
+	return fmt.Sprintf("[PUT /vcs/virtual-machines/{virtualMachineId}/snapshots][%d] vcsVirtualMachineSnapshotCreateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *VcsVirtualMachineSnapshotCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

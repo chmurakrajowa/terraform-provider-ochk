@@ -14,6 +14,7 @@ import (
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewSecurityGroupDeleteUsingDELETEParams creates a new SecurityGroupDeleteUsingDELETEParams object,
@@ -52,12 +53,20 @@ func NewSecurityGroupDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) 
 	}
 }
 
-/* SecurityGroupDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-   for the security group delete using d e l e t e operation.
+/*
+SecurityGroupDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the security group delete using d e l e t e operation.
+
+	Typically these are written to a http.Request.
 */
 type SecurityGroupDeleteUsingDELETEParams struct {
+
+	/* Force.
+
+	   force
+	*/
+	Force *bool
 
 	/* GroupID.
 
@@ -118,6 +127,17 @@ func (o *SecurityGroupDeleteUsingDELETEParams) SetHTTPClient(client *http.Client
 	o.HTTPClient = client
 }
 
+// WithForce adds the force to the security group delete using d e l e t e params
+func (o *SecurityGroupDeleteUsingDELETEParams) WithForce(force *bool) *SecurityGroupDeleteUsingDELETEParams {
+	o.SetForce(force)
+	return o
+}
+
+// SetForce adds the force to the security group delete using d e l e t e params
+func (o *SecurityGroupDeleteUsingDELETEParams) SetForce(force *bool) {
+	o.Force = force
+}
+
 // WithGroupID adds the groupID to the security group delete using d e l e t e params
 func (o *SecurityGroupDeleteUsingDELETEParams) WithGroupID(groupID string) *SecurityGroupDeleteUsingDELETEParams {
 	o.SetGroupID(groupID)
@@ -136,6 +156,23 @@ func (o *SecurityGroupDeleteUsingDELETEParams) WriteToRequest(r runtime.ClientRe
 		return err
 	}
 	var res []error
+
+	if o.Force != nil {
+
+		// query param force
+		var qrForce bool
+
+		if o.Force != nil {
+			qrForce = *o.Force
+		}
+		qForce := swag.FormatBool(qrForce)
+		if qForce != "" {
+
+			if err := r.SetQueryParam("force", qForce); err != nil {
+				return err
+			}
+		}
+	}
 
 	// path param groupId
 	if err := r.SetPathParam("groupId", o.GroupID); err != nil {

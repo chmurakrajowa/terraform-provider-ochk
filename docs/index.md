@@ -7,7 +7,7 @@ Terraform Provider for managing cloud resources in OChK.
 ```hcl
 provider "ochk" {
     host = var.host
-    tenant = var.tenant
+    platform = var.platform
     username = var.username
     debug_log_file = var.debug_log_file
 }
@@ -18,7 +18,6 @@ data "ochk_virtual_machine" "vm" {
 
 resource "ochk_security_group" "vm" {
     display_name = "tf-sg-vm"
-    
     members {
         id = ochk_virtual_machine.vm.id
         type = "VIRTUAL_MACHINE"
@@ -29,14 +28,14 @@ resource "ochk_security_group" "vm" {
 ## Argument Reference
 
 * `host` - API hostname
-* `tenant` - tenant name
+* `platform` - platform name
 * `username` - user name
 * `password` - password
 * `debug_log_file` - output file to which all API calls will be logged. DEPRECATED: use TF_LOG=DEBUG instead.  
 
 Arguments can be set using environment variables:
 * `host` - `OCHK_HOST`
-* `tenant` - `OCHK_TENANT`
+* `platform` - `OCHK_PLATFORM`
 * `username` - `OCHK_USERNAME`
 * `password` - `OCHK_PASSWORD`
 

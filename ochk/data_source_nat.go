@@ -90,7 +90,7 @@ func dataSourceNatRead(ctx context.Context, d *schema.ResourceData, meta interfa
 	nats, err := proxy.Nats.ListNatsByName(ctx, displayName)
 
 	if err != nil {
-		return diag.Errorf("error while listing ipam services: %+v", err)
+		return diag.Errorf("error while listing nats: %+v", err)
 	}
 
 	if len(nats) < 1 {

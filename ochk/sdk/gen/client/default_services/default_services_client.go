@@ -38,9 +38,9 @@ type ClientService interface {
 }
 
 /*
-  ServiceGetUsingGET gets
+ServiceGetUsingGET gets
 
-  Get default service from NSX-T
+Get default service from NSX-T
 */
 func (a *Client) ServiceGetUsingGET(params *ServiceGetUsingGETParams, opts ...ClientOption) (*ServiceGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -78,9 +78,9 @@ func (a *Client) ServiceGetUsingGET(params *ServiceGetUsingGETParams, opts ...Cl
 }
 
 /*
-  ServiceListUsingGET lists
+ServiceListUsingGET lists
 
-  List default services from NSX-T
+List default services from NSX-T
 */
 func (a *Client) ServiceListUsingGET(params *ServiceListUsingGETParams, opts ...ClientOption) (*ServiceListUsingGETOK, error) {
 	// TODO: Validate the params before sending

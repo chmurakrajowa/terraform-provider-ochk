@@ -45,7 +45,8 @@ func NewSecurityGroupListUsingGETOK() *SecurityGroupListUsingGETOK {
 	return &SecurityGroupListUsingGETOK{}
 }
 
-/* SecurityGroupListUsingGETOK describes a response with status code 200, with default header values.
+/*
+SecurityGroupListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type SecurityGroupListUsingGETOK struct {
 	Payload *models.SecurityGroupListResponse
 }
 
+// IsSuccess returns true when this security group list using g e t o k response has a 2xx status code
+func (o *SecurityGroupListUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this security group list using g e t o k response has a 3xx status code
+func (o *SecurityGroupListUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this security group list using g e t o k response has a 4xx status code
+func (o *SecurityGroupListUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this security group list using g e t o k response has a 5xx status code
+func (o *SecurityGroupListUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this security group list using g e t o k response a status code equal to that given
+func (o *SecurityGroupListUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the security group list using g e t o k response
+func (o *SecurityGroupListUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *SecurityGroupListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/security-groups][%d] securityGroupListUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *SecurityGroupListUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /network/security-groups][%d] securityGroupListUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *SecurityGroupListUsingGETOK) GetPayload() *models.SecurityGroupListResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewSecurityGroupListUsingGETBadRequest() *SecurityGroupListUsingGETBadReque
 	return &SecurityGroupListUsingGETBadRequest{}
 }
 
-/* SecurityGroupListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+SecurityGroupListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type SecurityGroupListUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this security group list using g e t bad request response has a 2xx status code
+func (o *SecurityGroupListUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this security group list using g e t bad request response has a 3xx status code
+func (o *SecurityGroupListUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this security group list using g e t bad request response has a 4xx status code
+func (o *SecurityGroupListUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this security group list using g e t bad request response has a 5xx status code
+func (o *SecurityGroupListUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this security group list using g e t bad request response a status code equal to that given
+func (o *SecurityGroupListUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the security group list using g e t bad request response
+func (o *SecurityGroupListUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *SecurityGroupListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/security-groups][%d] securityGroupListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *SecurityGroupListUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /network/security-groups][%d] securityGroupListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *SecurityGroupListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

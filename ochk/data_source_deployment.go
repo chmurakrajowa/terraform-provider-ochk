@@ -16,6 +16,14 @@ func dataSourceDeployment() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"deployment_type": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"initial_size_mb": {
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -36,6 +44,14 @@ func dataSourceDeploymentRead(ctx context.Context, d *schema.ResourceData, meta 
 
 	if len(deployments) > 1 {
 		return diag.Errorf("more than one deployment with display_name: %s found!", displayName)
+	}
+
+	if err := d.Set("deployment_type", deployments[0].DeploymentType); err != nil {
+		return diag.Errorf("error setting deployment_type: %+v", err)
+	}
+
+	if err := d.Set("initial_size_mb", int(deployments[0].DeploymentInitialSizeMB)); err != nil {
+		return diag.Errorf("error setting initial_size_gb: %+v", err)
 	}
 
 	d.SetId(deployments[0].DeploymentID)

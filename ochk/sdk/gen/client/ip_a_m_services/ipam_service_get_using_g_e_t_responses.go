@@ -51,7 +51,8 @@ func NewIpamServiceGetUsingGETOK() *IpamServiceGetUsingGETOK {
 	return &IpamServiceGetUsingGETOK{}
 }
 
-/* IpamServiceGetUsingGETOK describes a response with status code 200, with default header values.
+/*
+IpamServiceGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type IpamServiceGetUsingGETOK struct {
 	Payload *models.ServiceGetResponse
 }
 
+// IsSuccess returns true when this ipam service get using g e t o k response has a 2xx status code
+func (o *IpamServiceGetUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this ipam service get using g e t o k response has a 3xx status code
+func (o *IpamServiceGetUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this ipam service get using g e t o k response has a 4xx status code
+func (o *IpamServiceGetUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this ipam service get using g e t o k response has a 5xx status code
+func (o *IpamServiceGetUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this ipam service get using g e t o k response a status code equal to that given
+func (o *IpamServiceGetUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the ipam service get using g e t o k response
+func (o *IpamServiceGetUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *IpamServiceGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /ipam/services/{serviceId}][%d] ipamServiceGetUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *IpamServiceGetUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /ipam/services/{serviceId}][%d] ipamServiceGetUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *IpamServiceGetUsingGETOK) GetPayload() *models.ServiceGetResponse {
 	return o.Payload
 }
@@ -83,14 +119,49 @@ func NewIpamServiceGetUsingGETBadRequest() *IpamServiceGetUsingGETBadRequest {
 	return &IpamServiceGetUsingGETBadRequest{}
 }
 
-/* IpamServiceGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+IpamServiceGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
 type IpamServiceGetUsingGETBadRequest struct {
 }
 
+// IsSuccess returns true when this ipam service get using g e t bad request response has a 2xx status code
+func (o *IpamServiceGetUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this ipam service get using g e t bad request response has a 3xx status code
+func (o *IpamServiceGetUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this ipam service get using g e t bad request response has a 4xx status code
+func (o *IpamServiceGetUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this ipam service get using g e t bad request response has a 5xx status code
+func (o *IpamServiceGetUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this ipam service get using g e t bad request response a status code equal to that given
+func (o *IpamServiceGetUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the ipam service get using g e t bad request response
+func (o *IpamServiceGetUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *IpamServiceGetUsingGETBadRequest) Error() string {
+	return fmt.Sprintf("[GET /ipam/services/{serviceId}][%d] ipamServiceGetUsingGETBadRequest ", 400)
+}
+
+func (o *IpamServiceGetUsingGETBadRequest) String() string {
 	return fmt.Sprintf("[GET /ipam/services/{serviceId}][%d] ipamServiceGetUsingGETBadRequest ", 400)
 }
 
@@ -104,14 +175,49 @@ func NewIpamServiceGetUsingGETNotFound() *IpamServiceGetUsingGETNotFound {
 	return &IpamServiceGetUsingGETNotFound{}
 }
 
-/* IpamServiceGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*
+IpamServiceGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */
 type IpamServiceGetUsingGETNotFound struct {
 }
 
+// IsSuccess returns true when this ipam service get using g e t not found response has a 2xx status code
+func (o *IpamServiceGetUsingGETNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this ipam service get using g e t not found response has a 3xx status code
+func (o *IpamServiceGetUsingGETNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this ipam service get using g e t not found response has a 4xx status code
+func (o *IpamServiceGetUsingGETNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this ipam service get using g e t not found response has a 5xx status code
+func (o *IpamServiceGetUsingGETNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this ipam service get using g e t not found response a status code equal to that given
+func (o *IpamServiceGetUsingGETNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the ipam service get using g e t not found response
+func (o *IpamServiceGetUsingGETNotFound) Code() int {
+	return 404
+}
+
 func (o *IpamServiceGetUsingGETNotFound) Error() string {
+	return fmt.Sprintf("[GET /ipam/services/{serviceId}][%d] ipamServiceGetUsingGETNotFound ", 404)
+}
+
+func (o *IpamServiceGetUsingGETNotFound) String() string {
 	return fmt.Sprintf("[GET /ipam/services/{serviceId}][%d] ipamServiceGetUsingGETNotFound ", 404)
 }
 

@@ -44,9 +44,9 @@ type ClientService interface {
 }
 
 /*
-  VirtualNetworkCreateUsingPUT creates
+VirtualNetworkCreateUsingPUT creates
 
-  Create virtual network
+Create virtual network
 */
 func (a *Client) VirtualNetworkCreateUsingPUT(params *VirtualNetworkCreateUsingPUTParams, opts ...ClientOption) (*VirtualNetworkCreateUsingPUTOK, *VirtualNetworkCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
@@ -85,9 +85,9 @@ func (a *Client) VirtualNetworkCreateUsingPUT(params *VirtualNetworkCreateUsingP
 }
 
 /*
-  VirtualNetworkDeleteUsingDELETE deletes
+VirtualNetworkDeleteUsingDELETE deletes
 
-  Delete virtual network
+Delete virtual network
 */
 func (a *Client) VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsingDELETEParams, opts ...ClientOption) (*VirtualNetworkDeleteUsingDELETEOK, *VirtualNetworkDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
@@ -126,9 +126,9 @@ func (a *Client) VirtualNetworkDeleteUsingDELETE(params *VirtualNetworkDeleteUsi
 }
 
 /*
-  VirtualNetworkGetUsingGET gets
+VirtualNetworkGetUsingGET gets
 
-  Get virtual network
+Get virtual network
 */
 func (a *Client) VirtualNetworkGetUsingGET(params *VirtualNetworkGetUsingGETParams, opts ...ClientOption) (*VirtualNetworkGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -166,9 +166,9 @@ func (a *Client) VirtualNetworkGetUsingGET(params *VirtualNetworkGetUsingGETPara
 }
 
 /*
-  VirtualNetworkListUsingGET lists
+VirtualNetworkListUsingGET lists
 
-  List virtual network
+List virtual network
 */
 func (a *Client) VirtualNetworkListUsingGET(params *VirtualNetworkListUsingGETParams, opts ...ClientOption) (*VirtualNetworkListUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -206,9 +206,9 @@ func (a *Client) VirtualNetworkListUsingGET(params *VirtualNetworkListUsingGETPa
 }
 
 /*
-  VirtualNetworkUpdateUsingPUT updates
+VirtualNetworkUpdateUsingPUT updates
 
-  Update virtual network
+Update virtual network
 */
 func (a *Client) VirtualNetworkUpdateUsingPUT(params *VirtualNetworkUpdateUsingPUTParams, opts ...ClientOption) (*VirtualNetworkUpdateUsingPUTOK, *VirtualNetworkUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending

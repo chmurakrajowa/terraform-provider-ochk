@@ -45,7 +45,8 @@ func NewKeyListUsingGETOK() *KeyListUsingGETOK {
 	return &KeyListUsingGETOK{}
 }
 
-/* KeyListUsingGETOK describes a response with status code 200, with default header values.
+/*
+KeyListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type KeyListUsingGETOK struct {
 	Payload *models.KeyListResponse
 }
 
+// IsSuccess returns true when this key list using g e t o k response has a 2xx status code
+func (o *KeyListUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this key list using g e t o k response has a 3xx status code
+func (o *KeyListUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key list using g e t o k response has a 4xx status code
+func (o *KeyListUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this key list using g e t o k response has a 5xx status code
+func (o *KeyListUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key list using g e t o k response a status code equal to that given
+func (o *KeyListUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the key list using g e t o k response
+func (o *KeyListUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *KeyListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /kms/key][%d] keyListUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *KeyListUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /kms/key][%d] keyListUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *KeyListUsingGETOK) GetPayload() *models.KeyListResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewKeyListUsingGETBadRequest() *KeyListUsingGETBadRequest {
 	return &KeyListUsingGETBadRequest{}
 }
 
-/* KeyListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+KeyListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type KeyListUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this key list using g e t bad request response has a 2xx status code
+func (o *KeyListUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this key list using g e t bad request response has a 3xx status code
+func (o *KeyListUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key list using g e t bad request response has a 4xx status code
+func (o *KeyListUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this key list using g e t bad request response has a 5xx status code
+func (o *KeyListUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key list using g e t bad request response a status code equal to that given
+func (o *KeyListUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the key list using g e t bad request response
+func (o *KeyListUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *KeyListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /kms/key][%d] keyListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *KeyListUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /kms/key][%d] keyListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *KeyListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

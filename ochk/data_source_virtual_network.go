@@ -15,32 +15,12 @@ func dataSourceVirtualNetwork() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"folder_path": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"ipam_enabled": {
 				Type:     schema.TypeBool,
-				Computed: true,
-			},
-			"primary_dns_address": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"secondary_dns_address": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"dns_suffix": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"dns_search_suffix": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"primary_wins_address": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"secondary_wins_address": {
-				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"gateway_address": {
@@ -59,14 +39,13 @@ func dataSourceVirtualNetwork() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"router": {
+			"vpc_id": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"subtenants": {
-				Type:     schema.TypeSet,
+			"project_id": {
+				Type:     schema.TypeString,
 				Computed: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 		},
 	}

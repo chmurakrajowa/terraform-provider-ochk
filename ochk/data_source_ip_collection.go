@@ -16,6 +16,10 @@ func dataSourceIPCollection() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"project_id": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"created_by": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -60,6 +64,10 @@ func dataSourceIPCollectionRead(ctx context.Context, d *schema.ResourceData, met
 	}
 
 	d.SetId(ipCollections[0].ID)
+
+	if err := d.Set("project_id", ipCollections[0].ProjectID); err != nil {
+		return diag.Errorf("error setting project_id: %+v", err)
+	}
 
 	if err := d.Set("created_by", ipCollections[0].CreatedBy); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)

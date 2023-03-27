@@ -52,10 +52,12 @@ func NewCustomServiceGetUsingGETParamsWithHTTPClient(client *http.Client) *Custo
 	}
 }
 
-/* CustomServiceGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the custom service get using g e t operation.
+/*
+CustomServiceGetUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the custom service get using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type CustomServiceGetUsingGETParams struct {
 

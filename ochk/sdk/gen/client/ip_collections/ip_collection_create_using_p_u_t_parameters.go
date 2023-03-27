@@ -54,10 +54,12 @@ func NewIPCollectionCreateUsingPUTParamsWithHTTPClient(client *http.Client) *IPC
 	}
 }
 
-/* IPCollectionCreateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the ip collection create using p u t operation.
+/*
+IPCollectionCreateUsingPUTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the ip collection create using p u t operation.
+
+	Typically these are written to a http.Request.
 */
 type IPCollectionCreateUsingPUTParams struct {
 

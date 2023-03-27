@@ -42,9 +42,9 @@ type ClientService interface {
 }
 
 /*
-  KeyRotationScheduleCreateUsingPUT creates
+KeyRotationScheduleCreateUsingPUT creates
 
-  Create key rotation schedule (KMS)
+Create key rotation schedule (KMS)
 */
 func (a *Client) KeyRotationScheduleCreateUsingPUT(params *KeyRotationScheduleCreateUsingPUTParams, opts ...ClientOption) (*KeyRotationScheduleCreateUsingPUTOK, *KeyRotationScheduleCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
@@ -83,9 +83,9 @@ func (a *Client) KeyRotationScheduleCreateUsingPUT(params *KeyRotationScheduleCr
 }
 
 /*
-  KeyRotationScheduleDeleteUsingDELETE deletes
+KeyRotationScheduleDeleteUsingDELETE deletes
 
-  Delete key rotation schedule (KMS)
+Delete key rotation schedule (KMS)
 */
 func (a *Client) KeyRotationScheduleDeleteUsingDELETE(params *KeyRotationScheduleDeleteUsingDELETEParams, opts ...ClientOption) (*KeyRotationScheduleDeleteUsingDELETEOK, error) {
 	// TODO: Validate the params before sending
@@ -123,9 +123,9 @@ func (a *Client) KeyRotationScheduleDeleteUsingDELETE(params *KeyRotationSchedul
 }
 
 /*
-  KeyRotationScheduleGetUsingGET gets
+KeyRotationScheduleGetUsingGET gets
 
-  Get key rotation schedule (KMS)
+Get key rotation schedule (KMS)
 */
 func (a *Client) KeyRotationScheduleGetUsingGET(params *KeyRotationScheduleGetUsingGETParams, opts ...ClientOption) (*KeyRotationScheduleGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -163,9 +163,9 @@ func (a *Client) KeyRotationScheduleGetUsingGET(params *KeyRotationScheduleGetUs
 }
 
 /*
-  KeyRotationScheduleUpdateUsingPUT updates
+KeyRotationScheduleUpdateUsingPUT updates
 
-  Update key rotation schedule (KMS)
+Update key rotation schedule (KMS)
 */
 func (a *Client) KeyRotationScheduleUpdateUsingPUT(params *KeyRotationScheduleUpdateUsingPUTParams, opts ...ClientOption) (*KeyRotationScheduleUpdateUsingPUTOK, error) {
 	// TODO: Validate the params before sending

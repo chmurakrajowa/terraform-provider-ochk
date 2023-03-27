@@ -53,10 +53,12 @@ func NewAllocationDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) *Al
 	}
 }
 
-/* AllocationDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-   for the allocation delete using d e l e t e operation.
+/*
+AllocationDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the allocation delete using d e l e t e operation.
+
+	Typically these are written to a http.Request.
 */
 type AllocationDeleteUsingDELETEParams struct {
 

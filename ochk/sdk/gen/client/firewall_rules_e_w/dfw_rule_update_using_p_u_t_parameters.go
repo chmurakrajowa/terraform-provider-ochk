@@ -54,10 +54,12 @@ func NewDfwRuleUpdateUsingPUTParamsWithHTTPClient(client *http.Client) *DfwRuleU
 	}
 }
 
-/* DfwRuleUpdateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the dfw rule update using p u t operation.
+/*
+DfwRuleUpdateUsingPUTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the dfw rule update using p u t operation.
+
+	Typically these are written to a http.Request.
 */
 type DfwRuleUpdateUsingPUTParams struct {
 

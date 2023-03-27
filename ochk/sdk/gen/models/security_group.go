@@ -42,6 +42,9 @@ type SecurityGroup struct {
 
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`
+
+	// project Id
+	ProjectID string `json:"projectId,omitempty"`
 }
 
 // Validate validates this security group

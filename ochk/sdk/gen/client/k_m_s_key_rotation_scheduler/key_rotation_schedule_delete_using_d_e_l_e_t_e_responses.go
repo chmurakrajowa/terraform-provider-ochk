@@ -45,7 +45,8 @@ func NewKeyRotationScheduleDeleteUsingDELETEOK() *KeyRotationScheduleDeleteUsing
 	return &KeyRotationScheduleDeleteUsingDELETEOK{}
 }
 
-/* KeyRotationScheduleDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*
+KeyRotationScheduleDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type KeyRotationScheduleDeleteUsingDELETEOK struct {
 	Payload *models.DeleteKeyRotationScheduleResponse
 }
 
+// IsSuccess returns true when this key rotation schedule delete using d e l e t e o k response has a 2xx status code
+func (o *KeyRotationScheduleDeleteUsingDELETEOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this key rotation schedule delete using d e l e t e o k response has a 3xx status code
+func (o *KeyRotationScheduleDeleteUsingDELETEOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key rotation schedule delete using d e l e t e o k response has a 4xx status code
+func (o *KeyRotationScheduleDeleteUsingDELETEOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this key rotation schedule delete using d e l e t e o k response has a 5xx status code
+func (o *KeyRotationScheduleDeleteUsingDELETEOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key rotation schedule delete using d e l e t e o k response a status code equal to that given
+func (o *KeyRotationScheduleDeleteUsingDELETEOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the key rotation schedule delete using d e l e t e o k response
+func (o *KeyRotationScheduleDeleteUsingDELETEOK) Code() int {
+	return 200
+}
+
 func (o *KeyRotationScheduleDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /kms/schedule/{keyId}][%d] keyRotationScheduleDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
+func (o *KeyRotationScheduleDeleteUsingDELETEOK) String() string {
+	return fmt.Sprintf("[DELETE /kms/schedule/{keyId}][%d] keyRotationScheduleDeleteUsingDELETEOK  %+v", 200, o.Payload)
+}
+
 func (o *KeyRotationScheduleDeleteUsingDELETEOK) GetPayload() *models.DeleteKeyRotationScheduleResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewKeyRotationScheduleDeleteUsingDELETEBadRequest() *KeyRotationScheduleDel
 	return &KeyRotationScheduleDeleteUsingDELETEBadRequest{}
 }
 
-/* KeyRotationScheduleDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*
+KeyRotationScheduleDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type KeyRotationScheduleDeleteUsingDELETEBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this key rotation schedule delete using d e l e t e bad request response has a 2xx status code
+func (o *KeyRotationScheduleDeleteUsingDELETEBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this key rotation schedule delete using d e l e t e bad request response has a 3xx status code
+func (o *KeyRotationScheduleDeleteUsingDELETEBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key rotation schedule delete using d e l e t e bad request response has a 4xx status code
+func (o *KeyRotationScheduleDeleteUsingDELETEBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this key rotation schedule delete using d e l e t e bad request response has a 5xx status code
+func (o *KeyRotationScheduleDeleteUsingDELETEBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key rotation schedule delete using d e l e t e bad request response a status code equal to that given
+func (o *KeyRotationScheduleDeleteUsingDELETEBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the key rotation schedule delete using d e l e t e bad request response
+func (o *KeyRotationScheduleDeleteUsingDELETEBadRequest) Code() int {
+	return 400
+}
+
 func (o *KeyRotationScheduleDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /kms/schedule/{keyId}][%d] keyRotationScheduleDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *KeyRotationScheduleDeleteUsingDELETEBadRequest) String() string {
+	return fmt.Sprintf("[DELETE /kms/schedule/{keyId}][%d] keyRotationScheduleDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *KeyRotationScheduleDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

@@ -55,10 +55,12 @@ func NewAllocationUpdateUsingPUTParamsWithHTTPClient(client *http.Client) *Alloc
 	}
 }
 
-/* AllocationUpdateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the allocation update using p u t operation.
+/*
+AllocationUpdateUsingPUTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the allocation update using p u t operation.
+
+	Typically these are written to a http.Request.
 */
 type AllocationUpdateUsingPUTParams struct {
 

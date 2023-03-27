@@ -14,33 +14,21 @@ type VirtualNetworkTestData struct {
 	ResourceName             string
 	DisplayName              string
 	IpamEnabled              bool
-	Subtenants               []string
-	DNSSearchSuffix          string
-	DNSSuffix                string
 	GatewayAddress           string
-	PrimaryDNSAddress        string
-	PrimaryWinsAddress       string
 	RouterRefID              string
-	SecondaryDNSAddress      string
-	SecondaryWinsAddress     string
 	SubnetMask               string
 	SubnetGatewayAddressCidr string
 	SubnetNetworkCidr        string
+	ProjectID                string
 }
 
 func (c *VirtualNetworkTestData) ToString() string {
 	return executeTemplateToString(`
-resource "ochk_virtual_network" "{{ .ResourceName}}" {
+resource "ochk_virtual_network" "{{.ResourceName}}" {
 	display_name = "{{.DisplayName}}"
 	ipam_enabled = "{{.IpamEnabled}}"
-	subtenants = {{ StringsToTFList .Subtenants}}
-	dns_search_suffix = "{{ .DNSSearchSuffix }}"
-	dns_suffix = "{{ .DNSSuffix }}"
-	primary_dns_address = "{{ .PrimaryDNSAddress }}"
-	primary_wins_address = "{{ .PrimaryWinsAddress }}"
-	router = {{ StringTFValue .RouterRefID }}
-	secondary_dns_address = "{{ .SecondaryDNSAddress }}"
-	secondary_wins_address = "{{ .SecondaryWinsAddress }}"
+	vpc_id = {{ StringTFValue .RouterRefID }}
+    project_id = {{ StringTFValue .ProjectID }}
 	subnet_network_cidr = "{{ .SubnetNetworkCidr }}"
 }
 `, c)
@@ -51,18 +39,19 @@ func (c *VirtualNetworkTestData) FullResourceName() string {
 }
 
 func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
-	subtenant1 := SubtenantDataSourceTestData{
-		ResourceName: "subt1",
-		Name:         testData.Subtenant1Name,
+
+	project := ProjectDataSourceTestData{
+		ResourceName: generateRandName(devTestDataPrefix),
+		DisplayName:  testData.Project1Name,
 	}
 
 	virtualNetwork := VirtualNetworkTestData{
 		ResourceName: "default",
 		DisplayName:  generateRandName(devTestDataPrefix),
-		Subtenants:   []string{testDataResourceID(&subtenant1)},
+		ProjectID:    testDataResourceID(&project),
 	}
 
-	configInitial := subtenant1.ToString() + virtualNetwork.ToString()
+	configInitial := project.ToString() + virtualNetwork.ToString()
 
 	resourceName := virtualNetwork.FullResourceName()
 	resource.ParallelTest(t, resource.TestCase{
@@ -73,8 +62,10 @@ func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
 				Config: configInitial,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", virtualNetwork.DisplayName),
+					resource.TestCheckResourceAttrPair(resourceName, "project_id", project.FullResourceName(), "id"),
+					resource.TestCheckResourceAttr(resourceName, "vpc_id", virtualNetwork.RouterRefID),
+					resource.TestCheckResourceAttrSet(resourceName, "folder_path"),
 					resource.TestCheckResourceAttr(resourceName, "ipam_enabled", strconv.FormatBool(virtualNetwork.IpamEnabled)),
-					resource.TestCheckResourceAttrPair(resourceName, "subtenants.0", subtenant1.FullResourceName(), "id"),
 				),
 			},
 		},
@@ -83,26 +74,21 @@ func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
 }
 
 func TestAccVirtualNetworkResource_createWithIpamAndSubnet(t *testing.T) {
-	subtenant1 := SubtenantDataSourceTestData{
-		ResourceName: "subt1",
-		Name:         testData.Subtenant2Name,
+
+	project := ProjectDataSourceTestData{
+		ResourceName: generateRandName(devTestDataPrefix),
+		DisplayName:  testData.Project1Name,
 	}
 
 	virtualNetwork := VirtualNetworkTestData{
-		ResourceName:         "default",
-		DisplayName:          generateRandName(devTestDataPrefix),
-		Subtenants:           []string{testDataResourceID(&subtenant1)},
-		IpamEnabled:          true,
-		PrimaryDNSAddress:    "192.168.1.6",
-		SecondaryDNSAddress:  "192.168.1.2",
-		DNSSuffix:            "test.lcl",
-		DNSSearchSuffix:      "test.lcl,prod.lcl",
-		PrimaryWinsAddress:   "192.168.1.3",
-		SecondaryWinsAddress: "192.168.1.3",
-		SubnetNetworkCidr:    "10.16.1.0/24",
+		ResourceName:      "default",
+		DisplayName:       generateRandName(devTestDataPrefix),
+		IpamEnabled:       true,
+		SubnetNetworkCidr: "10.16.1.0/24",
+		ProjectID:         testDataResourceID(&project),
 	}
 
-	configInitial := subtenant1.ToString() + virtualNetwork.ToString()
+	configInitial := project.ToString() + virtualNetwork.ToString()
 
 	resourceName := virtualNetwork.FullResourceName()
 	resource.ParallelTest(t, resource.TestCase{
@@ -112,13 +98,6 @@ func TestAccVirtualNetworkResource_createWithIpamAndSubnet(t *testing.T) {
 				Config: configInitial,
 				Check: resource.ComposeTestCheckFunc(
 					//resource.TestCheckResourceAttr(resourceName, "display_name", virtualNetwork.DisplayName),
-					resource.TestCheckResourceAttr(resourceName, "primary_dns_address", virtualNetwork.PrimaryDNSAddress),
-					resource.TestCheckResourceAttr(resourceName, "secondary_dns_address", virtualNetwork.SecondaryDNSAddress),
-					resource.TestCheckResourceAttr(resourceName, "dns_suffix", virtualNetwork.DNSSuffix),
-					resource.TestCheckResourceAttr(resourceName, "dns_search_suffix", virtualNetwork.DNSSearchSuffix),
-					resource.TestCheckResourceAttr(resourceName, "primary_wins_address", virtualNetwork.PrimaryWinsAddress),
-					resource.TestCheckResourceAttr(resourceName, "secondary_wins_address", virtualNetwork.SecondaryWinsAddress),
-					resource.TestCheckResourceAttrPair(resourceName, "subtenants.0", subtenant1.FullResourceName(), "id"),
 					resource.TestCheckResourceAttr(resourceName, "subnet_network_cidr", virtualNetwork.SubnetNetworkCidr),
 					resource.TestCheckResourceAttrSet(resourceName, "gateway_address"),
 					resource.TestCheckResourceAttrSet(resourceName, "subnet_mask"),
@@ -131,50 +110,41 @@ func TestAccVirtualNetworkResource_createWithIpamAndSubnet(t *testing.T) {
 }
 
 func TestAccVirtualNetworkResource_createAndUpdateWithIpamSubnetRouter(t *testing.T) {
-	subtenant1 := SubtenantDataSourceTestData{
-		ResourceName: "subt1",
-		Name:         testData.Subtenant3Name,
-	}
 
-	subtenant2 := SubtenantDataSourceTestData{
-		ResourceName: "subt2",
-		Name:         testData.Subtenant4Name,
+	project := ProjectDataSourceTestData{
+		ResourceName: generateRandName(devTestDataPrefix),
+		DisplayName:  testData.Project1Name,
 	}
 
 	router1 := RouterTestData{
 		ResourceName: "router1",
 		DisplayName:  generateRandName(devTestDataPrefix),
 		ParentRouter: testData.VRF,
+		ProjectName:  testData.Project1Name,
 	}
 
 	router2 := RouterTestData{
 		ResourceName: "router2",
 		DisplayName:  generateRandName(devTestDataPrefix),
 		ParentRouter: testData.VRF,
+		ProjectName:  testData.Project1Name,
 	}
 
 	virtualNetwork := VirtualNetworkTestData{
-		ResourceName:         "default",
-		DisplayName:          generateRandName(devTestDataPrefix),
-		Subtenants:           []string{testDataResourceID(&subtenant1)},
-		IpamEnabled:          true,
-		PrimaryDNSAddress:    "192.168.1.6",
-		SecondaryDNSAddress:  "192.168.1.2",
-		DNSSuffix:            "test.lcl",
-		DNSSearchSuffix:      "test.lcl,prod.lcl",
-		PrimaryWinsAddress:   "192.168.1.3",
-		SecondaryWinsAddress: "192.168.1.3",
-		SubnetNetworkCidr:    "10.16.1.0/24",
-		RouterRefID:          testDataResourceID(&router1),
+		ResourceName:      "default",
+		DisplayName:       generateRandName(devTestDataPrefix),
+		IpamEnabled:       true,
+		SubnetNetworkCidr: "10.16.1.0/24",
+		RouterRefID:       testDataResourceID(&router1),
+		ProjectID:         testDataResourceID(&project),
 	}
 
-	configInitial := subtenant1.ToString() + subtenant2.ToString() + router1.ToString("n-test1") + virtualNetwork.ToString()
+	configInitial := project.ToString() + router1.ToString("n-test1") + virtualNetwork.ToString()
 
 	virtualNetworkUpdated := virtualNetwork
-	virtualNetworkUpdated.Subtenants = []string{testDataResourceID(&subtenant2)}
 	virtualNetworkUpdated.RouterRefID = testDataResourceID(&router2)
 
-	configUpdated := subtenant1.ToString() + subtenant2.ToString() + router1.ToString("n-test1") + router2.ToString("n-test2") + virtualNetworkUpdated.ToString()
+	configUpdated := project.ToString() + router1.ToString("n-test1") + router2.ToString("n-test2") + virtualNetworkUpdated.ToString()
 
 	resourceName := virtualNetwork.FullResourceName()
 
@@ -185,19 +155,12 @@ func TestAccVirtualNetworkResource_createAndUpdateWithIpamSubnetRouter(t *testin
 				Config: configInitial,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", virtualNetwork.DisplayName),
-					resource.TestCheckResourceAttr(resourceName, "primary_dns_address", virtualNetwork.PrimaryDNSAddress),
-					resource.TestCheckResourceAttr(resourceName, "secondary_dns_address", virtualNetwork.SecondaryDNSAddress),
-					resource.TestCheckResourceAttr(resourceName, "dns_suffix", virtualNetwork.DNSSuffix),
-					resource.TestCheckResourceAttr(resourceName, "dns_search_suffix", virtualNetwork.DNSSearchSuffix),
-					resource.TestCheckResourceAttr(resourceName, "primary_wins_address", virtualNetwork.PrimaryWinsAddress),
-					resource.TestCheckResourceAttr(resourceName, "secondary_wins_address", virtualNetwork.SecondaryWinsAddress),
-					resource.TestCheckResourceAttrPair(resourceName, "subtenants.0", subtenant1.FullResourceName(), "id"),
-					resource.TestCheckResourceAttr(resourceName, "subnet_network_cidr", virtualNetwork.SubnetNetworkCidr),
+					resource.TestCheckResourceAttrPair(resourceName, "project_id", "data.ochk_project.project-n-test1", "id"),
+					resource.TestCheckResourceAttr(resourceName, "folder_path", "/"),
 					resource.TestCheckResourceAttrSet(resourceName, "gateway_address"),
 					resource.TestCheckResourceAttrSet(resourceName, "subnet_mask"),
 					resource.TestCheckResourceAttrSet(resourceName, "subnet_gateway_address_cidr"),
-					resource.TestCheckResourceAttrPair(resourceName, "router", router1.FullResourceName(), "id"),
-					resource.TestCheckResourceAttrPair(resourceName, "subtenants.0", subtenant1.FullResourceName(), "id"),
+					resource.TestCheckResourceAttrPair(resourceName, "vpc_id", router1.FullResourceName(), "id"),
 				),
 			},
 			{
@@ -209,19 +172,13 @@ func TestAccVirtualNetworkResource_createAndUpdateWithIpamSubnetRouter(t *testin
 				Config: configUpdated,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", virtualNetworkUpdated.DisplayName),
-					resource.TestCheckResourceAttr(resourceName, "primary_dns_address", virtualNetworkUpdated.PrimaryDNSAddress),
-					resource.TestCheckResourceAttr(resourceName, "secondary_dns_address", virtualNetworkUpdated.SecondaryDNSAddress),
-					resource.TestCheckResourceAttr(resourceName, "dns_suffix", virtualNetworkUpdated.DNSSuffix),
-					resource.TestCheckResourceAttr(resourceName, "dns_search_suffix", virtualNetworkUpdated.DNSSearchSuffix),
-					resource.TestCheckResourceAttr(resourceName, "primary_wins_address", virtualNetworkUpdated.PrimaryWinsAddress),
-					resource.TestCheckResourceAttr(resourceName, "secondary_wins_address", virtualNetworkUpdated.SecondaryWinsAddress),
+					resource.TestCheckResourceAttrPair(resourceName, "project_id", "data.ochk_project.project-n-test1", "id"),
 					resource.TestCheckResourceAttr(resourceName, "subnet_network_cidr", virtualNetwork.SubnetNetworkCidr),
 					resource.TestCheckResourceAttr(resourceName, "subnet_network_cidr", virtualNetwork.SubnetNetworkCidr),
 					resource.TestCheckResourceAttrSet(resourceName, "gateway_address"),
 					resource.TestCheckResourceAttrSet(resourceName, "subnet_mask"),
 					resource.TestCheckResourceAttrSet(resourceName, "subnet_gateway_address_cidr"),
-					resource.TestCheckResourceAttrPair(resourceName, "router", router2.FullResourceName(), "id"),
-					resource.TestCheckResourceAttrPair(resourceName, "subtenants.0", subtenant2.FullResourceName(), "id"),
+					resource.TestCheckResourceAttrPair(resourceName, "vpc_id", router2.FullResourceName(), "id"),
 				),
 			},
 		},

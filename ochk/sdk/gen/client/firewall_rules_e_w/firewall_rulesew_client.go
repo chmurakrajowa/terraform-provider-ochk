@@ -44,9 +44,9 @@ type ClientService interface {
 }
 
 /*
-  DfwRuleCreateUsingPUT creates
+DfwRuleCreateUsingPUT creates
 
-  Create firewall rule (east-west) in NSX-T
+Create firewall rule (east-west) in NSX-T
 */
 func (a *Client) DfwRuleCreateUsingPUT(params *DfwRuleCreateUsingPUTParams, opts ...ClientOption) (*DfwRuleCreateUsingPUTOK, *DfwRuleCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
@@ -85,9 +85,9 @@ func (a *Client) DfwRuleCreateUsingPUT(params *DfwRuleCreateUsingPUTParams, opts
 }
 
 /*
-  DfwRuleDeleteUsingDELETE deletes
+DfwRuleDeleteUsingDELETE deletes
 
-  Delete firewall rule (east-west) from NSX-T
+Delete firewall rule (east-west) from NSX-T
 */
 func (a *Client) DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams, opts ...ClientOption) (*DfwRuleDeleteUsingDELETEOK, *DfwRuleDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
@@ -126,9 +126,9 @@ func (a *Client) DfwRuleDeleteUsingDELETE(params *DfwRuleDeleteUsingDELETEParams
 }
 
 /*
-  DfwRuleGetUsingGET gets
+DfwRuleGetUsingGET gets
 
-  Get firewall rule (east-west) from NSX-T
+Get firewall rule (east-west) from NSX-T
 */
 func (a *Client) DfwRuleGetUsingGET(params *DfwRuleGetUsingGETParams, opts ...ClientOption) (*DfwRuleGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -166,9 +166,9 @@ func (a *Client) DfwRuleGetUsingGET(params *DfwRuleGetUsingGETParams, opts ...Cl
 }
 
 /*
-  DfwRuleListUsingGET lists
+DfwRuleListUsingGET lists
 
-  List firewall rules (east-west) from NSX-T
+List firewall rules (east-west) from NSX-T
 */
 func (a *Client) DfwRuleListUsingGET(params *DfwRuleListUsingGETParams, opts ...ClientOption) (*DfwRuleListUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -206,9 +206,9 @@ func (a *Client) DfwRuleListUsingGET(params *DfwRuleListUsingGETParams, opts ...
 }
 
 /*
-  DfwRuleUpdateUsingPUT updates
+DfwRuleUpdateUsingPUT updates
 
-  Update firewall rule (east-west) in NSX-T
+Update firewall rule (east-west) in NSX-T
 */
 func (a *Client) DfwRuleUpdateUsingPUT(params *DfwRuleUpdateUsingPUTParams, opts ...ClientOption) (*DfwRuleUpdateUsingPUTOK, *DfwRuleUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending

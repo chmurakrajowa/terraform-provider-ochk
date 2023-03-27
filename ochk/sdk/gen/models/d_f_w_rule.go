@@ -68,6 +68,9 @@ type DFWRule struct {
 	// priority
 	Priority int64 `json:"priority,omitempty"`
 
+	// project Id
+	ProjectID string `json:"projectId,omitempty"`
+
 	// rule Id
 	RuleID string `json:"ruleId,omitempty"`
 

@@ -38,9 +38,9 @@ type ClientService interface {
 }
 
 /*
-  IpamServiceGetUsingGET gets
+IpamServiceGetUsingGET gets
 
-  Get IPAM service
+Get IPAM service
 */
 func (a *Client) IpamServiceGetUsingGET(params *IpamServiceGetUsingGETParams, opts ...ClientOption) (*IpamServiceGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -78,9 +78,9 @@ func (a *Client) IpamServiceGetUsingGET(params *IpamServiceGetUsingGETParams, op
 }
 
 /*
-  IpamServicesListUsingGET lists
+IpamServicesListUsingGET lists
 
-  List IPAM services
+List IPAM services
 */
 func (a *Client) IpamServicesListUsingGET(params *IpamServicesListUsingGETParams, opts ...ClientOption) (*IpamServicesListUsingGETOK, error) {
 	// TODO: Validate the params before sending

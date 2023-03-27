@@ -30,6 +30,9 @@ type RouterInstance struct {
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
 
+	// folder path
+	FolderPath string `json:"folderPath,omitempty"`
+
 	// modification date
 	// Format: date-time
 	ModificationDate *strfmt.DateTime `json:"modificationDate,omitempty"`
@@ -39,6 +42,9 @@ type RouterInstance struct {
 
 	// parent t0 Id
 	ParentT0ID string `json:"parentT0Id,omitempty"`
+
+	// project Id
+	ProjectID string `json:"projectId,omitempty"`
 
 	// router Id
 	RouterID string `json:"routerId,omitempty"`

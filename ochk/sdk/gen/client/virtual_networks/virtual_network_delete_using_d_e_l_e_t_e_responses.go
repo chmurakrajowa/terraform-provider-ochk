@@ -51,7 +51,8 @@ func NewVirtualNetworkDeleteUsingDELETEOK() *VirtualNetworkDeleteUsingDELETEOK {
 	return &VirtualNetworkDeleteUsingDELETEOK{}
 }
 
-/* VirtualNetworkDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*
+VirtualNetworkDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type VirtualNetworkDeleteUsingDELETEOK struct {
 	Payload *models.VirtualNetworkDeleteResponse
 }
 
+// IsSuccess returns true when this virtual network delete using d e l e t e o k response has a 2xx status code
+func (o *VirtualNetworkDeleteUsingDELETEOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this virtual network delete using d e l e t e o k response has a 3xx status code
+func (o *VirtualNetworkDeleteUsingDELETEOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this virtual network delete using d e l e t e o k response has a 4xx status code
+func (o *VirtualNetworkDeleteUsingDELETEOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this virtual network delete using d e l e t e o k response has a 5xx status code
+func (o *VirtualNetworkDeleteUsingDELETEOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this virtual network delete using d e l e t e o k response a status code equal to that given
+func (o *VirtualNetworkDeleteUsingDELETEOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the virtual network delete using d e l e t e o k response
+func (o *VirtualNetworkDeleteUsingDELETEOK) Code() int {
+	return 200
+}
+
 func (o *VirtualNetworkDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /networks/{virtualNetworkId}][%d] virtualNetworkDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
+func (o *VirtualNetworkDeleteUsingDELETEOK) String() string {
+	return fmt.Sprintf("[DELETE /networks/{virtualNetworkId}][%d] virtualNetworkDeleteUsingDELETEOK  %+v", 200, o.Payload)
+}
+
 func (o *VirtualNetworkDeleteUsingDELETEOK) GetPayload() *models.VirtualNetworkDeleteResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewVirtualNetworkDeleteUsingDELETECreated() *VirtualNetworkDeleteUsingDELET
 	return &VirtualNetworkDeleteUsingDELETECreated{}
 }
 
-/* VirtualNetworkDeleteUsingDELETECreated describes a response with status code 201, with default header values.
+/*
+VirtualNetworkDeleteUsingDELETECreated describes a response with status code 201, with default header values.
 
 Entity has been deleted
 */
@@ -91,9 +128,44 @@ type VirtualNetworkDeleteUsingDELETECreated struct {
 	Payload *models.VirtualNetworkDeleteResponse
 }
 
+// IsSuccess returns true when this virtual network delete using d e l e t e created response has a 2xx status code
+func (o *VirtualNetworkDeleteUsingDELETECreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this virtual network delete using d e l e t e created response has a 3xx status code
+func (o *VirtualNetworkDeleteUsingDELETECreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this virtual network delete using d e l e t e created response has a 4xx status code
+func (o *VirtualNetworkDeleteUsingDELETECreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this virtual network delete using d e l e t e created response has a 5xx status code
+func (o *VirtualNetworkDeleteUsingDELETECreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this virtual network delete using d e l e t e created response a status code equal to that given
+func (o *VirtualNetworkDeleteUsingDELETECreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the virtual network delete using d e l e t e created response
+func (o *VirtualNetworkDeleteUsingDELETECreated) Code() int {
+	return 201
+}
+
 func (o *VirtualNetworkDeleteUsingDELETECreated) Error() string {
 	return fmt.Sprintf("[DELETE /networks/{virtualNetworkId}][%d] virtualNetworkDeleteUsingDELETECreated  %+v", 201, o.Payload)
 }
+
+func (o *VirtualNetworkDeleteUsingDELETECreated) String() string {
+	return fmt.Sprintf("[DELETE /networks/{virtualNetworkId}][%d] virtualNetworkDeleteUsingDELETECreated  %+v", 201, o.Payload)
+}
+
 func (o *VirtualNetworkDeleteUsingDELETECreated) GetPayload() *models.VirtualNetworkDeleteResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewVirtualNetworkDeleteUsingDELETEBadRequest() *VirtualNetworkDeleteUsingDE
 	return &VirtualNetworkDeleteUsingDELETEBadRequest{}
 }
 
-/* VirtualNetworkDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*
+VirtualNetworkDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type VirtualNetworkDeleteUsingDELETEBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this virtual network delete using d e l e t e bad request response has a 2xx status code
+func (o *VirtualNetworkDeleteUsingDELETEBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this virtual network delete using d e l e t e bad request response has a 3xx status code
+func (o *VirtualNetworkDeleteUsingDELETEBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this virtual network delete using d e l e t e bad request response has a 4xx status code
+func (o *VirtualNetworkDeleteUsingDELETEBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this virtual network delete using d e l e t e bad request response has a 5xx status code
+func (o *VirtualNetworkDeleteUsingDELETEBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this virtual network delete using d e l e t e bad request response a status code equal to that given
+func (o *VirtualNetworkDeleteUsingDELETEBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the virtual network delete using d e l e t e bad request response
+func (o *VirtualNetworkDeleteUsingDELETEBadRequest) Code() int {
+	return 400
+}
+
 func (o *VirtualNetworkDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /networks/{virtualNetworkId}][%d] virtualNetworkDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *VirtualNetworkDeleteUsingDELETEBadRequest) String() string {
+	return fmt.Sprintf("[DELETE /networks/{virtualNetworkId}][%d] virtualNetworkDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *VirtualNetworkDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

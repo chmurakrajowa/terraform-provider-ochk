@@ -42,6 +42,11 @@ func resourceVirtualMachine() *schema.Resource {
 				Required: true,
 				ForceNew: true,
 			},
+			"folder_path": {
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "/",
+			},
 			"initial_password": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -56,15 +61,19 @@ func resourceVirtualMachine() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"resource_profile": {
-				Type:     schema.TypeString,
+			"cpu_count": {
+				Type:     schema.TypeInt,
+				Required: true,
+			},
+			"memory_size_mb": {
+				Type:     schema.TypeInt,
 				Required: true,
 			},
 			"storage_policy": {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"subtenant_id": {
+			"project_id": {
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
@@ -79,12 +88,7 @@ func resourceVirtualMachine() *schema.Resource {
 				Optional: true,
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
-			"system_tags": {
-				Type:     schema.TypeSet,
-				Optional: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
-			},
-			"billing_tags": {
+			"tags": {
 				Type:     schema.TypeSet,
 				Optional: true,
 				Elem:     &schema.Schema{Type: schema.TypeString},
@@ -156,7 +160,7 @@ func resourceVirtualMachine() *schema.Resource {
 			},
 			"virtual_disk": {
 				Type:     schema.TypeSet,
-				Computed: true,
+				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"controller_id": {
@@ -166,7 +170,8 @@ func resourceVirtualMachine() *schema.Resource {
 						},
 						"lun_id": {
 							Type:     schema.TypeInt,
-							Required: true,
+							Optional: true,
+							Default:  "0",
 						},
 						"size_mb": {
 							Type:     schema.TypeInt,
@@ -180,6 +185,7 @@ func resourceVirtualMachine() *schema.Resource {
 					},
 				},
 			},
+
 			"encryption": {
 				Type:     schema.TypeBool,
 				Default:  false,
@@ -227,6 +233,30 @@ func resourceVirtualMachine() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"primary_dns_address": {
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"secondary_dns_address": {
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"dns_suffix": {
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"dns_search_suffix": {
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"primary_wins_address": {
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"secondary_wins_address": {
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 		},
 	}
 }
@@ -255,6 +285,7 @@ func resourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, met
 	proxy := meta.(*sdk.Client).VirtualMachines
 
 	virtualMachine, err := proxy.Read(ctx, d.Id())
+
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -324,24 +355,36 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 			return fmt.Errorf("error setting deployment_id: %w", err)
 		}
 	}
+
+	if err := d.Set("folder_path", virtualMachine.FolderPath); err != nil {
+		return fmt.Errorf("error setting folder_path: %w", err)
+	}
+
 	if err := d.Set("initial_password", "<hidden>"); err != nil {
 		return fmt.Errorf("error setting initial_password: %w", err)
 	}
 	if err := d.Set("power_state", virtualMachine.PowerState); err != nil {
 		return fmt.Errorf("error setting power_state: %w", err)
 	}
-	if err := d.Set("resource_profile", virtualMachine.ResourceProfile); err != nil {
-		return fmt.Errorf("error setting resource_profile: %w", err)
+
+	if err := d.Set("cpu_count", int(virtualMachine.CPUCount)); err != nil {
+		return fmt.Errorf("error setting cpu_count: %+v", err)
 	}
+
+	if err := d.Set("memory_size_mb", int(virtualMachine.MemorySizeMB)); err != nil {
+		return fmt.Errorf("error setting memory_size_mb: %w", err)
+	}
+
 	if err := d.Set("storage_policy", virtualMachine.StoragePolicy); err != nil {
 		return fmt.Errorf("error setting storage_policy: %w", err)
 	}
-	if err := d.Set("subtenant_id", virtualMachine.SubtenantRefID); err != nil {
-		return fmt.Errorf("error setting subtenant_id: %w", err)
+	if err := d.Set("project_id", virtualMachine.ProjectID); err != nil {
+		return fmt.Errorf("error setting project_id: %w", err)
 	}
 	if err := d.Set("virtual_network_devices", flattenVirtualNetworkDevice(virtualMachine.VirtualNetworkDevices)); err != nil {
 		return fmt.Errorf("error setting virtual_network_devices: %w", err)
 	}
+
 	if err := d.Set("additional_virtual_disks", flattenVirtualDisks(virtualMachine.AdditionalVirtualDiskDeviceCollection)); err != nil {
 		return fmt.Errorf("error setting additional_virtual_disks: %w", err)
 	}
@@ -359,6 +402,7 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 	if virtualMachine.OsVirtualDiskDevice != nil {
 		virtualDisks = append(virtualDisks, virtualMachine.OsVirtualDiskDevice)
 	}
+
 	if err := d.Set("virtual_disk", flattenVirtualDisks(virtualDisks)); err != nil {
 		return fmt.Errorf("error setting virtual_disk: %w", err)
 	}
@@ -393,15 +437,34 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 	if err := d.Set("modified_by", virtualMachine.ModifiedBy); err != nil {
 		return fmt.Errorf("error setting modified_by: %w", err)
 	}
-	if err := d.Set("backup_lists", flattenBackupListsFromIDs(virtualMachine.BackupListCollection)); err != nil {
-		return fmt.Errorf("error setting backup lists: %w", err)
+
+	if len(virtualMachine.BackupListCollection) > 0 {
+		if err := d.Set("backup_lists", flattenBackupListsFromIDs(virtualMachine.BackupListCollection)); err != nil {
+			return fmt.Errorf("error setting backup lists: %w", err)
+		}
 	}
-	if err := d.Set("billing_tags", flattenBillingTagsListsFromIDs(virtualMachine.BillingTags)); err != nil {
-		return fmt.Errorf("error setting billing tags: %w", err)
+	if err := d.Set("tags", flattenTagsListsFromIDs(virtualMachine.Tags)); err != nil {
+		return fmt.Errorf("error setting tags: %w", err)
 	}
-	if err := d.Set("system_tags", flattenSystemTagsListsFromIDs(virtualMachine.SystemTags)); err != nil {
-		return fmt.Errorf("error setting system tags: %w", err)
+	if err := d.Set("primary_dns_address", virtualMachine.PrimaryDNSAddress); err != nil {
+		return fmt.Errorf("error setting primary_dns_address: %+v", err)
 	}
+	if err := d.Set("secondary_dns_address", virtualMachine.SecondaryDNSAddress); err != nil {
+		return fmt.Errorf("error setting secondary_dns_address: %+v", err)
+	}
+	if err := d.Set("dns_suffix", virtualMachine.DNSSuffix); err != nil {
+		return fmt.Errorf("error setting dns_suffix: %+v", err)
+	}
+	if err := d.Set("dns_search_suffix", virtualMachine.DNSSearchSuffix); err != nil {
+		return fmt.Errorf("error setting dns_search_suffix: %+v", err)
+	}
+	if err := d.Set("primary_wins_address", virtualMachine.PrimaryWinsAddress); err != nil {
+		return fmt.Errorf("error setting primary_wins_address: %+v", err)
+	}
+	if err := d.Set("secondary_wins_address", virtualMachine.SecondaryWinsAddress); err != nil {
+		return fmt.Errorf("error setting secondary_wins_address: %+v", err)
+	}
+
 	return nil
 }
 
@@ -413,20 +476,27 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VcsVirtualM
 		},
 		InitialPassword:       d.Get("initial_password").(string),
 		PowerState:            d.Get("power_state").(string),
-		ResourceProfile:       d.Get("resource_profile").(string),
 		StoragePolicy:         d.Get("storage_policy").(string),
-		SubtenantRefID:        d.Get("subtenant_id").(string),
+		ProjectID:             d.Get("project_id").(string),
 		VirtualMachineID:      d.Id(),
 		VirtualMachineName:    d.Get("display_name").(string),
 		SSHKey:                d.Get("ssh_key").(string),
 		VirtualNetworkDevices: expandVirtualNetworkDevices(d.Get("virtual_network_devices").([]interface{})),
 		DeploymentParams:      expandVDeploymentParams(d.Get("deployment_params").([]interface{})),
 		BackupListCollection:  expandBackupListsFromIDs(d.Get("backup_lists").(*schema.Set).List()),
-		BillingTags:           expandBillingTagsListsFromIDs(d.Get("billing_tags").(*schema.Set).List()),
-		SystemTags:            expandSystemTagsListsFromIDs(d.Get("system_tags").(*schema.Set).List()),
+		Tags:                  expandTagsListsFromIDs(d.Get("tags").(*schema.Set).List()),
 		OsType:                d.Get("os_type").(string),
 		OvfIPConfiguration:    d.Get("ovf_ip_configuration").(bool),
 		InitialUserName:       d.Get("initial_user_name").(string),
+		FolderPath:            d.Get("folder_path").(string),
+		DNSSearchSuffix:       d.Get("dns_search_suffix").(string),
+		DNSSuffix:             d.Get("dns_suffix").(string),
+		PrimaryDNSAddress:     d.Get("primary_dns_address").(string),
+		PrimaryWinsAddress:    d.Get("primary_wins_address").(string),
+		SecondaryDNSAddress:   d.Get("secondary_dns_address").(string),
+		SecondaryWinsAddress:  d.Get("secondary_wins_address").(string),
+		CPUCount:              int32(d.Get("cpu_count").(int)),
+		MemorySizeMB:          int32(d.Get("memory_size_mb").(int)),
 	}
 
 	encryptionInstance := &models.EncryptionInstance{

@@ -17,9 +17,14 @@ type IPCollectionTestData struct {
 
 func (c *IPCollectionTestData) ToString() string {
 	return executeTemplateToString(`
+data "ochk_project" "project-ipc-1" {
+  display_name = "`+testData.Project1Name+`"
+}
+
 resource "ochk_ip_collection" "{{ .ResourceName}}" {
   display_name = "{{ .DisplayName}}"
   ip_addresses  = {{ StringsToTFList .IPAddresses}}
+  project_id = data.ochk_project.project-ipc-1.id
 }
 `, c)
 }
@@ -47,6 +52,7 @@ func TestAccIPCollectionResource_create_update(t *testing.T) {
 				Config: ipCollection.ToString(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(IPCollectionResourceName, "display_name", ipCollection.DisplayName),
+					resource.TestCheckResourceAttrPair(IPCollectionResourceName, "project_id", "data.ochk_project.project-ipc-1", "id"),
 					resource.TestCheckResourceAttr(IPCollectionResourceName, "ip_addresses.0", ipCollection.IPAddresses[0]),
 					resource.TestCheckResourceAttrSet(IPCollectionResourceName, "created_by"),
 					resource.TestCheckResourceAttrSet(IPCollectionResourceName, "created_at"),
@@ -63,6 +69,7 @@ func TestAccIPCollectionResource_create_update(t *testing.T) {
 				Config: ipCollectionUpdated.ToString(),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(IPCollectionResourceName, "display_name", ipCollectionUpdated.DisplayName),
+					resource.TestCheckResourceAttrPair(IPCollectionResourceName, "project_id", "data.ochk_project.project-ipc-1", "id"),
 					resource.TestCheckResourceAttr(IPCollectionResourceName, "ip_addresses.0", ipCollectionUpdated.IPAddresses[0]),
 					resource.TestCheckResourceAttrSet(IPCollectionResourceName, "created_by"),
 					resource.TestCheckResourceAttrSet(IPCollectionResourceName, "created_at"),

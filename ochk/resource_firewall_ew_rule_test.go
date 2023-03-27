@@ -14,7 +14,7 @@ import (
 func testAccirewallEWRuleCreateResourceId(firewallRuleResourceName string) resource.ImportStateIdFunc {
 	return func(s *terraform.State) (string, error) {
 		firewallRuleResource := s.RootModule().Resources[firewallRuleResourceName]
-		resourceID := firewallRuleResource.Primary.Attributes["router_id"] + "/" + firewallRuleResource.Primary.ID
+		resourceID := firewallRuleResource.Primary.Attributes["vpc_id"] + "/" + firewallRuleResource.Primary.ID
 		return resourceID, nil
 	}
 }
@@ -29,7 +29,7 @@ func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
 	directionUpdated := "OUT"
 	ipProtocol := "IPV4_IPV6"
 	ipProtocolUpdated := "IPV4"
-	dataSourceRouter := "ochk_router.default"
+	dataSourceRouter := "ochk_vpc.default"
 
 	source := generateRandName(devTestDataPrefix)
 	destination := generateRandName(devTestDataPrefix)
@@ -41,6 +41,7 @@ func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
 				Config: testAccFirewallEWRuleResourceConfig(displayName, source, destination, action, ipProtocol, direction, 1000, "data.ochk_custom_service.custom_service1.id"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", displayName),
+					resource.TestCheckResourceAttrPair(resourceName, "project_id", "data.ochk_project.project-1", "id"),
 					resource.TestCheckResourceAttr(resourceName, "action", action),
 					resource.TestCheckResourceAttr(resourceName, "direction", direction),
 					resource.TestCheckResourceAttr(resourceName, "ip_protocol", ipProtocol),
@@ -50,7 +51,7 @@ func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
 					resource.TestCheckResourceAttrSet(resourceName, "created_at"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_by"),
 					resource.TestCheckResourceAttrSet(resourceName, "modified_at"),
-					resource.TestCheckResourceAttrPair(resourceName, "router_id", dataSourceRouter, "id"),
+					resource.TestCheckResourceAttrPair(resourceName, "vpc_id", dataSourceRouter, "id"),
 				),
 			},
 			{
@@ -63,6 +64,7 @@ func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
 				Config: testAccFirewallEWRuleResourceConfig(displayNameUpdated, source, destination, actionUpdated, ipProtocolUpdated, directionUpdated, 2000, "data.ochk_custom_service.custom_service2.id"),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", displayNameUpdated),
+					resource.TestCheckResourceAttrPair(resourceName, "project_id", "data.ochk_project.project-1", "id"),
 					resource.TestCheckResourceAttr(resourceName, "action", actionUpdated),
 					resource.TestCheckResourceAttr(resourceName, "direction", directionUpdated),
 					resource.TestCheckResourceAttr(resourceName, "ip_protocol", ipProtocolUpdated),
@@ -87,7 +89,7 @@ func TestAccFirewallEWRuleResource_withPriority(t *testing.T) {
 			{
 				Config: testAccFirewallEWRuleResourceConfigWithOrder(displayNameBefore, displayNameMiddle, displayNameAfter),
 				Check: resource.ComposeTestCheckFunc(
-					testAccFirewallEWRuleCheckRulesOrder("ochk_router.default", displayNameBefore, displayNameMiddle, displayNameAfter),
+					testAccFirewallEWRuleCheckRulesOrder("ochk_vpc.default", displayNameBefore, displayNameMiddle, displayNameAfter),
 				),
 			},
 		},
@@ -189,13 +191,18 @@ locals {
 	routerDisplayName = %[1]q
 }
 
-data "ochk_router" "vrf-default" {
+data "ochk_vrf" "vrf-default" {
 	display_name = %[13]q
 }
 
-resource "ochk_router" "default" {
+data "ochk_project" "project-1" {
+  display_name = "`+testData.Project1Name+`"
+}
+
+resource "ochk_vpc" "default" {
   display_name = local.routerDisplayName
-  parent_router_id = data.ochk_router.vrf-default.id
+  vrf_id = data.ochk_vrf.vrf-default.id
+  project_id = data.ochk_project.project-1.id
 }
 
 data "ochk_service" "http" {
@@ -216,6 +223,7 @@ data "ochk_custom_service" "custom_service2" {
 
 resource "ochk_security_group" "source" {
   display_name = %[1]q
+  project_id = data.ochk_project.project-1.id
 
   members {
     id = data.ochk_virtual_machine.default.id
@@ -225,6 +233,7 @@ resource "ochk_security_group" "source" {
 
 resource "ochk_security_group" "destination" {
   display_name = %[2]q
+  project_id = data.ochk_project.project-1.id
   
   members {
     id = data.ochk_virtual_machine.default.id
@@ -234,7 +243,8 @@ resource "ochk_security_group" "destination" {
 
 resource "ochk_firewall_ew_rule" "default" {
   display_name = %[3]q
-  router_id = ochk_router.default.id
+  vpc_id = ochk_vpc.default.id
+  project_id = data.ochk_project.project-1.id
 
   services = [data.ochk_service.http.id]
   custom_services = [%[11]s]
@@ -260,13 +270,18 @@ locals {
 	routerDisplayName = %[1]q
 }
 
-data "ochk_router" "vrf" {
+data "ochk_vrf" "vrf" {
 	display_name = %[7]q
 }
 
-resource "ochk_router" "default" {
+data "ochk_project" "project-1" {
+  display_name = "`+testData.Project1Name+`"
+}
+
+resource "ochk_vpc" "default" {
   display_name = local.routerDisplayName
-  parent_router_id = data.ochk_router.vrf.id
+  vrf_id = data.ochk_vrf.vrf.id
+  project_id = data.ochk_project.project-1.id
 }
 
 data "ochk_service" "http" {
@@ -279,6 +294,7 @@ data "ochk_virtual_machine" "default" {
 
 resource "ochk_security_group" "source-before" {
   display_name = "%[1]sbef"
+  project_id = data.ochk_project.project-1.id
 
   members {
     id = data.ochk_virtual_machine.default.id
@@ -288,6 +304,7 @@ resource "ochk_security_group" "source-before" {
 
 resource "ochk_security_group" "source-middle" {
   display_name = "%[1]smid"
+  project_id = data.ochk_project.project-1.id
 
   members {
     id = data.ochk_virtual_machine.default.id
@@ -297,6 +314,7 @@ resource "ochk_security_group" "source-middle" {
 
 resource "ochk_security_group" "source-after" {
   display_name = "%[1]saft"
+  project_id = data.ochk_project.project-1.id
 
   members {
     id = data.ochk_virtual_machine.default.id
@@ -306,6 +324,7 @@ resource "ochk_security_group" "source-after" {
 
 resource "ochk_security_group" "destination-before" {
   display_name = "%[2]sbef"
+  project_id = data.ochk_project.project-1.id
   
   members {
     id = data.ochk_virtual_machine.default.id
@@ -315,6 +334,7 @@ resource "ochk_security_group" "destination-before" {
 
 resource "ochk_security_group" "destination-middle" {
   display_name = "%[2]smid"
+  project_id = data.ochk_project.project-1.id
   
   members {
     id = data.ochk_virtual_machine.default.id
@@ -324,6 +344,7 @@ resource "ochk_security_group" "destination-middle" {
 
 resource "ochk_security_group" "destination-after" {
   display_name = "%[2]saft"
+  project_id = data.ochk_project.project-1.id
   
   members {
     id = data.ochk_virtual_machine.default.id
@@ -333,7 +354,8 @@ resource "ochk_security_group" "destination-after" {
 
 resource "ochk_firewall_ew_rule" "middle" {
   display_name = %[3]q
-  router_id = ochk_router.default.id
+  project_id = data.ochk_project.project-1.id
+  vpc_id = ochk_vpc.default.id
 
   services = [data.ochk_service.http.id]
   source = [ochk_security_group.source-middle.id]
@@ -343,7 +365,8 @@ resource "ochk_firewall_ew_rule" "middle" {
 
 resource "ochk_firewall_ew_rule" "before" {
   display_name = %[4]q
-  router_id = ochk_router.default.id
+  project_id = data.ochk_project.project-1.id
+  vpc_id = ochk_vpc.default.id
 
   services = [data.ochk_service.http.id]
   source = [ochk_security_group.source-before.id]
@@ -353,7 +376,8 @@ resource "ochk_firewall_ew_rule" "before" {
 
 resource "ochk_firewall_ew_rule" "after" {
   display_name = %[5]q
-  router_id = ochk_router.default.id
+  project_id = data.ochk_project.project-1.id
+  vpc_id = ochk_vpc.default.id
 
   services = [data.ochk_service.http.id]
   source = [ochk_security_group.source-after.id]

@@ -45,7 +45,8 @@ func NewVcsVirtualMachineDeleteUsingDELETEOK() *VcsVirtualMachineDeleteUsingDELE
 	return &VcsVirtualMachineDeleteUsingDELETEOK{}
 }
 
-/* VcsVirtualMachineDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*
+VcsVirtualMachineDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 Request has been completed successfully
 */
@@ -53,9 +54,44 @@ type VcsVirtualMachineDeleteUsingDELETEOK struct {
 	Payload *models.VcsVirtualMachineDeleteResponse
 }
 
+// IsSuccess returns true when this vcs virtual machine delete using d e l e t e o k response has a 2xx status code
+func (o *VcsVirtualMachineDeleteUsingDELETEOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this vcs virtual machine delete using d e l e t e o k response has a 3xx status code
+func (o *VcsVirtualMachineDeleteUsingDELETEOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this vcs virtual machine delete using d e l e t e o k response has a 4xx status code
+func (o *VcsVirtualMachineDeleteUsingDELETEOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this vcs virtual machine delete using d e l e t e o k response has a 5xx status code
+func (o *VcsVirtualMachineDeleteUsingDELETEOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this vcs virtual machine delete using d e l e t e o k response a status code equal to that given
+func (o *VcsVirtualMachineDeleteUsingDELETEOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the vcs virtual machine delete using d e l e t e o k response
+func (o *VcsVirtualMachineDeleteUsingDELETEOK) Code() int {
+	return 200
+}
+
 func (o *VcsVirtualMachineDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
+func (o *VcsVirtualMachineDeleteUsingDELETEOK) String() string {
+	return fmt.Sprintf("[DELETE /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineDeleteUsingDELETEOK  %+v", 200, o.Payload)
+}
+
 func (o *VcsVirtualMachineDeleteUsingDELETEOK) GetPayload() *models.VcsVirtualMachineDeleteResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewVcsVirtualMachineDeleteUsingDELETEBadRequest() *VcsVirtualMachineDeleteU
 	return &VcsVirtualMachineDeleteUsingDELETEBadRequest{}
 }
 
-/* VcsVirtualMachineDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*
+VcsVirtualMachineDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type VcsVirtualMachineDeleteUsingDELETEBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this vcs virtual machine delete using d e l e t e bad request response has a 2xx status code
+func (o *VcsVirtualMachineDeleteUsingDELETEBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this vcs virtual machine delete using d e l e t e bad request response has a 3xx status code
+func (o *VcsVirtualMachineDeleteUsingDELETEBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this vcs virtual machine delete using d e l e t e bad request response has a 4xx status code
+func (o *VcsVirtualMachineDeleteUsingDELETEBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this vcs virtual machine delete using d e l e t e bad request response has a 5xx status code
+func (o *VcsVirtualMachineDeleteUsingDELETEBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this vcs virtual machine delete using d e l e t e bad request response a status code equal to that given
+func (o *VcsVirtualMachineDeleteUsingDELETEBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the vcs virtual machine delete using d e l e t e bad request response
+func (o *VcsVirtualMachineDeleteUsingDELETEBadRequest) Code() int {
+	return 400
+}
+
 func (o *VcsVirtualMachineDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *VcsVirtualMachineDeleteUsingDELETEBadRequest) String() string {
+	return fmt.Sprintf("[DELETE /vcs/virtual-machines/{virtualMachineId}][%d] vcsVirtualMachineDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *VcsVirtualMachineDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

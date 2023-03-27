@@ -44,9 +44,9 @@ type ClientService interface {
 }
 
 /*
-  GfwRuleCreateUsingPUT creates
+GfwRuleCreateUsingPUT creates
 
-  Create firewall rule (south-north) in NSX-T
+Create firewall rule (south-north) in NSX-T
 */
 func (a *Client) GfwRuleCreateUsingPUT(params *GfwRuleCreateUsingPUTParams, opts ...ClientOption) (*GfwRuleCreateUsingPUTOK, *GfwRuleCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
@@ -85,9 +85,9 @@ func (a *Client) GfwRuleCreateUsingPUT(params *GfwRuleCreateUsingPUTParams, opts
 }
 
 /*
-  GfwRuleDeleteUsingDELETE deletes
+GfwRuleDeleteUsingDELETE deletes
 
-  Delete firewall rule (south-north) from NSX-T
+Delete firewall rule (south-north) from NSX-T
 */
 func (a *Client) GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams, opts ...ClientOption) (*GfwRuleDeleteUsingDELETEOK, *GfwRuleDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
@@ -126,9 +126,9 @@ func (a *Client) GfwRuleDeleteUsingDELETE(params *GfwRuleDeleteUsingDELETEParams
 }
 
 /*
-  GfwRuleGetUsingGET gets
+GfwRuleGetUsingGET gets
 
-  Get firewall rule (south-north) from NSX-T
+Get firewall rule (south-north) from NSX-T
 */
 func (a *Client) GfwRuleGetUsingGET(params *GfwRuleGetUsingGETParams, opts ...ClientOption) (*GfwRuleGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -166,9 +166,9 @@ func (a *Client) GfwRuleGetUsingGET(params *GfwRuleGetUsingGETParams, opts ...Cl
 }
 
 /*
-  GfwRuleListUsingGET lists
+GfwRuleListUsingGET lists
 
-  List firewall rules (south-north) from NSX-T
+List firewall rules (south-north) from NSX-T
 */
 func (a *Client) GfwRuleListUsingGET(params *GfwRuleListUsingGETParams, opts ...ClientOption) (*GfwRuleListUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -206,9 +206,9 @@ func (a *Client) GfwRuleListUsingGET(params *GfwRuleListUsingGETParams, opts ...
 }
 
 /*
-  GfwRuleUpdateUsingPUT updates
+GfwRuleUpdateUsingPUT updates
 
-  Create firewall rule (south-north) in NSX-T
+Create firewall rule (south-north) in NSX-T
 */
 func (a *Client) GfwRuleUpdateUsingPUT(params *GfwRuleUpdateUsingPUTParams, opts ...ClientOption) (*GfwRuleUpdateUsingPUTOK, *GfwRuleUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending

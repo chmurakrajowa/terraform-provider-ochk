@@ -8,6 +8,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
+	"sync"
 )
 
 type NatProxy struct {
@@ -22,7 +23,10 @@ func (p *NatProxy) Read(ctx context.Context, natRuleID string) (*models.NATRuleI
 		HTTPClient: p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.NatRuleGetUsingGET(params)
+	mutex.Unlock()
 	if err != nil {
 		var notFound *n_a_t_rules.NatRuleGetUsingGETNotFound
 		if ok := errors.As(err, &notFound); ok {
@@ -46,7 +50,31 @@ func (p *NatProxy) ListNatsByName(ctx context.Context, displayName string) ([]*m
 		HTTPClient:  p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.NatRuleListUsingGET(params)
+	mutex.Unlock()
+
+	if err != nil {
+		return nil, fmt.Errorf("error while listing nats: %w", err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("listing nats failed: %s", response.Payload.Messages)
+	}
+
+	return response.Payload.NatRuleInstances, nil
+}
+func (p *NatProxy) List(ctx context.Context) ([]*models.NATRuleInstance, error) {
+	params := &n_a_t_rules.NatRuleListUsingGETParams{
+		Context:    ctx,
+		HTTPClient: p.httpClient,
+	}
+
+	mutex := sync.Mutex{}
+	mutex.Lock()
+	response, err := p.service.NatRuleListUsingGET(params)
+	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing nats: %w", err)
@@ -68,8 +96,11 @@ func (p *NatProxy) CreateNat(ctx context.Context, natRuleInstance *models.NATRul
 		Context:         ctx,
 		HTTPClient:      p.httpClient,
 	}
-
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	_, put, err := p.service.NatRuleCreateUsingPUT(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while creating nat: %w", err)
 	}
@@ -92,7 +123,11 @@ func (p *NatProxy) Update(ctx context.Context, natRuleInstance *models.NATRuleIn
 		HTTPClient:      p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	put, err := p.service.NatRuleUpdateUsingPUT(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying nat: %w", err)
 	}
@@ -112,6 +147,7 @@ func (p *NatProxy) Delete(ctx context.Context, ruleID string) error {
 	}
 
 	response, err := p.service.NatRuleDeleteUsingDELETE(params)
+
 	if err != nil {
 		var badRequest *n_a_t_rules.NatRuleDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {

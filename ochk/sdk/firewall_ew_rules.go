@@ -8,6 +8,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
+	"sync"
 )
 
 type FirewallEWRulesProxy struct {
@@ -27,7 +28,11 @@ func (p *FirewallEWRulesProxy) Create(ctx context.Context, routerID string, rule
 		HTTPClient: p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	_, put, err := p.service.DfwRuleCreateUsingPUT(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while creating firewall EW rule: %w", err)
 	}
@@ -47,7 +52,11 @@ func (p *FirewallEWRulesProxy) Read(ctx context.Context, routerID string, ruleID
 		HTTPClient: p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.DfwRuleGetUsingGET(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while reading firwall EW rule: %w", err)
 	}
@@ -72,7 +81,11 @@ func (p *FirewallEWRulesProxy) Update(ctx context.Context, routerID string, rule
 		HTTPClient: p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	put, _, err := p.service.DfwRuleUpdateUsingPUT(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while updating firewall EW rule: %w", err)
 	}
@@ -92,7 +105,10 @@ func (p *FirewallEWRulesProxy) ListByDisplayName(ctx context.Context, routerID s
 		HTTPClient:  p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.DfwRuleListUsingGET(params)
+	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while listing firewall EW rule: %w", err)
 	}
@@ -111,7 +127,11 @@ func (p *FirewallEWRulesProxy) List(ctx context.Context, routerID string) ([]*mo
 		HTTPClient: p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.DfwRuleListUsingGET(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while listing firewall EW rule: %w", err)
 	}
@@ -144,6 +164,7 @@ func (p *FirewallEWRulesProxy) Delete(ctx context.Context, routerID string, rule
 	}
 
 	response, _, err := p.service.DfwRuleDeleteUsingDELETE(params)
+
 	if err != nil {
 		var badRequest *firewall_rules_e_w.DfwRuleDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {

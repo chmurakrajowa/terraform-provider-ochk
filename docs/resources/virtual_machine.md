@@ -18,57 +18,39 @@ data "ochk_deployment" "centos" {
   display_name = "CentOS 7"
 }
 
-data "ochk_subtenant" "default" {
-  name = "<subtenant-display-name>"
+data "ochk_project" "default" {
+  name = "<project-display-name>"
 }
 
 resource "ochk_virtual_network" "default" {
   display_name = "vnet"
-  subtenants = [
-    data.ochk_subtenant.default.id
-  ]
+  project_id = data.ochk_project.default.id
 }
 
 resource "ochk_virtual_machine" "default" {
-  locals {
-  ssh_key = "ssh-rsa 
-    ....  example@example.com"
-  }
-  
   display_name = "vm"
+  project_id = data.ochk_project.default.id
+  folder_path = "/"
+
   deployment_id = data.ochk_deployment.centos.id
+  os_tyoe = "LINUX"
+    
+  initial_user_name = "root"
   initial_password = "<initial-password>"
 
   power_state = "poweredOn"
-  resource_profile = "SIZE_S"
-  storage_policy = "STANDARD"
-  subtenant_id = data.ochk_subtenant.default.id
-
-  virtual_network_devices {
-    virtual_network_id = ochk_virtual_network.default.id
+  cpu_count = 2
+  memory_size_mb = 4096
+  virtual_disk {
+    size_mb = 40960
   }
- 
-  backup_lists = [
-     "example_backup_id"
-  ]
+          
+  storage_policy = "STANDARD_W1"
   
-  billing_tags = [
-    'example_billing_tag1_id',
-    'example_billing_tag2_id',
-    
-  ]
-  system_tags = [
-    "example_system_tag1_id",
-    "example_system_tag2_id",
-  ]
-  
-  os_tyoe = "LINUX/WINODWS"
-  ovf_ip_configuration = false
-  initial_user_name = "root"
-  initial_password = "initial_password_for_vm"
+  virtual_network_devices {
+    virtual_network_id = data.ochk_virtual_network.default.id
+  }
 }
-
-
 ```
 
 ## Argument Reference
@@ -79,29 +61,25 @@ The following arguments are supported:
 * `deployment_id` - (Required) The unique deployment's identifier, use `ochk_deployment` data source for getting identifier by name.
 * `initial_password` - (Required) Initial password. Cannot be changed after creation.
 * `power_state` - (Required) Power state information for the specified virtual machine. Value is one of: `poweredOn`, `poweredOff`, `suspended`. 
-* `resource_profile` - (Required) The definition of the amount of resources that are allocated to virtual machines , values: 
-  * **`CUSTOM`** - Custom configuration of vCPU and RAM
-  * **`SIZE_XL`** - 16 vCPU, 64 GB RAM 
-  * **`SIZE_L`** - 8 vCPU, 32 GB RAM 
-  * **`SIZE_M`** - 4 vCPU, 16 GB RAM
-  * **`SIZE_S`** - 2 vCPU, 8 GB RAM
-  * **`SIZE_XS`** - 1 vCPU, 4 GB RAM
+* `cpu_count` - (Required) Vcpus count for virtual machine.
+* `memory_size_mb` - (Required) Size of memory in megabytes for virtual machine.
 * `storage_policy` - (Required) Storage Policy associated with virtual machine. The policies control which type of storage is provided for the virtual machine, how the virtual machine is placed within the storage, and which data services are offered for the virtual machine; values: 
   * **`ENTERPRISE`** - virtual machine disks are distributed over two Data Centers
   * **`STANDARD_W1`** - virtual machine located in Data Center 1 
   * **`STANDARD_W2`** - virtual machine located in Data Center 2 
-* `subtenant_id` - (Required) Business group's identifier, use `ochk_subtenant` data source for getting identifier by name.
-* `ssh_key` -SSH key to set on machine.(??????)
-* `backup_lists` (Optional) Backup list for virtual machine
-* `system_tags` (Optional) System tags for virtual machine
-* `billing_tags` (Optional) Billing tags for virtual machine
-* `deployment_params` - Extra deployment parameter 
-    * **param_name** - (Required)
-    * **param_type** - (Required)
-    * **param_value** - (Required)
+* `project_id` - (Required) Project id, use `ochk_project` data source for getting identifier by name.
+* `virtual_disk` - (Required) Details of a system disk storage created by default. Disc has the following values:
+  * **size_mb** - (Required) Size in megabytes of the disk.
+* `folder_path` - (Optional) Folder path for virtual machine. Default `/`.
+* `ssh_key` -(Optional) SSH key to set on machine. Default empty.
+* `backup_lists` (Optional) Backup list for virtual machine.
+* `tags` (Optional) Tags for virtual machine.
+* `deployment_params` - (Optional) Extra deployment parameters. Requirements: VM Tools installed and bash script on virtual machine which communicates with VM Tolls to set deployment param in OS. Each element must have the following values:
+    * **param_name** - (Required) Param name which will be transferred to VM Tools.
+    * **param_type** - (Required) Param type. Use `ochk_deployment_params_types` data source for getting supported types list.
+    * **param_value** - (Required) Param value which will be transferred to VM Tools.
 * `virtual_network_devices` - (Required) List of virtual network devices. Each element must have the following values:
     * **virtual_network_id** - (Required) The unique identifier of virtual network. Virtual network allows the virtual machine to communicate with the rest of your network, host machine, and other virtual machines. Use `ochk_virtual_network` data source for getting identifier by name.
-    * **device_id** (Optional)
 * `additional_virtual_disks` - (Optional) List of additional virtual disks. Additional disk will be created on the same storage as the virtual machine configuration. Each element must have the following values: 
     * **controller_id** - (Required) The unique identifier of controller. The only supported value for now is "0".
     * **lun_id** - (Required) Number used to identify a logical unit. Set this to consecutive int numbers > 0. When updating, e.g. extending size, `lun_id` needs to be preserved.
@@ -113,17 +91,19 @@ The following arguments are supported:
 * `ovf_ip_configuration` (Optional) Only for virtual machines created from ISO/OVF file.
 * `initial_user_name` (Optional) Only for virtual machines created from OVF to set ssh-key or ip address.
 * `os_type` - (Optional) Only for virtual machines created from ISO/OVF file.
+* `dns_suffix` - The custom Domain Name System (DNS) suffix which should have your assigned domain name.
+* `dns_search_suffix` - Domain Name System (DNS) suffix for search domain.
+* `primary_dns_address` - Primary Domain Name System (DNS) server IP address.
+* `secondary_dns_address` - Secondary Domain Name System (DNS) server IP address.
+* `primary_wins_address` - Primary Windows Internet Name Service (WINS) address.
+* `secondary_wins_address` - Secondary Windows Internet Name Service (WINS) address.
 
 ## Attribute Reference
 
 The following attributes are exported in addition to above arguments:
-* `virtual_disk` - Details of a system disk storage created by default. Additional disk will be created on the same storage as the virtual machine configuration. Each element has the following values:
-    * **controller_id** - The unique identifier of controller.
-    * **lun_id** - Number used to identify a logical unit.
-    * **size_mb** - Size in megabytes of the disk.
-    * **device_type** - Type of the device.
 * `created_by` - Who created this resource.
 * `created_at` - When this resource was created.
 * `modified_by` - Who last modified this resource. 
 * `modified_at` - When last modification occurred.  
 * `ip_address` - Default virtual machine ip address
+

@@ -53,10 +53,12 @@ func NewLogCategoryGetUsingGETParamsWithHTTPClient(client *http.Client) *LogCate
 	}
 }
 
-/* LogCategoryGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the log category get using g e t operation.
+/*
+LogCategoryGetUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the log category get using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type LogCategoryGetUsingGETParams struct {
 

@@ -52,10 +52,12 @@ func NewVcsVirtualMachineSnapshotListUsingGETParamsWithHTTPClient(client *http.C
 	}
 }
 
-/* VcsVirtualMachineSnapshotListUsingGETParams contains all the parameters to send to the API endpoint
-   for the vcs virtual machine snapshot list using g e t operation.
+/*
+VcsVirtualMachineSnapshotListUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the vcs virtual machine snapshot list using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type VcsVirtualMachineSnapshotListUsingGETParams struct {
 

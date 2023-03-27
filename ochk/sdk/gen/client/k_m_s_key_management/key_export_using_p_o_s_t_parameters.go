@@ -54,10 +54,12 @@ func NewKeyExportUsingPOSTParamsWithHTTPClient(client *http.Client) *KeyExportUs
 	}
 }
 
-/* KeyExportUsingPOSTParams contains all the parameters to send to the API endpoint
-   for the key export using p o s t operation.
+/*
+KeyExportUsingPOSTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the key export using p o s t operation.
+
+	Typically these are written to a http.Request.
 */
 type KeyExportUsingPOSTParams struct {
 

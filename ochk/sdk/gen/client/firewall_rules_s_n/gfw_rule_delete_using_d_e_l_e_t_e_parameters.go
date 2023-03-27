@@ -52,10 +52,12 @@ func NewGfwRuleDeleteUsingDELETEParamsWithHTTPClient(client *http.Client) *GfwRu
 	}
 }
 
-/* GfwRuleDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
-   for the gfw rule delete using d e l e t e operation.
+/*
+GfwRuleDeleteUsingDELETEParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the gfw rule delete using d e l e t e operation.
+
+	Typically these are written to a http.Request.
 */
 type GfwRuleDeleteUsingDELETEParams struct {
 

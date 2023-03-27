@@ -51,7 +51,8 @@ func NewBackupPlanGetUsingGETOK() *BackupPlanGetUsingGETOK {
 	return &BackupPlanGetUsingGETOK{}
 }
 
-/* BackupPlanGetUsingGETOK describes a response with status code 200, with default header values.
+/*
+BackupPlanGetUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type BackupPlanGetUsingGETOK struct {
 	Payload *models.BackupPlanGetResponse
 }
 
+// IsSuccess returns true when this backup plan get using g e t o k response has a 2xx status code
+func (o *BackupPlanGetUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this backup plan get using g e t o k response has a 3xx status code
+func (o *BackupPlanGetUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this backup plan get using g e t o k response has a 4xx status code
+func (o *BackupPlanGetUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this backup plan get using g e t o k response has a 5xx status code
+func (o *BackupPlanGetUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this backup plan get using g e t o k response a status code equal to that given
+func (o *BackupPlanGetUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the backup plan get using g e t o k response
+func (o *BackupPlanGetUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *BackupPlanGetUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /backups/plans/{backupPlanId}][%d] backupPlanGetUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *BackupPlanGetUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /backups/plans/{backupPlanId}][%d] backupPlanGetUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *BackupPlanGetUsingGETOK) GetPayload() *models.BackupPlanGetResponse {
 	return o.Payload
 }
@@ -83,14 +119,49 @@ func NewBackupPlanGetUsingGETBadRequest() *BackupPlanGetUsingGETBadRequest {
 	return &BackupPlanGetUsingGETBadRequest{}
 }
 
-/* BackupPlanGetUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+BackupPlanGetUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
 type BackupPlanGetUsingGETBadRequest struct {
 }
 
+// IsSuccess returns true when this backup plan get using g e t bad request response has a 2xx status code
+func (o *BackupPlanGetUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this backup plan get using g e t bad request response has a 3xx status code
+func (o *BackupPlanGetUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this backup plan get using g e t bad request response has a 4xx status code
+func (o *BackupPlanGetUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this backup plan get using g e t bad request response has a 5xx status code
+func (o *BackupPlanGetUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this backup plan get using g e t bad request response a status code equal to that given
+func (o *BackupPlanGetUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the backup plan get using g e t bad request response
+func (o *BackupPlanGetUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *BackupPlanGetUsingGETBadRequest) Error() string {
+	return fmt.Sprintf("[GET /backups/plans/{backupPlanId}][%d] backupPlanGetUsingGETBadRequest ", 400)
+}
+
+func (o *BackupPlanGetUsingGETBadRequest) String() string {
 	return fmt.Sprintf("[GET /backups/plans/{backupPlanId}][%d] backupPlanGetUsingGETBadRequest ", 400)
 }
 
@@ -104,14 +175,49 @@ func NewBackupPlanGetUsingGETNotFound() *BackupPlanGetUsingGETNotFound {
 	return &BackupPlanGetUsingGETNotFound{}
 }
 
-/* BackupPlanGetUsingGETNotFound describes a response with status code 404, with default header values.
+/*
+BackupPlanGetUsingGETNotFound describes a response with status code 404, with default header values.
 
 Entity not found.
 */
 type BackupPlanGetUsingGETNotFound struct {
 }
 
+// IsSuccess returns true when this backup plan get using g e t not found response has a 2xx status code
+func (o *BackupPlanGetUsingGETNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this backup plan get using g e t not found response has a 3xx status code
+func (o *BackupPlanGetUsingGETNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this backup plan get using g e t not found response has a 4xx status code
+func (o *BackupPlanGetUsingGETNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this backup plan get using g e t not found response has a 5xx status code
+func (o *BackupPlanGetUsingGETNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this backup plan get using g e t not found response a status code equal to that given
+func (o *BackupPlanGetUsingGETNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the backup plan get using g e t not found response
+func (o *BackupPlanGetUsingGETNotFound) Code() int {
+	return 404
+}
+
 func (o *BackupPlanGetUsingGETNotFound) Error() string {
+	return fmt.Sprintf("[GET /backups/plans/{backupPlanId}][%d] backupPlanGetUsingGETNotFound ", 404)
+}
+
+func (o *BackupPlanGetUsingGETNotFound) String() string {
 	return fmt.Sprintf("[GET /backups/plans/{backupPlanId}][%d] backupPlanGetUsingGETNotFound ", 404)
 }
 

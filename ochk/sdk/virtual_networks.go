@@ -8,6 +8,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -27,7 +28,11 @@ func (p *VirtualNetworksProxy) Create(ctx context.Context, virtualNetwork *model
 		HTTPClient:             p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	_, put, err := p.service.VirtualNetworkCreateUsingPUT(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while creating virtual network: %w", err)
 	}
@@ -51,7 +56,11 @@ func (p *VirtualNetworksProxy) Update(ctx context.Context, virtualNetwork *model
 		HTTPClient:             p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	put, _, err := p.service.VirtualNetworkUpdateUsingPUT(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying virtual network: %w", err)
 	}
@@ -74,7 +83,11 @@ func (p *VirtualNetworksProxy) Read(ctx context.Context, virtualNetworkID string
 		HTTPClient:       p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.VirtualNetworkGetUsingGET(params)
+	mutex.Unlock()
+
 	if err != nil {
 		var notFound *virtual_networks.VirtualNetworkGetUsingGETNotFound
 		if ok := errors.As(err, &notFound); ok {
@@ -98,7 +111,33 @@ func (p *VirtualNetworksProxy) ListByDisplayName(ctx context.Context, displayNam
 		HTTPClient:  p.httpClient,
 	}
 
+	mutex := sync.Mutex{}
+	mutex.Lock()
 	response, err := p.service.VirtualNetworkListUsingGET(params)
+	mutex.Unlock()
+
+	if err != nil {
+		return nil, fmt.Errorf("error while listing virtual networks: %w", err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("listing virtual networks failed: %s", response.Payload.Messages)
+	}
+
+	return response.Payload.VirtualNetworkInstanceCollection, nil
+}
+
+func (p *VirtualNetworksProxy) List(ctx context.Context) ([]*models.VirtualNetworkInstance, error) {
+	params := &virtual_networks.VirtualNetworkListUsingGETParams{
+		Context:    ctx,
+		HTTPClient: p.httpClient,
+	}
+
+	mutex := sync.Mutex{}
+	mutex.Lock()
+	response, err := p.service.VirtualNetworkListUsingGET(params)
+	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while listing virtual networks: %w", err)
 	}
@@ -118,6 +157,7 @@ func (p *VirtualNetworksProxy) Delete(ctx context.Context, virtualNetworkID stri
 	}
 
 	response, _, err := p.service.VirtualNetworkDeleteUsingDELETE(params)
+
 	if err != nil {
 		var badRequest *virtual_networks.VirtualNetworkDeleteUsingDELETEBadRequest
 		if ok := errors.As(err, &badRequest); ok {

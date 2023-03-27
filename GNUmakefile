@@ -1,42 +1,50 @@
-default: testacc
-
-PROVIDER_VERSION="1.2.4"
+GOFMT_FILES?=$$(find . -name '*.go' | grep -v 'vendor')
+PROVIDER_VERSION?=$$(sed -n -e '1{s/\#//g;p;}' CHANGELOG.md | awk '{print $$1}')
 
 ARCH:=$(shell uname -m)
 ifeq ($(ARCH),x86_64)
   ARCH:=amd64
 endif
+OS:=$(shell uname -s | tr '[:upper:]' '[:lower:]')
 
-OOS:=darwin
-export GOARCH:=$(ARCH)
-export GOOS:=$(OOS)
+EXAMPLES_PROVIDER_DIR="examples/terraform.d/plugins/registry.terraform.io/chmurakrajowa/ochk/$(PROVIDER_VERSION)/$(OS)_$(ARCH)"
+ENV_PROVIDER_DIR="env/terraform.d/plugins/registry.terraform.io/chmurakrajowa/ochk/$(PROVIDER_VERSION)/$(OS)_$(ARCH)"
 
-.PHONY: testacc
+default: build
 
-build:
+build: fmtcheck
 	go build ./...
 
-EXAMPLES_PROVIDER_DIR="examples/terraform.d/plugins/registry.terraform.io/chmurakrajowa/ochk/${PROVIDER_VERSION}/$(OOS)_$(ARCH)"
-ENV_PROVIDER_DIR="env/terraform.d/plugins/registry.terraform.io/chmurakrajowa/ochk/${PROVIDER_VERSION}/$(OOS)_$(ARCH)"
-
-build_local:
-	mkdir -p ${EXAMPLES_PROVIDER_DIR}
-	mkdir -p ${ENV_PROVIDER_DIR}
-	mkdir bin || true
+build_local: fmtcheck
+	mkdir -p $(EXAMPLES_PROVIDER_DIR)
+	mkdir -p $(ENV_PROVIDER_DIR)
+	mkdir -p bin
 	go build -o bin ./...
-	cp bin/terraform-provider-ochk ${EXAMPLES_PROVIDER_DIR}/terraform-provider-ochk_v${PROVIDER_VERSION}
-	cp bin/terraform-provider-ochk ${ENV_PROVIDER_DIR}/terraform-provider-ochk_v${PROVIDER_VERSION}
+	cp bin/terraform-provider-ochk $(EXAMPLES_PROVIDER_DIR)/terraform-provider-ochk_v$(PROVIDER_VERSION)
+	cp bin/terraform-provider-ochk $(ENV_PROVIDER_DIR)/terraform-provider-ochk_v$(PROVIDER_VERSION)
 
-testacc:
-	TF_ACC=1 go test ./...
+test: fmtcheck
+	go test ./...
+
+testacc: fmtcheck
+	TF_ACC=1 go test ./... -v $(TESTARGS) -timeout 120m
+
+fmt:
+	gofmt -w -s $(GOFMT_FILES)
+
+fmtcheck:
+	@sh -c "'$(CURDIR)/tools/gofmtcheck.sh'"
+
+vet:
+	go vet
 
 lint:
-	tools/lint.sh
+	@sh -c "'$(CURDIR)/tools/lint.sh'"
 
 swagger-update:
-	tools/swagger_update.sh
+	@sh -c "'$(CURDIR)/tools/swagger_update.sh'"
 
-swagger:
-	tools/swagger_gen.sh
+swagger-generate:
+	@sh -c "'$(CURDIR)/tools/swagger_gen.sh'"
 
-
+.PHONY: build test testacc fmt fmtcheck vet lint swagger-update swagger-generate

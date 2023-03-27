@@ -38,9 +38,9 @@ type ClientService interface {
 }
 
 /*
-  McsGenerateSecretUsingPOST generates m c s secret
+McsGenerateSecretUsingPOST generates m c s secret
 
-  Generate MCS Secret
+Generate MCS Secret
 */
 func (a *Client) McsGenerateSecretUsingPOST(params *McsGenerateSecretUsingPOSTParams, opts ...ClientOption) (*McsGenerateSecretUsingPOSTOK, error) {
 	// TODO: Validate the params before sending
@@ -78,9 +78,9 @@ func (a *Client) McsGenerateSecretUsingPOST(params *McsGenerateSecretUsingPOSTPa
 }
 
 /*
-  McsGetSecretUsingGET gets m c s secret
+McsGetSecretUsingGET gets m c s secret
 
-  Get MCS secret
+Get MCS secret
 */
 func (a *Client) McsGetSecretUsingGET(params *McsGetSecretUsingGETParams, opts ...ClientOption) (*McsGetSecretUsingGETOK, error) {
 	// TODO: Validate the params before sending

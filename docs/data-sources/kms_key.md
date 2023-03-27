@@ -4,7 +4,7 @@ page_title: "KMS encryption key Data Source"
 
 # KMS encryption key Data Source
 
-Data Source for getting KMS encryption keys display name and version.
+Data Source for getting KMS encryption key by display name and version.
 
 ## Example Usage
 
@@ -25,6 +25,7 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported in addition to above arguments:
+
 * `key_usage` - List of key usages, what actions the key will be applied to: e.g. [`ENCRYPT`, `DECRYPT`].
 * `algorithm` - Encryption algorithm.
 * `size` - Size of the key in bits.

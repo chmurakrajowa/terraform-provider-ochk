@@ -52,10 +52,12 @@ func NewGfwRuleGetUsingGETParamsWithHTTPClient(client *http.Client) *GfwRuleGetU
 	}
 }
 
-/* GfwRuleGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the gfw rule get using g e t operation.
+/*
+GfwRuleGetUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the gfw rule get using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type GfwRuleGetUsingGETParams struct {
 

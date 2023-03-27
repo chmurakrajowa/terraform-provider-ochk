@@ -1,15 +1,13 @@
 variable "test-data-prefix" {}
 variable "host" {}
-variable "tenant" {}
+variable "platform" {}
 variable "username" {}
 variable "password" {}
 variable "debug_log_file" {
   default = ""
 }
-variable "bg_manager_user" {}
-variable "bg_manager_user2" {}
-variable "subtenant_network_name" {}
-variable "subtenant_for_vm_name" {}
+variable "project_network_name" {}
+variable "project_for_vm_name" {}
 variable "initial_password_for_vm" {}
 
 variable "vrf_router" {}

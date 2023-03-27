@@ -45,7 +45,8 @@ func NewSnapshotListUsingGETOK() *SnapshotListUsingGETOK {
 	return &SnapshotListUsingGETOK{}
 }
 
-/* SnapshotListUsingGETOK describes a response with status code 200, with default header values.
+/*
+SnapshotListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type SnapshotListUsingGETOK struct {
 	Payload *models.SnapshotListResponse
 }
 
+// IsSuccess returns true when this snapshot list using g e t o k response has a 2xx status code
+func (o *SnapshotListUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this snapshot list using g e t o k response has a 3xx status code
+func (o *SnapshotListUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this snapshot list using g e t o k response has a 4xx status code
+func (o *SnapshotListUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this snapshot list using g e t o k response has a 5xx status code
+func (o *SnapshotListUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this snapshot list using g e t o k response a status code equal to that given
+func (o *SnapshotListUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the snapshot list using g e t o k response
+func (o *SnapshotListUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *SnapshotListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /vcs/snapshots][%d] snapshotListUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *SnapshotListUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /vcs/snapshots][%d] snapshotListUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *SnapshotListUsingGETOK) GetPayload() *models.SnapshotListResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewSnapshotListUsingGETBadRequest() *SnapshotListUsingGETBadRequest {
 	return &SnapshotListUsingGETBadRequest{}
 }
 
-/* SnapshotListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+SnapshotListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type SnapshotListUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this snapshot list using g e t bad request response has a 2xx status code
+func (o *SnapshotListUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this snapshot list using g e t bad request response has a 3xx status code
+func (o *SnapshotListUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this snapshot list using g e t bad request response has a 4xx status code
+func (o *SnapshotListUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this snapshot list using g e t bad request response has a 5xx status code
+func (o *SnapshotListUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this snapshot list using g e t bad request response a status code equal to that given
+func (o *SnapshotListUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the snapshot list using g e t bad request response
+func (o *SnapshotListUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *SnapshotListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /vcs/snapshots][%d] snapshotListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *SnapshotListUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /vcs/snapshots][%d] snapshotListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *SnapshotListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

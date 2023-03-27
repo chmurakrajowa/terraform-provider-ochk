@@ -53,10 +53,12 @@ func NewRequestListUsingGETParamsWithHTTPClient(client *http.Client) *RequestLis
 	}
 }
 
-/* RequestListUsingGETParams contains all the parameters to send to the API endpoint
-   for the request list using g e t operation.
+/*
+RequestListUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the request list using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type RequestListUsingGETParams struct {
 

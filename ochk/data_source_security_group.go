@@ -16,6 +16,10 @@ func dataSourceSecurityGroup() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"project_id": {
+				Type:     schema.TypeString,
+				Required: true,
+			},
 			"created_by": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -75,6 +79,10 @@ func datSourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, met
 	}
 
 	d.SetId(securityGroups[0].ID)
+
+	if err := d.Set("project_id", securityGroups[0].ProjectID); err != nil {
+		return diag.Errorf("error setting project_id: %+v", err)
+	}
 
 	if err := d.Set("created_by", securityGroups[0].CreatedBy); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)

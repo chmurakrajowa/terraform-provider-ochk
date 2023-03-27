@@ -45,7 +45,8 @@ func NewNatRuleListUsingGETOK() *NatRuleListUsingGETOK {
 	return &NatRuleListUsingGETOK{}
 }
 
-/* NatRuleListUsingGETOK describes a response with status code 200, with default header values.
+/*
+NatRuleListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type NatRuleListUsingGETOK struct {
 	Payload *models.NATRuleListResponse
 }
 
+// IsSuccess returns true when this nat rule list using g e t o k response has a 2xx status code
+func (o *NatRuleListUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this nat rule list using g e t o k response has a 3xx status code
+func (o *NatRuleListUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this nat rule list using g e t o k response has a 4xx status code
+func (o *NatRuleListUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this nat rule list using g e t o k response has a 5xx status code
+func (o *NatRuleListUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this nat rule list using g e t o k response a status code equal to that given
+func (o *NatRuleListUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the nat rule list using g e t o k response
+func (o *NatRuleListUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *NatRuleListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/nat/rules][%d] natRuleListUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *NatRuleListUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /network/nat/rules][%d] natRuleListUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *NatRuleListUsingGETOK) GetPayload() *models.NATRuleListResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewNatRuleListUsingGETBadRequest() *NatRuleListUsingGETBadRequest {
 	return &NatRuleListUsingGETBadRequest{}
 }
 
-/* NatRuleListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+NatRuleListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type NatRuleListUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this nat rule list using g e t bad request response has a 2xx status code
+func (o *NatRuleListUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this nat rule list using g e t bad request response has a 3xx status code
+func (o *NatRuleListUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this nat rule list using g e t bad request response has a 4xx status code
+func (o *NatRuleListUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this nat rule list using g e t bad request response has a 5xx status code
+func (o *NatRuleListUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this nat rule list using g e t bad request response a status code equal to that given
+func (o *NatRuleListUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the nat rule list using g e t bad request response
+func (o *NatRuleListUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *NatRuleListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/nat/rules][%d] natRuleListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *NatRuleListUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /network/nat/rules][%d] natRuleListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *NatRuleListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

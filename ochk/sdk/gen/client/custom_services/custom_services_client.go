@@ -44,9 +44,9 @@ type ClientService interface {
 }
 
 /*
-  CustomServiceCreateUsingPUT creates
+CustomServiceCreateUsingPUT creates
 
-  Create custom service in NSX-T
+Create custom service in NSX-T
 */
 func (a *Client) CustomServiceCreateUsingPUT(params *CustomServiceCreateUsingPUTParams, opts ...ClientOption) (*CustomServiceCreateUsingPUTOK, *CustomServiceCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
@@ -85,9 +85,9 @@ func (a *Client) CustomServiceCreateUsingPUT(params *CustomServiceCreateUsingPUT
 }
 
 /*
-  CustomServiceDeleteUsingDELETE deletes
+CustomServiceDeleteUsingDELETE deletes
 
-  Delete custom service from NSX-T
+Delete custom service from NSX-T
 */
 func (a *Client) CustomServiceDeleteUsingDELETE(params *CustomServiceDeleteUsingDELETEParams, opts ...ClientOption) (*CustomServiceDeleteUsingDELETEOK, *CustomServiceDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
@@ -126,9 +126,9 @@ func (a *Client) CustomServiceDeleteUsingDELETE(params *CustomServiceDeleteUsing
 }
 
 /*
-  CustomServiceGetUsingGET gets
+CustomServiceGetUsingGET gets
 
-  Get custom service from NSX-T
+Get custom service from NSX-T
 */
 func (a *Client) CustomServiceGetUsingGET(params *CustomServiceGetUsingGETParams, opts ...ClientOption) (*CustomServiceGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -166,9 +166,9 @@ func (a *Client) CustomServiceGetUsingGET(params *CustomServiceGetUsingGETParams
 }
 
 /*
-  CustomServiceListUsingGET lists
+CustomServiceListUsingGET lists
 
-  List custom services from NSX-T
+List custom services from NSX-T
 */
 func (a *Client) CustomServiceListUsingGET(params *CustomServiceListUsingGETParams, opts ...ClientOption) (*CustomServiceListUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -206,9 +206,9 @@ func (a *Client) CustomServiceListUsingGET(params *CustomServiceListUsingGETPara
 }
 
 /*
-  CustomServiceUpdateUsingPUT updates
+CustomServiceUpdateUsingPUT updates
 
-  Update custom service from NSX-T
+Update custom service from NSX-T
 */
 func (a *Client) CustomServiceUpdateUsingPUT(params *CustomServiceUpdateUsingPUTParams, opts ...ClientOption) (*CustomServiceUpdateUsingPUTOK, *CustomServiceUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending

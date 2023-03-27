@@ -51,7 +51,8 @@ func NewSyncUsingPOSTOK() *SyncUsingPOSTOK {
 	return &SyncUsingPOSTOK{}
 }
 
-/* SyncUsingPOSTOK describes a response with status code 200, with default header values.
+/*
+SyncUsingPOSTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type SyncUsingPOSTOK struct {
 	Payload *models.SyncMessageResponse
 }
 
+// IsSuccess returns true when this sync using p o s t o k response has a 2xx status code
+func (o *SyncUsingPOSTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this sync using p o s t o k response has a 3xx status code
+func (o *SyncUsingPOSTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this sync using p o s t o k response has a 4xx status code
+func (o *SyncUsingPOSTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this sync using p o s t o k response has a 5xx status code
+func (o *SyncUsingPOSTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this sync using p o s t o k response a status code equal to that given
+func (o *SyncUsingPOSTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the sync using p o s t o k response
+func (o *SyncUsingPOSTOK) Code() int {
+	return 200
+}
+
 func (o *SyncUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /ads/sync][%d] syncUsingPOSTOK  %+v", 200, o.Payload)
 }
+
+func (o *SyncUsingPOSTOK) String() string {
+	return fmt.Sprintf("[POST /ads/sync][%d] syncUsingPOSTOK  %+v", 200, o.Payload)
+}
+
 func (o *SyncUsingPOSTOK) GetPayload() *models.SyncMessageResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewSyncUsingPOSTCreated() *SyncUsingPOSTCreated {
 	return &SyncUsingPOSTCreated{}
 }
 
-/* SyncUsingPOSTCreated describes a response with status code 201, with default header values.
+/*
+SyncUsingPOSTCreated describes a response with status code 201, with default header values.
 
 Entity has been imported
 */
@@ -91,9 +128,44 @@ type SyncUsingPOSTCreated struct {
 	Payload *models.SyncMessageResponse
 }
 
+// IsSuccess returns true when this sync using p o s t created response has a 2xx status code
+func (o *SyncUsingPOSTCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this sync using p o s t created response has a 3xx status code
+func (o *SyncUsingPOSTCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this sync using p o s t created response has a 4xx status code
+func (o *SyncUsingPOSTCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this sync using p o s t created response has a 5xx status code
+func (o *SyncUsingPOSTCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this sync using p o s t created response a status code equal to that given
+func (o *SyncUsingPOSTCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the sync using p o s t created response
+func (o *SyncUsingPOSTCreated) Code() int {
+	return 201
+}
+
 func (o *SyncUsingPOSTCreated) Error() string {
 	return fmt.Sprintf("[POST /ads/sync][%d] syncUsingPOSTCreated  %+v", 201, o.Payload)
 }
+
+func (o *SyncUsingPOSTCreated) String() string {
+	return fmt.Sprintf("[POST /ads/sync][%d] syncUsingPOSTCreated  %+v", 201, o.Payload)
+}
+
 func (o *SyncUsingPOSTCreated) GetPayload() *models.SyncMessageResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewSyncUsingPOSTBadRequest() *SyncUsingPOSTBadRequest {
 	return &SyncUsingPOSTBadRequest{}
 }
 
-/* SyncUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*
+SyncUsingPOSTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type SyncUsingPOSTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this sync using p o s t bad request response has a 2xx status code
+func (o *SyncUsingPOSTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this sync using p o s t bad request response has a 3xx status code
+func (o *SyncUsingPOSTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this sync using p o s t bad request response has a 4xx status code
+func (o *SyncUsingPOSTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this sync using p o s t bad request response has a 5xx status code
+func (o *SyncUsingPOSTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this sync using p o s t bad request response a status code equal to that given
+func (o *SyncUsingPOSTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the sync using p o s t bad request response
+func (o *SyncUsingPOSTBadRequest) Code() int {
+	return 400
+}
+
 func (o *SyncUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /ads/sync][%d] syncUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *SyncUsingPOSTBadRequest) String() string {
+	return fmt.Sprintf("[POST /ads/sync][%d] syncUsingPOSTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *SyncUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

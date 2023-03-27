@@ -27,6 +27,9 @@ type CustomServiceInstance struct {
 	// Format: date-time
 	CreationDate *strfmt.DateTime `json:"creationDate,omitempty"`
 
+	// description
+	Description string `json:"description,omitempty"`
+
 	// display name
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -39,6 +42,9 @@ type CustomServiceInstance struct {
 
 	// modified by
 	ModifiedBy string `json:"modifiedBy,omitempty"`
+
+	// project Id
+	ProjectID string `json:"projectId,omitempty"`
 
 	// service Id
 	ServiceID string `json:"serviceId,omitempty"`

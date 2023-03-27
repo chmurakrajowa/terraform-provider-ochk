@@ -51,7 +51,8 @@ func NewRouterDeleteUsingDELETEOK() *RouterDeleteUsingDELETEOK {
 	return &RouterDeleteUsingDELETEOK{}
 }
 
-/* RouterDeleteUsingDELETEOK describes a response with status code 200, with default header values.
+/*
+RouterDeleteUsingDELETEOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type RouterDeleteUsingDELETEOK struct {
 	Payload *models.DeleteRouterResponse
 }
 
+// IsSuccess returns true when this router delete using d e l e t e o k response has a 2xx status code
+func (o *RouterDeleteUsingDELETEOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this router delete using d e l e t e o k response has a 3xx status code
+func (o *RouterDeleteUsingDELETEOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this router delete using d e l e t e o k response has a 4xx status code
+func (o *RouterDeleteUsingDELETEOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this router delete using d e l e t e o k response has a 5xx status code
+func (o *RouterDeleteUsingDELETEOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this router delete using d e l e t e o k response a status code equal to that given
+func (o *RouterDeleteUsingDELETEOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the router delete using d e l e t e o k response
+func (o *RouterDeleteUsingDELETEOK) Code() int {
+	return 200
+}
+
 func (o *RouterDeleteUsingDELETEOK) Error() string {
 	return fmt.Sprintf("[DELETE /network/routers/{routerId}][%d] routerDeleteUsingDELETEOK  %+v", 200, o.Payload)
 }
+
+func (o *RouterDeleteUsingDELETEOK) String() string {
+	return fmt.Sprintf("[DELETE /network/routers/{routerId}][%d] routerDeleteUsingDELETEOK  %+v", 200, o.Payload)
+}
+
 func (o *RouterDeleteUsingDELETEOK) GetPayload() *models.DeleteRouterResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewRouterDeleteUsingDELETECreated() *RouterDeleteUsingDELETECreated {
 	return &RouterDeleteUsingDELETECreated{}
 }
 
-/* RouterDeleteUsingDELETECreated describes a response with status code 201, with default header values.
+/*
+RouterDeleteUsingDELETECreated describes a response with status code 201, with default header values.
 
 Entity has been deleted
 */
@@ -91,9 +128,44 @@ type RouterDeleteUsingDELETECreated struct {
 	Payload *models.DeleteRouterResponse
 }
 
+// IsSuccess returns true when this router delete using d e l e t e created response has a 2xx status code
+func (o *RouterDeleteUsingDELETECreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this router delete using d e l e t e created response has a 3xx status code
+func (o *RouterDeleteUsingDELETECreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this router delete using d e l e t e created response has a 4xx status code
+func (o *RouterDeleteUsingDELETECreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this router delete using d e l e t e created response has a 5xx status code
+func (o *RouterDeleteUsingDELETECreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this router delete using d e l e t e created response a status code equal to that given
+func (o *RouterDeleteUsingDELETECreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the router delete using d e l e t e created response
+func (o *RouterDeleteUsingDELETECreated) Code() int {
+	return 201
+}
+
 func (o *RouterDeleteUsingDELETECreated) Error() string {
 	return fmt.Sprintf("[DELETE /network/routers/{routerId}][%d] routerDeleteUsingDELETECreated  %+v", 201, o.Payload)
 }
+
+func (o *RouterDeleteUsingDELETECreated) String() string {
+	return fmt.Sprintf("[DELETE /network/routers/{routerId}][%d] routerDeleteUsingDELETECreated  %+v", 201, o.Payload)
+}
+
 func (o *RouterDeleteUsingDELETECreated) GetPayload() *models.DeleteRouterResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewRouterDeleteUsingDELETEBadRequest() *RouterDeleteUsingDELETEBadRequest {
 	return &RouterDeleteUsingDELETEBadRequest{}
 }
 
-/* RouterDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
+/*
+RouterDeleteUsingDELETEBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type RouterDeleteUsingDELETEBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this router delete using d e l e t e bad request response has a 2xx status code
+func (o *RouterDeleteUsingDELETEBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this router delete using d e l e t e bad request response has a 3xx status code
+func (o *RouterDeleteUsingDELETEBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this router delete using d e l e t e bad request response has a 4xx status code
+func (o *RouterDeleteUsingDELETEBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this router delete using d e l e t e bad request response has a 5xx status code
+func (o *RouterDeleteUsingDELETEBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this router delete using d e l e t e bad request response a status code equal to that given
+func (o *RouterDeleteUsingDELETEBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the router delete using d e l e t e bad request response
+func (o *RouterDeleteUsingDELETEBadRequest) Code() int {
+	return 400
+}
+
 func (o *RouterDeleteUsingDELETEBadRequest) Error() string {
 	return fmt.Sprintf("[DELETE /network/routers/{routerId}][%d] routerDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *RouterDeleteUsingDELETEBadRequest) String() string {
+	return fmt.Sprintf("[DELETE /network/routers/{routerId}][%d] routerDeleteUsingDELETEBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *RouterDeleteUsingDELETEBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

@@ -51,7 +51,8 @@ func NewKeyImportUsingPOSTOK() *KeyImportUsingPOSTOK {
 	return &KeyImportUsingPOSTOK{}
 }
 
-/* KeyImportUsingPOSTOK describes a response with status code 200, with default header values.
+/*
+KeyImportUsingPOSTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type KeyImportUsingPOSTOK struct {
 	Payload *models.ImportKmsKeyResponse
 }
 
+// IsSuccess returns true when this key import using p o s t o k response has a 2xx status code
+func (o *KeyImportUsingPOSTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this key import using p o s t o k response has a 3xx status code
+func (o *KeyImportUsingPOSTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key import using p o s t o k response has a 4xx status code
+func (o *KeyImportUsingPOSTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this key import using p o s t o k response has a 5xx status code
+func (o *KeyImportUsingPOSTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key import using p o s t o k response a status code equal to that given
+func (o *KeyImportUsingPOSTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the key import using p o s t o k response
+func (o *KeyImportUsingPOSTOK) Code() int {
+	return 200
+}
+
 func (o *KeyImportUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /kms/key/import][%d] keyImportUsingPOSTOK  %+v", 200, o.Payload)
 }
+
+func (o *KeyImportUsingPOSTOK) String() string {
+	return fmt.Sprintf("[POST /kms/key/import][%d] keyImportUsingPOSTOK  %+v", 200, o.Payload)
+}
+
 func (o *KeyImportUsingPOSTOK) GetPayload() *models.ImportKmsKeyResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewKeyImportUsingPOSTCreated() *KeyImportUsingPOSTCreated {
 	return &KeyImportUsingPOSTCreated{}
 }
 
-/* KeyImportUsingPOSTCreated describes a response with status code 201, with default header values.
+/*
+KeyImportUsingPOSTCreated describes a response with status code 201, with default header values.
 
 Entity has been imported
 */
@@ -91,9 +128,44 @@ type KeyImportUsingPOSTCreated struct {
 	Payload *models.ImportKmsKeyResponse
 }
 
+// IsSuccess returns true when this key import using p o s t created response has a 2xx status code
+func (o *KeyImportUsingPOSTCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this key import using p o s t created response has a 3xx status code
+func (o *KeyImportUsingPOSTCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key import using p o s t created response has a 4xx status code
+func (o *KeyImportUsingPOSTCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this key import using p o s t created response has a 5xx status code
+func (o *KeyImportUsingPOSTCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key import using p o s t created response a status code equal to that given
+func (o *KeyImportUsingPOSTCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the key import using p o s t created response
+func (o *KeyImportUsingPOSTCreated) Code() int {
+	return 201
+}
+
 func (o *KeyImportUsingPOSTCreated) Error() string {
 	return fmt.Sprintf("[POST /kms/key/import][%d] keyImportUsingPOSTCreated  %+v", 201, o.Payload)
 }
+
+func (o *KeyImportUsingPOSTCreated) String() string {
+	return fmt.Sprintf("[POST /kms/key/import][%d] keyImportUsingPOSTCreated  %+v", 201, o.Payload)
+}
+
 func (o *KeyImportUsingPOSTCreated) GetPayload() *models.ImportKmsKeyResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewKeyImportUsingPOSTBadRequest() *KeyImportUsingPOSTBadRequest {
 	return &KeyImportUsingPOSTBadRequest{}
 }
 
-/* KeyImportUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*
+KeyImportUsingPOSTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type KeyImportUsingPOSTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this key import using p o s t bad request response has a 2xx status code
+func (o *KeyImportUsingPOSTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this key import using p o s t bad request response has a 3xx status code
+func (o *KeyImportUsingPOSTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this key import using p o s t bad request response has a 4xx status code
+func (o *KeyImportUsingPOSTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this key import using p o s t bad request response has a 5xx status code
+func (o *KeyImportUsingPOSTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this key import using p o s t bad request response a status code equal to that given
+func (o *KeyImportUsingPOSTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the key import using p o s t bad request response
+func (o *KeyImportUsingPOSTBadRequest) Code() int {
+	return 400
+}
+
 func (o *KeyImportUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /kms/key/import][%d] keyImportUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *KeyImportUsingPOSTBadRequest) String() string {
+	return fmt.Sprintf("[POST /kms/key/import][%d] keyImportUsingPOSTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *KeyImportUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

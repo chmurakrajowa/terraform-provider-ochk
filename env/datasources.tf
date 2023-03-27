@@ -1,4 +1,4 @@
-data "ochk_router" "default-vrf" {
+data "ochk_vrf" "default-vrf" {
   display_name = var.vrf_router
 }
 

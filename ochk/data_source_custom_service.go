@@ -16,6 +16,10 @@ func dataSourceCustomService() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"project_id": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"ports": {
 				Type:     schema.TypeList,
 				Computed: true,
@@ -84,6 +88,10 @@ func dataSourceCustomServiceRead(ctx context.Context, d *schema.ResourceData, me
 
 	if err := d.Set("display_name", customServices[0].DisplayName); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
+	}
+
+	if err := d.Set("project_id", customServices[0].ProjectID); err != nil {
+		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
 	if err := d.Set("ports", flattenCustomServicePorts(customServices[0].L4PortSetEntries)); err != nil {

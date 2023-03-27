@@ -44,9 +44,9 @@ type ClientService interface {
 }
 
 /*
-  RouterCreateUsingPUT creates
+RouterCreateUsingPUT creates
 
-  Create router T1 in NSX-T
+Create router T1 in NSX-T
 */
 func (a *Client) RouterCreateUsingPUT(params *RouterCreateUsingPUTParams, opts ...ClientOption) (*RouterCreateUsingPUTOK, *RouterCreateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending
@@ -85,9 +85,9 @@ func (a *Client) RouterCreateUsingPUT(params *RouterCreateUsingPUTParams, opts .
 }
 
 /*
-  RouterDeleteUsingDELETE deletes
+RouterDeleteUsingDELETE deletes
 
-  Delete router T1 from NSX-T
+Delete router T1 from NSX-T
 */
 func (a *Client) RouterDeleteUsingDELETE(params *RouterDeleteUsingDELETEParams, opts ...ClientOption) (*RouterDeleteUsingDELETEOK, *RouterDeleteUsingDELETECreated, error) {
 	// TODO: Validate the params before sending
@@ -126,9 +126,9 @@ func (a *Client) RouterDeleteUsingDELETE(params *RouterDeleteUsingDELETEParams, 
 }
 
 /*
-  RouterGetUsingGET gets
+RouterGetUsingGET gets
 
-  Get router from NSX-T
+Get router from NSX-T
 */
 func (a *Client) RouterGetUsingGET(params *RouterGetUsingGETParams, opts ...ClientOption) (*RouterGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -166,9 +166,9 @@ func (a *Client) RouterGetUsingGET(params *RouterGetUsingGETParams, opts ...Clie
 }
 
 /*
-  RouterListUsingGET lists
+RouterListUsingGET lists
 
-  List routers T0/T1 from NSX-T
+List routers T0/T1 from NSX-T
 */
 func (a *Client) RouterListUsingGET(params *RouterListUsingGETParams, opts ...ClientOption) (*RouterListUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -206,9 +206,9 @@ func (a *Client) RouterListUsingGET(params *RouterListUsingGETParams, opts ...Cl
 }
 
 /*
-  RouterUpdateUsingPUT updates
+RouterUpdateUsingPUT updates
 
-  Update router T1 from NSX-T
+Update router T1 from NSX-T
 */
 func (a *Client) RouterUpdateUsingPUT(params *RouterUpdateUsingPUTParams, opts ...ClientOption) (*RouterUpdateUsingPUTOK, *RouterUpdateUsingPUTCreated, error) {
 	// TODO: Validate the params before sending

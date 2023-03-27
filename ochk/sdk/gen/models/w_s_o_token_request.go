@@ -20,8 +20,8 @@ type WSOTokenRequest struct {
 	// password
 	Password string `json:"password,omitempty"`
 
-	// tenant
-	Tenant string `json:"tenant,omitempty"`
+	// platform
+	Platform string `json:"platform,omitempty"`
 
 	// username
 	Username string `json:"username,omitempty"`

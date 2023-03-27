@@ -54,10 +54,12 @@ func NewMcsGenerateSecretUsingPOSTParamsWithHTTPClient(client *http.Client) *Mcs
 	}
 }
 
-/* McsGenerateSecretUsingPOSTParams contains all the parameters to send to the API endpoint
-   for the mcs generate secret using p o s t operation.
+/*
+McsGenerateSecretUsingPOSTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the mcs generate secret using p o s t operation.
+
+	Typically these are written to a http.Request.
 */
 type McsGenerateSecretUsingPOSTParams struct {
 

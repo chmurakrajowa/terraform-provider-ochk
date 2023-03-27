@@ -10,7 +10,7 @@ Data Source for getting backup plan by display name.
 
 ```hcl
 data "ochk_backup_plan" "backup_plan" {
-  display_name = "example.backup_plan"
+  display_name = "Platinium"
 }
 ```
 
@@ -18,6 +18,9 @@ data "ochk_backup_plan" "backup_plan" {
 
 The following arguments are supported:
 
-* `display_name` - (Required) Exact display name of backup plan.
+* `display_name` - (Required) Exact display name of backup plan. You can get full display names list from [Backup Plans](backup_plans.md) Data Source.
 
- 
+## Attribute Reference
+
+The following attributes are exported:
+* `display_name` - Name of backup plan.

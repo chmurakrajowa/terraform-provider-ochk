@@ -34,7 +34,11 @@ func resourceFirewallEWRule() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
-			"router_id": {
+			"vpc_id": {
+				Type:     schema.TypeString,
+				Required: true,
+			},
+			"project_id": {
 				Type:     schema.TypeString,
 				Required: true,
 			},
@@ -106,14 +110,14 @@ func resourceFirewallEWRule() *schema.Resource {
 	}
 }
 
-func firewallEWRuleStateContextImport(ctx context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+func firewallEWRuleStateContextImport(_ context.Context, d *schema.ResourceData, _ interface{}) ([]*schema.ResourceData, error) {
 	parts := strings.SplitN(d.Id(), "/", 2)
 	if len(parts) != 2 || parts[0] == "" || parts[1] == "" {
-		return nil, fmt.Errorf("unexpected format of ID (%s), expected format: router_id/rule_id", d.Id())
+		return nil, fmt.Errorf("unexpected format of ID (%s), expected format: vpc_id/rule_id", d.Id())
 	}
 	d.SetId(parts[1])
-	if err := d.Set("router_id", parts[0]); err != nil {
-		return nil, fmt.Errorf("cannot set router_id: (%s)", parts[0])
+	if err := d.Set("vpc_id", parts[0]); err != nil {
+		return nil, fmt.Errorf("cannot set vpc_id: (%s)", parts[0])
 	}
 	return []*schema.ResourceData{d}, nil
 }
@@ -121,11 +125,11 @@ func firewallEWRuleStateContextImport(ctx context.Context, d *schema.ResourceDat
 func resourceFirewallEWRuleCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallEWRules
 
-	routerID := d.Get("router_id").(string)
+	routerId := d.Get("vpc_id").(string)
 
 	firewallEWRule := mapResourceDataToEWRule(d)
 
-	created, err := proxy.Create(ctx, routerID, firewallEWRule)
+	created, err := proxy.Create(ctx, routerId, firewallEWRule)
 	if err != nil {
 		return diag.Errorf("error while creating firewall EW rule: %+v", err)
 	}
@@ -138,9 +142,9 @@ func resourceFirewallEWRuleCreate(ctx context.Context, d *schema.ResourceData, m
 func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallEWRules
 
-	routerID := d.Get("router_id").(string)
+	routerId := d.Get("vpc_id").(string)
 
-	firewallEWRule, err := proxy.Read(ctx, routerID, d.Id())
+	firewallEWRule, err := proxy.Read(ctx, routerId, d.Id())
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -153,6 +157,10 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 
 	if err := d.Set("display_name", firewallEWRule.DisplayName); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
+	}
+
+	if err := d.Set("project_id", firewallEWRule.ProjectID); err != nil {
+		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
 	if err := d.Set("action", firewallEWRule.Action); err != nil {
@@ -175,8 +183,10 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting services: %+v", err)
 	}
 
-	if err := d.Set("custom_services", flattenCustomServicesFromIDs(firewallEWRule.CustomServices)); err != nil {
-		return diag.Errorf("error setting custom services: %+v", err)
+	if len(firewallEWRule.CustomServices) > 0 {
+		if err := d.Set("custom_services", flattenCustomServicesFromIDs(firewallEWRule.CustomServices)); err != nil {
+			return diag.Errorf("error setting custom services: %+v", err)
+		}
 	}
 
 	if err := d.Set("source", flattenSecurityGroupFromIDs(firewallEWRule.Source)); err != nil {
@@ -217,7 +227,7 @@ func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 
 	proxy := meta.(*sdk.Client).FirewallEWRules
 
-	routerID := d.Get("router_id").(string)
+	routerID := d.Get("vpc_id").(string)
 
 	firewallEWRule := mapResourceDataToEWRule(d)
 	firewallEWRule.RuleID = d.Id()
@@ -233,6 +243,7 @@ func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 func mapResourceDataToEWRule(d *schema.ResourceData) *models.DFWRule {
 	rule := &models.DFWRule{
 		DisplayName: d.Get("display_name").(string),
+		ProjectID:   d.Get("project_id").(string),
 		Action:      d.Get("action").(string),
 		Direction:   d.Get("direction").(string),
 		Priority:    int64(d.Get("priority").(int)),
@@ -268,7 +279,7 @@ func mapResourceDataToEWRule(d *schema.ResourceData) *models.DFWRule {
 func resourceFirewallEWRuleDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallEWRules
 
-	routerID := d.Get("router_id").(string)
+	routerID := d.Get("vpc_id").(string)
 
 	err := proxy.Delete(ctx, routerID, d.Id())
 	if err != nil {

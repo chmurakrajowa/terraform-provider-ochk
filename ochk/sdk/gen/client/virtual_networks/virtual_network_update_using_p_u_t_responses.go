@@ -51,7 +51,8 @@ func NewVirtualNetworkUpdateUsingPUTOK() *VirtualNetworkUpdateUsingPUTOK {
 	return &VirtualNetworkUpdateUsingPUTOK{}
 }
 
-/* VirtualNetworkUpdateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+VirtualNetworkUpdateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type VirtualNetworkUpdateUsingPUTOK struct {
 	Payload *models.VirtualNetworkUpdateResponse
 }
 
+// IsSuccess returns true when this virtual network update using p u t o k response has a 2xx status code
+func (o *VirtualNetworkUpdateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this virtual network update using p u t o k response has a 3xx status code
+func (o *VirtualNetworkUpdateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this virtual network update using p u t o k response has a 4xx status code
+func (o *VirtualNetworkUpdateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this virtual network update using p u t o k response has a 5xx status code
+func (o *VirtualNetworkUpdateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this virtual network update using p u t o k response a status code equal to that given
+func (o *VirtualNetworkUpdateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the virtual network update using p u t o k response
+func (o *VirtualNetworkUpdateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *VirtualNetworkUpdateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /networks/{virtualNetworkId}][%d] virtualNetworkUpdateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *VirtualNetworkUpdateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /networks/{virtualNetworkId}][%d] virtualNetworkUpdateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *VirtualNetworkUpdateUsingPUTOK) GetPayload() *models.VirtualNetworkUpdateResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewVirtualNetworkUpdateUsingPUTCreated() *VirtualNetworkUpdateUsingPUTCreat
 	return &VirtualNetworkUpdateUsingPUTCreated{}
 }
 
-/* VirtualNetworkUpdateUsingPUTCreated describes a response with status code 201, with default header values.
+/*
+VirtualNetworkUpdateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been updated
 */
@@ -91,9 +128,44 @@ type VirtualNetworkUpdateUsingPUTCreated struct {
 	Payload *models.VirtualNetworkUpdateResponse
 }
 
+// IsSuccess returns true when this virtual network update using p u t created response has a 2xx status code
+func (o *VirtualNetworkUpdateUsingPUTCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this virtual network update using p u t created response has a 3xx status code
+func (o *VirtualNetworkUpdateUsingPUTCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this virtual network update using p u t created response has a 4xx status code
+func (o *VirtualNetworkUpdateUsingPUTCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this virtual network update using p u t created response has a 5xx status code
+func (o *VirtualNetworkUpdateUsingPUTCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this virtual network update using p u t created response a status code equal to that given
+func (o *VirtualNetworkUpdateUsingPUTCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the virtual network update using p u t created response
+func (o *VirtualNetworkUpdateUsingPUTCreated) Code() int {
+	return 201
+}
+
 func (o *VirtualNetworkUpdateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /networks/{virtualNetworkId}][%d] virtualNetworkUpdateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
+func (o *VirtualNetworkUpdateUsingPUTCreated) String() string {
+	return fmt.Sprintf("[PUT /networks/{virtualNetworkId}][%d] virtualNetworkUpdateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
 func (o *VirtualNetworkUpdateUsingPUTCreated) GetPayload() *models.VirtualNetworkUpdateResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewVirtualNetworkUpdateUsingPUTBadRequest() *VirtualNetworkUpdateUsingPUTBa
 	return &VirtualNetworkUpdateUsingPUTBadRequest{}
 }
 
-/* VirtualNetworkUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+VirtualNetworkUpdateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type VirtualNetworkUpdateUsingPUTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this virtual network update using p u t bad request response has a 2xx status code
+func (o *VirtualNetworkUpdateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this virtual network update using p u t bad request response has a 3xx status code
+func (o *VirtualNetworkUpdateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this virtual network update using p u t bad request response has a 4xx status code
+func (o *VirtualNetworkUpdateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this virtual network update using p u t bad request response has a 5xx status code
+func (o *VirtualNetworkUpdateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this virtual network update using p u t bad request response a status code equal to that given
+func (o *VirtualNetworkUpdateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the virtual network update using p u t bad request response
+func (o *VirtualNetworkUpdateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *VirtualNetworkUpdateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /networks/{virtualNetworkId}][%d] virtualNetworkUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *VirtualNetworkUpdateUsingPUTBadRequest) String() string {
+	return fmt.Sprintf("[PUT /networks/{virtualNetworkId}][%d] virtualNetworkUpdateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *VirtualNetworkUpdateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

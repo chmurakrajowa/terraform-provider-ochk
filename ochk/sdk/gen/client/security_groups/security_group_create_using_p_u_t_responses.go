@@ -51,7 +51,8 @@ func NewSecurityGroupCreateUsingPUTOK() *SecurityGroupCreateUsingPUTOK {
 	return &SecurityGroupCreateUsingPUTOK{}
 }
 
-/* SecurityGroupCreateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+SecurityGroupCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type SecurityGroupCreateUsingPUTOK struct {
 	Payload *models.CreateSecurityGroupResponse
 }
 
+// IsSuccess returns true when this security group create using p u t o k response has a 2xx status code
+func (o *SecurityGroupCreateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this security group create using p u t o k response has a 3xx status code
+func (o *SecurityGroupCreateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this security group create using p u t o k response has a 4xx status code
+func (o *SecurityGroupCreateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this security group create using p u t o k response has a 5xx status code
+func (o *SecurityGroupCreateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this security group create using p u t o k response a status code equal to that given
+func (o *SecurityGroupCreateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the security group create using p u t o k response
+func (o *SecurityGroupCreateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *SecurityGroupCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /network/security-groups][%d] securityGroupCreateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *SecurityGroupCreateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /network/security-groups][%d] securityGroupCreateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *SecurityGroupCreateUsingPUTOK) GetPayload() *models.CreateSecurityGroupResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewSecurityGroupCreateUsingPUTCreated() *SecurityGroupCreateUsingPUTCreated
 	return &SecurityGroupCreateUsingPUTCreated{}
 }
 
-/* SecurityGroupCreateUsingPUTCreated describes a response with status code 201, with default header values.
+/*
+SecurityGroupCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -91,9 +128,44 @@ type SecurityGroupCreateUsingPUTCreated struct {
 	Payload *models.CreateSecurityGroupResponse
 }
 
+// IsSuccess returns true when this security group create using p u t created response has a 2xx status code
+func (o *SecurityGroupCreateUsingPUTCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this security group create using p u t created response has a 3xx status code
+func (o *SecurityGroupCreateUsingPUTCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this security group create using p u t created response has a 4xx status code
+func (o *SecurityGroupCreateUsingPUTCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this security group create using p u t created response has a 5xx status code
+func (o *SecurityGroupCreateUsingPUTCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this security group create using p u t created response a status code equal to that given
+func (o *SecurityGroupCreateUsingPUTCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the security group create using p u t created response
+func (o *SecurityGroupCreateUsingPUTCreated) Code() int {
+	return 201
+}
+
 func (o *SecurityGroupCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /network/security-groups][%d] securityGroupCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
+func (o *SecurityGroupCreateUsingPUTCreated) String() string {
+	return fmt.Sprintf("[PUT /network/security-groups][%d] securityGroupCreateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
 func (o *SecurityGroupCreateUsingPUTCreated) GetPayload() *models.CreateSecurityGroupResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewSecurityGroupCreateUsingPUTBadRequest() *SecurityGroupCreateUsingPUTBadR
 	return &SecurityGroupCreateUsingPUTBadRequest{}
 }
 
-/* SecurityGroupCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+SecurityGroupCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type SecurityGroupCreateUsingPUTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this security group create using p u t bad request response has a 2xx status code
+func (o *SecurityGroupCreateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this security group create using p u t bad request response has a 3xx status code
+func (o *SecurityGroupCreateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this security group create using p u t bad request response has a 4xx status code
+func (o *SecurityGroupCreateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this security group create using p u t bad request response has a 5xx status code
+func (o *SecurityGroupCreateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this security group create using p u t bad request response a status code equal to that given
+func (o *SecurityGroupCreateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the security group create using p u t bad request response
+func (o *SecurityGroupCreateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *SecurityGroupCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /network/security-groups][%d] securityGroupCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *SecurityGroupCreateUsingPUTBadRequest) String() string {
+	return fmt.Sprintf("[PUT /network/security-groups][%d] securityGroupCreateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *SecurityGroupCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

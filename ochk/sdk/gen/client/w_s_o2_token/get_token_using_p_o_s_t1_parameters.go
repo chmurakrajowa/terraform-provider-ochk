@@ -54,18 +54,20 @@ func NewGetTokenUsingPOST1ParamsWithHTTPClient(client *http.Client) *GetTokenUsi
 	}
 }
 
-/* GetTokenUsingPOST1Params contains all the parameters to send to the API endpoint
-   for the get token using p o s t 1 operation.
+/*
+GetTokenUsingPOST1Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get token using p o s t 1 operation.
+
+	Typically these are written to a http.Request.
 */
 type GetTokenUsingPOST1Params struct {
 
-	/* WsoTokenRequest.
+	/* WsoUITokenRequest.
 
-	   wsoTokenRequest
+	   wsoUITokenRequest
 	*/
-	WsoTokenRequest *models.WSOTokenRequest
+	WsoUITokenRequest *models.WSOUITokenRequest
 
 	timeout    time.Duration
 	Context    context.Context
@@ -120,15 +122,15 @@ func (o *GetTokenUsingPOST1Params) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithWsoTokenRequest adds the wsoTokenRequest to the get token using p o s t 1 params
-func (o *GetTokenUsingPOST1Params) WithWsoTokenRequest(wsoTokenRequest *models.WSOTokenRequest) *GetTokenUsingPOST1Params {
-	o.SetWsoTokenRequest(wsoTokenRequest)
+// WithWsoUITokenRequest adds the wsoUITokenRequest to the get token using p o s t 1 params
+func (o *GetTokenUsingPOST1Params) WithWsoUITokenRequest(wsoUITokenRequest *models.WSOUITokenRequest) *GetTokenUsingPOST1Params {
+	o.SetWsoUITokenRequest(wsoUITokenRequest)
 	return o
 }
 
-// SetWsoTokenRequest adds the wsoTokenRequest to the get token using p o s t 1 params
-func (o *GetTokenUsingPOST1Params) SetWsoTokenRequest(wsoTokenRequest *models.WSOTokenRequest) {
-	o.WsoTokenRequest = wsoTokenRequest
+// SetWsoUITokenRequest adds the wsoUiTokenRequest to the get token using p o s t 1 params
+func (o *GetTokenUsingPOST1Params) SetWsoUITokenRequest(wsoUITokenRequest *models.WSOUITokenRequest) {
+	o.WsoUITokenRequest = wsoUITokenRequest
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -138,8 +140,8 @@ func (o *GetTokenUsingPOST1Params) WriteToRequest(r runtime.ClientRequest, reg s
 		return err
 	}
 	var res []error
-	if o.WsoTokenRequest != nil {
-		if err := r.SetBodyParam(o.WsoTokenRequest); err != nil {
+	if o.WsoUITokenRequest != nil {
+		if err := r.SetBodyParam(o.WsoUITokenRequest); err != nil {
 			return err
 		}
 	}

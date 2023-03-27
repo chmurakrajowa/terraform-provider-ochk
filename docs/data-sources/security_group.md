@@ -23,9 +23,14 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported:
- * `display_name` - Security group name. 
- * `members` - Members that are assigned to the security group.
-   Each entry has following values:
-    * **type**: type of security group member, values: IPCOLLECTION, VIRTUAL_MACHINE, LOGICAL_PORT
-    * **id**: resource identifier depending on the security group type selection
- 
+
+* `project_id` - Project id to which security group is assigned.
+* `members` - Members that are assigned to the security group.
+  Each entry has following values:
+   * **type**: Type of security group member, values: `IPCOLLECTION`, `VIRTUAL_MACHINE`
+   * **display_name**: Display name of security group member.
+   * **id**: Resource id depending on the security group type selection.
+* `created_by` - Who created this resource.
+* `created_at` - When this resource was created.
+* `modified_by` - Who last modified this resource.
+* `modified_at` - When last modification occurred.

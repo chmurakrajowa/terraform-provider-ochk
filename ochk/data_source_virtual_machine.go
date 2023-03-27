@@ -16,6 +16,14 @@ func dataSourceVirtualMachine() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"folder_path": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"project_id": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -38,6 +46,17 @@ func dataSourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("more than one virtual machine with display_name: %s found!", displayName)
 	}
 
+	if err := d.Set("display_name", virtualMachines[0].VirtualMachineName); err != nil {
+		return diag.Errorf("error setting virtual machine display_name: %v", err)
+	}
+
+	if err := d.Set("folder_path", virtualMachines[0].FolderPath); err != nil {
+		return diag.Errorf("error setting virtual machine folder_path: %v", err)
+	}
+
+	if err := d.Set("project_id", virtualMachines[0].ProjectID); err != nil {
+		return diag.Errorf("error setting virtual machine project_id: %v", err)
+	}
 	d.SetId(virtualMachines[0].VirtualMachineID)
 
 	return nil

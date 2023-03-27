@@ -54,10 +54,12 @@ func NewKeyImportUsingPOSTParamsWithHTTPClient(client *http.Client) *KeyImportUs
 	}
 }
 
-/* KeyImportUsingPOSTParams contains all the parameters to send to the API endpoint
-   for the key import using p o s t operation.
+/*
+KeyImportUsingPOSTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the key import using p o s t operation.
+
+	Typically these are written to a http.Request.
 */
 type KeyImportUsingPOSTParams struct {
 

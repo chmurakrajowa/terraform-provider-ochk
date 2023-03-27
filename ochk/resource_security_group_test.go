@@ -20,10 +20,16 @@ type SecurityGroupMemberTestData struct {
 	Type string
 }
 
-func (c *SecurityGroupTestData) ToString() string {
+func (c *SecurityGroupTestData) ToString(projNameSuffix string) string {
 	return executeTemplateToString(`
+
+data "ochk_project" "proj-1`+projNameSuffix+`" {
+  display_name = "`+testData.Project1Name+`"
+}
+
 resource "ochk_security_group" "{{ .ResourceName}}" {
   display_name = "{{ .DisplayName}}"
+  project_id = data.ochk_project.proj-1`+projNameSuffix+`.id
 
   {{range $member := .Members}}
   members {
@@ -56,12 +62,12 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 			},
 		},
 	}
-	configOneMember := virtualMachine.ToString() + securityGroup.ToString()
+	configOneMember := virtualMachine.ToString("-sc1") + securityGroup.ToString("-one-mbmr")
 
 	/* Security group with one member with updated display_name */
 	securityGroupUpdated := securityGroup
 	securityGroupUpdated.DisplayName += "-upd"
-	configOneMemberUpdated := virtualMachine.ToString() + securityGroupUpdated.ToString()
+	configOneMemberUpdated := virtualMachine.ToString("-sc1-upd") + securityGroupUpdated.ToString("-one-mbmr-upd")
 
 	/* Security group with two members and updated display_name */
 	securityGroupTwoMembers := securityGroupUpdated
@@ -73,7 +79,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 		ID:   testDataResourceID(&virtualMachine2),
 		Type: "VIRTUAL_MACHINE",
 	})
-	configTwoMembers := securityGroupTwoMembers.ToString() + virtualMachine.ToString() + virtualMachine2.ToString()
+	configTwoMembers := securityGroupTwoMembers.ToString("-two-mbmrs") + virtualMachine.ToString("-sc21") + virtualMachine2.ToString("-sg22")
 
 	securityGroupResourceName := securityGroup.FullResourceName()
 	resource.ParallelTest(t, resource.TestCase{
@@ -83,6 +89,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 				Config: configOneMember,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(securityGroupResourceName, "display_name", securityGroup.DisplayName),
+					resource.TestCheckResourceAttrPair(securityGroupResourceName, "project_id", "data.ochk_project.proj-1-one-mbmr", "id"),
 					resource.TestCheckResourceAttrPair(securityGroupResourceName, "members.0.id", virtualMachine.FullResourceName(), "id"),
 					resource.TestCheckResourceAttr(securityGroupResourceName, "members.0.type", securityGroup.Members[0].Type),
 					resource.TestCheckResourceAttrSet(securityGroupResourceName, "members.0.display_name"),
@@ -101,12 +108,14 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 				Config: configOneMemberUpdated,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(securityGroupResourceName, "display_name", securityGroupUpdated.DisplayName),
+					resource.TestCheckResourceAttrPair(securityGroupResourceName, "project_id", "data.ochk_project.proj-1-one-mbmr-upd", "id"),
 				),
 			},
 			{
 				Config: configTwoMembers,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(securityGroupResourceName, "display_name", securityGroupTwoMembers.DisplayName),
+					resource.TestCheckResourceAttrPair(securityGroupResourceName, "project_id", "data.ochk_project.proj-1-two-mbmrs", "id"),
 					//TODO this relies on certain ordering in backend, should be fixed to any ordering
 					resource.TestCheckResourceAttrPair(securityGroupResourceName, "members.0.id", virtualMachine.FullResourceName(), "id"),
 					resource.TestCheckResourceAttr(securityGroupResourceName, "members.0.type", securityGroupTwoMembers.Members[0].Type),

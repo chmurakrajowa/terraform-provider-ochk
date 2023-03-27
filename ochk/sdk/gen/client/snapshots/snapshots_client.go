@@ -38,9 +38,9 @@ type ClientService interface {
 }
 
 /*
-  SnapshotGetUsingGET gets
+SnapshotGetUsingGET gets
 
-  Get vSphere vCenter virtual machine snapshot
+Get vSphere vCenter virtual machine snapshot
 */
 func (a *Client) SnapshotGetUsingGET(params *SnapshotGetUsingGETParams, opts ...ClientOption) (*SnapshotGetUsingGETOK, error) {
 	// TODO: Validate the params before sending
@@ -78,9 +78,9 @@ func (a *Client) SnapshotGetUsingGET(params *SnapshotGetUsingGETParams, opts ...
 }
 
 /*
-  SnapshotListUsingGET lists
+SnapshotListUsingGET lists
 
-  List vSphere vCenter virtual machines snapshots
+List vSphere vCenter virtual machines snapshots
 */
 func (a *Client) SnapshotListUsingGET(params *SnapshotListUsingGETParams, opts ...ClientOption) (*SnapshotListUsingGETOK, error) {
 	// TODO: Validate the params before sending

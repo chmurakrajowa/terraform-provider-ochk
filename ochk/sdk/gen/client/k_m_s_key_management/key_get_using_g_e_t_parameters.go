@@ -52,10 +52,12 @@ func NewKeyGetUsingGETParamsWithHTTPClient(client *http.Client) *KeyGetUsingGETP
 	}
 }
 
-/* KeyGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the key get using g e t operation.
+/*
+KeyGetUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the key get using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type KeyGetUsingGETParams struct {
 

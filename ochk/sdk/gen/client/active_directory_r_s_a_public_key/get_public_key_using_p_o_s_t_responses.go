@@ -45,7 +45,8 @@ func NewGetPublicKeyUsingPOSTOK() *GetPublicKeyUsingPOSTOK {
 	return &GetPublicKeyUsingPOSTOK{}
 }
 
-/* GetPublicKeyUsingPOSTOK describes a response with status code 200, with default header values.
+/*
+GetPublicKeyUsingPOSTOK describes a response with status code 200, with default header values.
 
 Entity has been imported
 */
@@ -53,9 +54,44 @@ type GetPublicKeyUsingPOSTOK struct {
 	Payload *models.GetPublicKeyResponse
 }
 
+// IsSuccess returns true when this get public key using p o s t o k response has a 2xx status code
+func (o *GetPublicKeyUsingPOSTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get public key using p o s t o k response has a 3xx status code
+func (o *GetPublicKeyUsingPOSTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get public key using p o s t o k response has a 4xx status code
+func (o *GetPublicKeyUsingPOSTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get public key using p o s t o k response has a 5xx status code
+func (o *GetPublicKeyUsingPOSTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get public key using p o s t o k response a status code equal to that given
+func (o *GetPublicKeyUsingPOSTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get public key using p o s t o k response
+func (o *GetPublicKeyUsingPOSTOK) Code() int {
+	return 200
+}
+
 func (o *GetPublicKeyUsingPOSTOK) Error() string {
 	return fmt.Sprintf("[POST /ads/cer][%d] getPublicKeyUsingPOSTOK  %+v", 200, o.Payload)
 }
+
+func (o *GetPublicKeyUsingPOSTOK) String() string {
+	return fmt.Sprintf("[POST /ads/cer][%d] getPublicKeyUsingPOSTOK  %+v", 200, o.Payload)
+}
+
 func (o *GetPublicKeyUsingPOSTOK) GetPayload() *models.GetPublicKeyResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewGetPublicKeyUsingPOSTBadRequest() *GetPublicKeyUsingPOSTBadRequest {
 	return &GetPublicKeyUsingPOSTBadRequest{}
 }
 
-/* GetPublicKeyUsingPOSTBadRequest describes a response with status code 400, with default header values.
+/*
+GetPublicKeyUsingPOSTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type GetPublicKeyUsingPOSTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this get public key using p o s t bad request response has a 2xx status code
+func (o *GetPublicKeyUsingPOSTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get public key using p o s t bad request response has a 3xx status code
+func (o *GetPublicKeyUsingPOSTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get public key using p o s t bad request response has a 4xx status code
+func (o *GetPublicKeyUsingPOSTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get public key using p o s t bad request response has a 5xx status code
+func (o *GetPublicKeyUsingPOSTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get public key using p o s t bad request response a status code equal to that given
+func (o *GetPublicKeyUsingPOSTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the get public key using p o s t bad request response
+func (o *GetPublicKeyUsingPOSTBadRequest) Code() int {
+	return 400
+}
+
 func (o *GetPublicKeyUsingPOSTBadRequest) Error() string {
 	return fmt.Sprintf("[POST /ads/cer][%d] getPublicKeyUsingPOSTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *GetPublicKeyUsingPOSTBadRequest) String() string {
+	return fmt.Sprintf("[POST /ads/cer][%d] getPublicKeyUsingPOSTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *GetPublicKeyUsingPOSTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

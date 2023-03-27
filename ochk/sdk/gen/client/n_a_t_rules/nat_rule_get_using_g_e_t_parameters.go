@@ -52,10 +52,12 @@ func NewNatRuleGetUsingGETParamsWithHTTPClient(client *http.Client) *NatRuleGetU
 	}
 }
 
-/* NatRuleGetUsingGETParams contains all the parameters to send to the API endpoint
-   for the nat rule get using g e t operation.
+/*
+NatRuleGetUsingGETParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the nat rule get using g e t operation.
+
+	Typically these are written to a http.Request.
 */
 type NatRuleGetUsingGETParams struct {
 

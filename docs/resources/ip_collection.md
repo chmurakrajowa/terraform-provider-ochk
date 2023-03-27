@@ -9,8 +9,13 @@ IP Collection is a part of security group to group the IP addresses and after th
 ## Example Usage
 
 ```hcl
+data "ochk_projects" "project" {
+  display_name = "project-example"
+}
+
 resource "ochk_ip_collection" "dns-servers" {
   display_name = "dns-servers"
+  project_id = data.ochk.project.project.id
   ip_addresses = ["1.1.1.1", "1.0.0.1", "8.8.8.8"]
 }
 ```
@@ -20,7 +25,8 @@ resource "ochk_ip_collection" "dns-servers" {
 The following arguments are supported:
 
 * `display_name` - (Required) Display name of IP Collection.
-* `addresses` - List of IP addresses that IP Collection contains. Each element can be an individual ip address (e.g: `10.10.1.1`), CIDR (e.g. `10.10.1.1/24`) or IP range (e.g. `10.10.1.1-10.10.1.10`)
+* `project_id` - (Required) Project id to which ip collection is assigned.
+* `ip_addresses` - List of IP addresses that IP Collection contains. Each element can be an individual ip address (e.g: `10.10.1.1`), CIDR (e.g. `10.10.1.1/24`) or IP range (e.g. `10.10.1.1-10.10.1.10`)
   
 ## Attribute Reference
 

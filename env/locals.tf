@@ -1,3 +1,3 @@
 locals {
-  nat_public_ip_addr = "45.130.209.206"
+  nat_public_ip_addr = "198.19.240.5"
 }

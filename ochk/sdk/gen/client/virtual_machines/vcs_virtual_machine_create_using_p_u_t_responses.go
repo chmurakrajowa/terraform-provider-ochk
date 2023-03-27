@@ -51,7 +51,8 @@ func NewVcsVirtualMachineCreateUsingPUTOK() *VcsVirtualMachineCreateUsingPUTOK {
 	return &VcsVirtualMachineCreateUsingPUTOK{}
 }
 
-/* VcsVirtualMachineCreateUsingPUTOK describes a response with status code 200, with default header values.
+/*
+VcsVirtualMachineCreateUsingPUTOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -59,9 +60,44 @@ type VcsVirtualMachineCreateUsingPUTOK struct {
 	Payload *models.VcsVirtualMachineCreateResponse
 }
 
+// IsSuccess returns true when this vcs virtual machine create using p u t o k response has a 2xx status code
+func (o *VcsVirtualMachineCreateUsingPUTOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this vcs virtual machine create using p u t o k response has a 3xx status code
+func (o *VcsVirtualMachineCreateUsingPUTOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this vcs virtual machine create using p u t o k response has a 4xx status code
+func (o *VcsVirtualMachineCreateUsingPUTOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this vcs virtual machine create using p u t o k response has a 5xx status code
+func (o *VcsVirtualMachineCreateUsingPUTOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this vcs virtual machine create using p u t o k response a status code equal to that given
+func (o *VcsVirtualMachineCreateUsingPUTOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the vcs virtual machine create using p u t o k response
+func (o *VcsVirtualMachineCreateUsingPUTOK) Code() int {
+	return 200
+}
+
 func (o *VcsVirtualMachineCreateUsingPUTOK) Error() string {
 	return fmt.Sprintf("[PUT /vcs/virtual-machines][%d] vcsVirtualMachineCreateUsingPUTOK  %+v", 200, o.Payload)
 }
+
+func (o *VcsVirtualMachineCreateUsingPUTOK) String() string {
+	return fmt.Sprintf("[PUT /vcs/virtual-machines][%d] vcsVirtualMachineCreateUsingPUTOK  %+v", 200, o.Payload)
+}
+
 func (o *VcsVirtualMachineCreateUsingPUTOK) GetPayload() *models.VcsVirtualMachineCreateResponse {
 	return o.Payload
 }
@@ -83,7 +119,8 @@ func NewVcsVirtualMachineCreateUsingPUTCreated() *VcsVirtualMachineCreateUsingPU
 	return &VcsVirtualMachineCreateUsingPUTCreated{}
 }
 
-/* VcsVirtualMachineCreateUsingPUTCreated describes a response with status code 201, with default header values.
+/*
+VcsVirtualMachineCreateUsingPUTCreated describes a response with status code 201, with default header values.
 
 Entity has been created
 */
@@ -91,9 +128,44 @@ type VcsVirtualMachineCreateUsingPUTCreated struct {
 	Payload *models.VcsVirtualMachineCreateResponse
 }
 
+// IsSuccess returns true when this vcs virtual machine create using p u t created response has a 2xx status code
+func (o *VcsVirtualMachineCreateUsingPUTCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this vcs virtual machine create using p u t created response has a 3xx status code
+func (o *VcsVirtualMachineCreateUsingPUTCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this vcs virtual machine create using p u t created response has a 4xx status code
+func (o *VcsVirtualMachineCreateUsingPUTCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this vcs virtual machine create using p u t created response has a 5xx status code
+func (o *VcsVirtualMachineCreateUsingPUTCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this vcs virtual machine create using p u t created response a status code equal to that given
+func (o *VcsVirtualMachineCreateUsingPUTCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the vcs virtual machine create using p u t created response
+func (o *VcsVirtualMachineCreateUsingPUTCreated) Code() int {
+	return 201
+}
+
 func (o *VcsVirtualMachineCreateUsingPUTCreated) Error() string {
 	return fmt.Sprintf("[PUT /vcs/virtual-machines][%d] vcsVirtualMachineCreateUsingPUTCreated  %+v", 201, o.Payload)
 }
+
+func (o *VcsVirtualMachineCreateUsingPUTCreated) String() string {
+	return fmt.Sprintf("[PUT /vcs/virtual-machines][%d] vcsVirtualMachineCreateUsingPUTCreated  %+v", 201, o.Payload)
+}
+
 func (o *VcsVirtualMachineCreateUsingPUTCreated) GetPayload() *models.VcsVirtualMachineCreateResponse {
 	return o.Payload
 }
@@ -115,7 +187,8 @@ func NewVcsVirtualMachineCreateUsingPUTBadRequest() *VcsVirtualMachineCreateUsin
 	return &VcsVirtualMachineCreateUsingPUTBadRequest{}
 }
 
-/* VcsVirtualMachineCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
+/*
+VcsVirtualMachineCreateUsingPUTBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -123,9 +196,44 @@ type VcsVirtualMachineCreateUsingPUTBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this vcs virtual machine create using p u t bad request response has a 2xx status code
+func (o *VcsVirtualMachineCreateUsingPUTBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this vcs virtual machine create using p u t bad request response has a 3xx status code
+func (o *VcsVirtualMachineCreateUsingPUTBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this vcs virtual machine create using p u t bad request response has a 4xx status code
+func (o *VcsVirtualMachineCreateUsingPUTBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this vcs virtual machine create using p u t bad request response has a 5xx status code
+func (o *VcsVirtualMachineCreateUsingPUTBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this vcs virtual machine create using p u t bad request response a status code equal to that given
+func (o *VcsVirtualMachineCreateUsingPUTBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the vcs virtual machine create using p u t bad request response
+func (o *VcsVirtualMachineCreateUsingPUTBadRequest) Code() int {
+	return 400
+}
+
 func (o *VcsVirtualMachineCreateUsingPUTBadRequest) Error() string {
 	return fmt.Sprintf("[PUT /vcs/virtual-machines][%d] vcsVirtualMachineCreateUsingPUTBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *VcsVirtualMachineCreateUsingPUTBadRequest) String() string {
+	return fmt.Sprintf("[PUT /vcs/virtual-machines][%d] vcsVirtualMachineCreateUsingPUTBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *VcsVirtualMachineCreateUsingPUTBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }

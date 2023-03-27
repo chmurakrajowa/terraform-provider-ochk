@@ -54,10 +54,12 @@ func NewCustomServiceCreateUsingPUTParamsWithHTTPClient(client *http.Client) *Cu
 	}
 }
 
-/* CustomServiceCreateUsingPUTParams contains all the parameters to send to the API endpoint
-   for the custom service create using p u t operation.
+/*
+CustomServiceCreateUsingPUTParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the custom service create using p u t operation.
+
+	Typically these are written to a http.Request.
 */
 type CustomServiceCreateUsingPUTParams struct {
 

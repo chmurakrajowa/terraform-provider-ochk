@@ -45,7 +45,8 @@ func NewGfwRuleListUsingGETOK() *GfwRuleListUsingGETOK {
 	return &GfwRuleListUsingGETOK{}
 }
 
-/* GfwRuleListUsingGETOK describes a response with status code 200, with default header values.
+/*
+GfwRuleListUsingGETOK describes a response with status code 200, with default header values.
 
 OK
 */
@@ -53,9 +54,44 @@ type GfwRuleListUsingGETOK struct {
 	Payload *models.GFWRuleListResponse
 }
 
+// IsSuccess returns true when this gfw rule list using g e t o k response has a 2xx status code
+func (o *GfwRuleListUsingGETOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this gfw rule list using g e t o k response has a 3xx status code
+func (o *GfwRuleListUsingGETOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this gfw rule list using g e t o k response has a 4xx status code
+func (o *GfwRuleListUsingGETOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this gfw rule list using g e t o k response has a 5xx status code
+func (o *GfwRuleListUsingGETOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this gfw rule list using g e t o k response a status code equal to that given
+func (o *GfwRuleListUsingGETOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the gfw rule list using g e t o k response
+func (o *GfwRuleListUsingGETOK) Code() int {
+	return 200
+}
+
 func (o *GfwRuleListUsingGETOK) Error() string {
 	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/s-n][%d] gfwRuleListUsingGETOK  %+v", 200, o.Payload)
 }
+
+func (o *GfwRuleListUsingGETOK) String() string {
+	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/s-n][%d] gfwRuleListUsingGETOK  %+v", 200, o.Payload)
+}
+
 func (o *GfwRuleListUsingGETOK) GetPayload() *models.GFWRuleListResponse {
 	return o.Payload
 }
@@ -77,7 +113,8 @@ func NewGfwRuleListUsingGETBadRequest() *GfwRuleListUsingGETBadRequest {
 	return &GfwRuleListUsingGETBadRequest{}
 }
 
-/* GfwRuleListUsingGETBadRequest describes a response with status code 400, with default header values.
+/*
+GfwRuleListUsingGETBadRequest describes a response with status code 400, with default header values.
 
 Bad request, error occurred. For more details see log messages.
 */
@@ -85,9 +122,44 @@ type GfwRuleListUsingGETBadRequest struct {
 	Payload *models.ProxyResponseMessage
 }
 
+// IsSuccess returns true when this gfw rule list using g e t bad request response has a 2xx status code
+func (o *GfwRuleListUsingGETBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this gfw rule list using g e t bad request response has a 3xx status code
+func (o *GfwRuleListUsingGETBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this gfw rule list using g e t bad request response has a 4xx status code
+func (o *GfwRuleListUsingGETBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this gfw rule list using g e t bad request response has a 5xx status code
+func (o *GfwRuleListUsingGETBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this gfw rule list using g e t bad request response a status code equal to that given
+func (o *GfwRuleListUsingGETBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the gfw rule list using g e t bad request response
+func (o *GfwRuleListUsingGETBadRequest) Code() int {
+	return 400
+}
+
 func (o *GfwRuleListUsingGETBadRequest) Error() string {
 	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/s-n][%d] gfwRuleListUsingGETBadRequest  %+v", 400, o.Payload)
 }
+
+func (o *GfwRuleListUsingGETBadRequest) String() string {
+	return fmt.Sprintf("[GET /network/routers/{routerId}/rules/s-n][%d] gfwRuleListUsingGETBadRequest  %+v", 400, o.Payload)
+}
+
 func (o *GfwRuleListUsingGETBadRequest) GetPayload() *models.ProxyResponseMessage {
 	return o.Payload
 }
