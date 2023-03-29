@@ -1,3 +1,8 @@
+## 2.0.3 (2023-03-27)
+
+### Security
+* Updated external libraries versions in go.mod for security reasons
+
 ## 2.0.2 (2023-03-27)
 
 ### Resources

@@ -7,13 +7,13 @@ This repository contains Terraform Provider for managing cloud resources in OChK
 
 - Website: https://chmurakrajowa.pl
 
-<img src="https://chmurakrajowa.pl/img/logotypes/chmura-krajowa-logo.svg" width="200px">
+<img src="https://ochk.cloud/images/ochk_extended_logo.svg" width="200px">
 
 Requirements
 -------------------------
 
-- [Terraform](https://www.terraform.io/downloads.html) 1.0+
-- [Go](https://golang.org/doc/install) 1.16+ (to build the provider plugin)
+- [Terraform](https://www.terraform.io/downloads.html) 1.3.7+
+- [Go](https://golang.org/doc/install) 1.18+ (to build the provider plugin)
 
 Building The Provider
 -------------------------

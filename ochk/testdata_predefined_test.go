@@ -74,7 +74,7 @@ type predefinedTestData struct {
 	NatPublicIpAddr            string
 }
 
-var devTestDataPrefix = "tf-u-test"
+var devTestDataPrefix = "tf-gotest"
 var predefinedTestDataDev = predefinedTestData{
 	LogicalPort1DisplayName:    "",
 	BackupPlanName:             "",
