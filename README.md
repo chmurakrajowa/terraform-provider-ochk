@@ -5,7 +5,7 @@ OChK Terraform Provider
 
 This repository contains Terraform Provider for managing cloud resources in OChK. 
 
-- Website: https://chmurakrajowa.pl
+- Website: https://ochk.cloud
 
 <img src="https://ochk.cloud/images/ochk_extended_logo.svg" width="200px">
 
