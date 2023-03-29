@@ -1,10 +1,11 @@
 OChK Terraform Provider
 ==================
 
-![Build](https://github.com/chmurakrajowa/ochk-terraform-provider/workflows/Terraform%20Provider%20Checks/badge.svg?event=push)
+![Test](https://github.com/chmurakrajowa/terraform-provider-ochk/actions/workflows/test.yml/badge.svg?event=push)
 
 This repository contains Terraform Provider for managing cloud resources in OChK. 
 
+- Documentation: https://registry.terraform.io/providers/chmurakrajowa/ochk/latest/docs
 - Website: https://ochk.cloud
 
 <img src="https://ochk.cloud/images/ochk_extended_logo.svg" width="200px">
