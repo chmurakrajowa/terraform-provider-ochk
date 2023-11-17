@@ -109,6 +109,11 @@ func (m *AccountListResponse) contextValidateAccountInstanceCollection(ctx conte
 	for i := 0; i < len(m.AccountInstanceCollection); i++ {
 
 		if m.AccountInstanceCollection[i] != nil {
+
+			if swag.IsZero(m.AccountInstanceCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.AccountInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("accountInstanceCollection" + "." + strconv.Itoa(i))

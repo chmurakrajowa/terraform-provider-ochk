@@ -109,6 +109,11 @@ func (m *BackupListListResponse) contextValidateBackupListCollection(ctx context
 	for i := 0; i < len(m.BackupListCollection); i++ {
 
 		if m.BackupListCollection[i] != nil {
+
+			if swag.IsZero(m.BackupListCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.BackupListCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("backupListCollection" + "." + strconv.Itoa(i))

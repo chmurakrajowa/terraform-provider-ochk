@@ -99,6 +99,11 @@ func (m *GetPublicKeyResponse) ContextValidate(ctx context.Context, formats strf
 func (m *GetPublicKeyResponse) contextValidateRsaPublicKey(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RsaPublicKey != nil {
+
+		if swag.IsZero(m.RsaPublicKey) { // not required
+			return nil
+		}
+
 		if err := m.RsaPublicKey.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("rsaPublicKey")

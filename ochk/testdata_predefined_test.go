@@ -72,9 +72,11 @@ type predefinedTestData struct {
 	FirewallEWRuleName         string
 	FirewallSNRuleName         string
 	NatPublicIpAddr            string
+	SnapshotName               string
+	AccountName                string
 }
 
-var devTestDataPrefix = "tf-gotest"
+var devTestDataPrefix = "tf-gojl"
 var predefinedTestDataDev = predefinedTestData{
 	LogicalPort1DisplayName:    "",
 	BackupPlanName:             "",
@@ -105,4 +107,6 @@ var predefinedTestDataDev = predefinedTestData{
 	FirewallEWRuleName:         fmt.Sprintf("%s-tf-fw-ew-http", devTestDataPrefix),
 	FirewallSNRuleName:         fmt.Sprintf("%s-tf-fw-sn-http", devTestDataPrefix),
 	NatPublicIpAddr:            "",
+	SnapshotName:               fmt.Sprintf("%s-snaps001", devTestDataPrefix),
+	AccountName:                fmt.Sprintf("%s-act1", devTestDataPrefix),
 }

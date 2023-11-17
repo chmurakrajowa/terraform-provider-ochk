@@ -1,7 +1,7 @@
 
-data "ochk_manual_nats" "manual_nats" {
+//data "ochk_manual_nats" "manual_nats" {
 
-}
+//}
 
 /*
 data "ochk_manual_nat" "manual-nat1" {
@@ -12,9 +12,9 @@ data "ochk_manual_nat" "manual-nat" {
   display_name = "${var.test-data-prefix}-dnat"
 }
 */
-data "ochk_service" "http" {
-  display_name = "HTTP"
-}
+//data "ochk_service" "http" {
+//  display_name = "HTTP"
+//}
 /*
 resource "ochk_manual_nat" "dnat" {
     display_name = "${var.test-data-prefix}-dnat"

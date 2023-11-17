@@ -99,6 +99,11 @@ func (m *PublicIPAllocationGetResponse) ContextValidate(ctx context.Context, for
 func (m *PublicIPAllocationGetResponse) contextValidatePublicIPAllocation(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.PublicIPAllocation != nil {
+
+		if swag.IsZero(m.PublicIPAllocation) { // not required
+			return nil
+		}
+
 		if err := m.PublicIPAllocation.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("publicIpAllocation")

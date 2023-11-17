@@ -109,6 +109,11 @@ func (m *SecurityGroupListResponse) contextValidateSecurityGroupCollection(ctx c
 	for i := 0; i < len(m.SecurityGroupCollection); i++ {
 
 		if m.SecurityGroupCollection[i] != nil {
+
+			if swag.IsZero(m.SecurityGroupCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.SecurityGroupCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("securityGroupCollection" + "." + strconv.Itoa(i))

@@ -129,6 +129,11 @@ func (m *UpdateLogCategoryResponse) ContextValidate(ctx context.Context, formats
 func (m *UpdateLogCategoryResponse) contextValidateLogCategory(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.LogCategory != nil {
+
+		if swag.IsZero(m.LogCategory) { // not required
+			return nil
+		}
+
 		if err := m.LogCategory.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("logCategory")
@@ -145,6 +150,11 @@ func (m *UpdateLogCategoryResponse) contextValidateLogCategory(ctx context.Conte
 func (m *UpdateLogCategoryResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")

@@ -99,6 +99,11 @@ func (m *BackupListGetResponse) ContextValidate(ctx context.Context, formats str
 func (m *BackupListGetResponse) contextValidateBackupList(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.BackupList != nil {
+
+		if swag.IsZero(m.BackupList) { // not required
+			return nil
+		}
+
 		if err := m.BackupList.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("backupList")

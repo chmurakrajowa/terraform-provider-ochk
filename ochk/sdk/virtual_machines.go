@@ -88,6 +88,8 @@ func (p *VirtualMachinesProxy) Read(ctx context.Context, VirtualMachineID string
 			return nil, &NotFoundError{Err: err}
 		}
 
+		//virtual_Machines.VcsVirtualMachineS
+
 		return nil, fmt.Errorf("error while reading virtual machine: %w", err)
 	}
 

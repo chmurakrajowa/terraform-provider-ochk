@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"strings"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -28,7 +29,7 @@ func resourceSecurityGroup() *schema.Resource {
 		},
 
 		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
+			StateContext: resourceSecurityGroupImportState,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -80,6 +81,11 @@ func resourceSecurityGroup() *schema.Resource {
 			},
 		},
 	}
+}
+
+func resourceSecurityGroupImportState(_ context.Context, d *schema.ResourceData, _ interface{}) ([]*schema.ResourceData, error) {
+	d.SetId(strings.ToLower(d.Id()))
+	return []*schema.ResourceData{d}, nil
 }
 
 func resourceSecurityGroupCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {

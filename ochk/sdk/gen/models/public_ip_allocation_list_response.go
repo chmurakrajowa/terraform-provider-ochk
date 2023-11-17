@@ -109,6 +109,11 @@ func (m *PublicIPAllocationListResponse) contextValidatePublicIPAllocationCollec
 	for i := 0; i < len(m.PublicIPAllocationCollection); i++ {
 
 		if m.PublicIPAllocationCollection[i] != nil {
+
+			if swag.IsZero(m.PublicIPAllocationCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.PublicIPAllocationCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("publicIpAllocationCollection" + "." + strconv.Itoa(i))

@@ -28,6 +28,9 @@ type SnapshotInstance struct {
 	// Format: date-time
 	CreateTime *strfmt.DateTime `json:"createTime,omitempty"`
 
+	// parent snapshot Id
+	ParentSnapshotID string `json:"parentSnapshotId,omitempty"`
+
 	// power state
 	// Enum: [poweredOff poweredOn suspended]
 	PowerState string `json:"powerState,omitempty"`
@@ -172,6 +175,11 @@ func (m *SnapshotInstance) contextValidateChildSnapshots(ctx context.Context, fo
 	for i := 0; i < len(m.ChildSnapshots); i++ {
 
 		if m.ChildSnapshots[i] != nil {
+
+			if swag.IsZero(m.ChildSnapshots[i]) { // not required
+				return nil
+			}
+
 			if err := m.ChildSnapshots[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("childSnapshots" + "." + strconv.Itoa(i))

@@ -482,6 +482,11 @@ func (m *DFWRule) contextValidateCustomServices(ctx context.Context, formats str
 	for i := 0; i < len(m.CustomServices); i++ {
 
 		if m.CustomServices[i] != nil {
+
+			if swag.IsZero(m.CustomServices[i]) { // not required
+				return nil
+			}
+
 			if err := m.CustomServices[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("customServices" + "." + strconv.Itoa(i))
@@ -502,6 +507,11 @@ func (m *DFWRule) contextValidateDefaultServices(ctx context.Context, formats st
 	for i := 0; i < len(m.DefaultServices); i++ {
 
 		if m.DefaultServices[i] != nil {
+
+			if swag.IsZero(m.DefaultServices[i]) { // not required
+				return nil
+			}
+
 			if err := m.DefaultServices[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("defaultServices" + "." + strconv.Itoa(i))
@@ -522,6 +532,11 @@ func (m *DFWRule) contextValidateDestination(ctx context.Context, formats strfmt
 	for i := 0; i < len(m.Destination); i++ {
 
 		if m.Destination[i] != nil {
+
+			if swag.IsZero(m.Destination[i]) { // not required
+				return nil
+			}
+
 			if err := m.Destination[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("destination" + "." + strconv.Itoa(i))
@@ -540,6 +555,11 @@ func (m *DFWRule) contextValidateDestination(ctx context.Context, formats strfmt
 func (m *DFWRule) contextValidatePosition(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.Position != nil {
+
+		if swag.IsZero(m.Position) { // not required
+			return nil
+		}
+
 		if err := m.Position.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("position")
@@ -558,6 +578,11 @@ func (m *DFWRule) contextValidateScope(ctx context.Context, formats strfmt.Regis
 	for i := 0; i < len(m.Scope); i++ {
 
 		if m.Scope[i] != nil {
+
+			if swag.IsZero(m.Scope[i]) { // not required
+				return nil
+			}
+
 			if err := m.Scope[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("scope" + "." + strconv.Itoa(i))
@@ -578,6 +603,11 @@ func (m *DFWRule) contextValidateSource(ctx context.Context, formats strfmt.Regi
 	for i := 0; i < len(m.Source); i++ {
 
 		if m.Source[i] != nil {
+
+			if swag.IsZero(m.Source[i]) { // not required
+				return nil
+			}
+
 			if err := m.Source[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("source" + "." + strconv.Itoa(i))

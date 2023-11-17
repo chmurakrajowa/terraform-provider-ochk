@@ -109,6 +109,11 @@ func (m *GetLogStats) contextValidateLogCategoryStats(ctx context.Context, forma
 	for i := 0; i < len(m.LogCategoryStats); i++ {
 
 		if m.LogCategoryStats[i] != nil {
+
+			if swag.IsZero(m.LogCategoryStats[i]) { // not required
+				return nil
+			}
+
 			if err := m.LogCategoryStats[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("logCategoryStats" + "." + strconv.Itoa(i))

@@ -129,6 +129,11 @@ func (m *UpdateBillingAlarmDefinitionResponse) ContextValidate(ctx context.Conte
 func (m *UpdateBillingAlarmDefinitionResponse) contextValidateBillingAlarmDefinition(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.BillingAlarmDefinition != nil {
+
+		if swag.IsZero(m.BillingAlarmDefinition) { // not required
+			return nil
+		}
+
 		if err := m.BillingAlarmDefinition.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("billingAlarmDefinition")
@@ -145,6 +150,11 @@ func (m *UpdateBillingAlarmDefinitionResponse) contextValidateBillingAlarmDefini
 func (m *UpdateBillingAlarmDefinitionResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")

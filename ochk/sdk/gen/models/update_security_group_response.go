@@ -129,6 +129,11 @@ func (m *UpdateSecurityGroupResponse) ContextValidate(ctx context.Context, forma
 func (m *UpdateSecurityGroupResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
@@ -145,6 +150,11 @@ func (m *UpdateSecurityGroupResponse) contextValidateRequestInstance(ctx context
 func (m *UpdateSecurityGroupResponse) contextValidateSecurityGroup(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.SecurityGroup != nil {
+
+		if swag.IsZero(m.SecurityGroup) { // not required
+			return nil
+		}
+
 		if err := m.SecurityGroup.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("securityGroup")

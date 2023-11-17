@@ -1,4 +1,4 @@
-data "ochk_virtual_networks" "virtual_networks" {
+/*data "ochk_virtual_networks" "virtual_networks" {
 
 }
 
@@ -8,7 +8,7 @@ resource "ochk_virtual_network" "network_for_vm" {
   vpc_id = ochk_vpc.project-vpc.id
   project_id = data.ochk_project.project_for_vm.id
   subnet_network_cidr = "192.168.51.0/24"
-}
+}*/
 
 /*
 data "ochk_network" "subtenant-network" {

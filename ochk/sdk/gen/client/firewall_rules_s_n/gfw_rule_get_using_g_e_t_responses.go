@@ -42,7 +42,7 @@ func (o *GfwRuleGetUsingGETReader) ReadResponse(response runtime.ClientResponse,
 		}
 		return nil, result
 	default:
-		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /network/routers/{routerId}/rules/s-n/{ruleId}] gfwRuleGetUsingGET", response, response.Code())
 	}
 }
 

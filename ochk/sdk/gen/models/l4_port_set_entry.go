@@ -148,6 +148,11 @@ func (m *L4PortSetEntry) ContextValidate(ctx context.Context, formats strfmt.Reg
 func (m *L4PortSetEntry) contextValidateResourceType(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.ResourceType != nil {
+
+		if swag.IsZero(m.ResourceType) { // not required
+			return nil
+		}
+
 		if err := m.ResourceType.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("resourceType")

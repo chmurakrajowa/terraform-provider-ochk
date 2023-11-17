@@ -6,6 +6,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"strings"
 	"time"
 )
 
@@ -26,7 +27,7 @@ func resourceAutoNat() *schema.Resource {
 			Delete: schema.DefaultTimeout(autoNatRetryTimeout),
 		},
 		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
+			StateContext: resourceNatImportState,
 		},
 		Schema: map[string]*schema.Schema{
 			"display_name": {
@@ -103,7 +104,7 @@ func resourceManualNat() *schema.Resource {
 			Delete: schema.DefaultTimeout(autoNatRetryTimeout),
 		},
 		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
+			StateContext: resourceNatImportState,
 		},
 		Schema: map[string]*schema.Schema{
 			"display_name": {
@@ -172,6 +173,11 @@ func resourceManualNat() *schema.Resource {
 			},
 		},
 	}
+}
+
+func resourceNatImportState(_ context.Context, d *schema.ResourceData, _ interface{}) ([]*schema.ResourceData, error) {
+	d.SetId(strings.ToLower(d.Id()))
+	return []*schema.ResourceData{d}, nil
 }
 
 func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
@@ -371,8 +377,8 @@ func mapResourceDataToAutoNat(d *schema.ResourceData) *models.NATRuleInstance {
 }
 
 func mapResourceDataToManualNat(d *schema.ResourceData) *models.NATRuleInstance {
-	var publicPriorityInt64 int64
-	publicPriorityInt64 = int64(d.Get("priority").(int))
+
+	publicPriorityInt64 := int64(d.Get("priority").(int))
 
 	natManualRule := &models.NATRuleInstance{
 		DisplayName:        d.Get("display_name").(string),

@@ -613,6 +613,11 @@ func (m *BillingAlarmDefinition) contextValidateGroupInstanceList(ctx context.Co
 	for i := 0; i < len(m.GroupInstanceList); i++ {
 
 		if m.GroupInstanceList[i] != nil {
+
+			if swag.IsZero(m.GroupInstanceList[i]) { // not required
+				return nil
+			}
+
 			if err := m.GroupInstanceList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("groupInstanceList" + "." + strconv.Itoa(i))
@@ -633,6 +638,11 @@ func (m *BillingAlarmDefinition) contextValidateUserInstanceList(ctx context.Con
 	for i := 0; i < len(m.UserInstanceList); i++ {
 
 		if m.UserInstanceList[i] != nil {
+
+			if swag.IsZero(m.UserInstanceList[i]) { // not required
+				return nil
+			}
+
 			if err := m.UserInstanceList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("userInstanceList" + "." + strconv.Itoa(i))

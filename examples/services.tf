@@ -1,2 +1,2 @@
-data "ochk_services" "services" {
-}
+/*data "ochk_services" "services" {
+}*/

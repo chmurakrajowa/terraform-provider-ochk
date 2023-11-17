@@ -129,6 +129,11 @@ func (m *CreateSnapshotResponse) ContextValidate(ctx context.Context, formats st
 func (m *CreateSnapshotResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
@@ -145,6 +150,11 @@ func (m *CreateSnapshotResponse) contextValidateRequestInstance(ctx context.Cont
 func (m *CreateSnapshotResponse) contextValidateSnapshotInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.SnapshotInstance != nil {
+
+		if swag.IsZero(m.SnapshotInstance) { // not required
+			return nil
+		}
+
 		if err := m.SnapshotInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("snapshotInstance")

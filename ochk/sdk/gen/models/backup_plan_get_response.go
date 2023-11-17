@@ -99,6 +99,11 @@ func (m *BackupPlanGetResponse) ContextValidate(ctx context.Context, formats str
 func (m *BackupPlanGetResponse) contextValidateBackupPlan(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.BackupPlan != nil {
+
+		if swag.IsZero(m.BackupPlan) { // not required
+			return nil
+		}
+
 		if err := m.BackupPlan.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("backupPlan")

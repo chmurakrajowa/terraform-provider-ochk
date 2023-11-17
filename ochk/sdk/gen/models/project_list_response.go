@@ -109,6 +109,11 @@ func (m *ProjectListResponse) contextValidateProjectInstanceCollection(ctx conte
 	for i := 0; i < len(m.ProjectInstanceCollection); i++ {
 
 		if m.ProjectInstanceCollection[i] != nil {
+
+			if swag.IsZero(m.ProjectInstanceCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.ProjectInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("projectInstanceCollection" + "." + strconv.Itoa(i))

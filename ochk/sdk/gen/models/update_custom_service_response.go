@@ -129,6 +129,11 @@ func (m *UpdateCustomServiceResponse) ContextValidate(ctx context.Context, forma
 func (m *UpdateCustomServiceResponse) contextValidateCustomServiceInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.CustomServiceInstance != nil {
+
+		if swag.IsZero(m.CustomServiceInstance) { // not required
+			return nil
+		}
+
 		if err := m.CustomServiceInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("customServiceInstance")
@@ -145,6 +150,11 @@ func (m *UpdateCustomServiceResponse) contextValidateCustomServiceInstance(ctx c
 func (m *UpdateCustomServiceResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")

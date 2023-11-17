@@ -112,6 +112,11 @@ func (m *Hits) contextValidateHits(ctx context.Context, formats strfmt.Registry)
 	for i := 0; i < len(m.Hits); i++ {
 
 		if m.Hits[i] != nil {
+
+			if swag.IsZero(m.Hits[i]) { // not required
+				return nil
+			}
+
 			if err := m.Hits[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("hits" + "." + strconv.Itoa(i))
@@ -130,6 +135,11 @@ func (m *Hits) contextValidateHits(ctx context.Context, formats strfmt.Registry)
 func (m *Hits) contextValidateTotal(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.Total != nil {
+
+		if swag.IsZero(m.Total) { // not required
+			return nil
+		}
+
 		if err := m.Total.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("total")
