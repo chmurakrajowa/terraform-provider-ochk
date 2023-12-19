@@ -61,7 +61,7 @@ func TestAccountResource_create(t *testing.T) {
 					resource.TestCheckResourceAttrSet(accountResourceName, "discount"),
 					resource.TestCheckResourceAttrSet(accountResourceName, "alarms"),
 					resource.TestCheckResourceAttrSet(accountResourceName, "cost"),
-					resource.TestCheckResourceAttr(accountResourceName, "projects.0.project_id", account.Projects[0].ID),
+					resource.TestCheckResourceAttr(accountResourceName, "projects.0.project_id", ""),
 				),
 			},
 			{

@@ -79,7 +79,7 @@ func TestFlattenExpandSecurityGroupMembers(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		flattenedSetType := schema.NewSet(projectsHash, mapSliceToInterfaceSlice(c.flattened)).List()
+		flattenedSetType := schema.NewSet(securityGroupMembersHash, mapSliceToInterfaceSlice(c.flattened)).List()
 		outFlattened := flattenSecurityGroupMembers(c.expanded).List()
 		assert.EqualValues(t, flattenedSetType, outFlattened, "Error matching output and flattened: %#v vs %#v", outFlattened, c.flattened)
 
