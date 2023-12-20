@@ -109,6 +109,11 @@ func (m *IPCollectionListResponse) contextValidateIPCollectionSet(ctx context.Co
 	for i := 0; i < len(m.IPCollectionSet); i++ {
 
 		if m.IPCollectionSet[i] != nil {
+
+			if swag.IsZero(m.IPCollectionSet[i]) { // not required
+				return nil
+			}
+
 			if err := m.IPCollectionSet[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("ipCollectionSet" + "." + strconv.Itoa(i))

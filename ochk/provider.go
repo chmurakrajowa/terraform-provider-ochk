@@ -92,9 +92,12 @@ func Provider() *schema.Provider {
 			"ochk_firewall_sn_rule":        dataSourceFirewallSNRule(),
 			"ochk_firewall_sn_rules":       dataSourceFirewallSNRules(),
 			"ochk_public_ip_addresses":     dataSourcePublicIPAddresses(),
+			"ochk_snapshot":                dataSourceSnapshot(),
+			"ochk_snapshots":               dataSourceSnapshots(),
+			"ochk_billing_account":         dataSourceBillingAccount(),
+			"ochk_billing_accounts":        dataSourceBillingAccounts(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"ochk_firewall_ew_rule": resourceFirewallEWRule(),
 			"ochk_firewall_sn_rule": resourceFirewallSNRule(),
 			"ochk_vpc":              resourceVpc(),
 			"ochk_security_group":   resourceSecurityGroup(),
@@ -107,6 +110,8 @@ func Provider() *schema.Provider {
 			"ochk_tag":              resourceTag(),
 			"ochk_auto_nat":         resourceAutoNat(),
 			"ochk_manual_nat":       resourceManualNat(),
+			"ochk_snapshot":         resourceSnapshot(),
+			"ochk_billing_account":  resourceBillingAccount(),
 		},
 		ConfigureContextFunc: func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 			client, err := sdk.NewClient(

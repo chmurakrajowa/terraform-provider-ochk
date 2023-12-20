@@ -109,6 +109,11 @@ func (m *LogCategoryListResponse) contextValidateLogCategoryCollection(ctx conte
 	for i := 0; i < len(m.LogCategoryCollection); i++ {
 
 		if m.LogCategoryCollection[i] != nil {
+
+			if swag.IsZero(m.LogCategoryCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.LogCategoryCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("logCategoryCollection" + "." + strconv.Itoa(i))

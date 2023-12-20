@@ -129,6 +129,11 @@ func (m *CreateDFWRuleResponse) ContextValidate(ctx context.Context, formats str
 func (m *CreateDFWRuleResponse) contextValidateDfwRule(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.DfwRule != nil {
+
+		if swag.IsZero(m.DfwRule) { // not required
+			return nil
+		}
+
 		if err := m.DfwRule.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("dfwRule")
@@ -145,6 +150,11 @@ func (m *CreateDFWRuleResponse) contextValidateDfwRule(ctx context.Context, form
 func (m *CreateDFWRuleResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")

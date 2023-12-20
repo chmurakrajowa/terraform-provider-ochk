@@ -129,6 +129,11 @@ func (m *ProjectCreateResponse) ContextValidate(ctx context.Context, formats str
 func (m *ProjectCreateResponse) contextValidateProjectInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.ProjectInstance != nil {
+
+		if swag.IsZero(m.ProjectInstance) { // not required
+			return nil
+		}
+
 		if err := m.ProjectInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("projectInstance")
@@ -145,6 +150,11 @@ func (m *ProjectCreateResponse) contextValidateProjectInstance(ctx context.Conte
 func (m *ProjectCreateResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")

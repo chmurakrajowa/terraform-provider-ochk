@@ -109,6 +109,11 @@ func (m *RouterListResponse) contextValidateRouterCollection(ctx context.Context
 	for i := 0; i < len(m.RouterCollection); i++ {
 
 		if m.RouterCollection[i] != nil {
+
+			if swag.IsZero(m.RouterCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.RouterCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("routerCollection" + "." + strconv.Itoa(i))

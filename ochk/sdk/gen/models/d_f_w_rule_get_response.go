@@ -99,6 +99,11 @@ func (m *DFWRuleGetResponse) ContextValidate(ctx context.Context, formats strfmt
 func (m *DFWRuleGetResponse) contextValidateRuleInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RuleInstance != nil {
+
+		if swag.IsZero(m.RuleInstance) { // not required
+			return nil
+		}
+
 		if err := m.RuleInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("ruleInstance")

@@ -118,8 +118,8 @@ func firewallSNRuleStateContextImport(_ context.Context, d *schema.ResourceData,
 	if len(parts) != 2 || parts[0] == "" || parts[1] == "" {
 		return nil, fmt.Errorf("unexpected format of ID (%s), expected format: vpc_id/rule_id", d.Id())
 	}
-	d.SetId(parts[1])
-	if err := d.Set("vpc_id", parts[0]); err != nil {
+	d.SetId(strings.ToLower(parts[1]))
+	if err := d.Set("vpc_id", strings.ToLower(parts[0])); err != nil {
 		return nil, fmt.Errorf("cannot set vpc_id: (%s)", parts[0])
 	}
 	return []*schema.ResourceData{d}, nil

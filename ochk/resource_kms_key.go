@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"strings"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -27,7 +28,7 @@ func resourceKMSKey() *schema.Resource {
 		},
 
 		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
+			StateContext: resourceKMSKeyImportState,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -106,6 +107,11 @@ func resourceKMSKey() *schema.Resource {
 			},
 		},
 	}
+}
+
+func resourceKMSKeyImportState(_ context.Context, d *schema.ResourceData, _ interface{}) ([]*schema.ResourceData, error) {
+	d.SetId(strings.ToLower(d.Id()))
+	return []*schema.ResourceData{d}, nil
 }
 
 func resourceKMSKeyCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {

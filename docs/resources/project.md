@@ -23,7 +23,7 @@ resource "ochk_project" "project" {
 The following arguments are supported:
 
 * `display_name` - (Required) Display name for the project. Updates to this attribute forces recreate.
-* `description` - (Required) Description.
+* `description` - (Optional) Description.
 * `vrf_id` - (Required) VRF id.
 * `limits_enabled` - (Optional) Limits for mamtory, sorage and vcpus enabled (True) or disabled (False). Default: True.
 * `memory_reserved_size_mb` - (Required if `limits_enabled` is True) Memory reservation size in megabytes.

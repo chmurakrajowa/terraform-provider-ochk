@@ -36,6 +36,8 @@ type Client struct {
 	Nats               NatProxy
 	Folders            FoldersProxy
 	PublicIPAddresses  PublicIPAddressProxy
+	Snapshots          SnapshotsProxy
+	Accounts           AccountsProxy
 	key                string
 	apiClientTransport httptransport.Runtime
 }
@@ -217,6 +219,14 @@ func NewClient(ctx context.Context, host string, platform string, username strin
 		PublicIPAddresses: PublicIPAddressProxy{
 			httpClient: httpClient,
 			service:    authClient.IPamPublicIPAllocations,
+		},
+		Snapshots: SnapshotsProxy{
+			httpClient: httpClient,
+			service:    authClient.VirtualMachines,
+		},
+		Accounts: AccountsProxy{
+			httpClient: httpClient,
+			service:    authClient.BillingAccounts,
 		},
 	}
 

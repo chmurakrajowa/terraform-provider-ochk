@@ -4,9 +4,9 @@ data "ochk_auto_nat" "auto-nat" {
 }
 */
 
-data "ochk_auto_nats" "auto_nats" {
+//data "ochk_auto_nats" "auto_nats" {
 
-}
+//}
 
 /*
 resource "ochk_auto_nat" "first-auto-nat" {

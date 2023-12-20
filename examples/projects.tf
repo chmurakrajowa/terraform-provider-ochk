@@ -1,7 +1,7 @@
-data "ochk_projects" "projects" {
+/*data "ochk_projects" "projects" {
 
-}
-
+}*/
+/*
 data "ochk_project" "project_for_vm" {
   //name = var.project_for_vm_name
   display_name = "admin"
@@ -25,7 +25,7 @@ resource "ochk_project" "project1" {
   storage_reserved_size_gb = 400
   vcpu_reserved_quantity = 10
 }
-
+*/
 /*
 resource "ochk_project" "project-1" {
   display_name = "${var.test-data-prefix}-project-1"

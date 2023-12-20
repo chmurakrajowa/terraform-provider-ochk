@@ -1,10 +1,10 @@
-data "ochk_vrf" "vrf" {
+/*data "ochk_vrf" "vrf" {
 	display_name = var.vrf_router
 }
 
 data "ochk_firewall_ew_rules" "firewall_ew_rules" {
     vpc_id = ochk_vpc.project-vpc.id
-}
+}*/
 
 /*
 resource "ochk_firewall_ew_rule" "fw-ew2" {

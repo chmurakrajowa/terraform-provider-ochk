@@ -1,6 +1,6 @@
-data "ochk_security_groups" "security_groups" {
+//data "ochk_security_groups" "security_groups" {
 
-}
+//}
 
 /*
 resource "ochk_security_group" "project-test" {
@@ -14,7 +14,7 @@ resource "ochk_security_group" "project-test" {
 }
 */
 
-
+/*
 resource "ochk_security_group" "project-sg1-src" {
   display_name = "${var.test-data-prefix}-sg1-src"
   project_id = data.ochk_project.project_for_vm.id
@@ -34,5 +34,5 @@ resource "ochk_security_group" "project-sg1-dst" {
     type = "IPCOLLECTION"
   }
 }
-
+*/
 

@@ -14,6 +14,11 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/active_directory_sync"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/backups"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/billing_accounts"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/billing_k_m_s_report"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/billing_periods"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/billing_public_ip_report"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/billing_v_r_f_report"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/billing_vm_report"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/custom_services"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/default_services"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/deployments"
@@ -93,6 +98,11 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.ActiveDirectorySync = active_directory_sync.New(transport, formats)
 	cli.Backups = backups.New(transport, formats)
 	cli.BillingAccounts = billing_accounts.New(transport, formats)
+	cli.BillingkmsReport = billing_k_m_s_report.New(transport, formats)
+	cli.BillingPeriods = billing_periods.New(transport, formats)
+	cli.BillingPublicIPReport = billing_public_ip_report.New(transport, formats)
+	cli.BillingvrfReport = billing_v_r_f_report.New(transport, formats)
+	cli.BillingVMReport = billing_vm_report.New(transport, formats)
 	cli.CustomServices = custom_services.New(transport, formats)
 	cli.DefaultServices = default_services.New(transport, formats)
 	cli.Deployments = deployments.New(transport, formats)
@@ -176,6 +186,16 @@ type Ochk struct {
 
 	BillingAccounts billing_accounts.ClientService
 
+	BillingkmsReport billing_k_m_s_report.ClientService
+
+	BillingPeriods billing_periods.ClientService
+
+	BillingPublicIPReport billing_public_ip_report.ClientService
+
+	BillingvrfReport billing_v_r_f_report.ClientService
+
+	BillingVMReport billing_vm_report.ClientService
+
 	CustomServices custom_services.ClientService
 
 	DefaultServices default_services.ClientService
@@ -248,6 +268,11 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.ActiveDirectorySync.SetTransport(transport)
 	c.Backups.SetTransport(transport)
 	c.BillingAccounts.SetTransport(transport)
+	c.BillingkmsReport.SetTransport(transport)
+	c.BillingPeriods.SetTransport(transport)
+	c.BillingPublicIPReport.SetTransport(transport)
+	c.BillingvrfReport.SetTransport(transport)
+	c.BillingVMReport.SetTransport(transport)
 	c.CustomServices.SetTransport(transport)
 	c.DefaultServices.SetTransport(transport)
 	c.Deployments.SetTransport(transport)

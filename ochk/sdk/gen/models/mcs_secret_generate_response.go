@@ -99,6 +99,11 @@ func (m *McsSecretGenerateResponse) ContextValidate(ctx context.Context, formats
 func (m *McsSecretGenerateResponse) contextValidateMcsSecret(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.McsSecret != nil {
+
+		if swag.IsZero(m.McsSecret) { // not required
+			return nil
+		}
+
 		if err := m.McsSecret.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("mcsSecret")

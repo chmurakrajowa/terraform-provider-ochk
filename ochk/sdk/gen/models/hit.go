@@ -75,6 +75,11 @@ func (m *Hit) ContextValidate(ctx context.Context, formats strfmt.Registry) erro
 func (m *Hit) contextValidateSource(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.Source != nil {
+
+		if swag.IsZero(m.Source) { // not required
+			return nil
+		}
+
 		if err := m.Source.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("_source")

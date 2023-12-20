@@ -99,6 +99,11 @@ func (m *VirtualNetworkGetResponse) ContextValidate(ctx context.Context, formats
 func (m *VirtualNetworkGetResponse) contextValidateVirtualNetworkInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.VirtualNetworkInstance != nil {
+
+		if swag.IsZero(m.VirtualNetworkInstance) { // not required
+			return nil
+		}
+
 		if err := m.VirtualNetworkInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("virtualNetworkInstance")

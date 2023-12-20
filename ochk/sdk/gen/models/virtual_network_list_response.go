@@ -109,6 +109,11 @@ func (m *VirtualNetworkListResponse) contextValidateVirtualNetworkInstanceCollec
 	for i := 0; i < len(m.VirtualNetworkInstanceCollection); i++ {
 
 		if m.VirtualNetworkInstanceCollection[i] != nil {
+
+			if swag.IsZero(m.VirtualNetworkInstanceCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.VirtualNetworkInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("virtualNetworkInstanceCollection" + "." + strconv.Itoa(i))

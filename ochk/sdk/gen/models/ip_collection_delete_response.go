@@ -129,6 +129,11 @@ func (m *IPCollectionDeleteResponse) ContextValidate(ctx context.Context, format
 func (m *IPCollectionDeleteResponse) contextValidateIPCollection(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.IPCollection != nil {
+
+		if swag.IsZero(m.IPCollection) { // not required
+			return nil
+		}
+
 		if err := m.IPCollection.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("ipCollection")
@@ -145,6 +150,11 @@ func (m *IPCollectionDeleteResponse) contextValidateIPCollection(ctx context.Con
 func (m *IPCollectionDeleteResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")

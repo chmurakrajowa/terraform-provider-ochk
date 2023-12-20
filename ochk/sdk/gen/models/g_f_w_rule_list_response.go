@@ -109,6 +109,11 @@ func (m *GFWRuleListResponse) contextValidateRuleInstances(ctx context.Context, 
 	for i := 0; i < len(m.RuleInstances); i++ {
 
 		if m.RuleInstances[i] != nil {
+
+			if swag.IsZero(m.RuleInstances[i]) { // not required
+				return nil
+			}
+
 			if err := m.RuleInstances[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("ruleInstances" + "." + strconv.Itoa(i))

@@ -109,6 +109,11 @@ func (m *NATRuleListResponse) contextValidateNatRuleInstances(ctx context.Contex
 	for i := 0; i < len(m.NatRuleInstances); i++ {
 
 		if m.NatRuleInstances[i] != nil {
+
+			if swag.IsZero(m.NatRuleInstances[i]) { // not required
+				return nil
+			}
+
 			if err := m.NatRuleInstances[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("natRuleInstances" + "." + strconv.Itoa(i))

@@ -99,6 +99,11 @@ func (m *CustomServiceGetResponse) ContextValidate(ctx context.Context, formats 
 func (m *CustomServiceGetResponse) contextValidateCustomServiceInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.CustomServiceInstance != nil {
+
+		if swag.IsZero(m.CustomServiceInstance) { // not required
+			return nil
+		}
+
 		if err := m.CustomServiceInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("customServiceInstance")

@@ -109,6 +109,11 @@ func (m *CustomServiceListResponse) contextValidateCustomServiceInstanceCollecti
 	for i := 0; i < len(m.CustomServiceInstanceCollection); i++ {
 
 		if m.CustomServiceInstanceCollection[i] != nil {
+
+			if swag.IsZero(m.CustomServiceInstanceCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.CustomServiceInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("customServiceInstanceCollection" + "." + strconv.Itoa(i))

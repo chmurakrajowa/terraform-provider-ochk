@@ -369,6 +369,11 @@ func (m *NATRuleInstance) ContextValidate(ctx context.Context, formats strfmt.Re
 func (m *NATRuleInstance) contextValidateServiceInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.ServiceInstance != nil {
+
+		if swag.IsZero(m.ServiceInstance) { // not required
+			return nil
+		}
+
 		if err := m.ServiceInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("serviceInstance")
@@ -385,6 +390,11 @@ func (m *NATRuleInstance) contextValidateServiceInstance(ctx context.Context, fo
 func (m *NATRuleInstance) contextValidateTierZeroRouter(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.TierZeroRouter != nil {
+
+		if swag.IsZero(m.TierZeroRouter) { // not required
+			return nil
+		}
+
 		if err := m.TierZeroRouter.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tierZeroRouter")
@@ -401,6 +411,11 @@ func (m *NATRuleInstance) contextValidateTierZeroRouter(ctx context.Context, for
 func (m *NATRuleInstance) contextValidateVirtualNetworkInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.VirtualNetworkInstance != nil {
+
+		if swag.IsZero(m.VirtualNetworkInstance) { // not required
+			return nil
+		}
+
 		if err := m.VirtualNetworkInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("virtualNetworkInstance")

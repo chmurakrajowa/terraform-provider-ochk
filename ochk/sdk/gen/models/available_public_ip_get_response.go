@@ -99,6 +99,11 @@ func (m *AvailablePublicIPGetResponse) ContextValidate(ctx context.Context, form
 func (m *AvailablePublicIPGetResponse) contextValidatePublicIPAddress(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.PublicIPAddress != nil {
+
+		if swag.IsZero(m.PublicIPAddress) { // not required
+			return nil
+		}
+
 		if err := m.PublicIPAddress.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("publicIpAddress")

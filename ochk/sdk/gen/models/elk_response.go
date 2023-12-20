@@ -75,6 +75,11 @@ func (m *ElkResponse) ContextValidate(ctx context.Context, formats strfmt.Regist
 func (m *ElkResponse) contextValidateHits(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.Hits != nil {
+
+		if swag.IsZero(m.Hits) { // not required
+			return nil
+		}
+
 		if err := m.Hits.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("hits")

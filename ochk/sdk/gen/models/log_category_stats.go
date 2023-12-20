@@ -75,6 +75,11 @@ func (m *LogCategoryStats) ContextValidate(ctx context.Context, formats strfmt.R
 func (m *LogCategoryStats) contextValidateLogCategory(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.LogCategory != nil {
+
+		if swag.IsZero(m.LogCategory) { // not required
+			return nil
+		}
+
 		if err := m.LogCategory.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("logCategory")

@@ -1,4 +1,4 @@
-
+/*
 data "ochk_service" "http_gw" {
   display_name = "HTTP"
 }
@@ -22,4 +22,4 @@ resource "ochk_firewall_sn_rule" "fw-ew3" {
   ip_protocol = "IPV4_IPV6"
 
   priority = 1000
-}
+}*/

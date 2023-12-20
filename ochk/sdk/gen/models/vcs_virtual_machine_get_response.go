@@ -99,6 +99,11 @@ func (m *VcsVirtualMachineGetResponse) ContextValidate(ctx context.Context, form
 func (m *VcsVirtualMachineGetResponse) contextValidateVcsVirtualMachineInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.VcsVirtualMachineInstance != nil {
+
+		if swag.IsZero(m.VcsVirtualMachineInstance) { // not required
+			return nil
+		}
+
 		if err := m.VcsVirtualMachineInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("vcsVirtualMachineInstance")

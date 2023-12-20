@@ -91,6 +91,11 @@ func (m *TimestampGroup) contextValidateFieldGroups(ctx context.Context, formats
 	for i := 0; i < len(m.FieldGroups); i++ {
 
 		if m.FieldGroups[i] != nil {
+
+			if swag.IsZero(m.FieldGroups[i]) { // not required
+				return nil
+			}
+
 			if err := m.FieldGroups[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("fieldGroups" + "." + strconv.Itoa(i))

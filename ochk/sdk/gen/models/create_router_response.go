@@ -132,6 +132,11 @@ func (m *CreateRouterResponse) ContextValidate(ctx context.Context, formats strf
 func (m *CreateRouterResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
@@ -148,6 +153,11 @@ func (m *CreateRouterResponse) contextValidateRequestInstance(ctx context.Contex
 func (m *CreateRouterResponse) contextValidateRouterInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RouterInstance != nil {
+
+		if swag.IsZero(m.RouterInstance) { // not required
+			return nil
+		}
+
 		if err := m.RouterInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("routerInstance")

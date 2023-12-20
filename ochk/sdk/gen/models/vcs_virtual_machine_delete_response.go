@@ -129,6 +129,11 @@ func (m *VcsVirtualMachineDeleteResponse) ContextValidate(ctx context.Context, f
 func (m *VcsVirtualMachineDeleteResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
@@ -145,6 +150,11 @@ func (m *VcsVirtualMachineDeleteResponse) contextValidateRequestInstance(ctx con
 func (m *VcsVirtualMachineDeleteResponse) contextValidateVcsVirtualMachineInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.VcsVirtualMachineInstance != nil {
+
+		if swag.IsZero(m.VcsVirtualMachineInstance) { // not required
+			return nil
+		}
+
 		if err := m.VcsVirtualMachineInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("vcsVirtualMachineInstance")

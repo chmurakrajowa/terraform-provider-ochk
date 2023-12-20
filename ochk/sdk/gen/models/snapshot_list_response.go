@@ -109,6 +109,11 @@ func (m *SnapshotListResponse) contextValidateSnapshotInstanceCollection(ctx con
 	for i := 0; i < len(m.SnapshotInstanceCollection); i++ {
 
 		if m.SnapshotInstanceCollection[i] != nil {
+
+			if swag.IsZero(m.SnapshotInstanceCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.SnapshotInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("snapshotInstanceCollection" + "." + strconv.Itoa(i))

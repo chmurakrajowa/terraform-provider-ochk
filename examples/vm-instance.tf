@@ -3,7 +3,7 @@ data "ochk_virtual_machines" "virtual_machines" {
 
 }
 */
-
+/*
 data "ochk_deployment_types" "dep_types" {
 
 }
@@ -14,17 +14,17 @@ data "ochk_deployment_params_types" "dep_types" {
 
 data "ochk_deployments" "ovf" {
   deployment_type = "ISO"
-}
+}*/
 
 /*
 data "ochk_virtual_machine" "test" {
   display_name = data.ochk_virtual_machines.virtual_machines.virtual_machines[0].display_name
 }
 */
-
+/*
 data "ochk_deployment" "centos" {
   display_name = "CentOS 7"
-}
+}*/
 
 /*
 resource "ochk_virtual_machine" "default" {

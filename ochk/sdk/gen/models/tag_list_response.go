@@ -109,6 +109,11 @@ func (m *TagListResponse) contextValidateTagCollection(ctx context.Context, form
 	for i := 0; i < len(m.TagCollection); i++ {
 
 		if m.TagCollection[i] != nil {
+
+			if swag.IsZero(m.TagCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.TagCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("tagCollection" + "." + strconv.Itoa(i))

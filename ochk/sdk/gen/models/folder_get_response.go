@@ -99,6 +99,11 @@ func (m *FolderGetResponse) ContextValidate(ctx context.Context, formats strfmt.
 func (m *FolderGetResponse) contextValidateFolderInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.FolderInstance != nil {
+
+		if swag.IsZero(m.FolderInstance) { // not required
+			return nil
+		}
+
 		if err := m.FolderInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("folderInstance")

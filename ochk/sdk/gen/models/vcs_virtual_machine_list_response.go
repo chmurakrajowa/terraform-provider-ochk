@@ -109,6 +109,11 @@ func (m *VcsVirtualMachineListResponse) contextValidateVcsVirtualMachineInstance
 	for i := 0; i < len(m.VcsVirtualMachineInstanceCollection); i++ {
 
 		if m.VcsVirtualMachineInstanceCollection[i] != nil {
+
+			if swag.IsZero(m.VcsVirtualMachineInstanceCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.VcsVirtualMachineInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("vcsVirtualMachineInstanceCollection" + "." + strconv.Itoa(i))

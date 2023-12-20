@@ -99,6 +99,11 @@ func (m *ProjectGetResponse) ContextValidate(ctx context.Context, formats strfmt
 func (m *ProjectGetResponse) contextValidateProjectInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.ProjectInstance != nil {
+
+		if swag.IsZero(m.ProjectInstance) { // not required
+			return nil
+		}
+
 		if err := m.ProjectInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("projectInstance")

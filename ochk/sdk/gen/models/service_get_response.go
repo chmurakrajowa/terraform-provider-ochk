@@ -99,6 +99,11 @@ func (m *ServiceGetResponse) ContextValidate(ctx context.Context, formats strfmt
 func (m *ServiceGetResponse) contextValidateServiceInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.ServiceInstance != nil {
+
+		if swag.IsZero(m.ServiceInstance) { // not required
+			return nil
+		}
+
 		if err := m.ServiceInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("serviceInstance")

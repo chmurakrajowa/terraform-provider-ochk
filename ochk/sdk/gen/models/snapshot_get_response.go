@@ -99,6 +99,11 @@ func (m *SnapshotGetResponse) ContextValidate(ctx context.Context, formats strfm
 func (m *SnapshotGetResponse) contextValidateSnapshotInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.SnapshotInstance != nil {
+
+		if swag.IsZero(m.SnapshotInstance) { // not required
+			return nil
+		}
+
 		if err := m.SnapshotInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("snapshotInstance")

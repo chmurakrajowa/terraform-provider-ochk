@@ -129,6 +129,11 @@ func (m *AccountCreateResponse) ContextValidate(ctx context.Context, formats str
 func (m *AccountCreateResponse) contextValidateAccountInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.AccountInstance != nil {
+
+		if swag.IsZero(m.AccountInstance) { // not required
+			return nil
+		}
+
 		if err := m.AccountInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("accountInstance")
@@ -145,6 +150,11 @@ func (m *AccountCreateResponse) contextValidateAccountInstance(ctx context.Conte
 func (m *AccountCreateResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
