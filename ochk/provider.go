@@ -24,18 +24,11 @@ func Provider() *schema.Provider {
 				DefaultFunc: schema.EnvDefaultFunc("TF_VAR_platform", nil),
 				Description: "platform value",
 			},
-			"username": {
+			"api_key": {
 				Type:        schema.TypeString,
 				Optional:    true,
-				DefaultFunc: schema.EnvDefaultFunc("TF_VAR_username", nil),
-				Description: "username value",
-			},
-			"password": {
-				Type:        schema.TypeString,
-				Optional:    true,
-				DefaultFunc: schema.EnvDefaultFunc("TF_VAR_password", nil),
-				Description: "password value",
-				Sensitive:   true,
+				DefaultFunc: schema.EnvDefaultFunc("TF_VAR_api_key", nil),
+				Description: "APi KEY value",
 			},
 			"insecure": {
 				Type:        schema.TypeBool,
@@ -98,6 +91,7 @@ func Provider() *schema.Provider {
 			"ochk_billing_accounts":        dataSourceBillingAccounts(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
+			"ochk_firewall_ew_rule": resourceFirewallEWRule(),
 			"ochk_firewall_sn_rule": resourceFirewallSNRule(),
 			"ochk_vpc":              resourceVpc(),
 			"ochk_security_group":   resourceSecurityGroup(),
@@ -118,8 +112,7 @@ func Provider() *schema.Provider {
 				ctx,
 				d.Get("host").(string),
 				d.Get("platform").(string),
-				d.Get("username").(string),
-				d.Get("password").(string),
+				d.Get("api_key").(string),
 				d.Get("insecure").(bool),
 				d.Get("debug_log_file").(string),
 			)

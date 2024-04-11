@@ -96,7 +96,7 @@ func (p *SnapshotsProxy) Create(ctx context.Context, virtualMachineID string, ra
 		HTTPClient:       p.httpClient,
 	}
 
-	_, put, err := p.service.VcsVirtualMachineSnapshotCreateUsingPUT(params)
+	put, _, err := p.service.VcsVirtualMachineSnapshotCreateUsingPUT(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while creating snapshot: %w", err)
 	}

@@ -90,7 +90,7 @@ func (p *AccountsProxy) Create(ctx context.Context, account *models.AccountInsta
 		HTTPClient:      p.httpClient,
 	}
 
-	_, put, err := p.service.AccountCreateUsingPUT(params)
+	put, _, err := p.service.AccountCreateUsingPUT(params)
 
 	if err != nil {
 		return nil, fmt.Errorf("error while creating account: %w", err)
@@ -130,7 +130,7 @@ func (p *AccountsProxy) Delete(ctx context.Context, accountID string) error {
 
 func (p *AccountsProxy) Update(ctx context.Context, account *models.AccountInstance) (*models.AccountInstance, error) {
 	if err := account.Validate(strfmt.Default); err != nil {
-		return nil, fmt.Errorf("error while validating tag struct: %w", err)
+		return nil, fmt.Errorf("error while validating account struct: %w", err)
 	}
 
 	params := &billing_accounts.AccountUpdateUsingPUTParams{

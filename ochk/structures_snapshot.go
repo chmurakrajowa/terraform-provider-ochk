@@ -53,6 +53,9 @@ func getChildSnap(in []*models.SnapshotInstance) []map[string]interface{} {
 }
 
 func flattenChildsListsFromIDs(m []*models.SnapshotInstance) *schema.Set {
+	if len(m) == 0 {
+		return nil
+	}
 
 	s := &schema.Set{
 		F: schema.HashString,

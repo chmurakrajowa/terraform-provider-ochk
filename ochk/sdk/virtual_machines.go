@@ -29,7 +29,7 @@ func (p *VirtualMachinesProxy) Create(ctx context.Context, virtualMachine *model
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	_, put, err := p.service.VcsVirtualMachineCreateUsingPUT(params)
+	put, _, err := p.service.VcsVirtualMachineCreateUsingPUT(params)
 	mutex.Unlock()
 
 	if err != nil {

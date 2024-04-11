@@ -30,7 +30,7 @@ func (p *FirewallSNRulesProxy) Create(ctx context.Context, routerID string, rule
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	_, put, err := p.service.GfwRuleCreateUsingPUT(params)
+	put, _, err := p.service.GfwRuleCreateUsingPUT(params)
 	mutex.Unlock()
 
 	if err != nil {

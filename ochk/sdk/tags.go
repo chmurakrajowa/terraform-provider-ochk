@@ -89,7 +89,7 @@ func (p *TagsProxy) Create(ctx context.Context, tag *models.Tag) (*models.Tag, e
 		HTTPClient: p.httpClient,
 	}
 
-	_, put, err := p.service.TagCreateUsingPUT(params)
+	put, _, err := p.service.TagCreateUsingPUT(params)
 
 	if err != nil {
 		return nil, fmt.Errorf("error while creating tag: %w", err)

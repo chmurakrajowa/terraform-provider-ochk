@@ -5,9 +5,6 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/w_s_o2_logout_token"
-	wso2controller "github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/w_s_o2_token"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/runtime/logger"
 	"github.com/go-openapi/strfmt"
@@ -44,47 +41,31 @@ type Client struct {
 
 var clientMutex sync.Mutex
 
-func Logout() error {
-
-	clientMutex.Lock()
-	defer clientMutex.Unlock()
-
-	for key, caschedClient := range clientCache {
-
-		ochkClient := client.New(&caschedClient.c.apiClientTransport, strfmt.Default)
-
-		httpClient := &http.Client{
-			Transport: &http.Transport{
-				TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-			},
-		}
-
-		params := w_s_o2_logout_token.LogoutTokenUsingPOSTParams{
-			Context:    *caschedClient.ctx,
-			HTTPClient: httpClient,
-		}
-
-		authResponse, err := ochkClient.WsO2LogoutToken.LogoutTokenUsingPOST(&params)
-		if err != nil {
-			return fmt.Errorf("error while logout: %+v", err)
-		}
-
-		if !authResponse.Payload.Success {
-			return fmt.Errorf("logout token failed: %s", authResponse.Payload.Messages)
-		}
-		delete(clientCache, key)
-
-	}
-
-	return nil
+type myTransport struct {
 }
 
-func NewClient(ctx context.Context, host string, platform string, username string, password string, insecure bool, debugLogFile string) (*Client, error) {
+var PLATFORM = ""
+var API_KEY = ""
+
+func assign(platform string, api_key string) {
+	PLATFORM = platform
+	API_KEY = api_key
+}
+
+func (t *myTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+
+	req.Header.Add("platform", PLATFORM)
+	req.Header.Add("x-api-key", API_KEY)
+	return http.DefaultTransport.RoundTrip(req)
+}
+
+func NewClient(ctx context.Context, host string, platform string, api_key string, insecure bool, debugLogFile string) (*Client, error) {
 
 	clientMutex.Lock()
 	defer clientMutex.Unlock()
+	assign(platform, api_key)
 
-	if c := getClientFromCache(host, platform, username, insecure, debugLogFile); c != nil {
+	if c := getClientFromCache(host, platform, api_key, insecure, debugLogFile); c != nil {
 		return c, nil
 	}
 
@@ -97,10 +78,14 @@ func NewClient(ctx context.Context, host string, platform string, username strin
 		defaultLogger = fileLogger
 	}
 
+	//httpClient := &http.Client{
+	//	Transport: &http.Transport{
+	//		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	//	},
+	//}
+
 	httpClient := &http.Client{
-		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-		},
+		Transport: &myTransport{},
 	}
 
 	apiClientTransport := httptransport.New(host, client.DefaultBasePath, mapToSchemes(insecure))
@@ -113,33 +98,11 @@ func NewClient(ctx context.Context, host string, platform string, username strin
 		apiClientTransport.SetLogger(defaultLogger)
 	}
 
-	ochkClient := client.New(apiClientTransport, strfmt.Default)
-
-	params := wso2controller.GetTokenUsingPOSTParams{
-		WsoTokenRequest: &models.WSOTokenRequest{
-			Platform: platform,
-			Password: password,
-			Username: username,
-		},
-		Context:    ctx,
-		HTTPClient: httpClient,
-	}
-
-	authResponse, err := ochkClient.WsO2Token.GetTokenUsingPOST(&params)
-	if err != nil {
-		return nil, fmt.Errorf("error while retrieving auth token: %+v", err)
-	}
-
-	if !authResponse.Payload.Success {
-		return nil, fmt.Errorf("retrieving auth token failed: %s", authResponse.Payload.Messages)
-	}
-
 	apiClientAuthTransport := httptransport.New(host, client.DefaultBasePath, mapToSchemes(insecure))
 	apiClientAuthTransport.SetDebug(true)
 	if defaultLogger != nil {
 		apiClientAuthTransport.SetLogger(defaultLogger)
 	}
-	apiClientAuthTransport.DefaultAuthentication = httptransport.APIKeyAuth("Authorization", "header", authResponse.Payload.Token)
 
 	authClient := client.New(apiClientAuthTransport, strfmt.Default)
 
@@ -231,7 +194,7 @@ func NewClient(ctx context.Context, host string, platform string, username strin
 	}
 
 	c.apiClientTransport = *apiClientAuthTransport
-	c.key = cacheClient(c, host, platform, username, insecure, debugLogFile, &ctx)
+	c.key = cacheClient(c, host, platform, api_key, insecure, debugLogFile, &ctx)
 	return c, nil
 }
 
@@ -244,8 +207,8 @@ type cachedClient struct {
 var clientCacheLifetime = time.Minute * 5
 var clientCache = map[string]cachedClient{}
 
-func clientCacheKey(host string, platform string, username string, insecure bool, file string) string {
-	return fmt.Sprintf("%s_%s_%s_%t_%s", host, platform, username, insecure, file)
+func clientCacheKey(host string, platform string, api_key string, insecure bool, file string) string {
+	return fmt.Sprintf("%s_%s_%s_%t_%s", host, platform, api_key, insecure, file)
 }
 
 func getClientFromCacheByKey(key string) *Client {
@@ -262,8 +225,8 @@ func getClientFromCacheByKey(key string) *Client {
 	return nil
 }
 
-func getClientFromCache(host string, platform string, username string, insecure bool, file string) *Client {
-	key := clientCacheKey(host, platform, username, insecure, file)
+func getClientFromCache(host string, platform string, api_key string, insecure bool, file string) *Client {
+	key := clientCacheKey(host, platform, api_key, insecure, file)
 	return getClientFromCacheByKey(key)
 
 }

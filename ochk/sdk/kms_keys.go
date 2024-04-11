@@ -24,7 +24,7 @@ func (p *KMSKeysProxy) Create(ctx context.Context, keyInstance *models.KeyInstan
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	_, post, err := p.service.KeyCreateUsingPUT(params)
+	post, _, err := p.service.KeyCreateUsingPUT(params)
 	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while creating KMS key: %w", err)
@@ -46,7 +46,7 @@ func (p *KMSKeysProxy) Import(ctx context.Context, keyImport *models.KeyImport) 
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	_, post, err := p.service.KeyImportUsingPOST(params)
+	post, _, err := p.service.KeyImportUsingPOST(params)
 	mutex.Unlock()
 
 	if err != nil {

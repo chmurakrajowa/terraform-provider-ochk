@@ -29,6 +29,7 @@ The following arguments are supported:
 ## Attribute Reference
 
 The following attributes are exported:
+* `snapshot_description` - The short description of the snapshot
 * `parent_id` - Id of parent snapshot
 * `child_id` - Id of child snapshot
-* `power_state` - Powered state
+* `power_state` - Powered state; for snapshots with RAM, the power_state is "poweredOn"
