@@ -35,11 +35,10 @@ $ go build -o examples/ ./...
 Using the provider
 --------------------------
 
-Provide connection details in `terraform.tfvars` file. Password should be set using `OCHK_PASSWORD` environment variable.
+Provide connection details in `terraform.tfvars` file. 
 
 ```sh
 $ cd examples
-$ export OCHK_PASSWORD=*******
 $ terraform init
 $ terraform apply
 ```
@@ -69,8 +68,7 @@ In order to run the full suite of Acceptance tests you need to provide connectio
 $ export TF_ACC=true
 $ export TF_VAR_host=host
 $ export TF_VAR_platform=platform
-$ export TF_VAR_username=username
-$ export TF_VAR_password=*******
+$ export TF_VAR_api_key=api_key
 
 $ go test ./...
 ```
