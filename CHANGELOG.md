@@ -13,6 +13,7 @@
 
 ### Security
 * Updated external libraries versions in go.mod for security reasons
+* Changed basic auth method to x_api_key method
 
 ### Misc
 * Changed import functions - id is case-insensitive now
