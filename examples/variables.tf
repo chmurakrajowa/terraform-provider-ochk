@@ -1,8 +1,7 @@
 variable "test-data-prefix" {}
 variable "host" {}
 variable "platform" {}
-variable "username" {}
-variable "password" {}
+variable "api_key" {}
 variable "debug_log_file" {
   default = ""
 }
