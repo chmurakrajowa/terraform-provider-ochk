@@ -1,4 +1,4 @@
-## 2.0.4 (2023-11-17)
+## 2.1.0 (2024-07-01)
 
 ### Resources
 * Added data sources
