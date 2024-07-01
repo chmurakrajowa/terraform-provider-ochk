@@ -178,6 +178,11 @@ func (m *CustomServiceInstance) contextValidateL4PortSetEntries(ctx context.Cont
 	for i := 0; i < len(m.L4PortSetEntries); i++ {
 
 		if m.L4PortSetEntries[i] != nil {
+
+			if swag.IsZero(m.L4PortSetEntries[i]) { // not required
+				return nil
+			}
+
 			if err := m.L4PortSetEntries[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("l4PortSetEntries" + "." + strconv.Itoa(i))
@@ -198,6 +203,11 @@ func (m *CustomServiceInstance) contextValidateTags(ctx context.Context, formats
 	for i := 0; i < len(m.Tags); i++ {
 
 		if m.Tags[i] != nil {
+
+			if swag.IsZero(m.Tags[i]) { // not required
+				return nil
+			}
+
 			if err := m.Tags[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("tags" + "." + strconv.Itoa(i))

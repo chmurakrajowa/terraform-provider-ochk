@@ -96,6 +96,11 @@ func (m *VirtualNetworkInstance) ContextValidate(ctx context.Context, formats st
 func (m *VirtualNetworkInstance) contextValidateSubnet(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.Subnet != nil {
+
+		if swag.IsZero(m.Subnet) { // not required
+			return nil
+		}
+
 		if err := m.Subnet.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("subnet")

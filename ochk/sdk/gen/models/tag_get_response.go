@@ -99,6 +99,11 @@ func (m *TagGetResponse) ContextValidate(ctx context.Context, formats strfmt.Reg
 func (m *TagGetResponse) contextValidateTag(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.Tag != nil {
+
+		if swag.IsZero(m.Tag) { // not required
+			return nil
+		}
+
 		if err := m.Tag.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tag")

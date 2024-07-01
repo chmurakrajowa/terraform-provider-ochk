@@ -99,6 +99,11 @@ func (m *KeyRotationScheduleGetResponse) ContextValidate(ctx context.Context, fo
 func (m *KeyRotationScheduleGetResponse) contextValidateKeyRotationSchedule(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.KeyRotationSchedule != nil {
+
+		if swag.IsZero(m.KeyRotationSchedule) { // not required
+			return nil
+		}
+
 		if err := m.KeyRotationSchedule.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("keyRotationSchedule")

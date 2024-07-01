@@ -102,7 +102,7 @@ func (p *IPCollectionsProxy) Create(ctx context.Context, IPCollection *models.IP
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	_, put, err := p.service.IPCollectionCreateUsingPUT(params)
+	put, _, err := p.service.IPCollectionCreateUsingPUT(params)
 	mutex.Unlock()
 
 	if err != nil {

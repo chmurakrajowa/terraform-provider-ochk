@@ -109,6 +109,11 @@ func (m *RequestInstanceListResponse) contextValidateRequestInstanceList(ctx con
 	for i := 0; i < len(m.RequestInstanceList); i++ {
 
 		if m.RequestInstanceList[i] != nil {
+
+			if swag.IsZero(m.RequestInstanceList[i]) { // not required
+				return nil
+			}
+
 			if err := m.RequestInstanceList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("requestInstanceList" + "." + strconv.Itoa(i))

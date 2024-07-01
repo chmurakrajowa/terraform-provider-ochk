@@ -351,3 +351,18 @@ resource "ochk_firewall_sn_rule" "fw-sn1" {
 
   priority = 10
 }
+
+resource "ochk_snapshot" "snap-01" {
+  display_name = "${var.test-data-prefix}-snaps-001"
+  snapshot_description = "snapshot testowy"
+  virtual_machine_id = ochk_virtual_machine.default.id
+}
+
+resource "ochk_billing_account" "acct-01" {
+  display_name = "${var.test-data-prefix}-act1"
+  account_description = "account testowy"
+
+  projects{
+     project_id = ochk_project.project-1.id
+  }
+}

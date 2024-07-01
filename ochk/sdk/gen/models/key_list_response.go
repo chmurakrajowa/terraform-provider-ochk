@@ -109,6 +109,11 @@ func (m *KeyListResponse) contextValidateKeyInstanceCollection(ctx context.Conte
 	for i := 0; i < len(m.KeyInstanceCollection); i++ {
 
 		if m.KeyInstanceCollection[i] != nil {
+
+			if swag.IsZero(m.KeyInstanceCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.KeyInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("keyInstanceCollection" + "." + strconv.Itoa(i))

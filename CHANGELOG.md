@@ -1,3 +1,23 @@
+## 2.1.0 (2024-07-01)
+
+### Resources
+* Added data sources
+  * `data_source_billing_account`
+  * `data_source_billing_accounts`
+  * `data_source_snapshot`
+  * `data_source_snapshots`
+
+* Added resources
+  * `resource_billing_account`
+  * `resource_snapshot`
+
+### Security
+* Updated external libraries versions in go.mod for security reasons
+* Changed basic auth method to x_api_key method
+
+### Misc
+* Changed import functions - id is case-insensitive now
+
 ## 2.0.3 (2023-03-27)
 
 ### Security

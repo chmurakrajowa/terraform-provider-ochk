@@ -10,7 +10,6 @@ terraform {
 provider "ochk" {
   host = var.host
   platform = var.platform
-  username = var.username
-  password = var.password
+  api_key = var.api_key
   debug_log_file = var.debug_log_file
 }

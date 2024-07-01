@@ -129,6 +129,11 @@ func (m *UpdateNATRuleResponse) ContextValidate(ctx context.Context, formats str
 func (m *UpdateNATRuleResponse) contextValidateNatRuleInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.NatRuleInstance != nil {
+
+		if swag.IsZero(m.NatRuleInstance) { // not required
+			return nil
+		}
+
 		if err := m.NatRuleInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("natRuleInstance")
@@ -145,6 +150,11 @@ func (m *UpdateNATRuleResponse) contextValidateNatRuleInstance(ctx context.Conte
 func (m *UpdateNATRuleResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")

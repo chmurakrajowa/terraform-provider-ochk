@@ -11,8 +11,8 @@ data "ochk_backup_list" "backup_list" {
 }
 */
 
-data "ochk_backup_plans" "backup_plans" {
-}
+/*data "ochk_backup_plans" "backup_plans" {
+}*/
 
 /*
 data "ochk_backup_lists" "backup_lists" {

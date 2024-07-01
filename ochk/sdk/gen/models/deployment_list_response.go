@@ -109,6 +109,11 @@ func (m *DeploymentListResponse) contextValidateDeploymentInstanceCollection(ctx
 	for i := 0; i < len(m.DeploymentInstanceCollection); i++ {
 
 		if m.DeploymentInstanceCollection[i] != nil {
+
+			if swag.IsZero(m.DeploymentInstanceCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.DeploymentInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("deploymentInstanceCollection" + "." + strconv.Itoa(i))

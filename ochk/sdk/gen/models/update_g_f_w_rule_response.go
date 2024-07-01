@@ -129,6 +129,11 @@ func (m *UpdateGFWRuleResponse) ContextValidate(ctx context.Context, formats str
 func (m *UpdateGFWRuleResponse) contextValidateGfwRule(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.GfwRule != nil {
+
+		if swag.IsZero(m.GfwRule) { // not required
+			return nil
+		}
+
 		if err := m.GfwRule.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("gfwRule")
@@ -145,6 +150,11 @@ func (m *UpdateGFWRuleResponse) contextValidateGfwRule(ctx context.Context, form
 func (m *UpdateGFWRuleResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")

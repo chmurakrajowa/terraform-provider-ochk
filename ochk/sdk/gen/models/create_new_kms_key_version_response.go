@@ -129,6 +129,11 @@ func (m *CreateNewKmsKeyVersionResponse) ContextValidate(ctx context.Context, fo
 func (m *CreateNewKmsKeyVersionResponse) contextValidateKeyInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.KeyInstance != nil {
+
+		if swag.IsZero(m.KeyInstance) { // not required
+			return nil
+		}
+
 		if err := m.KeyInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("keyInstance")
@@ -145,6 +150,11 @@ func (m *CreateNewKmsKeyVersionResponse) contextValidateKeyInstance(ctx context.
 func (m *CreateNewKmsKeyVersionResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")

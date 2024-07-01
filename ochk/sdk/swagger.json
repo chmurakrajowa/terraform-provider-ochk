@@ -27,6 +27,26 @@
       "description": "Backup Controller"
     },
     {
+      "name": "Billing KMS Report",
+      "description": "Billing KMS Controller"
+    },
+    {
+      "name": "Billing Periods",
+      "description": "Billing Period Controller"
+    },
+    {
+      "name": "Billing Public IP Report",
+      "description": "Billing PIP Controller"
+    },
+    {
+      "name": "Billing VM Report",
+      "description": "Billing VM Controller"
+    },
+    {
+      "name": "Billing VRF Report",
+      "description": "Billing VRF Controller"
+    },
+    {
       "name": "Billing accounts",
       "description": "Billing Alarm Definition Controller"
     },
@@ -477,6 +497,56 @@
         }
       }
     },
+    "/billing/accounts/billing-periods": {
+      "get": {
+        "tags": [
+          "Billing Periods"
+        ],
+        "summary": "listBillingPeriods",
+        "operationId": "listBillingPeriodsUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ListBillingPeriodResponse"
+            }
+          }
+        }
+      }
+    },
+    "/billing/accounts/billing-periods/{billingPeriodId}": {
+      "get": {
+        "tags": [
+          "Billing Periods"
+        ],
+        "summary": "getBillingPeriod",
+        "operationId": "getBillingPeriodUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "billingPeriodId",
+            "in": "path",
+            "description": "billingPeriodId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetBillingPeriodResponse"
+            }
+          }
+        }
+      }
+    },
     "/billing/accounts/{accountId}": {
       "get": {
         "tags": [
@@ -603,6 +673,154 @@
             "description": "Bad request, error occurred. For more details see log messages.",
             "schema": {
               "$ref": "#/definitions/ProxyResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/billing/accounts/{accountId}/reports/{billingPeriodId}/kms": {
+      "get": {
+        "tags": [
+          "Billing KMS Report"
+        ],
+        "summary": "generateKMSBilling",
+        "operationId": "generateKMSBillingUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "accountId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "billingPeriodId",
+            "in": "path",
+            "description": "billingPeriodId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GenerateKMSBillingReportResponse"
+            }
+          }
+        }
+      }
+    },
+    "/billing/accounts/{accountId}/reports/{billingPeriodId}/pip": {
+      "get": {
+        "tags": [
+          "Billing Public IP Report"
+        ],
+        "summary": "generatePIPBilling",
+        "operationId": "generatePIPBillingUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "accountId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "billingPeriodId",
+            "in": "path",
+            "description": "billingPeriodId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GeneratePIPBillingReportResponse"
+            }
+          }
+        }
+      }
+    },
+    "/billing/accounts/{accountId}/reports/{billingPeriodId}/vm": {
+      "get": {
+        "tags": [
+          "Billing VM Report"
+        ],
+        "summary": "generateVMBilling",
+        "operationId": "generateVMBillingUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "accountId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "billingPeriodId",
+            "in": "path",
+            "description": "billingPeriodId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GenerateVirtualMachineBillingReportResponse"
+            }
+          }
+        }
+      }
+    },
+    "/billing/accounts/{accountId}/reports/{billingPeriodId}/vrf": {
+      "get": {
+        "tags": [
+          "Billing VRF Report"
+        ],
+        "summary": "generateVRFBilling",
+        "operationId": "generateVRFBillingUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "description": "accountId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "billingPeriodId",
+            "in": "path",
+            "description": "billingPeriodId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GenerateVRFBillingReportResponse"
             }
           }
         }
@@ -6356,6 +6574,19 @@
       },
       "title": "BillingAlarmDefinition"
     },
+    "BillingPeriod": {
+      "type": "object",
+      "properties": {
+        "monthN": {
+          "type": "string"
+        },
+        "periodId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "BillingPeriod"
+    },
     "CreateBillingAlarmDefinitionResponse": {
       "type": "object",
       "properties": {
@@ -7513,6 +7744,118 @@
       },
       "title": "GFWRuleListResponse"
     },
+    "GenerateKMSBillingReportResponse": {
+      "type": "object",
+      "properties": {
+        "kmsReportElementCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KMSReportElement"
+          }
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "GenerateKMSBillingReportResponse"
+    },
+    "GeneratePIPBillingReportResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "pipReportElementCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PIPReportElement"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "GeneratePIPBillingReportResponse"
+    },
+    "GenerateVRFBillingReportResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "vrfReportElementCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VRFReportElement"
+          }
+        }
+      },
+      "title": "GenerateVRFBillingReportResponse"
+    },
+    "GenerateVirtualMachineBillingReportResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "virtualMachineReportElementCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VirtualMachineReportElement"
+          }
+        }
+      },
+      "title": "GenerateVirtualMachineBillingReportResponse"
+    },
+    "GetBillingPeriodResponse": {
+      "type": "object",
+      "properties": {
+        "billingPeriod": {
+          "$ref": "#/definitions/BillingPeriod"
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "GetBillingPeriodResponse"
+    },
     "GetLogCategoryStats": {
       "type": "object",
       "properties": {
@@ -7880,6 +8223,42 @@
         }
       },
       "title": "IsoInstance"
+    },
+    "KMSReportElement": {
+      "type": "object",
+      "properties": {
+        "estimatedCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "insertDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "keyId": {
+          "type": "string"
+        },
+        "keyName": {
+          "type": "string"
+        },
+        "keyType": {
+          "type": "string"
+        },
+        "totalCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "totalDays": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "unitPrice": {
+          "type": "number",
+          "format": "float"
+        }
+      },
+      "title": "KMSReportElement"
     },
     "KeyExport": {
       "type": "object",
@@ -8284,6 +8663,29 @@
       },
       "title": "LicSettings"
     },
+    "ListBillingPeriodResponse": {
+      "type": "object",
+      "properties": {
+        "billingPeriodCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BillingPeriod"
+          }
+        },
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        }
+      },
+      "title": "ListBillingPeriodResponse"
+    },
     "LogCategory": {
       "type": "object",
       "properties": {
@@ -8561,6 +8963,43 @@
         }
       },
       "title": "NATRuleListResponse"
+    },
+    "PIPReportElement": {
+      "type": "object",
+      "properties": {
+        "allocationId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "allocationName": {
+          "type": "string"
+        },
+        "estimatedCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "insertDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "ipAddress": {
+          "type": "string"
+        },
+        "totalCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "totalDays": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "unitPrice": {
+          "type": "number",
+          "format": "float"
+        }
+      },
+      "title": "PIPReportElement"
     },
     "Position": {
       "type": "object",
@@ -9489,6 +9928,9 @@
           "format": "date-time",
           "x-nullable": true
         },
+        "parentSnapshotId": {
+          "type": "string"
+        },
         "powerState": {
           "type": "string",
           "enum": [
@@ -10025,6 +10467,39 @@
       },
       "title": "UserInstance"
     },
+    "VRFReportElement": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "estimatedCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "insertDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "routerId": {
+          "type": "string"
+        },
+        "totalCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "totalDays": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "unitPrice": {
+          "type": "number",
+          "format": "float"
+        }
+      },
+      "title": "VRFReportElement"
+    },
     "VcsVirtualMachineCreateResponse": {
       "type": "object",
       "properties": {
@@ -10196,6 +10671,9 @@
         "projectId": {
           "type": "string"
         },
+        "readOnly": {
+          "type": "boolean"
+        },
         "secondaryDnsAddress": {
           "type": "string"
         },
@@ -10303,6 +10781,131 @@
         }
       },
       "title": "VirtualDiskDevice"
+    },
+    "VirtualMachineReportElement": {
+      "type": "object",
+      "properties": {
+        "allocatedStorageGB": {
+          "type": "number",
+          "format": "float"
+        },
+        "allocatedvCPU": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "allocatedvRAM": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cost": {
+          "type": "number",
+          "format": "float"
+        },
+        "cpuCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "currentReportHours": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "discountCpuCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "discountPercentage": {
+          "type": "number",
+          "format": "float"
+        },
+        "discountRAMCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "discountValue": {
+          "type": "number",
+          "format": "float"
+        },
+        "estimatedMonthlyCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "insertDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "licenseCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "osType": {
+          "type": "string",
+          "enum": [
+            "LINUX",
+            "WINDOWS"
+          ]
+        },
+        "ramCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "runningTimePerc": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "snapshotCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "snapshotGB": {
+          "type": "number",
+          "format": "float"
+        },
+        "storageCost": {
+          "type": "number",
+          "format": "float"
+        },
+        "storagePolicy": {
+          "type": "string"
+        },
+        "storageTotalUsedGB": {
+          "type": "number",
+          "format": "float"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "totalCostAfterDiscount": {
+          "type": "number",
+          "format": "float"
+        },
+        "totalCostAfterDiscountWithLicense": {
+          "type": "number",
+          "format": "float"
+        },
+        "totalHours": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalHoursAllocated": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalHoursPoweredOn": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "virtualMachineGuest": {
+          "type": "string"
+        },
+        "virtualMachineId": {
+          "type": "string"
+        },
+        "virtualMachineName": {
+          "type": "string"
+        }
+      },
+      "title": "VirtualMachineReportElement"
     },
     "VirtualNetworkCreateResponse": {
       "type": "object",

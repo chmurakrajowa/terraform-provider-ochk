@@ -143,6 +143,11 @@ func (m *PublicIPAllocation) ContextValidate(ctx context.Context, formats strfmt
 func (m *PublicIPAllocation) contextValidatePublicIPAddress(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.PublicIPAddress != nil {
+
+		if swag.IsZero(m.PublicIPAddress) { // not required
+			return nil
+		}
+
 		if err := m.PublicIPAddress.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("publicIpAddress")
@@ -161,6 +166,11 @@ func (m *PublicIPAllocation) contextValidateServiceList(ctx context.Context, for
 	for i := 0; i < len(m.ServiceList); i++ {
 
 		if m.ServiceList[i] != nil {
+
+			if swag.IsZero(m.ServiceList[i]) { // not required
+				return nil
+			}
+
 			if err := m.ServiceList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("serviceList" + "." + strconv.Itoa(i))

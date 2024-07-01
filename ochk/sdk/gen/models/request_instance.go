@@ -529,6 +529,11 @@ func (m *RequestInstance) contextValidateRequestMessageList(ctx context.Context,
 	for i := 0; i < len(m.RequestMessageList); i++ {
 
 		if m.RequestMessageList[i] != nil {
+
+			if swag.IsZero(m.RequestMessageList[i]) { // not required
+				return nil
+			}
+
 			if err := m.RequestMessageList[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("requestMessageList" + "." + strconv.Itoa(i))

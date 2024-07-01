@@ -129,6 +129,11 @@ func (m *TagCreateResponse) ContextValidate(ctx context.Context, formats strfmt.
 func (m *TagCreateResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
@@ -145,6 +150,11 @@ func (m *TagCreateResponse) contextValidateRequestInstance(ctx context.Context, 
 func (m *TagCreateResponse) contextValidateTag(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.Tag != nil {
+
+		if swag.IsZero(m.Tag) { // not required
+			return nil
+		}
+
 		if err := m.Tag.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("tag")

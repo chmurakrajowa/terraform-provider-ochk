@@ -102,7 +102,7 @@ func (p *RoutersProxy) Create(ctx context.Context, Router *models.RouterInstance
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	_, put, err := p.service.RouterCreateUsingPUT(params)
+	put, _, err := p.service.RouterCreateUsingPUT(params)
 	mutex.Unlock()
 
 	if err != nil {

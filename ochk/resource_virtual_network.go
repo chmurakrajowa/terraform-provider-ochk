@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"strings"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -28,7 +29,7 @@ func resourceVirtualNetwork() *schema.Resource {
 		},
 
 		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
+			StateContext: resourceVirtualNetworkImportState,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -75,6 +76,11 @@ func resourceVirtualNetwork() *schema.Resource {
 			},
 		},
 	}
+}
+
+func resourceVirtualNetworkImportState(_ context.Context, d *schema.ResourceData, _ interface{}) ([]*schema.ResourceData, error) {
+	d.SetId(strings.ToLower(d.Id()))
+	return []*schema.ResourceData{d}, nil
 }
 
 func resourceVirtualNetworkCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {

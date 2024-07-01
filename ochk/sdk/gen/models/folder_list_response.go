@@ -109,6 +109,11 @@ func (m *FolderListResponse) contextValidateFolderInstanceCollection(ctx context
 	for i := 0; i < len(m.FolderInstanceCollection); i++ {
 
 		if m.FolderInstanceCollection[i] != nil {
+
+			if swag.IsZero(m.FolderInstanceCollection[i]) { // not required
+				return nil
+			}
+
 			if err := m.FolderInstanceCollection[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("folderInstanceCollection" + "." + strconv.Itoa(i))

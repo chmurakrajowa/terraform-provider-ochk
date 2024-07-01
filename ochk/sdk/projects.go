@@ -29,7 +29,7 @@ func (p *ProjectsProxy) Create(ctx context.Context, project *models.ProjectInsta
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	_, put, err := p.service.ProjectCreateUsingPUT(params)
+	put, _, err := p.service.ProjectCreateUsingPUT(params)
 	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while creating project: %w", err)

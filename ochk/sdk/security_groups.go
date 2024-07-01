@@ -29,7 +29,7 @@ func (p *SecurityGroupsProxy) Create(ctx context.Context, securityGroup *models.
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	_, put, err := p.service.SecurityGroupCreateUsingPUT(params)
+	put, _, err := p.service.SecurityGroupCreateUsingPUT(params)
 	mutex.Unlock()
 
 	if err != nil {

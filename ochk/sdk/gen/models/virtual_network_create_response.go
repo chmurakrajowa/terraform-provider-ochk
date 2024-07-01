@@ -129,6 +129,11 @@ func (m *VirtualNetworkCreateResponse) ContextValidate(ctx context.Context, form
 func (m *VirtualNetworkCreateResponse) contextValidateRequestInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RequestInstance != nil {
+
+		if swag.IsZero(m.RequestInstance) { // not required
+			return nil
+		}
+
 		if err := m.RequestInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("requestInstance")
@@ -145,6 +150,11 @@ func (m *VirtualNetworkCreateResponse) contextValidateRequestInstance(ctx contex
 func (m *VirtualNetworkCreateResponse) contextValidateVirtualNetworkInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.VirtualNetworkInstance != nil {
+
+		if swag.IsZero(m.VirtualNetworkInstance) { // not required
+			return nil
+		}
+
 		if err := m.VirtualNetworkInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("virtualNetworkInstance")

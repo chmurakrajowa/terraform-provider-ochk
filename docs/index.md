@@ -8,7 +8,7 @@ Terraform Provider for managing cloud resources in OChK.
 provider "ochk" {
     host = var.host
     platform = var.platform
-    username = var.username
+    api_key = var.api_key
     debug_log_file = var.debug_log_file
 }
 
@@ -29,17 +29,14 @@ resource "ochk_security_group" "vm" {
 
 * `host` - API hostname
 * `platform` - platform name
-* `username` - user name
-* `password` - password
-* `debug_log_file` - output file to which all API calls will be logged. DEPRECATED: use TF_LOG=DEBUG instead.  
+* `api_key` - api key
+* `debug_log_file` - output file to which all API calls will be logged. DEPRECATED: use TF_LOG=DEBUG instead.
 
 Arguments can be set using environment variables:
 * `host` - `OCHK_HOST`
 * `platform` - `OCHK_PLATFORM`
-* `username` - `OCHK_USERNAME`
-* `password` - `OCHK_PASSWORD`
-
-
+* `api_key` - `OCHK_API_KEY`
+    
 ## Debugging 
 
 To debug API calls, set TF_LOG=DEBUG env var.

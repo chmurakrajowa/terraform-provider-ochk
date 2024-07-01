@@ -99,6 +99,11 @@ func (m *DeploymentGetResponse) ContextValidate(ctx context.Context, formats str
 func (m *DeploymentGetResponse) contextValidateDeploymentInstance(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.DeploymentInstance != nil {
+
+		if swag.IsZero(m.DeploymentInstance) { // not required
+			return nil
+		}
+
 		if err := m.DeploymentInstance.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("deploymentInstance")

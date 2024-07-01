@@ -99,6 +99,11 @@ func (m *GetLogHistogram) ContextValidate(ctx context.Context, formats strfmt.Re
 func (m *GetLogHistogram) contextValidateLogHistogram(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.LogHistogram != nil {
+
+		if swag.IsZero(m.LogHistogram) { // not required
+			return nil
+		}
+
 		if err := m.LogHistogram.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("logHistogram")

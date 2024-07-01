@@ -30,7 +30,7 @@ func (p *VirtualNetworksProxy) Create(ctx context.Context, virtualNetwork *model
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	_, put, err := p.service.VirtualNetworkCreateUsingPUT(params)
+	put, _, err := p.service.VirtualNetworkCreateUsingPUT(params)
 	mutex.Unlock()
 
 	if err != nil {

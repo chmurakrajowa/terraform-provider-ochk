@@ -29,7 +29,7 @@ func (p *CustomServicesProxy) Create(ctx context.Context, customService *models.
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	_, put, err := p.service.CustomServiceCreateUsingPUT(params)
+	put, _, err := p.service.CustomServiceCreateUsingPUT(params)
 	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while creating custom service: %w", err)

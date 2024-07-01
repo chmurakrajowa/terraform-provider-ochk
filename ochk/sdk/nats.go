@@ -98,7 +98,7 @@ func (p *NatProxy) CreateNat(ctx context.Context, natRuleInstance *models.NATRul
 	}
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	_, put, err := p.service.NatRuleCreateUsingPUT(params)
+	put, _, err := p.service.NatRuleCreateUsingPUT(params)
 	mutex.Unlock()
 
 	if err != nil {

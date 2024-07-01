@@ -2,8 +2,7 @@ variable "test-data-prefix" {}
 variable "vrf_router" {}
 variable "host" {}
 variable "platform" {}
-variable "username" {}
-variable "password" {}
+variable "api_key" {}
 variable "debug_log_file" {}
 variable "initial_password_for_vm" {}
 variable "backup_list" {}
