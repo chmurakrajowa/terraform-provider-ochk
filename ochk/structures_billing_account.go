@@ -41,9 +41,9 @@ func flattenAccProjects(in []*models.AccountProjectInstance) *schema.Set {
 }
 
 func projectsHash(v interface{}) int {
-	m := v.(map[string]interface{})
+	m := v.(map[strfmt.UUID]interface{})
 
-	return schema.HashString(m["project_id"])
+	return schema.HashString((m["project_id"].(strfmt.UUID)).String())
 }
 
 func expandAcctProjects(in []interface{}) []*models.AccountProjectInstance {

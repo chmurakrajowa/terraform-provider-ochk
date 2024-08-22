@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="go test datasources" type="GoTestRunConfiguration" factoryName="Go Test">
+    <module name="terraform-provider-ochk" />
+    <working_directory value="$PROJECT_DIR$/ochk" />
+    <envs>
+      <env name="TF_VAR_api_key" value="IIC-j-HBeYXKlKcmt6bgmO8hBSSc16i6" />
+      <env name="TF_VAR_host" value="pckproxy.ochk.pilot" />
+      <env name="TF_VAR_platform" value="devel" />
+      <env name="TF_ACC" value="true" />
+    </envs>
+    <root_directory value="$PROJECT_DIR$" />
+    <kind value="DIRECTORY" />
+    <package value="github.com/chmurakrajowa/terraform-provider-ochk" />
+    <directory value="$PROJECT_DIR$/ochk" />
+    <filePath value="$PROJECT_DIR$/ochk/data_source_backup_list_test.go|$PROJECT_DIR$/ochk/data_source_backup_lists_test.go|$PROJECT_DIR$/ochk/data_source_backup_plan_test.go|$PROJECT_DIR$/ochk/data_source_backup_plans_test.go|$PROJECT_DIR$/ochk/data_source_billing_account_test.go|$PROJECT_DIR$/ochk/data_source_billing_accounts_test.go|$PROJECT_DIR$/ochk/data_source_custom_service_test.go|$PROJECT_DIR$/ochk/data_source_custom_services_test.go|$PROJECT_DIR$/ochk/data_source_deployment_params_types_test.go|$PROJECT_DIR$/ochk/data_source_deployment_test.go|$PROJECT_DIR$/ochk/data_source_deployment_types_test.go|$PROJECT_DIR$/ochk/data_source_deployments_test.go|$PROJECT_DIR$/ochk/data_source_firewall_ew_rule_test.go|$PROJECT_DIR$/ochk/data_source_firewall_ew_rules_test.go|$PROJECT_DIR$/ochk/data_source_firewall_sn_rule_test.go|$PROJECT_DIR$/ochk/data_source_firewall_sn_rules_test.go|$PROJECT_DIR$/ochk/data_source_folders_test.go|$PROJECT_DIR$/ochk/data_source_ip_collection_test.go|$PROJECT_DIR$/ochk/data_source_ip_collections_test.go|$PROJECT_DIR$/ochk/data_source_kms_key_test.go|$PROJECT_DIR$/ochk/data_source_kms_keys_test.go|$PROJECT_DIR$/ochk/data_source_nat_test.go|$PROJECT_DIR$/ochk/data_source_nats_test.go|$PROJECT_DIR$/ochk/data_source_project_test.go|$PROJECT_DIR$/ochk/data_source_projects_test.go|$PROJECT_DIR$/ochk/data_source_public_ip_addresses_test.go|$PROJECT_DIR$/ochk/data_source_security_group_test.go|$PROJECT_DIR$/ochk/data_source_security_groups_test.go|$PROJECT_DIR$/ochk/data_source_service_test.go|$PROJECT_DIR$/ochk/data_source_services_test.go|$PROJECT_DIR$/ochk/data_source_snapshot_test.go|$PROJECT_DIR$/ochk/data_source_snapshots_test.go|$PROJECT_DIR$/ochk/data_source_tag_test.go|$PROJECT_DIR$/ochk/data_source_tags_test.go|$PROJECT_DIR$/ochk/data_source_virtual_machine_test.go|$PROJECT_DIR$/ochk/data_source_virtual_machines_test.go|$PROJECT_DIR$/ochk/data_source_virtual_network_test.go|$PROJECT_DIR$/ochk/data_source_virtual_networks_test.go|$PROJECT_DIR$/ochk/data_source_vpc_test.go|$PROJECT_DIR$/ochk/data_source_vpcs_test.go|$PROJECT_DIR$/ochk/data_source_vrf_test.go|$PROJECT_DIR$/ochk/data_source_vrfs_test.go" />
+    <framework value="gotest" />
+    <pattern value="regexp ^DataSource" />
+    <method v="2" />
+  </configuration>
+</component>

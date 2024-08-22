@@ -12,7 +12,7 @@
 }
 {
 	"Name": "VRF",
-	"Text": "T0"
+	"Text": "VRF-default"
 }
 {
 	"Name": "Deployment1DisplayName",
