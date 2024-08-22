@@ -84,7 +84,7 @@ func dataSourceCustomServiceRead(ctx context.Context, d *schema.ResourceData, me
 		return diag.Errorf("more than one custom service with display_name: %s found!", displayName)
 	}
 
-	d.SetId(customServices[0].ServiceID)
+	d.SetId(customServices[0].ServiceID.String())
 
 	if err := d.Set("display_name", customServices[0].DisplayName); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)

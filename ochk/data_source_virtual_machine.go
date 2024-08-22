@@ -57,7 +57,7 @@ func dataSourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, m
 	if err := d.Set("project_id", virtualMachines[0].ProjectID); err != nil {
 		return diag.Errorf("error setting virtual machine project_id: %v", err)
 	}
-	d.SetId(virtualMachines[0].VirtualMachineID)
+	d.SetId(virtualMachines[0].VirtualMachineID.String())
 
 	return nil
 }

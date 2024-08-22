@@ -1,7 +1,8 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -25,7 +26,7 @@ func expandSecurityGroupFromIDs(in []interface{}) []*models.SecurityGroup {
 
 	for i, v := range in {
 		securityGroup := &models.SecurityGroup{
-			ID: v.(string),
+			ID: v.(strfmt.UUID),
 		}
 
 		out[i] = securityGroup
@@ -63,8 +64,8 @@ func expandSecurityGroupMembers(in []interface{}) []*models.SecurityGroupMember 
 		m := v.(map[string]interface{})
 
 		member := &models.SecurityGroupMember{
-			ID:         m["id"].(string),
-			MemberType: m["type"].(string),
+			ID:         strfmt.UUID(m["id"].(string)),
+			MemberType: models.SecurityGroupMemberType(m["type"].(string)),
 		}
 
 		if displayName, ok := m["display_name"].(string); ok && displayName != "" {
@@ -79,5 +80,5 @@ func expandSecurityGroupMembers(in []interface{}) []*models.SecurityGroupMember 
 func securityGroupMembersHash(v interface{}) int {
 	m := v.(map[string]interface{})
 
-	return schema.HashString(m["id"])
+	return schema.HashString(m["id"].(strfmt.UUID).String())
 }

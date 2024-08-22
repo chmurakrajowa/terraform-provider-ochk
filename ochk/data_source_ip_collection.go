@@ -63,7 +63,7 @@ func dataSourceIPCollectionRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("more than one IP collection with display_name: %s found!", displayName)
 	}
 
-	d.SetId(ipCollections[0].ID)
+	d.SetId(ipCollections[0].ID.String())
 
 	if err := d.Set("project_id", ipCollections[0].ProjectID); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)

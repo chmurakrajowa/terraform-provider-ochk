@@ -1,7 +1,8 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -34,8 +35,8 @@ func expandCustomServicePorts(in []interface{}) []*models.L4PortSetEntry {
 		m := v.(map[string]interface{})
 
 		member := &models.L4PortSetEntry{
-			L4PortSetEntryID: m["id"].(string),
-			L4Protocol:       m["protocol"].(string),
+			L4PortSetEntryID: strfmt.UUID(m["id"].(string)),
+			L4Protocol:       models.L4Protocol(m["protocol"].(string)),
 			SourcePorts:      transformSetToStringSlice(m["source"].(*schema.Set)),
 			DestinationPorts: transformSetToStringSlice(m["destination"].(*schema.Set)),
 		}
@@ -66,7 +67,7 @@ func expandCustomServicesFromIDs(in []interface{}) []*models.CustomServiceInstan
 
 	for i, v := range in {
 		service := &models.CustomServiceInstance{
-			ServiceID: v.(string),
+			ServiceID: v.(strfmt.UUID),
 		}
 
 		out[i] = service
@@ -75,15 +76,15 @@ func expandCustomServicesFromIDs(in []interface{}) []*models.CustomServiceInstan
 	return out
 }
 
-func flattenCustomServices(in []*models.CustomServiceInstance) []map[string]interface{} {
+func flattenCustomServices(in []*models.CustomServiceInstance) []map[strfmt.UUID]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
 
-	var out []map[string]interface{}
+	var out []map[strfmt.UUID]interface{}
 
 	for _, v := range in {
-		m := make(map[string]interface{})
+		m := make(map[strfmt.UUID]interface{})
 		m["custom_service_id"] = v.ServiceID
 		m["display_name"] = v.DisplayName
 		m["project_id"] = v.ProjectID

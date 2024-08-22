@@ -3,8 +3,9 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"strings"
 	"time"
 
@@ -135,6 +136,6 @@ func resourceTagDelete(ctx context.Context, d *schema.ResourceData, meta interfa
 func mapResourceDataToTag(d *schema.ResourceData) *models.Tag {
 	return &models.Tag{
 		TagValue:  d.Get("display_name").(string),
-		ProjectID: d.Get("project_id").(string),
+		ProjectID: strfmt.UUID(d.Get("project_id").(string)),
 	}
 }

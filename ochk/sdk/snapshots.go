@@ -4,30 +4,29 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/snapshots"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/virtual_machines"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/virtual_machine_snapshot"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 )
 
 type SnapshotsProxy struct {
 	httpClient *http.Client
-	service    virtual_machines.ClientService
+	service    virtual_machine_snapshot.ClientService
 }
 
-func (p *SnapshotsProxy) Read(ctx context.Context, snapshotID string, virtualMachineID string) (*models.SnapshotInstance, error) {
-	params := &virtual_machines.VcsVirtualMachineSnapshotGetUsingGETParams{
+func (p *SnapshotsProxy) Read(ctx context.Context, snapshotID strfmt.UUID, virtualMachineID strfmt.UUID) (*models.SnapshotInstance, error) {
+	params := &virtual_machine_snapshot.GetVcsVirtualMachinesVirtualMachineIDSnapshotsSnapshotIDParams{
 		SnapshotID:       snapshotID,
 		VirtualMachineID: virtualMachineID,
 		Context:          ctx,
 		HTTPClient:       p.httpClient,
 	}
 
-	response, err := p.service.VcsVirtualMachineSnapshotGetUsingGET(params)
+	response, err := p.service.GetVcsVirtualMachinesVirtualMachineIDSnapshotsSnapshotID(params)
 
 	if err != nil {
-		var notFound *snapshots.SnapshotGetUsingGETNotFound
+		var notFound *virtual_machine_snapshot.GetVcsVirtualMachinesVirtualMachineIDSnapshotsSnapshotIDNotFound
 
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
@@ -43,15 +42,15 @@ func (p *SnapshotsProxy) Read(ctx context.Context, snapshotID string, virtualMac
 	return response.Payload.SnapshotInstance, nil
 }
 
-func (p *SnapshotsProxy) ListSnapshotsByName(ctx context.Context, virtualMachineID string, snapshotName string) ([]*models.SnapshotInstance, error) {
-	params := &virtual_machines.VcsVirtualMachineSnapshotListUsingGETParams{
+func (p *SnapshotsProxy) ListSnapshotsByName(ctx context.Context, virtualMachineID strfmt.UUID, snapshotName string) ([]*models.SnapshotInstance, error) {
+	params := &virtual_machine_snapshot.GetVcsVirtualMachinesVirtualMachineIDSnapshotsParams{
 		VirtualMachineID: virtualMachineID,
 		DisplayName:      &snapshotName,
 		Context:          ctx,
 		HTTPClient:       p.httpClient,
 	}
 
-	response, err := p.service.VcsVirtualMachineSnapshotListUsingGET(params)
+	response, err := p.service.GetVcsVirtualMachinesVirtualMachineIDSnapshots(params)
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing snapshots: %w", err)
@@ -63,40 +62,40 @@ func (p *SnapshotsProxy) ListSnapshotsByName(ctx context.Context, virtualMachine
 	return response.Payload.SnapshotInstanceCollection, nil
 }
 
-func (p *SnapshotsProxy) ListSnapshots(ctx context.Context, virtualMachineID string) ([]*models.SnapshotInstance, error) {
-	params := &virtual_machines.VcsVirtualMachineSnapshotListUsingGETParams{
+func (p *SnapshotsProxy) ListSnapshots(ctx context.Context, virtualMachineID strfmt.UUID) ([]*models.SnapshotInstance, error) {
+	params := &virtual_machine_snapshot.GetVcsVirtualMachinesVirtualMachineIDSnapshotsParams{
 		VirtualMachineID: virtualMachineID,
 		Context:          ctx,
 		HTTPClient:       p.httpClient,
 	}
 
-	response, err := p.service.VcsVirtualMachineSnapshotListUsingGET(params)
+	response, err := p.service.GetVcsVirtualMachinesVirtualMachineIDSnapshots(params)
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing snapshots: %w", err)
 	}
 
 	if !response.Payload.Success {
-		return nil, fmt.Errorf("Listing snapshots failed: %s", response.Payload.Messages)
+		return nil, fmt.Errorf("listing snapshots failed: %s", response.Payload.Messages)
 	}
 
 	return response.Payload.SnapshotInstanceCollection, nil
 }
 
-func (p *SnapshotsProxy) Create(ctx context.Context, virtualMachineID string, ram *bool, snapshot *models.SnapshotInstance) (*models.SnapshotInstance, error) {
+func (p *SnapshotsProxy) Create(ctx context.Context, virtualMachineID strfmt.UUID, ram *bool, snapshot *models.SnapshotInstance) (*models.SnapshotInstance, error) {
 	if err := snapshot.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating snapshot struct: %w", err)
 	}
 
-	params := &virtual_machines.VcsVirtualMachineSnapshotCreateUsingPUTParams{
+	params := &virtual_machine_snapshot.PutVcsVirtualMachinesVirtualMachineIDSnapshotsParams{
 		VirtualMachineID: virtualMachineID,
-		SnapshotInstance: snapshot,
-		RAMSnapshot:      ram,
-		Context:          ctx,
-		HTTPClient:       p.httpClient,
+		Body:             snapshot,
+		//
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
-	put, _, err := p.service.VcsVirtualMachineSnapshotCreateUsingPUT(params)
+	put, err := p.service.PutVcsVirtualMachinesVirtualMachineIDSnapshots(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while creating snapshot: %w", err)
 	}
@@ -108,18 +107,18 @@ func (p *SnapshotsProxy) Create(ctx context.Context, virtualMachineID string, ra
 	return put.Payload.SnapshotInstance, nil
 }
 
-func (p *SnapshotsProxy) Delete(ctx context.Context, virtualMachineID string, snapshotID string) error {
+func (p *SnapshotsProxy) Delete(ctx context.Context, virtualMachineID strfmt.UUID, snapshotID strfmt.UUID) error {
 
-	params := &virtual_machines.VcsVirtualMachineSnapshotDeleteUsingDELETEParams{
+	params := &virtual_machine_snapshot.DeleteVcsVirtualMachinesVirtualMachineIDSnapshotsSnapshotIDParams{
 		VirtualMachineID: virtualMachineID,
 		SnapshotID:       snapshotID,
 		Context:          ctx,
 		HTTPClient:       p.httpClient,
 	}
 
-	response, err := p.service.VcsVirtualMachineSnapshotDeleteUsingDELETE(params)
+	response, err := p.service.DeleteVcsVirtualMachinesVirtualMachineIDSnapshotsSnapshotID(params)
 	if err != nil {
-		var badRequest *snapshots.SnapshotGetUsingGETBadRequest
+		var badRequest *virtual_machine_snapshot.DeleteVcsVirtualMachinesVirtualMachineIDSnapshotsSnapshotIDBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}

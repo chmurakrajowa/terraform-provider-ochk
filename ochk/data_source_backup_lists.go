@@ -3,6 +3,7 @@ package ochk
 import (
 	"context"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -39,7 +40,7 @@ func dataSourceBackupListsRead(ctx context.Context, d *schema.ResourceData, meta
 
 	proxy := meta.(*sdk.Client).BackupLists
 
-	backupPlanId := d.Get("backup_plan_id").(string)
+	backupPlanId := strfmt.UUID(d.Get("backup_plan_id").(string))
 
 	backupLists, err := proxy.ListBackupList(ctx, backupPlanId)
 
@@ -51,7 +52,7 @@ func dataSourceBackupListsRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error while listing backup list")
 	}
 
-	d.SetId("backup-list-" + backupPlanId)
+	d.SetId("backup-list-" + backupPlanId.String())
 
 	return nil
 }

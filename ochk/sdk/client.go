@@ -4,7 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/runtime/logger"
 	"github.com/go-openapi/strfmt"
@@ -109,15 +109,15 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 	c := &Client{
 		SecurityGroups: SecurityGroupsProxy{
 			httpClient: httpClient,
-			service:    authClient.SecurityGroups,
+			service:    authClient.SecurityGroup,
 		},
 		FirewallEWRules: FirewallEWRulesProxy{
 			httpClient: httpClient,
-			service:    authClient.FirewallRulesew,
+			service:    authClient.DfwRule,
 		},
 		FirewallSNRules: FirewallSNRulesProxy{
 			httpClient: httpClient,
-			service:    authClient.FirewallRulessn,
+			service:    authClient.GfwRule,
 		},
 		Services: ServicesProxy{
 			httpClient: httpClient,
@@ -125,11 +125,11 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		},
 		Routers: RoutersProxy{
 			httpClient: httpClient,
-			service:    authClient.Routers,
+			service:    authClient.Router,
 		},
 		VirtualMachines: VirtualMachinesProxy{
 			httpClient: httpClient,
-			service:    authClient.VirtualMachines,
+			service:    authClient.VirtualMachine,
 		},
 		Projects: ProjectsProxy{
 			httpClient: httpClient,
@@ -137,7 +137,7 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		},
 		VirtualNetworks: VirtualNetworksProxy{
 			httpClient: httpClient,
-			service:    authClient.VirtualNetworks,
+			service:    authClient.VirtualNetwork,
 		},
 		Requests: RequestsProxy{
 			httpClient: httpClient,
@@ -145,7 +145,7 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		},
 		IPCollections: IPCollectionsProxy{
 			httpClient: httpClient,
-			service:    authClient.IPCollections,
+			service:    authClient.IPCollection,
 		},
 		Deployments: DeploymentsProxy{
 			httpClient: httpClient,
@@ -157,7 +157,7 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		},
 		KMSKeys: KMSKeysProxy{
 			httpClient: httpClient,
-			service:    authClient.KmsKeyManagement,
+			service:    authClient.Key,
 		},
 		BackupPlans: BackupPlansProxy{
 			httpClient: httpClient,
@@ -173,7 +173,7 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		},
 		Nats: NatProxy{
 			httpClient: httpClient,
-			service:    authClient.NatRules,
+			service:    authClient.NatRule,
 		},
 		Folders: FoldersProxy{
 			httpClient: httpClient,
@@ -181,15 +181,15 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		},
 		PublicIPAddresses: PublicIPAddressProxy{
 			httpClient: httpClient,
-			service:    authClient.IPamPublicIPAllocations,
+			service:    authClient.PublicIP,
 		},
 		Snapshots: SnapshotsProxy{
 			httpClient: httpClient,
-			service:    authClient.VirtualMachines,
+			service:    authClient.VirtualMachineSnapshot,
 		},
 		Accounts: AccountsProxy{
 			httpClient: httpClient,
-			service:    authClient.BillingAccounts,
+			service:    authClient.Accounts,
 		},
 	}
 

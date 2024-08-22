@@ -2,8 +2,9 @@ package ochk
 
 import (
 	"context"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"strings"
 	"time"
 
@@ -83,7 +84,7 @@ func resourceIPCollectionCreate(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error while creating ip collection: %+v", err)
 	}
 
-	d.SetId(created.ID)
+	d.SetId(created.ID.String())
 
 	return resourceIPCollectionRead(ctx, d, meta)
 }
@@ -91,7 +92,7 @@ func resourceIPCollectionCreate(ctx context.Context, d *schema.ResourceData, met
 func resourceIPCollectionRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).IPCollections
 
-	ipCollection, err := proxy.Read(ctx, d.Id())
+	ipCollection, err := proxy.Read(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -137,7 +138,7 @@ func resourceIPCollectionUpdate(ctx context.Context, d *schema.ResourceData, met
 	proxy := meta.(*sdk.Client).IPCollections
 
 	IPCollection := mapResourceDataToIPCollection(d)
-	IPCollection.ID = d.Id()
+	IPCollection.ID = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, IPCollection)
 	if err != nil {
@@ -150,7 +151,7 @@ func resourceIPCollectionUpdate(ctx context.Context, d *schema.ResourceData, met
 func resourceIPCollectionDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).IPCollections
 
-	err := proxy.Delete(ctx, d.Id())
+	err := proxy.Delete(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -167,7 +168,7 @@ func resourceIPCollectionDelete(ctx context.Context, d *schema.ResourceData, met
 func mapResourceDataToIPCollection(d *schema.ResourceData) *models.IPCollection {
 	return &models.IPCollection{
 		DisplayName:           d.Get("display_name").(string),
-		ProjectID:             d.Get("project_id").(string),
+		ProjectID:             strfmt.UUID(d.Get("project_id").(string)),
 		IPCollectionAddresses: transformSetToStringSlice(d.Get("ip_addresses").(*schema.Set)),
 	}
 }

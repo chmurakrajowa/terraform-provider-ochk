@@ -2,8 +2,9 @@ package ochk
 
 import (
 	"context"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"strings"
 	"time"
 
@@ -98,7 +99,7 @@ func resourceSecurityGroupCreate(ctx context.Context, d *schema.ResourceData, me
 		return diag.Errorf("error while creating security group: %+v", err)
 	}
 
-	d.SetId(created.ID)
+	d.SetId(created.ID.String())
 
 	return resourceSecurityGroupRead(ctx, d, meta)
 }
@@ -106,7 +107,7 @@ func resourceSecurityGroupCreate(ctx context.Context, d *schema.ResourceData, me
 func resourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).SecurityGroups
 
-	securityGroup, err := proxy.Read(ctx, d.Id())
+	securityGroup, err := proxy.Read(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -152,7 +153,7 @@ func resourceSecurityGroupUpdate(ctx context.Context, d *schema.ResourceData, me
 	proxy := meta.(*sdk.Client).SecurityGroups
 
 	securityGroup := mapResourceDataToSecurityGroup(d)
-	securityGroup.ID = d.Id()
+	securityGroup.ID = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, securityGroup)
 	if err != nil {
@@ -165,7 +166,7 @@ func resourceSecurityGroupUpdate(ctx context.Context, d *schema.ResourceData, me
 func resourceSecurityGroupDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).SecurityGroups
 
-	err := proxy.Delete(ctx, d.Id())
+	err := proxy.Delete(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -182,7 +183,7 @@ func resourceSecurityGroupDelete(ctx context.Context, d *schema.ResourceData, me
 func mapResourceDataToSecurityGroup(d *schema.ResourceData) *models.SecurityGroup {
 	return &models.SecurityGroup{
 		DisplayName: d.Get("display_name").(string),
-		ProjectID:   d.Get("project_id").(string),
+		ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
 		Members:     expandSecurityGroupMembers(d.Get("members").(*schema.Set).List()),
 	}
 }

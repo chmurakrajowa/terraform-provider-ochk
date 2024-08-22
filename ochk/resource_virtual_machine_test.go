@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"testing"
@@ -19,21 +20,21 @@ type VirtualDiskTestData struct {
 type VirtualMachineTestData struct {
 	ResourceName           string
 	DisplayName            string
-	DeploymentID           string
+	DeploymentID           strfmt.UUID
 	InitialPassword        string
 	PowerState             string
 	VirtualDiskSizeMB      string
 	MemorySizeMb           string
 	CpuCount               string
 	StoragePolicy          string
-	ProjectID              string
+	ProjectID              strfmt.UUID
 	AdditionalVirtualDisks []VirtualDiskTestData
 	VirtualDiskDevice      *VirtualDiskTestData
 	VirtualNetworkDevices  []struct {
-		VirtualNetworkID string
+		VirtualNetworkID strfmt.UUID
 	}
 	Encryption                     bool
-	EncryptionKeyID                string
+	EncryptionKeyID                strfmt.UUID
 	EncryptionPrivateKeyIDToUnwrap string
 	EncryptionRecrypt              string
 
@@ -62,7 +63,7 @@ data "ochk_tag" "vm-tag" {
 
 resource "ochk_virtual_machine" "{{ .ResourceName}}" {
 	display_name = "{{.DisplayName}}"
-	deployment_id = {{ StringTFValue .DeploymentID }}
+	deployment_id = {{ UuidTFValue .DeploymentID }}
 	initial_password = "{{.InitialPassword}}"
 	power_state  = "{{.PowerState}}"
 	cpu_count = {{.CpuCount}}
@@ -71,10 +72,10 @@ resource "ochk_virtual_machine" "{{ .ResourceName}}" {
 		size_mb = {{.VirtualDiskSizeMB}}
 	}
 	storage_policy  = "{{.StoragePolicy}}"
-	project_id  = {{ StringTFValue .ProjectID}}
+	project_id  = {{ UuidTFValue .ProjectID}}
 	{{range .VirtualNetworkDevices}}
 	virtual_network_devices {
-		virtual_network_id = {{ StringTFValue .VirtualNetworkID }}
+		virtual_network_id = {{ UuidTFValue .VirtualNetworkID }}
     }
 	{{end}}
 	{{range .AdditionalVirtualDisks}}
@@ -111,10 +112,10 @@ resource "ochk_virtual_machine" "{{ .ResourceName}}" {
 	secondary_wins_address = "{{ .SecondaryWinsAddress }}"
 
 	{{if .EncryptionKeyID }}
-	encryption_key_id = {{ StringTFValue .EncryptionKeyID }}
+	encryption_key_id = {{ UuidTFValue .EncryptionKeyID }}
 	{{end}}
 	{{if .EncryptionPrivateKeyIDToUnwrap }}
-	encryption_private_key_id_to_unwrap = {{ StringTFValue .EncryptionPrivateKeyIDToUnwrap }}
+	encryption_private_key_id_to_unwrap = {{ UuidTFValue .EncryptionPrivateKeyIDToUnwrap }}
 	{{end}}
 	{{if .EncryptionRecrypt }}
 	encryption_recrypt = "{{ .EncryptionRecrypt }}"
@@ -146,16 +147,16 @@ func TestAccVirtualMachineResource_create_update_minimal(t *testing.T) {
 	virtualMachine := VirtualMachineTestData{
 		ResourceName:      "default",
 		DisplayName:       generateShortRandName(devTestDataPrefix),
-		DeploymentID:      testDataResourceID(&deployment),
+		DeploymentID:      strfmt.UUID(testDataResourceID(&deployment)),
 		InitialPassword:   "50b90880f9f",
 		PowerState:        "poweredOn",
 		VirtualDiskSizeMB: "40960",
 		CpuCount:          "2",
 		MemorySizeMb:      "4096",
 		StoragePolicy:     "STANDARD_W1",
-		ProjectID:         testDataResourceID(&project1),
-		VirtualNetworkDevices: []struct{ VirtualNetworkID string }{
-			{VirtualNetworkID: testDataResourceID(&vnet1)},
+		ProjectID:         strfmt.UUID(testDataResourceID(&project1)),
+		VirtualNetworkDevices: []struct{ VirtualNetworkID strfmt.UUID }{
+			{VirtualNetworkID: strfmt.UUID(testDataResourceID(&vnet1))},
 		},
 		AdditionalVirtualDisks: []VirtualDiskTestData{
 			{
@@ -329,23 +330,23 @@ func TestAccVirtualMachineResource_create_with_managed_encryption(t *testing.T) 
 	virtualMachine := VirtualMachineTestData{
 		ResourceName:      "default",
 		DisplayName:       generateShortRandName(devTestDataPrefix),
-		DeploymentID:      testDataResourceID(&deployment),
+		DeploymentID:      strfmt.UUID(testDataResourceID(&deployment)),
 		InitialPassword:   "50b90880f9f",
 		PowerState:        "poweredOn",
 		CpuCount:          "2",
 		MemorySizeMb:      "4096",
 		VirtualDiskSizeMB: "40960",
 		StoragePolicy:     "STANDARD_W1",
-		ProjectID:         testDataResourceID(&project1),
-		VirtualNetworkDevices: []struct{ VirtualNetworkID string }{
-			{VirtualNetworkID: testDataResourceID(&vnet1)},
+		ProjectID:         strfmt.UUID(testDataResourceID(&project1)),
+		VirtualNetworkDevices: []struct{ VirtualNetworkID strfmt.UUID }{
+			{VirtualNetworkID: strfmt.UUID(testDataResourceID(&vnet1))},
 		},
 		Encryption: true,
 	}
 
 	configInitial := deployment.ToString() + project1.ToString() + vnet1.ToString("-vm-m-in") + kmsAESKey.ToString() + virtualMachine.ToString()
 	virtualMachineUpdated := virtualMachine
-	virtualMachineUpdated.EncryptionKeyID = testDataResourceID(&kmsAESKey)
+	virtualMachineUpdated.EncryptionKeyID = strfmt.UUID(testDataResourceID(&kmsAESKey))
 	virtualMachineUpdated.EncryptionRecrypt = "SHALLOW"
 
 	configUpdated := deployment.ToString() + project1.ToString() + vnet1.ToString("-vm-m-up") + kmsAESKey.ToString() + virtualMachineUpdated.ToString()
@@ -395,19 +396,19 @@ func TestAccVirtualMachineResource_create_with_own_encryption(t *testing.T) {
 	virtualMachine := VirtualMachineTestData{
 		ResourceName:      "default",
 		DisplayName:       generateShortRandName(devTestDataPrefix),
-		DeploymentID:      testDataResourceID(&deployment),
+		DeploymentID:      strfmt.UUID(testDataResourceID(&deployment)),
 		InitialPassword:   "50b90880f9f",
 		PowerState:        "poweredOn",
 		CpuCount:          "2",
 		MemorySizeMb:      "4096",
 		VirtualDiskSizeMB: "40960",
 		StoragePolicy:     "STANDARD_W1",
-		ProjectID:         testDataResourceID(&project1),
-		VirtualNetworkDevices: []struct{ VirtualNetworkID string }{
-			{VirtualNetworkID: testDataResourceID(&vnet1)},
+		ProjectID:         strfmt.UUID(testDataResourceID(&project1)),
+		VirtualNetworkDevices: []struct{ VirtualNetworkID strfmt.UUID }{
+			{VirtualNetworkID: strfmt.UUID(testDataResourceID(&vnet1))},
 		},
 		Encryption:      true,
-		EncryptionKeyID: testDataResourceID(&kmsAESKey),
+		EncryptionKeyID: strfmt.UUID(testDataResourceID(&kmsAESKey)),
 	}
 
 	configInitial := deployment.ToString() + project1.ToString() + vnet1.ToString("-vm-enc-in") + kmsAESKey.ToString() + virtualMachine.ToString()

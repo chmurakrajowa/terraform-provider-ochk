@@ -1,10 +1,24 @@
 package ochk
 
 import (
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func mapSliceToInterfaceSlice(in []map[string]interface{}) []interface{} {
+func mapSliceToInterfaceSlice(in []map[strfmt.UUID]interface{}) []interface{} {
+	if in == nil {
+		return nil
+	}
+
+	output := make([]interface{}, len(in))
+	for i := range in {
+		output[i] = in[i]
+	}
+
+	return output
+}
+
+func mapSliceToInterfaceSliceStr(in []map[string]interface{}) []interface{} {
 	if in == nil {
 		return nil
 	}

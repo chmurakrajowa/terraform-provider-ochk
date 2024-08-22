@@ -3,8 +3,9 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"strings"
 	"time"
 
@@ -128,7 +129,7 @@ func firewallSNRuleStateContextImport(_ context.Context, d *schema.ResourceData,
 func resourceFirewallSNRuleCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallSNRules
 
-	routerID := d.Get("vpc_id").(string)
+	routerID := strfmt.UUID(d.Get("vpc_id").(string))
 
 	rule := mapResourceDataToGFWRule(d)
 
@@ -137,7 +138,7 @@ func resourceFirewallSNRuleCreate(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error while creating firewall SN rule: %+v", err)
 	}
 
-	d.SetId(created.RuleID)
+	d.SetId(created.RuleID.String())
 
 	return resourceFirewallSNRuleRead(ctx, d, meta)
 }
@@ -145,9 +146,9 @@ func resourceFirewallSNRuleCreate(ctx context.Context, d *schema.ResourceData, m
 func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallSNRules
 
-	routerID := d.Get("vpc_id").(string)
+	routerID := strfmt.UUID(d.Get("vpc_id").(string))
 
-	firewallSNRule, err := proxy.Read(ctx, routerID, d.Id())
+	firewallSNRule, err := proxy.Read(ctx, routerID, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -235,10 +236,10 @@ func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 		return nil
 	}
 
-	routerID := d.Get("vpc_id").(string)
+	routerID := strfmt.UUID(d.Get("vpc_id").(string))
 
 	rule := mapResourceDataToGFWRule(d)
-	rule.RuleID = d.Id()
+	rule.RuleID = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, routerID, rule)
 	if err != nil {
@@ -248,14 +249,14 @@ func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 	return resourceFirewallSNRuleRead(ctx, d, meta)
 }
 
-func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GFWRule {
-	rule := &models.GFWRule{
+func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GfwRule {
+	rule := &models.GfwRule{
 		DisplayName: d.Get("display_name").(string),
-		ProjectID:   d.Get("project_id").(string),
-		Action:      d.Get("action").(string),
-		Direction:   d.Get("direction").(string),
+		ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
+		Action:      d.Get("action").(models.Action),
+		Direction:   d.Get("direction").(models.Direction),
 		Disabled:    d.Get("disabled").(bool),
-		IPProtocol:  d.Get("ip_protocol").(string),
+		IPProtocol:  d.Get("ip_protocol").(models.IPProtocol),
 		Priority:    int64(d.Get("priority").(int)),
 	}
 
@@ -279,15 +280,15 @@ func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GFWRule {
 
 		var RouterInstanceList = make([]*models.RouterInstance, 1)
 		routerInstanceId := &models.RouterInstance{
-			RouterID: routerId.(string),
+			RouterID: strfmt.UUID(routerId.(string)),
 		}
 		RouterInstanceList[0] = routerInstanceId
 		rule.Scope = RouterInstanceList
 	}
 
-	if position, ok := d.GetOk("position"); ok {
-		rule.Position = expandFirewallRulePosition(position.([]interface{}))
-	}
+	//if position, ok := d.GetOk("position"); ok {
+	//	rule.Position = expandFirewallRulePosition(position.([]interface{}))
+	//}
 
 	return rule
 }
@@ -295,9 +296,9 @@ func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GFWRule {
 func resourceFirewallSNRuleDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallSNRules
 
-	routerID := d.Get("vpc_id").(string)
+	routerID := strfmt.UUID(d.Get("vpc_id").(string))
 
-	err := proxy.Delete(ctx, routerID, d.Id())
+	err := proxy.Delete(ctx, routerID, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()

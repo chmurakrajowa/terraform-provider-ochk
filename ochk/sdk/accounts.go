@@ -4,28 +4,28 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/billing_accounts"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/accounts"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 )
 
 type AccountsProxy struct {
 	httpClient *http.Client
-	service    billing_accounts.ClientService
+	service    accounts.ClientService
 }
 
-func (p *AccountsProxy) Read(ctx context.Context, accountID string) (*models.AccountInstance, error) {
-	params := &billing_accounts.AccountGetUsingGETParams{
+func (p *AccountsProxy) Read(ctx context.Context, accountID strfmt.UUID) (*models.AccountInstance, error) {
+	params := &accounts.GetBillingAccountsAccountIDParams{
 		AccountID:  accountID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, err := p.service.AccountGetUsingGET(params)
+	response, err := p.service.GetBillingAccountsAccountID(params)
 
 	if err != nil {
-		var notFound *billing_accounts.AccountGetUsingGETNotFound
+		var notFound *accounts.GetBillingAccountsAccountIDNotFound
 
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
@@ -42,13 +42,13 @@ func (p *AccountsProxy) Read(ctx context.Context, accountID string) (*models.Acc
 }
 
 func (p *AccountsProxy) ListAccountByName(ctx context.Context, accountName string) ([]*models.AccountInstance, error) {
-	params := &billing_accounts.AccountListUsingGETParams{
+	params := &accounts.GetBillingAccountsParams{
 		Name:       &accountName,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, err := p.service.AccountListUsingGET(params)
+	response, err := p.service.GetBillingAccounts(params)
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing billing accounts: %w", err)
@@ -61,12 +61,12 @@ func (p *AccountsProxy) ListAccountByName(ctx context.Context, accountName strin
 }
 
 func (p *AccountsProxy) ListAccounts(ctx context.Context) ([]*models.AccountInstance, error) {
-	params := &billing_accounts.AccountListUsingGETParams{
+	params := &accounts.GetBillingAccountsParams{
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, err := p.service.AccountListUsingGET(params)
+	response, err := p.service.GetBillingAccounts(params)
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing billing accounts: %w", err)
@@ -84,13 +84,13 @@ func (p *AccountsProxy) Create(ctx context.Context, account *models.AccountInsta
 		return nil, fmt.Errorf("error while validating account struct: %w", err)
 	}
 
-	params := &billing_accounts.AccountCreateUsingPUTParams{
-		AccountInstance: account,
-		Context:         ctx,
-		HTTPClient:      p.httpClient,
+	params := &accounts.PutBillingAccountsParams{
+		Body:       account,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
-	put, _, err := p.service.AccountCreateUsingPUT(params)
+	put, err := p.service.PutBillingAccounts(params)
 
 	if err != nil {
 		return nil, fmt.Errorf("error while creating account: %w", err)
@@ -103,17 +103,17 @@ func (p *AccountsProxy) Create(ctx context.Context, account *models.AccountInsta
 	return put.Payload.AccountInstance, nil
 }
 
-func (p *AccountsProxy) Delete(ctx context.Context, accountID string) error {
+func (p *AccountsProxy) Delete(ctx context.Context, accountID strfmt.UUID) error {
 
-	params := &billing_accounts.AccountDeleteUsingDELETEParams{
+	params := &accounts.DeleteBillingAccountsAccountIDParams{
 		AccountID:  accountID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, _, err := p.service.AccountDeleteUsingDELETE(params)
+	response, err := p.service.DeleteBillingAccountsAccountID(params)
 	if err != nil {
-		var badRequest *billing_accounts.AccountGetUsingGETBadRequest
+		var badRequest *accounts.DeleteBillingAccountsAccountIDBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}
@@ -133,14 +133,14 @@ func (p *AccountsProxy) Update(ctx context.Context, account *models.AccountInsta
 		return nil, fmt.Errorf("error while validating account struct: %w", err)
 	}
 
-	params := &billing_accounts.AccountUpdateUsingPUTParams{
-		AccountID:       account.AccountID,
-		AccountInstance: account,
-		Context:         ctx,
-		HTTPClient:      p.httpClient,
+	params := &accounts.PutBillingAccountsAccountIDParams{
+		AccountID:  account.AccountID,
+		Body:       account,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
-	put, _, err := p.service.AccountUpdateUsingPUT(params)
+	put, err := p.service.PutBillingAccountsAccountID(params)
 
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying account: %w", err)
@@ -152,7 +152,7 @@ func (p *AccountsProxy) Update(ctx context.Context, account *models.AccountInsta
 	return put.Payload.AccountInstance, nil
 }
 
-func (p *AccountsProxy) Exists(ctx context.Context, accountID string) (bool, error) {
+func (p *AccountsProxy) Exists(ctx context.Context, accountID strfmt.UUID) (bool, error) {
 	if _, err := p.Read(ctx, accountID); err != nil {
 		if IsNotFoundError(err) {
 			return false, nil

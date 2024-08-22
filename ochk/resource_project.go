@@ -3,8 +3,9 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"strings"
 	"time"
 
@@ -83,7 +84,7 @@ func resourceProjectCreate(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.Errorf("error while creating project: %+v", err)
 	}
 
-	d.SetId(created.ProjectID)
+	d.SetId(created.ProjectID.String())
 
 	return resourceProjectRead(ctx, d, meta)
 }
@@ -91,7 +92,7 @@ func resourceProjectCreate(ctx context.Context, d *schema.ResourceData, meta int
 func resourceProjectRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Projects
 
-	project, err := proxy.Read(ctx, d.Id())
+	project, err := proxy.Read(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -143,7 +144,7 @@ func resourceProjectUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	proxy := meta.(*sdk.Client).Projects
 
 	project := mapResourceDataToProject(d)
-	project.ProjectID = d.Id()
+	project.ProjectID = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, project)
 	if err != nil {
@@ -156,7 +157,7 @@ func resourceProjectUpdate(ctx context.Context, d *schema.ResourceData, meta int
 func resourceProjectDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Projects
 
-	err := proxy.Delete(ctx, d.Id())
+	err := proxy.Delete(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -176,7 +177,7 @@ func mapResourceDataToProject(d *schema.ResourceData) *models.ProjectInstance {
 		MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)),
 		Name:                  d.Get("display_name").(string),
 		StorageReservedSizeGB: int64(d.Get("storage_reserved_size_gb").(int)),
-		VrfID:                 d.Get("vrf_id").(string),
+		VrfID:                 strfmt.UUID(d.Get("vrf_id").(string)),
 		CPUReserved:           int64(d.Get("vcpu_reserved_quantity").(int)),
 		LimitEnabled:          d.Get("limits_enabled").(bool),
 	}

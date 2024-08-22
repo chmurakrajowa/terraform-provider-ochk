@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"strconv"
@@ -15,11 +16,11 @@ type VirtualNetworkTestData struct {
 	DisplayName              string
 	IpamEnabled              bool
 	GatewayAddress           string
-	RouterRefID              string
+	RouterRefID              strfmt.UUID
 	SubnetMask               string
 	SubnetGatewayAddressCidr string
 	SubnetNetworkCidr        string
-	ProjectID                string
+	ProjectID                strfmt.UUID
 }
 
 func (c *VirtualNetworkTestData) ToString() string {
@@ -27,8 +28,8 @@ func (c *VirtualNetworkTestData) ToString() string {
 resource "ochk_virtual_network" "{{.ResourceName}}" {
 	display_name = "{{.DisplayName}}"
 	ipam_enabled = "{{.IpamEnabled}}"
-	vpc_id = {{ StringTFValue .RouterRefID }}
-    project_id = {{ StringTFValue .ProjectID }}
+	vpc_id = {{ UuidTFValue .RouterRefID }}
+    project_id = {{ UuidTFValue .ProjectID }}
 	subnet_network_cidr = "{{ .SubnetNetworkCidr }}"
 }
 `, c)
@@ -48,7 +49,7 @@ func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
 	virtualNetwork := VirtualNetworkTestData{
 		ResourceName: "default",
 		DisplayName:  generateRandName(devTestDataPrefix),
-		ProjectID:    testDataResourceID(&project),
+		ProjectID:    strfmt.UUID(testDataResourceID(&project)),
 	}
 
 	configInitial := project.ToString() + virtualNetwork.ToString()
@@ -63,7 +64,7 @@ func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "display_name", virtualNetwork.DisplayName),
 					resource.TestCheckResourceAttrPair(resourceName, "project_id", project.FullResourceName(), "id"),
-					resource.TestCheckResourceAttr(resourceName, "vpc_id", virtualNetwork.RouterRefID),
+					resource.TestCheckResourceAttr(resourceName, "vpc_id", virtualNetwork.RouterRefID.String()),
 					resource.TestCheckResourceAttrSet(resourceName, "folder_path"),
 					resource.TestCheckResourceAttr(resourceName, "ipam_enabled", strconv.FormatBool(virtualNetwork.IpamEnabled)),
 				),
@@ -85,7 +86,7 @@ func TestAccVirtualNetworkResource_createWithIpamAndSubnet(t *testing.T) {
 		DisplayName:       generateRandName(devTestDataPrefix),
 		IpamEnabled:       true,
 		SubnetNetworkCidr: "10.16.1.0/24",
-		ProjectID:         testDataResourceID(&project),
+		ProjectID:         strfmt.UUID(testDataResourceID(&project)),
 	}
 
 	configInitial := project.ToString() + virtualNetwork.ToString()
@@ -135,14 +136,14 @@ func TestAccVirtualNetworkResource_createAndUpdateWithIpamSubnetRouter(t *testin
 		DisplayName:       generateRandName(devTestDataPrefix),
 		IpamEnabled:       true,
 		SubnetNetworkCidr: "10.16.1.0/24",
-		RouterRefID:       testDataResourceID(&router1),
-		ProjectID:         testDataResourceID(&project),
+		RouterRefID:       strfmt.UUID(testDataResourceID(&router1)),
+		ProjectID:         strfmt.UUID(testDataResourceID(&project)),
 	}
 
 	configInitial := project.ToString() + router1.ToString("n-test1") + virtualNetwork.ToString()
 
 	virtualNetworkUpdated := virtualNetwork
-	virtualNetworkUpdated.RouterRefID = testDataResourceID(&router2)
+	virtualNetworkUpdated.RouterRefID = strfmt.UUID(testDataResourceID(&router2))
 
 	configUpdated := project.ToString() + router1.ToString("n-test1") + router2.ToString("n-test2") + virtualNetworkUpdated.ToString()
 

@@ -2,7 +2,8 @@ package ochk
 
 import (
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -82,7 +83,7 @@ func expandChildSnapshots(in []interface{}) []*models.SnapshotInstance {
 		}
 
 		snapInstance := &models.SnapshotInstance{
-			SnapshotID: snapID,
+			SnapshotID: strfmt.UUID(snapID),
 		}
 
 		out[i] = snapInstance

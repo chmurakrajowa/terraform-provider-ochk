@@ -1,6 +1,9 @@
 package ochk
 
-import "github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+import (
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/go-openapi/strfmt"
+)
 
 func flattenIPCollections(in []*models.IPCollection) []map[string]interface{} {
 	if len(in) == 0 {
@@ -28,12 +31,12 @@ func expandIPCollections(in []interface{}) []*models.IPCollection {
 
 	var out = make([]*models.IPCollection, len(in))
 	for i, v := range in {
-		m := v.(map[string]interface{})
+		m := v.(map[strfmt.UUID]interface{})
 
 		member := &models.IPCollection{}
 
 		if paramName, ok := m["ip_collection_id"].(string); ok {
-			member.ID = paramName
+			member.ID = strfmt.UUID(paramName)
 		}
 
 		if paramType, ok := m["display_name"].(string); ok {
@@ -52,7 +55,7 @@ func expandIPCollections(in []interface{}) []*models.IPCollection {
 		}
 
 		if paramValue, ok := m["project_id"].(string); ok {
-			member.ProjectID = paramValue
+			member.ProjectID = strfmt.UUID(paramValue)
 		}
 		out[i] = member
 	}

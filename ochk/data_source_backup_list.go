@@ -3,6 +3,7 @@ package ochk
 import (
 	"context"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -29,7 +30,7 @@ func dataSourceBackupListRead(ctx context.Context, d *schema.ResourceData, meta 
 	proxy := meta.(*sdk.Client).BackupLists
 
 	backupListName := d.Get("display_name").(string)
-	backupPlanId := d.Get("backup_plan_id").(string)
+	backupPlanId := strfmt.UUID(d.Get("backup_plan_id").(string))
 
 	backupLists, err := proxy.ListBackupListByName(ctx, backupPlanId, backupListName)
 
@@ -45,7 +46,7 @@ func dataSourceBackupListRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("more than one backup list with name: %s found!", backupListName)
 	}
 
-	d.SetId(backupLists[0].BackupListID)
+	d.SetId(backupLists[0].BackupListID.String())
 
 	if err := d.Set("display_name", backupLists[0].BackupListName); err != nil {
 		return diag.Errorf("error setting backup list name: %+v", err)

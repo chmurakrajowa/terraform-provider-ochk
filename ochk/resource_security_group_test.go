@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"testing"
@@ -16,7 +17,7 @@ type SecurityGroupTestData struct {
 }
 
 type SecurityGroupMemberTestData struct {
-	ID   string
+	ID   strfmt.UUID
 	Type string
 }
 
@@ -57,7 +58,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 		DisplayName:  generateRandName(devTestDataPrefix),
 		Members: []SecurityGroupMemberTestData{
 			{
-				ID:   testDataResourceID(&virtualMachine),
+				ID:   strfmt.UUID(testDataResourceID(&virtualMachine)),
 				Type: "VIRTUAL_MACHINE",
 			},
 		},
@@ -76,7 +77,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 		DisplayName:  testData.VirtualMachine2DisplayName,
 	}
 	securityGroupTwoMembers.Members = append(securityGroupTwoMembers.Members, SecurityGroupMemberTestData{
-		ID:   testDataResourceID(&virtualMachine2),
+		ID:   strfmt.UUID(testDataResourceID(&virtualMachine2)),
 		Type: "VIRTUAL_MACHINE",
 	})
 	configTwoMembers := securityGroupTwoMembers.ToString("-two-mbmrs") + virtualMachine.ToString("-sc21") + virtualMachine2.ToString("-sg22")

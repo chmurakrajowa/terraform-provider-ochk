@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_s_n"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/gfw_rule"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -13,24 +13,24 @@ import (
 
 type FirewallSNRulesProxy struct {
 	httpClient *http.Client
-	service    firewall_rules_s_n.ClientService
+	service    gfw_rule.ClientService
 }
 
-func (p *FirewallSNRulesProxy) Create(ctx context.Context, routerID string, rule *models.GFWRule) (*models.GFWRule, error) {
+func (p *FirewallSNRulesProxy) Create(ctx context.Context, routerID strfmt.UUID, rule *models.GfwRule) (*models.GfwRule, error) {
 	if err := rule.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating firewall SN rule struct: %w", err)
 	}
 
-	params := &firewall_rules_s_n.GfwRuleCreateUsingPUTParams{
+	params := &gfw_rule.PutNetworkRoutersRouterIDRulesSNParams{
 		RouterID:   routerID,
-		GfwRule:    rule,
+		Body:       rule,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.GfwRuleCreateUsingPUT(params)
+	put, err := p.service.PutNetworkRoutersRouterIDRulesSN(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -44,22 +44,22 @@ func (p *FirewallSNRulesProxy) Create(ctx context.Context, routerID string, rule
 	return put.Payload.GfwRule, nil
 }
 
-func (p *FirewallSNRulesProxy) Update(ctx context.Context, routerID string, rule *models.GFWRule) (*models.GFWRule, error) {
+func (p *FirewallSNRulesProxy) Update(ctx context.Context, routerID strfmt.UUID, rule *models.GfwRule) (*models.GfwRule, error) {
 	if err := rule.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating firewall SN rule struct: %w", err)
 	}
 
-	params := &firewall_rules_s_n.GfwRuleUpdateUsingPUTParams{
+	params := &gfw_rule.PutNetworkRoutersRouterIDRulesSNRuleIDParams{
 		RouterID:   routerID,
 		RuleID:     rule.RuleID,
-		GfwRule:    rule,
+		Body:       rule,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.GfwRuleUpdateUsingPUT(params)
+	put, err := p.service.PutNetworkRoutersRouterIDRulesSNRuleID(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -73,8 +73,8 @@ func (p *FirewallSNRulesProxy) Update(ctx context.Context, routerID string, rule
 	return put.Payload.GfwRule, nil
 }
 
-func (p *FirewallSNRulesProxy) Read(ctx context.Context, routerID string, ruleID string) (*models.GFWRule, error) {
-	params := &firewall_rules_s_n.GfwRuleGetUsingGETParams{
+func (p *FirewallSNRulesProxy) Read(ctx context.Context, routerID strfmt.UUID, ruleID strfmt.UUID) (*models.GfwRule, error) {
+	params := &gfw_rule.GetNetworkRoutersRouterIDRulesSNRuleIDParams{
 		RuleID:     ruleID,
 		RouterID:   routerID,
 		Context:    ctx,
@@ -83,7 +83,7 @@ func (p *FirewallSNRulesProxy) Read(ctx context.Context, routerID string, ruleID
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GfwRuleGetUsingGET(params)
+	response, err := p.service.GetNetworkRoutersRouterIDRulesSNRuleID(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -97,8 +97,8 @@ func (p *FirewallSNRulesProxy) Read(ctx context.Context, routerID string, ruleID
 	return response.Payload.RuleInstance, nil
 }
 
-func (p *FirewallSNRulesProxy) ListByDisplayName(ctx context.Context, routerID string, displayName string) ([]*models.GFWRule, error) {
-	params := &firewall_rules_s_n.GfwRuleListUsingGETParams{
+func (p *FirewallSNRulesProxy) ListByDisplayName(ctx context.Context, routerID strfmt.UUID, displayName string) ([]*models.GfwRule, error) {
+	params := &gfw_rule.GetNetworkRoutersRouterIDRulesSNParams{
 		RouterID:    routerID,
 		DisplayName: &displayName,
 		Context:     ctx,
@@ -107,7 +107,7 @@ func (p *FirewallSNRulesProxy) ListByDisplayName(ctx context.Context, routerID s
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GfwRuleListUsingGET(params)
+	response, err := p.service.GetNetworkRoutersRouterIDRulesSN(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -121,8 +121,8 @@ func (p *FirewallSNRulesProxy) ListByDisplayName(ctx context.Context, routerID s
 	return response.Payload.RuleInstances, nil
 }
 
-func (p *FirewallSNRulesProxy) List(ctx context.Context, routerID string) ([]*models.GFWRule, error) {
-	params := &firewall_rules_s_n.GfwRuleListUsingGETParams{
+func (p *FirewallSNRulesProxy) List(ctx context.Context, routerID strfmt.UUID) ([]*models.GfwRule, error) {
+	params := &gfw_rule.GetNetworkRoutersRouterIDRulesSNParams{
 		RouterID:   routerID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
@@ -130,7 +130,7 @@ func (p *FirewallSNRulesProxy) List(ctx context.Context, routerID string) ([]*mo
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GfwRuleListUsingGET(params)
+	response, err := p.service.GetNetworkRoutersRouterIDRulesSN(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -144,7 +144,7 @@ func (p *FirewallSNRulesProxy) List(ctx context.Context, routerID string) ([]*mo
 	return response.Payload.RuleInstances, nil
 }
 
-func (p *FirewallSNRulesProxy) Exists(ctx context.Context, routerID string, ruleID string) (bool, error) {
+func (p *FirewallSNRulesProxy) Exists(ctx context.Context, routerID strfmt.UUID, ruleID strfmt.UUID) (bool, error) {
 	if _, err := p.Read(ctx, routerID, ruleID); err != nil {
 		if IsNotFoundError(err) {
 			return false, nil
@@ -156,18 +156,18 @@ func (p *FirewallSNRulesProxy) Exists(ctx context.Context, routerID string, rule
 	return true, nil
 }
 
-func (p *FirewallSNRulesProxy) Delete(ctx context.Context, routerID string, ruleID string) error {
-	params := &firewall_rules_s_n.GfwRuleDeleteUsingDELETEParams{
+func (p *FirewallSNRulesProxy) Delete(ctx context.Context, routerID strfmt.UUID, ruleID strfmt.UUID) error {
+	params := &gfw_rule.DeleteNetworkRoutersRouterIDRulesSNRuleIDParams{
 		RouterID:   routerID,
 		RuleID:     ruleID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, _, err := p.service.GfwRuleDeleteUsingDELETE(params)
+	response, err := p.service.DeleteNetworkRoutersRouterIDRulesSNRuleID(params)
 
 	if err != nil {
-		var badRequest *firewall_rules_s_n.GfwRuleDeleteUsingDELETEBadRequest
+		var badRequest *gfw_rule.DeleteNetworkRoutersRouterIDRulesSNRuleIDBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}

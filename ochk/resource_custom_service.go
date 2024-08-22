@@ -2,8 +2,9 @@ package ochk
 
 import (
 	"context"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"strings"
 	"time"
 
@@ -106,7 +107,7 @@ func resourceCustomServiceCreate(ctx context.Context, d *schema.ResourceData, me
 		return diag.Errorf("error while creating custom service: %+v", err)
 	}
 
-	d.SetId(created.ServiceID)
+	d.SetId(created.ServiceID.String())
 
 	return resourceCustomServiceRead(ctx, d, meta)
 }
@@ -114,7 +115,7 @@ func resourceCustomServiceCreate(ctx context.Context, d *schema.ResourceData, me
 func resourceCustomServiceRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).CustomServices
 
-	customService, err := proxy.Read(ctx, d.Id())
+	customService, err := proxy.Read(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -160,7 +161,7 @@ func resourceCustomServiceUpdate(ctx context.Context, d *schema.ResourceData, me
 	proxy := meta.(*sdk.Client).CustomServices
 
 	customService := mapResourceDataToCustomService(d)
-	customService.ServiceID = d.Id()
+	customService.ServiceID = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, customService)
 	if err != nil {
@@ -173,7 +174,7 @@ func resourceCustomServiceUpdate(ctx context.Context, d *schema.ResourceData, me
 func resourceCustomServiceDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).CustomServices
 
-	err := proxy.Delete(ctx, d.Id())
+	err := proxy.Delete(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -190,7 +191,7 @@ func resourceCustomServiceDelete(ctx context.Context, d *schema.ResourceData, me
 func mapResourceDataToCustomService(d *schema.ResourceData) *models.CustomServiceInstance {
 	return &models.CustomServiceInstance{
 		DisplayName:      d.Get("display_name").(string),
-		ProjectID:        d.Get("project_id").(string),
+		ProjectID:        strfmt.UUID(d.Get("project_id").(string)),
 		L4PortSetEntries: expandCustomServicePorts(d.Get("ports").([]interface{})),
 	}
 }

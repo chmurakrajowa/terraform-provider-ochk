@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/firewall_rules_e_w"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/dfw_rule"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -13,24 +13,24 @@ import (
 
 type FirewallEWRulesProxy struct {
 	httpClient *http.Client
-	service    firewall_rules_e_w.ClientService
+	service    dfw_rule.ClientService
 }
 
-func (p *FirewallEWRulesProxy) Create(ctx context.Context, routerID string, rule *models.DFWRule) (*models.DFWRule, error) {
+func (p *FirewallEWRulesProxy) Create(ctx context.Context, routerID strfmt.UUID, rule *models.DfwRule) (*models.DfwRule, error) {
 	if err := rule.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating firewall EW rule struct: %w", err)
 	}
 
-	params := &firewall_rules_e_w.DfwRuleCreateUsingPUTParams{
+	params := &dfw_rule.PutNetworkRoutersRouterIDRulesEWParams{
 		RouterID:   routerID,
-		DfwRule:    rule,
+		Body:       rule,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.DfwRuleCreateUsingPUT(params)
+	put, err := p.service.PutNetworkRoutersRouterIDRulesEW(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -44,8 +44,8 @@ func (p *FirewallEWRulesProxy) Create(ctx context.Context, routerID string, rule
 	return put.Payload.DfwRule, nil
 }
 
-func (p *FirewallEWRulesProxy) Read(ctx context.Context, routerID string, ruleID string) (*models.DFWRule, error) {
-	params := &firewall_rules_e_w.DfwRuleGetUsingGETParams{
+func (p *FirewallEWRulesProxy) Read(ctx context.Context, routerID strfmt.UUID, ruleID strfmt.UUID) (*models.DfwRule, error) {
+	params := &dfw_rule.GetNetworkRoutersRouterIDRulesEWRuleIDParams{
 		RuleID:     ruleID,
 		RouterID:   routerID,
 		Context:    ctx,
@@ -54,7 +54,7 @@ func (p *FirewallEWRulesProxy) Read(ctx context.Context, routerID string, ruleID
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.DfwRuleGetUsingGET(params)
+	response, err := p.service.GetNetworkRoutersRouterIDRulesEWRuleID(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -68,22 +68,22 @@ func (p *FirewallEWRulesProxy) Read(ctx context.Context, routerID string, ruleID
 	return response.Payload.RuleInstance, nil
 }
 
-func (p *FirewallEWRulesProxy) Update(ctx context.Context, routerID string, rule *models.DFWRule) (*models.DFWRule, error) {
+func (p *FirewallEWRulesProxy) Update(ctx context.Context, routerID strfmt.UUID, rule *models.DfwRule) (*models.DfwRule, error) {
 	if err := rule.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating firewall EW rule struct: %w", err)
 	}
 
-	params := &firewall_rules_e_w.DfwRuleUpdateUsingPUTParams{
+	params := &dfw_rule.PutNetworkRoutersRouterIDRulesEWRuleIDParams{
 		RouterID:   routerID,
 		RuleID:     rule.RuleID,
-		DfwRule:    rule,
+		Body:       rule,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.DfwRuleUpdateUsingPUT(params)
+	put, err := p.service.PutNetworkRoutersRouterIDRulesEWRuleID(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -97,8 +97,8 @@ func (p *FirewallEWRulesProxy) Update(ctx context.Context, routerID string, rule
 	return put.Payload.DfwRule, nil
 }
 
-func (p *FirewallEWRulesProxy) ListByDisplayName(ctx context.Context, routerID string, displayName string) ([]*models.DFWRule, error) {
-	params := &firewall_rules_e_w.DfwRuleListUsingGETParams{
+func (p *FirewallEWRulesProxy) ListByDisplayName(ctx context.Context, routerID strfmt.UUID, displayName string) ([]*models.DfwRule, error) {
+	params := &dfw_rule.GetNetworkRoutersRouterIDRulesEWParams{
 		RouterID:    routerID,
 		DisplayName: &displayName,
 		Context:     ctx,
@@ -107,7 +107,7 @@ func (p *FirewallEWRulesProxy) ListByDisplayName(ctx context.Context, routerID s
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.DfwRuleListUsingGET(params)
+	response, err := p.service.GetNetworkRoutersRouterIDRulesEW(params)
 	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while listing firewall EW rule: %w", err)
@@ -120,8 +120,8 @@ func (p *FirewallEWRulesProxy) ListByDisplayName(ctx context.Context, routerID s
 	return response.Payload.RuleInstances, nil
 }
 
-func (p *FirewallEWRulesProxy) List(ctx context.Context, routerID string) ([]*models.DFWRule, error) {
-	params := &firewall_rules_e_w.DfwRuleListUsingGETParams{
+func (p *FirewallEWRulesProxy) List(ctx context.Context, routerID strfmt.UUID) ([]*models.DfwRule, error) {
+	params := &dfw_rule.GetNetworkRoutersRouterIDRulesEWParams{
 		RouterID:   routerID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
@@ -129,7 +129,7 @@ func (p *FirewallEWRulesProxy) List(ctx context.Context, routerID string) ([]*mo
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.DfwRuleListUsingGET(params)
+	response, err := p.service.GetNetworkRoutersRouterIDRulesEW(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -143,7 +143,7 @@ func (p *FirewallEWRulesProxy) List(ctx context.Context, routerID string) ([]*mo
 	return response.Payload.RuleInstances, nil
 }
 
-func (p *FirewallEWRulesProxy) Exists(ctx context.Context, routerID string, ruleID string) (bool, error) {
+func (p *FirewallEWRulesProxy) Exists(ctx context.Context, routerID strfmt.UUID, ruleID strfmt.UUID) (bool, error) {
 	if _, err := p.Read(ctx, routerID, ruleID); err != nil {
 		if IsNotFoundError(err) {
 			return false, nil
@@ -155,18 +155,18 @@ func (p *FirewallEWRulesProxy) Exists(ctx context.Context, routerID string, rule
 	return true, nil
 }
 
-func (p *FirewallEWRulesProxy) Delete(ctx context.Context, routerID string, ruleID string) error {
-	params := &firewall_rules_e_w.DfwRuleDeleteUsingDELETEParams{
+func (p *FirewallEWRulesProxy) Delete(ctx context.Context, routerID strfmt.UUID, ruleID strfmt.UUID) error {
+	params := &dfw_rule.DeleteNetworkRoutersRouterIDRulesEWRuleIDParams{
 		RouterID:   routerID,
 		RuleID:     ruleID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, _, err := p.service.DfwRuleDeleteUsingDELETE(params)
+	response, err := p.service.DeleteNetworkRoutersRouterIDRulesEWRuleID(params)
 
 	if err != nil {
-		var badRequest *firewall_rules_e_w.DfwRuleDeleteUsingDELETEBadRequest
+		var badRequest *dfw_rule.DeleteNetworkRoutersRouterIDRulesEWRuleIDBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}

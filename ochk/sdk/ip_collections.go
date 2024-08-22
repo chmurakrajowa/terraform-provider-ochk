@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_collections"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/ip_collection"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -13,11 +13,11 @@ import (
 
 type IPCollectionsProxy struct {
 	httpClient *http.Client
-	service    ip_collections.ClientService
+	service    ip_collection.ClientService
 }
 
-func (p *IPCollectionsProxy) Read(ctx context.Context, ipCollectionID string) (*models.IPCollection, error) {
-	params := &ip_collections.IPCollectionGetUsingGETParams{
+func (p *IPCollectionsProxy) Read(ctx context.Context, ipCollectionID strfmt.UUID) (*models.IPCollection, error) {
+	params := &ip_collection.GetIpcsIPCollectionIDParams{
 		IPCollectionID: ipCollectionID,
 		Context:        ctx,
 		HTTPClient:     p.httpClient,
@@ -25,11 +25,11 @@ func (p *IPCollectionsProxy) Read(ctx context.Context, ipCollectionID string) (*
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.IPCollectionGetUsingGET(params)
+	response, err := p.service.GetIpcsIPCollectionID(params)
 	mutex.Unlock()
 
 	if err != nil {
-		var notFound *ip_collections.IPCollectionGetUsingGETNotFound
+		var notFound *ip_collection.GetIpcsIPCollectionIDNotFound
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
 		}
@@ -45,15 +45,15 @@ func (p *IPCollectionsProxy) Read(ctx context.Context, ipCollectionID string) (*
 }
 
 func (p *IPCollectionsProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.IPCollection, error) {
-	params := &ip_collections.IPCollectionListUsingGETParams{
-		DisplayName: &displayName,
-		Context:     ctx,
-		HTTPClient:  p.httpClient,
+	params := &ip_collection.GetIpcsParams{
+		Name:       &displayName,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.IPCollectionListUsingGET(params)
+	response, err := p.service.GetIpcs(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -68,14 +68,14 @@ func (p *IPCollectionsProxy) ListByDisplayName(ctx context.Context, displayName 
 }
 
 func (p *IPCollectionsProxy) List(ctx context.Context) ([]*models.IPCollection, error) {
-	params := &ip_collections.IPCollectionListUsingGETParams{
+	params := &ip_collection.GetIpcsParams{
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.IPCollectionListUsingGET(params)
+	response, err := p.service.GetIpcs(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -94,15 +94,15 @@ func (p *IPCollectionsProxy) Create(ctx context.Context, IPCollection *models.IP
 		return nil, fmt.Errorf("error while validating ip collection struct: %w", err)
 	}
 
-	params := &ip_collections.IPCollectionCreateUsingPUTParams{
-		IPCollection: IPCollection,
-		Context:      ctx,
-		HTTPClient:   p.httpClient,
+	params := &ip_collection.PutIpcsParams{
+		Body:       IPCollection,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.IPCollectionCreateUsingPUT(params)
+	put, err := p.service.PutIpcs(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -121,16 +121,16 @@ func (p *IPCollectionsProxy) Update(ctx context.Context, IPCollection *models.IP
 		return nil, fmt.Errorf("error while validating ip collection struct: %w", err)
 	}
 
-	params := &ip_collections.IPCollectionUpdateUsingPUTParams{
+	params := &ip_collection.PutIpcsIPCollectionIDParams{
 		IPCollectionID: IPCollection.ID,
-		IPCollection:   IPCollection,
+		Body:           IPCollection,
 		Context:        ctx,
 		HTTPClient:     p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, err := p.service.IPCollectionUpdateUsingPUT(params)
+	put, err := p.service.PutIpcsIPCollectionID(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -144,7 +144,7 @@ func (p *IPCollectionsProxy) Update(ctx context.Context, IPCollection *models.IP
 	return put.Payload.IPCollection, nil
 }
 
-func (p *IPCollectionsProxy) Exists(ctx context.Context, IPCollectionID string) (bool, error) {
+func (p *IPCollectionsProxy) Exists(ctx context.Context, IPCollectionID strfmt.UUID) (bool, error) {
 	if _, err := p.Read(ctx, IPCollectionID); err != nil {
 		if IsNotFoundError(err) {
 			return false, nil
@@ -156,17 +156,17 @@ func (p *IPCollectionsProxy) Exists(ctx context.Context, IPCollectionID string) 
 	return true, nil
 }
 
-func (p *IPCollectionsProxy) Delete(ctx context.Context, IPCollectionID string) error {
-	params := &ip_collections.IPCollectionDeleteUsingDELETEParams{
+func (p *IPCollectionsProxy) Delete(ctx context.Context, IPCollectionID strfmt.UUID) error {
+	params := &ip_collection.DeleteIpcsIPCollectionIDParams{
 		IPCollectionID: IPCollectionID,
 		Context:        ctx,
 		HTTPClient:     p.httpClient,
 	}
 
-	response, err := p.service.IPCollectionDeleteUsingDELETE(params)
+	response, err := p.service.DeleteIpcsIPCollectionID(params)
 
 	if err != nil {
-		var badRequest *ip_collections.IPCollectionDeleteUsingDELETEBadRequest
+		var badRequest *ip_collection.DeleteIpcsIPCollectionIDBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}

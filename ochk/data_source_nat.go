@@ -177,7 +177,7 @@ func dataSourceNatRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		}
 	}
 
-	d.SetId(nats[0].RuleID)
+	d.SetId(nats[0].RuleID.String())
 
 	return nil
 }

@@ -1,6 +1,9 @@
 package ochk
 
-import "github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+import (
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/go-openapi/strfmt"
+)
 
 func flattenKMSKeys(in []*models.KeyInstance) []map[string]interface{} {
 	if len(in) == 0 {
@@ -28,7 +31,7 @@ func expandKMSKeys(in []interface{}) []*models.KeyInstance {
 
 	var out = make([]*models.KeyInstance, len(in))
 	for i, v := range in {
-		m := v.(map[string]interface{})
+		m := v.(map[strfmt.UUID]interface{})
 
 		member := &models.KeyInstance{}
 

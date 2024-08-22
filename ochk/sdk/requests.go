@@ -4,8 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/requests"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/requests"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"net/http"
 	"time"
@@ -16,12 +17,12 @@ type RequestsProxy struct {
 	service    requests.ClientService
 }
 
-func (p *RequestsProxy) FetchResourceID(ctx context.Context, timeout time.Duration, request *models.RequestInstance) (error, string) {
+func (p *RequestsProxy) FetchResourceID(ctx context.Context, timeout time.Duration, request *models.RequestInstance) (error, strfmt.UUID) {
 	if err := verifyRequestStatusAndPhase(request); err != nil {
 		return fmt.Errorf("request is not in valid state: %w", err), ""
 	}
 
-	resourceID := ""
+	var resourceID strfmt.UUID
 
 	return resource.RetryContext(ctx, timeout, func() *resource.RetryError {
 		requestState, err := p.Read(ctx, request.RequestID)
@@ -55,17 +56,17 @@ func verifyRequestStatusAndPhase(request *models.RequestInstance) error {
 	return nil
 }
 
-func (p *RequestsProxy) Read(ctx context.Context, requestID string) (*models.RequestInstance, error) {
-	params := &requests.RequestGetUsingGETParams{
+func (p *RequestsProxy) Read(ctx context.Context, requestID strfmt.UUID) (*models.RequestInstance, error) {
+	params := &requests.GetRequestRequestIDParams{
 		RequestID:  requestID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, err := p.service.RequestGetUsingGET(params)
+	response, err := p.service.GetRequestRequestID(params)
 
 	if err != nil {
-		var notFound *requests.RequestGetUsingGETNotFound
+		var notFound *requests.GetRequestRequestIDNotFound
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
 		}

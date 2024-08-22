@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -50,7 +51,7 @@ func dataSourceSnapshotRead(ctx context.Context, d *schema.ResourceData, meta in
 	proxy := meta.(*sdk.Client).Snapshots
 
 	snapshotName := d.Get("display_name").(string)
-	virtualMachineID := d.Get("virtual_machine_id").(string)
+	virtualMachineID := strfmt.UUID(d.Get("virtual_machine_id").(string))
 
 	snapshots, err := proxy.ListSnapshotsByName(ctx, virtualMachineID, snapshotName)
 

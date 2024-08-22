@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/ip_a_m_public_ip_allocations"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/public_ip"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -14,11 +14,11 @@ import (
 
 type PublicIPAddressProxy struct {
 	httpClient *http.Client
-	service    ip_a_m_public_ip_allocations.ClientService
+	service    public_ip.ClientService
 }
 
 func (p *PublicIPAddressProxy) Get(ctx context.Context, allocationId int32) (*models.PublicIPAllocation, error) {
-	params := &ip_a_m_public_ip_allocations.AllocationGetUsingGETParams{
+	params := &public_ip.GetIpamIpaddressPublicAllocationAllocationIDParams{
 		AllocationID: allocationId,
 		Context:      ctx,
 		HTTPClient:   p.httpClient,
@@ -26,7 +26,7 @@ func (p *PublicIPAddressProxy) Get(ctx context.Context, allocationId int32) (*mo
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.AllocationGetUsingGET(params)
+	response, err := p.service.GetIpamIpaddressPublicAllocationAllocationID(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -41,14 +41,14 @@ func (p *PublicIPAddressProxy) Get(ctx context.Context, allocationId int32) (*mo
 }
 
 func (p *PublicIPAddressProxy) List(ctx context.Context) ([]*models.PublicIPAllocation, error) {
-	params := &ip_a_m_public_ip_allocations.AllocationListUsingGETParams{
+	params := &public_ip.GetIpamIpaddressPublicAllocationParams{
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.AllocationListUsingGET(params)
+	response, err := p.service.GetIpamIpaddressPublicAllocation(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -63,7 +63,7 @@ func (p *PublicIPAddressProxy) List(ctx context.Context) ([]*models.PublicIPAllo
 }
 
 func (p *PublicIPAddressProxy) ListByName(ctx context.Context, allocationName string) ([]*models.PublicIPAllocation, error) {
-	params := &ip_a_m_public_ip_allocations.AllocationListUsingGETParams{
+	params := &public_ip.GetIpamIpaddressPublicAllocationParams{
 		Name:       &allocationName,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
@@ -71,7 +71,7 @@ func (p *PublicIPAddressProxy) ListByName(ctx context.Context, allocationName st
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.AllocationListUsingGET(params)
+	response, err := p.service.GetIpamIpaddressPublicAllocation(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -86,7 +86,7 @@ func (p *PublicIPAddressProxy) ListByName(ctx context.Context, allocationName st
 }
 
 func (p *PublicIPAddressProxy) ListByIp(ctx context.Context, ipAddress string) ([]*models.PublicIPAllocation, error) {
-	params := &ip_a_m_public_ip_allocations.AllocationListUsingGETParams{
+	params := &public_ip.GetIpamIpaddressPublicAllocationParams{
 		IPAddress:  &ipAddress,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
@@ -94,7 +94,7 @@ func (p *PublicIPAddressProxy) ListByIp(ctx context.Context, ipAddress string) (
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.AllocationListUsingGET(params)
+	response, err := p.service.GetIpamIpaddressPublicAllocation(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -108,20 +108,20 @@ func (p *PublicIPAddressProxy) ListByIp(ctx context.Context, ipAddress string) (
 	return response.Payload.PublicIPAllocationCollection, nil
 }
 
-func (p *PublicIPAddressProxy) Create(ctx context.Context, publicaIPAllocation *models.PublicIPAllocation, timeout time.Duration) (*models.RequestInstance, error) {
-	if err := publicaIPAllocation.Validate(strfmt.Default); err != nil {
+func (p *PublicIPAddressProxy) Create(ctx context.Context, publicIPAllocation *models.PublicIPAllocation, timeout time.Duration) (*models.RequestInstance, error) {
+	if err := publicIPAllocation.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating public ip address struct: %w", err)
 	}
 
-	params := &ip_a_m_public_ip_allocations.AllocationCreateUsingPUTParams{
-		PublicIPAllocation: publicaIPAllocation,
-		Context:            ctx,
-		HTTPClient:         p.httpClient,
+	params := &public_ip.PutIpamIpaddressPublicAllocationParams{
+		Body:       publicIPAllocation,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.AllocationCreateUsingPUT(params)
+	put, err := p.service.PutIpamIpaddressPublicAllocation(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -135,21 +135,21 @@ func (p *PublicIPAddressProxy) Create(ctx context.Context, publicaIPAllocation *
 	return put.Payload.RequestInstance, nil
 }
 
-func (p *PublicIPAddressProxy) Update(ctx context.Context, publicaIPAllocation *models.PublicIPAllocation) (*models.RequestInstance, error) {
-	if err := publicaIPAllocation.Validate(strfmt.Default); err != nil {
+func (p *PublicIPAddressProxy) Update(ctx context.Context, publicIPAllocation *models.PublicIPAllocation) (*models.RequestInstance, error) {
+	if err := publicIPAllocation.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating public ip allocation struct: %w", err)
 	}
 
-	params := &ip_a_m_public_ip_allocations.AllocationUpdateUsingPUTParams{
-		AllocationID:       publicaIPAllocation.AllocationID,
-		PublicIPAllocation: publicaIPAllocation,
-		Context:            ctx,
-		HTTPClient:         p.httpClient,
+	params := &public_ip.PutIpamIpaddressPublicAllocationAllocationIDParams{
+		AllocationID: publicIPAllocation.AllocationID,
+		Body:         publicIPAllocation,
+		Context:      ctx,
+		HTTPClient:   p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, err := p.service.AllocationUpdateUsingPUT(params)
+	put, err := p.service.PutIpamIpaddressPublicAllocationAllocationID(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -163,17 +163,17 @@ func (p *PublicIPAddressProxy) Update(ctx context.Context, publicaIPAllocation *
 	return put.Payload.RequestInstance, nil
 }
 
-func (p *PublicIPAddressProxy) Delete(ctx context.Context, publicaIPAllocationID int32) (*models.RequestInstance, error) {
-	params := &ip_a_m_public_ip_allocations.AllocationDeleteUsingDELETEParams{
-		AllocationID: publicaIPAllocationID,
+func (p *PublicIPAddressProxy) Delete(ctx context.Context, publicIPAllocationID int32) (*models.RequestInstance, error) {
+	params := &public_ip.DeleteIpamIpaddressPublicAllocationAllocationIDParams{
+		AllocationID: publicIPAllocationID,
 		Context:      ctx,
 		HTTPClient:   p.httpClient,
 	}
 
-	response, err := p.service.AllocationDeleteUsingDELETE(params)
+	response, err := p.service.DeleteIpamIpaddressPublicAllocationAllocationID(params)
 
 	if err != nil {
-		var badRequest *ip_a_m_public_ip_allocations.AllocationDeleteUsingDELETEBadRequest
+		var badRequest *public_ip.GetIpamIpaddressPublicAllocationBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return nil, &NotFoundError{Err: err}
 		}

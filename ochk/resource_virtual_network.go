@@ -2,8 +2,9 @@ package ochk
 
 import (
 	"context"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"strings"
 	"time"
 
@@ -88,7 +89,7 @@ func resourceVirtualNetworkCreate(ctx context.Context, d *schema.ResourceData, m
 
 	virtualNetwork := mapResourceDataToVirtualNetwork(d)
 
-	request, err := client.VirtualNetworks.Create(ctx, virtualNetwork, d.Timeout(schema.TimeoutCreate))
+	request, err := client.VirtualNetworks.Create(ctx, virtualNetwork)
 	if err != nil {
 		return diag.Errorf("error while creating virtual network: %+v", err)
 	}
@@ -98,7 +99,7 @@ func resourceVirtualNetworkCreate(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error while fetching virtual network request state: %+v", err)
 	}
 
-	d.SetId(resourceID)
+	d.SetId(resourceID.String())
 
 	return resourceVirtualNetworkRead(ctx, d, meta)
 }
@@ -106,7 +107,7 @@ func resourceVirtualNetworkCreate(ctx context.Context, d *schema.ResourceData, m
 func resourceVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).VirtualNetworks
 
-	virtualNetwork, err := proxy.Read(ctx, d.Id())
+	virtualNetwork, err := proxy.Read(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -169,7 +170,7 @@ func resourceVirtualNetworkUpdate(ctx context.Context, d *schema.ResourceData, m
 	sdkClient := meta.(*sdk.Client)
 
 	virtualNetwork := mapResourceDataToVirtualNetwork(d)
-	virtualNetwork.VirtualNetworkID = d.Id()
+	virtualNetwork.VirtualNetworkID = strfmt.UUID(d.Id())
 
 	request, err := sdkClient.VirtualNetworks.Update(ctx, virtualNetwork)
 	if err != nil {
@@ -181,7 +182,7 @@ func resourceVirtualNetworkUpdate(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error while fetching virtual network request state: %+v", err)
 	}
 
-	d.SetId(resourceID)
+	d.SetId(resourceID.String())
 
 	return resourceVirtualNetworkRead(ctx, d, meta)
 }
@@ -189,7 +190,7 @@ func resourceVirtualNetworkUpdate(ctx context.Context, d *schema.ResourceData, m
 func resourceVirtualNetworkDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	sdkClient := meta.(*sdk.Client)
 
-	request, err := sdkClient.VirtualNetworks.Delete(ctx, d.Id())
+	request, err := sdkClient.VirtualNetworks.Delete(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -213,10 +214,10 @@ func mapResourceDataToVirtualNetwork(d *schema.ResourceData) *models.VirtualNetw
 		DisplayName:      d.Get("display_name").(string),
 		GatewayAddress:   d.Get("gateway_address").(string),
 		IpamEnabled:      d.Get("ipam_enabled").(bool),
-		RouterRefID:      d.Get("vpc_id").(string),
+		RouterRefID:      strfmt.UUID(d.Get("vpc_id").(string)),
 		SubnetMask:       d.Get("subnet_mask").(string),
-		ProjectID:        d.Get("project_id").(string),
-		VirtualNetworkID: d.Id(),
+		ProjectID:        strfmt.UUID(d.Get("project_id").(string)),
+		VirtualNetworkID: strfmt.UUID(d.Id()),
 	}
 
 	subnetGatewayAddressCidr, subnetGatewayAddressCidrOk := d.GetOk("subnet_gateway_address_cidr")

@@ -65,7 +65,7 @@ func dataSourceProjectRead(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.Errorf("error setting vrf_id:  %+v", err)
 	}
 
-	d.SetId(projects[0].ProjectID)
+	d.SetId(projects[0].ProjectID.String())
 
 	if err := mapProjectToResourceData(d, projects[0]); err != nil {
 		return diag.Errorf("error while mapping project to resource data: %+v", err)

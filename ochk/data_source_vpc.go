@@ -66,7 +66,7 @@ func dataSourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("more than one vpc with display_name: %s found!", displayName)
 	}
 
-	d.SetId(routers[0].RouterID)
+	d.SetId(routers[0].RouterID.String())
 
 	if err := d.Set("vrf_id", routers[0].ParentT0ID); err != nil {
 		return diag.Errorf("error setting vrf_id: %+v", err)

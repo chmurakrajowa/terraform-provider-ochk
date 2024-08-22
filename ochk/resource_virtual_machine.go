@@ -3,8 +3,9 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"strings"
 	"time"
 
@@ -282,7 +283,7 @@ func resourceVirtualMachineCreate(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error while fetching virtual machine request state: %+v", err)
 	}
 
-	d.SetId(resourceID)
+	d.SetId(resourceID.String())
 
 	return resourceVirtualMachineRead(ctx, d, meta)
 }
@@ -290,7 +291,7 @@ func resourceVirtualMachineCreate(ctx context.Context, d *schema.ResourceData, m
 func resourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).VirtualMachines
 
-	virtualMachine, err := proxy.Read(ctx, d.Id())
+	virtualMachine, err := proxy.Read(ctx, strfmt.UUID(d.Id()))
 
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
@@ -313,7 +314,7 @@ func resourceVirtualMachineUpdate(ctx context.Context, d *schema.ResourceData, m
 	sdkClient := meta.(*sdk.Client)
 
 	virtualMachine := mapResourceDataToVirtualMachine(d)
-	virtualMachine.VirtualMachineID = d.Id()
+	virtualMachine.VirtualMachineID = strfmt.UUID(d.Id())
 
 	request, err := sdkClient.VirtualMachines.Update(ctx, virtualMachine)
 	if err != nil {
@@ -325,7 +326,7 @@ func resourceVirtualMachineUpdate(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error while fetching virtual machine request state: %+v", err)
 	}
 
-	d.SetId(resourceID)
+	d.SetId(resourceID.String())
 
 	return resourceVirtualMachineRead(ctx, d, meta)
 }
@@ -333,7 +334,7 @@ func resourceVirtualMachineUpdate(ctx context.Context, d *schema.ResourceData, m
 func resourceVirtualMachineDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	sdkClient := meta.(*sdk.Client)
 
-	request, err := sdkClient.VirtualMachines.Delete(ctx, d.Id())
+	request, err := sdkClient.VirtualMachines.Delete(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -352,7 +353,7 @@ func resourceVirtualMachineDelete(ctx context.Context, d *schema.ResourceData, m
 	return nil
 }
 
-func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *models.VcsVirtualMachineInstance) error {
+func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *models.VirtualMachineInstance) error {
 	if err := d.Set("display_name", virtualMachine.VirtualMachineName); err != nil {
 		return fmt.Errorf("error setting display_name: %w", err)
 	}
@@ -395,10 +396,10 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 		return fmt.Errorf("error setting additional_virtual_disks: %w", err)
 	}
 
-	virtualMachine.DeploymentParams = expandVDeploymentParams(d.Get("deployment_params").([]interface{}))
-	if err := d.Set("deployment_params", flattenDeploymentParams(virtualMachine.DeploymentParams)); err != nil {
-		return fmt.Errorf("error setting deployment_params: %w", err)
-	}
+	//virtualMachine.DeploymentParams = expandVDeploymentParams(d.Get("deployment_params").([]interface{}))
+	//if err := d.Set("deployment_params", flattenDeploymentParams(virtualMachine.DeploymentParams)); err != nil {
+	//	return fmt.Errorf("error setting deployment_params: %w", err)
+	//}
 
 	if err := d.Set("ip_address", virtualMachine.IPAddress); err != nil {
 		return fmt.Errorf("error setting ip_address: %w", err)
@@ -474,35 +475,35 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 	return nil
 }
 
-func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VcsVirtualMachineInstance {
-	virtualMachineInstance := models.VcsVirtualMachineInstance{
+func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VirtualMachineInstance {
+	virtualMachineInstance := models.VirtualMachineInstance{
 		AdditionalVirtualDiskDeviceCollection: expandVirtualDisks(d.Get("additional_virtual_disks").(*schema.Set).List()),
 		DeploymentInstance: &models.DeploymentInstance{
-			DeploymentID: d.Get("deployment_id").(string),
+			DeploymentID: strfmt.UUID(d.Get("deployment_id").(string)),
 		},
 		InitialPassword:       d.Get("initial_password").(string),
-		PowerState:            d.Get("power_state").(string),
-		StoragePolicy:         d.Get("storage_policy").(string),
-		ProjectID:             d.Get("project_id").(string),
-		VirtualMachineID:      d.Id(),
+		PowerState:            d.Get("power_state").(models.PowerState),
+		StoragePolicy:         d.Get("storage_policy").(models.StoragePolicy),
+		ProjectID:             strfmt.UUID(d.Get("project_id").(string)),
+		VirtualMachineID:      strfmt.UUID(d.Id()),
 		VirtualMachineName:    d.Get("display_name").(string),
 		SSHKey:                d.Get("ssh_key").(string),
 		VirtualNetworkDevices: expandVirtualNetworkDevices(d.Get("virtual_network_devices").([]interface{})),
-		DeploymentParams:      expandVDeploymentParams(d.Get("deployment_params").([]interface{})),
-		BackupListCollection:  expandBackupListsFromIDs(d.Get("backup_lists").(*schema.Set).List()),
-		Tags:                  expandTagsListsFromIDs(d.Get("tags").(*schema.Set).List()),
-		OsType:                d.Get("os_type").(string),
-		OvfIPConfiguration:    d.Get("ovf_ip_configuration").(bool),
-		InitialUserName:       d.Get("initial_user_name").(string),
-		FolderPath:            d.Get("folder_path").(string),
-		DNSSearchSuffix:       d.Get("dns_search_suffix").(string),
-		DNSSuffix:             d.Get("dns_suffix").(string),
-		PrimaryDNSAddress:     d.Get("primary_dns_address").(string),
-		PrimaryWinsAddress:    d.Get("primary_wins_address").(string),
-		SecondaryDNSAddress:   d.Get("secondary_dns_address").(string),
-		SecondaryWinsAddress:  d.Get("secondary_wins_address").(string),
-		CPUCount:              int32(d.Get("cpu_count").(int)),
-		MemorySizeMB:          int32(d.Get("memory_size_mb").(int)),
+		//DeploymentParams:      expandVDeploymentParams(d.Get("deployment_params").([]interface{})),
+		BackupListCollection: expandBackupListsFromIDs(d.Get("backup_lists").(*schema.Set).List()),
+		Tags:                 expandTagsListsFromIDs(d.Get("tags").(*schema.Set).List()),
+		OsType:               d.Get("os_type").(models.OsType),
+		OvfIPConfiguration:   d.Get("ovf_ip_configuration").(bool),
+		InitialUserName:      d.Get("initial_user_name").(string),
+		FolderPath:           d.Get("folder_path").(string),
+		DNSSearchSuffix:      d.Get("dns_search_suffix").(string),
+		DNSSuffix:            d.Get("dns_suffix").(string),
+		PrimaryDNSAddress:    d.Get("primary_dns_address").(string),
+		PrimaryWinsAddress:   d.Get("primary_wins_address").(string),
+		SecondaryDNSAddress:  d.Get("secondary_dns_address").(string),
+		SecondaryWinsAddress: d.Get("secondary_wins_address").(string),
+		CPUCount:             int32(d.Get("cpu_count").(int)),
+		MemorySizeMB:         int32(d.Get("memory_size_mb").(int)),
 	}
 
 	encryptionInstance := &models.EncryptionInstance{
@@ -510,7 +511,7 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VcsVirtualM
 	}
 
 	if recryptOperation, ok := d.GetOk("encryption_recrypt"); ok && recryptOperation.(string) != "" {
-		encryptionInstance.RecryptOperation = d.Get("encryption_recrypt").(string)
+		encryptionInstance.RecryptOperation = d.Get("encryption_recrypt").(models.RecryptOperation)
 	} else {
 		encryptionInstance.RecryptOperation = "NONE"
 	}

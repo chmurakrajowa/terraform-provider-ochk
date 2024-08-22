@@ -2,8 +2,9 @@ package ochk
 
 import (
 	"context"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"strings"
 	"time"
 
@@ -87,7 +88,7 @@ func resourceVpcCreate(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("error while creating vpc: %+v", err)
 	}
 
-	d.SetId(created.RouterID)
+	d.SetId(created.RouterID.String())
 
 	return resourceVpcRead(ctx, d, meta)
 }
@@ -95,7 +96,7 @@ func resourceVpcCreate(ctx context.Context, d *schema.ResourceData, meta interfa
 func resourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Routers
 
-	Router, err := proxy.Read(ctx, d.Id())
+	Router, err := proxy.Read(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -145,7 +146,7 @@ func resourceVpcUpdate(ctx context.Context, d *schema.ResourceData, meta interfa
 	proxy := meta.(*sdk.Client).Routers
 
 	Router := mapResourceDataToVpc(d)
-	Router.RouterID = d.Id()
+	Router.RouterID = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, Router)
 	if err != nil {
@@ -158,7 +159,7 @@ func resourceVpcUpdate(ctx context.Context, d *schema.ResourceData, meta interfa
 func resourceVpcDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Routers
 
-	err := proxy.Delete(ctx, d.Id())
+	err := proxy.Delete(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -175,8 +176,8 @@ func resourceVpcDelete(ctx context.Context, d *schema.ResourceData, meta interfa
 func mapResourceDataToVpc(d *schema.ResourceData) *models.RouterInstance {
 	return &models.RouterInstance{
 		DisplayName: d.Get("display_name").(string),
-		ParentT0ID:  d.Get("vrf_id").(string),
-		ProjectID:   d.Get("project_id").(string),
+		ParentT0ID:  strfmt.UUID(d.Get("vrf_id").(string)),
+		ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
 		FolderPath:  d.Get("folder_path").(string),
 	}
 }

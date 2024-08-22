@@ -69,7 +69,7 @@ func dataSourceVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("more than one virtual network with name: %s found!", name)
 	}
 
-	d.SetId(virtualNetworks[0].VirtualNetworkID)
+	d.SetId(virtualNetworks[0].VirtualNetworkID.String())
 
 	if err := mapVirtualNetworkToResourceData(d, virtualNetworks[0]); err != nil {
 		return err
