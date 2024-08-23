@@ -61,8 +61,8 @@ GetTagsParams contains all the parameters to send to the API endpoint
 */
 type GetTagsParams struct {
 
-	// Name.
-	Name *string
+	// TagValue.
+	TagValue *string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -117,15 +117,15 @@ func (o *GetTagsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithName adds the name to the get tags params
-func (o *GetTagsParams) WithName(name *string) *GetTagsParams {
-	o.SetName(name)
+// WithTagValue adds the tagValue to the get tags params
+func (o *GetTagsParams) WithTagValue(tagValue *string) *GetTagsParams {
+	o.SetTagValue(tagValue)
 	return o
 }
 
-// SetName adds the name to the get tags params
-func (o *GetTagsParams) SetName(name *string) {
-	o.Name = name
+// SetTagValue adds the tagValue to the get tags params
+func (o *GetTagsParams) SetTagValue(tagValue *string) {
+	o.TagValue = tagValue
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -136,18 +136,18 @@ func (o *GetTagsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regis
 	}
 	var res []error
 
-	if o.Name != nil {
+	if o.TagValue != nil {
 
-		// query param name
-		var qrName string
+		// query param tagValue
+		var qrTagValue string
 
-		if o.Name != nil {
-			qrName = *o.Name
+		if o.TagValue != nil {
+			qrTagValue = *o.TagValue
 		}
-		qName := qrName
-		if qName != "" {
+		qTagValue := qrTagValue
+		if qTagValue != "" {
 
-			if err := r.SetQueryParam("name", qName); err != nil {
+			if err := r.SetQueryParam("tagValue", qTagValue); err != nil {
 				return err
 			}
 		}

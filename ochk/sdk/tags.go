@@ -41,7 +41,7 @@ func (p *TagsProxy) Read(ctx context.Context, tagID int32) (*models.Tag, error) 
 
 func (p *TagsProxy) ListTagsByTagName(ctx context.Context, tagName string) ([]*models.Tag, error) {
 	params := &tags.GetTagsParams{
-		Name:       &tagName,
+		TagValue:   &tagName,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}

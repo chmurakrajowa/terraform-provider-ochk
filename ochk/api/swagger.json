@@ -2204,6 +2204,250 @@
         }
       }
     },
+    "/network/floating-ips": {
+      "get": {
+        "tags": [
+          "FloatingIp"
+        ],
+        "summary": "List floating ips (OSC)",
+        "description": "List floating ips (OSC)",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ListFloatingIpResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "FloatingIp"
+        ],
+        "summary": "Create floating ip (OSC)",
+        "description": "Create floating ip (OSC)",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/FloatingIp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateFloatingIpResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/network/floating-ips/{floatingIpId}": {
+      "get": {
+        "tags": [
+          "FloatingIp"
+        ],
+        "summary": "Get floating ip (OSC)",
+        "description": "Get floating ip (OSC)",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "floatingIpId",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetFloatingIpResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "FloatingIp"
+        ],
+        "summary": "Update firewall rule (OSC)",
+        "description": "Update firewall rule (OSC)",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "floatingIpId",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/FloatingIp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateFloatingIpResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FloatingIp"
+        ],
+        "summary": "Delete firewall rule (OSC)",
+        "description": "Delete firewall rule (OSC)",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "floatingIpId",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteFloatingIpResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
     "/folder/{projectId}": {
       "get": {
         "tags": [
@@ -2619,75 +2863,21 @@
         }
       }
     },
-    "/ipam/services": {
+    "/identification/platform-type": {
       "get": {
         "tags": [
-          "IpamService"
+          "Identification"
         ],
-        "summary": "List IPAM services",
-        "description": "List IPAM services",
+        "summary": "Get platform type",
+        "description": "Get platform type",
         "produces": [
           "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "displayName",
-            "type": "string"
-          }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/ListIPAMServicesResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          }
-        }
-      }
-    },
-    "/ipam/services/{serviceId}": {
-      "get": {
-        "tags": [
-          "IpamService"
-        ],
-        "summary": "Get IPAM service",
-        "description": "Get IPAM service",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "serviceId",
-            "required": true,
-            "type": "string",
-            "format": "uuid"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/GetIPAMServiceResponse"
+              "$ref": "#/definitions/GetPlatformTypeResponse"
             }
           },
           "400": {
@@ -2971,6 +3161,98 @@
           },
           "404": {
             "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/ipam/services": {
+      "get": {
+        "tags": [
+          "IpamService"
+        ],
+        "summary": "List IPAM services",
+        "description": "List IPAM services",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "displayName",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ListIPAMServicesResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/ipam/services/{serviceId}": {
+      "get": {
+        "tags": [
+          "IpamService"
+        ],
+        "summary": "Get IPAM service",
+        "description": "Get IPAM service",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "serviceId",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetIPAMServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
             "schema": {
               "$ref": "#/definitions/ProblemDetails"
             }
@@ -4006,44 +4288,6 @@
         }
       }
     },
-    "/authentik/logout": {
-      "post": {
-        "tags": [
-          "Logout"
-        ],
-        "summary": "Logout token",
-        "description": "Logout token",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/ApiResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          }
-        }
-      }
-    },
     "/log/stats/{logCategoryId}": {
       "post": {
         "tags": [
@@ -4426,6 +4670,44 @@
         }
       }
     },
+    "/authentik/logout": {
+      "post": {
+        "tags": [
+          "Logout"
+        ],
+        "summary": "Logout token",
+        "description": "Logout token",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
     "/network/nat/rules": {
       "get": {
         "tags": [
@@ -4681,6 +4963,285 @@
           },
           "404": {
             "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/network/floating-ips/{floatingIpId}/port-forwardings": {
+      "get": {
+        "tags": [
+          "PortForwarding"
+        ],
+        "summary": "List floating ips (OSC)",
+        "description": "List floating ips (OSC)",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "floatingIpId",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ListPortForwardingResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "PortForwarding"
+        ],
+        "summary": "Create floating ip (OSC)",
+        "description": "Create floating ip (OSC)",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "floatingIpId",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/PortForwarding"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreatePortForwardingResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/network/floating-ips/{floatingIpId}/port-forwardings/{portForwardingId}": {
+      "get": {
+        "tags": [
+          "PortForwarding"
+        ],
+        "summary": "Get floating ip (OSC)",
+        "description": "Get floating ip (OSC)",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "floatingIpId",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "path",
+            "name": "portForwardingId",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetPortForwardingResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "PortForwarding"
+        ],
+        "summary": "Update firewall rule (OSC)",
+        "description": "Update firewall rule (OSC)",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "floatingIpId",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "path",
+            "name": "portForwardingId",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/PortForwarding"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdatePortForwardingResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "PortForwarding"
+        ],
+        "summary": "Delete firewall rule (OSC)",
+        "description": "Delete firewall rule (OSC)",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "floatingIpId",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "path",
+            "name": "portForwardingId",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeletePortForwardingResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
             "schema": {
               "$ref": "#/definitions/ProblemDetails"
             }
@@ -5916,7 +6477,7 @@
         "parameters": [
           {
             "in": "query",
-            "name": "name",
+            "name": "tagValue",
             "type": "string"
           }
         ],
@@ -6071,6 +6632,11 @@
             "required": true,
             "type": "integer",
             "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "updateMembers",
+            "type": "boolean"
           },
           {
             "in": "body",
@@ -7903,6 +8469,28 @@
       },
       "additionalProperties": false
     },
+    "CreateFloatingIpResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "floatingIp": {
+          "$ref": "#/definitions/FloatingIp"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        }
+      },
+      "additionalProperties": false
+    },
     "CreateGfwRuleResponse": {
       "type": "object",
       "properties": {
@@ -8028,6 +8616,28 @@
         },
         "keyInstance": {
           "$ref": "#/definitions/KeyInstance"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        }
+      },
+      "additionalProperties": false
+    },
+    "CreatePortForwardingResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "portForwarding": {
+          "$ref": "#/definitions/PortForwarding"
         },
         "requestInstance": {
           "$ref": "#/definitions/RequestInstance"
@@ -8501,6 +9111,25 @@
       },
       "additionalProperties": false
     },
+    "DeleteFloatingIpResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        }
+      },
+      "additionalProperties": false
+    },
     "DeleteGfwRuleResponse": {
       "type": "object",
       "properties": {
@@ -8581,6 +9210,25 @@
       "additionalProperties": false
     },
     "DeleteNATRuleResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        }
+      },
+      "additionalProperties": false
+    },
+    "DeletePortForwardingResponse": {
       "type": "object",
       "properties": {
         "messages": {
@@ -9049,6 +9697,30 @@
       },
       "additionalProperties": false
     },
+    "ErrorInstance": {
+      "type": "object",
+      "properties": {
+        "errorType": {
+          "$ref": "#/definitions/ErrorType"
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "ErrorType": {
+      "format": "int32",
+      "enum": [
+        0,
+        1,
+        2
+      ],
+      "type": "integer"
+    },
     "EtherType": {
       "enum": [
         "IPv4",
@@ -9155,6 +9827,62 @@
         },
         "projectExternalId": {
           "format": "uuid",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "FloatingIp": {
+      "type": "object",
+      "properties": {
+        "floatingIpId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "externalId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "creationDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "modificationDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "modifiedBy": {
+          "type": "string"
+        },
+        "publicAddress": {
+          "type": "string"
+        },
+        "portForwardings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PortForwarding"
+          }
+        },
+        "oscProjectId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "vmPortId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "vmFixedIp": {
+          "type": "string"
+        },
+        "vmName": {
           "type": "string"
         }
       },
@@ -9486,6 +10214,25 @@
       },
       "additionalProperties": false
     },
+    "GetFloatingIpResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "floatingIp": {
+          "$ref": "#/definitions/FloatingIp"
+        }
+      },
+      "additionalProperties": false
+    },
     "GetGfwRuleResponse": {
       "type": "object",
       "properties": {
@@ -9656,6 +10403,47 @@
         },
         "natRuleInstance": {
           "$ref": "#/definitions/NATRuleInstance"
+        }
+      },
+      "additionalProperties": false
+    },
+    "GetPlatformTypeResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "errorInstance": {
+          "$ref": "#/definitions/ErrorInstance"
+        },
+        "platformType": {
+          "$ref": "#/definitions/PlatformType"
+        }
+      },
+      "additionalProperties": false
+    },
+    "GetPortForwardingResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "portForwarding": {
+          "$ref": "#/definitions/PortForwarding"
         }
       },
       "additionalProperties": false
@@ -10840,6 +11628,28 @@
       },
       "additionalProperties": false
     },
+    "ListFloatingIpResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "floatingIpCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FloatingIp"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
     "ListGfwRulesResponse": {
       "type": "object",
       "properties": {
@@ -10945,6 +11755,28 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/NATRuleInstance"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "ListPortForwardingResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "portForwardingCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PortForwarding"
           }
         }
       },
@@ -11675,6 +12507,70 @@
         "OPENSTACK"
       ],
       "type": "string"
+    },
+    "PortForwarding": {
+      "type": "object",
+      "properties": {
+        "portForwardingId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "externalId": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "internalPortId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "internalIpAddress": {
+          "type": "string"
+        },
+        "internalPort": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "internalPortRange": {
+          "type": "string"
+        },
+        "externalPort": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "externalPortRange": {
+          "type": "string"
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "creationDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "modificationDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "modifiedBy": {
+          "type": "string"
+        },
+        "publicAddress": {
+          "type": "string"
+        },
+        "floatingIpId": {
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     },
     "PowerState": {
       "enum": [
@@ -13180,6 +14076,28 @@
       },
       "additionalProperties": false
     },
+    "UpdateFloatingIpResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "floatingIp": {
+          "$ref": "#/definitions/FloatingIp"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        }
+      },
+      "additionalProperties": false
+    },
     "UpdateGfwRuleResponse": {
       "type": "object",
       "properties": {
@@ -13283,6 +14201,28 @@
         },
         "natRuleInstance": {
           "$ref": "#/definitions/NATRuleInstance"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        }
+      },
+      "additionalProperties": false
+    },
+    "UpdatePortForwardingResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "portForwarding": {
+          "$ref": "#/definitions/PortForwarding"
         },
         "requestInstance": {
           "$ref": "#/definitions/RequestInstance"

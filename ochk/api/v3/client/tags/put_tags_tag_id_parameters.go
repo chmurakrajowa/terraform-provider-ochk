@@ -72,6 +72,9 @@ type PutTagsTagIDParams struct {
 	// Format: int32
 	TagID int32
 
+	// UpdateMembers.
+	UpdateMembers *bool
+
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -147,6 +150,17 @@ func (o *PutTagsTagIDParams) SetTagID(tagID int32) {
 	o.TagID = tagID
 }
 
+// WithUpdateMembers adds the updateMembers to the put tags tag ID params
+func (o *PutTagsTagIDParams) WithUpdateMembers(updateMembers *bool) *PutTagsTagIDParams {
+	o.SetUpdateMembers(updateMembers)
+	return o
+}
+
+// SetUpdateMembers adds the updateMembers to the put tags tag ID params
+func (o *PutTagsTagIDParams) SetUpdateMembers(updateMembers *bool) {
+	o.UpdateMembers = updateMembers
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *PutTagsTagIDParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -163,6 +177,23 @@ func (o *PutTagsTagIDParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 	// path param tagId
 	if err := r.SetPathParam("tagId", swag.FormatInt32(o.TagID)); err != nil {
 		return err
+	}
+
+	if o.UpdateMembers != nil {
+
+		// query param updateMembers
+		var qrUpdateMembers bool
+
+		if o.UpdateMembers != nil {
+			qrUpdateMembers = *o.UpdateMembers
+		}
+		qUpdateMembers := swag.FormatBool(qrUpdateMembers)
+		if qUpdateMembers != "" {
+
+			if err := r.SetQueryParam("updateMembers", qUpdateMembers); err != nil {
+				return err
+			}
+		}
 	}
 
 	if len(res) > 0 {

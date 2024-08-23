@@ -35,6 +35,7 @@ type Client struct {
 	PublicIPAddresses  PublicIPAddressProxy
 	Snapshots          SnapshotsProxy
 	Accounts           AccountsProxy
+	PlatformType       PlatformTypeProxy
 	key                string
 	apiClientTransport httptransport.Runtime
 }
@@ -190,6 +191,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		Accounts: AccountsProxy{
 			httpClient: httpClient,
 			service:    authClient.Accounts,
+		},
+		PlatformType: PlatformTypeProxy{
+			httpClient: httpClient,
+			service:    authClient.Identification,
 		},
 	}
 
