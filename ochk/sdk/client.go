@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/runtime/logger"
 	"github.com/go-openapi/strfmt"
@@ -37,6 +38,7 @@ type Client struct {
 	Accounts           AccountsProxy
 	PlatformType       PlatformTypeProxy
 	key                string
+	PType              models.PlatformType
 	apiClientTransport httptransport.Runtime
 }
 
@@ -199,6 +201,14 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 	}
 
 	c.apiClientTransport = *apiClientAuthTransport
+
+	platformType, err := checkPlatformType(ctx, c)
+
+	if err != nil {
+		return nil, err
+	}
+
+	c.PType = platformType
 	c.key = cacheClient(c, host, platform, api_key, insecure, debugLogFile, &ctx)
 	return c, nil
 }
@@ -207,6 +217,15 @@ type cachedClient struct {
 	c         *Client
 	cacheTime time.Time
 	ctx       *context.Context
+}
+
+func checkPlatformType(ctx context.Context, c *Client) (models.PlatformType, error) {
+	proxy := c.PlatformType
+	platformType, err := proxy.Read(ctx)
+	if err != nil {
+		return "UNKNOWN", fmt.Errorf("error checking platform type. : %v", err)
+	}
+	return platformType, nil
 }
 
 var clientCacheLifetime = time.Minute * 5
