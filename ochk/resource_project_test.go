@@ -49,7 +49,7 @@ func TestAccProjectResource_create(t *testing.T) {
 		ResourceName:          "default",
 		Description:           "tf-test-description",
 		ParentRouter:          testData.VRF,
-		MemoryReservedSizeMB:  24000,
+		MemoryReservedSizeMB:  23,
 		DisplayName:           generateRandName(devTestDataPrefix),
 		StorageReservedSizeGB: 150,
 		VcpuReservedQuantity:  100,
@@ -57,9 +57,10 @@ func TestAccProjectResource_create(t *testing.T) {
 	}
 
 	configInitial := project.ToString()
-
+	fmt.Printf("Project full name: %v\n", project.DisplayName)
+	fmt.Printf("Project memeory GB: %v\n", project.MemoryReservedSizeMB)
 	projectUpdated := project
-	projectUpdated.MemoryReservedSizeMB = 30000
+	projectUpdated.MemoryReservedSizeMB = 25
 	projectUpdated.StorageReservedSizeGB = 200
 	projectUpdated.VcpuReservedQuantity = 100
 	projectUpdated.Description += " - updated"

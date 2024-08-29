@@ -42,6 +42,7 @@ func TestAccTagResource_create_update(t *testing.T) {
 	tagUpdated.DisplayName += "-upd"
 
 	TagResourceName := tag.FullResourceName()
+	fmt.Printf("Tag full name: %v\n", tag.DisplayName)
 	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{

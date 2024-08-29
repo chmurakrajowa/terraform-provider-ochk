@@ -174,7 +174,7 @@ func resourceProjectDelete(ctx context.Context, d *schema.ResourceData, meta int
 func mapResourceDataToProject(d *schema.ResourceData) *models.ProjectInstance {
 	return &models.ProjectInstance{
 		Description:           d.Get("description").(string),
-		MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)),
+		MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)) * 1024,
 		Name:                  d.Get("display_name").(string),
 		StorageReservedSizeGB: int64(d.Get("storage_reserved_size_gb").(int)),
 		VrfID:                 strfmt.UUID(d.Get("vrf_id").(string)),
