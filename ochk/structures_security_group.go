@@ -3,6 +3,7 @@ package ochk
 import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -54,9 +55,9 @@ func flattenSecurityGroupMembers(in []*models.SecurityGroupMember) *schema.Set {
 	return out
 }
 
-func expandSecurityGroupMembers(in []interface{}) []*models.SecurityGroupMember {
+func expandSecurityGroupMembers(in []interface{}, platformType models.PlatformType) ([]*models.SecurityGroupMember, diag.Diagnostics, string) {
 	if len(in) == 0 {
-		return nil
+		return nil, diag.Errorf("expandSecurityGroupMembers >>> IN Values is null: %+v", nil), ""
 	}
 
 	var out = make([]*models.SecurityGroupMember, len(in))
@@ -67,14 +68,30 @@ func expandSecurityGroupMembers(in []interface{}) []*models.SecurityGroupMember 
 			ID:         strfmt.UUID(m["id"].(string)),
 			MemberType: models.SecurityGroupMemberType(m["type"].(string)),
 		}
+		if platformType == "OPENSTACK" {
+			if member.MemberType == "IPCOLLECTION" {
+				return nil, diag.Errorf("error while expand security group:'' %+v", IPCOLLECTION), "IPCOLLECTION"
+			} else if member.MemberType == "LOGICAL_PORT" {
+				return nil, diag.Errorf("error while expand security group:'' %+v", LOGICAL_PORT), "LOGICAL_PORT"
+			} else if member.MemberType == "IPSET" {
+				return nil, diag.Errorf("error while expand security group:'' %+v", LOGICAL_PORT), "IPSET"
+			}
+		}
+
+		if platformType == "VMWARE" {
+			if member.MemberType == "IPSET" {
+				return nil, diag.Errorf("error while expand security group:'' %+v", IPSET), "IPSET"
+			} else if member.MemberType == "LOGICAL_PORT" {
+				return nil, diag.Errorf("error while expand security group:'' %+v", LOGICAL_PORT), "LOGICAL_PORT"
+			}
+		}
 
 		if displayName, ok := m["display_name"].(string); ok && displayName != "" {
 			member.DisplayName = displayName
 		}
-
 		out[i] = member
 	}
-	return out
+	return out, nil, ""
 }
 
 func securityGroupMembersHash(v interface{}) int {

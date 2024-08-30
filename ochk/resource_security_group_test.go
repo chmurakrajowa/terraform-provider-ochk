@@ -42,6 +42,28 @@ resource "ochk_security_group" "{{ .ResourceName}}" {
 `, c)
 }
 
+func (c *SecurityGroupTestData) ToString2(projNameSuffix string) string {
+
+	return executeTemplateToString(`
+
+data "ochk_project" "proj-1`+projNameSuffix+`" {
+  display_name = "`+testData.Project1Name+`"
+}
+
+resource "ochk_security_group" "{{ .ResourceName}}" {
+  display_name = "{{ .DisplayName}}"
+  project_id = data.ochk_project.proj-1`+projNameSuffix+`.id
+
+  {{range $member := .Members}}
+  members {
+    id   = {{ $member.ID }}
+    type = "VIRTUAL_MACHINE"
+  }
+  {{end}}
+}
+`, c)
+}
+
 func (c *SecurityGroupTestData) FullResourceName() string {
 	return "ochk_security_group." + c.ResourceName
 }
@@ -63,6 +85,8 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 			},
 		},
 	}
+	fmt.Printf("Security group name: %v\n", securityGroup.DisplayName)
+
 	configOneMember := virtualMachine.ToString("-sc1") + securityGroup.ToString("-one-mbmr")
 
 	/* Security group with one member with updated display_name */

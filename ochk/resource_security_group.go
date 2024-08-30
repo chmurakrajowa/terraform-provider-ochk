@@ -2,7 +2,6 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -92,11 +91,22 @@ func resourceSecurityGroupImportState(_ context.Context, d *schema.ResourceData,
 func resourceSecurityGroupCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).SecurityGroups
 
-	securityGroup := mapResourceDataToSecurityGroup(d)
+	proxy_pt := meta.(*sdk.Client).PlatformType
+	platformType, _ := proxy_pt.Read(ctx)
+
+	//if true {
+	//	return diag.Errorf("########################## >>>> error while creating proxy platform type: %+v", platformType)
+	//}
+
+	securityGroup, err_pt := mapResourceDataToSecurityGroup(d, platformType)
+	if err_pt != nil {
+		return diag.Errorf("ResourceSecurityGroupCreate >>>> error while creating proxy platform type: %+v", err_pt)
+
+	}
 
 	created, err := proxy.Create(ctx, securityGroup)
 	if err != nil {
-		return diag.Errorf("error while creating security group: %+v", err)
+		return diag.Errorf("ResourceSecurityGroupCreate >>>> error while creating security group: %+v", err)
 	}
 
 	d.SetId(created.ID.String())
@@ -151,8 +161,14 @@ func resourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta
 
 func resourceSecurityGroupUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).SecurityGroups
+	proxy_pt := meta.(*sdk.Client).PlatformType
+	platformType, _ := proxy_pt.Read(ctx)
+	securityGroup, err_pt := mapResourceDataToSecurityGroup(d, platformType)
 
-	securityGroup := mapResourceDataToSecurityGroup(d)
+	if err_pt != nil {
+		return diag.Errorf("resourceSecurityGroupUpdate >>>> error while creating proxy platform type: %+v", err_pt)
+
+	}
 	securityGroup.ID = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, securityGroup)
@@ -178,12 +194,4 @@ func resourceSecurityGroupDelete(ctx context.Context, d *schema.ResourceData, me
 	}
 
 	return nil
-}
-
-func mapResourceDataToSecurityGroup(d *schema.ResourceData) *models.SecurityGroup {
-	return &models.SecurityGroup{
-		DisplayName: d.Get("display_name").(string),
-		ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
-		Members:     expandSecurityGroupMembers(d.Get("members").(*schema.Set).List()),
-	}
 }
