@@ -44,7 +44,7 @@ func mapResourceDataToSecurityGroup(d *schema.ResourceData, platformType models.
 //##################################################################################################################################
 
 func loadTestOpenstackData() {
-	fmt.Printf("pathToFile %v", pathToFile)
+	//	fmt.Printf("pathToFile %v", pathToFile)
 
 	jsonfile, err := os.ReadFile(pathToFile)
 
@@ -117,7 +117,7 @@ type predefinedTestOpenstackData struct {
 	//AccountName                string
 }
 
-var DevTestDataOpenstackPrefix = "tf-test"
+var DevTestDataOpenstackPrefix = "tf-gojl"
 var predefinedTestDataOpenstackDev = predefinedTestOpenstackData{
 	//LogicalPort1DisplayName:    "",
 	//BackupPlanName:             "",
@@ -165,13 +165,13 @@ var CastTemplateFuncMap = map[string]interface{}{
 	"UuidTFValue":     CastUuidTFValue,
 }
 
-//type TestData interface {
-//	FullResourceName() string
-//}
-//
-//func CastDataResourceID(td TestData) string {
-//	return td.FullResourceName() + ".id"
-//}
+type TestData interface {
+	FullResourceName() string
+}
+
+func CastDataResourceID(td TestData) string {
+	return td.FullResourceName() + ".id"
+}
 
 func CastTemplateToString(templateString string, data interface{}) string {
 	parsedTemplate, err := template.New("template_name").Funcs(CastTemplateFuncMap).Parse(templateString)
