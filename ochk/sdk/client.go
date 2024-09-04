@@ -15,6 +15,7 @@ import (
 )
 
 type Client struct {
+	FirewallRules      FirewallRulesProxy
 	FirewallEWRules    FirewallEWRulesProxy
 	FirewallSNRules    FirewallSNRulesProxy
 	Requests           RequestsProxy
@@ -122,6 +123,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 			httpClient: httpClient,
 			service:    authClient.GfwRule,
 		},
+		FirewallRules: FirewallRulesProxy{
+			httpClient: httpClient,
+			service:    authClient.FirewallRule,
+		},
 		Services: ServicesProxy{
 			httpClient: httpClient,
 			service:    authClient.DefaultServices,
@@ -134,10 +139,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 			httpClient: httpClient,
 			service:    authClient.VirtualMachine,
 		},
-		Projects: ProjectsProxy{
-			httpClient: httpClient,
-			service:    authClient.Projects,
-		},
+		//Projects: ProjectsProxy{
+		//	httpClient: httpClient,
+		//	service:    authClient.Projects,
+		//},
 		VirtualNetworks: VirtualNetworksProxy{
 			httpClient: httpClient,
 			service:    authClient.VirtualNetwork,
