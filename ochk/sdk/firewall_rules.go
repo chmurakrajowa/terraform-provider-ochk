@@ -44,6 +44,7 @@ func (p *FirewallRulesProxy) Read(ctx context.Context, projectId strfmt.UUID, se
 }
 
 func (p *FirewallRulesProxy) List(ctx context.Context, projectId strfmt.UUID, securityGroupId strfmt.UUID) ([]*models.FirewallRule, error) {
+
 	params := &firewall_rule.GetProjectsProjectIDOscSecurityGroupsSecurityGroupIDFirewallParams{
 		ProjectID:       projectId,
 		SecurityGroupID: securityGroupId,
@@ -56,6 +57,10 @@ func (p *FirewallRulesProxy) List(ctx context.Context, projectId strfmt.UUID, se
 	response, err := p.service.GetProjectsProjectIDOscSecurityGroupsSecurityGroupIDFirewall(params)
 	mutex.Unlock()
 
+	if false {
+		return nil, fmt.Errorf("openstack rule response.Payload.Success: %w", response)
+	}
+
 	if err != nil {
 		return nil, fmt.Errorf("error while listing firewall openstack rule: %w", err)
 	}
@@ -66,6 +71,3 @@ func (p *FirewallRulesProxy) List(ctx context.Context, projectId strfmt.UUID, se
 
 	return response.Payload.FirewallRuleCollection, nil
 }
-
-// /projects/3cda830c-b37f-46dc-be54-f649d31bec66/osc/security-groups/ff765340-2c9e-4dc8-b565-bd1d84793f5d/firewall/06f8f3bc-93d7-4d84-98bd-270e2b9b847f
-// /projects/ff765340-2c9e-4dc8-b565-bd1d84793f5d/osc/security-groups/3cda830c-b37f-46dc-be54-f649d31bec66/firewall/06f8f3bc-93d7-4d84-98bd-270e2b9b847f

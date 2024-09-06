@@ -139,10 +139,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 			httpClient: httpClient,
 			service:    authClient.VirtualMachine,
 		},
-		//Projects: ProjectsProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.Projects,
-		//},
+		Projects: ProjectsProxy{
+			httpClient: httpClient,
+			service:    authClient.Projects,
+		},
 		VirtualNetworks: VirtualNetworksProxy{
 			httpClient: httpClient,
 			service:    authClient.VirtualNetwork,
