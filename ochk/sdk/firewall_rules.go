@@ -71,3 +71,28 @@ func (p *FirewallRulesProxy) List(ctx context.Context, projectId strfmt.UUID, se
 
 	return response.Payload.FirewallRuleCollection, nil
 }
+
+func (p *FirewallRulesProxy) ListByName(ctx context.Context, projectId strfmt.UUID, securityGroupId strfmt.UUID, name string) ([]*models.FirewallRule, error) {
+	params := &firewall_rule.GetProjectsProjectIDOscSecurityGroupsSecurityGroupIDFirewallParams{
+		ProjectID:       projectId,
+		SecurityGroupID: securityGroupId,
+		Name:            &name,
+		Context:         ctx,
+		HTTPClient:      p.httpClient,
+	}
+
+	mutex := sync.Mutex{}
+	mutex.Lock()
+	response, err := p.service.GetProjectsProjectIDOscSecurityGroupsSecurityGroupIDFirewall(params)
+	mutex.Unlock()
+
+	if err != nil {
+		return nil, fmt.Errorf("error while listing firewall rules: %w", err)
+	}
+
+	if !response.Payload.Success {
+		return nil, fmt.Errorf("listing firewall rules failed: %s", response.Payload.Messages)
+	}
+
+	return response.Payload.FirewallRuleCollection, nil
+}

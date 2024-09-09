@@ -16,9 +16,9 @@ var templateFuncMap = map[string]interface{}{
 	"UuidTFValue":     uuidTFValue,
 }
 
-type TestData interface {
-	FullResourceName() string
-}
+//type TestData interface {
+//	FullResourceName() string
+//}
 
 func testDataResourceID(td TestData) string {
 	return td.FullResourceName() + ".id"

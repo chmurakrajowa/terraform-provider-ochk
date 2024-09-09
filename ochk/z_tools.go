@@ -17,7 +17,7 @@ import (
 
 type MemberType string
 
-var pathToFile = "../../env/predefined-resources.json"
+var pathToFile = "../env/predefined-resources.json"
 
 const (
 	IPCOLLECTION MemberType = "IPCOLLECTION"
@@ -70,7 +70,6 @@ func loadTestOpenstackData() {
 			}
 			val := reflect.ValueOf(&predefinedTestDataOpenstackDev).Elem().FieldByName(m.Name)
 
-			fmt.Printf("VAL %v", val)
 			if val.IsValid() {
 				reflect.ValueOf(&predefinedTestDataOpenstackDev).Elem().FieldByName(m.Name).SetString(m.Text)
 			}
