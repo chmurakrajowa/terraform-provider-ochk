@@ -12,6 +12,8 @@ ENV_PROVIDER_DIR="env/terraform.d/plugins/registry.terraform.io/chmurakrajowa/oc
 
 default: build
 
+clean:
+	go clean ./...
 build: fmtcheck
 	go build ./...
 

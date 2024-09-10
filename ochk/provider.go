@@ -95,6 +95,7 @@ func Provider() *schema.Provider {
 		ResourcesMap: map[string]*schema.Resource{
 			"ochk_firewall_ew_rule": resourceFirewallEWRule(),
 			"ochk_firewall_sn_rule": resourceFirewallSNRule(),
+			"ochk_firewall_rule":    resourceFirewallRule(),
 			"ochk_vpc":              resourceVpc(),
 			"ochk_security_group":   resourceSecurityGroup(),
 			"ochk_project":          resourceProject(),
