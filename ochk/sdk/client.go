@@ -15,32 +15,33 @@ import (
 )
 
 type Client struct {
-	FirewallRules      FirewallRulesProxy
-	FirewallEWRules    FirewallEWRulesProxy
-	FirewallSNRules    FirewallSNRulesProxy
-	Requests           RequestsProxy
-	Routers            RoutersProxy
-	SecurityGroups     SecurityGroupsProxy
-	Services           ServicesProxy
-	Projects           ProjectsProxy
-	VirtualMachines    VirtualMachinesProxy
-	VirtualNetworks    VirtualNetworksProxy
-	IPCollections      IPCollectionsProxy
-	Deployments        DeploymentsProxy
-	CustomServices     CustomServicesProxy
-	KMSKeys            KMSKeysProxy
-	BackupPlans        BackupPlansProxy
-	BackupLists        BackupListsProxy
-	Tags               TagsProxy
-	Nats               NatProxy
-	Folders            FoldersProxy
-	PublicIPAddresses  PublicIPAddressProxy
-	Snapshots          SnapshotsProxy
-	Accounts           AccountsProxy
-	PlatformType       PlatformTypeProxy
-	key                string
-	PType              models.PlatformType
-	apiClientTransport httptransport.Runtime
+	FloatingIPAddresses FloatingIPAddressProxy
+	FirewallRules       FirewallRulesProxy
+	FirewallEWRules     FirewallEWRulesProxy
+	FirewallSNRules     FirewallSNRulesProxy
+	Requests            RequestsProxy
+	Routers             RoutersProxy
+	SecurityGroups      SecurityGroupsProxy
+	Services            ServicesProxy
+	Projects            ProjectsProxy
+	VirtualMachines     VirtualMachinesProxy
+	VirtualNetworks     VirtualNetworksProxy
+	IPCollections       IPCollectionsProxy
+	Deployments         DeploymentsProxy
+	CustomServices      CustomServicesProxy
+	KMSKeys             KMSKeysProxy
+	BackupPlans         BackupPlansProxy
+	BackupLists         BackupListsProxy
+	Tags                TagsProxy
+	Nats                NatProxy
+	Folders             FoldersProxy
+	PublicIPAddresses   PublicIPAddressProxy
+	Snapshots           SnapshotsProxy
+	Accounts            AccountsProxy
+	PlatformType        PlatformTypeProxy
+	key                 string
+	PType               models.PlatformType
+	apiClientTransport  httptransport.Runtime
 }
 
 var clientMutex sync.Mutex
@@ -190,6 +191,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		PublicIPAddresses: PublicIPAddressProxy{
 			httpClient: httpClient,
 			service:    authClient.PublicIP,
+		},
+		FloatingIPAddresses: FloatingIPAddressProxy{
+			httpClient: httpClient,
+			service:    authClient.FloatingIP,
 		},
 		Snapshots: SnapshotsProxy{
 			httpClient: httpClient,
