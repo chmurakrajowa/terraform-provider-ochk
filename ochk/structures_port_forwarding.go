@@ -5,7 +5,7 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-func flattenFirewallRulesLists(in []*models.FirewallRule) []map[strfmt.UUID]interface{} {
+func flattenPortsForwardingLists(in []*models.PortForwarding) []map[strfmt.UUID]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -14,8 +14,10 @@ func flattenFirewallRulesLists(in []*models.FirewallRule) []map[strfmt.UUID]inte
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["rule_id"] = v.RuleID
-		m["name"] = v.Name
+		m["port_forwarding_id"] = v.PortForwardingID
+		m["display_name"] = v.Name
+		m["floating_ip_id"] = v.FloatingIPID
+		m["internal_port_id"] = v.InternalPortID
 		out = append(out, m)
 	}
 	return out

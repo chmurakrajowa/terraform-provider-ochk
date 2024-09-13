@@ -85,7 +85,7 @@ func dataSourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, met
 	firewallRule, err := proxy.ListByName(ctx, projectId, securityGroupId, name)
 
 	if err != nil {
-		return diag.Errorf("firewall rule for ruleId %s not found: %+v", firewallRule, err)
+		return diag.Errorf("ferror while listing firewall rule: %+v", err)
 	}
 
 	if len(firewallRule) < 1 {

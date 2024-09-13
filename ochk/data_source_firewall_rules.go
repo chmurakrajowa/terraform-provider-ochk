@@ -48,11 +48,11 @@ func dataSourceFirewallRulesRead(ctx context.Context, d *schema.ResourceData, me
 	firewallRules, err := proxy.List(ctx, projectId, securityGroupId)
 
 	if err := d.Set("firewall_rules", flattenFirewallRulesLists(firewallRules)); err != nil {
-		return diag.Errorf("error setting projects list: %v", err)
+		return diag.Errorf("error setting firewall rules list: %v", err)
 	}
 
 	if err != nil {
-		return diag.Errorf("error while listing projects")
+		return diag.Errorf("error while listing firewall rules")
 	}
 
 	d.SetId("firewall_Rules-list")

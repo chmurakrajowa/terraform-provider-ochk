@@ -80,6 +80,8 @@ func Provider() *schema.Provider {
 			"ochk_auto_nats":               dataSourceAutoNats(),
 			"ochk_manual_nat":              dataSourceNat(),
 			"ochk_manual_nats":             dataSourceManualNats(),
+			"ochk_ports_forwarding":        dataSourcePortsForwarding(),
+			"ochk_port_forwarding":         dataSourcePortForwarding(),
 			"ochk_firewall_ew_rule":        dataSourceFirewallEWRule(),
 			"ochk_firewall_ew_rules":       dataSourceFirewallEWRules(),
 			"ochk_firewall_sn_rule":        dataSourceFirewallSNRule(),
@@ -112,6 +114,7 @@ func Provider() *schema.Provider {
 			"ochk_snapshot":            resourceSnapshot(),
 			"ochk_billing_account":     resourceBillingAccount(),
 			"ochk_floating_ip_address": resourceFloatingIp(),
+			"ochk_port_forwarding":     resourcePortForwarding(),
 		},
 		ConfigureContextFunc: func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 			client, err := sdk.NewClient(

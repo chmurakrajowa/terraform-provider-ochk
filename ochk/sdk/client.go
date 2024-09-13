@@ -34,6 +34,7 @@ type Client struct {
 	BackupLists         BackupListsProxy
 	Tags                TagsProxy
 	Nats                NatProxy
+	PortForwarding      PortsForwardingProxy
 	Folders             FoldersProxy
 	PublicIPAddresses   PublicIPAddressProxy
 	Snapshots           SnapshotsProxy
@@ -183,6 +184,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		Nats: NatProxy{
 			httpClient: httpClient,
 			service:    authClient.NatRule,
+		},
+		PortForwarding: PortsForwardingProxy{
+			httpClient: httpClient,
+			service:    authClient.PortForwarding,
 		},
 		Folders: FoldersProxy{
 			httpClient: httpClient,

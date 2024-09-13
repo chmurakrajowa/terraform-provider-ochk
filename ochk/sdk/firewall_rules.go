@@ -129,7 +129,7 @@ func (p *FirewallRulesProxy) Create(ctx context.Context, projectId strfmt.UUID, 
 
 func (p *FirewallRulesProxy) Update(ctx context.Context, projectId strfmt.UUID, securityGroupId strfmt.UUID, rule *models.FirewallRule) (*models.FirewallRule, error) {
 	if err := rule.Validate(strfmt.Default); err != nil {
-		return nil, fmt.Errorf("error while validating firewall EW rule struct: %w", err)
+		return nil, fmt.Errorf("error while validating firewall rule struct: %w", err)
 	}
 
 	params := &firewall_rule.PutProjectsProjectIDOscSecurityGroupsSecurityGroupIDFirewallRuleIDParams{
