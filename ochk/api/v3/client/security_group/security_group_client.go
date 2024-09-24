@@ -91,6 +91,8 @@ type ClientService interface {
 
 	GetNetworkSecurityGroupsGroupID(params *GetNetworkSecurityGroupsGroupIDParams, opts ...ClientOption) (*GetNetworkSecurityGroupsGroupIDOK, error)
 
+	PostNetworkSecurityGroupsWaitingRoomImport(params *PostNetworkSecurityGroupsWaitingRoomImportParams, opts ...ClientOption) (*PostNetworkSecurityGroupsWaitingRoomImportOK, error)
+
 	PutNetworkSecurityGroups(params *PutNetworkSecurityGroupsParams, opts ...ClientOption) (*PutNetworkSecurityGroupsOK, error)
 
 	PutNetworkSecurityGroupsGroupID(params *PutNetworkSecurityGroupsGroupIDParams, opts ...ClientOption) (*PutNetworkSecurityGroupsGroupIDOK, error)
@@ -215,6 +217,46 @@ func (a *Client) GetNetworkSecurityGroupsGroupID(params *GetNetworkSecurityGroup
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for GetNetworkSecurityGroupsGroupID: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+PostNetworkSecurityGroupsWaitingRoomImport imports security group
+
+Import security group
+*/
+func (a *Client) PostNetworkSecurityGroupsWaitingRoomImport(params *PostNetworkSecurityGroupsWaitingRoomImportParams, opts ...ClientOption) (*PostNetworkSecurityGroupsWaitingRoomImportOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewPostNetworkSecurityGroupsWaitingRoomImportParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "PostNetworkSecurityGroupsWaitingRoomImport",
+		Method:             "POST",
+		PathPattern:        "/network/security-groups/waiting-room/import",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json", "text/json", "application/*+json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &PostNetworkSecurityGroupsWaitingRoomImportReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*PostNetworkSecurityGroupsWaitingRoomImportOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for PostNetworkSecurityGroupsWaitingRoomImport: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

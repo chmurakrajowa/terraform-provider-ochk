@@ -6464,6 +6464,58 @@
         }
       }
     },
+    "/network/security-groups/waiting-room/import": {
+      "post": {
+        "tags": [
+          "SecurityGroup"
+        ],
+        "summary": "Import security group",
+        "description": "Import security group",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/SecurityGroup"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ImportSecurityGroupResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
     "/tags": {
       "get": {
         "tags": [
@@ -7064,6 +7116,58 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/ResetVirtualMachineResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/vcs/virtual-machines/waiting-room/import": {
+      "post": {
+        "tags": [
+          "VirtualMachine"
+        ],
+        "summary": "Import virtual machine",
+        "description": "Import virtual machine",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/VirtualMachineImport"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ImportVirtualMachineResponse"
             }
           },
           "400": {
@@ -10960,6 +11064,44 @@
       },
       "additionalProperties": false
     },
+    "ImportSecurityGroupResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ImportVirtualMachineResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "requestInstance": {
+          "$ref": "#/definitions/RequestInstance"
+        }
+      },
+      "additionalProperties": false
+    },
     "InternalTransitSubnet": {
       "type": "object",
       "properties": {
@@ -12600,7 +12742,7 @@
           "type": "string"
         }
       },
-      "additionalProperties": { }
+      "additionalProperties": {}
     },
     "ProjectInstance": {
       "type": "object",
@@ -13032,7 +13174,9 @@
         "FILES_MANAGER_UPDATE_STATUS",
         "PORT_FORWARDING_CREATE",
         "PORT_FORWARDING_UPDATE",
-        "PORT_FORWARDING_DELETE"
+        "PORT_FORWARDING_DELETE",
+        "VIRTUAL_MACHINE_IMPORT",
+        "SECURITY_GROUP_IMPORT"
       ],
       "type": "string"
     },
@@ -13708,7 +13852,7 @@
         "resource": {
           "type": "string"
         },
-        "jsonPayload": { },
+        "jsonPayload": {},
         "timestamp": {
           "format": "date-time",
           "type": "string"
@@ -14545,6 +14689,31 @@
         "SATA"
       ],
       "type": "string"
+    },
+    "VirtualMachineImport": {
+      "type": "object",
+      "properties": {
+        "externalId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "deploymentId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "projectId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "osTypeId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "storagePolicy": {
+          "$ref": "#/definitions/StoragePolicy"
+        }
+      },
+      "additionalProperties": false
     },
     "VirtualMachineInstance": {
       "type": "object",

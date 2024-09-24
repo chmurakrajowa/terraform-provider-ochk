@@ -95,6 +95,8 @@ type ClientService interface {
 
 	PostVcsVirtualMachinesVirtualMachineIDReset(params *PostVcsVirtualMachinesVirtualMachineIDResetParams, opts ...ClientOption) (*PostVcsVirtualMachinesVirtualMachineIDResetOK, error)
 
+	PostVcsVirtualMachinesWaitingRoomImport(params *PostVcsVirtualMachinesWaitingRoomImportParams, opts ...ClientOption) (*PostVcsVirtualMachinesWaitingRoomImportOK, error)
+
 	PutVcsVirtualMachines(params *PutVcsVirtualMachinesParams, opts ...ClientOption) (*PutVcsVirtualMachinesOK, error)
 
 	PutVcsVirtualMachinesVirtualMachineID(params *PutVcsVirtualMachinesVirtualMachineIDParams, opts ...ClientOption) (*PutVcsVirtualMachinesVirtualMachineIDOK, error)
@@ -299,6 +301,46 @@ func (a *Client) PostVcsVirtualMachinesVirtualMachineIDReset(params *PostVcsVirt
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for PostVcsVirtualMachinesVirtualMachineIDReset: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+PostVcsVirtualMachinesWaitingRoomImport imports virtual machine
+
+Import virtual machine
+*/
+func (a *Client) PostVcsVirtualMachinesWaitingRoomImport(params *PostVcsVirtualMachinesWaitingRoomImportParams, opts ...ClientOption) (*PostVcsVirtualMachinesWaitingRoomImportOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewPostVcsVirtualMachinesWaitingRoomImportParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "PostVcsVirtualMachinesWaitingRoomImport",
+		Method:             "POST",
+		PathPattern:        "/vcs/virtual-machines/waiting-room/import",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json", "text/json", "application/*+json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &PostVcsVirtualMachinesWaitingRoomImportReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*PostVcsVirtualMachinesWaitingRoomImportOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for PostVcsVirtualMachinesWaitingRoomImport: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
