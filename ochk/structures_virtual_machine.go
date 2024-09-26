@@ -8,8 +8,7 @@ import (
 )
 
 func virtualDiskHash(v interface{}) int {
-	m := v.(map[string]interface{})
-
+	m := v.(map[strfmt.UUID]interface{})
 	return schema.HashString(fmt.Sprintf("%d%d", m["controller_id"], m["lun_id"]))
 }
 
@@ -94,13 +93,14 @@ func flattenVirtualDisks(in []*models.VirtualDiskDevice) *schema.Set {
 }
 
 func expandVirtualDisks(in []interface{}) []*models.VirtualDiskDevice {
+
 	if len(in) == 0 {
 		return nil
 	}
-
 	var out = make([]*models.VirtualDiskDevice, len(in))
+
 	for i, v := range in {
-		m := v.(map[strfmt.UUID]interface{})
+		m := v.(map[string]interface{})
 
 		member := &models.VirtualDiskDevice{}
 
@@ -148,7 +148,7 @@ func expandVirtualNetworkDevices(in []interface{}) []*models.VirtualNetworkDevic
 
 	var out = make([]*models.VirtualNetworkDevice, len(in))
 	for i, v := range in {
-		m := v.(map[strfmt.UUID]interface{})
+		m := v.(map[string]interface{})
 
 		member := &models.VirtualNetworkDevice{}
 
