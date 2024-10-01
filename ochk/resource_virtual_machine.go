@@ -476,14 +476,15 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 }
 
 func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VirtualMachineInstance {
-	virtualMachineInstance := models.VirtualMachineInstance{
+	var virtualMachineInstance = models.VirtualMachineInstance{
 		AdditionalVirtualDiskDeviceCollection: expandVirtualDisks(d.Get("additional_virtual_disks").(*schema.Set).List()),
 		DeploymentInstance: &models.DeploymentInstance{
 			DeploymentID: strfmt.UUID(d.Get("deployment_id").(string)),
 		},
-		InitialPassword:       d.Get("initial_password").(string),
-		PowerState:            d.Get("power_state").(models.PowerState),
-		StoragePolicy:         d.Get("storage_policy").(models.StoragePolicy),
+		InitialPassword: d.Get("initial_password").(string),
+		PowerState:      models.PowerStatePoweredOn,
+		//StoragePolicy:         d.GetOk("storage_policy").(models.StoragePolicy),
+		StoragePolicy:         models.StoragePolicySTANDARDW1,
 		ProjectID:             strfmt.UUID(d.Get("project_id").(string)),
 		VirtualMachineID:      strfmt.UUID(d.Id()),
 		VirtualMachineName:    d.Get("display_name").(string),
@@ -492,7 +493,7 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VirtualMach
 		//DeploymentParams:      expandVDeploymentParams(d.Get("deployment_params").([]interface{})),
 		BackupListCollection: expandBackupListsFromIDs(d.Get("backup_lists").(*schema.Set).List()),
 		Tags:                 expandTagsListsFromIDs(d.Get("tags").(*schema.Set).List()),
-		OsType:               d.Get("os_type").(models.OsType),
+		OsType:               models.OsTypeLINUX,
 		OvfIPConfiguration:   d.Get("ovf_ip_configuration").(bool),
 		InitialUserName:      d.Get("initial_user_name").(string),
 		FolderPath:           d.Get("folder_path").(string),
@@ -505,7 +506,6 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VirtualMach
 		CPUCount:             int32(d.Get("cpu_count").(int)),
 		MemorySizeMB:         int32(d.Get("memory_size_mb").(int)),
 	}
-
 	encryptionInstance := &models.EncryptionInstance{
 		Encrypt: d.Get("encryption").(bool),
 	}
