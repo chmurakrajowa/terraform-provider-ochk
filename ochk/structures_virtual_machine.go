@@ -92,8 +92,37 @@ func flattenVirtualDisks(in []*models.VirtualDiskDevice) *schema.Set {
 	return out
 }
 
-func expandVirtualDisks(in []interface{}) []*models.VirtualDiskDevice {
+func validateVirtualMachine(d *schema.ResourceData, platformType models.PlatformType) string {
+	for i, v := range d.Get("additional_virtual_disks").(*schema.Set).List() {
+		m := v.(map[string]interface{})
+		if m["size_mb"].(int) < 1024 {
+			return fmt.Sprintf(E1002, m["size_mb"])
+		}
+		fmt.Println("I= %s", i)
+	}
 
+	if platformType == models.PlatformTypeOPENSTACK {
+		if len(d.Get("backup_lists").(*schema.Set).List()) > 0 {
+			return fmt.Sprintf(E1003, "backup_lists", "backup_lists")
+		}
+
+		if d.Get("encryption").(bool) {
+			return fmt.Sprintf(E1004, "encryption")
+		}
+
+		if len(d.Get("encryption_key_id").(string)) > 0 {
+			return fmt.Sprintf(E1004, "encryption_key_id")
+		}
+
+		if len(d.Get("encryption_recrypt").(string)) > 0 {
+			return fmt.Sprintf(E1004, "encryption_recrypt")
+		}
+
+	}
+	return ""
+}
+
+func expandVirtualDisks(in []interface{}) []*models.VirtualDiskDevice {
 	if len(in) == 0 {
 		return nil
 	}
@@ -111,7 +140,6 @@ func expandVirtualDisks(in []interface{}) []*models.VirtualDiskDevice {
 		if lunID, ok := m["lun_id"].(int); ok {
 			member.LunID = int32(lunID)
 		}
-
 		if sizeMB, ok := m["size_mb"].(int); ok {
 			member.SizeMB = int64(sizeMB)
 		}

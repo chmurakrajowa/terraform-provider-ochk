@@ -15,6 +15,11 @@ import (
 
 const (
 	VirtualMachineRetryTimeout = 20 * time.Minute
+	E1001                      = "TF_ERROR{1001}: Error during creating virtual machine. %s"
+	E1002                      = "Input value MB_SIZE %d MB is less then 1024 MB"
+	E1003                      = "Resource: %s is not supported in Openstack. Please remove %s from your terraform file."
+	E1004                      = "KMS is not supported in Openstack. Please remove %s field from your terraform file."
+	E1001_UPDATE               = "TF_ERROR{1001}: Error during updating virtual machine. %s"
 )
 
 func resourceVirtualMachine() *schema.Resource {
@@ -271,6 +276,10 @@ func resourceVirtualMachineImportState(_ context.Context, d *schema.ResourceData
 func resourceVirtualMachineCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	client := meta.(*sdk.Client)
 
+	result := validateVirtualMachine(d, client.PType)
+	if result != "" {
+		return diag.Errorf(E1001, result)
+	}
 	virtualMachine := mapResourceDataToVirtualMachine(d)
 
 	request, err := client.VirtualMachines.Create(ctx, virtualMachine)
@@ -280,7 +289,7 @@ func resourceVirtualMachineCreate(ctx context.Context, d *schema.ResourceData, m
 
 	err, resourceID := client.Requests.FetchResourceID(ctx, d.Timeout(schema.TimeoutCreate), request)
 	if err != nil {
-		return diag.Errorf("error while fetching virtual machine request state: %+v", err)
+		return diag.Errorf(E1001, err)
 	}
 
 	d.SetId(resourceID.String())
@@ -313,6 +322,11 @@ func resourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, met
 func resourceVirtualMachineUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	sdkClient := meta.(*sdk.Client)
 
+	result := validateVirtualMachine(d, sdkClient.PType)
+	if result != "" {
+		return diag.Errorf(E1001_UPDATE, result)
+	}
+
 	virtualMachine := mapResourceDataToVirtualMachine(d)
 	virtualMachine.VirtualMachineID = strfmt.UUID(d.Id())
 
@@ -323,7 +337,7 @@ func resourceVirtualMachineUpdate(ctx context.Context, d *schema.ResourceData, m
 
 	err, resourceID := sdkClient.Requests.FetchResourceID(ctx, d.Timeout(schema.TimeoutCreate), request)
 	if err != nil {
-		return diag.Errorf("error while fetching virtual machine request state: %+v", err)
+		return diag.Errorf("Error while fetching virtual machine request state: %+v", err)
 	}
 
 	d.SetId(resourceID.String())
