@@ -31,7 +31,7 @@ func (p *RequestsProxy) FetchResourceID(ctx context.Context, timeout time.Durati
 		}
 
 		if err := verifyRequestStatusAndPhase(requestState); err != nil {
-			return resource.NonRetryableError(fmt.Errorf("request is not in valid state: %w. %s", err, requestState.LastErrorMessage))
+			return resource.NonRetryableError(fmt.Errorf("Request is not in valid state. %w. %s", err, requestState.LastErrorMessage))
 		}
 
 		if requestState.RequestPhase != "FINISHED" {
@@ -46,11 +46,11 @@ func (p *RequestsProxy) FetchResourceID(ctx context.Context, timeout time.Durati
 
 func verifyRequestStatusAndPhase(request *models.RequestInstance) error {
 	if request.RequestStatus == "FAILED" {
-		return fmt.Errorf("request status is %s", request.RequestStatus)
+		return fmt.Errorf("Request status is %s", request.RequestStatus)
 	}
 
 	if request.RequestPhase == "CANCELLED" || request.RequestPhase == "TIMEOUT" {
-		return fmt.Errorf("request phase is %s", request.RequestPhase)
+		return fmt.Errorf("Request phase is %s", request.RequestPhase)
 	}
 
 	return nil

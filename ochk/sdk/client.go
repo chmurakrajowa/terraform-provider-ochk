@@ -52,10 +52,14 @@ type myTransport struct {
 
 var PLATFORM = ""
 var API_KEY = ""
+var PLATFORM_TYPE = ""
 
-func assign(platform string, api_key string) {
+var E1000 = "ERROR{1000}: Check input variables. Selected platform: \"%s\" is not from indicated virtualization platform: \"%s\"."
+
+func assign(platform_type string, platform string, api_key string) {
 	PLATFORM = platform
 	API_KEY = api_key
+	PLATFORM_TYPE = platform_type
 }
 
 func (t *myTransport) RoundTrip(req *http.Request) (*http.Response, error) {
@@ -65,11 +69,11 @@ func (t *myTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	return http.DefaultTransport.RoundTrip(req)
 }
 
-func NewClient(ctx context.Context, host string, platform string, api_key string, insecure bool, debugLogFile string) (*Client, error) {
+func NewClient(ctx context.Context, host string, platform string, api_key string, insecure bool, debugLogFile string, platformType string) (*Client, error) {
 
 	clientMutex.Lock()
 	defer clientMutex.Unlock()
-	assign(platform, api_key)
+	assign(platformType, platform, api_key)
 
 	if c := getClientFromCache(host, platform, api_key, insecure, debugLogFile); c != nil {
 		return c, nil
@@ -217,13 +221,16 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 
 	c.apiClientTransport = *apiClientAuthTransport
 
-	platformType, err := checkPlatformType(ctx, c)
+	platformTypeAPI, err := checkPlatformType(ctx, c)
 
 	if err != nil {
 		return nil, err
 	}
 
-	c.PType = platformType
+	if string(platformTypeAPI) != PLATFORM_TYPE {
+		return nil, fmt.Errorf(E1000, PLATFORM, PLATFORM_TYPE)
+	}
+	c.PType = platformTypeAPI
 	c.key = cacheClient(c, host, platform, api_key, insecure, debugLogFile, &ctx)
 	return c, nil
 }
