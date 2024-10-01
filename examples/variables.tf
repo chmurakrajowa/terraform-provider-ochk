@@ -2,6 +2,7 @@ variable "test-data-prefix" {}
 variable "host" {}
 variable "platform" {}
 variable "api_key" {}
+variable "platform_type" {}
 variable "debug_log_file" {
   default = ""
 }

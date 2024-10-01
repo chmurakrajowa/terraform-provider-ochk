@@ -2,9 +2,12 @@ terraform {
   required_providers {
     ochk = {
       source = "chmurakrajowa/ochk"
+      version = "2.1.3"
     }
   }
-  backend "local" {}
+  backend "local" {
+    path="examples/test.tfstate"
+    }
 }
 
 provider "ochk" {
@@ -12,4 +15,5 @@ provider "ochk" {
   platform = var.platform
   api_key = var.api_key
   debug_log_file = var.debug_log_file
+  platform_type = var.platform_type
 }

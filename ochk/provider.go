@@ -30,6 +30,12 @@ func Provider() *schema.Provider {
 				DefaultFunc: schema.EnvDefaultFunc("TF_VAR_api_key", nil),
 				Description: "APi KEY value",
 			},
+			"platform_type": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				DefaultFunc: schema.EnvDefaultFunc("TF_VAR_platform_type", nil),
+				Description: "platform type value",
+			},
 			"insecure": {
 				Type:        schema.TypeBool,
 				Optional:    true,
@@ -124,6 +130,7 @@ func Provider() *schema.Provider {
 				d.Get("api_key").(string),
 				d.Get("insecure").(bool),
 				d.Get("debug_log_file").(string),
+				d.Get("platform_type").(string),
 			)
 			if err != nil {
 				return nil, diag.FromErr(err)
