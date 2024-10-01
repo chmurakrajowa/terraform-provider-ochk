@@ -2,6 +2,7 @@ package ochk
 
 import (
 	"context"
+	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
@@ -83,6 +84,18 @@ func resourceSnapshotCreate(ctx context.Context, d *schema.ResourceData, meta in
 	virtualMachineId := strfmt.UUID(d.Get("virtual_machine_id").(string))
 	ram := d.Get("ram").(bool)
 
+	//if ram {
+	//	err := d.Set("power_state", models.PowerStatePoweredOn)
+	//	if err != nil {
+	//		return nil
+	//	}
+	//} else {
+	//	err := d.Set("power_state", models.PowerStatePoweredOff)
+	//	if err != nil {
+	//		return nil
+	//	}
+	//}
+
 	snapshot := mapResourceDataToSnapshot(d)
 
 	created, err := proxy.Create(ctx, virtualMachineId, &ram, snapshot)
@@ -153,8 +166,20 @@ func mapResourceDataToSnapshot(d *schema.ResourceData) *models.SnapshotInstance 
 		SnapshotName:        d.Get("display_name").(string),
 		SnapshotDescription: d.Get("snapshot_description").(string),
 		VirtualMachineID:    strfmt.UUID(d.Get("virtual_machine_id").(string)),
-		PowerState:          d.Get("power_state").(models.PowerState),
+		PowerState:          castStringToPowerStateEnum(d.Get("power_state").(string)),
 		ParentSnapshotID:    strfmt.UUID(d.Get("parent_id").(string)),
 		ChildSnapshots:      expandChildSnapshots(d.Get("child_id").(*schema.Set).List()),
+	}
+}
+
+func castStringToPowerStateEnum(e string) models.PowerState {
+	fmt.Println("castStringToPowerStateEnum >>>>>>>> %s", e)
+	switch e {
+	case "poweredOff":
+		return models.PowerStatePoweredOff
+	case "poweredOn":
+		return models.PowerStatePoweredOn
+	default:
+		return ""
 	}
 }
