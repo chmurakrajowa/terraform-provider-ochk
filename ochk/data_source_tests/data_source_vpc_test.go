@@ -12,7 +12,7 @@ import (
 func TestAccRouterDataSource_read(t *testing.T) {
 
 	ctx := context.Background()
-	client, err := sdk.NewClient(ctx, os.Getenv("TF_VAR_host"), os.Getenv("TF_VAR_platform"), os.Getenv("TF_VAR_api_key"), false, "")
+	client, err := sdk.NewClient(ctx, os.Getenv("TF_VAR_host"), os.Getenv("TF_VAR_platform"), os.Getenv("TF_VAR_api_key"), false, "", os.Getenv("TF_VAR_platform_type"))
 	if err != nil {
 		assert.Error(t, err)
 	}
