@@ -212,12 +212,12 @@ func expandBackupListsFromIDs(in []interface{}) []*models.BackupList {
 	if len(in) == 0 {
 		return nil
 	}
-
 	var out = make([]*models.BackupList, len(in))
 
 	for i, v := range in {
+		value := strfmt.UUID.String(strfmt.UUID(v.(string)))
 		BackupListInstance := &models.BackupList{
-			BackupListID: v.(strfmt.UUID),
+			BackupListID: strfmt.UUID(value),
 		}
 
 		out[i] = BackupListInstance

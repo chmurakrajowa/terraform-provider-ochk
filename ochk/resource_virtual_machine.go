@@ -84,6 +84,9 @@ func resourceVirtualMachine() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
+				DiffSuppressFunc: func(k, value, new string, d *schema.ResourceData) bool {
+					return value == strings.ToLower(value)
+				},
 			},
 			"ssh_key": {
 				Type:     schema.TypeString,
@@ -399,7 +402,7 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 	if err := d.Set("storage_policy", virtualMachine.StoragePolicy); err != nil {
 		return fmt.Errorf("error setting storage_policy: %w", err)
 	}
-	if err := d.Set("project_id", virtualMachine.ProjectID); err != nil {
+	if err := d.Set("project_id", strings.ToLower(virtualMachine.ProjectID.String())); err != nil {
 		return fmt.Errorf("error setting project_id: %w", err)
 	}
 	if err := d.Set("virtual_network_devices", flattenVirtualNetworkDevice(virtualMachine.VirtualNetworkDevices)); err != nil {
