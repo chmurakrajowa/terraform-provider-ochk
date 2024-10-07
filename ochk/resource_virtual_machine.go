@@ -84,8 +84,9 @@ func resourceVirtualMachine() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
-				DiffSuppressFunc: func(k, value, new string, d *schema.ResourceData) bool {
-					return value == strings.ToLower(value)
+				StateFunc: func(val any) string {
+					return strings.ToLower(val.(string))
+
 				},
 			},
 			"ssh_key": {
