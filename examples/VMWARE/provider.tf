@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "local" {
-    path="examples/test.tfstate"
+    path="examples/VMWARE/test.tfstate"
     }
 }
 
