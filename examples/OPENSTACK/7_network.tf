@@ -2,13 +2,7 @@
 
 }
 
-resource "ochk_virtual_network" "network_for_vm" {
-  display_name = "${var.test-data-prefix}-vnet3"
-  ipam_enabled = true
-  vpc_id = ochk_vpc.project-vpc.id
-  project_id = data.ochk_project.project_for_vm.id
-  subnet_network_cidr = "192.168.51.0/24"
-}*/
+*/
 
 /*
 data "ochk_network" "subtenant-network" {

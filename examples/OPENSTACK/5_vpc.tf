@@ -1,5 +1,15 @@
+/*data "ochk_vrf" "project-vrf" {
+  display_name = var.vrf_router
+}
+*/
+
 /*data "ochk_vpcs" "vpcs" {
     //vrf_id = data.ochk_vrf.project-vrf.id
+}
+
+/*data "ochk_vpcs" "vpcs" {
+    //vrf_id = data.ochk_vrf.project-vrf.id
+    //display_name = "${var.test-data-prefix}_vpc_test01"
 }
 
 resource "ochk_vpc" "project-vpc" {
@@ -27,12 +37,6 @@ resource "ochk_vpc" "project-vpc1" {
   project_id = data.ochk_project.project_for_vm.id
 }*/
 
-/*
-data "ochk_router" "project-vpc1234" {
-  display_name = "r18-vpc"
-  vrf_id = data.ochk_vrf.project-vrf.id
-}
-*/
 
 /*
 resource "ochk_vpc" "project-vpc" {

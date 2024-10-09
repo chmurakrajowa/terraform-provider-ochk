@@ -12,7 +12,6 @@ resource "ochk_vpc" "project-vpc-folder" {
   display_name = "${var.test-data-prefix}-vpc-folder"
   vrf_id = data.ochk_vrf.project-vrf.id
   project_id = data.ochk_project.project_for_vm.id
-  folder_path = "/radek"
 }
 
 resource "ochk_vpc" "project-vpc-1" {
