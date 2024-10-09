@@ -96,9 +96,11 @@ func validateVirtualMachine(d *schema.ResourceData, platformType models.Platform
 	for i, v := range d.Get("additional_virtual_disks").(*schema.Set).List() {
 		m := v.(map[string]interface{})
 		if m["size_mb"].(int) < 1024 {
+			if i == -1 {
+				return ""
+			}
 			return fmt.Sprintf(E1002, m["size_mb"])
 		}
-		fmt.Println("I= %s", i)
 	}
 
 	if platformType == models.PlatformTypeOPENSTACK {
@@ -202,7 +204,7 @@ func flattenBackupListsFromIDs(m []*models.BackupList) *schema.Set {
 	}
 
 	for _, v := range m {
-		s.Add(v.BackupListID)
+		s.Add(strfmt.UUID.String(v.BackupListID))
 	}
 
 	return s
@@ -226,7 +228,6 @@ func expandBackupListsFromIDs(in []interface{}) []*models.BackupList {
 }
 
 func flattenTagsListsFromIDs(m []*models.Tag) *schema.Set {
-
 	s := &schema.Set{
 		F: schema.HashString,
 	}

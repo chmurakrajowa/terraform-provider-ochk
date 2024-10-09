@@ -29,6 +29,11 @@ func dataSourceTags() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"related_virtual_machines": {
+							Type:     schema.TypeSet,
+							Optional: true,
+							Elem:     &schema.Schema{Type: schema.TypeString},
+						},
 					},
 				},
 			},

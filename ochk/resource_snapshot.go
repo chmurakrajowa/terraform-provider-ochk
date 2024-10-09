@@ -2,7 +2,6 @@ package ochk
 
 import (
 	"context"
-	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
@@ -173,7 +172,6 @@ func mapResourceDataToSnapshot(d *schema.ResourceData) *models.SnapshotInstance 
 }
 
 func castStringToPowerStateEnum(e string) models.PowerState {
-	fmt.Println("castStringToPowerStateEnum >>>>>>>> %s", e)
 	switch e {
 	case "poweredOff":
 		return models.PowerStatePoweredOff

@@ -66,7 +66,7 @@ func dataSourceFloatingIPAddressRead(ctx context.Context, d *schema.ResourceData
 	floatingIp, err := proxy.ListByName(ctx, name)
 
 	if err != nil {
-		return diag.Errorf("floating ip for ruleId %s not found: %+v", floatingIp, err)
+		return diag.Errorf("floating ip for ruleId %+v not found: %+v", floatingIp, err)
 	}
 
 	if len(floatingIp) < 1 {

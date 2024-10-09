@@ -9,7 +9,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"io"
-	"os"
 	"reflect"
 	"strings"
 	"text/template"
@@ -44,37 +43,36 @@ func mapResourceDataToSecurityGroup(d *schema.ResourceData, platformType models.
 //##################################################################################################################################
 
 func loadTestOpenstackData() {
-	//	fmt.Printf("pathToFile %v", pathToFile)
+	//jsonfile, err := os.ReadFile(pathToFile)
 
-	jsonfile, err := os.ReadFile(pathToFile)
+	jsonfile := "{\n\t\"Name\": \"NatPublicIpAddr\",\n\t\"Text\": \"45.130.209.203\"\n}\n{\n\t\"Name\": \"BackupPlanName\",\n\t\"Text\": \"Premium\"\n}\n{\n    \"Name\": \"BackupListName\",\n    \"Text\": \"Standard (1 month / 24h)\"\n}\n{\n\t\"Name\": \"VRF\",\n\t\"Text\": \"VRF-default\"\n}\n{\n\t\"Name\": \"Deployment1DisplayName\",\n\t\"Text\": \"CentOS 7\"\n}\n"
+	//if err != nil {
+	//	fmt.Printf("pathToFile err %v", err)
+	//
+	//}
 
-	if err != nil {
-		fmt.Printf("pathToFile err %v", err)
+	//if err == nil {
 
+	type Message struct {
+		Name, Text string
 	}
 
-	if err == nil {
+	var m Message
 
-		type Message struct {
-			Name, Text string
+	decoder := json.NewDecoder(strings.NewReader(string(jsonfile)))
+	for {
+		if err := decoder.Decode(&m); err == io.EOF {
+			break
+		} else if err != nil {
+			break
 		}
+		val := reflect.ValueOf(&predefinedTestDataOpenstackDev).Elem().FieldByName(m.Name)
 
-		var m Message
-
-		decoder := json.NewDecoder(strings.NewReader(string(jsonfile)))
-		for {
-			if err := decoder.Decode(&m); err == io.EOF {
-				break
-			} else if err != nil {
-				break
-			}
-			val := reflect.ValueOf(&predefinedTestDataOpenstackDev).Elem().FieldByName(m.Name)
-
-			if val.IsValid() {
-				reflect.ValueOf(&predefinedTestDataOpenstackDev).Elem().FieldByName(m.Name).SetString(m.Text)
-			}
+		if val.IsValid() {
+			reflect.ValueOf(&predefinedTestDataOpenstackDev).Elem().FieldByName(m.Name).SetString(m.Text)
 		}
 	}
+	//}
 }
 
 func getTestOpenstackData() predefinedTestOpenstackData {

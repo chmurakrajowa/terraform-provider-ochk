@@ -8,6 +8,9 @@ endif
 OS:=$(shell uname -s | tr '[:upper:]' '[:lower:]')
 
 EXAMPLES_PROVIDER_DIR="examples/terraform.d/plugins/registry.terraform.io/chmurakrajowa/ochk/$(PROVIDER_VERSION)/$(OS)_$(ARCH)"
+EXAMPLES_VMWARE_PROVIDER_DIR="examples/VMWARE/terraform.d/plugins/registry.terraform.io/chmurakrajowa/ochk/$(PROVIDER_VERSION)/$(OS)_$(ARCH)"
+EXAMPLES_OPENSTACK_PROVIDER_DIR="examples/OPENSTACK/terraform.d/plugins/registry.terraform.io/chmurakrajowa/ochk/$(PROVIDER_VERSION)/$(OS)_$(ARCH)"
+
 ENV_PROVIDER_DIR="env/terraform.d/plugins/registry.terraform.io/chmurakrajowa/ochk/$(PROVIDER_VERSION)/$(OS)_$(ARCH)"
 
 default: build
@@ -19,11 +22,15 @@ build: fmtcheck
 
 build_local: fmtcheck
 	mkdir -p $(EXAMPLES_PROVIDER_DIR)
+	mkdir -p $(EXAMPLES_VMWARE_PROVIDER_DIR)
+	mkdir -p $(EXAMPLES_OPENSTACK_PROVIDER_DIR)
 	mkdir -p $(ENV_PROVIDER_DIR)
 	mkdir -p bin
 	go build -o bin ./...
 	cp bin/terraform-provider-ochk $(EXAMPLES_PROVIDER_DIR)/terraform-provider-ochk_v$(PROVIDER_VERSION)
 	cp bin/terraform-provider-ochk $(ENV_PROVIDER_DIR)/terraform-provider-ochk_v$(PROVIDER_VERSION)
+	cp bin/terraform-provider-ochk $(EXAMPLES_VMWARE_PROVIDER_DIR)/terraform-provider-ochk_v$(PROVIDER_VERSION)
+	cp bin/terraform-provider-ochk $(EXAMPLES_OPENSTACK_PROVIDER_DIR)/terraform-provider-ochk_v$(PROVIDER_VERSION)
 
 test: fmtcheck
 	go test ./...
