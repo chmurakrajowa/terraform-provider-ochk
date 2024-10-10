@@ -1,7 +1,5 @@
 /*data "ochk_virtual_networks" "virtual_networks" {
-
 }
-
 */
 
 /*

@@ -41,8 +41,9 @@ resource "ochk_virtual_machine" "default-devel" {
 }
 
 */
+/*
 data "ochk_virtual_machines" "virtual_machines_openstack" {
-}
+}*/
 
 # data "ochk_virtual_machine" "virtual_machines_openstack" {
 #     display_name = "vmZielona"
