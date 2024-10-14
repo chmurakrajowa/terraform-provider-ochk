@@ -36,7 +36,6 @@ func resourceBillingAccount() *schema.Resource {
 			"display_name": {
 				Type:     schema.TypeString,
 				Required: true,
-				ForceNew: true,
 			},
 			"account_description": {
 				Type:     schema.TypeString,
