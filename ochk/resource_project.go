@@ -35,14 +35,20 @@ func resourceProject() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"project_id": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"display_name": {
 				Type:     schema.TypeString,
 				Required: true,
-				ForceNew: true,
 			},
 			"vrf_id": {
 				Type:     schema.TypeString,
 				Required: true,
+				StateFunc: func(val any) string {
+					return strings.ToLower(val.(string))
+				},
 			},
 			"description": {
 				Type:     schema.TypeString,
@@ -85,7 +91,6 @@ func resourceProjectCreate(ctx context.Context, d *schema.ResourceData, meta int
 	}
 
 	d.SetId(created.ProjectID.String())
-
 	return resourceProjectRead(ctx, d, meta)
 }
 
@@ -110,6 +115,10 @@ func resourceProjectRead(ctx context.Context, d *schema.ResourceData, meta inter
 }
 
 func mapProjectToResourceData(d *schema.ResourceData, project *models.ProjectInstance) error {
+	if err := d.Set("project_id", strings.ToLower(strfmt.UUID.String(project.ProjectID))); err != nil {
+		return fmt.Errorf("error setting project_id: %w", err)
+	}
+
 	if err := d.Set("display_name", project.Name); err != nil {
 		return fmt.Errorf("error setting name: %w", err)
 	}
@@ -180,5 +189,6 @@ func mapResourceDataToProject(d *schema.ResourceData) *models.ProjectInstance {
 		VrfID:                 strfmt.UUID(d.Get("vrf_id").(string)),
 		CPUReserved:           int64(d.Get("vcpu_reserved_quantity").(int)),
 		LimitEnabled:          d.Get("limits_enabled").(bool),
+		ProjectID:             strfmt.UUID(d.Get("project_id").(string)),
 	}
 }
