@@ -94,13 +94,9 @@ func resourceSecurityGroupCreate(ctx context.Context, d *schema.ResourceData, me
 	proxy_pt := meta.(*sdk.Client).PlatformType
 	platformType, _ := proxy_pt.Read(ctx)
 
-	//if true {
-	//	return diag.Errorf("########################## >>>> error while creating proxy platform type: %+v", platformType)
-	//}
-
-	securityGroup, err_pt := mapResourceDataToSecurityGroup(d, platformType)
-	if err_pt != nil {
-		return diag.Errorf("ResourceSecurityGroupCreate >>>> error while creating proxy platform type: %+v", err_pt)
+	securityGroup, err_sg := mapResourceDataToSecurityGroup(d, platformType)
+	if err_sg != nil {
+		return diag.Errorf("ResourceSecurityGroupCreate >>>> error while mapping security group to resource: %+v", err_sg)
 
 	}
 
@@ -166,7 +162,7 @@ func resourceSecurityGroupUpdate(ctx context.Context, d *schema.ResourceData, me
 	securityGroup, err_pt := mapResourceDataToSecurityGroup(d, platformType)
 
 	if err_pt != nil {
-		return diag.Errorf("resourceSecurityGroupUpdate >>>> error while creating proxy platform type: %+v", err_pt)
+		return diag.Errorf("resourceSecurityGroupUpdate >>>> error while update security group: %+v", err_pt)
 
 	}
 	securityGroup.ID = strfmt.UUID(d.Id())

@@ -28,7 +28,7 @@ func mapResourceDataToSecurityGroup(d *schema.ResourceData, platformType models.
 
 	members, err, wrongMemberType := expandSecurityGroupMembers(d.Get("members").(*schema.Set).List(), platformType)
 	if err != nil {
-		return nil, diag.Errorf("mapResourceDataToSecurityGroup >>>> error while creating security group. Wrong type member: %+v", wrongMemberType)
+		return nil, diag.Errorf("Wrong type member: %+v", wrongMemberType)
 	}
 	return &models.SecurityGroup{
 		DisplayName: d.Get("display_name").(string),
