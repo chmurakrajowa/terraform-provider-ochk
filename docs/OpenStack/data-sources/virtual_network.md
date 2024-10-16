@@ -9,8 +9,8 @@ Data Source for getting virtual network by display name.
 ## Example Usage
 
 ```hcl
-data "ochk_virtual_network" "vnet" {
-  display_name = "virtual-network-display-name"
+data "ochk_virtual_network" "{{ .DataSourceName}}" {
+  display_name = "virtual_network_name"
 }
 ```
 

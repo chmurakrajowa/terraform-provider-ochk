@@ -11,11 +11,11 @@ Data Source for getting tag by name.
 ```hcl
 
 data "ochk_project" "project" {
-  display_name = "example_project"
+  display_name = "project_name"
 }
 
-data "ochk_tag" "os1" {
-  display_name = "example_tag"
+data "ochk_tag" "{{ .DataSourceName}}" {
+  display_name = "tag_name"
   project_id = data.ochk_project.project.id
 }
 ```

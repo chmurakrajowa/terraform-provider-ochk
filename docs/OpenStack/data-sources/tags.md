@@ -9,7 +9,7 @@ Data Source for getting tags list.
 ## Example Usage
 
 ```hcl
-data "ochk_tags" "tags" {
+data "ochk_tags" "{{ .DataSourceName}}" {
 }
 ```
 ## Argument Reference

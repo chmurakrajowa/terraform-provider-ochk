@@ -10,12 +10,12 @@ Data Source for getting VPC (Virtual Private Cloud) router by display name and V
 
 ```hcl
 data "ochk_vrf" "vrf" {
-  display_name = "T0"
+  display_name = "vrf_name"
 }
 
 data "ochk_vpc" "vpc" {
   vrf_id = data.ochk_vrf.vrf.id
-  display_name = "VPC1"
+  display_name = "vpc_name"
 }
 ```
 

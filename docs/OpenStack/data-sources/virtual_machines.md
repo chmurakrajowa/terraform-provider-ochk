@@ -9,7 +9,7 @@ Data Source for getting virtual machines list.
 ## Example Usage
 
 ```hcl
-data "ochk_virtual_machines" "vms" {
+data "ochk_virtual_machines" "{{ .DataSourceName}}" {
 }
 ```
 

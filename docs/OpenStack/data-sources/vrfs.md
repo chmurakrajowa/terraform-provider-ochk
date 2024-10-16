@@ -9,7 +9,7 @@ Data Source for getting VRFs (Virtual Routing and Forwarding) list.
 ## Example Usage
 
 ```hcl
-data "ochk_vrfs" "vrfs" {
+data "ochk_vrfs" "{{ .DataSourceName}}" {
 }
 ```
 

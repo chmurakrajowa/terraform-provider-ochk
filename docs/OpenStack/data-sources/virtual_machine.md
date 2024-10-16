@@ -9,8 +9,8 @@ Data Source for getting virtual machines by display name.
 ## Example Usage
 
 ```hcl
-data "ochk_virtual_machine" "vm" {
-  display_name = "virtual-machine-display-name"
+data "ochk_virtual_machine" "{{ .DataSourceName}}" {
+  display_name = "virtual_machine_name"
 }
 ```
 

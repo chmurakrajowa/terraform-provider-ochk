@@ -9,7 +9,7 @@ Data Source for getting deployment instances list.
 ## Example Usage
 
 ```hcl
-data "ochk_deployments" "deployments" {
+data "ochk_deployments" "{{ .DataSourceName}}" {
   deployment_type = "TEMPLATE"
 }
 ```

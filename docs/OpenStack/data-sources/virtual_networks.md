@@ -9,7 +9,7 @@ Data Source for getting virtual networks list.
 ## Example Usage
 
 ```hcl
-data "ochk_virtual_networks" "vnets" {
+data "ochk_virtual_networks" "{{ .DataSourceName}}" {
 }
 ```
 

@@ -9,8 +9,8 @@ Data Source for getting VRF (Virtual Routing and Forwarding) router by display n
 ## Example Usage
 
 ```hcl
-data "ochk_vrf" "vrf" {
-  display_name = "T0"
+data "ochk_vrf" "{{ .DataSourceName}}" {
+  display_name = "vrf_name"
 }
 ```
 

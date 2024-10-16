@@ -9,7 +9,7 @@ Data Source for getting supported deployment params types.
 ## Example Usage
 
 ```hcl
-data "ochk_deployment_params_types" "deployment_params_types" {
+data "ochk_deployment_params_types" "{{ .DataSourceName}}" {
 }
 ```
 

@@ -19,11 +19,10 @@ data "ochk_project" "project" {
   display_name = "project_display_name"
 }
 
-resource "ochk_vpc" "router" {
+resource "ochk_vpc" "{{ .ResourceName}}" {
   display_name = "router_name"
   vrf_id = data.ochk_router.rt.id
   project_id = data.ochk_project.project.id
-  folder_path = "/"
 }
 
 ```
@@ -37,9 +36,7 @@ The following arguments are supported:
 * `project_id` - (Required) Project identifier, use `ochk_project` data source for getting identifier by name.
 * `folder_path` - (Optional) Folder path for vpc. Default `/`.
 
-
 ## Attribute Reference
-
 
 The following attributes are exported in addition to above arguments:
 * `router_type` - Router type

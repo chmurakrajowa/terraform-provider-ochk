@@ -9,7 +9,7 @@ Data Source for getting billing accounts list.
 ## Example Usage
 
 ```hcl
-data "ochk_billing_accounts" "accounts" {
+data "ochk_billing_accounts" "{{ .DataSourceName}}" {
 }
 ```
 

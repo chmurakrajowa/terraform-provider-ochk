@@ -13,7 +13,7 @@ data "ochk_project" "project" {
   display_name = "example_project"
 }
 
-resource "ochk_tag" "tag" {
+resource "ochk_tag" "{{ .ResourceName}}" {
     display_name = "example-tag"
     project_id = data.ochk_project.project.id
 }

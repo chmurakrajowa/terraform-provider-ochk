@@ -9,8 +9,8 @@ Data Source for getting projects by display name.
 ## Example Usage
 
 ```hcl
-data "ochk_project" "project1" {
-  display_name = "project-name"
+data "ochk_project" "{{ .DataSourceName}}" {
+  display_name = "project_name"
 }
 ```
 

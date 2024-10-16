@@ -10,10 +10,10 @@ Data Source for getting folders list for selected project id.
 
 ```hcl
 data "ochk_project" "project" {
-  display_name = "Project1"
+  display_name = "project_name"
 }
 
-data "ochk_folders" "folders" {
+data "ochk_folders" "{{ .DataSourceName}}" {
   project_id = data.ochk_project.project.id
 }
 ```

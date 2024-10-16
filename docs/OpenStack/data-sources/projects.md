@@ -9,7 +9,7 @@ Data Source for getting projects list.
 ## Example Usage
 
 ```hcl
-data "ochk_projects" "projects" {
+data "ochk_projects" "{{ .DataSourceName}}" {
 }
 ```
 

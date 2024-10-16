@@ -1,5 +1,5 @@
 ---
-page_title: "Account Resource"
+page_title: "Billing Account Resource"
 ---
 
 # Billing Account Resource
@@ -9,7 +9,7 @@ Resource for managing accounts.
 ## Example Usage
 
 ```hcl
-resource "ochk_billing_account" "acct1" {
+resource "ochk_billing_account" "{{ .ResourceName}}" {
   display_name = "tf-acct-billaccount"
  
   projects {
@@ -26,7 +26,7 @@ data "ochk_project" "project" {
 }
 
 
-resource "ochk_billing_account" "acct_ex1" {
+resource "ochk_billing_account" "{{ .ResourceName}}" {
   display_name = "acct-example"
 
   projects {

@@ -10,10 +10,10 @@ Data Source for getting VPCs (Virtual Private Cloud) list.
 
 ```hcl
 data "ochk_vrf" "vrf" {
-  display_name = "T0"
+  display_name = "vrf_name"
 }
 
-data "ochk_vpc" "vpc" {
+data "ochk_vpc" "{{ .DataSourceName}}" {
   vrf_id = data.ochk_vrf.vrf.id
 }
 ```
