@@ -11,11 +11,11 @@ Resource for managing virtual networks (vNets) to enable communication between m
 ### Minimal example
 ```hcl
 data "ochk_project" "project" {
-  display_name = "example.project"
+  display_name = "project_name"
 }
 
 resource "ochk_virtual_network" "{{ .ResourceName}}" {
-	display_name = "display name"
+	display_name = "virtual_machine_name"
 	ipam_enabled = false
 	project_id = data.ochk_project.project.id
 }
@@ -25,20 +25,20 @@ resource "ochk_virtual_network" "{{ .ResourceName}}" {
 ```hcl
 
 data "ochk_project" "project" {
-  display_name = "example.project"
+  display_name = "project_name"
 }
 
 data "ochk_vrf" "vrf" {
-  display_name = "T0"
+  display_name = "vrf_name"
 }
 
 data "ochk_vpc" "vpc" {
   vrf_id = data.ochk_vrf.vrf.id
-  display_name = "VPC1"
+  display_name = "vpc_name"
 }
 
 resource "ochk_virtual_network" "{{ .ResourceName}}" {
-	display_name = "vnet name"
+	display_name = "virtual_network_name"
 	project_id = data.ochk_project.project.id
 	ipam_enabled = true
 	vpc_id = data.ochk_vpc.vpc.id

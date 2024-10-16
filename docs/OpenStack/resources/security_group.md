@@ -23,15 +23,15 @@ resource "ochk_security_group" "sg_vm" {
 It is not recommended to directly use resource identifiers. To avoid that prefer to use data sources:
 ```hcl
 data "ochk_project" "project" {
-  display_name = "project-example"
+  display_name = "project_name"
 }
 
 data "ochk_virtual_machine" "vm" {
-  display_name = "devel0000001157"
+  display_name = "virtual_machine_name"
 }
 
 resource "ochk_security_group" "{{ .ResourceName}}" {
-  display_name = "tf-sg-example01"
+  display_name = "security_group_name"
   project_id = data.ochk_project.project.id
 
   members {

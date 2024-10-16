@@ -23,16 +23,15 @@ data "ochk_project" "default" {
 }
 
 resource "ochk_virtual_network" "default" {
-  display_name = "vnet"
+  display_name = "virtual_network_name"
   project_id = data.ochk_project.default.id
 }
 
 resource "ochk_virtual_machine" "{{ .ResourceName}}" {
-  display_name = "vm"
+  display_name = "virtual_machine_name"
   project_id = data.ochk_project.default.id
 
   deployment_id = data.ochk_deployment.debian.id
-  os_tyoe = "LINUX"
     
   initial_user_name = "root"
   initial_password = "initial-password"

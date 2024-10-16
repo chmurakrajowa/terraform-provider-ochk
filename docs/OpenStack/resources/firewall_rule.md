@@ -14,11 +14,11 @@ data "ochk_project" "project" {
 }
 
 data "ochk_security_group" "sg" {
-  display_name = "security-group-name"
+  display_name = "security_group_name"
 }
 
 resource "ochk_firewall_rule" "{{ .ResourceName}}" {
-    display_name = "tf-fw-rule"
+    display_name = "firewall_rule_name"
     project_id = data.ochk_project.project.id
     security_group_id = data.ochk_security_group.sg.id
     description = "short description"

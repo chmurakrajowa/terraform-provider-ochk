@@ -16,11 +16,11 @@ data "ochk_vrf" "rt" {
 }
 
 data "ochk_project" "project" {
-  display_name = "project_display_name"
+  display_name = "project_name"
 }
 
 resource "ochk_vpc" "{{ .ResourceName}}" {
-  display_name = "router_name"
+  display_name = "vpc_name"
   vrf_id = data.ochk_router.rt.id
   project_id = data.ochk_project.project.id
 }

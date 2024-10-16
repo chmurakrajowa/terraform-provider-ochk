@@ -10,8 +10,8 @@ Resource for managing projects.
 
 ```hcl
 resource "ochk_project" "{{ .ResourceName}}" {
-	display_name = "example.project"
-	description = "Short description"
+	display_name = "project_name"
+	description = "short description"
 	memory_reserved_size_mb = 30000
 	storage_reserved_size_gb = 200
 	vcpu_reserved_quantity = 100

@@ -22,12 +22,12 @@ resource "ochk_billing_account" "{{ .ResourceName}}" {
 It is not recommended to directly use resource identifiers. To avoid that prefer to use data sources:
 ```hcl
 data "ochk_project" "project" {
-  display_name = "project-example"
+  display_name = "project_name"
 }
 
 
 resource "ochk_billing_account" "{{ .ResourceName}}" {
-  display_name = "acct-example"
+  display_name = "billing_account_name"
 
   projects {
     project_id = data.ochk_project.project.id

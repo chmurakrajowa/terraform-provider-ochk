@@ -10,8 +10,8 @@ Resource for managing accounts.
 
 ```hcl
 resource "ochk_floating_ip_address" "{{ .ResourceName}}" {
-  display_name = "tf-floating-ip-addr"
-  description = "Short description"
+  display_name = "floating_ip_name"
+  description = "short description"
   display_name = "debian_tf_test"
 }
 

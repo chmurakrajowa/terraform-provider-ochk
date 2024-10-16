@@ -10,11 +10,11 @@ Resource for managing Tags. Tags can be assigned to virtual machines for billing
 
 ```hcl
 data "ochk_project" "project" {
-  display_name = "example_project"
+  display_name = "project_name"
 }
 
 resource "ochk_tag" "{{ .ResourceName}}" {
-    display_name = "example-tag"
+    display_name = "tag_name"
     project_id = data.ochk_project.project.id
 }
 ```
