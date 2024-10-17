@@ -499,9 +499,9 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VirtualMach
 			DeploymentID: strfmt.UUID(d.Get("deployment_id").(string)),
 		},
 		InitialPassword: d.Get("initial_password").(string),
-		PowerState:      models.PowerStatePoweredOn,
-		//StoragePolicy:         d.GetOk("storage_policy").(models.StoragePolicy),
-		StoragePolicy:         models.StoragePolicySTANDARDW1,
+		//PowerState:      models.PowerStatePoweredOn,
+		PowerState:            castStringToPowerStateEnum(d.Get("power_state").(string)),
+		StoragePolicy:         castStringToStorageEnum(d.Get("storage_policy").(string)),
 		ProjectID:             strfmt.UUID(d.Get("project_id").(string)),
 		VirtualMachineID:      strfmt.UUID(d.Id()),
 		VirtualMachineName:    d.Get("display_name").(string),
@@ -558,6 +558,31 @@ func castStringToOsTypeEnum(e string) models.OsType {
 		return models.OsTypeWINDOWS
 	case "LINUX":
 		return models.OsTypeLINUX
+	default:
+		return ""
+	}
+}
+
+func castStringToStorageEnum(e string) models.StoragePolicy {
+	switch e {
+	case "UNKNOWN":
+		return models.StoragePolicyUNKNOWN
+	case "STANDARD":
+		return models.StoragePolicySTANDARD
+	case "STANDARD_W1":
+		return models.StoragePolicySTANDARDW1
+	case "STANDARD_W2":
+		return models.StoragePolicySTANDARDW2
+	case "ENTERPRISE":
+		return models.StoragePolicyENTERPRISE
+	case "STANDARDENCRYPTION":
+		return models.StoragePolicySTANDARDENCRYPTION
+	case "ENTERPRISEENCRYPTION":
+		return models.StoragePolicyENTERPRISEENCRYPTION
+	case "STANDARD_W1_ENCRYPTION":
+		return models.StoragePolicySTANDARDW1ENCRYPTION
+	case "STANDARD_W2_ENCRYPTION":
+		return models.StoragePolicySTANDARDW2ENCRYPTION
 	default:
 		return ""
 	}
