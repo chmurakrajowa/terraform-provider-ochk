@@ -10,7 +10,7 @@ Resource for managing firewall rules to control incoming and outgoing network tr
 
 ```hcl
 data "ochk_project" "project" {
-  display_name = "example_project"
+  display_name = "project_name"
 }
 
 data "ochk_security_group" "sg" {

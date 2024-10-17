@@ -12,7 +12,7 @@ Resource for managing Port Forwarding.
 
 ```hcl
 data "ochk_floating_address" "f1" {
-display_name = "floating_ip_name"
+    display_name = "floating_ip_name"
 }
 
 resource "ochk_port_forwarding" "{{ .ResourceName}}" {

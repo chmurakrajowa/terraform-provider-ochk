@@ -12,7 +12,6 @@ Resource for managing accounts.
 resource "ochk_floating_ip_address" "{{ .ResourceName}}" {
   display_name = "floating_ip_name"
   description = "short description"
-  display_name = "debian_tf_test"
 }
 
 ## Argument Reference
