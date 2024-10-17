@@ -86,7 +86,6 @@ func resourceVirtualMachine() *schema.Resource {
 				ForceNew: true,
 				StateFunc: func(val any) string {
 					return strings.ToLower(val.(string))
-
 				},
 			},
 			"ssh_key": {
@@ -511,7 +510,7 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VirtualMach
 		//DeploymentParams:      expandVDeploymentParams(d.Get("deployment_params").([]interface{})),
 		BackupListCollection: expandBackupListsFromIDs(d.Get("backup_lists").(*schema.Set).List()),
 		Tags:                 expandTagsListsFromIDs(d.Get("tags").(*schema.Set).List()),
-		OsType:               models.OsTypeLINUX,
+		OsType:               castStringToOsTypeEnum(d.Get("os_type").(string)),
 		OvfIPConfiguration:   d.Get("ovf_ip_configuration").(bool),
 		InitialUserName:      d.Get("initial_user_name").(string),
 		FolderPath:           d.Get("folder_path").(string),
@@ -551,4 +550,15 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VirtualMach
 	}
 
 	return &virtualMachineInstance
+}
+
+func castStringToOsTypeEnum(e string) models.OsType {
+	switch e {
+	case "WINDOWS":
+		return models.OsTypeWINDOWS
+	case "LINUX":
+		return models.OsTypeLINUX
+	default:
+		return ""
+	}
 }
