@@ -2,6 +2,7 @@ package ochk
 
 import (
 	"context"
+	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
@@ -14,6 +15,13 @@ import (
 
 const (
 	VpcRetryTimeout = 1 * time.Minute
+	E2001           = "TF_ERROR{2001}: Error while creating router(vpc): %+v"
+	E2001_UPDATE    = "TF_ERROR{2001}: Error while updating router(vpc): %+v"
+	E2002           = "Field %s is not applicable for platform VMWARE. Please remove field from Your input config file."
+	E2003           = "Wrong field in resource."
+	E2004           = "Error while mapping router (vpc) to resource: %+v"
+	E2005           = "Error while reading vpc: %+v"
+	E2006           = "Error while deleting vpc: %+v"
 )
 
 func resourceVpc() *schema.Resource {
@@ -84,12 +92,18 @@ func resourceVpcImportState(_ context.Context, d *schema.ResourceData, _ interfa
 
 func resourceVpcCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Routers
+	proxy_pt := meta.(*sdk.Client).PlatformType
 
-	Router := mapResourceDataToVpc(d)
+	platformType, _ := proxy_pt.Read(ctx)
+	Router, err_vpc := mapResourceDataToVpc(d, platformType)
+
+	if err_vpc != nil {
+		return diag.Errorf(E2004, err_vpc)
+	}
 
 	created, err := proxy.Create(ctx, Router)
 	if err != nil {
-		return diag.Errorf("error while creating vpc: %+v", err)
+		return diag.Errorf(E2001, err)
 	}
 
 	d.SetId(created.RouterID.String())
@@ -108,7 +122,7 @@ func resourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interface
 			return diag.Errorf("vpc with id %s not found: %+v", id, err)
 		}
 
-		return diag.Errorf("error while reading vpc: %+v", err)
+		return diag.Errorf(E2005, err)
 	}
 
 	if err := d.Set("vrf_id", Router.ParentT0ID); err != nil {
@@ -124,7 +138,7 @@ func resourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interface
 	}
 
 	if err := d.Set("autonat_enabled", Router.SnatEnabled); err != nil {
-		return diag.Errorf("error setting autonat_enabled: %+v", err)
+		return diag.Errorf("error setting autonat_enabled  uuuuuuuuu : %+v", err)
 	}
 
 	if err := d.Set("folder_path", Router.FolderPath); err != nil {
@@ -152,13 +166,20 @@ func resourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interface
 
 func resourceVpcUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Routers
+	proxy_pt := meta.(*sdk.Client).PlatformType
+	platformType, _ := proxy_pt.Read(ctx)
 
-	Router := mapResourceDataToVpc(d)
+	Router, err_vpc := mapResourceDataToVpc(d, platformType)
+
+	if err_vpc != nil {
+		return diag.Errorf(E2004, err_vpc)
+	}
+
 	Router.RouterID = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, Router)
 	if err != nil {
-		return diag.Errorf("error while modifying vpc: %+v", err)
+		return diag.Errorf(E2001_UPDATE, err)
 	}
 
 	return resourceVpcRead(ctx, d, meta)
@@ -175,18 +196,30 @@ func resourceVpcDelete(ctx context.Context, d *schema.ResourceData, meta interfa
 			return diag.Errorf("vpc with id %s not found: %+v", id, err)
 		}
 
-		return diag.Errorf("error while deleting vpc: %+v", err)
+		return diag.Errorf(E2006, err)
 	}
 
 	return nil
 }
 
-func mapResourceDataToVpc(d *schema.ResourceData) *models.RouterInstance {
-	return &models.RouterInstance{
-		DisplayName: d.Get("display_name").(string),
-		ParentT0ID:  strfmt.UUID(d.Get("vrf_id").(string)),
-		ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
-		SnatEnabled: d.Get("autonat_enabled").(bool),
-		FolderPath:  d.Get("folder_path").(string),
+func mapResourceDataToVpc(d *schema.ResourceData, platformType models.PlatformType) (*models.RouterInstance, diag.Diagnostics) {
+	if platformType == models.PlatformTypeOPENSTACK {
+		return &models.RouterInstance{
+			DisplayName: d.Get("display_name").(string),
+			ParentT0ID:  strfmt.UUID(d.Get("vrf_id").(string)),
+			ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
+			SnatEnabled: d.Get("autonat_enabled").(bool),
+			FolderPath:  d.Get("folder_path").(string),
+		}, nil
+	} else {
+		if d.Get("autonat_enabled").(bool) {
+			return nil, diag.Errorf(E2003, fmt.Sprintf(E2002, "autonat_enabled"))
+		}
+		return &models.RouterInstance{
+			DisplayName: d.Get("display_name").(string),
+			ParentT0ID:  strfmt.UUID(d.Get("vrf_id").(string)),
+			ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
+			FolderPath:  d.Get("folder_path").(string),
+		}, nil
 	}
 }
