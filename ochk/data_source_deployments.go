@@ -35,6 +35,10 @@ func dataSourceDeployments() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"deployment_category": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"initial_size_gb": {
 							Type:     schema.TypeInt,
 							Computed: true,

@@ -48,6 +48,10 @@ func resourceVpc() *schema.Resource {
 				Required: true,
 				ForceNew: true,
 			},
+			"autonat_enabled": {
+				Type:     schema.TypeBool,
+				Optional: true,
+			},
 			"folder_path": {
 				Type:     schema.TypeString,
 				Optional: true,
@@ -119,6 +123,10 @@ func resourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
+	if err := d.Set("autonat_enabled", Router.SnatEnabled); err != nil {
+		return diag.Errorf("error setting autonat_enabled: %+v", err)
+	}
+
 	if err := d.Set("folder_path", Router.FolderPath); err != nil {
 		return diag.Errorf("error setting folder_path: %+v", err)
 	}
@@ -178,6 +186,7 @@ func mapResourceDataToVpc(d *schema.ResourceData) *models.RouterInstance {
 		DisplayName: d.Get("display_name").(string),
 		ParentT0ID:  strfmt.UUID(d.Get("vrf_id").(string)),
 		ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
+		SnatEnabled: d.Get("autonat_enabled").(bool),
 		FolderPath:  d.Get("folder_path").(string),
 	}
 }

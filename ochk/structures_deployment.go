@@ -18,6 +18,7 @@ func flattenDeployments(in []*models.DeploymentInstance, deploymentType models.D
 			m["deployment_id"] = v.DeploymentID
 			m["display_name"] = v.DisplayName
 			m["deployment_type"] = v.DeploymentType
+			m["deployment_category"] = v.DeploymentCategory
 			m["initial_size_gb"] = int(v.DeploymentInitialSizeGB)
 			out = append(out, m)
 		}
