@@ -89,7 +89,6 @@ func resourceFirewallSNRule() *schema.Resource {
 				AtLeastOneOf: []string{"source", "destination"},
 				Elem:         &schema.Schema{Type: schema.TypeString},
 			},
-
 			"priority": {
 				Type:     schema.TypeInt,
 				Required: true,

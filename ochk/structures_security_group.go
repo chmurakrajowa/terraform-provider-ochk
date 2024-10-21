@@ -56,11 +56,10 @@ func flattenSecurityGroupMembers(in []*models.SecurityGroupMember) *schema.Set {
 }
 
 func expandSecurityGroupMembers(in []interface{}, platformType models.PlatformType) ([]*models.SecurityGroupMember, diag.Diagnostics, string) {
-	if len(in) == 0 {
-		return nil, diag.Errorf("expandSecurityGroupMembers >>> IN Values is null: %+v", nil), ""
-	}
-
 	var out = make([]*models.SecurityGroupMember, len(in))
+	if len(in) == 0 {
+		return out, nil, ""
+	}
 	for i, v := range in {
 		m := v.(map[string]interface{})
 

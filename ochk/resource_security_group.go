@@ -2,6 +2,7 @@ package ochk
 
 import (
 	"context"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -12,7 +13,10 @@ import (
 )
 
 const (
-	SecurityGroupRetryTimeout = 1 * time.Minute
+	SecurityGroupRetryTimeout            = 1 * time.Minute
+	IPCOLLECTION              MemberType = "IPCOLLECTION"
+	LOGICAL_PORT              MemberType = "LOGICAL_PORT"
+	IPSET                     MemberType = "IPSET"
 )
 
 func resourceSecurityGroup() *schema.Resource {
@@ -44,8 +48,8 @@ func resourceSecurityGroup() *schema.Resource {
 			},
 			"members": {
 				Type:     schema.TypeSet,
-				MinItems: 1,
-				Required: true,
+				MinItems: 0,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": {
@@ -190,4 +194,16 @@ func resourceSecurityGroupDelete(ctx context.Context, d *schema.ResourceData, me
 	}
 
 	return nil
+}
+
+func mapResourceDataToSecurityGroup(d *schema.ResourceData, platformType models.PlatformType) (*models.SecurityGroup, diag.Diagnostics) {
+	members, err, wrongMemberType := expandSecurityGroupMembers(d.Get("members").(*schema.Set).List(), platformType)
+	if err != nil {
+		return nil, diag.Errorf("Wrong type member: %+v", wrongMemberType)
+	}
+	return &models.SecurityGroup{
+		DisplayName: d.Get("display_name").(string),
+		ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
+		Members:     members,
+	}, nil
 }
