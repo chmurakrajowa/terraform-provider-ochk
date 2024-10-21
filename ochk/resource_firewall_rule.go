@@ -303,8 +303,6 @@ func resourceFirewallRuleDelete(ctx context.Context, d *schema.ResourceData, met
 }
 
 func expandSecurityGroup(dest_security_group string) *models.SecurityGroup {
-	fmt.Printf("@@@@@@@@@@@@@@@@@@@@@")
-
 	sg_dest := &models.SecurityGroup{
 		ID: strfmt.UUID(dest_security_group),
 	}
