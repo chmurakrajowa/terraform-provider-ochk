@@ -45,6 +45,10 @@ The following attributes are exported in addition to above arguments:
 * `port_range_min` - Min port value.
 * `port_range_max` - Max port value.
 * `remote_ip_prefix` - IP address (prefix).
+* `dest_security_group` - Security group that is destination in rule
+  Each entry has following values:
+   * **display_name**: Display name of security group.
+   * **sec_group_id**: Id of security group.
 * `created_by` - Who created this resource.
 * `created_at` - When this resource was created.
 * `modified_by` - Who last modified this resource.

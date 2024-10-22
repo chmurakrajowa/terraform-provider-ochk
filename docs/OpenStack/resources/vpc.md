@@ -34,6 +34,7 @@ The following arguments are supported:
 * `display_name` - (Required) The Tier-1 router name (between 3 and 15 characters).
 * `vrf_id` - (Required) VRF id. (default vrf name : T0)
 * `project_id` - (Required) Project identifier, use `ochk_project` data source for getting identifier by name.
+* `autonat_enabled` - (Optional) Information whether there is an internet connection
 * `folder_path` - (Optional) Folder path for vpc. Default `/`.
 
 ## Attribute Reference

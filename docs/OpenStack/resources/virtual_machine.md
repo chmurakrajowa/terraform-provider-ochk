@@ -14,8 +14,8 @@ Warning: provisioning of virtual machine can take up to 15 minutes.
 
 ```hcl
 
-data "ochk_deployment" "debian" {
-  display_name = "Debian 12"
+data "ochk_deployment" "deploy1" {
+  display_name = "deployment_name"
 }
 
 data "ochk_project" "default" {
@@ -31,9 +31,8 @@ resource "ochk_virtual_machine" "{{ .ResourceName}}" {
   display_name = "virtual_machine_name"
   project_id = data.ochk_project.default.id
 
-  deployment_id = data.ochk_deployment.debian.id
-    
-  initial_user_name = "root"
+  deployment_id = data.ochk_deployment.deploy1.id
+
   initial_password = "initial-password"
 
   power_state = "poweredOn"

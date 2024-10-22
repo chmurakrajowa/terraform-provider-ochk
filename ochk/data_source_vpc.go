@@ -2,6 +2,7 @@ package ochk
 
 import (
 	"context"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -23,6 +24,10 @@ func dataSourceVpc() *schema.Resource {
 			"project_id": {
 				Type:     schema.TypeString,
 				Computed: true,
+			},
+			"autonat_enabled": {
+				Type:     schema.TypeBool,
+				Optional: true,
 			},
 			"folder_path": {
 				Type:     schema.TypeString,
@@ -50,7 +55,9 @@ func dataSourceVpc() *schema.Resource {
 
 func dataSourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Routers
+	proxy_pt := meta.(*sdk.Client).PlatformType
 
+	platformType, _ := proxy_pt.Read(ctx)
 	displayName := d.Get("display_name").(string)
 
 	routers, err := proxy.ListByDisplayName(ctx, displayName)
@@ -74,6 +81,12 @@ func dataSourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interfa
 
 	if err := d.Set("project_id", routers[0].ProjectID); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
+	}
+
+	if platformType == models.PlatformTypeOPENSTACK {
+		if err := d.Set("autonat_enabled", routers[0].SnatEnabled); err != nil {
+			return diag.Errorf("error setting autonat_enabled: %+v", err)
+		}
 	}
 
 	if err := d.Set("folder_path", routers[0].FolderPath); err != nil {

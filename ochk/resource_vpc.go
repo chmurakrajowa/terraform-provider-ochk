@@ -138,7 +138,7 @@ func resourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interface
 	}
 
 	if err := d.Set("autonat_enabled", Router.SnatEnabled); err != nil {
-		return diag.Errorf("error setting autonat_enabled  uuuuuuuuu : %+v", err)
+		return diag.Errorf("error setting autonat_enabled: %+v", err)
 	}
 
 	if err := d.Set("folder_path", Router.FolderPath); err != nil {

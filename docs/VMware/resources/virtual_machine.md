@@ -14,7 +14,7 @@ Warning: provisioning of virtual machine can take up to 15 minutes.
 
 ```hcl
 
-data "ochk_deployment" "centos" {
+data "ochk_deployment" "deploy1" {
   display_name = "deployment_name"
 }
 
@@ -32,10 +32,9 @@ resource "ochk_virtual_machine" "{{ .ResourceName}}"  {
   project_id = data.ochk_project.default.id
   folder_path = "/"
 
-  deployment_id = data.ochk_deployment.centos.id
+  deployment_id = data.ochk_deployment.deploy1.id
   os_tyoe = "LINUX"
-    
-  initial_user_name = "root"
+
   initial_password = "initial-password"
 
   power_state = "poweredOn"

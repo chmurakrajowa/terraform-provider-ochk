@@ -30,6 +30,7 @@ The following arguments are supported:
 
 The following attributes are exported:
 * `project_id` - Project id to which VPC is assigned.
+* `autonat_enabled` - Information whether there is an internet connection
 * `folder_path` - VPC folder path, default: `/`.
 * `created_by` - Who created this resource.
 * `created_at` - When this resource was created.

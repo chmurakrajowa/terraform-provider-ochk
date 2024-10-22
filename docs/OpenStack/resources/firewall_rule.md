@@ -27,7 +27,7 @@ resource "ochk_firewall_rule" "{{ .ResourceName}}" {
     protocol = "TCP"
     port_range_min = 20008
     port_range_max = 20020
-    remote_ip_prefix = ""
+    remote_ip_prefix = "10.140.12.02"
 }
 
 ```
@@ -46,6 +46,7 @@ The following arguments are supported:
 * `port_range_min` - Min port value.
 * `port_range_max` - Max port value.
 * `remote_ip_prefix` - IP address (prefix).
+* `dest_security_group` - Security group as destination
 
 ## Attribute Reference
 
