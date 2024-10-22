@@ -57,6 +57,22 @@ func dataSourceFirewallRule() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"dest_security_group": {
+				Type:     schema.TypeSet,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"sec_group_id": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"display_name": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"created_by": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -140,6 +156,10 @@ func dataSourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, met
 
 	if err := d.Set("rule_id", firewallRule[0].RuleID); err != nil {
 		return diag.Errorf("error setting rule_id: %+v", err)
+	}
+
+	if err := d.Set("dest_security_group", flattenSecGroups(firewallRule[0].SecurityGroup)); err != nil {
+		return diag.Errorf("error setting dest_security_group: %+v", err)
 	}
 
 	if err := d.Set("created_by", firewallRule[0].CreatedBy.DisplayName); err != nil {
