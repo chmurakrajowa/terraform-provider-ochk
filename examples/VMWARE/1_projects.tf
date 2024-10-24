@@ -1,7 +1,5 @@
-# data "ochk_projects" "projects" {
-#
-# }
-
+data "ochk_projects" "projects" {
+ }
 
 # data "ochk_project" "project_for_vm" {
 #   //name = var.project_for_vm_name
@@ -47,7 +45,7 @@ resource "ochk_project" "project-1" {
 /*
 resource "ochk_project" "project-2" {
   name = "${var.test-data-prefix}-project-2"
-  description = "Business group description 2"
+  description = "Desc"
   memory_reserved_size_mb = 30000
   storage_reserved_size_gb = 400
 

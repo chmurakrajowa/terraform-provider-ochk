@@ -12,7 +12,7 @@ data "ochk_snapshot" "snapshot" {
 /*resource "ochk_snapshot" "snapshot_vm" {
     virtual_machine_id = "5e322d55-4bb9-4860-997f-6f73bc61947c"
     display_name = "${var.test-data-prefix}-proxySnapNoRam043ja"
-    ram = false
+    ram = true
 }*/
 /*
 resource "ochk_snapshot" "snapshot_vm1" {

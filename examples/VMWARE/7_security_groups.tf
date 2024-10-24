@@ -7,12 +7,8 @@
 #       project_id = "8FE2C804-9AF1-49D8-B60F-75E0FEEE2922"
 #
 #       members {
-#             //id = "8f39fa0d-0158-4b4c-8dc9-20be31159220" // id vm
 #             id = "71c620fd-41ab-4208-8441-02dedfc3c18f" // inny id  vm
-#             //id = "9f842807-edef-45ad-ab14-3dc0511d0f3f" // id ip ochk_ip_collection
-#             //type = "VIRTUAL_MACHINE"
 #             type = "VIRTUAL_MACHINE"
-#
 #       }
 #       members {
 #                id = "d29c20be-d384-4573-9487-a8a9682c415a" // id vm

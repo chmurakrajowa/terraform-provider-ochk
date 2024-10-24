@@ -31,13 +31,10 @@ output "backup_lists" {
   value = data.ochk_backup_lists.backup_lists
 }
 
-output "billing_tags" {
-  value = data.ochk_billing_tags.billing_tags
+output "tags" {
+  value = data.ochk_tags.tags
 }
 
-output "system_tags" {
-  value = data.ochk_system_tags.system_tags
-}
 
 output "custom_services" {
   value = data.ochk_custom_services.custom_services
@@ -149,13 +146,10 @@ output "vnet" {
   value = ochk_virtual_network.network_for_vm
 }
 
-output "billing-tag" {
-  value = ochk_billing_tag.res-bt-cc2
+output "tag" {
+  value = ochk_tag.res-cc2
 }
 
-output "system-tag" {
-  value = ochk_system_tag.res-st-os2
-}
 
 output "vm" {
   value = ochk_virtual_machine.default

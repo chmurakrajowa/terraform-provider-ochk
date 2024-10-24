@@ -1,6 +1,5 @@
 
 //data "ochk_manual_nats" "manual_nats" {
-
 //}
 
 /*

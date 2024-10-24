@@ -25,6 +25,7 @@ The following arguments are supported:
 The following attributes are exported:
  * `display_name` - Name of deployment. For ISO and OVF deployment name is image file name.
  * `deployment_type` - Type of deployment. You can get list of deployment types from [Deployment Types](deployment_types.md) Data Source.
+ * `deployment_category` - Category of deployment
  * `initial_size_mb` - Size of first partition in deployment in megabytes.
     
  

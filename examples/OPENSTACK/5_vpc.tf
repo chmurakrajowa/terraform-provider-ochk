@@ -1,7 +1,9 @@
-/*data "ochk_vrf" "project-vrf" {
-  display_name = var.vrf_router
-}
-*/
+/*data "ochk_vpc" "project-vpc" {
+
+   vrf_id = "5df9b4f3-8f50-4a98-95d5-8ef2304f4362"
+  display_name = "5665655665dfgh"
+}*/
+
 
 /*data "ochk_vpcs" "vpcs" {
     //vrf_id = data.ochk_vrf.project-vrf.id
