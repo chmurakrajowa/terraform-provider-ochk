@@ -17,10 +17,10 @@ const (
 	FirewallRuleRetryTimeout = 1 * time.Minute
 	E3001                    = "TF_ERROR{3001}: Error while creating firewall rule: %+v"
 	E3001_UPDATE             = "TF_ERROR{3001}: Error while updating firewall rule: %+v"
-	E3002                    = "Field %s or %s is required. Please put %s or %s field to input config file."
 	E3003                    = "Error while mapping firewall rule to resource: %+v"
-	E3004                    = "Error while reading firewall rule: %+v"
-	E3005                    = "Error while deleting firewall rule: %+v"
+	E3004                    = "Error while mapping firewall rule to resource: Only one field from %s can be set in input resource file."
+	E3006                    = "Error while reading firewall rule: %+v"
+	E3007                    = "Error while deleting firewall rule: %+v"
 )
 
 func resourceFirewallRule() *schema.Resource {
@@ -137,11 +137,9 @@ func resourceFirewallRuleCreate(ctx context.Context, d *schema.ResourceData, met
 
 	created, err := proxy.Create(ctx, projectId, securityGroupId, firewallRule)
 	if err != nil {
-		return diag.Errorf("error while creating firewall rule: %+v", err)
+		return diag.Errorf(E3001, err)
 	}
-
 	d.SetId(created.RuleID.String())
-
 	return resourceFirewallRuleRead(ctx, d, meta)
 }
 
@@ -159,7 +157,7 @@ func resourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, meta 
 			return diag.Errorf("firewall rule with id %s not found: %+v", id, err)
 		}
 
-		return diag.Errorf("error while reading firewall rule: %+v", err)
+		return diag.Errorf(E3006, err)
 	}
 
 	if err := d.Set("display_name", firewallRule.Name); err != nil {
@@ -206,8 +204,10 @@ func resourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting remote_ip_prefix: %+v", err)
 	}
 
-	if err := d.Set("dest_security_group", firewallRule.SecurityGroup.ID); err != nil {
-		return diag.Errorf("error setting dest_security_group: %+v", err)
+	if firewallRule.SecurityGroup != nil {
+		if err := d.Set("dest_security_group", firewallRule.SecurityGroup.ID); err != nil {
+			return diag.Errorf("error setting dest_security_group: %+v", err)
+		}
 	}
 
 	if err := d.Set("created_by", firewallRule.CreatedBy.DisplayName); err != nil {
@@ -247,17 +247,15 @@ func resourceFirewallRuleUpdate(ctx context.Context, d *schema.ResourceData, met
 
 	_, err := proxy.Update(ctx, projectID, securityGroupID, firewallRule)
 	if err != nil {
-		return diag.Errorf("error while creating firewall rule: %+v", err)
+		return diag.Errorf(E3001_UPDATE, err)
 	}
 
 	return resourceFirewallRuleRead(ctx, d, meta)
 }
 
 func mapResourceDataToRule(d *schema.ResourceData) (*models.FirewallRule, diag.Diagnostics) {
-
-	if d.Get("dest_security_group").(string) == "" && d.Get("remote_ip_prefix").(string) == "" {
-		fmt.Printf("dest_security_group or remote_ip_prefix has to be set in input resource.")
-		return nil, diag.Errorf(E3001, fmt.Sprintf(E3002, "dest_security_group", "remote_ip_prefix", "dest_security_group", "remote_ip_prefix"))
+	if d.Get("dest_security_group").(string) != "" && d.Get("remote_ip_prefix").(string) != "" {
+		return nil, diag.Errorf(E3004, "[dest_security_group, remote_ip_prefix]")
 	}
 
 	if d.Get("dest_security_group").(string) != "" {
@@ -270,10 +268,8 @@ func mapResourceDataToRule(d *schema.ResourceData) (*models.FirewallRule, diag.D
 			Protocol:          models.Protocol(d.Get("protocol").(string)),
 			PortRangeMax:      int64(d.Get("port_range_max").(int)),
 			PortRangeMin:      int64(d.Get("port_range_min").(int)),
-			//RemoteIPPrefix:    d.Get("remote_ip_prefix").(string),
-			SecurityGroup: expandSecurityGroup(d.Get("dest_security_group").(string)),
+			SecurityGroup:     expandSecurityGroup(d.Get("dest_security_group").(string)),
 		}
-
 		return rule, nil
 	} else {
 		rule := &models.FirewallRule{
@@ -286,7 +282,6 @@ func mapResourceDataToRule(d *schema.ResourceData) (*models.FirewallRule, diag.D
 			PortRangeMax:      int64(d.Get("port_range_max").(int)),
 			PortRangeMin:      int64(d.Get("port_range_min").(int)),
 			RemoteIPPrefix:    d.Get("remote_ip_prefix").(string),
-			//	SecurityGroup:     expandSecurityGroup(d.Get("dest_security_group").(string)),
 		}
 		return rule, nil
 	}
@@ -294,10 +289,8 @@ func mapResourceDataToRule(d *schema.ResourceData) (*models.FirewallRule, diag.D
 
 func resourceFirewallRuleDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallRules
-
 	securityGroupID := strfmt.UUID(d.Get("security_group_id").(string))
 	projectID := strfmt.UUID(d.Get("project_id").(string))
-
 	err := proxy.Delete(ctx, projectID, securityGroupID, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
@@ -306,9 +299,8 @@ func resourceFirewallRuleDelete(ctx context.Context, d *schema.ResourceData, met
 			return diag.Errorf("firewall rule with id %s not found: %+v", id, err)
 		}
 
-		return diag.Errorf("error while deleting firewall rule: %+v", err)
+		return diag.Errorf(E3007, err)
 	}
-
 	return nil
 }
 
