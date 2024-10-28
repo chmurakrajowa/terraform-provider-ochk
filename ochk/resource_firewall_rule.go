@@ -82,12 +82,14 @@ func resourceFirewallRule() *schema.Resource {
 				Optional: true,
 			},
 			"remote_ip_prefix": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:         schema.TypeString,
+				Optional:     true,
+				AtLeastOneOf: []string{"remote_ip_prefix", "dest_security_group"},
 			},
 			"dest_security_group": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:         schema.TypeString,
+				Optional:     true,
+				AtLeastOneOf: []string{"remote_ip_prefix", "dest_security_group"},
 			},
 			"created_by": {
 				Type:     schema.TypeString,
@@ -204,6 +206,10 @@ func resourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting remote_ip_prefix: %+v", err)
 	}
 
+	if err := d.Set("dest_security_group", firewallRule.SecurityGroup.ID); err != nil {
+		return diag.Errorf("error setting dest_security_group: %+v", err)
+	}
+
 	if err := d.Set("created_by", firewallRule.CreatedBy.DisplayName); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
@@ -224,17 +230,18 @@ func resourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, meta 
 }
 
 func resourceFirewallRuleUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
-	if !d.HasChanges("display_name", "description", "ether_type", "direction", "protocol", "port_range_min", "port_range_max", "remote_ip_prefix") {
+	if !d.HasChanges("display_name", "description", "ether_type", "direction", "protocol", "port_range_min", "port_range_max", "remote_ip_prefix", "desc_security_group") {
 		return nil
 	}
 	proxy := meta.(*sdk.Client).FirewallRules
 
 	securityGroupID := strfmt.UUID(d.Get("security_group_id").(string))
 	projectID := strfmt.UUID(d.Get("project_id").(string))
-	firewallRule, err_rule := mapResourceDataToRule(d)
 
-	if err_rule != nil {
-		return diag.Errorf(E3001_UPDATE, err_rule)
+	firewallRule, errRule := mapResourceDataToRule(d)
+
+	if errRule != nil {
+		return diag.Errorf(E3001_UPDATE, errRule)
 	}
 	firewallRule.RuleID = strfmt.UUID(d.Id())
 
@@ -252,6 +259,7 @@ func mapResourceDataToRule(d *schema.ResourceData) (*models.FirewallRule, diag.D
 		fmt.Printf("dest_security_group or remote_ip_prefix has to be set in input resource.")
 		return nil, diag.Errorf(E3001, fmt.Sprintf(E3002, "dest_security_group", "remote_ip_prefix", "dest_security_group", "remote_ip_prefix"))
 	}
+
 	if d.Get("dest_security_group").(string) != "" {
 		rule := &models.FirewallRule{
 			Name:              d.Get("display_name").(string),
@@ -262,9 +270,10 @@ func mapResourceDataToRule(d *schema.ResourceData) (*models.FirewallRule, diag.D
 			Protocol:          models.Protocol(d.Get("protocol").(string)),
 			PortRangeMax:      int64(d.Get("port_range_max").(int)),
 			PortRangeMin:      int64(d.Get("port_range_min").(int)),
-			RemoteIPPrefix:    d.Get("remote_ip_prefix").(string),
-			SecurityGroup:     expandSecurityGroup(d.Get("dest_security_group").(string)),
+			//RemoteIPPrefix:    d.Get("remote_ip_prefix").(string),
+			SecurityGroup: expandSecurityGroup(d.Get("dest_security_group").(string)),
 		}
+
 		return rule, nil
 	} else {
 		rule := &models.FirewallRule{
@@ -277,6 +286,7 @@ func mapResourceDataToRule(d *schema.ResourceData) (*models.FirewallRule, diag.D
 			PortRangeMax:      int64(d.Get("port_range_max").(int)),
 			PortRangeMin:      int64(d.Get("port_range_min").(int)),
 			RemoteIPPrefix:    d.Get("remote_ip_prefix").(string),
+			//	SecurityGroup:     expandSecurityGroup(d.Get("dest_security_group").(string)),
 		}
 		return rule, nil
 	}
