@@ -10,30 +10,34 @@ import (
 )
 
 func TestAcctsDataSource_read(t *testing.T) {
-	ctx := context.Background()
-	client, err := sdk.NewClient(ctx, os.Getenv("TF_VAR_host"), os.Getenv("TF_VAR_platform"), os.Getenv("TF_VAR_api_key"), false, "", os.Getenv("TF_VAR_platform_type"))
-	if err != nil {
-		assert.Error(t, err)
-	}
-	fmt.Printf("Account name: %v\n", client.Accounts)
-	proxy := client.Accounts
-	accountInstances, err := proxy.ListAccounts(context.Background())
-	if err != nil {
-		assert.Error(t, err)
+	checkVariables := CheckInputVariables()
+	if checkVariables == "" {
+		ctx := context.Background()
+		client, err := sdk.NewClient(ctx, os.Getenv("TF_VAR_host"), os.Getenv("TF_VAR_platform"), os.Getenv("TF_VAR_api_key"), false, "", os.Getenv("TF_VAR_platform_type"))
+		if err != nil {
+			assert.Error(t, err)
+		}
+		fmt.Printf("Account name: %v\n", client.Accounts)
+		proxy := client.Accounts
+		accountInstances, err := proxy.ListAccounts(context.Background())
+		if err != nil {
+			assert.Error(t, err)
+		} else {
+			assert.Condition(t, func() bool {
+				if accountInstances != nil {
+					return true
+				}
+				return false
+			})
+			assert.Condition(t, func() bool {
+				if accountInstances != nil && len(accountInstances) >= 0 {
+
+					return true
+				}
+				return false
+			})
+		}
 	} else {
-		assert.Condition(t, func() bool {
-			if accountInstances != nil {
-				return true
-			}
-			return false
-		})
-		assert.Condition(t, func() bool {
-			if accountInstances != nil && len(accountInstances) >= 0 {
-
-				return true
-			}
-			return false
-		})
+		fmt.Printf("ERROR:: %s", checkVariables)
 	}
-
 }

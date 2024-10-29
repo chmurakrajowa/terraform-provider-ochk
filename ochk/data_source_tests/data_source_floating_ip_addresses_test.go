@@ -33,9 +33,6 @@ func TestAccFloatingIPAddressesDataSource_read(t *testing.T) {
 		if err != nil {
 			assert.Error(t, err)
 		}
-
-		//fmt.Printf("Public ip client %v\n", client.PublicIPAddresses)
-		//	fmt.Printf("Floating ip client: %v\n", client.FloatingIPAddresses)
 		proxy := client.FloatingIPAddresses
 		floatingIPInstances, err := proxy.List(context.Background())
 		if err != nil {
