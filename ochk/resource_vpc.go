@@ -18,7 +18,7 @@ const (
 	E2001           = "TF_ERROR{2001}: Error while creating router(vpc): %+v"
 	E2001_UPDATE    = "TF_ERROR{2001}: Error while updating router(vpc): %+v"
 	E2002           = "Field %s is not applicable for platform VMWARE. Please remove field from Your input config file."
-	E2003           = "Wrong field in resource."
+	E2003           = "Wrong field in resource. %s"
 	E2004           = "Error while mapping router (vpc) to resource: %+v"
 	E2005           = "Error while reading vpc: %+v"
 	E2006           = "Error while deleting vpc: %+v"
