@@ -74,6 +74,7 @@ type predefinedTestData struct {
 	NatPublicIpAddr            string
 	SnapshotName               string
 	AccountName                string
+	SecurityGroupName          string
 }
 
 var devTestDataPrefix = "tf-gojl"
@@ -109,4 +110,5 @@ var predefinedTestDataDev = predefinedTestData{
 	NatPublicIpAddr:            "",
 	SnapshotName:               fmt.Sprintf("%s-snaps001", devTestDataPrefix),
 	AccountName:                fmt.Sprintf("%s-act1", devTestDataPrefix),
+	SecurityGroupName:          fmt.Sprintf("%s-sg1", devTestDataPrefix),
 }
