@@ -15,7 +15,7 @@ func TestFirewallRulesDataSource_read(t *testing.T) {
 			{
 				Config: testFirewallRulesDataSourceConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttrSet(resourceName, "firewall_rules.0.firewall_rule_id"),
+					resource.TestCheckResourceAttrSet(resourceName, "firewall_rules.0.rule_id"),
 					resource.TestCheckResourceAttrSet(resourceName, "firewall_rules.0.name"),
 				),
 			},
