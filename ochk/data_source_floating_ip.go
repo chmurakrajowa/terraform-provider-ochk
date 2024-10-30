@@ -20,7 +20,7 @@ func dataSourceFloatingIPAddress() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"public_adress": {
+			"public_address": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -101,8 +101,8 @@ func dataSourceFloatingIPAddressRead(ctx context.Context, d *schema.ResourceData
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
-	if err := d.Set("public_adress", floatingIp[0].PublicAddress); err != nil {
-		return diag.Errorf("error setting public_adress: %+v", err)
+	if err := d.Set("public_address", floatingIp[0].PublicAddress); err != nil {
+		return diag.Errorf("error setting public_address: %+v", err)
 	}
 
 	if err := d.Set("project_id", floatingIp[0].OscProjectID); err != nil {
