@@ -25,11 +25,6 @@ func TestFlattenFloatingIpAddress(t *testing.T) {
 					Name:          "publicIp1",
 					PublicAddress: "203.0.113.15",
 				},
-				//{
-				//	FloatingIPID:  "791bf702-22fb-4c76-bebb-1fee7ee75607",
-				//	Name:          "test2",
-				//	PublicAddress: "/test1/test2",
-				//},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
@@ -37,11 +32,6 @@ func TestFlattenFloatingIpAddress(t *testing.T) {
 					"display_name":   "publicIp1",
 					"public_address": "203.0.113.15",
 				},
-				//{
-				//	"id":           strfmt.UUID("791bf702-22fb-4c76-bebb-1fee7ee75607"),
-				//	"display_name": "test2",
-				//	"description":  "/test1/test2",
-				//},
 			},
 		},
 	}
