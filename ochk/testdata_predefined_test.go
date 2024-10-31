@@ -73,6 +73,7 @@ type predefinedTestData struct {
 	InfraAdminGroup            string
 	FirewallEWRuleName         string
 	FirewallSNRuleName         string
+	FirewallRuleName           string
 	NatPublicIpAddr            string
 	SnapshotName               string
 	AccountName                string
@@ -112,6 +113,7 @@ var predefinedTestDataDev = predefinedTestData{
 	InfraAdminGroup:            fmt.Sprintf("%s-subt1-InfraAdm", devTestDataPrefix),
 	FirewallEWRuleName:         fmt.Sprintf("%s-tf-fw-ew-http", devTestDataPrefix),
 	FirewallSNRuleName:         fmt.Sprintf("%s-tf-fw-sn-http", devTestDataPrefix),
+	FirewallRuleName:           fmt.Sprintf("%s-tf-fw", devTestDataPrefix),
 	NatPublicIpAddr:            "",
 	SnapshotName:               fmt.Sprintf("%s-snaps001", devTestDataPrefix),
 	AccountName:                fmt.Sprintf("%s-act1", devTestDataPrefix),
