@@ -12,31 +12,22 @@ import (
 	"testing"
 )
 
-func testAccFirewallRuleCreateResourceId(firewallRuleResourceName string) resource.ImportStateIdFunc {
-	return func(s *terraform.State) (string, error) {
-		firewallRuleResource := s.RootModule().Resources[firewallRuleResourceName]
-		resourceID := firewallRuleResource.Primary.Attributes["project_id"] + "/" + firewallRuleResource.Primary.ID
-		return resourceID, nil
-	}
-}
-
 func TestAccFirewallRuleResource_create_update(t *testing.T) {
 	resourceName := "ochk_firewall_rule.default"
 	displayName := generateRandName(devTestDataPrefix)
-	//displayNameUpdated := displayName + "-upd"
+	displayNameUpdated := displayName + "-upd"
 
 	dataSourceSecurityGroup := "data.ochk_security_group.sg-1"
 	dataSourceProject := "data.ochk_project.project-1"
-
-	//projectName := testData.Project1Name
-	//securityGroupName := testData.SecurityGroupName
 
 	description := "TEST"
 	ether_type := "IPv4"
 	direction := "EGRESS"
 	protocol := "TCP"
 	port_range_min := 20008
+	port_range_min_update := 20003
 	port_range_max := 20020
+	port_range_max_update := 20025
 	remote_ip_prefix := "200.200.200.1/32"
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -62,10 +53,12 @@ func TestAccFirewallRuleResource_create_update(t *testing.T) {
 				),
 			},
 			{
-				ResourceName:      resourceName,
-				ImportState:       true,
-				ImportStateVerify: true,
-				ImportStateIdFunc: testAccFirewallRuleCreateResourceId(resourceName),
+				Config: testAccFirewallRuleResourceConfig(displayNameUpdated, description, ether_type, direction, protocol, port_range_min_update, port_range_max_update, remote_ip_prefix),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr(resourceName, "display_name", displayNameUpdated),
+					resource.TestCheckResourceAttr(resourceName, "port_range_min", "20003"),
+					resource.TestCheckResourceAttr(resourceName, "port_range_max", "20025"),
+				),
 			},
 		},
 		CheckDestroy: testAccFirewallRuleResourceNotExists(displayName),
@@ -93,7 +86,7 @@ resource "ochk_firewall_rule" "default" {
   direction = %[4]q
   protocol = %[5]q
   port_range_min = %[6]d
-  port_range_max = %[6]d
+  port_range_max = %[7]d
   remote_ip_prefix = %[8]q
 }
 `, displayName, description, ether_type, direction, protocol, port_range_min, port_range_max, remote_ip_prefix)
@@ -131,7 +124,6 @@ func testAccFirewallRuleResourceNotExists(displayName string) resource.TestCheck
 		if len(firewallRule) > 0 {
 			return fmt.Errorf("firewall rule %s still exists", firewallRule[0].RuleID)
 		}
-
 		return nil
 	}
 }
