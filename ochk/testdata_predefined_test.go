@@ -3,6 +3,7 @@ package ochk
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/go-openapi/strfmt"
 	"io"
 	"os"
 	"reflect"
@@ -47,6 +48,7 @@ type predefinedTestData struct {
 	Network1Name               string
 	Network2Name               string
 	Project1Name               string
+	Project1Id                 strfmt.UUID
 	Project2Name               string
 	Project3Name               string
 	Project4Name               string
@@ -75,6 +77,8 @@ type predefinedTestData struct {
 	SnapshotName               string
 	AccountName                string
 	SecurityGroupName          string
+	FloatingIpAddressName      string
+	FloatingIpAddress          string
 }
 
 var devTestDataPrefix = "tf-gojl"
@@ -85,6 +89,7 @@ var predefinedTestDataDev = predefinedTestData{
 	Network1Name:               fmt.Sprintf("%s-vnet1", devTestDataPrefix),
 	Network2Name:               fmt.Sprintf("%s-vnet2", devTestDataPrefix),
 	Project1Name:               fmt.Sprintf("%s-project-01", devTestDataPrefix),
+	Project1Id:                 strfmt.UUID("3cda830c-b37f-46dc-be54-f649d31bec66"),
 	Project2Name:               fmt.Sprintf("%s-project-02", devTestDataPrefix),
 	Project3Name:               fmt.Sprintf("%s-project-03", devTestDataPrefix),
 	Project4Name:               fmt.Sprintf("%s-project-04", devTestDataPrefix),
@@ -111,4 +116,6 @@ var predefinedTestDataDev = predefinedTestData{
 	SnapshotName:               fmt.Sprintf("%s-snaps001", devTestDataPrefix),
 	AccountName:                fmt.Sprintf("%s-act1", devTestDataPrefix),
 	SecurityGroupName:          fmt.Sprintf("%s-sg1", devTestDataPrefix),
+	FloatingIpAddressName:      "publicIp1",
+	FloatingIpAddress:          "203.0.113.15",
 }
