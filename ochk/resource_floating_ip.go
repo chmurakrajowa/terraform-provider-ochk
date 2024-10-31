@@ -37,7 +37,6 @@ func resourceFloatingIp() *schema.Resource {
 			"display_name": {
 				Type:     schema.TypeString,
 				Required: true,
-				ForceNew: true,
 			},
 			"description": {
 				Type:     schema.TypeString,
@@ -55,7 +54,7 @@ func resourceFloatingIp() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"public_adress": {
+			"public_address": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -127,10 +126,10 @@ func resourceFloatingIpUpdate(ctx context.Context, d *schema.ResourceData, meta 
 	}
 	proxy := meta.(*sdk.Client).FloatingIPAddresses
 
-	floating_ip := mapResourceDataToFloatingIp(d)
-	floating_ip.FloatingIPID = strfmt.UUID(d.Id())
+	floatingIp := mapResourceDataToFloatingIp(d)
+	floatingIp.FloatingIPID = strfmt.UUID(d.Id())
 
-	_, err := proxy.Update(ctx, floating_ip)
+	_, err := proxy.Update(ctx, floatingIp)
 	if err != nil {
 		return diag.Errorf("error while modifying floating ip: %+v", err)
 	}
