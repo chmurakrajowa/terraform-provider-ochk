@@ -34,7 +34,7 @@ func dataSourcePortForwarding() *schema.Resource {
 				Computed: true,
 			},
 			"external_port": {
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"external_port_range": {
@@ -46,7 +46,7 @@ func dataSourcePortForwarding() *schema.Resource {
 				Computed: true,
 			},
 			"internal_port": {
-				Type:     schema.TypeString,
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"internal_port_id": {
