@@ -80,6 +80,7 @@ type predefinedTestData struct {
 	SecurityGroupName          string
 	FloatingIpAddressName      string
 	FloatingIpAddress          string
+	PortForwardingName         string
 }
 
 var devTestDataPrefix = "tf-gojl"
@@ -120,4 +121,5 @@ var predefinedTestDataDev = predefinedTestData{
 	SecurityGroupName:          fmt.Sprintf("%s-sg1", devTestDataPrefix),
 	FloatingIpAddressName:      "publicIp1",
 	FloatingIpAddress:          "203.0.113.15",
+	PortForwardingName:         "pbtest1", // fmt.Sprintf("%s-port-fwd", devTestDataPrefix),
 }
