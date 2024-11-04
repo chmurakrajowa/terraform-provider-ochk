@@ -48,7 +48,7 @@ func resourceFloatingIp() *schema.Resource {
 			},
 			"vm_port_id": {
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"vm_fixed_ip": {
 				Type:     schema.TypeString,
@@ -56,7 +56,7 @@ func resourceFloatingIp() *schema.Resource {
 			},
 			"public_address": {
 				Type:     schema.TypeString,
-				Computed: true,
+				Optional: true,
 			},
 		},
 	}
