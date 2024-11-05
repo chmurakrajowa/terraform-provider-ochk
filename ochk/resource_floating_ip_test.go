@@ -33,7 +33,6 @@ func (c *FloatingIpTestData) FullResourceName() string {
 
 func TestUnitFloating_Ip_Resource_create(t *testing.T) {
 
-	checkPlatformType()
 	floating_ip := FloatingIpTestData{
 		ResourceName: "floating_ip_test2",
 		Description:  "tf-test-description",
