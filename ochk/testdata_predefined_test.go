@@ -119,7 +119,7 @@ var predefinedTestDataDev = predefinedTestData{
 	SnapshotName:               fmt.Sprintf("%s-snaps001", devTestDataPrefix),
 	AccountName:                fmt.Sprintf("%s-act1", devTestDataPrefix),
 	SecurityGroupName:          fmt.Sprintf("%s-sg1", devTestDataPrefix),
-	FloatingIpAddressName:      "publicIp1",
+	FloatingIpAddressName:      "jltest01",
 	FloatingIpAddress:          "203.0.113.15",
 	PortForwardingName:         "pbtest1", // fmt.Sprintf("%s-port-fwd", devTestDataPrefix),
 }
