@@ -26,6 +26,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/dfw_rule"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/firewall_rule"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/floating_ip"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/floating_ip_vms"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/folder"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/gfw_rule"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/health_check"
@@ -113,6 +114,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Ochk {
 	cli.DfwRule = dfw_rule.New(transport, formats)
 	cli.FirewallRule = firewall_rule.New(transport, formats)
 	cli.FloatingIP = floating_ip.New(transport, formats)
+	cli.FloatingIPVms = floating_ip_vms.New(transport, formats)
 	cli.Folder = folder.New(transport, formats)
 	cli.GfwRule = gfw_rule.New(transport, formats)
 	cli.HealthCheck = health_check.New(transport, formats)
@@ -216,6 +218,8 @@ type Ochk struct {
 
 	FloatingIP floating_ip.ClientService
 
+	FloatingIPVms floating_ip_vms.ClientService
+
 	Folder folder.ClientService
 
 	GfwRule gfw_rule.ClientService
@@ -292,6 +296,7 @@ func (c *Ochk) SetTransport(transport runtime.ClientTransport) {
 	c.DfwRule.SetTransport(transport)
 	c.FirewallRule.SetTransport(transport)
 	c.FloatingIP.SetTransport(transport)
+	c.FloatingIPVms.SetTransport(transport)
 	c.Folder.SetTransport(transport)
 	c.GfwRule.SetTransport(transport)
 	c.HealthCheck.SetTransport(transport)
