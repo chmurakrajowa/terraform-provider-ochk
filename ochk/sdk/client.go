@@ -16,6 +16,7 @@ import (
 
 type Client struct {
 	FloatingIPAddresses FloatingIPAddressProxy
+	FloatingIPVms       FloatingIPVmsProxy
 	FirewallRules       FirewallRulesProxy
 	FirewallEWRules     FirewallEWRulesProxy
 	FirewallSNRules     FirewallSNRulesProxy
@@ -204,6 +205,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		FloatingIPAddresses: FloatingIPAddressProxy{
 			httpClient: httpClient,
 			service:    authClient.FloatingIP,
+		},
+		FloatingIPVms: FloatingIPVmsProxy{
+			httpClient: httpClient,
+			service:    authClient.FloatingIPVms,
 		},
 		Snapshots: SnapshotsProxy{
 			httpClient: httpClient,
