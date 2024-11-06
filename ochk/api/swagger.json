@@ -2448,6 +2448,44 @@
         }
       }
     },
+    "/network/floating-ips-vms": {
+      "get": {
+        "tags": [
+          "FloatingIpVms"
+        ],
+        "summary": "List floating ips vm (OSC)",
+        "description": "List floating ips vm (OSC)",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ListPortFwdVmResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
     "/folder/{projectId}": {
       "get": {
         "tags": [
@@ -11924,6 +11962,28 @@
       },
       "additionalProperties": false
     },
+    "ListPortFwdVmResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "portFwdVmCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PortFwdVm"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
     "ListProjectResponse": {
       "type": "object",
       "properties": {
@@ -12709,6 +12769,38 @@
         },
         "floatingIpId": {
           "format": "uuid",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "PortFwdVm": {
+      "type": "object",
+      "properties": {
+        "virtualMachineId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "vmExternalId": {
+          "type": "string"
+        },
+        "virtualMachineName": {
+          "type": "string"
+        },
+        "networkInterfaceLabel": {
+          "type": "string"
+        },
+        "oscPortId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "macAddress": {
+          "type": "string"
+        },
+        "networkName": {
+          "type": "string"
+        },
+        "ipAddress": {
           "type": "string"
         }
       },
