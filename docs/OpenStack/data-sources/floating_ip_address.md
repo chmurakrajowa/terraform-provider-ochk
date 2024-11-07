@@ -4,7 +4,7 @@ page_title: "Floating IP Data Source"
 
 # Floating IP Data Source
 
-Data Source for getting allocated Public IP Addresses list.
+Data Source for getting allocated Public IP Address.
 
 ## Example Usage
 
