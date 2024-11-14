@@ -7,7 +7,7 @@ import (
 )
 
 func TestAcctsDataSource_read(t *testing.T) {
-	resourceName := "data.ochk_accounts.default"
+	resourceName := "data.ochk_billing_accounts.default"
 
 	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,

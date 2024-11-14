@@ -87,7 +87,7 @@ func dataSourceSnapshotRead(ctx context.Context, d *schema.ResourceData, meta in
 	if err := d.Set("parent_id", snapshots[0].ParentSnapshotID); err != nil {
 		return diag.Errorf("error setting parent_id: %+v", err)
 	}
-	if snapshots[0].ChildSnapshots != nil {
+	if len(snapshots[0].ChildSnapshots) > 0 { // != nil {
 		if err := d.Set("child_id", snapshots[0].ChildSnapshots[0].SnapshotID); err != nil {
 			return diag.Errorf("error setting child_id: %+v", err)
 		}
