@@ -1,9 +1,12 @@
-## 2.1.1 (2024-07-01)
+## 2.1.2 (2024-11-19)
 * Added data sources for OpenStack platform
   * `ochk_firewall_rules`
   * `ochk_firewall_rule`
 
-
+## 2.1.1 (2024-07-01)
+* Added data sources for OpenStack platform
+  * `ochk_firewall_rules`
+  * `ochk_firewall_rule`
 
 ## 2.1.0 (2024-07-01)
 

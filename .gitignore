@@ -31,3 +31,4 @@ dist
 *.tfstate.lock.info
 
 clean_tenenat*
+dist/
