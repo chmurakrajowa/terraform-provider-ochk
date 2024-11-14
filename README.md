@@ -84,6 +84,7 @@ $ export TF_ACC=true
 $ export TF_VAR_host=host
 $ export TF_VAR_platform=platform
 $ export TF_VAR_api_key=api_key
+$ export TF_VAR_platform_type=VMWARE / OPENSTACK
 
 $ go test ./...
 ```
