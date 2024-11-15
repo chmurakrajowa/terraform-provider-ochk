@@ -15,7 +15,7 @@ func TestAccSnapshotDataSource_read(t *testing.T) {
 			{
 				Config: testAccSnapshotDataSourceConfig(testData.VirtualMachine1DisplayName, testData.SnapshotName),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "snapshot_name", testData.SnapshotName),
+					resource.TestCheckResourceAttr(resourceName, "display_name", testData.SnapshotName),
 					resource.TestCheckResourceAttrPair(resourceName, "virtual_machine_id", "data.ochk_virtual_machine.virtual-machine-1", "id"),
 					resource.TestCheckResourceAttrSet(resourceName, "snapshot_description"),
 					resource.TestCheckResourceAttrSet(resourceName, "power_state"),
@@ -33,7 +33,7 @@ data "ochk_virtual_machine" "virtual-machine-1" {
 }
 data "ochk_snapshot" "snap-def" {
 	virtual_machine_id = data.ochk_virtual_machine.virtual-machine-1.id
-	snapshot_name = %[2]q
+	display_name = %[2]q
 }
 `, virtualMachineName, snapshotName)
 }
