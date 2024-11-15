@@ -134,6 +134,9 @@ func resourceVirtualMachine() *schema.Resource {
 						"virtual_network_id": {
 							Type:     schema.TypeString,
 							Required: true,
+							StateFunc: func(val any) string {
+								return strings.ToLower(val.(string))
+							},
 						},
 						"device_id": {
 							Type:     schema.TypeString,
