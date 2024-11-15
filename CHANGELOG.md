@@ -1,12 +1,25 @@
-## 2.1.2 (2024-11-19)
-* Added data sources for OpenStack platform
-  * `ochk_firewall_rules`
-  * `ochk_firewall_rule`
+## 3.0 (2024-11-15)
+* Added support for two types of platforms: VMWARE and OPENSTACK. Changed login parameters: to set the type of platform that we currently use,`platform_type` param was added.
+* Added `autonat_enabled` to `resource_vpc` for OPENSTACK
+* Added platform_type checking validation to `resource_security_group` to verify members_type. Only `VIRTUAL_MACHINE` member_type is allowed for OPENSTACK.
+* Changed the resource id type from string to uuid
+* Added deployment_category to data_source_deployment
+* Changed MB to GB project size in `resource_project`
 
-## 2.1.1 (2024-07-01)
-* Added data sources for OpenStack platform
-  * `ochk_firewall_rules`
-  * `ochk_firewall_rule`
+* Added new resources for OpenStack
+* `resource_floating_ip` - reservation of public IP addresses
+* `resource_port_forwarding` - network address translation
+* `resource_firewall_rule`
+
+* Added new data_sources for OpenStack
+* `data_source_floating_ip`
+* `data_source_floating_ips`
+* `data_source_port_forwarding`
+* `data_source_ports_forwarding`
+* `data_source_firewall_rule`
+* `data_source_firewall_rules`
+* `data_source_floating_ip_vms’
+
 
 ## 2.1.0 (2024-07-01)
 

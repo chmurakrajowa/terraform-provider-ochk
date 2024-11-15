@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	VpcRetryTimeout = 1 * time.Minute
+	VpcRetryTimeout = 2 * time.Minute
 	E2001           = "TF_ERROR{2001}: Error while creating router(vpc): %+v"
 	E2001_UPDATE    = "TF_ERROR{2001}: Error while updating router(vpc): %+v"
 	E2002           = "Field %s is not applicable for platform VMWARE. Please remove field from Your input config file."
