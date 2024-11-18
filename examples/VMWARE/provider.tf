@@ -2,7 +2,7 @@ terraform {
   required_providers {
     ochk = {
       source = "chmurakrajowa/ochk"
-      version = "2.1.2"
+      version = "3.0"
     }
   }
   backend "local" {
