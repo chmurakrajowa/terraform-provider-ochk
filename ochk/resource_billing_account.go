@@ -55,8 +55,8 @@ func resourceBillingAccount() *schema.Resource {
 			},
 			"projects": {
 				Type:     schema.TypeSet,
-				Required: true,
-				MinItems: 1,
+				MinItems: 0,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"project_id": {
