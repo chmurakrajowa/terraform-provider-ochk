@@ -1,6 +1,7 @@
 package ochk
 
 import (
+	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -13,7 +14,7 @@ func flattenSecurityGroupFromIDs(m []*models.SecurityGroup) *schema.Set {
 	}
 
 	for _, v := range m {
-		s.Add(v.ID)
+		s.Add(fmt.Sprint(v.ID))
 	}
 	return s
 }
@@ -26,10 +27,10 @@ func expandSecurityGroupFromIDs(in []interface{}) []*models.SecurityGroup {
 	var out = make([]*models.SecurityGroup, len(in))
 
 	for i, v := range in {
+		idValue := strfmt.UUID.String(strfmt.UUID(v.(string)))
 		securityGroup := &models.SecurityGroup{
-			ID: v.(strfmt.UUID),
+			ID: strfmt.UUID(idValue),
 		}
-
 		out[i] = securityGroup
 	}
 
