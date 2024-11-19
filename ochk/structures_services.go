@@ -25,8 +25,9 @@ func expandServicesFromIDs(in []interface{}) []*models.ServiceInstance {
 	var out = make([]*models.ServiceInstance, len(in))
 
 	for i, v := range in {
+		idValue := strfmt.UUID.String(strfmt.UUID(v.(string)))
 		service := &models.ServiceInstance{
-			ServiceID: v.(strfmt.UUID),
+			ServiceID: strfmt.UUID(idValue),
 		}
 
 		out[i] = service

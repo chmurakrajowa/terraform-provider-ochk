@@ -1,6 +1,7 @@
 package ochk
 
 import (
+	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -53,7 +54,7 @@ func flattenCustomServicesFromIDs(in []*models.CustomServiceInstance) *schema.Se
 	}
 
 	for _, v := range in {
-		out.Add(v.ServiceID)
+		out.Add(fmt.Sprint(v.ServiceID))
 	}
 	return out
 }
@@ -66,8 +67,9 @@ func expandCustomServicesFromIDs(in []interface{}) []*models.CustomServiceInstan
 	var out = make([]*models.CustomServiceInstance, len(in))
 
 	for i, v := range in {
+		idValue := strfmt.UUID.String(strfmt.UUID(v.(string)))
 		service := &models.CustomServiceInstance{
-			ServiceID: v.(strfmt.UUID),
+			ServiceID: strfmt.UUID(idValue),
 		}
 
 		out[i] = service
