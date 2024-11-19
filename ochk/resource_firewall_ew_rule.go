@@ -241,12 +241,51 @@ func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 	return resourceFirewallEWRuleRead(ctx, d, meta)
 }
 
+func castStringToActionEnum(e string) models.Action {
+	switch e {
+	case "ALLOW":
+		return models.ActionALLOW
+	case "REJECT":
+		return models.ActionREJECT
+	case "DROP":
+		return models.ActionDROP
+	default:
+		return ""
+	}
+}
+
+func castStringToADirectionEnum(e string) models.Direction {
+	switch e {
+	case "IN_OUT":
+		return models.DirectionINOUT
+	case "IN":
+		return models.DirectionIN
+	case "OUT":
+		return models.DirectionOUT
+	default:
+		return ""
+	}
+}
+
+func castStringToAIPProtocolEnum(e string) models.IPProtocol {
+	switch e {
+	case "IPV4_IPV6":
+		return models.IPProtocolIPV4IPV6
+	case "IPV4":
+		return models.IPProtocolIPV4
+	case "IPV6":
+		return models.IPProtocolIPV6
+	default:
+		return ""
+	}
+}
+
 func mapResourceDataToEWRule(d *schema.ResourceData) *models.DfwRule {
 	rule := &models.DfwRule{
 		DisplayName: d.Get("display_name").(string),
 		ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
-		Action:      d.Get("action").(models.Action),
-		Direction:   d.Get("direction").(models.Direction),
+		Action:      castStringToActionEnum(d.Get("action").(string)),
+		Direction:   castStringToADirectionEnum(d.Get("direction").(string)),
 		Priority:    int64(d.Get("priority").(int)),
 	}
 
@@ -255,7 +294,7 @@ func mapResourceDataToEWRule(d *schema.ResourceData) *models.DfwRule {
 	}
 
 	if ipProtocol, ok := d.GetOk("ip_protocol"); ok {
-		rule.IPProtocol = ipProtocol.(models.IPProtocol)
+		rule.IPProtocol = castStringToAIPProtocolEnum(ipProtocol.(string))
 	}
 
 	if services, ok := d.GetOk("services"); ok {
