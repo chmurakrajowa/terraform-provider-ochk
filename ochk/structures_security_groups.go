@@ -16,6 +16,7 @@ func flattenSecurityGroups(in []*models.SecurityGroup) []map[strfmt.UUID]interfa
 		m := make(map[strfmt.UUID]interface{})
 		m["security_group_id"] = v.ID
 		m["display_name"] = v.DisplayName
+		m["project_id"] = v.ProjectID
 		out = append(out, m)
 	}
 	return out
