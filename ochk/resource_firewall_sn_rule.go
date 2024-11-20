@@ -78,16 +78,14 @@ func resourceFirewallSNRule() *schema.Resource {
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"source": {
-				Type:         schema.TypeSet,
-				Optional:     true,
-				AtLeastOneOf: []string{"source", "destination"},
-				Elem:         &schema.Schema{Type: schema.TypeString},
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"destination": {
-				Type:         schema.TypeSet,
-				Optional:     true,
-				AtLeastOneOf: []string{"source", "destination"},
-				Elem:         &schema.Schema{Type: schema.TypeString},
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"priority": {
 				Type:     schema.TypeInt,
@@ -252,10 +250,10 @@ func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GfwRule {
 	rule := &models.GfwRule{
 		DisplayName: d.Get("display_name").(string),
 		ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
-		Action:      d.Get("action").(models.Action),
-		Direction:   d.Get("direction").(models.Direction),
+		Action:      castStringToActionEnum(d.Get("action").(string)),
+		Direction:   castStringToADirectionEnum(d.Get("direction").(string)),
 		Disabled:    d.Get("disabled").(bool),
-		IPProtocol:  d.Get("ip_protocol").(models.IPProtocol),
+		IPProtocol:  castStringToAIPProtocolEnum(d.Get("ip_protocol").(string)),
 		Priority:    int64(d.Get("priority").(int)),
 	}
 
