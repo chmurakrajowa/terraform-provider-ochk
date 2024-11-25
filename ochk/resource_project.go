@@ -82,8 +82,10 @@ func resourceProjectImportState(_ context.Context, d *schema.ResourceData, _ int
 
 func resourceProjectCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Projects
+	proxy_pt := meta.(*sdk.Client).PlatformType
+	platformType, _ := proxy_pt.Read(ctx)
 
-	project := mapResourceDataToProject(d)
+	project := mapResourceDataToProject(d, platformType)
 
 	created, err := proxy.Create(ctx, project)
 	if err != nil {
@@ -152,7 +154,10 @@ func mapProjectToResourceData(d *schema.ResourceData, project *models.ProjectIns
 func resourceProjectUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Projects
 
-	project := mapResourceDataToProject(d)
+	proxy_pt := meta.(*sdk.Client).PlatformType
+	platformType, _ := proxy_pt.Read(ctx)
+
+	project := mapResourceDataToProject(d, platformType)
 	project.ProjectID = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, project)
@@ -180,10 +185,14 @@ func resourceProjectDelete(ctx context.Context, d *schema.ResourceData, meta int
 	return nil
 }
 
-func mapResourceDataToProject(d *schema.ResourceData) *models.ProjectInstance {
+func mapResourceDataToProject(d *schema.ResourceData, platformType models.PlatformType) *models.ProjectInstance {
+	var factor int64 = 1
+	if platformType == "OPENSTACK" {
+		factor = 1024
+	}
 	return &models.ProjectInstance{
 		Description:           d.Get("description").(string),
-		MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)) * 1024,
+		MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)) * factor,
 		Name:                  d.Get("display_name").(string),
 		StorageReservedSizeGB: int64(d.Get("storage_reserved_size_gb").(int)),
 		VrfID:                 strfmt.UUID(d.Get("vrf_id").(string)),
