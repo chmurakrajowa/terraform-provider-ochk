@@ -12,6 +12,10 @@
 }
 {
 "Name": "VRF",
+"Text": "T0"
+}
+{
+"Name": "VRF_OPENSTACK",
 "Text": "VRF-default"
 }
 {

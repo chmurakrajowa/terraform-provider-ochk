@@ -68,6 +68,7 @@ type predefinedTestData struct {
 	TagName                    string
 	VPC                        string
 	VRF                        string
+	VRF_OPENSTACK              string
 	AutoNatName                string
 	DnatName                   string
 	InfraAdminGroup            string
@@ -111,6 +112,7 @@ var predefinedTestDataDev = predefinedTestData{
 	AutoNatName:                fmt.Sprintf("%s-autonat", devTestDataPrefix),
 	DnatName:                   fmt.Sprintf("%s-dnat", devTestDataPrefix),
 	VRF:                        "",
+	VRF_OPENSTACK:              "",
 	InfraAdminGroup:            fmt.Sprintf("%s-subt1-InfraAdm", devTestDataPrefix),
 	FirewallEWRuleName:         fmt.Sprintf("%s-tf-fw-ew-http", devTestDataPrefix),
 	FirewallSNRuleName:         fmt.Sprintf("%s-tf-fw-sn-http", devTestDataPrefix),

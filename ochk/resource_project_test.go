@@ -6,6 +6,7 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
+	"os"
 	"strconv"
 	"testing"
 )
@@ -19,6 +20,10 @@ type ProjectTestData struct {
 	VcpuReservedQuantity  int64
 	ParentRouter          string
 	LimitsEnabled         bool
+}
+
+func checkPlatformType() string {
+	return os.Getenv("TF_VAR_platform_type")
 }
 
 func (c *ProjectTestData) ToString() string {
@@ -44,12 +49,24 @@ func (c *ProjectTestData) FullResourceName() string {
 }
 
 func TestAccProjectResource_create(t *testing.T) {
+	platformType := checkPlatformType()
+
+	fmt.Printf("checkPlatformType%s ", platformType)
+	vrfRouter := testData.VRF_OPENSTACK
+	var mem int64 = 23
+	var mem_update int64 = 25
+	if platformType == "VMWARE" {
+		vrfRouter = testData.VRF
+		mem = 23561
+		mem_update = mem + 2
+	}
+	fmt.Printf("vrfRouter%s ", vrfRouter)
 
 	project := ProjectTestData{
 		ResourceName:          "default",
 		Description:           "tf-test-description",
-		ParentRouter:          testData.VRF,
-		MemoryReservedSizeMB:  23,
+		ParentRouter:          vrfRouter,
+		MemoryReservedSizeMB:  mem,
 		DisplayName:           generateRandName(devTestDataPrefix),
 		StorageReservedSizeGB: 150,
 		VcpuReservedQuantity:  100,
@@ -60,7 +77,7 @@ func TestAccProjectResource_create(t *testing.T) {
 	fmt.Printf("Project full name: %v\n", project.DisplayName)
 	fmt.Printf("Project memeory GB: %v\n", project.MemoryReservedSizeMB)
 	projectUpdated := project
-	projectUpdated.MemoryReservedSizeMB = 25
+	projectUpdated.MemoryReservedSizeMB = mem_update
 	projectUpdated.StorageReservedSizeGB = 200
 	projectUpdated.VcpuReservedQuantity = 100
 	projectUpdated.Description += " - updated"
