@@ -2,6 +2,7 @@ package ochk
 
 import (
 	"context"
+	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
@@ -73,7 +74,14 @@ func resourceSnapshot() *schema.Resource {
 }
 
 func resourceSnapshotImportState(_ context.Context, d *schema.ResourceData, _ interface{}) ([]*schema.ResourceData, error) {
-	d.SetId(strings.ToLower(d.Id()))
+	parts := strings.SplitN(d.Id(), "/", 2)
+	if len(parts) != 2 || parts[0] == "" || parts[1] == "" {
+		return nil, fmt.Errorf("unexpected format of ID (%s), expected format: virtual_machine_id/snapshot_id", d.Id())
+	}
+	d.SetId(strings.ToLower(parts[1]))
+	if err := d.Set("virtual_machine_id", strings.ToLower(parts[0])); err != nil {
+		return nil, fmt.Errorf("cannot set virtual_machine_id: (%s)", parts[0])
+	}
 	return []*schema.ResourceData{d}, nil
 }
 
