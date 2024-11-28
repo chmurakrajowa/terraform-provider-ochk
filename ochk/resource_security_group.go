@@ -17,6 +17,8 @@ const (
 	IPCOLLECTION              MemberType = "IPCOLLECTION"
 	LOGICAL_PORT              MemberType = "LOGICAL_PORT"
 	IPSET                     MemberType = "IPSET"
+	SEGMENT                   MemberType = "SEGMENT"
+	GROUP                     MemberType = "GROUP"
 )
 
 func resourceSecurityGroup() *schema.Resource {

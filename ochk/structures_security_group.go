@@ -75,6 +75,10 @@ func expandSecurityGroupMembers(in []interface{}, platformType models.PlatformTy
 				return nil, diag.Errorf("error while expand security group:'' %+v", LOGICAL_PORT), "LOGICAL_PORT"
 			} else if member.MemberType == "IPSET" {
 				return nil, diag.Errorf("error while expand security group:'' %+v", LOGICAL_PORT), "IPSET"
+			} else if member.MemberType == "SEGMENT" {
+				return nil, diag.Errorf("error while expand security group:'' %+v", SEGMENT), "SEGMENT"
+			} else if member.MemberType == "GROUP" {
+				return nil, diag.Errorf("error while expand security group:'' %+v", GROUP), "GROUP"
 			}
 		}
 
@@ -83,6 +87,10 @@ func expandSecurityGroupMembers(in []interface{}, platformType models.PlatformTy
 				return nil, diag.Errorf("error while expand security group:'' %+v", IPSET), "IPSET"
 			} else if member.MemberType == "LOGICAL_PORT" {
 				return nil, diag.Errorf("error while expand security group:'' %+v", LOGICAL_PORT), "LOGICAL_PORT"
+			} else if member.MemberType == "SEGMENT" {
+				return nil, diag.Errorf("error while expand security group:'' %+v", SEGMENT), "SEGMENT"
+			} else if member.MemberType == "GROUP" {
+				return nil, diag.Errorf("error while expand security group:'' %+v", GROUP), "GROUP"
 			}
 		}
 
