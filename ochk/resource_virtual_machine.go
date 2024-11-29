@@ -501,8 +501,7 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VirtualMach
 		DeploymentInstance: &models.DeploymentInstance{
 			DeploymentID: strfmt.UUID(d.Get("deployment_id").(string)),
 		},
-		InitialPassword: d.Get("initial_password").(string),
-		//PowerState:      models.PowerStatePoweredOn,
+		InitialPassword:       d.Get("initial_password").(string),
 		PowerState:            castStringToPowerStateEnum(d.Get("power_state").(string)),
 		StoragePolicy:         castStringToStorageEnum(d.Get("storage_policy").(string)),
 		ProjectID:             strfmt.UUID(d.Get("project_id").(string)),
