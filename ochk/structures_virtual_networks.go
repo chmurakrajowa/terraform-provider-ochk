@@ -20,7 +20,7 @@ func flattenStringSlice(in []string) *schema.Set {
 	return out
 }
 
-func flattenVirtualNeworks(in []*models.VirtualNetworkInstance) []map[strfmt.UUID]interface{} {
+func flattenVirtualNetworks(in []*models.VirtualNetworkInstance) []map[strfmt.UUID]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
