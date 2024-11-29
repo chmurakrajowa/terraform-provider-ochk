@@ -131,9 +131,9 @@ func expandVirtualDisks(in []interface{}) []*models.VirtualDiskDevice {
 	var out = make([]*models.VirtualDiskDevice, len(in))
 
 	for i, v := range in {
-		//m := v.(map[string]interface{})
+		m := v.(map[string]interface{})
 
-		m := v.(map[strfmt.UUID]interface{})
+		//m := v.(map[strfmt.UUID]interface{})
 
 		member := &models.VirtualDiskDevice{}
 
@@ -180,8 +180,8 @@ func expandVirtualNetworkDevices(in []interface{}) []*models.VirtualNetworkDevic
 
 	var out = make([]*models.VirtualNetworkDevice, len(in))
 	for i, v := range in {
-		//m := v.(map[string]interface{})
-		m := v.(map[strfmt.UUID]interface{})
+		m := v.(map[string]interface{})
+		//m := v.(map[strfmt.UUID]interface{})
 		member := &models.VirtualNetworkDevice{}
 
 		if virtualNetworkID, ok := m["virtual_network_id"].(string); ok && virtualNetworkID != "" {
