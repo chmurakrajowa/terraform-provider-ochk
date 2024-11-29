@@ -2,7 +2,6 @@ package ochk
 
 import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
-	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -10,7 +9,7 @@ import (
 func TestFlattenExpandVirtualDisks(t *testing.T) {
 	cases := []struct {
 		expanded  []*models.VirtualDiskDevice
-		flattened []map[strfmt.UUID]interface{}
+		flattened []map[string]interface{}
 	}{
 		{
 			expanded: []*models.VirtualDiskDevice{
@@ -21,7 +20,7 @@ func TestFlattenExpandVirtualDisks(t *testing.T) {
 					VirtualDiskDeviceType: models.VirtualDiskDeviceType("IDE"),
 				},
 			},
-			flattened: []map[strfmt.UUID]interface{}{
+			flattened: []map[string]interface{}{
 				{
 					"controller_id": 1,
 					"lun_id":        2,
@@ -45,7 +44,7 @@ func TestFlattenExpandVirtualDisks(t *testing.T) {
 					VirtualDiskDeviceType: "IDE2",
 				},
 			},
-			flattened: []map[strfmt.UUID]interface{}{
+			flattened: []map[string]interface{}{
 				{
 					"controller_id": 1,
 					"lun_id":        2,
@@ -67,7 +66,7 @@ func TestFlattenExpandVirtualDisks(t *testing.T) {
 		//outFlattened := flattenVirtualDisks(c.expanded).List()
 		//assert.EqualValues(t, flattenedSetType, outFlattened, "Error matching output and flattened: %#v vs %#v", outFlattened, c.flattened)
 
-		flattenedInterfaceSlice := mapSliceToInterfaceSlice(c.flattened)
+		flattenedInterfaceSlice := mapSliceToInterfaceSliceStr(c.flattened)
 		outExpanded := expandVirtualDisks(flattenedInterfaceSlice)
 		assert.EqualValues(t, c.expanded, outExpanded, "Error matching output and expanded: %#v vs %#v", outExpanded, c.expanded)
 	}
@@ -77,7 +76,7 @@ func TestFlattenExpandVirtualDisks(t *testing.T) {
 func TestFlattenExpandVirtualNetworkDevices(t *testing.T) {
 	cases := []struct {
 		expanded  []*models.VirtualNetworkDevice
-		flattened []map[strfmt.UUID]interface{}
+		flattened []map[string]interface{}
 	}{
 		{
 			expanded:  nil,
@@ -90,7 +89,7 @@ func TestFlattenExpandVirtualNetworkDevices(t *testing.T) {
 					VirtualNetworkInstance: &models.VirtualNetworkInstance{VirtualNetworkID: "vnet-id"},
 				},
 			},
-			flattened: []map[strfmt.UUID]interface{}{
+			flattened: []map[string]interface{}{
 				{
 					"device_id":          "123",
 					"virtual_network_id": "vnet-id",
@@ -108,7 +107,7 @@ func TestFlattenExpandVirtualNetworkDevices(t *testing.T) {
 					VirtualNetworkInstance: &models.VirtualNetworkInstance{VirtualNetworkID: "vnet-id2"},
 				},
 			},
-			flattened: []map[strfmt.UUID]interface{}{
+			flattened: []map[string]interface{}{
 				{
 					"device_id":          "123",
 					"virtual_network_id": "vnet-id",
@@ -123,7 +122,7 @@ func TestFlattenExpandVirtualNetworkDevices(t *testing.T) {
 
 	for _, c := range cases {
 
-		flattenedInterfaceSlice := mapSliceToInterfaceSlice(c.flattened)
+		flattenedInterfaceSlice := mapSliceToInterfaceSliceStr(c.flattened)
 		outExpanded := expandVirtualNetworkDevices(flattenedInterfaceSlice)
 		assert.EqualValues(t, c.expanded, outExpanded, "Error matching output and expanded: %#v vs %#v", outExpanded, c.expanded)
 	}
