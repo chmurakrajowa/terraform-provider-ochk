@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestFlattenVirtualNeworks(t *testing.T) {
+func TestFlattenVirtualNetworks(t *testing.T) {
 	cases := []struct {
 		expanded  []*models.VirtualNetworkInstance
 		flattened []map[strfmt.UUID]interface{}
@@ -58,7 +58,7 @@ func TestFlattenVirtualNeworks(t *testing.T) {
 	}
 	for _, c := range cases {
 		flattenedType := mapSliceToInterfaceSlice(c.flattened)
-		outFlattened := mapSliceToInterfaceSlice(flattenVirtualNeworks(c.expanded))
+		outFlattened := mapSliceToInterfaceSlice(flattenVirtualNetworks(c.expanded))
 		assert.EqualValues(t, flattenedType, outFlattened, "Error matching output and flattened: %#v vs %#v", outFlattened, flattenedType)
 	}
 }
