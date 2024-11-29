@@ -3,7 +3,6 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
@@ -27,14 +26,14 @@ func checkPlatformType() string {
 	return os.Getenv("TF_VAR_platform_type")
 }
 
-func getPlatformType() models.PlatformType {
-	platformType := os.Getenv("TF_VAR_platform_type")
-	if platformType == "OPENSTACK" {
-		return models.PlatformTypeOPENSTACK
-	} else {
-		return models.PlatformTypeVMWARE
-	}
-}
+//func getPlatformType() models.PlatformType {
+//	platformType := os.Getenv("TF_VAR_platform_type")
+//	if platformType == "OPENSTACK" {
+//		return models.PlatformTypeOPENSTACK
+//	} else {
+//		return models.PlatformTypeVMWARE
+//	}
+//}
 
 func (c *ProjectTestData) ToString() string {
 	return executeTemplateToString(`
