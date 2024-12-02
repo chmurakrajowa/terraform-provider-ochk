@@ -23,12 +23,14 @@ func TestFlattenExpandSecurityGroupMembers(t *testing.T) {
 			expanded: []*models.SecurityGroup{
 				{
 					ID:          strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
+					ProjectID:   strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
 					DisplayName: "MySG1",
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
 					"security_group_id": strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
+					"project_id":        strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
 					"display_name":      "MySG1",
 				},
 			},

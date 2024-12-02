@@ -16,7 +16,7 @@ import (
 const (
 	VirtualMachineRetryTimeout = 20 * time.Minute
 	E1001                      = "TF_ERROR{1001}: Error during creating virtual machine. %s"
-	E1002                      = "Input value MB_SIZE %d MB is less then 1024 MB"
+	E1002                      = "Input value MB_SIZE %d MB is less then 5120 MB"
 	E1003                      = "Resource: %s is not supported in Openstack. Please remove %s from your terraform file."
 	E1004                      = "KMS is not supported in Openstack. Please remove %s field from your terraform file."
 	E1001_UPDATE               = "TF_ERROR{1001}: Error during updating virtual machine. %s"

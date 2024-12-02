@@ -27,7 +27,7 @@ func TestFlattenExpandServicesFromIDs(t *testing.T) {
 				},
 			},
 			flattened: []interface{}{
-				strfmt.UUID("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
+				"afdb07d8-d0d2-11ea-87d0-0242ac130003",
 			},
 		},
 
@@ -40,7 +40,7 @@ func TestFlattenExpandServicesFromIDs(t *testing.T) {
 				},
 			},
 			flattened: []interface{}{
-				strfmt.UUID("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
+				"afdb07d8-d0d2-11ea-87d0-0242ac130003",
 			},
 			onlyTestFlatten: true,
 		},
@@ -56,8 +56,8 @@ func TestFlattenExpandServicesFromIDs(t *testing.T) {
 				},
 			},
 			flattened: []interface{}{
-				strfmt.UUID("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
-				strfmt.UUID("114d82f0-79cc-4501-a574-dd920b6b6e7e"),
+				"afdb07d8-d0d2-11ea-87d0-0242ac130003",
+				"114d82f0-79cc-4501-a574-dd920b6b6e7e",
 			},
 		},
 	}
