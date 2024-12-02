@@ -61,7 +61,7 @@ The following arguments are supported:
 * `initial_password` - (Required) Initial password. Cannot be changed after creation.
 * `power_state` - (Required) Power state information for the specified virtual machine. Value is one of: `poweredOn`, `poweredOff`, `suspended`. 
 * `cpu_count` - (Required) Vcpus count for virtual machine.
-* `memory_size_mb` - (Required) Size of memory in megabytes for virtual machine.
+* `memory_size_mb` - (Required) Size of memory in megabytes (MB) for virtual machine.
 * `storage_policy` - (Required) Storage Policy associated with virtual machine. The policies control which type of storage is provided for the virtual machine, how the virtual machine is placed within the storage, and which data services are offered for the virtual machine; values: 
   * **`ENTERPRISE`** - virtual machine disks are distributed over two Data Centers
   * **`STANDARD_W1`** - virtual machine located in Data Center 1 
