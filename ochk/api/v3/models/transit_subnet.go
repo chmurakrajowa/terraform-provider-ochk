@@ -17,11 +17,11 @@ import (
 // swagger:model TransitSubnet
 type TransitSubnet struct {
 
-	// transit subnet
-	TransitSubnet string `json:"transitSubnet,omitempty"`
-
 	// transit subnet Id
 	TransitSubnetID int32 `json:"transitSubnetId,omitempty"`
+
+	// transit subnet name
+	TransitSubnetName string `json:"transitSubnetName,omitempty"`
 }
 
 // Validate validates this transit subnet

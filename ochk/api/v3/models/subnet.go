@@ -30,6 +30,9 @@ type Subnet struct {
 	// description
 	Description string `json:"description,omitempty"`
 
+	// dns servers
+	DNSServers []string `json:"dnsServers"`
+
 	// enable dhcp
 	EnableDhcp bool `json:"enableDhcp,omitempty"`
 

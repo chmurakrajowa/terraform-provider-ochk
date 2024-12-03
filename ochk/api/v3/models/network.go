@@ -45,8 +45,14 @@ type Network struct {
 	// project Id
 	ProjectID string `json:"projectId,omitempty"`
 
+	// router external
+	RouterExternal bool `json:"routerExternal,omitempty"`
+
 	// router ref Id
 	RouterRefID string `json:"routerRefId,omitempty"`
+
+	// shared
+	Shared bool `json:"shared,omitempty"`
 
 	// status
 	Status string `json:"status,omitempty"`

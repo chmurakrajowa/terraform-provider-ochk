@@ -17,11 +17,11 @@ import (
 // swagger:model InternalTransitSubnet
 type InternalTransitSubnet struct {
 
-	// internal transit subnet
-	InternalTransitSubnet string `json:"internalTransitSubnet,omitempty"`
-
 	// internal transit subnet Id
 	InternalTransitSubnetID int32 `json:"internalTransitSubnetId,omitempty"`
+
+	// internal transit subnet name
+	InternalTransitSubnetName string `json:"internalTransitSubnetName,omitempty"`
 }
 
 // Validate validates this internal transit subnet

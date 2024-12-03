@@ -7,6 +7,7 @@ package models
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -21,6 +22,9 @@ type SegmentSubnetInstance struct {
 
 	// dhcp ranges
 	DhcpRanges []string `json:"dhcpRanges"`
+
+	// dns servers
+	DNSServers []*DNSServerInstance `json:"dnsServers"`
 
 	// gateway address c ID r
 	GatewayAddressCIDR string `json:"gatewayAddressCIDR,omitempty"`
@@ -37,6 +41,10 @@ type SegmentSubnetInstance struct {
 func (m *SegmentSubnetInstance) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateDNSServers(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateSegmentSubnetID(formats); err != nil {
 		res = append(res, err)
 	}
@@ -44,6 +52,32 @@ func (m *SegmentSubnetInstance) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *SegmentSubnetInstance) validateDNSServers(formats strfmt.Registry) error {
+	if swag.IsZero(m.DNSServers) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.DNSServers); i++ {
+		if swag.IsZero(m.DNSServers[i]) { // not required
+			continue
+		}
+
+		if m.DNSServers[i] != nil {
+			if err := m.DNSServers[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("dnsServers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("dnsServers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -59,8 +93,42 @@ func (m *SegmentSubnetInstance) validateSegmentSubnetID(formats strfmt.Registry)
 	return nil
 }
 
-// ContextValidate validates this segment subnet instance based on context it is used
+// ContextValidate validate this segment subnet instance based on the context it is used
 func (m *SegmentSubnetInstance) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateDNSServers(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *SegmentSubnetInstance) contextValidateDNSServers(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.DNSServers); i++ {
+
+		if m.DNSServers[i] != nil {
+
+			if swag.IsZero(m.DNSServers[i]) { // not required
+				return nil
+			}
+
+			if err := m.DNSServers[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("dnsServers" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("dnsServers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 

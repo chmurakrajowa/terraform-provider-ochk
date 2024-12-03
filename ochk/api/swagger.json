@@ -9787,6 +9787,19 @@
       },
       "additionalProperties": false
     },
+    "DnsServerInstance": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "address": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
     "EdgeClusterInstance": {
       "type": "object",
       "properties": {
@@ -11147,7 +11160,7 @@
           "format": "int32",
           "type": "integer"
         },
-        "internalTransitSubnet": {
+        "internalTransitSubnetName": {
           "type": "string"
         }
       },
@@ -12433,6 +12446,12 @@
         },
         "routerRefId": {
           "type": "string"
+        },
+        "shared": {
+          "type": "boolean"
+        },
+        "routerExternal": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false
@@ -13268,7 +13287,8 @@
         "PORT_FORWARDING_UPDATE",
         "PORT_FORWARDING_DELETE",
         "VIRTUAL_MACHINE_IMPORT",
-        "SECURITY_GROUP_IMPORT"
+        "SECURITY_GROUP_IMPORT",
+        "ONBOARDING"
       ],
       "type": "string"
     },
@@ -13811,6 +13831,12 @@
         },
         "networkCIDR": {
           "type": "string"
+        },
+        "dnsServers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DnsServerInstance"
+          }
         }
       },
       "additionalProperties": false
@@ -14079,6 +14105,12 @@
           "items": {
             "$ref": "#/definitions/AllocationPool"
           }
+        },
+        "dnsServers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "additionalProperties": false
@@ -14196,7 +14228,7 @@
           "format": "int32",
           "type": "integer"
         },
-        "transitSubnet": {
+        "transitSubnetName": {
           "type": "string"
         }
       },
