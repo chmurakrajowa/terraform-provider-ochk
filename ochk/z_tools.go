@@ -23,7 +23,7 @@ var pathToFile = "../env/predefined-resources.json"
 
 func loadTestOpenstackData() {
 	//jsonfile, err := os.ReadFile(pathToFile)
-	fmt.Printf("pathToFile: %s", pathToFile)
+	//	fmt.Printf("pathToFile: %s", pathToFile)
 	jsonfile := "{\n\t\"Name\": \"NatPublicIpAddr\",\n\t\"Text\": \"45.130.209.203\"\n}\n{\n\t\"Name\": \"BackupPlanName\",\n\t\"Text\": \"Premium\"\n}\n{\n    \"Name\": \"BackupListName\",\n    \"Text\": \"Standard (1 month / 24h)\"\n}\n{\n\t\"Name\": \"VRF\",\n\t\"Text\": \"VRF-default\"\n}\n{\n\t\"Name\": \"Deployment1DisplayName\",\n\t\"Text\": \"Debian 12\"\n}\n"
 	//if err != nil {
 	//	fmt.Printf("pathToFile err %v", err)
