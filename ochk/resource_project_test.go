@@ -86,10 +86,12 @@ func TestAccProjectResource_create(t *testing.T) {
 	fmt.Printf("Project full name: %v\n", project.DisplayName)
 	fmt.Printf("Project memeory GB: %v\n", project.MemoryReservedSizeMB)
 	projectUpdated := project
+
 	projectUpdated.MemoryReservedSizeMB = mem_update
 	projectUpdated.StorageReservedSizeGB = 200
 	projectUpdated.VcpuReservedQuantity = 100
 	projectUpdated.Description += " - updated"
+	projectUpdated.DisplayName += "-updated"
 
 	configUpdated := projectUpdated.ToString()
 
