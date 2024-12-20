@@ -40,7 +40,7 @@ func flattenVirtualNetworks(in []*models.VirtualNetworkInstance) []map[strfmt.UU
 	return out
 }
 
-func flattenDnsSettings(in []*models.DNSServerInstance) []map[strfmt.UUID]interface{} {
+func flattenDnsServers(in []*models.DNSServerInstance) []map[strfmt.UUID]interface{} {
 	if len(in) == 0 {
 		return nil
 	}

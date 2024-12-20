@@ -75,6 +75,22 @@ func resourceVirtualNetwork() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"dns_servers": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"address": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+						"id": {
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -161,6 +177,11 @@ func mapVirtualNetworkToResourceData(d *schema.ResourceData, virtualNetwork *mod
 		if err := d.Set("subnet_network_cidr", virtualNetwork.Subnet.NetworkCIDR); err != nil {
 			return diag.Errorf("error setting subnet_network_cidr: %+v", err)
 		}
+		if virtualNetwork.Subnet.DNSServers != nil && len(virtualNetwork.Subnet.DNSServers) > 0 {
+			if err := d.Set("dns_servers", flattenDnsServers(virtualNetwork.Subnet.DNSServers)); err != nil {
+				return diag.Errorf("error setting dns_servers: %+v", err)
+			}
+		}
 	}
 
 	return nil
@@ -222,6 +243,8 @@ func mapResourceDataToVirtualNetwork(d *schema.ResourceData) *models.VirtualNetw
 
 	subnetGatewayAddressCidr, subnetGatewayAddressCidrOk := d.GetOk("subnet_gateway_address_cidr")
 	subnetNetworkCidr, subnetNetworkCidrOk := d.GetOk("subnet_network_cidr")
+	dnsServers, dnsServersOk := d.GetOk("dns_servers")
+
 	if subnetGatewayAddressCidrOk || subnetNetworkCidrOk {
 		virtualNetworkInstance.Subnet = &models.SegmentSubnetInstance{}
 
@@ -231,7 +254,28 @@ func mapResourceDataToVirtualNetwork(d *schema.ResourceData) *models.VirtualNetw
 		if subnetNetworkCidrOk {
 			virtualNetworkInstance.Subnet.NetworkCIDR = subnetNetworkCidr.(string)
 		}
+
+		if dnsServersOk {
+			virtualNetworkInstance.Subnet.DNSServers = expandDnsServers(dnsServers.(*schema.Set).List())
+		}
 	}
 
 	return &virtualNetworkInstance
+}
+
+func expandDnsServers(in []interface{}) []*models.DNSServerInstance {
+	if len(in) == 0 {
+		return nil
+	}
+
+	var out = make([]*models.DNSServerInstance, len(in))
+	for i, v := range in {
+		m := v.(map[string]interface{})
+		member := &models.DNSServerInstance{}
+		if address, ok := m["address"].(string); ok {
+			member.Address = address
+		}
+		out[i] = member
+	}
+	return out
 }
