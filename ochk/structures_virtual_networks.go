@@ -39,3 +39,17 @@ func flattenVirtualNetworks(in []*models.VirtualNetworkInstance) []map[strfmt.UU
 	}
 	return out
 }
+
+func flattenDnsSettings(in []*models.DNSServerInstance) []map[strfmt.UUID]interface{} {
+	if len(in) == 0 {
+		return nil
+	}
+	var out []map[strfmt.UUID]interface{}
+	for _, v := range in {
+		m := make(map[strfmt.UUID]interface{})
+		m["id"] = v.ID
+		m["address"] = v.Address
+		out = append(out, m)
+	}
+	return out
+}

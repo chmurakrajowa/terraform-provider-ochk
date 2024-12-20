@@ -47,6 +47,22 @@ func dataSourceVirtualNetwork() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"dns_servers": {
+				Type:     schema.TypeSet,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": {
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"address": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
