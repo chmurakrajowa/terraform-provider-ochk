@@ -51,6 +51,8 @@ func TestAccVirtualNetworkDatasource(t *testing.T) {
 					resource.TestCheckResourceAttrSet(resourceName, "subnet_gateway_address_cidr"),
 					resource.TestCheckResourceAttrSet(resourceName, "subnet_network_cidr"),
 					resource.TestCheckResourceAttrSet(resourceName, "vpc_id"),
+					resource.TestCheckResourceAttrSet(resourceName, "dns_servers.0.id"),
+					resource.TestCheckResourceAttrSet(resourceName, "dns_servers.0.address"),
 				),
 			},
 		},
