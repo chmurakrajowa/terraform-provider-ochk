@@ -30,3 +30,7 @@ The following attributes are exported:
 * `subnet_mask` - Subnet mask used to divide the IP address into network and host addresses. Set when `subnet_network_cidr` is set.
 * `gateway_address` - IP address of local network gateway. Set when `subnet_network_cidr` is set.
 * `subnet_gateway_address_cidr` - CIDR IP address of subnet gateway. Set when `subnet_network_cidr` is set.
+* `dns_servers` - DNS server that will be transferred to the network configuration of the created virtual machine.
+Each entry has following values:
+* **address**: IP address of DNS server
+* **id**: DNS server id

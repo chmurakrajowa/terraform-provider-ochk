@@ -64,4 +64,8 @@ The following attributes are exported in addition to above arguments:
 * `subnet_mask` - Subnet mask, set when `subnet_network_cidr` is set.
 * `subnet_gateway_address_cidr` - Subnet gateway address cidr, set when `subnet_network_cidr` is set.  
 * `subnet_network_cidr` - Subnet network cidr.
+* `dns_servers` - DNS server that will be transferred to the network configuration of the created virtual machine.
+Each entry has following values:
+* **address**: IP address of DNS server
+* **id**: DNS server id
  
