@@ -21,6 +21,12 @@ type VirtualNetworkTestData struct {
 	SubnetGatewayAddressCidr string
 	SubnetNetworkCidr        string
 	ProjectID                strfmt.UUID
+	DNSServer                []DNSServerTestData
+}
+
+type DNSServerTestData struct {
+	ID      strfmt.UUID
+	Address string
 }
 
 func (c *VirtualNetworkTestData) ToString() string {
@@ -31,6 +37,11 @@ resource "ochk_virtual_network" "{{.ResourceName}}" {
 	vpc_id = {{ UuidTFValue .RouterRefID }}
     project_id = {{ UuidTFValue .ProjectID }}
 	subnet_network_cidr = "{{ .SubnetNetworkCidr }}"
+   {{range $dns_server := .DNSServer}}
+   dns_servers {
+     address = "{{ $dns_server.Address }}"
+   }
+   {{end}}
 }
 `, c)
 }
@@ -50,6 +61,11 @@ func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
 		ResourceName: "default",
 		DisplayName:  generateRandName(devTestDataPrefix),
 		ProjectID:    strfmt.UUID(testDataResourceID(&project)),
+		DNSServer: []DNSServerTestData{
+			{
+				Address: "8.8.8.8",
+			},
+		},
 	}
 
 	configInitial := project.ToString() + virtualNetwork.ToString()
@@ -67,6 +83,7 @@ func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "vpc_id", virtualNetwork.RouterRefID.String()),
 					resource.TestCheckResourceAttrSet(resourceName, "folder_path"),
 					resource.TestCheckResourceAttr(resourceName, "ipam_enabled", strconv.FormatBool(virtualNetwork.IpamEnabled)),
+					resource.TestCheckResourceAttr(resourceName, "members.0.type", virtualNetwork.DNSServer[0].Address),
 				),
 			},
 		},
