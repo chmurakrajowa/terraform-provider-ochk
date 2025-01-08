@@ -2,9 +2,11 @@ package ochk
 
 import (
 	"context"
+	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
+	"github.com/hashicorp/go-cty/cty"
 	"strings"
 	"time"
 
@@ -83,6 +85,20 @@ func resourceVirtualNetwork() *schema.Resource {
 						"address": {
 							Type:     schema.TypeString,
 							Required: true,
+							ValidateDiagFunc: func(v any, p cty.Path) diag.Diagnostics {
+								value := v.(string)
+								platformType := sdk.PLATFORM_TYPE
+								var diags diag.Diagnostics
+								if value != "" && platformType == "VMWARE" {
+									diag := diag.Diagnostic{
+										Severity: diag.Error,
+										Summary:  fmt.Sprintf("Unsupported value for platform type: %s", platformType),
+										Detail:   fmt.Sprintf("Value %q is not supported for platform type: %s", p[0], platformType),
+									}
+									diags = append(diags, diag)
+								}
+								return diags
+							},
 						},
 						"id": {
 							Type:     schema.TypeInt,
