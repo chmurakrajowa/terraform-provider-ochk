@@ -90,12 +90,12 @@ func resourceVirtualNetwork() *schema.Resource {
 								platformType := sdk.PLATFORM_TYPE
 								var diags diag.Diagnostics
 								if value != "" && platformType == "VMWARE" {
-									diag := diag.Diagnostic{
+									diagnostic := diag.Diagnostic{
 										Severity: diag.Error,
 										Summary:  fmt.Sprintf("Unsupported value for platform type: %s", platformType),
 										Detail:   fmt.Sprintf("Value %q is not supported for platform type: %s", p[0], platformType),
 									}
-									diags = append(diags, diag)
+									diags = append(diags, diagnostic)
 								}
 								return diags
 							},
