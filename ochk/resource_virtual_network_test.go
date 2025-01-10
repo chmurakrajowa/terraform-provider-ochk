@@ -46,11 +46,24 @@ resource "ochk_virtual_network" "{{.ResourceName}}" {
 `, c)
 }
 
+func (c *VirtualNetworkTestData) ToStringVMware() string {
+	return executeTemplateToString(`
+resource "ochk_virtual_network" "{{.ResourceName}}" {
+	display_name = "{{.DisplayName}}"
+	ipam_enabled = "{{.IpamEnabled}}"
+	vpc_id = {{ UuidTFValue .RouterRefID }}
+    project_id = {{ UuidTFValue .ProjectID }}
+	subnet_network_cidr = "{{ .SubnetNetworkCidr }}"
+}
+`, c)
+}
+
 func (c *VirtualNetworkTestData) FullResourceName() string {
 	return "ochk_virtual_network." + c.ResourceName
 }
 
 func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
+	platformType := checkPlatformType()
 
 	project := ProjectDataSourceTestData{
 		ResourceName: generateRandName(devTestDataPrefix),
@@ -68,27 +81,52 @@ func TestAccVirtualNetworkResource_create_minimal(t *testing.T) {
 		},
 	}
 
-	configInitial := project.ToString() + virtualNetwork.ToString()
+	if platformType == "OPENSTACK" {
+		configInitial := project.ToString() + virtualNetwork.ToString()
 
-	resourceName := virtualNetwork.FullResourceName()
-	resource.ParallelTest(t, resource.TestCase{
-		ProviderFactories: testAccProviderFactories,
+		resourceName := virtualNetwork.FullResourceName()
+		resource.ParallelTest(t, resource.TestCase{
+			ProviderFactories: testAccProviderFactories,
 
-		Steps: []resource.TestStep{
-			{
-				Config: configInitial,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "display_name", virtualNetwork.DisplayName),
-					resource.TestCheckResourceAttrPair(resourceName, "project_id", project.FullResourceName(), "id"),
-					resource.TestCheckResourceAttr(resourceName, "vpc_id", virtualNetwork.RouterRefID.String()),
-					resource.TestCheckResourceAttrSet(resourceName, "folder_path"),
-					resource.TestCheckResourceAttr(resourceName, "ipam_enabled", strconv.FormatBool(virtualNetwork.IpamEnabled)),
-					resource.TestCheckResourceAttr(resourceName, "members.0.type", virtualNetwork.DNSServer[0].Address),
-				),
+			Steps: []resource.TestStep{
+				{
+					Config: configInitial,
+					Check: resource.ComposeTestCheckFunc(
+						resource.TestCheckResourceAttr(resourceName, "display_name", virtualNetwork.DisplayName),
+						resource.TestCheckResourceAttrPair(resourceName, "project_id", project.FullResourceName(), "id"),
+						resource.TestCheckResourceAttr(resourceName, "vpc_id", virtualNetwork.RouterRefID.String()),
+						resource.TestCheckResourceAttrSet(resourceName, "folder_path"),
+						resource.TestCheckResourceAttr(resourceName, "ipam_enabled", strconv.FormatBool(virtualNetwork.IpamEnabled)),
+						resource.TestCheckResourceAttr(resourceName, "members.0.type", virtualNetwork.DNSServer[0].Address),
+					),
+				},
 			},
-		},
-		CheckDestroy: testAccVirtualNetworkResourceNotExists(virtualNetwork.DisplayName),
-	})
+			CheckDestroy: testAccVirtualNetworkResourceNotExists(virtualNetwork.DisplayName),
+		})
+	} else {
+		configInitial := project.ToString() + virtualNetwork.ToStringVMware()
+
+		resourceName := virtualNetwork.FullResourceName()
+		resource.ParallelTest(t, resource.TestCase{
+			ProviderFactories: testAccProviderFactories,
+
+			Steps: []resource.TestStep{
+				{
+					Config: configInitial,
+					Check: resource.ComposeTestCheckFunc(
+						resource.TestCheckResourceAttr(resourceName, "display_name", virtualNetwork.DisplayName),
+						resource.TestCheckResourceAttrPair(resourceName, "project_id", project.FullResourceName(), "id"),
+						resource.TestCheckResourceAttr(resourceName, "vpc_id", virtualNetwork.RouterRefID.String()),
+						resource.TestCheckResourceAttrSet(resourceName, "folder_path"),
+						resource.TestCheckResourceAttr(resourceName, "ipam_enabled", strconv.FormatBool(virtualNetwork.IpamEnabled)),
+						resource.TestCheckResourceAttr(resourceName, "members.0.type", virtualNetwork.DNSServer[0].Address),
+					),
+				},
+			},
+			CheckDestroy: testAccVirtualNetworkResourceNotExists(virtualNetwork.DisplayName),
+		})
+	}
+
 }
 
 func TestAccVirtualNetworkResource_createWithIpamAndSubnet(t *testing.T) {
