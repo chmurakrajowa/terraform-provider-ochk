@@ -35,6 +35,8 @@ build_local: fmtcheck
 test: fmtcheck
 	go test ./...
 
+test_vmware: fmtcheck
+	go test ./.
 testacc: fmtcheck
 	TF_ACC=1 go test ./... -v $(TESTARGS) -timeout 120m
 

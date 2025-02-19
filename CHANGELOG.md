@@ -16,7 +16,7 @@
   * `data_source_ports_forwarding`
   * `data_source_firewall_rule`
   * `data_source_firewall_rules`
-  * `data_source_floating_ip_vms’
+  * `data_source_floating_ip_vms`
 
 ### Misc
 * Added support for two types of platforms: VMWARE and OPENSTACK. Changed login parameters: to set the type of platform that we currently use,`platform_type` param was added.
