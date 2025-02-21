@@ -6,7 +6,6 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"os"
 	"strconv"
 	"testing"
 )
@@ -23,7 +22,9 @@ type ProjectTestData struct {
 }
 
 func checkPlatformType() string {
-	return os.Getenv("TF_VAR_platform_type")
+
+	//return os.Getenv("TF_VAR_platform_type")
+	return "VMWARE"
 }
 
 //func getPlatformType() models.PlatformType {
