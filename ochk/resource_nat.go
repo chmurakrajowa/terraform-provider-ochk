@@ -2,8 +2,9 @@ package ochk
 
 import (
 	"context"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"strings"
@@ -184,7 +185,7 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 
 	proxy := meta.(*sdk.Client).Nats
 
-	Nat, err := proxy.Read(ctx, d.Id())
+	Nat, err := proxy.Read(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -296,7 +297,7 @@ func resourceAutoNatCreate(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.Errorf("error while fetching nat request state: %+v", err)
 	}
 
-	d.SetId(resourceID)
+	d.SetId(resourceID.String())
 
 	return resourceNatRead(ctx, d, meta)
 
@@ -318,7 +319,7 @@ func resourceManualNatCreate(ctx context.Context, d *schema.ResourceData, meta i
 		return diag.Errorf("error while fetching nat request state: %+v", err)
 	}
 
-	d.SetId(resourceID)
+	d.SetId(resourceID.String())
 
 	return resourceNatRead(ctx, d, meta)
 }
@@ -327,7 +328,7 @@ func resourceAutoNatUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	proxy := meta.(*sdk.Client).Nats
 
 	Nat := mapResourceDataToAutoNat(d)
-	Nat.RuleID = d.Id()
+	Nat.RuleID = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, Nat)
 	if err != nil {
@@ -341,7 +342,7 @@ func resourceManualNatUpdate(ctx context.Context, d *schema.ResourceData, meta i
 	proxy := meta.(*sdk.Client).Nats
 
 	Nat := mapResourceDataToManualNat(d)
-	Nat.RuleID = d.Id()
+	Nat.RuleID = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, Nat)
 	if err != nil {
@@ -354,7 +355,7 @@ func resourceManualNatUpdate(ctx context.Context, d *schema.ResourceData, meta i
 func resourceNatDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Nats
 
-	err := proxy.Delete(ctx, d.Id())
+	err := proxy.Delete(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -385,7 +386,7 @@ func mapResourceDataToManualNat(d *schema.ResourceData) *models.NATRuleInstance 
 		Description:        d.Get("description").(string),
 		Enabled:            d.Get("enabled").(bool),
 		TierZeroRouter:     mapResourceDataToVrfRouter(d),
-		Action:             d.Get("action").(string),
+		Action:             models.NATRuleAction(d.Get("action").(string)),
 		Priority:           publicPriorityInt64,
 		SourceNetwork:      d.Get("source_network").(string),
 		DestinationNetwork: d.Get("destination_network").(string),
@@ -408,22 +409,23 @@ func mapResourceDataToManualNat(d *schema.ResourceData) *models.NATRuleInstance 
 }
 
 func mapResourceDataToVrfRouter(d *schema.ResourceData) *models.RouterInstance {
+	var vrf_id = d.Get("vrf_id").(string)
 	routerInstance := models.RouterInstance{
-		RouterID: d.Get("vrf_id").(string),
+		RouterID: strfmt.UUID(vrf_id),
 	}
 	return &routerInstance
 }
 
 func mapResourceDataToVirtualNetworkInstance(d *schema.ResourceData) *models.VirtualNetworkInstance {
 	virtualNetworkInstance := models.VirtualNetworkInstance{
-		VirtualNetworkID: d.Get("virtual_network_id").(string),
+		VirtualNetworkID: strfmt.UUID(d.Get("virtual_network_id").(string)),
 	}
 	return &virtualNetworkInstance
 }
 
 func mapResourceDataToServiceInstance(d *schema.ResourceData) *models.ServiceInstance {
 	serviceInstance := models.ServiceInstance{
-		ServiceID: d.Get("service_id").(string),
+		ServiceID: strfmt.UUID(d.Get("service_id").(string)),
 	}
 	return &serviceInstance
 }

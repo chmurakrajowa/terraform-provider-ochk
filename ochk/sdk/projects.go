@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/projects"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/projects"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -21,15 +21,15 @@ func (p *ProjectsProxy) Create(ctx context.Context, project *models.ProjectInsta
 		return nil, fmt.Errorf("error while validating project struct: %w", err)
 	}
 
-	params := &projects.ProjectCreateUsingPUTParams{
-		ProjectInstance: project,
-		Context:         ctx,
-		HTTPClient:      p.httpClient,
+	params := &projects.PutProjectsParams{
+		Body:       project,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.ProjectCreateUsingPUT(params)
+	put, err := p.service.PutProjects(params)
 	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while creating project: %w", err)
@@ -47,16 +47,16 @@ func (p *ProjectsProxy) Update(ctx context.Context, project *models.ProjectInsta
 		return nil, fmt.Errorf("error while validating project struct: %w", err)
 	}
 
-	params := &projects.ProjectUpdateUsingPUTParams{
-		ProjectID:       project.ProjectID,
-		ProjectInstance: project,
-		Context:         ctx,
-		HTTPClient:      p.httpClient,
+	params := &projects.PutProjectsProjectIDParams{
+		ProjectID:  project.ProjectID,
+		Body:       project,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.ProjectUpdateUsingPUT(params)
+	put, err := p.service.PutProjectsProjectID(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -70,8 +70,8 @@ func (p *ProjectsProxy) Update(ctx context.Context, project *models.ProjectInsta
 	return put.Payload.ProjectInstance, nil
 }
 
-func (p *ProjectsProxy) Read(ctx context.Context, projectID string) (*models.ProjectInstance, error) {
-	params := &projects.ProjectGetUsingGETParams{
+func (p *ProjectsProxy) Read(ctx context.Context, projectID strfmt.UUID) (*models.ProjectInstance, error) {
+	params := &projects.GetProjectsProjectIDParams{
 		ProjectID:  projectID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
@@ -79,11 +79,11 @@ func (p *ProjectsProxy) Read(ctx context.Context, projectID string) (*models.Pro
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.ProjectGetUsingGET(params)
+	response, err := p.service.GetProjectsProjectID(params)
 	mutex.Unlock()
 
 	if err != nil {
-		var notFound *projects.ProjectGetUsingGETNotFound
+		var notFound *projects.DeleteProjectsProjectIDNotFound
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
 		}
@@ -99,7 +99,7 @@ func (p *ProjectsProxy) Read(ctx context.Context, projectID string) (*models.Pro
 }
 
 func (p *ProjectsProxy) ListByName(ctx context.Context, name string) ([]*models.ProjectInstance, error) {
-	params := &projects.ProjectListUsingGETParams{
+	params := &projects.GetProjectsParams{
 		Name:       &name,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
@@ -107,7 +107,7 @@ func (p *ProjectsProxy) ListByName(ctx context.Context, name string) ([]*models.
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.ProjectListUsingGET(params)
+	response, err := p.service.GetProjects(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -121,14 +121,14 @@ func (p *ProjectsProxy) ListByName(ctx context.Context, name string) ([]*models.
 	return response.Payload.ProjectInstanceCollection, nil
 }
 func (p *ProjectsProxy) List(ctx context.Context) ([]*models.ProjectInstance, error) {
-	params := &projects.ProjectListUsingGETParams{
+	params := &projects.GetProjectsParams{
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.ProjectListUsingGET(params)
+	response, err := p.service.GetProjects(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -142,7 +142,7 @@ func (p *ProjectsProxy) List(ctx context.Context) ([]*models.ProjectInstance, er
 	return response.Payload.ProjectInstanceCollection, nil
 }
 
-func (p *ProjectsProxy) Exists(ctx context.Context, projectID string) (bool, error) {
+func (p *ProjectsProxy) Exists(ctx context.Context, projectID strfmt.UUID) (bool, error) {
 	if _, err := p.Read(ctx, projectID); err != nil {
 		if IsNotFoundError(err) {
 			return false, nil
@@ -154,17 +154,17 @@ func (p *ProjectsProxy) Exists(ctx context.Context, projectID string) (bool, err
 	return true, nil
 }
 
-func (p *ProjectsProxy) Delete(ctx context.Context, projectID string) error {
-	params := &projects.ProjectDeleteUsingDELETEParams{
+func (p *ProjectsProxy) Delete(ctx context.Context, projectID strfmt.UUID) error {
+	params := &projects.DeleteProjectsProjectIDParams{
 		ProjectID:  projectID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, _, err := p.service.ProjectDeleteUsingDELETE(params)
+	response, err := p.service.DeleteProjectsProjectID(params)
 
 	if err != nil {
-		var badRequest *projects.ProjectDeleteUsingDELETEBadRequest
+		var badRequest *projects.DeleteProjectsProjectIDBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}

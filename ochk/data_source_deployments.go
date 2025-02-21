@@ -2,6 +2,7 @@ package ochk
 
 import (
 	"context"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -34,7 +35,11 @@ func dataSourceDeployments() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"initial_size_mb": {
+						"deployment_category": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"initial_size_gb": {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
@@ -48,7 +53,7 @@ func dataSourceDeployments() *schema.Resource {
 func dataSourceDeploymentsRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Deployments
 
-	deploymentType := d.Get("deployment_type").(string)
+	deploymentType := models.DeploymentType(d.Get("deployment_type").(string))
 
 	deployments, err := proxy.List(ctx)
 	if err != nil {
@@ -66,7 +71,7 @@ func dataSourceDeploymentsRead(ctx context.Context, d *schema.ResourceData, meta
 	if deploymentType == "" {
 		d.SetId("deployments-list")
 	} else {
-		d.SetId("deployments-list-" + deploymentType)
+		d.SetId("deployments-list-" + string(deploymentType))
 	}
 
 	return nil

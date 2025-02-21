@@ -4,27 +4,27 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/k_m_s_key_management"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/key"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"net/http"
 	"sync"
 )
 
 type KMSKeysProxy struct {
 	httpClient *http.Client
-	service    k_m_s_key_management.ClientService
+	service    key.ClientService
 }
 
 func (p *KMSKeysProxy) Create(ctx context.Context, keyInstance *models.KeyInstance) (*models.KeyInstance, error) {
-	params := &k_m_s_key_management.KeyCreateUsingPUTParams{
-		KeyInstance: keyInstance,
-		Context:     ctx,
-		HTTPClient:  p.httpClient,
+	params := &key.PutKmsKeyParams{
+		Body:       keyInstance,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	post, _, err := p.service.KeyCreateUsingPUT(params)
+	post, err := p.service.PutKmsKey(params)
 	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while creating KMS key: %w", err)
@@ -38,15 +38,15 @@ func (p *KMSKeysProxy) Create(ctx context.Context, keyInstance *models.KeyInstan
 }
 
 func (p *KMSKeysProxy) Import(ctx context.Context, keyImport *models.KeyImport) (*models.KeyInstance, error) {
-	params := &k_m_s_key_management.KeyImportUsingPOSTParams{
-		KeyImport:  keyImport,
+	params := &key.PostKmsKeyImportParams{
+		Body:       keyImport,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	post, _, err := p.service.KeyImportUsingPOST(params)
+	post, err := p.service.PostKmsKeyImport(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -61,7 +61,7 @@ func (p *KMSKeysProxy) Import(ctx context.Context, keyImport *models.KeyImport) 
 }
 
 func (p *KMSKeysProxy) Read(ctx context.Context, keyID string) (*models.KeyInstance, error) {
-	params := &k_m_s_key_management.KeyGetUsingGETParams{
+	params := &key.GetKmsKeyIDParams{
 		ID:         keyID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
@@ -69,11 +69,11 @@ func (p *KMSKeysProxy) Read(ctx context.Context, keyID string) (*models.KeyInsta
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.KeyGetUsingGET(params)
+	response, err := p.service.GetKmsKeyID(params)
 	mutex.Unlock()
 
 	if err != nil {
-		var notFound *k_m_s_key_management.KeyGetUsingGETNotFound
+		var notFound *key.GetKmsKeyIDNotFound
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
 		}
@@ -89,7 +89,7 @@ func (p *KMSKeysProxy) Read(ctx context.Context, keyID string) (*models.KeyInsta
 }
 
 func (p *KMSKeysProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.KeyInstance, error) {
-	params := &k_m_s_key_management.KeyListUsingGETParams{
+	params := &key.GetKmsKeyParams{
 		DisplayName: &displayName,
 		Context:     ctx,
 		HTTPClient:  p.httpClient,
@@ -97,7 +97,7 @@ func (p *KMSKeysProxy) ListByDisplayName(ctx context.Context, displayName string
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.KeyListUsingGET(params)
+	response, err := p.service.GetKmsKey(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -112,14 +112,14 @@ func (p *KMSKeysProxy) ListByDisplayName(ctx context.Context, displayName string
 }
 
 func (p *KMSKeysProxy) List(ctx context.Context) ([]*models.KeyInstance, error) {
-	params := &k_m_s_key_management.KeyListUsingGETParams{
+	params := &key.GetKmsKeyParams{
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.KeyListUsingGET(params)
+	response, err := p.service.GetKmsKey(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -134,16 +134,16 @@ func (p *KMSKeysProxy) List(ctx context.Context) ([]*models.KeyInstance, error) 
 }
 
 func (p *KMSKeysProxy) Delete(ctx context.Context, keyID string) error {
-	params := &k_m_s_key_management.KeyDeleteUsingDELETEParams{
+	params := &key.DeleteKmsKeyIDParams{
 		ID:         keyID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, err := p.service.KeyDeleteUsingDELETE(params)
+	response, err := p.service.DeleteKmsKeyID(params)
 
 	if err != nil {
-		var badRequest *k_m_s_key_management.KeyDeleteUsingDELETEBadRequest
+		var badRequest *key.DeleteKmsKeyIDBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}

@@ -54,7 +54,7 @@ func datSourceServiceRead(ctx context.Context, d *schema.ResourceData, meta inte
 		return diag.Errorf("more than one service with display_name: %s found!", displayName)
 	}
 
-	d.SetId(services[0].ServiceID)
+	d.SetId(services[0].ServiceID.String())
 
 	if err := d.Set("created_by", services[0].CreatedBy); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)

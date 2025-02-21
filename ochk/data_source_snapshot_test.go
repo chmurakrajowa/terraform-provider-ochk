@@ -33,7 +33,7 @@ data "ochk_virtual_machine" "virtual-machine-1" {
 }
 data "ochk_snapshot" "snap-def" {
 	virtual_machine_id = data.ochk_virtual_machine.virtual-machine-1.id
-	snapshot_name = %[2]q
+	display_name = %[2]q
 }
 `, virtualMachineName, snapshotName)
 }

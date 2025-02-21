@@ -1,7 +1,8 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -9,7 +10,7 @@ import (
 func TestFlattenIPCollections(t *testing.T) {
 	cases := []struct {
 		expanded  []*models.IPCollection
-		flattened []map[string]interface{}
+		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
 		{
@@ -33,7 +34,7 @@ func TestFlattenIPCollections(t *testing.T) {
 					ProjectID: "0d3f34d8-4364-45b7-ae69-0635fa438cab",
 				},
 			},
-			flattened: []map[string]interface{}{
+			flattened: []map[strfmt.UUID]interface{}{
 				{
 					"ip_collection_id": "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					"display_name":     "test1",

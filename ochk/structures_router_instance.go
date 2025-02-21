@@ -1,13 +1,14 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func flattenRouterInstancesFromScope(m []*models.RouterInstance) string {
 	for _, v := range m {
-		return v.RouterID
+		return v.RouterID.String()
 	}
 	return ""
 }
@@ -18,7 +19,7 @@ func flattenRouterInstancesFromIDs(m []*models.RouterInstance) *schema.Set {
 	}
 
 	for _, v := range m {
-		s.Add(v.RouterID)
+		s.Add(v.RouterID.String())
 	}
 	return s
 }
@@ -32,7 +33,7 @@ func expandRouterInstancesFromIDs(in []interface{}) []*models.RouterInstance {
 
 	for i, v := range in {
 		securityGroup := &models.RouterInstance{
-			RouterID: v.(string),
+			RouterID: v.(strfmt.UUID),
 		}
 
 		out[i] = securityGroup

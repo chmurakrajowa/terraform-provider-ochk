@@ -3,8 +3,9 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"strings"
 	"time"
 
@@ -34,14 +35,20 @@ func resourceProject() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"project_id": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"display_name": {
 				Type:     schema.TypeString,
 				Required: true,
-				ForceNew: true,
 			},
 			"vrf_id": {
 				Type:     schema.TypeString,
 				Required: true,
+				StateFunc: func(val any) string {
+					return strings.ToLower(val.(string))
+				},
 			},
 			"description": {
 				Type:     schema.TypeString,
@@ -75,23 +82,24 @@ func resourceProjectImportState(_ context.Context, d *schema.ResourceData, _ int
 
 func resourceProjectCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Projects
+	proxy_pt := meta.(*sdk.Client).PlatformType
+	platformType, _ := proxy_pt.Read(ctx)
 
-	project := mapResourceDataToProject(d)
+	project := mapResourceDataToProject(d, platformType)
 
 	created, err := proxy.Create(ctx, project)
 	if err != nil {
 		return diag.Errorf("error while creating project: %+v", err)
 	}
 
-	d.SetId(created.ProjectID)
-
+	d.SetId(created.ProjectID.String())
 	return resourceProjectRead(ctx, d, meta)
 }
 
 func resourceProjectRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Projects
 
-	project, err := proxy.Read(ctx, d.Id())
+	project, err := proxy.Read(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -109,6 +117,10 @@ func resourceProjectRead(ctx context.Context, d *schema.ResourceData, meta inter
 }
 
 func mapProjectToResourceData(d *schema.ResourceData, project *models.ProjectInstance) error {
+	if err := d.Set("project_id", strings.ToLower(strfmt.UUID.String(project.ProjectID))); err != nil {
+		return fmt.Errorf("error setting project_id: %w", err)
+	}
+
 	if err := d.Set("display_name", project.Name); err != nil {
 		return fmt.Errorf("error setting name: %w", err)
 	}
@@ -142,8 +154,11 @@ func mapProjectToResourceData(d *schema.ResourceData, project *models.ProjectIns
 func resourceProjectUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Projects
 
-	project := mapResourceDataToProject(d)
-	project.ProjectID = d.Id()
+	proxy_pt := meta.(*sdk.Client).PlatformType
+	platformType, _ := proxy_pt.Read(ctx)
+
+	project := mapResourceDataToProject(d, platformType)
+	project.ProjectID = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, project)
 	if err != nil {
@@ -156,7 +171,7 @@ func resourceProjectUpdate(ctx context.Context, d *schema.ResourceData, meta int
 func resourceProjectDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Projects
 
-	err := proxy.Delete(ctx, d.Id())
+	err := proxy.Delete(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -170,14 +185,19 @@ func resourceProjectDelete(ctx context.Context, d *schema.ResourceData, meta int
 	return nil
 }
 
-func mapResourceDataToProject(d *schema.ResourceData) *models.ProjectInstance {
+func mapResourceDataToProject(d *schema.ResourceData, platformType models.PlatformType) *models.ProjectInstance {
+	var factor int64 = 1
+	if platformType == "OPENSTACK" {
+		factor = 1024
+	}
 	return &models.ProjectInstance{
 		Description:           d.Get("description").(string),
-		MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)),
+		MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)) * factor,
 		Name:                  d.Get("display_name").(string),
 		StorageReservedSizeGB: int64(d.Get("storage_reserved_size_gb").(int)),
-		VrfID:                 d.Get("vrf_id").(string),
+		VrfID:                 strfmt.UUID(d.Get("vrf_id").(string)),
 		CPUReserved:           int64(d.Get("vcpu_reserved_quantity").(int)),
 		LimitEnabled:          d.Get("limits_enabled").(bool),
+		ProjectID:             strfmt.UUID(d.Get("project_id").(string)),
 	}
 }

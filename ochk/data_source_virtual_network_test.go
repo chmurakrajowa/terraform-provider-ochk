@@ -28,6 +28,8 @@ func (c *VirtualNetworkDataSourceTestData) FullResourceName() string {
 }
 
 func TestAccVirtualNetworkDatasource(t *testing.T) {
+	platformType := checkPlatformType()
+
 	virtualNetwork := VirtualNetworkDataSourceTestData{
 		ResourceName: "default",
 		DisplayName:  testData.VirtualNetwork1DisplayName,
@@ -35,24 +37,48 @@ func TestAccVirtualNetworkDatasource(t *testing.T) {
 	}
 
 	resourceName := virtualNetwork.FullResourceName()
-	resource.ParallelTest(t, resource.TestCase{
-		ProviderFactories: testAccProviderFactories,
-
-		Steps: []resource.TestStep{
-			{
-				Config: virtualNetwork.ToString("-vnet"),
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "display_name", virtualNetwork.DisplayName),
-					resource.TestCheckResourceAttr(resourceName, "folder_path", virtualNetwork.FolderPath),
-					resource.TestCheckResourceAttrPair(resourceName, "project_id", "data.ochk_project.project-vnet", "id"),
-					resource.TestCheckResourceAttrSet(resourceName, "ipam_enabled"),
-					resource.TestCheckResourceAttrSet(resourceName, "gateway_address"),
-					resource.TestCheckResourceAttrSet(resourceName, "subnet_mask"),
-					resource.TestCheckResourceAttrSet(resourceName, "subnet_gateway_address_cidr"),
-					resource.TestCheckResourceAttrSet(resourceName, "subnet_network_cidr"),
-					resource.TestCheckResourceAttrSet(resourceName, "vpc_id"),
-				),
+	if platformType == "VMWARE" {
+		resource.ParallelTest(t, resource.TestCase{
+			ProviderFactories: testAccProviderFactories,
+			Steps: []resource.TestStep{
+				{
+					Config: virtualNetwork.ToString("-vnet"),
+					Check: resource.ComposeTestCheckFunc(
+						resource.TestCheckResourceAttr(resourceName, "display_name", virtualNetwork.DisplayName),
+						resource.TestCheckResourceAttr(resourceName, "folder_path", virtualNetwork.FolderPath),
+						resource.TestCheckResourceAttrPair(resourceName, "project_id", "data.ochk_project.project-vnet", "id"),
+						resource.TestCheckResourceAttrSet(resourceName, "ipam_enabled"),
+						resource.TestCheckResourceAttrSet(resourceName, "gateway_address"),
+						resource.TestCheckResourceAttrSet(resourceName, "subnet_mask"),
+						resource.TestCheckResourceAttrSet(resourceName, "subnet_gateway_address_cidr"),
+						resource.TestCheckResourceAttrSet(resourceName, "subnet_network_cidr"),
+						resource.TestCheckResourceAttrSet(resourceName, "vpc_id"),
+					),
+				},
 			},
-		},
-	})
+		})
+	} else {
+		resource.ParallelTest(t, resource.TestCase{
+			ProviderFactories: testAccProviderFactories,
+			Steps: []resource.TestStep{
+				{
+					Config: virtualNetwork.ToString("-vnet"),
+					Check: resource.ComposeTestCheckFunc(
+						resource.TestCheckResourceAttr(resourceName, "display_name", virtualNetwork.DisplayName),
+						resource.TestCheckResourceAttr(resourceName, "folder_path", virtualNetwork.FolderPath),
+						resource.TestCheckResourceAttrPair(resourceName, "project_id", "data.ochk_project.project-vnet", "id"),
+						resource.TestCheckResourceAttrSet(resourceName, "ipam_enabled"),
+						resource.TestCheckResourceAttrSet(resourceName, "gateway_address"),
+						resource.TestCheckResourceAttrSet(resourceName, "subnet_mask"),
+						resource.TestCheckResourceAttrSet(resourceName, "subnet_gateway_address_cidr"),
+						resource.TestCheckResourceAttrSet(resourceName, "subnet_network_cidr"),
+						resource.TestCheckResourceAttrSet(resourceName, "vpc_id"),
+						resource.TestCheckResourceAttrSet(resourceName, "dns_servers.0.id"),
+						resource.TestCheckResourceAttrSet(resourceName, "dns_servers.0.address"),
+					),
+				},
+			},
+		})
+	}
+
 }

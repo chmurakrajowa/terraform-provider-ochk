@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/routers"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/router"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -13,11 +13,11 @@ import (
 
 type RoutersProxy struct {
 	httpClient *http.Client
-	service    routers.ClientService
+	service    router.ClientService
 }
 
-func (p *RoutersProxy) Read(ctx context.Context, routerID string) (*models.RouterInstance, error) {
-	params := &routers.RouterGetUsingGETParams{
+func (p *RoutersProxy) Read(ctx context.Context, routerID strfmt.UUID) (*models.RouterInstance, error) {
+	params := &router.GetNetworkRoutersRouterIDParams{
 		RouterID:   routerID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
@@ -25,11 +25,11 @@ func (p *RoutersProxy) Read(ctx context.Context, routerID string) (*models.Route
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.RouterGetUsingGET(params)
+	response, err := p.service.GetNetworkRoutersRouterID(params)
 	mutex.Unlock()
 
 	if err != nil {
-		var notFound *routers.RouterGetUsingGETNotFound
+		var notFound *router.GetNetworkRoutersRouterIDNotFound
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
 		}
@@ -45,7 +45,7 @@ func (p *RoutersProxy) Read(ctx context.Context, routerID string) (*models.Route
 }
 
 func (p *RoutersProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.RouterInstance, error) {
-	params := &routers.RouterListUsingGETParams{
+	params := &router.GetNetworkRoutersParams{
 		DisplayName: &displayName,
 		Context:     ctx,
 		HTTPClient:  p.httpClient,
@@ -53,7 +53,7 @@ func (p *RoutersProxy) ListByDisplayName(ctx context.Context, displayName string
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.RouterListUsingGET(params)
+	response, err := p.service.GetNetworkRouters(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -68,14 +68,14 @@ func (p *RoutersProxy) ListByDisplayName(ctx context.Context, displayName string
 }
 
 func (p *RoutersProxy) List(ctx context.Context) ([]*models.RouterInstance, error) {
-	params := &routers.RouterListUsingGETParams{
+	params := &router.GetNetworkRoutersParams{
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.RouterListUsingGET(params)
+	response, err := p.service.GetNetworkRouters(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -94,15 +94,15 @@ func (p *RoutersProxy) Create(ctx context.Context, Router *models.RouterInstance
 		return nil, fmt.Errorf("error while validating router struct: %w", err)
 	}
 
-	params := &routers.RouterCreateUsingPUTParams{
-		RouterInstance: Router,
-		Context:        ctx,
-		HTTPClient:     p.httpClient,
+	params := &router.PutNetworkRoutersParams{
+		Body:       Router,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.RouterCreateUsingPUT(params)
+	put, err := p.service.PutNetworkRouters(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -121,16 +121,16 @@ func (p *RoutersProxy) Update(ctx context.Context, Router *models.RouterInstance
 		return nil, fmt.Errorf("error while validating router struct: %w", err)
 	}
 
-	params := &routers.RouterUpdateUsingPUTParams{
-		RouterID:       Router.RouterID,
-		RouterInstance: Router,
-		Context:        ctx,
-		HTTPClient:     p.httpClient,
+	params := &router.PutNetworkRoutersRouterIDParams{
+		RouterID:   Router.RouterID,
+		Body:       Router,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.RouterUpdateUsingPUT(params)
+	put, err := p.service.PutNetworkRoutersRouterID(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -144,7 +144,7 @@ func (p *RoutersProxy) Update(ctx context.Context, Router *models.RouterInstance
 	return put.Payload.RouterInstance, nil
 }
 
-func (p *RoutersProxy) Exists(ctx context.Context, RouterID string) (bool, error) {
+func (p *RoutersProxy) Exists(ctx context.Context, RouterID strfmt.UUID) (bool, error) {
 	if _, err := p.Read(ctx, RouterID); err != nil {
 		if IsNotFoundError(err) {
 			return false, nil
@@ -156,17 +156,17 @@ func (p *RoutersProxy) Exists(ctx context.Context, RouterID string) (bool, error
 	return true, nil
 }
 
-func (p *RoutersProxy) Delete(ctx context.Context, RouterID string) error {
-	params := &routers.RouterDeleteUsingDELETEParams{
+func (p *RoutersProxy) Delete(ctx context.Context, RouterID strfmt.UUID) error {
+	params := &router.DeleteNetworkRoutersRouterIDParams{
 		RouterID:   RouterID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, _, err := p.service.RouterDeleteUsingDELETE(params)
+	response, err := p.service.DeleteNetworkRoutersRouterID(params)
 
 	if err != nil {
-		var badRequest *routers.RouterDeleteUsingDELETEBadRequest
+		var badRequest *router.DeleteNetworkRoutersRouterIDBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}

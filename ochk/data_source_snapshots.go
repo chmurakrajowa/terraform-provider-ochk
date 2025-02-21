@@ -3,6 +3,7 @@ package ochk
 import (
 	"context"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -50,7 +51,7 @@ func dataSourceSnapshots() *schema.Resource {
 func dataSourceSnapshotsRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 
 	proxy := meta.(*sdk.Client).Snapshots
-	virtualMachineID := d.Get("virtual_machine_id").(string)
+	virtualMachineID := strfmt.UUID(d.Get("virtual_machine_id").(string))
 
 	snapshots, err := proxy.ListSnapshots(ctx, virtualMachineID)
 
@@ -62,7 +63,7 @@ func dataSourceSnapshotsRead(ctx context.Context, d *schema.ResourceData, meta i
 		return diag.Errorf("error while listing snapshots: %+v", err)
 	}
 
-	d.SetId("snapshots-list " + virtualMachineID)
+	d.SetId("snapshots-list " + virtualMachineID.String())
 
 	return nil
 }

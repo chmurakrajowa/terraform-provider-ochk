@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/tags"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/tags"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 )
@@ -16,14 +16,14 @@ type TagsProxy struct {
 }
 
 func (p *TagsProxy) Read(ctx context.Context, tagID int32) (*models.Tag, error) {
-	params := &tags.TagGetUsingGETParams{
+	params := &tags.GetTagsTagIDParams{
 		TagID:      tagID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
-	response, err := p.service.TagGetUsingGET(params)
+	response, err := p.service.GetTagsTagID(params)
 	if err != nil {
-		var notFound *tags.TagGetUsingGETNotFound
+		var notFound *tags.GetTagsTagIDNotFound
 
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
@@ -40,13 +40,13 @@ func (p *TagsProxy) Read(ctx context.Context, tagID int32) (*models.Tag, error) 
 }
 
 func (p *TagsProxy) ListTagsByTagName(ctx context.Context, tagName string) ([]*models.Tag, error) {
-	params := &tags.TagListUsingGETParams{
+	params := &tags.GetTagsParams{
 		TagValue:   &tagName,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, err := p.service.TagListUsingGET(params)
+	response, err := p.service.GetTags(params)
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing tags: %w", err)
@@ -60,12 +60,12 @@ func (p *TagsProxy) ListTagsByTagName(ctx context.Context, tagName string) ([]*m
 }
 
 func (p *TagsProxy) ListTags(ctx context.Context) ([]*models.Tag, error) {
-	params := &tags.TagListUsingGETParams{
+	params := &tags.GetTagsParams{
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, err := p.service.TagListUsingGET(params)
+	response, err := p.service.GetTags(params)
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing tags: %w", err)
@@ -83,13 +83,13 @@ func (p *TagsProxy) Create(ctx context.Context, tag *models.Tag) (*models.Tag, e
 		return nil, fmt.Errorf("error while validating tag struct: %w", err)
 	}
 
-	params := &tags.TagCreateUsingPUTParams{
-		Tag:        tag,
+	params := &tags.PutTagsParams{
+		Body:       tag,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	put, _, err := p.service.TagCreateUsingPUT(params)
+	put, err := p.service.PutTags(params)
 
 	if err != nil {
 		return nil, fmt.Errorf("error while creating tag: %w", err)
@@ -107,14 +107,14 @@ func (p *TagsProxy) Update(ctx context.Context, tag *models.Tag) (*models.Tag, e
 		return nil, fmt.Errorf("error while validating tag struct: %w", err)
 	}
 
-	params := &tags.TagUpdateUsingPUTParams{
+	params := &tags.PutTagsTagIDParams{
 		TagID:      tag.TagID,
-		Tag:        tag,
+		Body:       tag,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	put, err := p.service.TagUpdateUsingPUT(params)
+	put, err := p.service.PutTagsTagID(params)
 
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying tag: %w", err)
@@ -147,15 +147,15 @@ func (p *TagsProxy) Delete(ctx context.Context, tagID string) error {
 		return fmt.Errorf("wrong tag_id format: %w", err)
 	}
 
-	params := &tags.TagDeleteUsingDELETEParams{
+	params := &tags.DeleteTagsTagIDParams{
 		TagID:      tagIDInt32,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, err := p.service.TagDeleteUsingDELETE(params)
+	response, err := p.service.DeleteTagsTagID(params)
 	if err != nil {
-		var badRequest *tags.TagDeleteUsingDELETEBadRequest
+		var badRequest *tags.DeleteTagsTagIDBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}

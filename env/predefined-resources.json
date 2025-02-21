@@ -3,18 +3,22 @@
 	"Text": "45.130.209.203"
 }
 {
-	"Name": "BackupPlanName",
-	"Text": "Standard"
+"Name": "BackupPlanName",
+"Text": "Premium"
 }
 {
-    "Name": "BackupListName",
-    "Text": "Standard (1 month / 24h)"
+"Name": "BackupListName",
+"Text": "Standard (1 month / 24h)"
 }
 {
-	"Name": "VRF",
-	"Text": "T0"
+"Name": "VRF",
+"Text": "T0"
 }
 {
-	"Name": "Deployment1DisplayName",
-	"Text": "CentOS 7"
+"Name": "VRF_OPENSTACK",
+"Text": "VRF-default"
+}
+{
+"Name": "Deployment1DisplayName",
+"Text": "Debian 12"
 }

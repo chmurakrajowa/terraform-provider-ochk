@@ -78,7 +78,7 @@ func datSourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("more than one security group with display_name: %s found!", displayName)
 	}
 
-	d.SetId(securityGroups[0].ID)
+	d.SetId(securityGroups[0].ID.String())
 
 	if err := d.Set("project_id", securityGroups[0].ProjectID); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)

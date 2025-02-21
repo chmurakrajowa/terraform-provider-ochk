@@ -2,17 +2,17 @@ package ochk
 
 import (
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func virtualDiskHash(v interface{}) int {
-	m := v.(map[string]interface{})
-
+	m := v.(map[strfmt.UUID]interface{})
 	return schema.HashString(fmt.Sprintf("%d%d", m["controller_id"], m["lun_id"]))
 }
 
-func flattenVirtualMachines(in []*models.VcsVirtualMachineInstance) []map[string]interface{} {
+func flattenVirtualMachines(in []*models.VirtualMachineInstance) []map[string]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -30,44 +30,46 @@ func flattenVirtualMachines(in []*models.VcsVirtualMachineInstance) []map[string
 	return out
 }
 
-func flattenDeploymentParams(in []*models.DeploymentParam) []map[string]interface{} {
-	if len(in) == 0 {
-		return nil
-	}
-
-	var out []map[string]interface{}
-
-	for _, v := range in {
-		m := make(map[string]interface{})
-		m["param_name"] = v.ParamName
-		m["param_type"] = v.ParamType
-		m["param_value"] = v.ParamValue
-
-		out = append(out, m)
-	}
-	return out
-}
-
-func expandVDeploymentParams(in []interface{}) []*models.DeploymentParam {
-	var out = make([]*models.DeploymentParam, len(in))
-	for i, v := range in {
-		m := v.(map[string]interface{})
-
-		member := &models.DeploymentParam{}
-
-		if paramName, ok := m["param_name"].(string); ok {
-			member.ParamName = paramName
-		}
-		if paramType, ok := m["param_type"].(string); ok {
-			member.ParamType = paramType
-		}
-		if paramValue, ok := m["param_value"].(string); ok {
-			member.ParamValue = paramValue
-		}
-		out[i] = member
-	}
-	return out
-}
+//TODO check what is this
+//
+//func flattenDeploymentParams(in []*models.DeploymentParam) []map[string]interface{} {
+//	if len(in) == 0 {
+//		return nil
+//	}
+//
+//	var out []map[string]interface{}
+//
+//	for _, v := range in {
+//		m := make(map[string]interface{})
+//		m["param_name"] = v.ParamName
+//		m["param_type"] = v.ParamType
+//		m["param_value"] = v.ParamValue
+//
+//		out = append(out, m)
+//	}
+//	return out
+//}
+//
+//func expandVDeploymentParams(in []interface{}) []*models.DeploymentParam {
+//	var out = make([]*models.DeploymentParam, len(in))
+//	for i, v := range in {
+//		m := v.(map[string]interface{})
+//
+//		member := &models.DeploymentParam{}
+//
+//		if paramName, ok := m["param_name"].(string); ok {
+//			member.ParamName = paramName
+//		}
+//		if paramType, ok := m["param_type"].(string); ok {
+//			member.ParamType = paramType
+//		}
+//		if paramValue, ok := m["param_value"].(string); ok {
+//			member.ParamValue = paramValue
+//		}
+//		out[i] = member
+//	}
+//	return out
+//}
 
 func flattenVirtualDisks(in []*models.VirtualDiskDevice) *schema.Set {
 	if len(in) == 0 {
@@ -79,7 +81,7 @@ func flattenVirtualDisks(in []*models.VirtualDiskDevice) *schema.Set {
 	}
 
 	for _, v := range in {
-		m := make(map[string]interface{})
+		m := make(map[strfmt.UUID]interface{})
 		m["controller_id"] = int(v.ControllerID)
 		m["lun_id"] = int(v.LunID)
 		m["size_mb"] = int(v.SizeMB)
@@ -90,14 +92,48 @@ func flattenVirtualDisks(in []*models.VirtualDiskDevice) *schema.Set {
 	return out
 }
 
+func validateVirtualMachine(d *schema.ResourceData, platformType models.PlatformType) string {
+	for i, v := range d.Get("additional_virtual_disks").(*schema.Set).List() {
+		m := v.(map[string]interface{})
+		if m["size_mb"].(int) < 1024 {
+			if i == -1 {
+				return ""
+			}
+			return fmt.Sprintf(E1002, m["size_mb"])
+		}
+	}
+
+	if platformType == models.PlatformTypeOPENSTACK {
+		if len(d.Get("backup_lists").(*schema.Set).List()) > 0 {
+			return fmt.Sprintf(E1003, "backup_lists", "backup_lists")
+		}
+
+		if d.Get("encryption").(bool) {
+			return fmt.Sprintf(E1004, "encryption")
+		}
+
+		if len(d.Get("encryption_key_id").(string)) > 0 {
+			return fmt.Sprintf(E1004, "encryption_key_id")
+		}
+
+		if len(d.Get("encryption_recrypt").(string)) > 0 {
+			return fmt.Sprintf(E1004, "encryption_recrypt")
+		}
+
+	}
+	return ""
+}
+
 func expandVirtualDisks(in []interface{}) []*models.VirtualDiskDevice {
 	if len(in) == 0 {
 		return nil
 	}
-
 	var out = make([]*models.VirtualDiskDevice, len(in))
+
 	for i, v := range in {
 		m := v.(map[string]interface{})
+
+		//m := v.(map[strfmt.UUID]interface{})
 
 		member := &models.VirtualDiskDevice{}
 
@@ -108,12 +144,11 @@ func expandVirtualDisks(in []interface{}) []*models.VirtualDiskDevice {
 		if lunID, ok := m["lun_id"].(int); ok {
 			member.LunID = int32(lunID)
 		}
-
 		if sizeMB, ok := m["size_mb"].(int); ok {
 			member.SizeMB = int64(sizeMB)
 		}
 
-		if deviceType, ok := m["device_type"].(string); ok {
+		if deviceType, ok := m["device_type"].(models.VirtualDiskDeviceType); ok {
 			member.VirtualDiskDeviceType = deviceType
 		}
 
@@ -123,10 +158,10 @@ func expandVirtualDisks(in []interface{}) []*models.VirtualDiskDevice {
 	return out
 }
 
-func flattenVirtualNetworkDevice(in []*models.VirtualNetworkDevice) []map[string]interface{} {
-	var out []map[string]interface{}
+func flattenVirtualNetworkDevice(in []*models.VirtualNetworkDevice) []map[strfmt.UUID]interface{} {
+	var out []map[strfmt.UUID]interface{}
 	for _, v := range in {
-		m := make(map[string]interface{})
+		m := make(map[strfmt.UUID]interface{})
 		m["device_id"] = v.DeviceID
 		if v.VirtualNetworkInstance != nil {
 			m["virtual_network_id"] = v.VirtualNetworkInstance.VirtualNetworkID
@@ -146,12 +181,12 @@ func expandVirtualNetworkDevices(in []interface{}) []*models.VirtualNetworkDevic
 	var out = make([]*models.VirtualNetworkDevice, len(in))
 	for i, v := range in {
 		m := v.(map[string]interface{})
-
+		//m := v.(map[strfmt.UUID]interface{})
 		member := &models.VirtualNetworkDevice{}
 
 		if virtualNetworkID, ok := m["virtual_network_id"].(string); ok && virtualNetworkID != "" {
 			member.VirtualNetworkInstance = &models.VirtualNetworkInstance{
-				VirtualNetworkID: virtualNetworkID,
+				VirtualNetworkID: strfmt.UUID(virtualNetworkID),
 			}
 		}
 
@@ -171,7 +206,7 @@ func flattenBackupListsFromIDs(m []*models.BackupList) *schema.Set {
 	}
 
 	for _, v := range m {
-		s.Add(v.BackupListID)
+		s.Add(strfmt.UUID.String(v.BackupListID))
 	}
 
 	return s
@@ -181,12 +216,12 @@ func expandBackupListsFromIDs(in []interface{}) []*models.BackupList {
 	if len(in) == 0 {
 		return nil
 	}
-
 	var out = make([]*models.BackupList, len(in))
 
 	for i, v := range in {
+		value := strfmt.UUID.String(strfmt.UUID(v.(string)))
 		BackupListInstance := &models.BackupList{
-			BackupListID: v.(string),
+			BackupListID: strfmt.UUID(value),
 		}
 
 		out[i] = BackupListInstance
@@ -195,7 +230,6 @@ func expandBackupListsFromIDs(in []interface{}) []*models.BackupList {
 }
 
 func flattenTagsListsFromIDs(m []*models.Tag) *schema.Set {
-
 	s := &schema.Set{
 		F: schema.HashString,
 	}

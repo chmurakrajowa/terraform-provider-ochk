@@ -1,39 +1,41 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 )
 
-func flattenFirewallRulePosition(in *models.Position) []map[string]interface{} {
-	if in == nil {
-		return nil
-	}
+//todo check what with posistion?
+//
+//func flattenFirewallRulePosition(in *models) []map[string]interface{} {
+//	if in == nil {
+//		return nil
+//	}
+//
+//	out := make([]map[string]interface{}, 0)
+//	position := make(map[string]interface{})
+//
+//	position["rule_id"] = in.RuleID
+//	position["revise_operation"] = in.ReviseOperation
+//
+//	out = append(out, position)
+//
+//	return out
+//}
+//
+//func expandFirewallRulePosition(in []interface{}) *models.Position {
+//	if len(in) == 0 {
+//		return nil
+//	}
+//
+//	position := in[0].(map[string]interface{})
+//
+//	return &models.Position{
+//		RuleID:          position["rule_id"].(string),
+//		ReviseOperation: position["revise_operation"].(string),
+//	}
+//}
 
-	out := make([]map[string]interface{}, 0)
-	position := make(map[string]interface{})
-
-	position["rule_id"] = in.RuleID
-	position["revise_operation"] = in.ReviseOperation
-
-	out = append(out, position)
-
-	return out
-}
-
-func expandFirewallRulePosition(in []interface{}) *models.Position {
-	if len(in) == 0 {
-		return nil
-	}
-
-	position := in[0].(map[string]interface{})
-
-	return &models.Position{
-		RuleID:          position["rule_id"].(string),
-		ReviseOperation: position["revise_operation"].(string),
-	}
-}
-
-func flattenFirewallEWRulesLists(in []*models.DFWRule) []map[string]interface{} {
+func flattenFirewallEWRulesLists(in []*models.DfwRule) []map[string]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -50,7 +52,7 @@ func flattenFirewallEWRulesLists(in []*models.DFWRule) []map[string]interface{} 
 	return out
 }
 
-func flattenFirewallSNRulesLists(in []*models.GFWRule) []map[string]interface{} {
+func flattenFirewallSNRulesLists(in []*models.GfwRule) []map[string]interface{} {
 	if len(in) == 0 {
 		return nil
 	}

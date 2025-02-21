@@ -10,6 +10,8 @@ func TestAccSecurityGroupDataSource_read(t *testing.T) {
 	resourceName := "data.ochk_security_group.one_member"
 	displayName := generateRandName(devTestDataPrefix)
 
+	fmt.Printf("Security group full name: %v\n", displayName)
+
 	resource.ParallelTest(t, resource.TestCase{
 		ProviderFactories: testAccProviderFactories,
 		Steps: []resource.TestStep{

@@ -40,17 +40,24 @@ func (c *RouterTestData) FullResourceName() string {
 
 func TestAccRouterResource_create_update(t *testing.T) {
 
+	platformType := checkPlatformType()
+
+	fmt.Printf("checkPlatformType%s ", platformType)
+	vrfRouter := testData.VRF_OPENSTACK
+	if platformType == "VMWARE" {
+		vrfRouter = testData.VRF
+	}
 	router := RouterTestData{
 		ResourceName: "vpc",
 		DisplayName:  generateShortRandName(devTestDataPrefix),
-		ParentRouter: testData.VRF,
+		ParentRouter: vrfRouter,
 		ProjectName:  testData.Project1Name,
 	}
 
 	routerUpdated := RouterTestData{
 		ResourceName: "vpc",
 		DisplayName:  router.DisplayName + "-upd",
-		ParentRouter: testData.VRF,
+		ParentRouter: vrfRouter,
 		ProjectName:  testData.Project1Name,
 	}
 

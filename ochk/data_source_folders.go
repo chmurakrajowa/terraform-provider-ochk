@@ -3,6 +3,7 @@ package ochk
 import (
 	"context"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -43,7 +44,7 @@ func dataSourceFoldersRead(ctx context.Context, d *schema.ResourceData, meta int
 
 	proxy := meta.(*sdk.Client).Folders
 
-	projectID := d.Get("project_id").(string)
+	projectID := strfmt.UUID(d.Get("project_id").(string))
 
 	folders, err := proxy.LisFoldersByProjectId(ctx, projectID)
 
@@ -55,7 +56,7 @@ func dataSourceFoldersRead(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.Errorf("error while listing folders")
 	}
 
-	d.SetId("folders-list-" + projectID)
+	d.SetId("folders-list-" + projectID.String())
 
 	return nil
 }

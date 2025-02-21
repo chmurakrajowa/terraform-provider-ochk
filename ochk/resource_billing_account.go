@@ -2,8 +2,9 @@ package ochk
 
 import (
 	"context"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"strings"
@@ -35,7 +36,6 @@ func resourceBillingAccount() *schema.Resource {
 			"display_name": {
 				Type:     schema.TypeString,
 				Required: true,
-				ForceNew: true,
 			},
 			"account_description": {
 				Type:     schema.TypeString,
@@ -55,8 +55,8 @@ func resourceBillingAccount() *schema.Resource {
 			},
 			"projects": {
 				Type:     schema.TypeSet,
-				Required: true,
-				MinItems: 1,
+				MinItems: 0,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"project_id": {
@@ -89,7 +89,7 @@ func resourceAccountCreate(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.Errorf("error while creating account: %+v", err)
 	}
 
-	d.SetId(created.AccountID)
+	d.SetId(created.AccountID.String())
 	return resourceAccountRead(ctx, d, meta)
 }
 
@@ -97,7 +97,7 @@ func resourceAccountUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	proxy := meta.(*sdk.Client).Accounts
 
 	account := mapResourceDataToAccount(d)
-	account.AccountID = d.Id()
+	account.AccountID = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, account)
 	if err != nil {
@@ -110,7 +110,7 @@ func resourceAccountUpdate(ctx context.Context, d *schema.ResourceData, meta int
 func resourceAccountRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Accounts
 
-	account, err := proxy.Read(ctx, d.Id())
+	account, err := proxy.Read(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -151,7 +151,7 @@ func resourceAccountRead(ctx context.Context, d *schema.ResourceData, meta inter
 func resourceAccountDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Accounts
 
-	err := proxy.Delete(ctx, d.Id())
+	err := proxy.Delete(ctx, strfmt.UUID(d.Id()))
 
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
@@ -182,7 +182,7 @@ func expandAccountProjects(in []interface{}) []*models.AccountProjectInstance {
 		m := v.(map[string]interface{})
 
 		project := &models.AccountProjectInstance{
-			ProjectID: m["project_id"].(string),
+			ProjectID: strfmt.UUID(m["project_id"].(string)),
 			Name:      m["display_name"].(string),
 		}
 

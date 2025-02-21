@@ -4,8 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/backups"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/backups"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
 )
@@ -15,20 +16,20 @@ type BackupPlansProxy struct {
 	service    backups.ClientService
 }
 
-func (p *BackupPlansProxy) Read(ctx context.Context, packupPlanID string) (*models.BackupPlan, error) {
-	params := &backups.BackupPlanGetUsingGETParams{
-		BackupPlanID: packupPlanID,
+func (p *BackupPlansProxy) Read(ctx context.Context, backupPlanID strfmt.UUID) (*models.BackupPlan, error) {
+	params := &backups.GetBackupsPlansBackupPlanIDParams{
+		BackupPlanID: backupPlanID,
 		Context:      ctx,
 		HTTPClient:   p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.BackupPlanGetUsingGET(params)
+	response, err := p.service.GetBackupsPlansBackupPlanID(params)
 	mutex.Unlock()
 
 	if err != nil {
-		var notFound *backups.BackupPlanGetUsingGETNotFound
+		var notFound *backups.GetBackupsPlansBackupPlanIDNotFound
 
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
@@ -45,7 +46,7 @@ func (p *BackupPlansProxy) Read(ctx context.Context, packupPlanID string) (*mode
 }
 
 func (p *BackupPlansProxy) ListBackupPlanByName(ctx context.Context, backupPlanName string) ([]*models.BackupPlan, error) {
-	params := &backups.BackupPlanListUsingGETParams{
+	params := &backups.GetBackupsPlansParams{
 		BackupPlanName: &backupPlanName,
 		Context:        ctx,
 		HTTPClient:     p.httpClient,
@@ -53,7 +54,7 @@ func (p *BackupPlansProxy) ListBackupPlanByName(ctx context.Context, backupPlanN
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.BackupPlanListUsingGET(params)
+	response, err := p.service.GetBackupsPlans(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -68,12 +69,12 @@ func (p *BackupPlansProxy) ListBackupPlanByName(ctx context.Context, backupPlanN
 }
 
 func (p *BackupPlansProxy) ListBackupPlans(ctx context.Context) ([]*models.BackupPlan, error) {
-	params := &backups.BackupPlanListUsingGETParams{
+	params := &backups.GetBackupsPlansParams{
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, err := p.service.BackupPlanListUsingGET(params)
+	response, err := p.service.GetBackupsPlans(params)
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing backup plans: %w", err)

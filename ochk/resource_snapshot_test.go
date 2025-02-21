@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"strconv"
@@ -13,7 +14,7 @@ import (
 type SnapshotTestData struct {
 	ResourceName     string
 	Name             string
-	VirtualMachineID string
+	VirtualMachineID strfmt.UUID
 	PowerState       string
 }
 
@@ -44,7 +45,7 @@ func TestAccSnapshotResource_create(t *testing.T) {
 	snapshot := SnapshotTestData{
 		ResourceName:     "default",
 		Name:             generateShortRandName(devTestDataPrefix),
-		VirtualMachineID: testDataResourceID(&virtualMachine),
+		VirtualMachineID: strfmt.UUID(testDataResourceID(&virtualMachine)),
 	}
 
 	SnapshotResourceName := snapshot.FullResourceName()
@@ -68,11 +69,11 @@ func TestAccSnapshotResource_create(t *testing.T) {
 	})
 }
 
-func testAccSnapshotResourceNotExists(Name string, VirtualMachineID string) resource.TestCheckFunc {
+func testAccSnapshotResourceNotExists(Name string, VirtualMachineID strfmt.UUID) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		proxy := testAccProvider.Meta().(*sdk.Client).Snapshots
 
-		snapshots, err := proxy.ListSnapshotsByName(context.Background(), VirtualMachineID, Name)
+		snapshots, err := proxy.ListSnapshotsByName(context.Background(), strfmt.UUID(VirtualMachineID), Name)
 		if err != nil {
 			return err
 		}
@@ -88,7 +89,7 @@ func testAccSnapshotResourceNotExists(Name string, VirtualMachineID string) reso
 type SnapshotWithRamTestData struct {
 	ResourceName     string
 	Name             string
-	VirtualMachineID string
+	VirtualMachineID strfmt.UUID
 	PowerState       string
 	Ram              bool
 }
@@ -121,7 +122,7 @@ func TestAccSnapshotWithRamResource_create(t *testing.T) {
 	snapshot := SnapshotWithRamTestData{
 		ResourceName:     "default",
 		Name:             generateShortRandName(devTestDataPrefix),
-		VirtualMachineID: testDataResourceID(&virtualMachine),
+		VirtualMachineID: strfmt.UUID(testDataResourceID(&virtualMachine)),
 		Ram:              true,
 	}
 

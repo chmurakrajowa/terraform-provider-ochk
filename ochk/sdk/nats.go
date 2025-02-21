@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/n_a_t_rules"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/nat_rule"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -13,11 +13,11 @@ import (
 
 type NatProxy struct {
 	httpClient *http.Client
-	service    n_a_t_rules.ClientService
+	service    nat_rule.ClientService
 }
 
-func (p *NatProxy) Read(ctx context.Context, natRuleID string) (*models.NATRuleInstance, error) {
-	params := &n_a_t_rules.NatRuleGetUsingGETParams{
+func (p *NatProxy) Read(ctx context.Context, natRuleID strfmt.UUID) (*models.NATRuleInstance, error) {
+	params := &nat_rule.GetNetworkNatRulesRuleIDParams{
 		RuleID:     natRuleID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
@@ -25,10 +25,10 @@ func (p *NatProxy) Read(ctx context.Context, natRuleID string) (*models.NATRuleI
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.NatRuleGetUsingGET(params)
+	response, err := p.service.GetNetworkNatRulesRuleID(params)
 	mutex.Unlock()
 	if err != nil {
-		var notFound *n_a_t_rules.NatRuleGetUsingGETNotFound
+		var notFound *nat_rule.DeleteNetworkNatRulesRuleIDNotFound
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
 		}
@@ -44,7 +44,7 @@ func (p *NatProxy) Read(ctx context.Context, natRuleID string) (*models.NATRuleI
 }
 
 func (p *NatProxy) ListNatsByName(ctx context.Context, displayName string) ([]*models.NATRuleInstance, error) {
-	params := &n_a_t_rules.NatRuleListUsingGETParams{
+	params := &nat_rule.GetNetworkNatRulesParams{
 		DisplayName: &displayName,
 		Context:     ctx,
 		HTTPClient:  p.httpClient,
@@ -52,7 +52,7 @@ func (p *NatProxy) ListNatsByName(ctx context.Context, displayName string) ([]*m
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.NatRuleListUsingGET(params)
+	response, err := p.service.GetNetworkNatRules(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -66,14 +66,14 @@ func (p *NatProxy) ListNatsByName(ctx context.Context, displayName string) ([]*m
 	return response.Payload.NatRuleInstances, nil
 }
 func (p *NatProxy) List(ctx context.Context) ([]*models.NATRuleInstance, error) {
-	params := &n_a_t_rules.NatRuleListUsingGETParams{
+	params := &nat_rule.GetNetworkNatRulesParams{
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.NatRuleListUsingGET(params)
+	response, err := p.service.GetNetworkNatRules(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -91,14 +91,14 @@ func (p *NatProxy) CreateNat(ctx context.Context, natRuleInstance *models.NATRul
 	if err := natRuleInstance.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating nat struct: %w", err)
 	}
-	params := &n_a_t_rules.NatRuleCreateUsingPUTParams{
-		NatRuleInstance: natRuleInstance,
-		Context:         ctx,
-		HTTPClient:      p.httpClient,
+	params := &nat_rule.PutNetworkNatRulesParams{
+		Body:       natRuleInstance,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.NatRuleCreateUsingPUT(params)
+	put, err := p.service.PutNetworkNatRules(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -116,16 +116,16 @@ func (p *NatProxy) Update(ctx context.Context, natRuleInstance *models.NATRuleIn
 	if err := natRuleInstance.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating nat struct: %w", err)
 	}
-	params := &n_a_t_rules.NatRuleUpdateUsingPUTParams{
-		RuleID:          natRuleInstance.RuleID,
-		NatRuleInstance: natRuleInstance,
-		Context:         ctx,
-		HTTPClient:      p.httpClient,
+	params := &nat_rule.PutNetworkNatRulesRuleIDParams{
+		RuleID:     natRuleInstance.RuleID,
+		Body:       natRuleInstance,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, err := p.service.NatRuleUpdateUsingPUT(params)
+	put, err := p.service.PutNetworkNatRulesRuleID(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -139,17 +139,17 @@ func (p *NatProxy) Update(ctx context.Context, natRuleInstance *models.NATRuleIn
 	return put.Payload.RequestInstance, nil
 }
 
-func (p *NatProxy) Delete(ctx context.Context, ruleID string) error {
-	params := &n_a_t_rules.NatRuleDeleteUsingDELETEParams{
+func (p *NatProxy) Delete(ctx context.Context, ruleID strfmt.UUID) error {
+	params := &nat_rule.DeleteNetworkNatRulesRuleIDParams{
 		RuleID:     ruleID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, err := p.service.NatRuleDeleteUsingDELETE(params)
+	response, err := p.service.DeleteNetworkNatRulesRuleID(params)
 
 	if err != nil {
-		var badRequest *n_a_t_rules.NatRuleDeleteUsingDELETEBadRequest
+		var badRequest *nat_rule.DeleteNetworkNatRulesRuleIDBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}

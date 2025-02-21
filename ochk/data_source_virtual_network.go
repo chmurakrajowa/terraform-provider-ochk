@@ -47,6 +47,22 @@ func dataSourceVirtualNetwork() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"dns_servers": {
+				Type:     schema.TypeSet,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": {
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"address": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -69,7 +85,7 @@ func dataSourceVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("more than one virtual network with name: %s found!", name)
 	}
 
-	d.SetId(virtualNetworks[0].VirtualNetworkID)
+	d.SetId(virtualNetworks[0].VirtualNetworkID.String())
 
 	if err := mapVirtualNetworkToResourceData(d, virtualNetworks[0]); err != nil {
 		return err

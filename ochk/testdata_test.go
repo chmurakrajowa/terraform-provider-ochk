@@ -3,6 +3,7 @@ package ochk
 import (
 	"bytes"
 	"fmt"
+	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"strings"
 	"testing"
@@ -12,11 +13,12 @@ import (
 var templateFuncMap = map[string]interface{}{
 	"StringsToTFList": stringsToTFList,
 	"StringTFValue":   stringTFValue,
+	"UuidTFValue":     uuidTFValue,
 }
 
-type TestData interface {
-	FullResourceName() string
-}
+//type TestData interface {
+//	FullResourceName() string
+//}
 
 func testDataResourceID(td TestData) string {
 	return td.FullResourceName() + ".id"
@@ -39,6 +41,14 @@ func executeTemplateToString(templateString string, data interface{}) string {
 func stringTFValue(value string) string {
 	if isTerraformResourceName(value) {
 		return value
+	}
+
+	return fmt.Sprintf("%q", value)
+}
+
+func uuidTFValue(value strfmt.UUID) string {
+	if isTerraformResourceName(value.String()) {
+		return value.String()
 	}
 
 	return fmt.Sprintf("%q", value)

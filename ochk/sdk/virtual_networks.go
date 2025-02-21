@@ -4,33 +4,32 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/virtual_networks"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/virtual_network"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
-	"time"
 )
 
 type VirtualNetworksProxy struct {
 	httpClient *http.Client
-	service    virtual_networks.ClientService
+	service    virtual_network.ClientService
 }
 
-func (p *VirtualNetworksProxy) Create(ctx context.Context, virtualNetwork *models.VirtualNetworkInstance, timeout time.Duration) (*models.RequestInstance, error) {
+func (p *VirtualNetworksProxy) Create(ctx context.Context, virtualNetwork *models.VirtualNetworkInstance) (*models.RequestInstance, error) {
 	if err := virtualNetwork.Validate(strfmt.Default); err != nil {
 		return nil, fmt.Errorf("error while validating virtual network struct: %w", err)
 	}
 
-	params := &virtual_networks.VirtualNetworkCreateUsingPUTParams{
-		VirtualNetworkInstance: virtualNetwork,
-		Context:                ctx,
-		HTTPClient:             p.httpClient,
+	params := &virtual_network.PutNetworksParams{
+		Body:       virtualNetwork,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.VirtualNetworkCreateUsingPUT(params)
+	put, err := p.service.PutNetworks(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -49,16 +48,16 @@ func (p *VirtualNetworksProxy) Update(ctx context.Context, virtualNetwork *model
 		return nil, fmt.Errorf("error while validating virtual network struct: %w", err)
 	}
 
-	params := &virtual_networks.VirtualNetworkUpdateUsingPUTParams{
-		VirtualNetworkID:       virtualNetwork.VirtualNetworkID,
-		VirtualNetworkInstance: virtualNetwork,
-		Context:                ctx,
-		HTTPClient:             p.httpClient,
+	params := &virtual_network.PutNetworksVirtualNetworkIDParams{
+		VirtualNetworkID: virtualNetwork.VirtualNetworkID,
+		Body:             virtualNetwork,
+		Context:          ctx,
+		HTTPClient:       p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.VirtualNetworkUpdateUsingPUT(params)
+	put, err := p.service.PutNetworksVirtualNetworkID(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -72,12 +71,12 @@ func (p *VirtualNetworksProxy) Update(ctx context.Context, virtualNetwork *model
 	return put.Payload.RequestInstance, nil
 }
 
-func (p *VirtualNetworksProxy) Read(ctx context.Context, virtualNetworkID string) (*models.VirtualNetworkInstance, error) {
+func (p *VirtualNetworksProxy) Read(ctx context.Context, virtualNetworkID strfmt.UUID) (*models.VirtualNetworkInstance, error) {
 	if virtualNetworkID == "" {
 		return nil, fmt.Errorf("empty virtual network ID")
 	}
 
-	params := &virtual_networks.VirtualNetworkGetUsingGETParams{
+	params := &virtual_network.GetNetworksVirtualNetworkIDParams{
 		VirtualNetworkID: virtualNetworkID,
 		Context:          ctx,
 		HTTPClient:       p.httpClient,
@@ -85,11 +84,11 @@ func (p *VirtualNetworksProxy) Read(ctx context.Context, virtualNetworkID string
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.VirtualNetworkGetUsingGET(params)
+	response, err := p.service.GetNetworksVirtualNetworkID(params)
 	mutex.Unlock()
 
 	if err != nil {
-		var notFound *virtual_networks.VirtualNetworkGetUsingGETNotFound
+		var notFound *virtual_network.GetNetworksVirtualNetworkIDNotFound
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
 		}
@@ -105,7 +104,7 @@ func (p *VirtualNetworksProxy) Read(ctx context.Context, virtualNetworkID string
 }
 
 func (p *VirtualNetworksProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.VirtualNetworkInstance, error) {
-	params := &virtual_networks.VirtualNetworkListUsingGETParams{
+	params := &virtual_network.GetNetworksParams{
 		DisplayName: &displayName,
 		Context:     ctx,
 		HTTPClient:  p.httpClient,
@@ -113,7 +112,7 @@ func (p *VirtualNetworksProxy) ListByDisplayName(ctx context.Context, displayNam
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.VirtualNetworkListUsingGET(params)
+	response, err := p.service.GetNetworks(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -128,14 +127,14 @@ func (p *VirtualNetworksProxy) ListByDisplayName(ctx context.Context, displayNam
 }
 
 func (p *VirtualNetworksProxy) List(ctx context.Context) ([]*models.VirtualNetworkInstance, error) {
-	params := &virtual_networks.VirtualNetworkListUsingGETParams{
+	params := &virtual_network.GetNetworksParams{
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.VirtualNetworkListUsingGET(params)
+	response, err := p.service.GetNetworks(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -149,17 +148,17 @@ func (p *VirtualNetworksProxy) List(ctx context.Context) ([]*models.VirtualNetwo
 	return response.Payload.VirtualNetworkInstanceCollection, nil
 }
 
-func (p *VirtualNetworksProxy) Delete(ctx context.Context, virtualNetworkID string) (*models.RequestInstance, error) {
-	params := &virtual_networks.VirtualNetworkDeleteUsingDELETEParams{
+func (p *VirtualNetworksProxy) Delete(ctx context.Context, virtualNetworkID strfmt.UUID) (*models.RequestInstance, error) {
+	params := &virtual_network.DeleteNetworksVirtualNetworkIDParams{
 		VirtualNetworkID: virtualNetworkID,
 		Context:          ctx,
 		HTTPClient:       p.httpClient,
 	}
 
-	response, _, err := p.service.VirtualNetworkDeleteUsingDELETE(params)
+	response, err := p.service.DeleteNetworksVirtualNetworkID(params)
 
 	if err != nil {
-		var badRequest *virtual_networks.VirtualNetworkDeleteUsingDELETEBadRequest
+		var badRequest *virtual_network.DeleteNetworksVirtualNetworkIDBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return nil, &NotFoundError{Err: err}
 		}

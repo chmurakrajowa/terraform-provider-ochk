@@ -1,7 +1,8 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -9,7 +10,7 @@ import (
 func TestFlattenKMSKeys(t *testing.T) {
 	cases := []struct {
 		expanded  []*models.KeyInstance
-		flattened []map[string]interface{}
+		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
 		{
@@ -33,7 +34,7 @@ func TestFlattenKMSKeys(t *testing.T) {
 					State: "Inactive",
 				},
 			},
-			flattened: []map[string]interface{}{
+			flattened: []map[strfmt.UUID]interface{}{
 				{
 					"kms_key_id":   "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					"display_name": "test1",

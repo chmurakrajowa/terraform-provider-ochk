@@ -3,8 +3,9 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"strings"
 	"time"
 
@@ -14,6 +15,11 @@ import (
 
 const (
 	VirtualMachineRetryTimeout = 20 * time.Minute
+	E1001                      = "TF_ERROR{1001}: Error during creating virtual machine. %s"
+	E1002                      = "Input value MB_SIZE %d MB is less then 5120 MB"
+	E1003                      = "Resource: %s is not supported in Openstack. Please remove %s from your terraform file."
+	E1004                      = "KMS is not supported in Openstack. Please remove %s field from your terraform file."
+	E1001_UPDATE               = "TF_ERROR{1001}: Error during updating virtual machine. %s"
 )
 
 func resourceVirtualMachine() *schema.Resource {
@@ -78,6 +84,9 @@ func resourceVirtualMachine() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
+				StateFunc: func(val any) string {
+					return strings.ToLower(val.(string))
+				},
 			},
 			"ssh_key": {
 				Type:     schema.TypeString,
@@ -125,6 +134,9 @@ func resourceVirtualMachine() *schema.Resource {
 						"virtual_network_id": {
 							Type:     schema.TypeString,
 							Required: true,
+							StateFunc: func(val any) string {
+								return strings.ToLower(val.(string))
+							},
 						},
 						"device_id": {
 							Type:     schema.TypeString,
@@ -270,6 +282,10 @@ func resourceVirtualMachineImportState(_ context.Context, d *schema.ResourceData
 func resourceVirtualMachineCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	client := meta.(*sdk.Client)
 
+	result := validateVirtualMachine(d, client.PType)
+	if result != "" {
+		return diag.Errorf(E1001, result)
+	}
 	virtualMachine := mapResourceDataToVirtualMachine(d)
 
 	request, err := client.VirtualMachines.Create(ctx, virtualMachine)
@@ -279,10 +295,10 @@ func resourceVirtualMachineCreate(ctx context.Context, d *schema.ResourceData, m
 
 	err, resourceID := client.Requests.FetchResourceID(ctx, d.Timeout(schema.TimeoutCreate), request)
 	if err != nil {
-		return diag.Errorf("error while fetching virtual machine request state: %+v", err)
+		return diag.Errorf(E1001, err)
 	}
 
-	d.SetId(resourceID)
+	d.SetId(resourceID.String())
 
 	return resourceVirtualMachineRead(ctx, d, meta)
 }
@@ -290,7 +306,7 @@ func resourceVirtualMachineCreate(ctx context.Context, d *schema.ResourceData, m
 func resourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).VirtualMachines
 
-	virtualMachine, err := proxy.Read(ctx, d.Id())
+	virtualMachine, err := proxy.Read(ctx, strfmt.UUID(d.Id()))
 
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
@@ -312,8 +328,13 @@ func resourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, met
 func resourceVirtualMachineUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	sdkClient := meta.(*sdk.Client)
 
+	result := validateVirtualMachine(d, sdkClient.PType)
+	if result != "" {
+		return diag.Errorf(E1001_UPDATE, result)
+	}
+
 	virtualMachine := mapResourceDataToVirtualMachine(d)
-	virtualMachine.VirtualMachineID = d.Id()
+	virtualMachine.VirtualMachineID = strfmt.UUID(d.Id())
 
 	request, err := sdkClient.VirtualMachines.Update(ctx, virtualMachine)
 	if err != nil {
@@ -322,10 +343,10 @@ func resourceVirtualMachineUpdate(ctx context.Context, d *schema.ResourceData, m
 
 	err, resourceID := sdkClient.Requests.FetchResourceID(ctx, d.Timeout(schema.TimeoutCreate), request)
 	if err != nil {
-		return diag.Errorf("error while fetching virtual machine request state: %+v", err)
+		return diag.Errorf("Error while fetching virtual machine request state: %+v", err)
 	}
 
-	d.SetId(resourceID)
+	d.SetId(resourceID.String())
 
 	return resourceVirtualMachineRead(ctx, d, meta)
 }
@@ -333,7 +354,7 @@ func resourceVirtualMachineUpdate(ctx context.Context, d *schema.ResourceData, m
 func resourceVirtualMachineDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	sdkClient := meta.(*sdk.Client)
 
-	request, err := sdkClient.VirtualMachines.Delete(ctx, d.Id())
+	request, err := sdkClient.VirtualMachines.Delete(ctx, strfmt.UUID(d.Id()))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -352,7 +373,7 @@ func resourceVirtualMachineDelete(ctx context.Context, d *schema.ResourceData, m
 	return nil
 }
 
-func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *models.VcsVirtualMachineInstance) error {
+func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *models.VirtualMachineInstance) error {
 	if err := d.Set("display_name", virtualMachine.VirtualMachineName); err != nil {
 		return fmt.Errorf("error setting display_name: %w", err)
 	}
@@ -384,7 +405,7 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 	if err := d.Set("storage_policy", virtualMachine.StoragePolicy); err != nil {
 		return fmt.Errorf("error setting storage_policy: %w", err)
 	}
-	if err := d.Set("project_id", virtualMachine.ProjectID); err != nil {
+	if err := d.Set("project_id", strings.ToLower(virtualMachine.ProjectID.String())); err != nil {
 		return fmt.Errorf("error setting project_id: %w", err)
 	}
 	if err := d.Set("virtual_network_devices", flattenVirtualNetworkDevice(virtualMachine.VirtualNetworkDevices)); err != nil {
@@ -395,10 +416,10 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 		return fmt.Errorf("error setting additional_virtual_disks: %w", err)
 	}
 
-	virtualMachine.DeploymentParams = expandVDeploymentParams(d.Get("deployment_params").([]interface{}))
-	if err := d.Set("deployment_params", flattenDeploymentParams(virtualMachine.DeploymentParams)); err != nil {
-		return fmt.Errorf("error setting deployment_params: %w", err)
-	}
+	//virtualMachine.DeploymentParams = expandVDeploymentParams(d.Get("deployment_params").([]interface{}))
+	//if err := d.Set("deployment_params", flattenDeploymentParams(virtualMachine.DeploymentParams)); err != nil {
+	//	return fmt.Errorf("error setting deployment_params: %w", err)
+	//}
 
 	if err := d.Set("ip_address", virtualMachine.IPAddress); err != nil {
 		return fmt.Errorf("error setting ip_address: %w", err)
@@ -474,43 +495,42 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 	return nil
 }
 
-func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VcsVirtualMachineInstance {
-	virtualMachineInstance := models.VcsVirtualMachineInstance{
+func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VirtualMachineInstance {
+	var virtualMachineInstance = models.VirtualMachineInstance{
 		AdditionalVirtualDiskDeviceCollection: expandVirtualDisks(d.Get("additional_virtual_disks").(*schema.Set).List()),
 		DeploymentInstance: &models.DeploymentInstance{
-			DeploymentID: d.Get("deployment_id").(string),
+			DeploymentID: strfmt.UUID(d.Get("deployment_id").(string)),
 		},
 		InitialPassword:       d.Get("initial_password").(string),
-		PowerState:            d.Get("power_state").(string),
-		StoragePolicy:         d.Get("storage_policy").(string),
-		ProjectID:             d.Get("project_id").(string),
-		VirtualMachineID:      d.Id(),
+		PowerState:            castStringToPowerStateEnum(d.Get("power_state").(string)),
+		StoragePolicy:         castStringToStorageEnum(d.Get("storage_policy").(string)),
+		ProjectID:             strfmt.UUID(d.Get("project_id").(string)),
+		VirtualMachineID:      strfmt.UUID(d.Id()),
 		VirtualMachineName:    d.Get("display_name").(string),
 		SSHKey:                d.Get("ssh_key").(string),
 		VirtualNetworkDevices: expandVirtualNetworkDevices(d.Get("virtual_network_devices").([]interface{})),
-		DeploymentParams:      expandVDeploymentParams(d.Get("deployment_params").([]interface{})),
-		BackupListCollection:  expandBackupListsFromIDs(d.Get("backup_lists").(*schema.Set).List()),
-		Tags:                  expandTagsListsFromIDs(d.Get("tags").(*schema.Set).List()),
-		OsType:                d.Get("os_type").(string),
-		OvfIPConfiguration:    d.Get("ovf_ip_configuration").(bool),
-		InitialUserName:       d.Get("initial_user_name").(string),
-		FolderPath:            d.Get("folder_path").(string),
-		DNSSearchSuffix:       d.Get("dns_search_suffix").(string),
-		DNSSuffix:             d.Get("dns_suffix").(string),
-		PrimaryDNSAddress:     d.Get("primary_dns_address").(string),
-		PrimaryWinsAddress:    d.Get("primary_wins_address").(string),
-		SecondaryDNSAddress:   d.Get("secondary_dns_address").(string),
-		SecondaryWinsAddress:  d.Get("secondary_wins_address").(string),
-		CPUCount:              int32(d.Get("cpu_count").(int)),
-		MemorySizeMB:          int32(d.Get("memory_size_mb").(int)),
+		//DeploymentParams:      expandVDeploymentParams(d.Get("deployment_params").([]interface{})),
+		BackupListCollection: expandBackupListsFromIDs(d.Get("backup_lists").(*schema.Set).List()),
+		Tags:                 expandTagsListsFromIDs(d.Get("tags").(*schema.Set).List()),
+		OsType:               castStringToOsTypeEnum(d.Get("os_type").(string)),
+		OvfIPConfiguration:   d.Get("ovf_ip_configuration").(bool),
+		InitialUserName:      d.Get("initial_user_name").(string),
+		FolderPath:           d.Get("folder_path").(string),
+		DNSSearchSuffix:      d.Get("dns_search_suffix").(string),
+		DNSSuffix:            d.Get("dns_suffix").(string),
+		PrimaryDNSAddress:    d.Get("primary_dns_address").(string),
+		PrimaryWinsAddress:   d.Get("primary_wins_address").(string),
+		SecondaryDNSAddress:  d.Get("secondary_dns_address").(string),
+		SecondaryWinsAddress: d.Get("secondary_wins_address").(string),
+		CPUCount:             int32(d.Get("cpu_count").(int)),
+		MemorySizeMB:         int32(d.Get("memory_size_mb").(int)),
 	}
-
 	encryptionInstance := &models.EncryptionInstance{
 		Encrypt: d.Get("encryption").(bool),
 	}
 
 	if recryptOperation, ok := d.GetOk("encryption_recrypt"); ok && recryptOperation.(string) != "" {
-		encryptionInstance.RecryptOperation = d.Get("encryption_recrypt").(string)
+		encryptionInstance.RecryptOperation = d.Get("encryption_recrypt").(models.RecryptOperation)
 	} else {
 		encryptionInstance.RecryptOperation = "NONE"
 	}
@@ -532,4 +552,40 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VcsVirtualM
 	}
 
 	return &virtualMachineInstance
+}
+
+func castStringToOsTypeEnum(e string) models.OsType {
+	switch e {
+	case "WINDOWS":
+		return models.OsTypeWINDOWS
+	case "LINUX":
+		return models.OsTypeLINUX
+	default:
+		return ""
+	}
+}
+
+func castStringToStorageEnum(e string) models.StoragePolicy {
+	switch e {
+	case "UNKNOWN":
+		return models.StoragePolicyUNKNOWN
+	case "STANDARD":
+		return models.StoragePolicySTANDARD
+	case "STANDARD_W1":
+		return models.StoragePolicySTANDARDW1
+	case "STANDARD_W2":
+		return models.StoragePolicySTANDARDW2
+	case "ENTERPRISE":
+		return models.StoragePolicyENTERPRISE
+	case "STANDARDENCRYPTION":
+		return models.StoragePolicySTANDARDENCRYPTION
+	case "ENTERPRISEENCRYPTION":
+		return models.StoragePolicyENTERPRISEENCRYPTION
+	case "STANDARD_W1_ENCRYPTION":
+		return models.StoragePolicySTANDARDW1ENCRYPTION
+	case "STANDARD_W2_ENCRYPTION":
+		return models.StoragePolicySTANDARDW2ENCRYPTION
+	default:
+		return ""
+	}
 }

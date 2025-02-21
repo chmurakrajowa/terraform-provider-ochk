@@ -3,7 +3,7 @@
 set -e
 
 echo "Clear ochk/sdk/gen directory"
-rm -rf ochk/sdk/gen/*
+rm -rf ochk/api/v3/*
 
 SWAGGER_BIN="$(go env GOPATH)/bin/swagger"
 
@@ -14,4 +14,4 @@ if [[ ! -f "${SWAGGER}" ]]; then
 fi
 
 echo "Run swagger gen"
-${SWAGGER_BIN} generate client -f ./ochk/sdk/swagger.json -t ./ochk/sdk/gen/ -A ochk
+${SWAGGER_BIN} generate client -f ./ochk/api/swagger.json -t ./ochk/api/v3/ -A ochk

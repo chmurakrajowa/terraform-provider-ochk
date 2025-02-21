@@ -1,90 +1,46 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestFlattenExpandSecurityGroupMembers(t *testing.T) {
+
 	cases := []struct {
-		expanded  []*models.SecurityGroupMember
-		flattened []map[string]interface{}
+		expanded  []*models.SecurityGroup
+		flattened []map[strfmt.UUID]interface{}
 	}{
 
-		// nil values
 		{
 			expanded:  nil,
 			flattened: nil,
 		},
 
-		// include display_name
 		{
-			expanded: []*models.SecurityGroupMember{
+			expanded: []*models.SecurityGroup{
 				{
-					ID:          "afdb07d8-d0d2-11ea-87d0-0242ac130003",
-					MemberType:  "LOGICAL_PORT",
-					DisplayName: "MyLogicaPort",
+					ID:          strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
+					ProjectID:   strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
+					DisplayName: "MySG1",
 				},
 			},
-			flattened: []map[string]interface{}{
+			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"id":           "afdb07d8-d0d2-11ea-87d0-0242ac130003",
-					"type":         "LOGICAL_PORT",
-					"display_name": "MyLogicaPort",
-				},
-			},
-		},
-
-		// empty display name
-		{
-			expanded: []*models.SecurityGroupMember{
-				{
-					ID:         "afdb07d8-d0d2-11ea-87d0-0242ac130003",
-					MemberType: "LOGICAL_PORT",
-				},
-			},
-			flattened: []map[string]interface{}{
-				{
-					"id":   "afdb07d8-d0d2-11ea-87d0-0242ac130003",
-					"type": "LOGICAL_PORT",
-				},
-			},
-		},
-
-		// multiple members
-		{
-			expanded: []*models.SecurityGroupMember{
-				{
-					ID:         "afdb07d8-d0d2-11ea-87d0-0242ac130003",
-					MemberType: "LOGICAL_PORT",
-				},
-				{
-					ID:         "f437d690-d0d2-11ea-87d0-0242ac130003",
-					MemberType: "VIRTUAL_MACHINE",
-				},
-			},
-			flattened: []map[string]interface{}{
-				{
-					"id":   "afdb07d8-d0d2-11ea-87d0-0242ac130003",
-					"type": "LOGICAL_PORT",
-				},
-				{
-					"id":   "f437d690-d0d2-11ea-87d0-0242ac130003",
-					"type": "VIRTUAL_MACHINE",
+					"security_group_id": strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
+					"project_id":        strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
+					"display_name":      "MySG1",
 				},
 			},
 		},
 	}
 
 	for _, c := range cases {
-		flattenedSetType := schema.NewSet(securityGroupMembersHash, mapSliceToInterfaceSlice(c.flattened)).List()
-		outFlattened := flattenSecurityGroupMembers(c.expanded).List()
-		assert.EqualValues(t, flattenedSetType, outFlattened, "Error matching output and flattened: %#v vs %#v", outFlattened, c.flattened)
 
-		flattenedInterfaceSlice := mapSliceToInterfaceSlice(c.flattened)
-		outExpanded := expandSecurityGroupMembers(flattenedInterfaceSlice)
-		assert.EqualValues(t, c.expanded, outExpanded, "Error matching output and expanded: %#v vs %#v", outExpanded, c.expanded)
+		flattenedType := mapSliceToInterfaceSlice(c.flattened)
+		outFlattened := mapSliceToInterfaceSlice(flattenSecurityGroups(c.expanded))
+		assert.EqualValues(t, flattenedType, outFlattened, "Error matching output and flattened: %#v vs %#v", outFlattened, flattenedType)
 	}
 }

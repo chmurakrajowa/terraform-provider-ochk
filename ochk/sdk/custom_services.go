@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/custom_services"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/custom_services"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -21,15 +21,15 @@ func (p *CustomServicesProxy) Create(ctx context.Context, customService *models.
 		return nil, fmt.Errorf("error while validating custom service struct: %w", err)
 	}
 
-	params := &custom_services.CustomServiceCreateUsingPUTParams{
-		CustomServiceInstance: customService,
-		Context:               ctx,
-		HTTPClient:            p.httpClient,
+	params := &custom_services.PutNetworkCustomServicesParams{
+		Body:       customService,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.CustomServiceCreateUsingPUT(params)
+	put, err := p.service.PutNetworkCustomServices(params)
 	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while creating custom service: %w", err)
@@ -47,16 +47,16 @@ func (p *CustomServicesProxy) Update(ctx context.Context, customService *models.
 		return nil, fmt.Errorf("error while validating custom service struct: %w", err)
 	}
 
-	params := &custom_services.CustomServiceUpdateUsingPUTParams{
-		ServiceID:             customService.ServiceID,
-		CustomServiceInstance: customService,
-		Context:               ctx,
-		HTTPClient:            p.httpClient,
+	params := &custom_services.PutNetworkCustomServicesServiceIDParams{
+		ServiceID:  customService.ServiceID,
+		Body:       customService,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.CustomServiceUpdateUsingPUT(params)
+	put, err := p.service.PutNetworkCustomServicesServiceID(params)
 	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying custom service: %w", err)
@@ -69,17 +69,17 @@ func (p *CustomServicesProxy) Update(ctx context.Context, customService *models.
 	return put.Payload.CustomServiceInstance, nil
 }
 
-func (p *CustomServicesProxy) Read(ctx context.Context, customServiceID string) (*models.CustomServiceInstance, error) {
-	params := &custom_services.CustomServiceGetUsingGETParams{
+func (p *CustomServicesProxy) Read(ctx context.Context, customServiceID strfmt.UUID) (*models.CustomServiceInstance, error) {
+	params := &custom_services.GetNetworkCustomServicesServiceIDParams{
 		ServiceID:  customServiceID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, err := p.service.CustomServiceGetUsingGET(params)
+	response, err := p.service.GetNetworkCustomServicesServiceID(params)
 
 	if err != nil {
-		var notFound *custom_services.CustomServiceGetUsingGETNotFound
+		var notFound *custom_services.GetNetworkCustomServicesServiceIDNotFound
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
 		}
@@ -95,13 +95,13 @@ func (p *CustomServicesProxy) Read(ctx context.Context, customServiceID string) 
 }
 
 func (p *CustomServicesProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.CustomServiceInstance, error) {
-	params := &custom_services.CustomServiceListUsingGETParams{
+	params := &custom_services.GetNetworkCustomServicesParams{
 		DisplayName: &displayName,
 		Context:     ctx,
 		HTTPClient:  p.httpClient,
 	}
 
-	response, err := p.service.CustomServiceListUsingGET(params)
+	response, err := p.service.GetNetworkCustomServices(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while listing custom services: %w", err)
 	}
@@ -114,12 +114,12 @@ func (p *CustomServicesProxy) ListByDisplayName(ctx context.Context, displayName
 }
 
 func (p *CustomServicesProxy) ListCustomServices(ctx context.Context) ([]*models.CustomServiceInstance, error) {
-	params := &custom_services.CustomServiceListUsingGETParams{
+	params := &custom_services.GetNetworkCustomServicesParams{
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, err := p.service.CustomServiceListUsingGET(params)
+	response, err := p.service.GetNetworkCustomServices(params)
 	if err != nil {
 		return nil, fmt.Errorf("error while listing custom services: %w", err)
 	}
@@ -131,7 +131,7 @@ func (p *CustomServicesProxy) ListCustomServices(ctx context.Context) ([]*models
 	return response.Payload.CustomServiceInstanceCollection, nil
 }
 
-func (p *CustomServicesProxy) Exists(ctx context.Context, customServiceID string) (bool, error) {
+func (p *CustomServicesProxy) Exists(ctx context.Context, customServiceID strfmt.UUID) (bool, error) {
 	if _, err := p.Read(ctx, customServiceID); err != nil {
 		if IsNotFoundError(err) {
 			return false, nil
@@ -143,16 +143,16 @@ func (p *CustomServicesProxy) Exists(ctx context.Context, customServiceID string
 	return true, nil
 }
 
-func (p *CustomServicesProxy) Delete(ctx context.Context, customServiceID string) error {
-	params := &custom_services.CustomServiceDeleteUsingDELETEParams{
+func (p *CustomServicesProxy) Delete(ctx context.Context, customServiceID strfmt.UUID) error {
+	params := &custom_services.DeleteNetworkCustomServicesServiceIDParams{
 		ServiceID:  customServiceID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, _, err := p.service.CustomServiceDeleteUsingDELETE(params)
+	response, err := p.service.DeleteNetworkCustomServicesServiceID(params)
 	if err != nil {
-		var badRequest *custom_services.CustomServiceDeleteUsingDELETEBadRequest
+		var badRequest *custom_services.DeleteNetworkCustomServicesServiceIDBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}

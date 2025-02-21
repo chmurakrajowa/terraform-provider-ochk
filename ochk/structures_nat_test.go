@@ -1,7 +1,8 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -9,7 +10,7 @@ import (
 func TestFlattenAutoNat(t *testing.T) {
 	cases := []struct {
 		expanded  []*models.NATRuleInstance
-		flattened []map[string]interface{}
+		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
 		{
@@ -31,13 +32,13 @@ func TestFlattenAutoNat(t *testing.T) {
 					},
 				},
 			},
-			flattened: []map[string]interface{}{
+			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"auto_nat_id":        "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					"auto_nat_id":        strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					"display_name":       "nat-test1",
-					"virtual_network_id": "2ae951f1-5285-496c-b598-aabe1a792319",
+					"virtual_network_id": strfmt.UUID("2ae951f1-5285-496c-b598-aabe1a792319"),
 					"enabled":            true,
-					"vrf_id":             "547948e9-b67d-44d1-ad69-ae9b711e289c",
+					"vrf_id":             strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 				},
 			},
 		},
@@ -68,20 +69,20 @@ func TestFlattenAutoNat(t *testing.T) {
 					},
 				},
 			},
-			flattened: []map[string]interface{}{
+			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"auto_nat_id":        "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					"auto_nat_id":        strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					"display_name":       "nat-test1",
-					"virtual_network_id": "2ae951f1-5285-496c-b598-aabe1a792319",
+					"virtual_network_id": strfmt.UUID("2ae951f1-5285-496c-b598-aabe1a792319"),
 					"enabled":            false,
-					"vrf_id":             "547948e9-b67d-44d1-ad69-ae9b711e289c",
+					"vrf_id":             strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 				},
 				{
-					"auto_nat_id":        "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					"auto_nat_id":        strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					"display_name":       "nat-test2",
-					"virtual_network_id": "2ae951f1-5285-496c-b598-aabe1a792319",
+					"virtual_network_id": strfmt.UUID("2ae951f1-5285-496c-b598-aabe1a792319"),
 					"enabled":            false,
-					"vrf_id":             "b0908315-4c61-4326-b18d-2d145e6937a3",
+					"vrf_id":             strfmt.UUID("b0908315-4c61-4326-b18d-2d145e6937a3"),
 				},
 			},
 		},
@@ -97,7 +98,7 @@ func TestFlattenAutoNat(t *testing.T) {
 func TestFlattenManualNat(t *testing.T) {
 	cases := []struct {
 		expanded  []*models.NATRuleInstance
-		flattened []map[string]interface{}
+		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
 		{
@@ -108,24 +109,24 @@ func TestFlattenManualNat(t *testing.T) {
 			expanded: []*models.NATRuleInstance{
 				{
 					NatType:     "MANUAL",
-					RuleID:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					RuleID:      strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					DisplayName: "nat-test1",
-					Action:      "DNAT",
+					Action:      models.NATRuleAction("DNAT"),
 					Enabled:     true,
 					TierZeroRouter: &models.RouterInstance{
-						RouterID: "547948e9-b67d-44d1-ad69-ae9b711e289c",
+						RouterID: strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 					},
 					SourceNetwork:      "192.168.15.0/24",
 					DestinationNetwork: "192.168.0.0/24",
 				},
 			},
-			flattened: []map[string]interface{}{
+			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"manual_nat_id":       "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					"manual_nat_id":       strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					"display_name":        "nat-test1",
-					"action":              "DNAT",
+					"action":              models.NATRuleAction("DNAT"),
 					"enabled":             true,
-					"vrf_id":              "547948e9-b67d-44d1-ad69-ae9b711e289c",
+					"vrf_id":              strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 					"source_network":      "192.168.15.0/24",
 					"destination_network": "192.168.0.0/24",
 				},
@@ -158,22 +159,22 @@ func TestFlattenManualNat(t *testing.T) {
 					DestinationNetwork: "192.168.0.0/24",
 				},
 			},
-			flattened: []map[string]interface{}{
+			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"manual_nat_id":       "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					"manual_nat_id":       strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					"display_name":        "nat-test2",
-					"action":              "DNAT",
+					"action":              models.NATRuleAction("DNAT"),
 					"enabled":             false,
-					"vrf_id":              "b0908315-4c61-4326-b18d-2d145e6937a3",
+					"vrf_id":              strfmt.UUID("b0908315-4c61-4326-b18d-2d145e6937a3"),
 					"source_network":      "192.168.0.0/24",
 					"destination_network": "192.168.1.0/24",
 				},
 				{
-					"manual_nat_id":       "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					"manual_nat_id":       strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					"display_name":        "nat-test1",
-					"action":              "DNAT",
+					"action":              models.NATRuleAction("DNAT"),
 					"enabled":             true,
-					"vrf_id":              "547948e9-b67d-44d1-ad69-ae9b711e289c",
+					"vrf_id":              strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 					"source_network":      "192.168.15.0/24",
 					"destination_network": "192.168.0.0/24",
 				},

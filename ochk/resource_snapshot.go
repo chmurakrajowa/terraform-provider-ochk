@@ -2,8 +2,10 @@ package ochk
 
 import (
 	"context"
+	"fmt"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"strings"
@@ -72,15 +74,34 @@ func resourceSnapshot() *schema.Resource {
 }
 
 func resourceSnapshotImportState(_ context.Context, d *schema.ResourceData, _ interface{}) ([]*schema.ResourceData, error) {
-	d.SetId(strings.ToLower(d.Id()))
+	parts := strings.SplitN(d.Id(), "/", 2)
+	if len(parts) != 2 || parts[0] == "" || parts[1] == "" {
+		return nil, fmt.Errorf("unexpected format of ID (%s), expected format: virtual_machine_id/snapshot_id", d.Id())
+	}
+	d.SetId(strings.ToLower(parts[1]))
+	if err := d.Set("virtual_machine_id", strings.ToLower(parts[0])); err != nil {
+		return nil, fmt.Errorf("cannot set virtual_machine_id: (%s)", parts[0])
+	}
 	return []*schema.ResourceData{d}, nil
 }
 
 func resourceSnapshotCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Snapshots
 
-	virtualMachineId := d.Get("virtual_machine_id").(string)
+	virtualMachineId := strfmt.UUID(d.Get("virtual_machine_id").(string))
 	ram := d.Get("ram").(bool)
+
+	//if ram {
+	//	err := d.Set("power_state", models.PowerStatePoweredOn)
+	//	if err != nil {
+	//		return nil
+	//	}
+	//} else {
+	//	err := d.Set("power_state", models.PowerStatePoweredOff)
+	//	if err != nil {
+	//		return nil
+	//	}
+	//}
 
 	snapshot := mapResourceDataToSnapshot(d)
 
@@ -89,15 +110,15 @@ func resourceSnapshotCreate(ctx context.Context, d *schema.ResourceData, meta in
 		return diag.Errorf("error while creating snapshot: %+v", err)
 	}
 
-	d.SetId(created.SnapshotID)
+	d.SetId(created.SnapshotID.String())
 	return resourceSnapshotRead(ctx, d, meta)
 }
 
 func resourceSnapshotRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Snapshots
-	virtualMachineId := d.Get("virtual_machine_id").(string)
+	virtualMachineId := strfmt.UUID(d.Get("virtual_machine_id").(string))
 
-	snapshot, err := proxy.Read(ctx, d.Id(), virtualMachineId)
+	snapshot, err := proxy.Read(ctx, strfmt.UUID(d.Id()), virtualMachineId)
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -132,9 +153,9 @@ func resourceSnapshotRead(ctx context.Context, d *schema.ResourceData, meta inte
 func resourceSnapshotDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Snapshots
 
-	virtualMachineID := d.Get("virtual_machine_id").(string)
+	virtualMachineID := strfmt.UUID(d.Get("virtual_machine_id").(string))
 
-	err := proxy.Delete(ctx, virtualMachineID, d.Id())
+	err := proxy.Delete(ctx, virtualMachineID, strfmt.UUID(d.Id()))
 
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
@@ -151,9 +172,20 @@ func mapResourceDataToSnapshot(d *schema.ResourceData) *models.SnapshotInstance 
 	return &models.SnapshotInstance{
 		SnapshotName:        d.Get("display_name").(string),
 		SnapshotDescription: d.Get("snapshot_description").(string),
-		VirtualMachineID:    d.Get("virtual_machine_id").(string),
-		PowerState:          d.Get("power_state").(string),
-		ParentSnapshotID:    d.Get("parent_id").(string),
+		VirtualMachineID:    strfmt.UUID(d.Get("virtual_machine_id").(string)),
+		PowerState:          castStringToPowerStateEnum(d.Get("power_state").(string)),
+		ParentSnapshotID:    strfmt.UUID(d.Get("parent_id").(string)),
 		ChildSnapshots:      expandChildSnapshots(d.Get("child_id").(*schema.Set).List()),
+	}
+}
+
+func castStringToPowerStateEnum(e string) models.PowerState {
+	switch e {
+	case "poweredOff":
+		return models.PowerStatePoweredOff
+	case "poweredOn":
+		return models.PowerStatePoweredOn
+	default:
+		return ""
 	}
 }

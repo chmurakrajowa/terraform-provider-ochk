@@ -46,6 +46,21 @@ $ terraform apply
 Developing the Provider
 ---------------------------
 
+---------------------------
+Update/generate API client for Platforma OChK V3.
+
+1. To generate new client from swagger, you need to download new swagger definition file in json format from https://pckproxy-at.ochk.pilot if you are working on AUTOTEST enviroment.
+
+Swagger.json file is available at: https://pckproxy-at.ochk.pilot/swagger/v1/swagger.json
+
+2. Place downloaded file in location ./api/v3/swagger.json
+3. Run script:
+```sh
+./tools/swagger_gen.sh
+```
+4. New proxy client will be generated. Do not modify any file under /api/v3/ location
+
+--------------------
 If you wish to work on the provider, you'll first need [Go](http://www.golang.org) installed on your machine (version 1.13+ is *required*).
 
 To compile the provider, run `go build ./...`. This will build the provider and put the provider binary in the current directory.
@@ -69,6 +84,7 @@ $ export TF_ACC=true
 $ export TF_VAR_host=host
 $ export TF_VAR_platform=platform
 $ export TF_VAR_api_key=api_key
+$ export TF_VAR_platform_type=VMWARE / OPENSTACK
 
 $ go test ./...
 ```

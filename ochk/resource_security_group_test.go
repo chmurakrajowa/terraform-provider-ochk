@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"testing"
@@ -16,7 +17,7 @@ type SecurityGroupTestData struct {
 }
 
 type SecurityGroupMemberTestData struct {
-	ID   string
+	ID   strfmt.UUID
 	Type string
 }
 
@@ -41,6 +42,28 @@ resource "ochk_security_group" "{{ .ResourceName}}" {
 `, c)
 }
 
+func (c *SecurityGroupTestData) ToString2(projNameSuffix string) string {
+
+	return executeTemplateToString(`
+
+data "ochk_project" "proj-1`+projNameSuffix+`" {
+  display_name = "`+testData.Project1Name+`"
+}
+
+resource "ochk_security_group" "{{ .ResourceName}}" {
+  display_name = "{{ .DisplayName}}"
+  project_id = data.ochk_project.proj-1`+projNameSuffix+`.id
+
+  {{range $member := .Members}}
+  members {
+    id   = {{ $member.ID }}
+    type = "VIRTUAL_MACHINE"
+  }
+  {{end}}
+}
+`, c)
+}
+
 func (c *SecurityGroupTestData) FullResourceName() string {
 	return "ochk_security_group." + c.ResourceName
 }
@@ -57,11 +80,13 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 		DisplayName:  generateRandName(devTestDataPrefix),
 		Members: []SecurityGroupMemberTestData{
 			{
-				ID:   testDataResourceID(&virtualMachine),
+				ID:   strfmt.UUID(testDataResourceID(&virtualMachine)),
 				Type: "VIRTUAL_MACHINE",
 			},
 		},
 	}
+	fmt.Printf("Security group name: %v\n", securityGroup.DisplayName)
+
 	configOneMember := virtualMachine.ToString("-sc1") + securityGroup.ToString("-one-mbmr")
 
 	/* Security group with one member with updated display_name */
@@ -76,7 +101,7 @@ func TestAccSecurityGroupResource_create(t *testing.T) {
 		DisplayName:  testData.VirtualMachine2DisplayName,
 	}
 	securityGroupTwoMembers.Members = append(securityGroupTwoMembers.Members, SecurityGroupMemberTestData{
-		ID:   testDataResourceID(&virtualMachine2),
+		ID:   strfmt.UUID(testDataResourceID(&virtualMachine2)),
 		Type: "VIRTUAL_MACHINE",
 	})
 	configTwoMembers := securityGroupTwoMembers.ToString("-two-mbmrs") + virtualMachine.ToString("-sc21") + virtualMachine2.ToString("-sg22")

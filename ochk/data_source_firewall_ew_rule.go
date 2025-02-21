@@ -3,6 +3,7 @@ package ochk
 import (
 	"context"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -88,7 +89,7 @@ func dataSourceFirewallEWRule() *schema.Resource {
 func dataSourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallEWRules
 
-	routerID := d.Get("vpc_id").(string)
+	routerID := strfmt.UUID(d.Get("vpc_id").(string))
 
 	displayName := d.Get("display_name").(string)
 
@@ -106,7 +107,7 @@ func dataSourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("more than one firewall ew rule with display_name: %s found!", displayName)
 	}
 
-	d.SetId(firewallEWRules[0].RuleID)
+	d.SetId(firewallEWRules[0].RuleID.String())
 
 	if err := d.Set("display_name", firewallEWRules[0].DisplayName); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)

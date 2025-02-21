@@ -3,8 +3,9 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/stretchr/testify/assert"
@@ -111,7 +112,7 @@ func testAccFirewallEWRuleCheckRulesOrder(securityPolicyResourceName string, dis
 			return fmt.Errorf("resource not found: %s", securityPolicyResourceName)
 		}
 
-		securityPolicies, err := client.FirewallEWRules.List(ctx, securityPolicyResource.Primary.ID)
+		securityPolicies, err := client.FirewallEWRules.List(ctx, strfmt.UUID(securityPolicyResource.Primary.ID))
 		if err != nil {
 			return err
 		}
@@ -147,10 +148,10 @@ func TestCheckOrderOfSecurityPolicies(t *testing.T) {
 			{},
 		}
 
-		stringArrayToDFWRule := func(strArr []string) []*models.DFWRule {
-			var result []*models.DFWRule
+		stringArrayToDFWRule := func(strArr []string) []*models.DfwRule {
+			var result []*models.DfwRule
 			for i := 0; i < len(strArr); i++ {
-				result = append(result, &models.DFWRule{DisplayName: strArr[i]})
+				result = append(result, &models.DfwRule{DisplayName: strArr[i]})
 			}
 			return result
 		}
@@ -165,7 +166,7 @@ func TestCheckOrderOfSecurityPolicies(t *testing.T) {
 	})
 }
 
-func checkOrderOfSecurityPolicies(securityPolicies []*models.DFWRule, displayNames []string) bool {
+func checkOrderOfSecurityPolicies(securityPolicies []*models.DfwRule, displayNames []string) bool {
 	indexOfFirstElement := findIndexOfFirstMatch(len(securityPolicies), func(idx int) bool {
 		return securityPolicies[idx].DisplayName == displayNames[0]
 	})

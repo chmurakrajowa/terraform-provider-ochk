@@ -20,7 +20,11 @@ func dataSourceDeployment() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"initial_size_mb": {
+			"deployment_category": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"initial_size_gb": {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
@@ -50,11 +54,15 @@ func dataSourceDeploymentRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting deployment_type: %+v", err)
 	}
 
-	if err := d.Set("initial_size_mb", int(deployments[0].DeploymentInitialSizeMB)); err != nil {
+	if err := d.Set("deployment_category", deployments[0].DeploymentCategory); err != nil {
+		return diag.Errorf("error setting deployment_category: %+v", err)
+	}
+
+	if err := d.Set("initial_size_gb", int(deployments[0].DeploymentInitialSizeGB)); err != nil {
 		return diag.Errorf("error setting initial_size_gb: %+v", err)
 	}
 
-	d.SetId(deployments[0].DeploymentID)
+	d.SetId(deployments[0].DeploymentID.String())
 
 	return nil
 }

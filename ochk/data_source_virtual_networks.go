@@ -55,7 +55,7 @@ func dataSourceVirtualNetworksRead(ctx context.Context, d *schema.ResourceData, 
 		return diag.Errorf("error while listing virtual networks: %+v", err)
 	}
 
-	if err := d.Set("virtual_networks", flattenVirtualNeworks(virtualNetworks)); err != nil {
+	if err := d.Set("virtual_networks", flattenVirtualNetworks(virtualNetworks)); err != nil {
 		return diag.Errorf("error setting virtual networks list: %v", err)
 	}
 

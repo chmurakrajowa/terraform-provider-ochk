@@ -4,7 +4,8 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/runtime/logger"
 	"github.com/go-openapi/strfmt"
@@ -14,29 +15,35 @@ import (
 )
 
 type Client struct {
-	FirewallEWRules    FirewallEWRulesProxy
-	FirewallSNRules    FirewallSNRulesProxy
-	Requests           RequestsProxy
-	Routers            RoutersProxy
-	SecurityGroups     SecurityGroupsProxy
-	Services           ServicesProxy
-	Projects           ProjectsProxy
-	VirtualMachines    VirtualMachinesProxy
-	VirtualNetworks    VirtualNetworksProxy
-	IPCollections      IPCollectionsProxy
-	Deployments        DeploymentsProxy
-	CustomServices     CustomServicesProxy
-	KMSKeys            KMSKeysProxy
-	BackupPlans        BackupPlansProxy
-	BackupLists        BackupListsProxy
-	Tags               TagsProxy
-	Nats               NatProxy
-	Folders            FoldersProxy
-	PublicIPAddresses  PublicIPAddressProxy
-	Snapshots          SnapshotsProxy
-	Accounts           AccountsProxy
-	key                string
-	apiClientTransport httptransport.Runtime
+	FloatingIPAddresses FloatingIPAddressProxy
+	FloatingIPVms       FloatingIPVmsProxy
+	FirewallRules       FirewallRulesProxy
+	FirewallEWRules     FirewallEWRulesProxy
+	FirewallSNRules     FirewallSNRulesProxy
+	Requests            RequestsProxy
+	Routers             RoutersProxy
+	SecurityGroups      SecurityGroupsProxy
+	Services            ServicesProxy
+	Projects            ProjectsProxy
+	VirtualMachines     VirtualMachinesProxy
+	VirtualNetworks     VirtualNetworksProxy
+	IPCollections       IPCollectionsProxy
+	Deployments         DeploymentsProxy
+	CustomServices      CustomServicesProxy
+	KMSKeys             KMSKeysProxy
+	BackupPlans         BackupPlansProxy
+	BackupLists         BackupListsProxy
+	Tags                TagsProxy
+	Nats                NatProxy
+	PortForwarding      PortsForwardingProxy
+	Folders             FoldersProxy
+	PublicIPAddresses   PublicIPAddressProxy
+	Snapshots           SnapshotsProxy
+	Accounts            AccountsProxy
+	PlatformType        PlatformTypeProxy
+	key                 string
+	PType               models.PlatformType
+	apiClientTransport  httptransport.Runtime
 }
 
 var clientMutex sync.Mutex
@@ -46,10 +53,14 @@ type myTransport struct {
 
 var PLATFORM = ""
 var API_KEY = ""
+var PLATFORM_TYPE = ""
 
-func assign(platform string, api_key string) {
+var E1000 = "ERROR{1000}: Check input variables. Selected platform: \"%s\" is not from indicated virtualization platform: \"%s\"."
+
+func assign(platform_type string, platform string, api_key string) {
 	PLATFORM = platform
 	API_KEY = api_key
+	PLATFORM_TYPE = platform_type
 }
 
 func (t *myTransport) RoundTrip(req *http.Request) (*http.Response, error) {
@@ -59,11 +70,11 @@ func (t *myTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	return http.DefaultTransport.RoundTrip(req)
 }
 
-func NewClient(ctx context.Context, host string, platform string, api_key string, insecure bool, debugLogFile string) (*Client, error) {
+func NewClient(ctx context.Context, host string, platform string, api_key string, insecure bool, debugLogFile string, platformType string) (*Client, error) {
 
 	clientMutex.Lock()
 	defer clientMutex.Unlock()
-	assign(platform, api_key)
+	assign(platformType, platform, api_key)
 
 	if c := getClientFromCache(host, platform, api_key, insecure, debugLogFile); c != nil {
 		return c, nil
@@ -109,15 +120,19 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 	c := &Client{
 		SecurityGroups: SecurityGroupsProxy{
 			httpClient: httpClient,
-			service:    authClient.SecurityGroups,
+			service:    authClient.SecurityGroup,
 		},
 		FirewallEWRules: FirewallEWRulesProxy{
 			httpClient: httpClient,
-			service:    authClient.FirewallRulesew,
+			service:    authClient.DfwRule,
 		},
 		FirewallSNRules: FirewallSNRulesProxy{
 			httpClient: httpClient,
-			service:    authClient.FirewallRulessn,
+			service:    authClient.GfwRule,
+		},
+		FirewallRules: FirewallRulesProxy{
+			httpClient: httpClient,
+			service:    authClient.FirewallRule,
 		},
 		Services: ServicesProxy{
 			httpClient: httpClient,
@@ -125,11 +140,11 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		},
 		Routers: RoutersProxy{
 			httpClient: httpClient,
-			service:    authClient.Routers,
+			service:    authClient.Router,
 		},
 		VirtualMachines: VirtualMachinesProxy{
 			httpClient: httpClient,
-			service:    authClient.VirtualMachines,
+			service:    authClient.VirtualMachine,
 		},
 		Projects: ProjectsProxy{
 			httpClient: httpClient,
@@ -137,7 +152,7 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		},
 		VirtualNetworks: VirtualNetworksProxy{
 			httpClient: httpClient,
-			service:    authClient.VirtualNetworks,
+			service:    authClient.VirtualNetwork,
 		},
 		Requests: RequestsProxy{
 			httpClient: httpClient,
@@ -145,7 +160,7 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		},
 		IPCollections: IPCollectionsProxy{
 			httpClient: httpClient,
-			service:    authClient.IPCollections,
+			service:    authClient.IPCollection,
 		},
 		Deployments: DeploymentsProxy{
 			httpClient: httpClient,
@@ -157,7 +172,7 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		},
 		KMSKeys: KMSKeysProxy{
 			httpClient: httpClient,
-			service:    authClient.KmsKeyManagement,
+			service:    authClient.Key,
 		},
 		BackupPlans: BackupPlansProxy{
 			httpClient: httpClient,
@@ -173,7 +188,11 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		},
 		Nats: NatProxy{
 			httpClient: httpClient,
-			service:    authClient.NatRules,
+			service:    authClient.NatRule,
+		},
+		PortForwarding: PortsForwardingProxy{
+			httpClient: httpClient,
+			service:    authClient.PortForwarding,
 		},
 		Folders: FoldersProxy{
 			httpClient: httpClient,
@@ -181,19 +200,42 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		},
 		PublicIPAddresses: PublicIPAddressProxy{
 			httpClient: httpClient,
-			service:    authClient.IPamPublicIPAllocations,
+			service:    authClient.PublicIP,
+		},
+		FloatingIPAddresses: FloatingIPAddressProxy{
+			httpClient: httpClient,
+			service:    authClient.FloatingIP,
+		},
+		FloatingIPVms: FloatingIPVmsProxy{
+			httpClient: httpClient,
+			service:    authClient.FloatingIPVms,
 		},
 		Snapshots: SnapshotsProxy{
 			httpClient: httpClient,
-			service:    authClient.VirtualMachines,
+			service:    authClient.VirtualMachineSnapshot,
 		},
 		Accounts: AccountsProxy{
 			httpClient: httpClient,
-			service:    authClient.BillingAccounts,
+			service:    authClient.Accounts,
+		},
+		PlatformType: PlatformTypeProxy{
+			httpClient: httpClient,
+			service:    authClient.Identification,
 		},
 	}
 
 	c.apiClientTransport = *apiClientAuthTransport
+
+	platformTypeAPI, err := checkPlatformType(ctx, c)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if string(platformTypeAPI) != PLATFORM_TYPE {
+		return nil, fmt.Errorf(E1000, PLATFORM, PLATFORM_TYPE)
+	}
+	c.PType = platformTypeAPI
 	c.key = cacheClient(c, host, platform, api_key, insecure, debugLogFile, &ctx)
 	return c, nil
 }
@@ -202,6 +244,15 @@ type cachedClient struct {
 	c         *Client
 	cacheTime time.Time
 	ctx       *context.Context
+}
+
+func checkPlatformType(ctx context.Context, c *Client) (models.PlatformType, error) {
+	proxy := c.PlatformType
+	platformType, err := proxy.Read(ctx)
+	if err != nil {
+		return "UNKNOWN", fmt.Errorf("error checking platform type. : %v", err)
+	}
+	return platformType, nil
 }
 
 var clientCacheLifetime = time.Minute * 5

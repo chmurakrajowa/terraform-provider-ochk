@@ -1,7 +1,8 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -9,7 +10,7 @@ import (
 func TestFlattenVpcs(t *testing.T) {
 	cases := []struct {
 		expanded  []*models.RouterInstance
-		flattened []map[string]interface{}
+		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
 		{
@@ -35,19 +36,19 @@ func TestFlattenVpcs(t *testing.T) {
 					RouterType:  "TIER1",
 				},
 			},
-			flattened: []map[string]interface{}{
+			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"vpc_id":       "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					"vpc_id":       strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					"display_name": "VRF1",
-					"project_id":   "e2655817-f1a1-4c76-bebb-1fee7ee75607",
-					"vrf_id":       "7364ff23-0513-48b6-97cb-637613e29424",
+					"project_id":   strfmt.UUID("e2655817-f1a1-4c76-bebb-1fee7ee75607"),
+					"vrf_id":       strfmt.UUID("7364ff23-0513-48b6-97cb-637613e29424"),
 					"folder_path":  "/test1",
 				},
 				{
-					"vpc_id":       "791bf702-22fb-4c76-bebb-1fee7ee75607",
+					"vpc_id":       strfmt.UUID("791bf702-22fb-4c76-bebb-1fee7ee75607"),
 					"display_name": "VRF2",
-					"project_id":   "e2655817-f1a1-4c76-bebb-1fee7ee75607",
-					"vrf_id":       "547948e9-b67d-44d1-ad69-ae9b711e289c",
+					"project_id":   strfmt.UUID("e2655817-f1a1-4c76-bebb-1fee7ee75607"),
+					"vrf_id":       strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 					"folder_path":  "/test2",
 				},
 			},

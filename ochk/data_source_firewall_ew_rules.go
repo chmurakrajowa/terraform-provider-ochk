@@ -3,6 +3,7 @@ package ochk
 import (
 	"context"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -43,7 +44,7 @@ func dataSourceFirewallEWRules() *schema.Resource {
 func dataSourceFirewallEWRulesRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).FirewallEWRules
 
-	routerID := d.Get("vpc_id").(string)
+	routerID := strfmt.UUID(d.Get("vpc_id").(string))
 
 	firewallEWRules, err := proxy.List(ctx, routerID)
 
@@ -55,7 +56,7 @@ func dataSourceFirewallEWRulesRead(ctx context.Context, d *schema.ResourceData, 
 		return diag.Errorf("no firewall_ew_rules found for router_id: %v", routerID)
 	}
 
-	d.SetId("firewall-ew-rules-" + routerID)
+	d.SetId("firewall-ew-rules-" + routerID.String())
 
 	return nil
 }

@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/client/security_groups"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk/gen/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/security_group"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -13,7 +13,7 @@ import (
 
 type SecurityGroupsProxy struct {
 	httpClient *http.Client
-	service    security_groups.ClientService
+	service    security_group.ClientService
 }
 
 func (p *SecurityGroupsProxy) Create(ctx context.Context, securityGroup *models.SecurityGroup) (*models.SecurityGroup, error) {
@@ -21,15 +21,15 @@ func (p *SecurityGroupsProxy) Create(ctx context.Context, securityGroup *models.
 		return nil, fmt.Errorf("error while validating security group struct: %w", err)
 	}
 
-	params := &security_groups.SecurityGroupCreateUsingPUTParams{
-		SecurityGroup: securityGroup,
-		Context:       ctx,
-		HTTPClient:    p.httpClient,
+	params := &security_group.PutNetworkSecurityGroupsParams{
+		Body:       securityGroup,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.SecurityGroupCreateUsingPUT(params)
+	put, err := p.service.PutNetworkSecurityGroups(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -48,16 +48,16 @@ func (p *SecurityGroupsProxy) Update(ctx context.Context, securityGroup *models.
 		return nil, fmt.Errorf("error while validating security group struct: %w", err)
 	}
 
-	params := &security_groups.SecurityGroupUpdateUsingPUTParams{
-		GroupID:       securityGroup.ID,
-		SecurityGroup: securityGroup,
-		Context:       ctx,
-		HTTPClient:    p.httpClient,
+	params := &security_group.PutNetworkSecurityGroupsGroupIDParams{
+		GroupID:    securityGroup.ID,
+		Body:       securityGroup,
+		Context:    ctx,
+		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, _, err := p.service.SecurityGroupUpdateUsingPUT(params)
+	put, err := p.service.PutNetworkSecurityGroupsGroupID(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -71,8 +71,8 @@ func (p *SecurityGroupsProxy) Update(ctx context.Context, securityGroup *models.
 	return put.Payload.SecurityGroup, nil
 }
 
-func (p *SecurityGroupsProxy) Read(ctx context.Context, securityGroupID string) (*models.SecurityGroup, error) {
-	params := &security_groups.SecurityGroupGetUsingGETParams{
+func (p *SecurityGroupsProxy) Read(ctx context.Context, securityGroupID strfmt.UUID) (*models.SecurityGroup, error) {
+	params := &security_group.GetNetworkSecurityGroupsGroupIDParams{
 		GroupID:    securityGroupID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
@@ -80,11 +80,11 @@ func (p *SecurityGroupsProxy) Read(ctx context.Context, securityGroupID string) 
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.SecurityGroupGetUsingGET(params)
+	response, err := p.service.GetNetworkSecurityGroupsGroupID(params)
 	mutex.Unlock()
 
 	if err != nil {
-		var notFound *security_groups.SecurityGroupGetUsingGETNotFound
+		var notFound *security_group.GetNetworkSecurityGroupsGroupIDNotFound
 		if ok := errors.As(err, &notFound); ok {
 			return nil, &NotFoundError{Err: err}
 		}
@@ -100,7 +100,7 @@ func (p *SecurityGroupsProxy) Read(ctx context.Context, securityGroupID string) 
 }
 
 func (p *SecurityGroupsProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.SecurityGroup, error) {
-	params := &security_groups.SecurityGroupListUsingGETParams{
+	params := &security_group.GetNetworkSecurityGroupsParams{
 		DisplayName: &displayName,
 		Context:     ctx,
 		HTTPClient:  p.httpClient,
@@ -108,7 +108,7 @@ func (p *SecurityGroupsProxy) ListByDisplayName(ctx context.Context, displayName
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.SecurityGroupListUsingGET(params)
+	response, err := p.service.GetNetworkSecurityGroups(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -123,14 +123,14 @@ func (p *SecurityGroupsProxy) ListByDisplayName(ctx context.Context, displayName
 }
 
 func (p *SecurityGroupsProxy) List(ctx context.Context) ([]*models.SecurityGroup, error) {
-	params := &security_groups.SecurityGroupListUsingGETParams{
+	params := &security_group.GetNetworkSecurityGroupsParams{
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.SecurityGroupListUsingGET(params)
+	response, err := p.service.GetNetworkSecurityGroups(params)
 	mutex.Unlock()
 
 	if err != nil {
@@ -144,7 +144,7 @@ func (p *SecurityGroupsProxy) List(ctx context.Context) ([]*models.SecurityGroup
 	return response.Payload.SecurityGroupCollection, nil
 }
 
-func (p *SecurityGroupsProxy) Exists(ctx context.Context, securityGroupID string) (bool, error) {
+func (p *SecurityGroupsProxy) Exists(ctx context.Context, securityGroupID strfmt.UUID) (bool, error) {
 	if _, err := p.Read(ctx, securityGroupID); err != nil {
 		if IsNotFoundError(err) {
 			return false, nil
@@ -156,17 +156,17 @@ func (p *SecurityGroupsProxy) Exists(ctx context.Context, securityGroupID string
 	return true, nil
 }
 
-func (p *SecurityGroupsProxy) Delete(ctx context.Context, securityGroupID string) error {
-	params := &security_groups.SecurityGroupDeleteUsingDELETEParams{
+func (p *SecurityGroupsProxy) Delete(ctx context.Context, securityGroupID strfmt.UUID) error {
+	params := &security_group.DeleteNetworkSecurityGroupsGroupIDParams{
 		GroupID:    securityGroupID,
 		Context:    ctx,
 		HTTPClient: p.httpClient,
 	}
 
-	response, _, err := p.service.SecurityGroupDeleteUsingDELETE(params)
+	response, err := p.service.DeleteNetworkSecurityGroupsGroupID(params)
 
 	if err != nil {
-		var badRequest *security_groups.SecurityGroupDeleteUsingDELETEBadRequest
+		var badRequest *security_group.DeleteNetworkSecurityGroupsGroupIDBadRequest
 		if ok := errors.As(err, &badRequest); ok {
 			return &NotFoundError{Err: err}
 		}

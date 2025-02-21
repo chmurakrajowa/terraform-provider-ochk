@@ -1,7 +1,11 @@
 package ochk
 
 import (
+	"context"
+	"fmt"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"strconv"
 	"testing"
 )
@@ -49,7 +53,7 @@ func TestAccAutoNatResource_create(t *testing.T) {
 			},
 		},
 		CheckDestroy: resource.ComposeTestCheckFunc(
-			testAccKMSKeyResourceNotExists(autoNat.DisplayName),
+			testAccNatResourceNotExists(autoNat.DisplayName),
 		),
 	})
 }
@@ -147,8 +151,8 @@ func TestAccDNatResource_create_update(t *testing.T) {
 			},
 		},
 		CheckDestroy: resource.ComposeTestCheckFunc(
-			testAccKMSKeyResourceNotExists(dNat.DisplayName),
-			testAccKMSKeyResourceNotExists(dNatUpdated.DisplayName),
+			testAccNatResourceNotExists(dNat.DisplayName),
+			testAccNatResourceNotExists(dNatUpdated.DisplayName),
 		),
 	})
 
@@ -246,8 +250,8 @@ func TestAccSNatResource_create_update(t *testing.T) {
 			},
 		},
 		CheckDestroy: resource.ComposeTestCheckFunc(
-			testAccKMSKeyResourceNotExists(sNat.DisplayName),
-			testAccKMSKeyResourceNotExists(sNatUpdated.DisplayName),
+			testAccNatResourceNotExists(sNat.DisplayName),
+			testAccNatResourceNotExists(sNatUpdated.DisplayName),
 		),
 	})
 }
@@ -338,8 +342,24 @@ func TestAccNoSNatResource_create_update(t *testing.T) {
 			},
 		},
 		CheckDestroy: resource.ComposeTestCheckFunc(
-			testAccKMSKeyResourceNotExists(noSNat.DisplayName),
-			testAccKMSKeyResourceNotExists(noSNatUpdated.DisplayName),
+			testAccNatResourceNotExists(noSNat.DisplayName),
+			testAccNatResourceNotExists(noSNatUpdated.DisplayName),
 		),
 	})
+}
+
+func testAccNatResourceNotExists(displayName string) resource.TestCheckFunc {
+	return func(s *terraform.State) error {
+		proxy := testAccProvider.Meta().(*sdk.Client).Nats
+
+		nat, err := proxy.ListNatsByName(context.Background(), displayName)
+		if err != nil {
+			return err
+		}
+
+		if len(nat) > 0 {
+			return fmt.Errorf("nat %s still exists", nat[0].RuleID)
+		}
+		return nil
+	}
 }
