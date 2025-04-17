@@ -1,3 +1,13 @@
+## 3.0.1 (2025-04-17)
+
+### Resources
+
+* Changed resources for VMware
+* `resource_kms_key` - changes for the imported key
+
+### Misc
+* Improved documentation display - two folders in docs: data-sources and resources
+
 ## 3.0.0 (2025-02-17)
 
 ### Resources
