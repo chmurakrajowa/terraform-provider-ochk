@@ -241,11 +241,10 @@ func mapResourceDataToKeyInstance(d *schema.ResourceData) *models.KeyInstance {
 
 func mapResourceDataToKeyImport(d *schema.ResourceData) *models.KeyImport {
 	keyInstance := models.KeyImport{
-		Algorithm: d.Get("algorithm").(string),
-		KeyName:   d.Get("display_name").(string),
-		//todo zmienić tą metdodę na typ
-		//KeyUsageList: transformSetToStringSlice(d.Get("key_usage").(*schema.Set)),
-		Size: int32(d.Get("size").(int)),
+		Algorithm:    d.Get("algorithm").(string),
+		KeyName:      d.Get("display_name").(string),
+		KeyUsageList: transformSetToSKeyUsage(d.Get("key_usage").(*schema.Set)),
+		Size:         int32(d.Get("size").(int)),
 	}
 
 	if privateKeyIDToUnwrap, ok := d.GetOk("private_key_id_to_unwrap"); ok && privateKeyIDToUnwrap.(string) != "" {
