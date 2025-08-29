@@ -123,8 +123,8 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		apiClientAuthTransport.SetLogger(defaultLogger)
 	}
 
-	configuration := openapi.NewConfiguration()
-	apiClient := openapi.NewAPIClient(configuration)
+	//configuration := openapi.NewConfiguration()
+	//apiClient := openapi.NewAPIClient(configuration)
 	//authClient := apiClient.New(apiClientAuthTransport, strfmt.Default)
 
 	c := &Client{
