@@ -17,8 +17,8 @@ type Client struct {
 	//FloatingIPAddresses FloatingIPAddressProxy
 	//FloatingIPVms       FloatingIPVmsProxy
 	//FirewallRules       FirewallRulesProxy
-	//FirewallEWRules     FirewallEWRulesProxy
-	//FirewallSNRules     FirewallSNRulesProxy
+	FirewallEWRules FirewallEWRulesProxy
+	FirewallSNRules FirewallSNRulesProxy
 	//Requests            RequestsProxy
 	//Routers             RoutersProxy
 	//SecurityGroups      SecurityGroupsProxy
@@ -27,7 +27,7 @@ type Client struct {
 	//VirtualMachines     VirtualMachinesProxy
 	//VirtualNetworks     VirtualNetworksProxy
 	//IPCollections       IPCollectionsProxy
-	//Deployments         DeploymentsProxy
+	Deployments DeploymentsProxy
 	//CustomServices      CustomServicesProxy
 	//KMSKeys             KMSKeysProxy
 	//BackupPlans         BackupPlansProxy
@@ -132,14 +132,14 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		//	httpClient: httpClient,
 		//	service:    authClient.SecurityGroup,
 		//},
-		//FirewallEWRules: FirewallEWRulesProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.DfwRule,
-		//},
-		//FirewallSNRules: FirewallSNRulesProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.GfwRule,
-		//},
+		FirewallEWRules: FirewallEWRulesProxy{
+			httpClient: httpClient,
+			//service:    authClient.DfwRule,
+		},
+		FirewallSNRules: FirewallSNRulesProxy{
+			httpClient: httpClient,
+			//service:    authClient.GfwRule,
+		},
 		//FirewallRules: FirewallRulesProxy{
 		//	httpClient: httpClient,
 		//	service:    authClient.FirewallRule,
@@ -172,10 +172,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		//	httpClient: httpClient,
 		//	service:    authClient.IPCollection,
 		//},
-		//Deployments: DeploymentsProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.Deployments,
-		//},
+		Deployments: DeploymentsProxy{
+			httpClient: httpClient,
+			//service:    authClient.Deployments,
+		},
 		//CustomServices: CustomServicesProxy{
 		//	httpClient: httpClient,
 		//	service:    authClient.CustomServices,
