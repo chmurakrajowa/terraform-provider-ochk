@@ -15,10 +15,10 @@ import (
 
 type Client struct {
 	FloatingIPAddresses FloatingIPAddressProxy
-	//FloatingIPVms       FloatingIPVmsProxy
-	FirewallRules   FirewallRulesProxy
-	FirewallEWRules FirewallEWRulesProxy
-	FirewallSNRules FirewallSNRulesProxy
+	FloatingIPVms       FloatingIPVmsProxy
+	FirewallRules       FirewallRulesProxy
+	FirewallEWRules     FirewallEWRulesProxy
+	FirewallSNRules     FirewallSNRulesProxy
 	//Requests            RequestsProxy
 	//Routers             RoutersProxy
 	//SecurityGroups      SecurityGroupsProxy
@@ -35,7 +35,7 @@ type Client struct {
 	//Tags                TagsProxy
 	//Nats                NatProxy
 	//PortForwarding      PortsForwardingProxy
-	//Folders             FoldersProxy
+	Folders FoldersProxy
 	//PublicIPAddresses   PublicIPAddressProxy
 	//Snapshots           SnapshotsProxy
 	Accounts           AccountsProxy
@@ -204,10 +204,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		//	httpClient: httpClient,
 		//	service:    authClient.PortForwarding,
 		//},
-		//Folders: FoldersProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.Folder,
-		//},
+		Folders: FoldersProxy{
+			httpClient: httpClient,
+			//service:    authClient.Folder,
+		},
 		//PublicIPAddresses: PublicIPAddressProxy{
 		//	httpClient: httpClient,
 		//	service:    authClient.PublicIP,
@@ -216,10 +216,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 			httpClient: httpClient,
 			//service:    authClient.FloatingIP,
 		},
-		//FloatingIPVms: FloatingIPVmsProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.FloatingIPVms,
-		//},
+		FloatingIPVms: FloatingIPVmsProxy{
+			httpClient: httpClient,
+			//service:    authClient.FloatingIPVms,
+		},
 		//Snapshots: SnapshotsProxy{
 		//	httpClient: httpClient,
 		//	service:    authClient.VirtualMachineSnapshot,
