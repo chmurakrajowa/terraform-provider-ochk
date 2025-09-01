@@ -16,7 +16,7 @@ import (
 type Client struct {
 	//FloatingIPAddresses FloatingIPAddressProxy
 	//FloatingIPVms       FloatingIPVmsProxy
-	//FirewallRules       FirewallRulesProxy
+	FirewallRules   FirewallRulesProxy
 	FirewallEWRules FirewallEWRulesProxy
 	FirewallSNRules FirewallSNRulesProxy
 	//Requests            RequestsProxy
@@ -140,10 +140,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 			httpClient: httpClient,
 			//service:    authClient.GfwRule,
 		},
-		//FirewallRules: FirewallRulesProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.FirewallRule,
-		//},
+		FirewallRules: FirewallRulesProxy{
+			httpClient: httpClient,
+			//service:    authClient.FirewallRule,
+		},
 		//Services: ServicesProxy{
 		//	httpClient: httpClient,
 		//	service:    authClient.DefaultServices,

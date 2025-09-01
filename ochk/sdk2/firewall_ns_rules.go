@@ -2,10 +2,8 @@ package sdk
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/gfw_rule"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -136,11 +134,6 @@ func (p *FirewallSNRulesProxy) Delete(ctx context.Context, routerID strfmt.UUID,
 	response, _, err := action.Execute()
 
 	if err != nil {
-		var badRequest *gfw_rule.DeleteNetworkRoutersRouterIDRulesSNRuleIDBadRequest
-		if ok := errors.As(err, &badRequest); ok {
-			return &NotFoundError{Err: err}
-		}
-
 		return fmt.Errorf("error while deleting firewall SN rule: %w", err)
 	}
 
