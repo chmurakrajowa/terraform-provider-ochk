@@ -14,7 +14,7 @@ import (
 )
 
 type Client struct {
-	//FloatingIPAddresses FloatingIPAddressProxy
+	FloatingIPAddresses FloatingIPAddressProxy
 	//FloatingIPVms       FloatingIPVmsProxy
 	FirewallRules   FirewallRulesProxy
 	FirewallEWRules FirewallEWRulesProxy
@@ -212,10 +212,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		//	httpClient: httpClient,
 		//	service:    authClient.PublicIP,
 		//},
-		//FloatingIPAddresses: FloatingIPAddressProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.FloatingIP,
-		//},
+		FloatingIPAddresses: FloatingIPAddressProxy{
+			httpClient: httpClient,
+			//service:    authClient.FloatingIP,
+		},
 		//FloatingIPVms: FloatingIPVmsProxy{
 		//	httpClient: httpClient,
 		//	service:    authClient.FloatingIPVms,
