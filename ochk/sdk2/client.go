@@ -24,25 +24,25 @@ type Client struct {
 	SecurityGroups      SecurityGroupsProxy
 	Services            ServicesProxy
 	Projects            ProjectsProxy
-	//VirtualMachines     VirtualMachinesProxy
-	//VirtualNetworks     VirtualNetworksProxy
-	IPCollections  IPCollectionsProxy
-	Deployments    DeploymentsProxy
-	CustomServices CustomServicesProxy
-	KMSKeys        KMSKeysProxy
-	//BackupPlans         BackupPlansProxy
-	//BackupLists         BackupListsProxy
-	//Tags                TagsProxy
-	Nats               NatProxy
-	PortForwarding     PortsForwardingProxy
-	Folders            FoldersProxy
-	PublicIPAddresses  PublicIPAddressProxy
-	Snapshots          SnapshotsProxy
-	Accounts           AccountsProxy
-	PlatformType       PlatformTypeProxy
-	key                string
-	PType              openapi.PlatformType
-	apiClientTransport httptransport.Runtime
+	VirtualMachines     VirtualMachinesProxy
+	VirtualNetworks     VirtualNetworksProxy
+	IPCollections       IPCollectionsProxy
+	Deployments         DeploymentsProxy
+	CustomServices      CustomServicesProxy
+	KMSKeys             KMSKeysProxy
+	BackupPlans         BackupPlansProxy
+	BackupLists         BackupListsProxy
+	Tags                TagsProxy
+	Nats                NatProxy
+	PortForwarding      PortsForwardingProxy
+	Folders             FoldersProxy
+	PublicIPAddresses   PublicIPAddressProxy
+	Snapshots           SnapshotsProxy
+	Accounts            AccountsProxy
+	PlatformType        PlatformTypeProxy
+	key                 string
+	PType               openapi.PlatformType
+	apiClientTransport  httptransport.Runtime
 }
 
 var clientMutex sync.Mutex
@@ -152,18 +152,18 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 			httpClient: httpClient,
 			//service:    authClient.Router,
 		},
-		//VirtualMachines: VirtualMachinesProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.VirtualMachine,
-		//},
+		VirtualMachines: VirtualMachinesProxy{
+			httpClient: httpClient,
+			//service:    authClient.VirtualMachine,
+		},
 		Projects: ProjectsProxy{
 			httpClient: httpClient,
 			//service:    authClient.Projects,
 		},
-		//VirtualNetworks: VirtualNetworksProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.VirtualNetwork,
-		//},
+		VirtualNetworks: VirtualNetworksProxy{
+			httpClient: httpClient,
+			//service:    authClient.VirtualNetwork,
+		},
 		Requests: RequestsProxy{
 			httpClient: httpClient,
 			//service:    authClient.Requests,
@@ -184,18 +184,18 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 			httpClient: httpClient,
 			//service:    authClient.Key,
 		},
-		//BackupPlans: BackupPlansProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.Backups,
-		//},
-		//BackupLists: BackupListsProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.Backups,
-		//},
-		//Tags: TagsProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.Tags,
-		//},
+		BackupPlans: BackupPlansProxy{
+			httpClient: httpClient,
+			//service:    authClient.Backups,
+		},
+		BackupLists: BackupListsProxy{
+			httpClient: httpClient,
+			//service:    authClient.Backups,
+		},
+		Tags: TagsProxy{
+			httpClient: httpClient,
+			//service:    authClient.Tags,
+		},
 		Nats: NatProxy{
 			httpClient: httpClient,
 			//service:    authClient.NatRule,
