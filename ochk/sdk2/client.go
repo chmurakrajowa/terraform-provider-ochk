@@ -19,11 +19,11 @@ type Client struct {
 	FirewallRules       FirewallRulesProxy
 	FirewallEWRules     FirewallEWRulesProxy
 	FirewallSNRules     FirewallSNRulesProxy
-	//Requests            RequestsProxy
+	Requests            RequestsProxy
 	//Routers             RoutersProxy
 	//SecurityGroups      SecurityGroupsProxy
 	//Services            ServicesProxy
-	//Projects            ProjectsProxy
+	Projects ProjectsProxy
 	//VirtualMachines     VirtualMachinesProxy
 	//VirtualNetworks     VirtualNetworksProxy
 	IPCollections IPCollectionsProxy
@@ -33,10 +33,10 @@ type Client struct {
 	//BackupPlans         BackupPlansProxy
 	//BackupLists         BackupListsProxy
 	//Tags                TagsProxy
-	Nats           NatProxy
-	PortForwarding PortsForwardingProxy
-	Folders        FoldersProxy
-	//PublicIPAddresses   PublicIPAddressProxy
+	Nats              NatProxy
+	PortForwarding    PortsForwardingProxy
+	Folders           FoldersProxy
+	PublicIPAddresses PublicIPAddressProxy
 	//Snapshots           SnapshotsProxy
 	Accounts           AccountsProxy
 	PlatformType       PlatformTypeProxy
@@ -156,18 +156,18 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		//	httpClient: httpClient,
 		//	service:    authClient.VirtualMachine,
 		//},
-		//Projects: ProjectsProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.Projects,
-		//},
+		Projects: ProjectsProxy{
+			httpClient: httpClient,
+			//service:    authClient.Projects,
+		},
 		//VirtualNetworks: VirtualNetworksProxy{
 		//	httpClient: httpClient,
 		//	service:    authClient.VirtualNetwork,
 		//},
-		//Requests: RequestsProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.Requests,
-		//},
+		Requests: RequestsProxy{
+			httpClient: httpClient,
+			//service:    authClient.Requests,
+		},
 		IPCollections: IPCollectionsProxy{
 			httpClient: httpClient,
 			//service:    authClient.IPCollection,
@@ -208,10 +208,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 			httpClient: httpClient,
 			//service:    authClient.Folder,
 		},
-		//PublicIPAddresses: PublicIPAddressProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.PublicIP,
-		//},
+		PublicIPAddresses: PublicIPAddressProxy{
+			httpClient: httpClient,
+			//service:    authClient.PublicIP,
+		},
 		FloatingIPAddresses: FloatingIPAddressProxy{
 			httpClient: httpClient,
 			//service:    authClient.FloatingIP,
