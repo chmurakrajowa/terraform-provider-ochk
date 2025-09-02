@@ -26,10 +26,10 @@ type Client struct {
 	//Projects            ProjectsProxy
 	//VirtualMachines     VirtualMachinesProxy
 	//VirtualNetworks     VirtualNetworksProxy
-	//IPCollections       IPCollectionsProxy
-	Deployments DeploymentsProxy
+	IPCollections IPCollectionsProxy
+	Deployments   DeploymentsProxy
 	//CustomServices      CustomServicesProxy
-	//KMSKeys             KMSKeysProxy
+	KMSKeys KMSKeysProxy
 	//BackupPlans         BackupPlansProxy
 	//BackupLists         BackupListsProxy
 	//Tags                TagsProxy
@@ -168,10 +168,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		//	httpClient: httpClient,
 		//	service:    authClient.Requests,
 		//},
-		//IPCollections: IPCollectionsProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.IPCollection,
-		//},
+		IPCollections: IPCollectionsProxy{
+			httpClient: httpClient,
+			//service:    authClient.IPCollection,
+		},
 		Deployments: DeploymentsProxy{
 			httpClient: httpClient,
 			//service:    authClient.Deployments,
@@ -180,10 +180,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		//	httpClient: httpClient,
 		//	service:    authClient.CustomServices,
 		//},
-		//KMSKeys: KMSKeysProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.Key,
-		//},
+		KMSKeys: KMSKeysProxy{
+			httpClient: httpClient,
+			//service:    authClient.Key,
+		},
 		//BackupPlans: BackupPlansProxy{
 		//	httpClient: httpClient,
 		//	service:    authClient.Backups,
