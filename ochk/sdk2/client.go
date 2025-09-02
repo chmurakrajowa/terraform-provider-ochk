@@ -33,9 +33,9 @@ type Client struct {
 	//BackupPlans         BackupPlansProxy
 	//BackupLists         BackupListsProxy
 	//Tags                TagsProxy
-	//Nats                NatProxy
-	//PortForwarding      PortsForwardingProxy
-	Folders FoldersProxy
+	Nats           NatProxy
+	PortForwarding PortsForwardingProxy
+	Folders        FoldersProxy
 	//PublicIPAddresses   PublicIPAddressProxy
 	//Snapshots           SnapshotsProxy
 	Accounts           AccountsProxy
@@ -196,14 +196,14 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		//	httpClient: httpClient,
 		//	service:    authClient.Tags,
 		//},
-		//Nats: NatProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.NatRule,
-		//},
-		//PortForwarding: PortsForwardingProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.PortForwarding,
-		//},
+		Nats: NatProxy{
+			httpClient: httpClient,
+			//service:    authClient.NatRule,
+		},
+		PortForwarding: PortsForwardingProxy{
+			httpClient: httpClient,
+			//service:    authClient.PortForwarding,
+		},
 		Folders: FoldersProxy{
 			httpClient: httpClient,
 			//service:    authClient.Folder,
