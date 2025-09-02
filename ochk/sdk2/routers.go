@@ -71,11 +71,11 @@ func (p *RoutersProxy) List(ctx context.Context) ([]openapi.RouterInstance, erro
 	return response.RouterCollection, nil
 }
 
-func (p *RoutersProxy) Create(ctx context.Context, Router *openapi.RouterInstance) (*openapi.RouterInstance, error) {
+func (p *RoutersProxy) Create(ctx context.Context, Router openapi.RouterInstance) (*openapi.RouterInstance, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	action := p.service.NetworkRoutersPut(ctx)
+	action := p.service.NetworkRoutersPut(ctx).RouterInstance(Router)
 	put, _, err := action.Execute()
 	mutex.Unlock()
 
