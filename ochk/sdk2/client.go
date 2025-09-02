@@ -20,24 +20,24 @@ type Client struct {
 	FirewallEWRules     FirewallEWRulesProxy
 	FirewallSNRules     FirewallSNRulesProxy
 	Requests            RequestsProxy
-	//Routers             RoutersProxy
-	//SecurityGroups      SecurityGroupsProxy
-	//Services            ServicesProxy
-	Projects ProjectsProxy
+	Routers             RoutersProxy
+	SecurityGroups      SecurityGroupsProxy
+	Services            ServicesProxy
+	Projects            ProjectsProxy
 	//VirtualMachines     VirtualMachinesProxy
 	//VirtualNetworks     VirtualNetworksProxy
-	IPCollections IPCollectionsProxy
-	Deployments   DeploymentsProxy
-	//CustomServices      CustomServicesProxy
-	KMSKeys KMSKeysProxy
+	IPCollections  IPCollectionsProxy
+	Deployments    DeploymentsProxy
+	CustomServices CustomServicesProxy
+	KMSKeys        KMSKeysProxy
 	//BackupPlans         BackupPlansProxy
 	//BackupLists         BackupListsProxy
 	//Tags                TagsProxy
-	Nats              NatProxy
-	PortForwarding    PortsForwardingProxy
-	Folders           FoldersProxy
-	PublicIPAddresses PublicIPAddressProxy
-	//Snapshots           SnapshotsProxy
+	Nats               NatProxy
+	PortForwarding     PortsForwardingProxy
+	Folders            FoldersProxy
+	PublicIPAddresses  PublicIPAddressProxy
+	Snapshots          SnapshotsProxy
 	Accounts           AccountsProxy
 	PlatformType       PlatformTypeProxy
 	key                string
@@ -128,10 +128,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 	//authClient := apiClient.New(apiClientAuthTransport, strfmt.Default)
 
 	c := &Client{
-		//SecurityGroups: SecurityGroupsProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.SecurityGroup,
-		//},
+		SecurityGroups: SecurityGroupsProxy{
+			httpClient: httpClient,
+			//service:    authClient.SecurityGroup,
+		},
 		FirewallEWRules: FirewallEWRulesProxy{
 			httpClient: httpClient,
 			//service:    authClient.DfwRule,
@@ -144,14 +144,14 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 			httpClient: httpClient,
 			//service:    authClient.FirewallRule,
 		},
-		//Services: ServicesProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.DefaultServices,
-		//},
-		//Routers: RoutersProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.Router,
-		//},
+		Services: ServicesProxy{
+			httpClient: httpClient,
+			//service:    authClient.DefaultServices,
+		},
+		Routers: RoutersProxy{
+			httpClient: httpClient,
+			//service:    authClient.Router,
+		},
 		//VirtualMachines: VirtualMachinesProxy{
 		//	httpClient: httpClient,
 		//	service:    authClient.VirtualMachine,
@@ -176,10 +176,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 			httpClient: httpClient,
 			//service:    authClient.Deployments,
 		},
-		//CustomServices: CustomServicesProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.CustomServices,
-		//},
+		CustomServices: CustomServicesProxy{
+			httpClient: httpClient,
+			//service:    authClient.CustomServices,
+		},
 		KMSKeys: KMSKeysProxy{
 			httpClient: httpClient,
 			//service:    authClient.Key,
@@ -220,10 +220,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 			httpClient: httpClient,
 			//service:    authClient.FloatingIPVms,
 		},
-		//Snapshots: SnapshotsProxy{
-		//	httpClient: httpClient,
-		//	service:    authClient.VirtualMachineSnapshot,
-		//},
+		Snapshots: SnapshotsProxy{
+			httpClient: httpClient,
+			//service:    authClient.VirtualMachineSnapshot,
+		},
 		Accounts: AccountsProxy{
 			httpClient: httpClient,
 			//service:    authClient.Accounts,
