@@ -11,7 +11,7 @@ import (
 
 type BackupPlansProxy struct {
 	httpClient *http.Client
-	service    openapi.BackupsAPIService
+	service    *openapi.BackupsAPIService
 }
 
 func (p *BackupPlansProxy) Read(ctx context.Context, backupPlanID strfmt.UUID) (*openapi.BackupPlan, error) {

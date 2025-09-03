@@ -11,7 +11,7 @@ import (
 
 type DeploymentsProxy struct {
 	httpClient *http.Client
-	service    openapi.DeploymentsAPIService
+	service    *openapi.DeploymentsAPIService
 }
 
 func (p *DeploymentsProxy) Read(ctx context.Context, deploymentID strfmt.UUID) (*openapi.DeploymentInstance, error) {

@@ -10,7 +10,7 @@ import (
 
 type AccountsProxy struct {
 	httpClient *http.Client
-	service    openapi.AccountsAPIService
+	service    *openapi.AccountsAPIService
 }
 
 func (p *AccountsProxy) Read(ctx context.Context, accountID strfmt.UUID) (*openapi.AccountInstance, error) {
@@ -97,23 +97,7 @@ func (p *AccountsProxy) Delete(ctx context.Context, accountID strfmt.UUID) error
 }
 
 func (p *AccountsProxy) Update(ctx context.Context, account *openapi.AccountInstance) (*openapi.AccountInstance, error) {
-
-	var myNullableString *string
-	val := &account.AccountId
-	myNullableString = &val
-
-	var accountIdStr string
-	if myNullableString != nil {
-		accountIdStr = *myNullableString
-	} else {
-		accountIdStr = ""
-	}
-
-	if accountIdStr == "" {
-		return nil, fmt.Errorf("error while modifying account: %w", "Account id is null")
-	}
-
-	action := p.service.BillingAccountsAccountIdPut(ctx, accountIdStr)
+	action := p.service.BillingAccountsAccountIdPut(ctx, account.GetAccountId())
 
 	put, _, err := action.Execute()
 

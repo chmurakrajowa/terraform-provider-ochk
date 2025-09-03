@@ -5,7 +5,6 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
-
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/runtime/logger"
 	"net/http"
@@ -123,114 +122,113 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		apiClientAuthTransport.SetLogger(defaultLogger)
 	}
 
-	//configuration := openapi.NewConfiguration()
-	//apiClient := openapi.NewAPIClient(configuration)
-	//authClient := apiClient.New(apiClientAuthTransport, strfmt.Default)
+	configuration := openapi.NewConfiguration()
+	apiClient := openapi.NewAPIClient(configuration)
 
 	c := &Client{
 		SecurityGroups: SecurityGroupsProxy{
 			httpClient: httpClient,
-			//service:    authClient.SecurityGroup,
+			service:    apiClient.SecurityGroupAPI,
 		},
 		FirewallEWRules: FirewallEWRulesProxy{
 			httpClient: httpClient,
-			//service:    authClient.DfwRule,
+			service:    apiClient.DfwRuleAPI,
 		},
 		FirewallSNRules: FirewallSNRulesProxy{
 			httpClient: httpClient,
-			//service:    authClient.GfwRule,
+			service:    apiClient.GfwRuleAPI,
 		},
 		FirewallRules: FirewallRulesProxy{
 			httpClient: httpClient,
-			//service:    authClient.FirewallRule,
+			service:    apiClient.FirewallRuleAPI,
 		},
 		Services: ServicesProxy{
 			httpClient: httpClient,
-			//service:    authClient.DefaultServices,
+			service:    apiClient.DefaultServicesAPI,
 		},
 		Routers: RoutersProxy{
 			httpClient: httpClient,
-			//service:    authClient.Router,
+			service:    apiClient.RouterAPI,
 		},
 		VirtualMachines: VirtualMachinesProxy{
 			httpClient: httpClient,
-			//service:    authClient.VirtualMachine,
+			service:    apiClient.VirtualMachineAPI,
 		},
 		Projects: ProjectsProxy{
 			httpClient: httpClient,
-			//service:    authClient.Projects,
+			service:    apiClient.ProjectsAPI,
 		},
 		VirtualNetworks: VirtualNetworksProxy{
 			httpClient: httpClient,
-			//service:    authClient.VirtualNetwork,
+			service:    apiClient.VirtualNetworkAPI,
 		},
 		Requests: RequestsProxy{
 			httpClient: httpClient,
-			//service:    authClient.Requests,
+			service:    apiClient.RequestsAPI,
 		},
 		IPCollections: IPCollectionsProxy{
 			httpClient: httpClient,
-			//service:    authClient.IPCollection,
+			service:    apiClient.IpCollectionAPI,
 		},
 		Deployments: DeploymentsProxy{
 			httpClient: httpClient,
-			//service:    authClient.Deployments,
+			service:    apiClient.DeploymentsAPI,
 		},
 		CustomServices: CustomServicesProxy{
 			httpClient: httpClient,
-			//service:    authClient.CustomServices,
+			service:    apiClient.CustomServicesAPI,
 		},
 		KMSKeys: KMSKeysProxy{
 			httpClient: httpClient,
-			//service:    authClient.Key,
+			service:    apiClient.KeyAPI,
 		},
 		BackupPlans: BackupPlansProxy{
 			httpClient: httpClient,
-			//service:    authClient.Backups,
+			service:    apiClient.BackupsAPI,
 		},
 		BackupLists: BackupListsProxy{
 			httpClient: httpClient,
-			//service:    authClient.Backups,
+			service:    apiClient.BackupsAPI,
 		},
 		Tags: TagsProxy{
 			httpClient: httpClient,
-			//service:    authClient.Tags,
+			service:    apiClient.TagsAPI,
 		},
 		Nats: NatProxy{
 			httpClient: httpClient,
-			//service:    authClient.NatRule,
+			service:    apiClient.NatRuleAPI,
 		},
 		PortForwarding: PortsForwardingProxy{
 			httpClient: httpClient,
-			//service:    authClient.PortForwarding,
+			service:    apiClient.PortForwardingAPI,
 		},
 		Folders: FoldersProxy{
 			httpClient: httpClient,
-			//service:    authClient.Folder,
+			service:    apiClient.FolderAPI,
 		},
 		PublicIPAddresses: PublicIPAddressProxy{
 			httpClient: httpClient,
-			//service:    authClient.PublicIP,
+			service:    apiClient.PublicIpAPI,
 		},
 		FloatingIPAddresses: FloatingIPAddressProxy{
 			httpClient: httpClient,
-			//service:    authClient.FloatingIP,
+			service:    apiClient.FloatingIpAPI,
 		},
 		FloatingIPVms: FloatingIPVmsProxy{
 			httpClient: httpClient,
-			//service:    authClient.FloatingIPVms,
+			service:    apiClient.FloatingIpVmsAPI,
 		},
 		Snapshots: SnapshotsProxy{
 			httpClient: httpClient,
-			//service:    authClient.VirtualMachineSnapshot,
+			service:    apiClient.VirtualMachineSnapshotAPI,
 		},
 		Accounts: AccountsProxy{
 			httpClient: httpClient,
-			//service:    authClient.Accounts,
+			service:    apiClient.AccountsAPI,
 		},
 		PlatformType: PlatformTypeProxy{
 			httpClient: httpClient,
-			//service:    authClient.Identification,
+			service:    apiClient.IdentificationAPI,
 		},
 	}
 

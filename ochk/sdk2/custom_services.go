@@ -11,7 +11,7 @@ import (
 
 type CustomServicesProxy struct {
 	httpClient *http.Client
-	service    openapi.CustomServicesAPIService
+	service    *openapi.CustomServicesAPIService
 }
 
 func (p *CustomServicesProxy) Create(ctx context.Context, customService openapi.CustomServiceInstance) (*openapi.CustomServiceInstance, error) {
