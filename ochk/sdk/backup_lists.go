@@ -2,10 +2,8 @@ package sdk
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/backups"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -13,79 +11,65 @@ import (
 
 type BackupListsProxy struct {
 	httpClient *http.Client
-	service    backups.ClientService
+	service    *openapi.BackupsAPIService
 }
 
-func (p *BackupListsProxy) Read(ctx context.Context, backupPlanID strfmt.UUID, backupListID strfmt.UUID) (*models.BackupList, error) {
-	params := &backups.GetBackupsPlansBackupPlanIDListsBackupListIDParams{
-		BackupListID: backupListID,
-		BackupPlanID: backupPlanID,
-		Context:      ctx,
-		HTTPClient:   p.httpClient,
-	}
+func (p *BackupListsProxy) Read(ctx context.Context, backupPlanID strfmt.UUID, backupListID strfmt.UUID) (*openapi.BackupList, error) {
 
-	response, err := p.service.GetBackupsPlansBackupPlanIDListsBackupListID(params)
+	action := p.service.BackupsPlansBackupPlanIdListsBackupListIdGet(ctx, string(backupPlanID), string(backupListID))
 
+	response, _, err := action.Execute()
 	if err != nil {
-		var notFound *backups.GetBackupsPlansBackupPlanIDListsBackupListIDNotFound
-
-		if ok := errors.As(err, &notFound); ok {
-			return nil, &NotFoundError{Err: err}
-		}
-
 		return nil, fmt.Errorf("error while reading backup list: %w", err)
 	}
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("retrieving backup list failed: %s", response.Payload.Messages)
+	isSuccess := *response.Success
+
+	if !isSuccess {
+		return nil, fmt.Errorf("retrieving backup list failed: %s", response.Messages)
 	}
 
-	return response.Payload.BackupList, nil
+	return response.BackupList, nil
 }
 
-func (p *BackupListsProxy) ListBackupListByName(ctx context.Context, backupPlanID strfmt.UUID, backupListName string) ([]*models.BackupList, error) {
-	params := &backups.GetBackupsPlansBackupPlanIDListsParams{
-		BackupPlanID:   backupPlanID,
-		BackupListName: &backupListName,
-		Context:        ctx,
-		HTTPClient:     p.httpClient,
-	}
+func (p *BackupListsProxy) ListBackupListByName(ctx context.Context, backupPlanID strfmt.UUID, backupListName string) ([]openapi.BackupList, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetBackupsPlansBackupPlanIDLists(params)
+	action := p.service.BackupsPlansBackupPlanIdListsGet(ctx, string(backupPlanID)).BackupListName(backupListName)
+	response, _, err := action.Execute()
+
+	mutex.Unlock()
+
+	if err != nil {
+		return nil, fmt.Errorf("error while listing backup list: %w", err)
+	}
+	isSuccess := *response.Success
+
+	if !isSuccess {
+		return nil, fmt.Errorf("Listing backup list failed: %s", response.Messages)
+	}
+
+	return response.BackupListCollection, nil
+}
+
+func (p *BackupListsProxy) ListBackupList(ctx context.Context, backupPlanID strfmt.UUID) ([]openapi.BackupList, error) {
+
+	mutex := sync.Mutex{}
+	mutex.Lock()
+	action := p.service.BackupsPlansBackupPlanIdListsGet(ctx, string(backupPlanID))
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing backup list: %w", err)
 	}
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("Listing backup list failed: %s", response.Payload.Messages)
+	isSuccess := *response.Success
+
+	if !isSuccess {
+		return nil, fmt.Errorf("Listing backup list failed: %s", response.Messages)
 	}
 
-	return response.Payload.BackupListCollection, nil
-}
-
-func (p *BackupListsProxy) ListBackupList(ctx context.Context, backupPlanID strfmt.UUID) ([]*models.BackupList, error) {
-	params := &backups.GetBackupsPlansBackupPlanIDListsParams{
-		BackupPlanID: backupPlanID,
-		Context:      ctx,
-		HTTPClient:   p.httpClient,
-	}
-
-	mutex := sync.Mutex{}
-	mutex.Lock()
-	response, err := p.service.GetBackupsPlansBackupPlanIDLists(params)
-	mutex.Unlock()
-
-	if err != nil {
-		return nil, fmt.Errorf("error while listing backup list: %w", err)
-	}
-
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("Listing backup list failed: %s", response.Payload.Messages)
-	}
-
-	return response.Payload.BackupListCollection, nil
+	return response.BackupListCollection, nil
 }

@@ -2,10 +2,8 @@ package sdk
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/nat_rule"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -13,152 +11,120 @@ import (
 
 type NatProxy struct {
 	httpClient *http.Client
-	service    nat_rule.ClientService
+	service    *openapi.NatRuleAPIService
 }
 
-func (p *NatProxy) Read(ctx context.Context, natRuleID strfmt.UUID) (*models.NATRuleInstance, error) {
-	params := &nat_rule.GetNetworkNatRulesRuleIDParams{
-		RuleID:     natRuleID,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
-
+func (p *NatProxy) Read(ctx context.Context, natRuleID strfmt.UUID) (*openapi.NATRuleInstance, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetNetworkNatRulesRuleID(params)
+	action := p.service.NetworkNatRulesRuleIdGet(ctx, string(natRuleID))
+	response, _, err := action.Execute()
 	mutex.Unlock()
 	if err != nil {
-		var notFound *nat_rule.DeleteNetworkNatRulesRuleIDNotFound
-		if ok := errors.As(err, &notFound); ok {
-			return nil, &NotFoundError{Err: err}
-		}
-
 		return nil, fmt.Errorf("error while reading nats: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("retrieving nats failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("retrieving nats failed: %s", response.Messages)
 	}
 
-	return response.Payload.NatRuleInstance, nil
+	return response.NatRuleInstance, nil
 }
 
-func (p *NatProxy) ListNatsByName(ctx context.Context, displayName string) ([]*models.NATRuleInstance, error) {
-	params := &nat_rule.GetNetworkNatRulesParams{
-		DisplayName: &displayName,
-		Context:     ctx,
-		HTTPClient:  p.httpClient,
-	}
+func (p *NatProxy) ListNatsByName(ctx context.Context, displayName string) ([]openapi.NATRuleInstance, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetNetworkNatRules(params)
+	action := p.service.NetworkNatRulesGet(ctx).DisplayName(displayName)
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing nats: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing nats failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("listing nats failed: %s", response.Messages)
 	}
 
-	return response.Payload.NatRuleInstances, nil
+	return response.NatRuleInstances, nil
 }
-func (p *NatProxy) List(ctx context.Context) ([]*models.NATRuleInstance, error) {
-	params := &nat_rule.GetNetworkNatRulesParams{
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
+func (p *NatProxy) List(ctx context.Context) ([]openapi.NATRuleInstance, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetNetworkNatRules(params)
+	action := p.service.NetworkNatRulesGet(ctx)
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing nats: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing nats failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("listing nats failed: %s", response.Messages)
 	}
 
-	return response.Payload.NatRuleInstances, nil
+	return response.NatRuleInstances, nil
 }
 
-func (p *NatProxy) CreateNat(ctx context.Context, natRuleInstance *models.NATRuleInstance) (*models.RequestInstance, error) {
-	if err := natRuleInstance.Validate(strfmt.Default); err != nil {
-		return nil, fmt.Errorf("error while validating nat struct: %w", err)
-	}
-	params := &nat_rule.PutNetworkNatRulesParams{
-		Body:       natRuleInstance,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
+func (p *NatProxy) CreateNat(ctx context.Context, natRuleInstance openapi.NATRuleInstance) (*openapi.RequestInstance, error) {
+
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, err := p.service.PutNetworkNatRules(params)
+	action := p.service.NetworkNatRulesPut(ctx).NATRuleInstance(natRuleInstance)
+	put, _, err := action.Execute()
+
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while creating nat: %w", err)
 	}
+	isSuccess := *put.Success
 
-	if !put.Payload.Success {
-		return nil, fmt.Errorf("creating nat failed: %s", put.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("creating nat failed: %s", put.Messages)
 	}
 
-	return put.Payload.RequestInstance, nil
+	return put.RequestInstance, nil
 }
 
-func (p *NatProxy) Update(ctx context.Context, natRuleInstance *models.NATRuleInstance) (*models.RequestInstance, error) {
-	if err := natRuleInstance.Validate(strfmt.Default); err != nil {
-		return nil, fmt.Errorf("error while validating nat struct: %w", err)
-	}
-	params := &nat_rule.PutNetworkNatRulesRuleIDParams{
-		RuleID:     natRuleInstance.RuleID,
-		Body:       natRuleInstance,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
+func (p *NatProxy) Update(ctx context.Context, natRuleInstance *openapi.NATRuleInstance) (*openapi.RequestInstance, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, err := p.service.PutNetworkNatRulesRuleID(params)
+	action := p.service.NetworkNatRulesRuleIdPut(ctx, natRuleInstance.GetRuleId())
+	put, _, err := action.Execute()
+
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying nat: %w", err)
 	}
+	isSuccess := *put.Success
 
-	if !put.Payload.Success {
-		return nil, fmt.Errorf("modifying nat failed: %s", put.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("modifying nat failed: %s", put.Messages)
 	}
 
-	return put.Payload.RequestInstance, nil
+	return put.RequestInstance, nil
 }
 
 func (p *NatProxy) Delete(ctx context.Context, ruleID strfmt.UUID) error {
-	params := &nat_rule.DeleteNetworkNatRulesRuleIDParams{
-		RuleID:     ruleID,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
 
-	response, err := p.service.DeleteNetworkNatRulesRuleID(params)
+	action := p.service.NetworkNatRulesRuleIdDelete(ctx, string(ruleID))
+	response, _, err := action.Execute()
 
 	if err != nil {
-		var badRequest *nat_rule.DeleteNetworkNatRulesRuleIDBadRequest
-		if ok := errors.As(err, &badRequest); ok {
-			return &NotFoundError{Err: err}
-		}
-
 		return fmt.Errorf("error while deleting nat: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return fmt.Errorf("deleting nat failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return fmt.Errorf("deleting nat failed: %s", response.Messages)
 	}
 
 	return nil

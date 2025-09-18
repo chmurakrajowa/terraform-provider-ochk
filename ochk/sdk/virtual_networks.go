@@ -2,10 +2,8 @@ package sdk
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/virtual_network"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -13,162 +11,130 @@ import (
 
 type VirtualNetworksProxy struct {
 	httpClient *http.Client
-	service    virtual_network.ClientService
+	service    *openapi.VirtualNetworkAPIService
 }
 
-func (p *VirtualNetworksProxy) Create(ctx context.Context, virtualNetwork *models.VirtualNetworkInstance) (*models.RequestInstance, error) {
-	if err := virtualNetwork.Validate(strfmt.Default); err != nil {
-		return nil, fmt.Errorf("error while validating virtual network struct: %w", err)
-	}
-
-	params := &virtual_network.PutNetworksParams{
-		Body:       virtualNetwork,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
+func (p *VirtualNetworksProxy) Create(ctx context.Context, virtualNetwork openapi.VirtualNetworkInstance) (*openapi.RequestInstance, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, err := p.service.PutNetworks(params)
+	action := p.service.NetworksPut(ctx).VirtualNetworkInstance(virtualNetwork)
+
+	put, _, err := action.Execute()
+
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while creating virtual network: %w", err)
 	}
+	isSuccess := *put.Success
 
-	if !put.Payload.Success {
-		return nil, fmt.Errorf("creating virtual network failed: %s", put.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("creating virtual network failed: %s", put.Messages)
 	}
 
-	return put.Payload.RequestInstance, nil
+	return put.RequestInstance, nil
 }
 
-func (p *VirtualNetworksProxy) Update(ctx context.Context, virtualNetwork *models.VirtualNetworkInstance) (*models.RequestInstance, error) {
-	if err := virtualNetwork.Validate(strfmt.Default); err != nil {
-		return nil, fmt.Errorf("error while validating virtual network struct: %w", err)
-	}
-
-	params := &virtual_network.PutNetworksVirtualNetworkIDParams{
-		VirtualNetworkID: virtualNetwork.VirtualNetworkID,
-		Body:             virtualNetwork,
-		Context:          ctx,
-		HTTPClient:       p.httpClient,
-	}
-
+func (p *VirtualNetworksProxy) Update(ctx context.Context, virtualNetwork openapi.VirtualNetworkInstance) (*openapi.RequestInstance, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, err := p.service.PutNetworksVirtualNetworkID(params)
+	action := p.service.NetworksVirtualNetworkIdPut(ctx, virtualNetwork.GetVirtualNetworkId()).VirtualNetworkInstance(virtualNetwork)
+	put, _, err := action.Execute()
+
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying virtual network: %w", err)
 	}
+	isSuccess := *put.Success
 
-	if !put.Payload.Success {
-		return nil, fmt.Errorf("modifying virtual network failed: %s", put.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("modifying virtual network failed: %s", put.Messages)
 	}
 
-	return put.Payload.RequestInstance, nil
+	return put.RequestInstance, nil
 }
 
-func (p *VirtualNetworksProxy) Read(ctx context.Context, virtualNetworkID strfmt.UUID) (*models.VirtualNetworkInstance, error) {
+func (p *VirtualNetworksProxy) Read(ctx context.Context, virtualNetworkID strfmt.UUID) (*openapi.VirtualNetworkInstance, error) {
 	if virtualNetworkID == "" {
 		return nil, fmt.Errorf("empty virtual network ID")
 	}
 
-	params := &virtual_network.GetNetworksVirtualNetworkIDParams{
-		VirtualNetworkID: virtualNetworkID,
-		Context:          ctx,
-		HTTPClient:       p.httpClient,
-	}
-
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetNetworksVirtualNetworkID(params)
+	action := p.service.NetworksVirtualNetworkIdGet(ctx, string(virtualNetworkID))
+	put, _, err := action.Execute()
+
 	mutex.Unlock()
 
 	if err != nil {
-		var notFound *virtual_network.GetNetworksVirtualNetworkIDNotFound
-		if ok := errors.As(err, &notFound); ok {
-			return nil, &NotFoundError{Err: err}
-		}
 
 		return nil, fmt.Errorf("error while reading virtual network: %w", err)
 	}
+	isSuccess := *put.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("retrieving virtual network failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("retrieving virtual network failed: %s", put.Messages)
 	}
 
-	return response.Payload.VirtualNetworkInstance, nil
+	return put.VirtualNetworkInstance, nil
 }
 
-func (p *VirtualNetworksProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.VirtualNetworkInstance, error) {
-	params := &virtual_network.GetNetworksParams{
-		DisplayName: &displayName,
-		Context:     ctx,
-		HTTPClient:  p.httpClient,
-	}
+func (p *VirtualNetworksProxy) ListByDisplayName(ctx context.Context, displayName string) ([]openapi.VirtualNetworkInstance, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetNetworks(params)
+	action := p.service.NetworksGet(ctx).DisplayName(displayName)
+	response, _, err := action.Execute()
+
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing virtual networks: %w", err)
 	}
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing virtual networks failed: %s", response.Payload.Messages)
+	isSuccess := *response.Success
+
+	if !isSuccess {
+		return nil, fmt.Errorf("listing virtual networks failed: %s", response.Messages)
 	}
 
-	return response.Payload.VirtualNetworkInstanceCollection, nil
+	return response.VirtualNetworkInstanceCollection, nil
 }
 
-func (p *VirtualNetworksProxy) List(ctx context.Context) ([]*models.VirtualNetworkInstance, error) {
-	params := &virtual_network.GetNetworksParams{
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
-
+func (p *VirtualNetworksProxy) List(ctx context.Context) ([]openapi.VirtualNetworkInstance, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetNetworks(params)
+	action := p.service.NetworksGet(ctx)
+	response, _, err := action.Execute()
+
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing virtual networks: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing virtual networks failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("listing virtual networks failed: %s", response.Messages)
 	}
 
-	return response.Payload.VirtualNetworkInstanceCollection, nil
+	return response.VirtualNetworkInstanceCollection, nil
 }
 
-func (p *VirtualNetworksProxy) Delete(ctx context.Context, virtualNetworkID strfmt.UUID) (*models.RequestInstance, error) {
-	params := &virtual_network.DeleteNetworksVirtualNetworkIDParams{
-		VirtualNetworkID: virtualNetworkID,
-		Context:          ctx,
-		HTTPClient:       p.httpClient,
-	}
-
-	response, err := p.service.DeleteNetworksVirtualNetworkID(params)
+func (p *VirtualNetworksProxy) Delete(ctx context.Context, virtualNetworkID strfmt.UUID) (*openapi.RequestInstance, error) {
+	action := p.service.NetworksVirtualNetworkIdDelete(ctx, string(virtualNetworkID))
+	response, _, err := action.Execute()
 
 	if err != nil {
-		var badRequest *virtual_network.DeleteNetworksVirtualNetworkIDBadRequest
-		if ok := errors.As(err, &badRequest); ok {
-			return nil, &NotFoundError{Err: err}
-		}
-
 		return nil, fmt.Errorf("error while deleting virtual network: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("deleting virtual network failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("deleting virtual network failed: %s", response.Messages)
 	}
 
-	return response.Payload.RequestInstance, nil
+	return response.RequestInstance, nil
 }

@@ -2,10 +2,8 @@ package sdk
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/custom_services"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -13,122 +11,105 @@ import (
 
 type CustomServicesProxy struct {
 	httpClient *http.Client
-	service    custom_services.ClientService
+	service    *openapi.CustomServicesAPIService
 }
 
-func (p *CustomServicesProxy) Create(ctx context.Context, customService *models.CustomServiceInstance) (*models.CustomServiceInstance, error) {
-	if err := customService.Validate(strfmt.Default); err != nil {
-		return nil, fmt.Errorf("error while validating custom service struct: %w", err)
-	}
-
-	params := &custom_services.PutNetworkCustomServicesParams{
-		Body:       customService,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
+func (p *CustomServicesProxy) Create(ctx context.Context, customService openapi.CustomServiceInstance) (*openapi.CustomServiceInstance, error) {
+	//if err := customService.Validate(strfmt.Default); err != nil {
+	//	return nil, fmt.Errorf("error while validating custom service struct: %w", err)
+	//}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, err := p.service.PutNetworkCustomServices(params)
+	action := p.service.NetworkCustomServicesPut(ctx).CustomServiceInstance(customService)
+	put, _, err := action.Execute()
 	mutex.Unlock()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while creating custom service: %w", err)
 	}
+	isSuccess := *put.Success
 
-	if !put.Payload.Success {
-		return nil, fmt.Errorf("creating custom service failed: %s", put.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("creating custom service failed: %s", put.Messages)
 	}
 
-	return put.Payload.CustomServiceInstance, nil
+	return put.CustomServiceInstance, nil
 }
 
-func (p *CustomServicesProxy) Update(ctx context.Context, customService *models.CustomServiceInstance) (*models.CustomServiceInstance, error) {
-	if err := customService.Validate(strfmt.Default); err != nil {
-		return nil, fmt.Errorf("error while validating custom service struct: %w", err)
-	}
-
-	params := &custom_services.PutNetworkCustomServicesServiceIDParams{
-		ServiceID:  customService.ServiceID,
-		Body:       customService,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
+func (p *CustomServicesProxy) Update(ctx context.Context, customService *openapi.CustomServiceInstance) (*openapi.CustomServiceInstance, error) {
+	//if err := customService.Validate(strfmt.Default); err != nil {
+	//	return nil, fmt.Errorf("error while validating custom service struct: %w", err)
+	//}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, err := p.service.PutNetworkCustomServicesServiceID(params)
+	action := p.service.NetworkCustomServicesServiceIdPut(ctx, customService.GetServiceId())
+	put, _, err := action.Execute()
+
 	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying custom service: %w", err)
 	}
+	isSuccess := *put.Success
 
-	if !put.Payload.Success {
-		return nil, fmt.Errorf("modifying custom service failed: %s", put.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("modifying custom service failed: %s", put.Messages)
 	}
 
-	return put.Payload.CustomServiceInstance, nil
+	return put.CustomServiceInstance, nil
 }
 
-func (p *CustomServicesProxy) Read(ctx context.Context, customServiceID strfmt.UUID) (*models.CustomServiceInstance, error) {
-	params := &custom_services.GetNetworkCustomServicesServiceIDParams{
-		ServiceID:  customServiceID,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
+func (p *CustomServicesProxy) Read(ctx context.Context, customServiceID strfmt.UUID) (*openapi.CustomServiceInstance, error) {
 
-	response, err := p.service.GetNetworkCustomServicesServiceID(params)
+	action := p.service.NetworkCustomServicesServiceIdGet(ctx, string(customServiceID))
+	response, _, err := action.Execute()
 
 	if err != nil {
-		var notFound *custom_services.GetNetworkCustomServicesServiceIDNotFound
-		if ok := errors.As(err, &notFound); ok {
-			return nil, &NotFoundError{Err: err}
-		}
-
 		return nil, fmt.Errorf("error while reading custom service: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("retrieving custom service failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("retrieving custom service failed: %s", response.Messages)
 	}
 
-	return response.Payload.CustomServiceInstance, nil
+	return response.CustomServiceInstance, nil
 }
 
-func (p *CustomServicesProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.CustomServiceInstance, error) {
-	params := &custom_services.GetNetworkCustomServicesParams{
-		DisplayName: &displayName,
-		Context:     ctx,
-		HTTPClient:  p.httpClient,
-	}
+func (p *CustomServicesProxy) ListByDisplayName(ctx context.Context, displayName string) ([]openapi.CustomServiceInstance, error) {
 
-	response, err := p.service.GetNetworkCustomServices(params)
+	action := p.service.NetworkCustomServicesGet(ctx).DisplayName(displayName)
+	response, _, err := action.Execute()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while listing custom services: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing custom services failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("listing custom services failed: %s", response.Messages)
 	}
 
-	return response.Payload.CustomServiceInstanceCollection, nil
+	return response.CustomServiceInstanceCollection, nil
 }
 
-func (p *CustomServicesProxy) ListCustomServices(ctx context.Context) ([]*models.CustomServiceInstance, error) {
-	params := &custom_services.GetNetworkCustomServicesParams{
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
+func (p *CustomServicesProxy) ListCustomServices(ctx context.Context) ([]openapi.CustomServiceInstance, error) {
 
-	response, err := p.service.GetNetworkCustomServices(params)
+	action := p.service.NetworkCustomServicesGet(ctx)
+
+	response, _, err := action.Execute()
+
 	if err != nil {
 		return nil, fmt.Errorf("error while listing custom services: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing custom services failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("listing custom services failed: %s", response.Messages)
 	}
 
-	return response.Payload.CustomServiceInstanceCollection, nil
+	return response.CustomServiceInstanceCollection, nil
 }
 
 func (p *CustomServicesProxy) Exists(ctx context.Context, customServiceID strfmt.UUID) (bool, error) {
@@ -144,24 +125,17 @@ func (p *CustomServicesProxy) Exists(ctx context.Context, customServiceID strfmt
 }
 
 func (p *CustomServicesProxy) Delete(ctx context.Context, customServiceID strfmt.UUID) error {
-	params := &custom_services.DeleteNetworkCustomServicesServiceIDParams{
-		ServiceID:  customServiceID,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
 
-	response, err := p.service.DeleteNetworkCustomServicesServiceID(params)
+	action := p.service.NetworkCustomServicesServiceIdDelete(ctx, string(customServiceID))
+	response, _, err := action.Execute()
+
 	if err != nil {
-		var badRequest *custom_services.DeleteNetworkCustomServicesServiceIDBadRequest
-		if ok := errors.As(err, &badRequest); ok {
-			return &NotFoundError{Err: err}
-		}
-
 		return fmt.Errorf("error while deleting custom service: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return fmt.Errorf("deleting custom service failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return fmt.Errorf("deleting custom service failed: %s", response.Messages)
 	}
 
 	return nil

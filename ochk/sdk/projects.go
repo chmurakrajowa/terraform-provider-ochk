@@ -2,144 +2,115 @@ package sdk
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/projects"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
+
 	"net/http"
 	"sync"
 )
 
 type ProjectsProxy struct {
 	httpClient *http.Client
-	service    projects.ClientService
+	service    *openapi.ProjectsAPIService
 }
 
-func (p *ProjectsProxy) Create(ctx context.Context, project *models.ProjectInstance) (*models.ProjectInstance, error) {
-	if err := project.Validate(strfmt.Default); err != nil {
-		return nil, fmt.Errorf("error while validating project struct: %w", err)
-	}
-
-	params := &projects.PutProjectsParams{
-		Body:       project,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
-
+func (p *ProjectsProxy) Create(ctx context.Context, project openapi.ProjectInstance) (*openapi.ProjectInstance, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, err := p.service.PutProjects(params)
+	action := p.service.ProjectsPut(ctx).ProjectInstance(project)
+	put, _, err := action.Execute()
+
 	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while creating project: %w", err)
 	}
+	isSuccess := *put.Success
 
-	if !put.Payload.Success {
-		return nil, fmt.Errorf("creating project failed: %s", put.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("creating project failed: %s", put.Messages)
 	}
 
-	return put.Payload.ProjectInstance, nil
+	return put.ProjectInstance, nil
 }
 
-func (p *ProjectsProxy) Update(ctx context.Context, project *models.ProjectInstance) (*models.ProjectInstance, error) {
-	if err := project.Validate(strfmt.Default); err != nil {
-		return nil, fmt.Errorf("error while validating project struct: %w", err)
-	}
-
-	params := &projects.PutProjectsProjectIDParams{
-		ProjectID:  project.ProjectID,
-		Body:       project,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
-
+func (p *ProjectsProxy) Update(ctx context.Context, project openapi.ProjectInstance) (*openapi.ProjectInstance, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, err := p.service.PutProjectsProjectID(params)
+	action := p.service.ProjectsProjectIdPut(ctx, project.GetProjectId()).ProjectInstance(project)
+	put, _, err := action.Execute()
+
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying project: %w", err)
 	}
+	isSuccess := *put.Success
 
-	if !put.Payload.Success {
-		return nil, fmt.Errorf("modifying project failed: %s", put.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("modifying project failed: %s", put.Messages)
 	}
 
-	return put.Payload.ProjectInstance, nil
+	return put.ProjectInstance, nil
 }
 
-func (p *ProjectsProxy) Read(ctx context.Context, projectID strfmt.UUID) (*models.ProjectInstance, error) {
-	params := &projects.GetProjectsProjectIDParams{
-		ProjectID:  projectID,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
+func (p *ProjectsProxy) Read(ctx context.Context, projectID strfmt.UUID) (*openapi.ProjectInstance, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetProjectsProjectID(params)
+	action := p.service.ProjectsProjectIdGet(ctx, string(projectID))
+	response, _, err := action.Execute()
+
 	mutex.Unlock()
 
 	if err != nil {
-		var notFound *projects.DeleteProjectsProjectIDNotFound
-		if ok := errors.As(err, &notFound); ok {
-			return nil, &NotFoundError{Err: err}
-		}
-
 		return nil, fmt.Errorf("error while reading project: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("retrieving project failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("retrieving project failed: %s", response.Messages)
 	}
 
-	return response.Payload.ProjectInstance, nil
+	return response.ProjectInstance, nil
 }
 
-func (p *ProjectsProxy) ListByName(ctx context.Context, name string) ([]*models.ProjectInstance, error) {
-	params := &projects.GetProjectsParams{
-		Name:       &name,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
+func (p *ProjectsProxy) ListByName(ctx context.Context, name string) ([]openapi.ProjectInstance, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetProjects(params)
+	action := p.service.ProjectsGet(ctx).Name(name)
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing projects: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing projects failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("listing projects failed: %s", response.Messages)
 	}
 
-	return response.Payload.ProjectInstanceCollection, nil
+	return response.ProjectInstanceCollection, nil
 }
-func (p *ProjectsProxy) List(ctx context.Context) ([]*models.ProjectInstance, error) {
-	params := &projects.GetProjectsParams{
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
-
+func (p *ProjectsProxy) List(ctx context.Context) ([]openapi.ProjectInstance, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetProjects(params)
+	action := p.service.ProjectsGet(ctx)
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing projects: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing projects failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("listing projects failed: %s", response.Messages)
 	}
 
-	return response.Payload.ProjectInstanceCollection, nil
+	return response.ProjectInstanceCollection, nil
 }
 
 func (p *ProjectsProxy) Exists(ctx context.Context, projectID strfmt.UUID) (bool, error) {
@@ -155,25 +126,16 @@ func (p *ProjectsProxy) Exists(ctx context.Context, projectID strfmt.UUID) (bool
 }
 
 func (p *ProjectsProxy) Delete(ctx context.Context, projectID strfmt.UUID) error {
-	params := &projects.DeleteProjectsProjectIDParams{
-		ProjectID:  projectID,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
-
-	response, err := p.service.DeleteProjectsProjectID(params)
+	action := p.service.ProjectsProjectIdDelete(ctx, string(projectID))
+	response, _, err := action.Execute()
 
 	if err != nil {
-		var badRequest *projects.DeleteProjectsProjectIDBadRequest
-		if ok := errors.As(err, &badRequest); ok {
-			return &NotFoundError{Err: err}
-		}
-
 		return fmt.Errorf("error while deleting project: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return fmt.Errorf("deleting project failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return fmt.Errorf("deleting project failed: %s", response.Messages)
 	}
 
 	return nil

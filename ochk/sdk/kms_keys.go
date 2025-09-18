@@ -2,157 +2,125 @@ package sdk
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/key"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"net/http"
 	"sync"
 )
 
 type KMSKeysProxy struct {
 	httpClient *http.Client
-	service    key.ClientService
+	service    *openapi.KeyAPIService
 }
 
-func (p *KMSKeysProxy) Create(ctx context.Context, keyInstance *models.KeyInstance) (*models.KeyInstance, error) {
-	params := &key.PutKmsKeyParams{
-		Body:       keyInstance,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
+func (p *KMSKeysProxy) Create(ctx context.Context, keyInstance openapi.KeyInstance) (*openapi.KeyInstance, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	post, err := p.service.PutKmsKey(params)
+	action := p.service.KmsKeyPut(ctx).KeyInstance(keyInstance)
+	post, _, err := action.Execute()
 	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while creating KMS key: %w", err)
 	}
 
-	if !post.Payload.Success {
-		return nil, fmt.Errorf("creating KMS key failed: %s", post.Payload.Messages)
+	isSuccess := *post.Success
+
+	if !isSuccess {
+		return nil, fmt.Errorf("creating KMS key failed: %s", post.Messages)
 	}
 
-	return post.Payload.KeyInstance, nil
+	return post.KeyInstance, nil
 }
 
-func (p *KMSKeysProxy) Import(ctx context.Context, keyImport *models.KeyImport) (*models.KeyInstance, error) {
-	params := &key.PostKmsKeyImportParams{
-		Body:       keyImport,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
-
+func (p *KMSKeysProxy) Import(ctx context.Context, keyImport openapi.KeyImport) (*openapi.KeyInstance, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	post, err := p.service.PostKmsKeyImport(params)
+	action := p.service.KmsKeyImportPost(ctx).KeyImport(keyImport)
+	post, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while importing KMS key: %w", err)
 	}
+	isSuccess := *post.Success
 
-	if !post.Payload.Success {
-		return nil, fmt.Errorf("importing KMS key failed: %s", post.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("importing KMS key failed: %s", post.Messages)
 	}
 
-	return post.Payload.KeyInstance, nil
+	return post.KeyInstance, nil
 }
 
-func (p *KMSKeysProxy) Read(ctx context.Context, keyID string) (*models.KeyInstance, error) {
-	params := &key.GetKmsKeyIDParams{
-		ID:         keyID,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
-
+func (p *KMSKeysProxy) Read(ctx context.Context, keyID string) (*openapi.KeyInstance, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetKmsKeyID(params)
+	action := p.service.KmsKeyIdGet(ctx, keyID)
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
-		var notFound *key.GetKmsKeyIDNotFound
-		if ok := errors.As(err, &notFound); ok {
-			return nil, &NotFoundError{Err: err}
-		}
-
 		return nil, fmt.Errorf("error while reading KMS key: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("retrieving KMS key failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("retrieving KMS key failed: %s", response.Messages)
 	}
 
-	return response.Payload.KeyInstance, nil
+	return response.KeyInstance, nil
 }
 
-func (p *KMSKeysProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.KeyInstance, error) {
-	params := &key.GetKmsKeyParams{
-		DisplayName: &displayName,
-		Context:     ctx,
-		HTTPClient:  p.httpClient,
-	}
-
+func (p *KMSKeysProxy) ListByDisplayName(ctx context.Context, displayName string) ([]openapi.KeyInstance, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetKmsKey(params)
+	action := p.service.KmsKeyGet(ctx).DisplayName(displayName)
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing KMS keys: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing KMS keys failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("listing KMS keys failed: %s", response.Messages)
 	}
 
-	return response.Payload.KeyInstanceCollection, nil
+	return response.KeyInstanceCollection, nil
 }
 
-func (p *KMSKeysProxy) List(ctx context.Context) ([]*models.KeyInstance, error) {
-	params := &key.GetKmsKeyParams{
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
-
+func (p *KMSKeysProxy) List(ctx context.Context) ([]openapi.KeyInstance, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetKmsKey(params)
+	action := p.service.KmsKeyGet(ctx)
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing KMS keys: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing KMS keys failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("listing KMS keys failed: %s", response.Messages)
 	}
 
-	return response.Payload.KeyInstanceCollection, nil
+	return response.KeyInstanceCollection, nil
 }
 
 func (p *KMSKeysProxy) Delete(ctx context.Context, keyID string) error {
-	params := &key.DeleteKmsKeyIDParams{
-		ID:         keyID,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
 
-	response, err := p.service.DeleteKmsKeyID(params)
+	action := p.service.KmsKeyIdDelete(ctx, keyID)
+	response, _, err := action.Execute()
 
 	if err != nil {
-		var badRequest *key.DeleteKmsKeyIDBadRequest
-		if ok := errors.As(err, &badRequest); ok {
-			return &NotFoundError{Err: err}
-		}
-
 		return fmt.Errorf("error while deleting KMS key: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return fmt.Errorf("deleting KMS key failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return fmt.Errorf("deleting KMS key failed: %s", response.Messages)
 	}
 
 	return nil

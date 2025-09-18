@@ -2,10 +2,8 @@ package sdk
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/router"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -13,135 +11,104 @@ import (
 
 type RoutersProxy struct {
 	httpClient *http.Client
-	service    router.ClientService
+	service    *openapi.RouterAPIService
 }
 
-func (p *RoutersProxy) Read(ctx context.Context, routerID strfmt.UUID) (*models.RouterInstance, error) {
-	params := &router.GetNetworkRoutersRouterIDParams{
-		RouterID:   routerID,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
-
+func (p *RoutersProxy) Read(ctx context.Context, routerID strfmt.UUID) (*openapi.RouterInstance, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetNetworkRoutersRouterID(params)
+	action := p.service.NetworkRoutersRouterIdGet(ctx, string(routerID))
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
-		var notFound *router.GetNetworkRoutersRouterIDNotFound
-		if ok := errors.As(err, &notFound); ok {
-			return nil, &NotFoundError{Err: err}
-		}
-
 		return nil, fmt.Errorf("error while reading routers: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("retrieving routers failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("retrieving routers failed: %s", response.Messages)
 	}
 
-	return response.Payload.RouterInstance, nil
+	return response.RouterInstance, nil
 }
 
-func (p *RoutersProxy) ListByDisplayName(ctx context.Context, displayName string) ([]*models.RouterInstance, error) {
-	params := &router.GetNetworkRoutersParams{
-		DisplayName: &displayName,
-		Context:     ctx,
-		HTTPClient:  p.httpClient,
-	}
-
+func (p *RoutersProxy) ListByDisplayName(ctx context.Context, displayName string) ([]openapi.RouterInstance, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetNetworkRouters(params)
+	action := p.service.NetworkRoutersGet(ctx).DisplayName(displayName)
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing routers: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing routers failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("listing routers failed: %s", response.Messages)
 	}
 
-	return response.Payload.RouterCollection, nil
+	return response.RouterCollection, nil
 }
 
-func (p *RoutersProxy) List(ctx context.Context) ([]*models.RouterInstance, error) {
-	params := &router.GetNetworkRoutersParams{
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
-
+func (p *RoutersProxy) List(ctx context.Context) ([]openapi.RouterInstance, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetNetworkRouters(params)
+	action := p.service.NetworkRoutersGet(ctx)
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing routers: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing routers failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("listing routers failed: %s", response.Messages)
 	}
 
-	return response.Payload.RouterCollection, nil
+	return response.RouterCollection, nil
 }
 
-func (p *RoutersProxy) Create(ctx context.Context, Router *models.RouterInstance) (*models.RouterInstance, error) {
-	if err := Router.Validate(strfmt.Default); err != nil {
-		return nil, fmt.Errorf("error while validating router struct: %w", err)
-	}
-
-	params := &router.PutNetworkRoutersParams{
-		Body:       Router,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
+func (p *RoutersProxy) Create(ctx context.Context, Router openapi.RouterInstance) (*openapi.RouterInstance, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, err := p.service.PutNetworkRouters(params)
+	action := p.service.NetworkRoutersPut(ctx).RouterInstance(Router)
+	put, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while creating router: %w", err)
 	}
+	isSuccess := *put.Success
 
-	if !put.Payload.Success {
-		return nil, fmt.Errorf("creating router failed: %s", put.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("creating router failed: %s", put.Messages)
 	}
 
-	return put.Payload.RouterInstance, nil
+	return put.RouterInstance, nil
 }
 
-func (p *RoutersProxy) Update(ctx context.Context, Router *models.RouterInstance) (*models.RouterInstance, error) {
-	if err := Router.Validate(strfmt.Default); err != nil {
-		return nil, fmt.Errorf("error while validating router struct: %w", err)
-	}
-
-	params := &router.PutNetworkRoutersRouterIDParams{
-		RouterID:   Router.RouterID,
-		Body:       Router,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
+func (p *RoutersProxy) Update(ctx context.Context, Router openapi.RouterInstance) (*openapi.RouterInstance, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	put, err := p.service.PutNetworkRoutersRouterID(params)
+	action := p.service.NetworkRoutersRouterIdPut(ctx, Router.GetRouterId()).RouterInstance(Router)
+	put, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while modifying router: %w", err)
 	}
+	isSuccess := *put.Success
 
-	if !put.Payload.Success {
-		return nil, fmt.Errorf("modifying router failed: %s", put.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("modifying router failed: %s", put.Messages)
 	}
 
-	return put.Payload.RouterInstance, nil
+	return put.RouterInstance, nil
 }
 
 func (p *RoutersProxy) Exists(ctx context.Context, RouterID strfmt.UUID) (bool, error) {
@@ -157,25 +124,17 @@ func (p *RoutersProxy) Exists(ctx context.Context, RouterID strfmt.UUID) (bool, 
 }
 
 func (p *RoutersProxy) Delete(ctx context.Context, RouterID strfmt.UUID) error {
-	params := &router.DeleteNetworkRoutersRouterIDParams{
-		RouterID:   RouterID,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
 
-	response, err := p.service.DeleteNetworkRoutersRouterID(params)
+	action := p.service.NetworkRoutersRouterIdDelete(ctx, string(RouterID))
+	response, _, err := action.Execute()
 
 	if err != nil {
-		var badRequest *router.DeleteNetworkRoutersRouterIDBadRequest
-		if ok := errors.As(err, &badRequest); ok {
-			return &NotFoundError{Err: err}
-		}
-
 		return fmt.Errorf("error while deleting router: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return fmt.Errorf("deleting router failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return fmt.Errorf("deleting router failed: %s", response.Messages)
 	}
 
 	return nil

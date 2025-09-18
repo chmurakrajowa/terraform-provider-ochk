@@ -2,10 +2,8 @@ package sdk
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/folder"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
@@ -13,54 +11,42 @@ import (
 
 type FoldersProxy struct {
 	httpClient *http.Client
-	service    folder.ClientService
+	service    *openapi.FolderAPIService
 }
 
-func (p *FoldersProxy) Read(ctx context.Context, projectID strfmt.UUID) (*models.FolderInstance, error) {
-	params := &folder.GetFolderProjectIDIDParams{
-		ProjectID:  projectID,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
-
+func (p *FoldersProxy) Read(ctx context.Context, projectID strfmt.UUID) (*openapi.FolderInstance, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetFolderProjectIDID(params)
+	action := p.service.FolderProjectIdGet(ctx, string(projectID))
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
-		var notFound *folder.GetFolderProjectIDIDNotFound
-
-		if ok := errors.As(err, &notFound); ok {
-			return nil, &NotFoundError{Err: err}
-		}
-
 		return nil, fmt.Errorf("error while reading folders: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("retrieving folders failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		return nil, fmt.Errorf("retrieving folders failed: %s", response.Messages)
 	}
 
-	return response.Payload.FolderInstance, nil
+	return &response.FolderInstanceCollection[0], nil
 }
 
-func (p *FoldersProxy) LisFoldersByProjectId(ctx context.Context, projectID strfmt.UUID) ([]*models.FolderInstance, error) {
-	params := &folder.GetFolderProjectIDParams{
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-		ProjectID:  projectID,
-	}
+func (p *FoldersProxy) LisFoldersByProjectId(ctx context.Context, projectID strfmt.UUID) ([]openapi.FolderInstance, error) {
 
-	response, err := p.service.GetFolderProjectID(params)
+	action := p.service.FolderProjectIdGet(ctx, string(projectID))
+	response, _, err := action.Execute()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing folders: %w", err)
 	}
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing folders failed: %s", response.Payload.Messages)
+	isSuccess := *response.Success
+
+	if !isSuccess {
+		return nil, fmt.Errorf("listing folders failed: %s", response.Messages)
 	}
 
-	return response.Payload.FolderInstanceCollection, nil
+	return response.FolderInstanceCollection, nil
 }
