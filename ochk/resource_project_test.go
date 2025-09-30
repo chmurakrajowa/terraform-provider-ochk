@@ -155,7 +155,7 @@ func testAccProjectResourceNotExists(name string) resource.TestCheckFunc {
 		}
 
 		if len(projects) > 0 {
-			return fmt.Errorf("project %s still exists", projects[0].ProjectID)
+			return fmt.Errorf("project %s still exists", projects[0].ProjectId)
 		}
 
 		return nil

@@ -79,7 +79,7 @@ func testAccSnapshotResourceNotExists(Name string, VirtualMachineID strfmt.UUID)
 		}
 
 		if len(snapshots) > 0 {
-			return fmt.Errorf("snapshot %s still exists", snapshots[0].SnapshotID)
+			return fmt.Errorf("snapshot %s still exists", snapshots[0].SnapshotId)
 		}
 
 		return nil

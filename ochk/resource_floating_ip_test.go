@@ -100,7 +100,7 @@ func testAccFloatingIpAddressResourceNotExists(name string) resource.TestCheckFu
 		}
 
 		if len(floatingIp) > 0 {
-			return fmt.Errorf("project %s still exists", floatingIp[0].FloatingIPID)
+			return fmt.Errorf("project %s still exists", floatingIp[0].FloatingIpId)
 		}
 		return nil
 	}

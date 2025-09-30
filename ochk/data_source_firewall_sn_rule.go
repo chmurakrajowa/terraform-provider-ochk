@@ -106,13 +106,13 @@ func dataSourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("more than one firewall sn rule with display_name: %s found!", displayName)
 	}
 
-	d.SetId(firewallSNRules[0].RuleID.String())
+	d.SetId(firewallSNRules[0].GetRuleId())
 
 	if err := d.Set("display_name", firewallSNRules[0].DisplayName); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", firewallSNRules[0].ProjectID); err != nil {
+	if err := d.Set("project_id", firewallSNRules[0].ProjectId); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
@@ -128,7 +128,7 @@ func dataSourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error setting disabled: %+v", err)
 	}
 
-	if err := d.Set("ip_protocol", firewallSNRules[0].IPProtocol); err != nil {
+	if err := d.Set("ip_protocol", firewallSNRules[0].IpProtocol); err != nil {
 		return diag.Errorf("error setting ip_protocol: %+v", err)
 	}
 
@@ -156,7 +156,7 @@ func dataSourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", firewallSNRules[0].CreationDate.String()); err != nil {
+	if err := d.Set("created_at", firewallSNRules[0].GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
@@ -164,7 +164,7 @@ func dataSourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", firewallSNRules[0].ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", firewallSNRules[0].GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 

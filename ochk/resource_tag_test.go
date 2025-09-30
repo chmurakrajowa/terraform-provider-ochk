@@ -79,7 +79,7 @@ func testAccTagResourceNotExists(displayName string) resource.TestCheckFunc {
 		}
 
 		if len(tags) > 0 {
-			return fmt.Errorf("tag %d still exists", tags[0].TagID)
+			return fmt.Errorf("tag %d still exists", tags[0].TagId)
 		}
 
 		return nil

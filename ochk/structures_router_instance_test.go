@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -9,7 +9,7 @@ import (
 
 func TestFlattenExpandRouterInstanceFromIDs(t *testing.T) {
 	cases := []struct {
-		expanded        []*models.RouterInstance
+		expanded        []openapi.RouterInstance
 		flattened       []interface{}
 		onlyTestFlatten bool
 	}{
@@ -21,9 +21,9 @@ func TestFlattenExpandRouterInstanceFromIDs(t *testing.T) {
 
 		// single router
 		{
-			expanded: []*models.RouterInstance{
+			expanded: []openapi.RouterInstance{
 				{
-					RouterID: "afdb07d8-d0d2-11ea-87d0-0242ac130003",
+					RouterId: "afdb07d8-d0d2-11ea-87d0-0242ac130003",
 				},
 			},
 			flattened: []interface{}{
@@ -33,10 +33,10 @@ func TestFlattenExpandRouterInstanceFromIDs(t *testing.T) {
 
 		// more fields then necessary (test only flatten)
 		{
-			expanded: []*models.RouterInstance{
+			expanded: []openapi.RouterInstance{
 				{
 					DisplayName: "T1",
-					RouterID:    "afdb07d8-d0d2-11ea-87d0-0242ac130003",
+					RouterId:    "afdb07d8-d0d2-11ea-87d0-0242ac130003",
 					RouterType:  "Ingress Router",
 				},
 			},
@@ -48,12 +48,12 @@ func TestFlattenExpandRouterInstanceFromIDs(t *testing.T) {
 
 		// multiple routers
 		{
-			expanded: []*models.RouterInstance{
+			expanded: []openapi.RouterInstance{
 				{
-					RouterID: "afdb07d8-d0d2-11ea-87d0-0242ac130003",
+					RouterId: "afdb07d8-d0d2-11ea-87d0-0242ac130003",
 				},
 				{
-					RouterID: "114d82f0-79cc-4501-a574-dd920b6b6e7e",
+					RouterId: "114d82f0-79cc-4501-a574-dd920b6b6e7e",
 				},
 			},
 			flattened: []interface{}{

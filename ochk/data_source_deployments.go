@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -53,7 +53,7 @@ func dataSourceDeployments() *schema.Resource {
 func dataSourceDeploymentsRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Deployments
 
-	deploymentType := models.DeploymentType(d.Get("deployment_type").(string))
+	deploymentType := openapi.DeploymentType(d.Get("deployment_type").(string))
 
 	deployments, err := proxy.List(ctx)
 	if err != nil {

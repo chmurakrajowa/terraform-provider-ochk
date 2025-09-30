@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -199,7 +199,7 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("vrf_id", Nat.TierZeroRouter.RouterID); err != nil {
+	if err := d.Set("vrf_id", Nat.TierZeroRouter.RouterId); err != nil {
 		return diag.Errorf("error setting vrf_id: %+v", err)
 	}
 
@@ -211,7 +211,7 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", Nat.CreationDate.String()); err != nil {
+	if err := d.Set("created_at", Nat.GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
@@ -219,7 +219,7 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", Nat.ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", Nat.GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
@@ -231,13 +231,13 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error setting priority: %+v", err)
 	}
 
-	if Nat.NatType == "AUTO" {
-		if err := d.Set("virtual_network_id", Nat.VirtualNetworkInstance.VirtualNetworkID); err != nil {
+	if *Nat.NatType == "AUTO" {
+		if err := d.Set("virtual_network_id", Nat.VirtualNetworkInstance.VirtualNetworkId); err != nil {
 			return diag.Errorf("error setting virtual_network_id: %+v", err)
 		}
 	}
 
-	if Nat.NatType == "MANUAL" {
+	if *Nat.NatType == "MANUAL" {
 		if Nat.Description == "UNKNOWN" || Nat.Description == "" {
 			if err := d.Set("description", ""); err != nil {
 				return diag.Errorf("error setting description: %+v", err)
@@ -267,8 +267,8 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 		}
 
 		if Nat.Action == "DNAT" {
-			if Nat.TranslatedPorts != "" && Nat.ServiceInstance.ServiceID != "" {
-				if err := d.Set("service_id", Nat.ServiceInstance.ServiceID); err != nil {
+			if Nat.TranslatedPorts != "" && Nat.ServiceInstance.ServiceId != "" {
+				if err := d.Set("service_id", Nat.ServiceInstance.ServiceId); err != nil {
 					return diag.Errorf("error setting service_id: %+v", err)
 				}
 
@@ -328,9 +328,9 @@ func resourceAutoNatUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	proxy := meta.(*sdk.Client).Nats
 
 	Nat := mapResourceDataToAutoNat(d)
-	Nat.RuleID = strfmt.UUID(d.Id())
+	Nat.RuleId = strfmt.UUID(d.Id())
 
-	_, err := proxy.Update(ctx, Nat)
+	_, err := proxy.Update(ctx, &Nat)
 	if err != nil {
 		return diag.Errorf("error while modifying nat: %+v", err)
 	}
@@ -342,9 +342,9 @@ func resourceManualNatUpdate(ctx context.Context, d *schema.ResourceData, meta i
 	proxy := meta.(*sdk.Client).Nats
 
 	Nat := mapResourceDataToManualNat(d)
-	Nat.RuleID = strfmt.UUID(d.Id())
+	Nat.RuleId = strfmt.UUID(d.Id())
 
-	_, err := proxy.Update(ctx, Nat)
+	_, err := proxy.Update(ctx, &Nat)
 	if err != nil {
 		return diag.Errorf("error while modifying nat: %+v", err)
 	}
@@ -369,24 +369,24 @@ func resourceNatDelete(ctx context.Context, d *schema.ResourceData, meta interfa
 	return nil
 }
 
-func mapResourceDataToAutoNat(d *schema.ResourceData) *models.NATRuleInstance {
-	return &models.NATRuleInstance{
+func mapResourceDataToAutoNat(d *schema.ResourceData) openapi.NATRuleInstance {
+	return openapi.NATRuleInstance{
 		DisplayName:            d.Get("display_name").(string),
 		VirtualNetworkInstance: mapResourceDataToVirtualNetworkInstance(d),
 		NatType:                "AUTO",
 	}
 }
 
-func mapResourceDataToManualNat(d *schema.ResourceData) *models.NATRuleInstance {
+func mapResourceDataToManualNat(d *schema.ResourceData) openapi.NATRuleInstance {
 
 	publicPriorityInt64 := int64(d.Get("priority").(int))
 
-	natManualRule := &models.NATRuleInstance{
+	natManualRule := openapi.NATRuleInstance{
 		DisplayName:        d.Get("display_name").(string),
 		Description:        d.Get("description").(string),
 		Enabled:            d.Get("enabled").(bool),
 		TierZeroRouter:     mapResourceDataToVrfRouter(d),
-		Action:             models.NATRuleAction(d.Get("action").(string)),
+		Action:             openapi.NATRuleAction(d.Get("action").(string)),
 		Priority:           publicPriorityInt64,
 		SourceNetwork:      d.Get("source_network").(string),
 		DestinationNetwork: d.Get("destination_network").(string),
@@ -408,24 +408,24 @@ func mapResourceDataToManualNat(d *schema.ResourceData) *models.NATRuleInstance 
 	return natManualRule
 }
 
-func mapResourceDataToVrfRouter(d *schema.ResourceData) *models.RouterInstance {
+func mapResourceDataToVrfRouter(d *schema.ResourceData) openapi.RouterInstance {
 	var vrf_id = d.Get("vrf_id").(string)
-	routerInstance := models.RouterInstance{
-		RouterID: strfmt.UUID(vrf_id),
+	routerInstance := openapi.RouterInstance{
+		RouterId: strfmt.UUID(vrf_id),
 	}
-	return &routerInstance
+	return routerInstance
 }
 
-func mapResourceDataToVirtualNetworkInstance(d *schema.ResourceData) *models.VirtualNetworkInstance {
-	virtualNetworkInstance := models.VirtualNetworkInstance{
-		VirtualNetworkID: strfmt.UUID(d.Get("virtual_network_id").(string)),
+func mapResourceDataToVirtualNetworkInstance(d *schema.ResourceData) openapi.VirtualNetworkInstance {
+	virtualNetworkInstance := openapi.VirtualNetworkInstance{
+		VirtualNetworkId: strfmt.UUID(d.Get("virtual_network_id").(string)),
 	}
-	return &virtualNetworkInstance
+	return virtualNetworkInstance
 }
 
-func mapResourceDataToServiceInstance(d *schema.ResourceData) *models.ServiceInstance {
-	serviceInstance := models.ServiceInstance{
-		ServiceID: strfmt.UUID(d.Get("service_id").(string)),
+func mapResourceDataToServiceInstance(d *schema.ResourceData) openapi.ServiceInstance {
+	serviceInstance := openapi.ServiceInstance{
+		ServiceId: strfmt.UUID(d.Get("service_id").(string)),
 	}
-	return &serviceInstance
+	return serviceInstance
 }

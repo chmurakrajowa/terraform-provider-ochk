@@ -137,7 +137,7 @@ func testAccKMSKeyResourceNotExists(displayName string) resource.TestCheckFunc {
 		}
 
 		if len(KMSKeys) > 0 {
-			return fmt.Errorf("kms_key %s still exists", KMSKeys[0].ID)
+			return fmt.Errorf("kms_key %s still exists", KMSKeys[0].Id)
 		}
 
 		return nil

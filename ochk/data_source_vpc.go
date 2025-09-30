@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -73,17 +73,17 @@ func dataSourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("more than one vpc with display_name: %s found!", displayName)
 	}
 
-	d.SetId(routers[0].RouterID.String())
+	d.SetId(routers[0].GetRouterId())
 
-	if err := d.Set("vrf_id", routers[0].ParentT0ID); err != nil {
+	if err := d.Set("vrf_id", routers[0].ParentT0Id); err != nil {
 		return diag.Errorf("error setting vrf_id: %+v", err)
 	}
 
-	if err := d.Set("project_id", routers[0].ProjectID); err != nil {
+	if err := d.Set("project_id", routers[0].ProjectId); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
-	if platformType == models.PlatformTypeOPENSTACK {
+	if platformType == openapi.PlatformTypeOPENSTACK {
 		if err := d.Set("autonat_enabled", routers[0].SnatEnabled); err != nil {
 			return diag.Errorf("error setting autonat_enabled: %+v", err)
 		}
@@ -97,7 +97,7 @@ func dataSourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", routers[0].CreationDate.String()); err != nil {
+	if err := d.Set("created_at", routers[0].GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
@@ -105,7 +105,7 @@ func dataSourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", routers[0].ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", routers[0].GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 

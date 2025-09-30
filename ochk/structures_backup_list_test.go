@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -9,7 +9,7 @@ import (
 
 func TestFlattenBackupLists(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.BackupList
+		expanded  []openapi.BackupList
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -18,13 +18,13 @@ func TestFlattenBackupLists(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.BackupList{
+			expanded: []openapi.BackupList{
 				{
-					BackupListID:   "5403439c-38a5-4f98-a58b-134072260bfb",
+					BackupListId:   "5403439c-38a5-4f98-a58b-134072260bfb",
 					BackupListName: "Platinium (1 week / 24h)",
 				},
 				{
-					BackupListID:   "791bf702-22fb-4c76-bebb-1fee7ee75607",
+					BackupListId:   "791bf702-22fb-4c76-bebb-1fee7ee75607",
 					BackupListName: "Platinium (1 day / 8h)",
 				},
 			},

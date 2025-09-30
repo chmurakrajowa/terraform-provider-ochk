@@ -252,7 +252,7 @@ func testAccVirtualNetworkResourceNotExists(displayName string) resource.TestChe
 		}
 
 		if len(virtualNetworks) > 0 {
-			return fmt.Errorf("virtual network %s still exists", virtualNetworks[0].VirtualNetworkID)
+			return fmt.Errorf("virtual network %s still exists", virtualNetworks[0].VirtualNetworkId)
 		}
 
 		return nil

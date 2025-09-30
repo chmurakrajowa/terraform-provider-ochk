@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -9,7 +9,7 @@ import (
 
 func TestFlattenAutoNat(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.NATRuleInstance
+		expanded  []openapi.NATRuleInstance
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -18,17 +18,17 @@ func TestFlattenAutoNat(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.NATRuleInstance{
+			expanded: []openapi.NATRuleInstance{
 				{
 					NatType:     "AUTO",
-					RuleID:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					RuleId:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					DisplayName: "nat-test1",
-					VirtualNetworkInstance: &models.VirtualNetworkInstance{
-						VirtualNetworkID: "2ae951f1-5285-496c-b598-aabe1a792319",
+					VirtualNetworkInstance: &openapi.VirtualNetworkInstance{
+						VirtualNetworkId: "2ae951f1-5285-496c-b598-aabe1a792319",
 					},
 					Enabled: true,
-					TierZeroRouter: &models.RouterInstance{
-						RouterID: "547948e9-b67d-44d1-ad69-ae9b711e289c",
+					TierZeroRouter: &openapi.RouterInstance{
+						RouterId: "547948e9-b67d-44d1-ad69-ae9b711e289c",
 					},
 				},
 			},
@@ -43,29 +43,29 @@ func TestFlattenAutoNat(t *testing.T) {
 			},
 		},
 		{
-			expanded: []*models.NATRuleInstance{
+			expanded: []openapi.NATRuleInstance{
 				{
 					NatType:     "AUTO",
-					RuleID:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					RuleId:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					DisplayName: "nat-test1",
-					VirtualNetworkInstance: &models.VirtualNetworkInstance{
-						VirtualNetworkID: "2ae951f1-5285-496c-b598-aabe1a792319",
+					VirtualNetworkInstance: &openapi.VirtualNetworkInstance{
+						VirtualNetworkId: "2ae951f1-5285-496c-b598-aabe1a792319",
 					},
 					Enabled: false,
-					TierZeroRouter: &models.RouterInstance{
-						RouterID: "547948e9-b67d-44d1-ad69-ae9b711e289c",
+					TierZeroRouter: &openapi.RouterInstance{
+						RouterId: "547948e9-b67d-44d1-ad69-ae9b711e289c",
 					},
 				},
 				{
 					NatType:     "AUTO",
-					RuleID:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					RuleId:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					DisplayName: "nat-test2",
-					VirtualNetworkInstance: &models.VirtualNetworkInstance{
-						VirtualNetworkID: "2ae951f1-5285-496c-b598-aabe1a792319",
+					VirtualNetworkInstance: &openapi.VirtualNetworkInstance{
+						VirtualNetworkId: "2ae951f1-5285-496c-b598-aabe1a792319",
 					},
 					Enabled: false,
-					TierZeroRouter: &models.RouterInstance{
-						RouterID: "b0908315-4c61-4326-b18d-2d145e6937a3",
+					TierZeroRouter: &openapi.RouterInstance{
+						RouterId: "b0908315-4c61-4326-b18d-2d145e6937a3",
 					},
 				},
 			},
@@ -97,7 +97,7 @@ func TestFlattenAutoNat(t *testing.T) {
 
 func TestFlattenManualNat(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.NATRuleInstance
+		expanded  []openapi.NATRuleInstance
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -106,15 +106,15 @@ func TestFlattenManualNat(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.NATRuleInstance{
+			expanded: []openapi.NATRuleInstance{
 				{
 					NatType:     "MANUAL",
-					RuleID:      strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					RuleId:      strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					DisplayName: "nat-test1",
-					Action:      models.NATRuleAction("DNAT"),
+					Action:      openapi.NATRuleAction("DNAT"),
 					Enabled:     true,
-					TierZeroRouter: &models.RouterInstance{
-						RouterID: strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
+					TierZeroRouter: &openapi.RouterInstance{
+						RouterId: strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 					},
 					SourceNetwork:      "192.168.15.0/24",
 					DestinationNetwork: "192.168.0.0/24",
@@ -124,7 +124,7 @@ func TestFlattenManualNat(t *testing.T) {
 				{
 					"manual_nat_id":       strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					"display_name":        "nat-test1",
-					"action":              models.NATRuleAction("DNAT"),
+					"action":              openapi.NATRuleAction("DNAT"),
 					"enabled":             true,
 					"vrf_id":              strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 					"source_network":      "192.168.15.0/24",
@@ -133,27 +133,27 @@ func TestFlattenManualNat(t *testing.T) {
 			},
 		},
 		{
-			expanded: []*models.NATRuleInstance{
+			expanded: []openapi.NATRuleInstance{
 				{
 					NatType:     "MANUAL",
-					RuleID:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					RuleId:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					DisplayName: "nat-test2",
 					Action:      "DNAT",
 					Enabled:     false,
-					TierZeroRouter: &models.RouterInstance{
-						RouterID: "b0908315-4c61-4326-b18d-2d145e6937a3",
+					TierZeroRouter: &openapi.RouterInstance{
+						RouterId: "b0908315-4c61-4326-b18d-2d145e6937a3",
 					},
 					SourceNetwork:      "192.168.0.0/24",
 					DestinationNetwork: "192.168.1.0/24",
 				},
 				{
 					NatType:     "MANUAL",
-					RuleID:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					RuleId:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					DisplayName: "nat-test1",
 					Action:      "DNAT",
 					Enabled:     true,
-					TierZeroRouter: &models.RouterInstance{
-						RouterID: "547948e9-b67d-44d1-ad69-ae9b711e289c",
+					TierZeroRouter: &openapi.RouterInstance{
+						RouterId: "547948e9-b67d-44d1-ad69-ae9b711e289c",
 					},
 					SourceNetwork:      "192.168.15.0/24",
 					DestinationNetwork: "192.168.0.0/24",
@@ -163,7 +163,7 @@ func TestFlattenManualNat(t *testing.T) {
 				{
 					"manual_nat_id":       strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					"display_name":        "nat-test2",
-					"action":              models.NATRuleAction("DNAT"),
+					"action":              openapi.NATRuleAction("DNAT"),
 					"enabled":             false,
 					"vrf_id":              strfmt.UUID("b0908315-4c61-4326-b18d-2d145e6937a3"),
 					"source_network":      "192.168.0.0/24",
@@ -172,7 +172,7 @@ func TestFlattenManualNat(t *testing.T) {
 				{
 					"manual_nat_id":       strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					"display_name":        "nat-test1",
-					"action":              models.NATRuleAction("DNAT"),
+					"action":              openapi.NATRuleAction("DNAT"),
 					"enabled":             true,
 					"vrf_id":              strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 					"source_network":      "192.168.15.0/24",

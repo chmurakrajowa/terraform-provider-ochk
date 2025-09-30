@@ -358,7 +358,7 @@ func testAccNatResourceNotExists(displayName string) resource.TestCheckFunc {
 		}
 
 		if len(nat) > 0 {
-			return fmt.Errorf("nat %s still exists", nat[0].RuleID)
+			return fmt.Errorf("nat %s still exists", nat[0].RuleId)
 		}
 		return nil
 	}

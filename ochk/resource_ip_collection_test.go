@@ -92,7 +92,7 @@ func testAccIPCollectionResourceNotExists(displayName string) resource.TestCheck
 		}
 
 		if len(ipCollections) > 0 {
-			return fmt.Errorf("ip_collection %s still exists", ipCollections[0].ID)
+			return fmt.Errorf("ip_collection %s still exists", ipCollections[0].Id)
 		}
 
 		return nil

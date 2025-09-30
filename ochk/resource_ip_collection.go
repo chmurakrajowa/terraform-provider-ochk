@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -84,7 +84,7 @@ func resourceIPCollectionCreate(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error while creating ip collection: %+v", err)
 	}
 
-	d.SetId(created.ID.String())
+	d.SetId(created.GetId())
 
 	return resourceIPCollectionRead(ctx, d, meta)
 }
@@ -103,7 +103,7 @@ func resourceIPCollectionRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error while reading ip collection: %+v", err)
 	}
 
-	if err := d.Set("ip_addresses", flattenStringSlice(ipCollection.IPCollectionAddresses)); err != nil {
+	if err := d.Set("ip_addresses", flattenStringSlice(ipCollection.IpCollectionAddresses)); err != nil {
 		return diag.Errorf("error setting ip_addresses: %+v", err)
 	}
 
@@ -111,7 +111,7 @@ func resourceIPCollectionRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", ipCollection.ProjectID); err != nil {
+	if err := d.Set("project_id", ipCollection.ProjectId); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
@@ -119,7 +119,7 @@ func resourceIPCollectionRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", ipCollection.CreationDate.String()); err != nil {
+	if err := d.Set("created_at", ipCollection.GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
@@ -127,7 +127,7 @@ func resourceIPCollectionRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", ipCollection.ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", ipCollection.GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
@@ -138,7 +138,7 @@ func resourceIPCollectionUpdate(ctx context.Context, d *schema.ResourceData, met
 	proxy := meta.(*sdk.Client).IPCollections
 
 	IPCollection := mapResourceDataToIPCollection(d)
-	IPCollection.ID = strfmt.UUID(d.Id())
+	IPCollection.Id = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, IPCollection)
 	if err != nil {
@@ -165,10 +165,10 @@ func resourceIPCollectionDelete(ctx context.Context, d *schema.ResourceData, met
 	return nil
 }
 
-func mapResourceDataToIPCollection(d *schema.ResourceData) *models.IPCollection {
-	return &models.IPCollection{
+func mapResourceDataToIPCollection(d *schema.ResourceData) openapi.IpCollection {
+	return openapi.IpCollection{
 		DisplayName:           d.Get("display_name").(string),
-		ProjectID:             strfmt.UUID(d.Get("project_id").(string)),
-		IPCollectionAddresses: transformSetToStringSlice(d.Get("ip_addresses").(*schema.Set)),
+		ProjectId:             strfmt.UUID(d.Get("project_id").(string)),
+		IpCollectionAddresses: transformSetToStringSlice(d.Get("ip_addresses").(*schema.Set)),
 	}
 }

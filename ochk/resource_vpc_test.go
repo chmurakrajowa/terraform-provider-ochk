@@ -105,7 +105,7 @@ func testAccRouterResourceNotExists(displayName string) resource.TestCheckFunc {
 		}
 
 		if len(Routers) > 0 {
-			return fmt.Errorf("vpc %s still exists", Routers[0].RouterID)
+			return fmt.Errorf("vpc %s still exists", Routers[0].RouterId)
 		}
 
 		return nil

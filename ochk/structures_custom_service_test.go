@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -9,7 +9,7 @@ import (
 
 func TestFlattenExpandCustomServicePorts(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.L4PortSetEntry
+		expanded  []openapi.L4PortSetEntry
 		flattened []map[string]interface{}
 	}{
 
@@ -20,15 +20,15 @@ func TestFlattenExpandCustomServicePorts(t *testing.T) {
 		},
 
 		{
-			expanded: []*models.L4PortSetEntry{
+			expanded: []openapi.L4PortSetEntry{
 				{
-					L4PortSetEntryID: "e1675817-f1a1-45c1-988b-ec2f142867aa",
+					L4PortSetEntryId: "e1675817-f1a1-45c1-988b-ec2f142867aa",
 					L4Protocol:       "protocol",
 					SourcePorts:      transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"1", "2", "3"}).List()),
 					DestinationPorts: transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"3", "4", "5"}).List()),
 				},
 				{
-					L4PortSetEntryID: "21675817-f1a1-45c1-988b-ec2f142867aa",
+					L4PortSetEntryId: "21675817-f1a1-45c1-988b-ec2f142867aa",
 					L4Protocol:       "protocol2",
 					SourcePorts:      transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"11", "22", "33"}).List()),
 					DestinationPorts: transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"33", "44", "55"}).List()),
@@ -65,7 +65,7 @@ func TestFlattenExpandCustomServicePorts(t *testing.T) {
 
 func TestFlattenCustomServices(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.CustomServiceInstance
+		expanded  []openapi.CustomServiceInstance
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -74,16 +74,16 @@ func TestFlattenCustomServices(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.CustomServiceInstance{
+			expanded: []openapi.CustomServiceInstance{
 				{
-					ServiceID:   "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					ServiceId:   "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					DisplayName: "test1",
-					ProjectID:   "aa675817-f1a1-45c1-988b-ec2f142867e1",
+					ProjectId:   "aa675817-f1a1-45c1-988b-ec2f142867e1",
 				},
 				{
-					ServiceID:   "791bf702-22fb-4c76-bebb-1fee7ee75607",
+					ServiceId:   "791bf702-22fb-4c76-bebb-1fee7ee75607",
 					DisplayName: "test2",
-					ProjectID:   "aa675817-f1a1-45c1-988b-ec2f142867e1",
+					ProjectId:   "aa675817-f1a1-45c1-988b-ec2f142867e1",
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

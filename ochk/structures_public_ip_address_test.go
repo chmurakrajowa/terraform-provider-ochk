@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -9,7 +9,7 @@ import (
 
 func TestFlattenPublicIPAddress(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.PublicIPAllocation
+		expanded  []openapi.PublicIpAllocation
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -18,19 +18,19 @@ func TestFlattenPublicIPAddress(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.PublicIPAllocation{
+			expanded: []openapi.PublicIpAllocation{
 				{
 					Name: "test1",
-					PublicIPAddress: &models.PublicIPAddress{
-						IPAddress:   "212.86.15.4",
-						IPAddressID: "f3f8c5c3-d3ca-4ec7-b553-81208cbc016b",
+					PublicIpAddress: &openapi.PublicIpAddress{
+						IpAddress:   "212.86.15.4",
+						IpAddressId: "f3f8c5c3-d3ca-4ec7-b553-81208cbc016b",
 					},
 				},
 				{
 					Name: "test2",
-					PublicIPAddress: &models.PublicIPAddress{
-						IPAddress:   "212.88.15.4",
-						IPAddressID: "a8d33488-f662-43af-9755-2509ce09d24b",
+					PublicIpAddress: &openapi.PublicIpAddress{
+						IpAddress:   "212.88.15.4",
+						IpAddressId: "a8d33488-f662-43af-9755-2509ce09d24b",
 					},
 				},
 			},

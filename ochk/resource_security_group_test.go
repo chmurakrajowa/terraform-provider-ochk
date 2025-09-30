@@ -165,7 +165,7 @@ func testAccSecurityGroupResourceNotExists(displayName string) resource.TestChec
 		}
 
 		if len(securityGroups) > 0 {
-			return fmt.Errorf("security group %s still exists", securityGroups[0].ID)
+			return fmt.Errorf("security group %s still exists", securityGroups[0].Id)
 		}
 
 		return nil

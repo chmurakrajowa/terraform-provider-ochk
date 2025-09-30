@@ -3,7 +3,7 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -139,7 +139,7 @@ func resourceFirewallRuleCreate(ctx context.Context, d *schema.ResourceData, met
 	if err != nil {
 		return diag.Errorf(E3001, err)
 	}
-	d.SetId(created.RuleID.String())
+	d.SetId(created.GetRuleId())
 	return resourceFirewallRuleRead(ctx, d, meta)
 }
 
@@ -172,7 +172,7 @@ func resourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting security_group_id: %+v", err)
 	}
 
-	if err := d.Set("rule_id", firewallRule.RuleID); err != nil {
+	if err := d.Set("rule_id", firewallRule.RuleId); err != nil {
 		return diag.Errorf("error setting rule_id: %+v", err)
 	}
 
@@ -200,12 +200,12 @@ func resourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting port_range_max: %+v", err)
 	}
 
-	if err := d.Set("remote_ip_prefix", firewallRule.RemoteIPPrefix); err != nil {
+	if err := d.Set("remote_ip_prefix", firewallRule.RemoteIpPrefix); err != nil {
 		return diag.Errorf("error setting remote_ip_prefix: %+v", err)
 	}
 
 	if firewallRule.SecurityGroup != nil {
-		if err := d.Set("dest_security_group", firewallRule.SecurityGroup.ID); err != nil {
+		if err := d.Set("dest_security_group", firewallRule.SecurityGroup.Id); err != nil {
 			return diag.Errorf("error setting dest_security_group: %+v", err)
 		}
 	}
@@ -214,7 +214,7 @@ func resourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", firewallRule.CreationDate.String()); err != nil {
+	if err := d.Set("created_at", firewallRule.GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
@@ -222,7 +222,7 @@ func resourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", firewallRule.ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", firewallRule.GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
@@ -243,7 +243,7 @@ func resourceFirewallRuleUpdate(ctx context.Context, d *schema.ResourceData, met
 	if errRule != nil {
 		return diag.Errorf(E3001_UPDATE, errRule)
 	}
-	firewallRule.RuleID = strfmt.UUID(d.Id())
+	firewallRule.RuleId = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, projectID, securityGroupID, firewallRule)
 	if err != nil {
@@ -253,35 +253,35 @@ func resourceFirewallRuleUpdate(ctx context.Context, d *schema.ResourceData, met
 	return resourceFirewallRuleRead(ctx, d, meta)
 }
 
-func mapResourceDataToRule(d *schema.ResourceData) (*models.FirewallRule, diag.Diagnostics) {
+func mapResourceDataToRule(d *schema.ResourceData) (openapi.FirewallRule, diag.Diagnostics) {
 	if d.Get("dest_security_group").(string) != "" && d.Get("remote_ip_prefix").(string) != "" {
 		return nil, diag.Errorf(E3004, "[dest_security_group, remote_ip_prefix]")
 	}
 
 	if d.Get("dest_security_group").(string) != "" {
-		rule := &models.FirewallRule{
+		rule := openapi.FirewallRule{
 			Name:              d.Get("display_name").(string),
 			Description:       d.Get("description").(string),
-			ProjectExternalID: strfmt.UUID(d.Get("project_id").(string)),
-			EtherType:         models.EtherType(d.Get("ether_type").(string)),
-			Direction:         models.Direction1(d.Get("direction").(string)),
-			Protocol:          models.Protocol(d.Get("protocol").(string)),
+			ProjectExternalId: strfmt.UUID(d.Get("project_id").(string)),
+			EtherType:         openapi.EtherType(d.Get("ether_type").(string)),
+			Direction:         openapi.Direction1(d.Get("direction").(string)),
+			Protocol:          openapi.Protocol(d.Get("protocol").(string)),
 			PortRangeMax:      int64(d.Get("port_range_max").(int)),
 			PortRangeMin:      int64(d.Get("port_range_min").(int)),
 			SecurityGroup:     expandSecurityGroup(d.Get("dest_security_group").(string)),
 		}
 		return rule, nil
 	} else {
-		rule := &models.FirewallRule{
+		rule := openapi.FirewallRule{
 			Name:              d.Get("display_name").(string),
 			Description:       d.Get("description").(string),
-			ProjectExternalID: strfmt.UUID(d.Get("project_id").(string)),
-			EtherType:         models.EtherType(d.Get("ether_type").(string)),
-			Direction:         models.Direction1(d.Get("direction").(string)),
-			Protocol:          models.Protocol(d.Get("protocol").(string)),
+			ProjectExternalId: strfmt.UUID(d.Get("project_id").(string)),
+			EtherType:         openapi.EtherType(d.Get("ether_type").(string)),
+			Direction:         openapi.Direction1(d.Get("direction").(string)),
+			Protocol:          openapi.Protocol(d.Get("protocol").(string)),
 			PortRangeMax:      int64(d.Get("port_range_max").(int)),
 			PortRangeMin:      int64(d.Get("port_range_min").(int)),
-			RemoteIPPrefix:    d.Get("remote_ip_prefix").(string),
+			RemoteIpPrefix:    d.Get("remote_ip_prefix").(string),
 		}
 		return rule, nil
 	}
@@ -304,9 +304,9 @@ func resourceFirewallRuleDelete(ctx context.Context, d *schema.ResourceData, met
 	return nil
 }
 
-func expandSecurityGroup(dest_security_group string) *models.SecurityGroup {
-	sg_dest := &models.SecurityGroup{
-		ID: strfmt.UUID(dest_security_group),
+func expandSecurityGroup(dest_security_group string) openapi.SecurityGroup {
+	sg_dest := openapi.SecurityGroup{
+		Id: strfmt.UUID(dest_security_group),
 	}
 	return sg_dest
 }

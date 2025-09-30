@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -9,7 +9,7 @@ import (
 
 func TestFlattenSecurityGroups(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.SecurityGroup
+		expanded  []openapi.SecurityGroup
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -18,15 +18,15 @@ func TestFlattenSecurityGroups(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.SecurityGroup{
+			expanded: []openapi.SecurityGroup{
 				{
-					ID:          "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					ProjectID:   strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					Id:          "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					ProjectId:   strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					DisplayName: "test1",
 				},
 				{
-					ID:          "791bf702-22fb-4c76-bebb-1fee7ee75607",
-					ProjectID:   strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					Id:          "791bf702-22fb-4c76-bebb-1fee7ee75607",
+					ProjectId:   strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					DisplayName: "test2",
 				},
 			},

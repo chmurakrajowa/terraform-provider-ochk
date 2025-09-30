@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -9,7 +9,7 @@ import (
 
 func TestFlattenVrfs(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.RouterInstance
+		expanded  []openapi.RouterInstance
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -18,14 +18,14 @@ func TestFlattenVrfs(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.RouterInstance{
+			expanded: []openapi.RouterInstance{
 				{
-					RouterID:    "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					RouterId:    "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					DisplayName: "VRF1",
 					RouterType:  "TIER0",
 				},
 				{
-					RouterID:    "791bf702-22fb-4c76-bebb-1fee7ee75607",
+					RouterId:    "791bf702-22fb-4c76-bebb-1fee7ee75607",
 					DisplayName: "VRF2",
 					RouterType:  "TIER0",
 				},

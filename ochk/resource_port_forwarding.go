@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -119,7 +119,7 @@ func resourcePortForwardingCreate(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error while creating port forwarding: %+v", err)
 	}
 
-	d.SetId(created.PortForwardingID.String())
+	d.SetId(created.GetPortForwardingId())
 
 	return resourcePortForwardingRead(ctx, d, meta)
 }
@@ -148,7 +148,7 @@ func resourcePortForwardingRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting floating_ip_id: %+v", err)
 	}
 
-	if err := d.Set("port_forwarding_id", portForwarding.PortForwardingID); err != nil {
+	if err := d.Set("port_forwarding_id", portForwarding.PortForwardingId); err != nil {
 		return diag.Errorf("error setting port_forwarding_id: %+v", err)
 	}
 
@@ -160,11 +160,11 @@ func resourcePortForwardingRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting protocol: %+v", err)
 	}
 
-	if err := d.Set("internal_port_id", portForwarding.InternalPortID); err != nil {
+	if err := d.Set("internal_port_id", portForwarding.InternalPortId); err != nil {
 		return diag.Errorf("error setting internal_port_id: %+v", err)
 	}
 
-	if err := d.Set("internal_ip_address", portForwarding.InternalIPAddress); err != nil {
+	if err := d.Set("internal_ip_address", portForwarding.InternalIpAddress); err != nil {
 		return diag.Errorf("error setting internal_ip_address: %+v", err)
 	}
 
@@ -192,7 +192,7 @@ func resourcePortForwardingRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", portForwarding.CreationDate.String()); err != nil {
+	if err := d.Set("created_at", portForwarding.GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
@@ -200,7 +200,7 @@ func resourcePortForwardingRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", portForwarding.ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", portForwarding.GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
@@ -215,7 +215,7 @@ func resourcePortForwardingUpdate(ctx context.Context, d *schema.ResourceData, m
 
 	floatingIpId := strfmt.UUID(d.Get("floating_ip_id").(string))
 	portForwarding := mapResourceDataToPortForwarding(d)
-	portForwarding.PortForwardingID = strfmt.UUID(d.Id())
+	portForwarding.PortForwardingId = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, floatingIpId, portForwarding)
 	if err != nil {
@@ -225,13 +225,13 @@ func resourcePortForwardingUpdate(ctx context.Context, d *schema.ResourceData, m
 	return resourcePortForwardingRead(ctx, d, meta)
 }
 
-func mapResourceDataToPortForwarding(d *schema.ResourceData) *models.PortForwarding {
-	portForwarding := &models.PortForwarding{
+func mapResourceDataToPortForwarding(d *schema.ResourceData) openapi.PortForwarding {
+	portForwarding := openapi.PortForwarding{
 		Name:              d.Get("display_name").(string),
 		Description:       d.Get("description").(string),
 		Protocol:          d.Get("protocol").(string),
-		InternalPortID:    strfmt.UUID(d.Get("internal_port_id").(string)),
-		InternalIPAddress: d.Get("internal_ip_address").(string),
+		InternalPortId:    strfmt.UUID(d.Get("internal_port_id").(string)),
+		InternalIpAddress: d.Get("internal_ip_address").(string),
 		InternalPort:      int32(d.Get("internal_port").(int)),
 		InternalPortRange: d.Get("internal_port_range").(string),
 		PublicAddress:     d.Get("public_address").(string),

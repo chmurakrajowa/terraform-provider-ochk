@@ -98,7 +98,7 @@ func testAccountResourceNotExists(displayName string) resource.TestCheckFunc {
 		}
 
 		if len(accounts) > 0 {
-			return fmt.Errorf("account %s still exists", accounts[0].AccountID)
+			return fmt.Errorf("account %s still exists", accounts[0].AccountId)
 		}
 
 		return nil

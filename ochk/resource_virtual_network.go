@@ -3,7 +3,7 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/go-cty/cty"
@@ -157,12 +157,12 @@ func resourceVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, met
 	return nil
 }
 
-func mapVirtualNetworkToResourceData(d *schema.ResourceData, virtualNetwork *models.VirtualNetworkInstance) diag.Diagnostics {
+func mapVirtualNetworkToResourceData(d *schema.ResourceData, virtualNetwork openapi.VirtualNetworkInstance) diag.Diagnostics {
 	if err := d.Set("display_name", virtualNetwork.DisplayName); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", virtualNetwork.ProjectID); err != nil {
+	if err := d.Set("project_id", virtualNetwork.ProjectId); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
@@ -182,7 +182,7 @@ func mapVirtualNetworkToResourceData(d *schema.ResourceData, virtualNetwork *mod
 		return diag.Errorf("error setting subnet_mask: %+v", err)
 	}
 
-	if err := d.Set("vpc_id", virtualNetwork.RouterRefID); err != nil {
+	if err := d.Set("vpc_id", virtualNetwork.RouterRefId); err != nil {
 		return diag.Errorf("error setting vpc: %+v", err)
 	}
 
@@ -193,8 +193,8 @@ func mapVirtualNetworkToResourceData(d *schema.ResourceData, virtualNetwork *mod
 		if err := d.Set("subnet_network_cidr", virtualNetwork.Subnet.NetworkCIDR); err != nil {
 			return diag.Errorf("error setting subnet_network_cidr: %+v", err)
 		}
-		if virtualNetwork.Subnet.DNSServers != nil && len(virtualNetwork.Subnet.DNSServers) > 0 {
-			if err := d.Set("dns_servers", flattenDnsServers(virtualNetwork.Subnet.DNSServers)); err != nil {
+		if virtualNetwork.Subnet.DnsServers != nil && len(virtualNetwork.Subnet.DnsServers) > 0 {
+			if err := d.Set("dns_servers", flattenDnsServers(virtualNetwork.Subnet.DnsServers)); err != nil {
 				return diag.Errorf("error setting dns_servers: %+v", err)
 			}
 		}
@@ -207,7 +207,7 @@ func resourceVirtualNetworkUpdate(ctx context.Context, d *schema.ResourceData, m
 	sdkClient := meta.(*sdk.Client)
 
 	virtualNetwork := mapResourceDataToVirtualNetwork(d)
-	virtualNetwork.VirtualNetworkID = strfmt.UUID(d.Id())
+	virtualNetwork.VirtualNetworkId = strfmt.UUID(d.Id())
 
 	request, err := sdkClient.VirtualNetworks.Update(ctx, virtualNetwork)
 	if err != nil {
@@ -246,15 +246,15 @@ func resourceVirtualNetworkDelete(ctx context.Context, d *schema.ResourceData, m
 	return nil
 }
 
-func mapResourceDataToVirtualNetwork(d *schema.ResourceData) *models.VirtualNetworkInstance {
-	virtualNetworkInstance := models.VirtualNetworkInstance{
+func mapResourceDataToVirtualNetwork(d *schema.ResourceData) openapi.VirtualNetworkInstance {
+	virtualNetworkInstance := openapi.VirtualNetworkInstance{
 		DisplayName:      d.Get("display_name").(string),
 		GatewayAddress:   d.Get("gateway_address").(string),
 		IpamEnabled:      d.Get("ipam_enabled").(bool),
-		RouterRefID:      strfmt.UUID(d.Get("vpc_id").(string)),
+		RouterRefId:      strfmt.UUID(d.Get("vpc_id").(string)),
 		SubnetMask:       d.Get("subnet_mask").(string),
-		ProjectID:        strfmt.UUID(d.Get("project_id").(string)),
-		VirtualNetworkID: strfmt.UUID(d.Id()),
+		ProjectId:        strfmt.UUID(d.Get("project_id").(string)),
+		VirtualNetworkId: strfmt.UUID(d.Id()),
 	}
 
 	subnetGatewayAddressCidr, subnetGatewayAddressCidrOk := d.GetOk("subnet_gateway_address_cidr")
@@ -262,7 +262,7 @@ func mapResourceDataToVirtualNetwork(d *schema.ResourceData) *models.VirtualNetw
 	dnsServers, dnsServersOk := d.GetOk("dns_servers")
 
 	if subnetGatewayAddressCidrOk || subnetNetworkCidrOk {
-		virtualNetworkInstance.Subnet = &models.SegmentSubnetInstance{}
+		virtualNetworkInstance.Subnet = &openapi.SegmentSubnetInstance{}
 
 		if subnetGatewayAddressCidrOk {
 			virtualNetworkInstance.Subnet.GatewayAddressCIDR = subnetGatewayAddressCidr.(string)
@@ -272,26 +272,26 @@ func mapResourceDataToVirtualNetwork(d *schema.ResourceData) *models.VirtualNetw
 		}
 
 		if dnsServersOk {
-			virtualNetworkInstance.Subnet.DNSServers = expandDnsServers(dnsServers.(*schema.Set).List())
+			virtualNetworkInstance.Subnet.DnsServers = expandDnsServers(dnsServers.(*schema.Set).List())
 		}
 	}
 
-	return &virtualNetworkInstance
+	return virtualNetworkInstance
 }
 
-func expandDnsServers(in []interface{}) []*models.DNSServerInstance {
+func expandDnsServers(in []interface{}) []openapi.DnsServerInstance {
 	if len(in) == 0 {
 		return nil
 	}
 
-	var out = make([]*models.DNSServerInstance, len(in))
+	var out = make([]openapi.DnsServerInstance, len(in))
 	for i, v := range in {
 		m := v.(map[string]interface{})
-		member := &models.DNSServerInstance{}
+		member := &openapi.DnsServerInstance{}
 		if address, ok := m["address"].(string); ok {
 			member.Address = address
 		}
-		out[i] = member
+		out[i] = *member
 	}
 	return out
 }

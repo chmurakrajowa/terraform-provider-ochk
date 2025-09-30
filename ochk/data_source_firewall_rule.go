@@ -146,15 +146,15 @@ func dataSourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting protocol: %+v", err)
 	}
 
-	if err := d.Set("remote_ip_prefix", firewallRule[0].RemoteIPPrefix); err != nil {
+	if err := d.Set("remote_ip_prefix", firewallRule[0].RemoteIpPrefix); err != nil {
 		return diag.Errorf("error setting remote_ip_prefix: %+v", err)
 	}
 
-	if err := d.Set("remote_ip_prefix", firewallRule[0].RemoteIPPrefix); err != nil {
+	if err := d.Set("remote_ip_prefix", firewallRule[0].RemoteIpPrefix); err != nil {
 		return diag.Errorf("error setting remote_ip_prefix: %+v", err)
 	}
 
-	if err := d.Set("rule_id", firewallRule[0].RuleID); err != nil {
+	if err := d.Set("rule_id", firewallRule[0].RuleId); err != nil {
 		return diag.Errorf("error setting rule_id: %+v", err)
 	}
 
@@ -166,7 +166,7 @@ func dataSourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", firewallRule[0].CreationDate.String()); err != nil {
+	if err := d.Set("created_at", firewallRule[0].GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
@@ -174,10 +174,10 @@ func dataSourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", firewallRule[0].ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", firewallRule[0].GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
-	d.SetId(firewallRule[0].RuleID.String())
+	d.SetId(firewallRule[0].GetRuleId())
 	return nil
 }

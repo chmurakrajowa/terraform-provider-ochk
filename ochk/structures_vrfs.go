@@ -1,11 +1,11 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 )
 
-func flattenVrfs(in []*models.RouterInstance) []map[strfmt.UUID]interface{} {
+func flattenVrfs(in []openapi.RouterInstance) []map[strfmt.UUID]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -13,9 +13,9 @@ func flattenVrfs(in []*models.RouterInstance) []map[strfmt.UUID]interface{} {
 	var out []map[strfmt.UUID]interface{}
 
 	for _, v := range in {
-		if v.RouterType == "TIER0" {
+		if *v.RouterType == "TIER0" {
 			m := make(map[strfmt.UUID]interface{})
-			m["vrf_id"] = v.RouterID
+			m["vrf_id"] = v.RouterId
 			m["display_name"] = v.DisplayName
 			out = append(out, m)
 		}

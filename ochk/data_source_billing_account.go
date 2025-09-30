@@ -73,7 +73,7 @@ func dataSourceBillingAccountRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("more than one billing account with name: %s found!", accountName)
 	}
 
-	d.SetId(fmt.Sprint(accounts[0].AccountID))
+	d.SetId(fmt.Sprint(accounts[0].AccountId))
 
 	if err := d.Set("display_name", accounts[0].AccountName); err != nil {
 		return diag.Errorf("error setting account name: %+v", err)

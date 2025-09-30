@@ -61,17 +61,17 @@ func dataSourceProjectRead(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.Errorf("more than one project with name: %s found!", name)
 	}
 
-	if err := d.Set("vrf_id", projects[0].VrfID); err != nil {
+	if err := d.Set("vrf_id", projects[0].VrfId); err != nil {
 		return diag.Errorf("error setting vrf_id:  %+v", err)
 	}
 
-	d.SetId(projects[0].ProjectID.String())
+	d.SetId(projects[0].GetProjectId())
 
 	if err := d.Set("display_name", projects[0].Name); err != nil {
 		return diag.Errorf("error setting name: %s", err)
 	}
 
-	if err := d.Set("vrf_id", projects[0].VrfID); err != nil {
+	if err := d.Set("vrf_id", projects[0].VrfId); err != nil {
 		return diag.Errorf("error setting vrf_id: %s", err)
 	}
 
@@ -91,7 +91,7 @@ func dataSourceProjectRead(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.Errorf("error setting storage_reserved_size_gb: %s", err)
 	}
 
-	if err := d.Set("vcpu_reserved_quantity", projects[0].CPUReserved); err != nil {
+	if err := d.Set("vcpu_reserved_quantity", projects[0].CpuReserved); err != nil {
 		return diag.Errorf("error setting vcpu_reserved_quantity: %s", err)
 	}
 	return nil

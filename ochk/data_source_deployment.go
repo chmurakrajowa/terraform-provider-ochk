@@ -62,7 +62,7 @@ func dataSourceDeploymentRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting initial_size_gb: %+v", err)
 	}
 
-	d.SetId(deployments[0].DeploymentID.String())
+	d.SetId(deployments[0].GetDeploymentId())
 
 	return nil
 }

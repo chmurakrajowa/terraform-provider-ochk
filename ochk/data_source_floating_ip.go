@@ -89,7 +89,7 @@ func dataSourceFloatingIPAddressRead(ctx context.Context, d *schema.ResourceData
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", floatingIp[0].CreationDate.String()); err != nil {
+	if err := d.Set("created_at", floatingIp[0].GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
@@ -97,7 +97,7 @@ func dataSourceFloatingIPAddressRead(ctx context.Context, d *schema.ResourceData
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", floatingIp[0].ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", floatingIp[0].GetModificationDate); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
@@ -105,22 +105,22 @@ func dataSourceFloatingIPAddressRead(ctx context.Context, d *schema.ResourceData
 		return diag.Errorf("error setting public_address: %+v", err)
 	}
 
-	if err := d.Set("project_id", floatingIp[0].OscProjectID); err != nil {
+	if err := d.Set("project_id", floatingIp[0].OscProjectId); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
-	if err := d.Set("vm_name", floatingIp[0].VMName); err != nil {
+	if err := d.Set("vm_name", floatingIp[0].VmName); err != nil {
 		return diag.Errorf("error setting vm_name: %+v", err)
 	}
 
-	if err := d.Set("vm_port_id", floatingIp[0].VMPortID); err != nil {
+	if err := d.Set("vm_port_id", floatingIp[0].VmPortId); err != nil {
 		return diag.Errorf("error setting vm_port_id: %+v", err)
 	}
 
-	if err := d.Set("vm_fixed_ip", floatingIp[0].VMFixedIP); err != nil {
+	if err := d.Set("vm_fixed_ip", floatingIp[0].VmFixedIp); err != nil {
 		return diag.Errorf("error setting vm_fixed_ip: %+v", err)
 	}
 
-	d.SetId(floatingIp[0].FloatingIPID.String())
+	d.SetId(floatingIp[0].GetFloatingIpId())
 	return nil
 }

@@ -1,11 +1,11 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 )
 
-func flattenPublicIPAddress(in []*models.PublicIPAllocation) []map[strfmt.UUID]interface{} {
+func flattenPublicIPAddress(in []openapi.PublicIpAllocation) []map[strfmt.UUID]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -14,9 +14,9 @@ func flattenPublicIPAddress(in []*models.PublicIPAllocation) []map[strfmt.UUID]i
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["public_ip_address_id"] = v.PublicIPAddress.IPAddressID
+		m["public_ip_address_id"] = v.PublicIpAddress.IpAddressId
 		m["display_name"] = v.Name
-		m["ip_address"] = v.PublicIPAddress.IPAddress
+		m["ip_address"] = v.PublicIpAddress.IpAddress
 		out = append(out, m)
 	}
 	return out

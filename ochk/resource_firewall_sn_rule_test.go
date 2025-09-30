@@ -166,13 +166,13 @@ func testAccFirewallSNRuleResourceNotExists(displayName string) resource.TestChe
 			return fmt.Errorf("wrong number of routers")
 		}
 
-		firewallRule, err := client.FirewallSNRules.ListByDisplayName(ctx, routers[0].RouterID, displayName)
+		firewallRule, err := client.FirewallSNRules.ListByDisplayName(ctx, routers[0].RouterId, displayName)
 		if err != nil {
 			return err
 		}
 
 		if len(firewallRule) > 0 {
-			return fmt.Errorf("firewall SN rule %s still exists", firewallRule[0].RuleID)
+			return fmt.Errorf("firewall SN rule %s still exists", firewallRule[0].RuleId)
 		}
 
 		return nil

@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 )
 
 //todo check what with posistion?
@@ -35,7 +35,7 @@ import (
 //	}
 //}
 
-func flattenFirewallEWRulesLists(in []*models.DfwRule) []map[string]interface{} {
+func flattenFirewallEWRulesLists(in []openapi.DfwRule) []map[string]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -44,15 +44,15 @@ func flattenFirewallEWRulesLists(in []*models.DfwRule) []map[string]interface{} 
 
 	for _, v := range in {
 		m := make(map[string]interface{})
-		m["firewall_ew_rule_id"] = v.RuleID
+		m["firewall_ew_rule_id"] = v.RuleId
 		m["display_name"] = v.DisplayName
-		m["project_id"] = v.ProjectID
+		m["project_id"] = v.ProjectId
 		out = append(out, m)
 	}
 	return out
 }
 
-func flattenFirewallSNRulesLists(in []*models.GfwRule) []map[string]interface{} {
+func flattenFirewallSNRulesLists(in []openapi.GfwRule) []map[string]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -61,9 +61,9 @@ func flattenFirewallSNRulesLists(in []*models.GfwRule) []map[string]interface{} 
 
 	for _, v := range in {
 		m := make(map[string]interface{})
-		m["firewall_sn_rule_id"] = v.RuleID
+		m["firewall_sn_rule_id"] = v.RuleId
 		m["display_name"] = v.DisplayName
-		m["project_id"] = v.ProjectID
+		m["project_id"] = v.ProjectId
 		out = append(out, m)
 	}
 	return out

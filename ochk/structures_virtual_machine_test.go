@@ -1,23 +1,23 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestFlattenExpandVirtualDisks(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.VirtualDiskDevice
+		expanded  []openapi.VirtualDiskDevice
 		flattened []map[string]interface{}
 	}{
 		{
-			expanded: []*models.VirtualDiskDevice{
+			expanded: []openapi.VirtualDiskDevice{
 				{
-					ControllerID:          1,
-					LunID:                 2,
+					ControllerId:          1,
+					LunId:                 2,
 					SizeMB:                3,
-					VirtualDiskDeviceType: models.VirtualDiskDeviceType("IDE"),
+					VirtualDiskDeviceType: openapi.VirtualDiskDeviceType("IDE"),
 				},
 			},
 			flattened: []map[string]interface{}{
@@ -25,21 +25,21 @@ func TestFlattenExpandVirtualDisks(t *testing.T) {
 					"controller_id": 1,
 					"lun_id":        2,
 					"size_mb":       3,
-					"device_type":   models.VirtualDiskDeviceType("IDE"),
+					"device_type":   openapi.VirtualDiskDeviceType("IDE"),
 				},
 			},
 		},
 		{
-			expanded: []*models.VirtualDiskDevice{
+			expanded: []openapi.VirtualDiskDevice{
 				{
-					ControllerID:          1,
-					LunID:                 2,
+					ControllerId:          1,
+					LunId:                 2,
 					SizeMB:                3,
 					VirtualDiskDeviceType: "IDE",
 				},
 				{
-					ControllerID:          11,
-					LunID:                 22,
+					ControllerId:          11,
+					LunId:                 22,
 					SizeMB:                33,
 					VirtualDiskDeviceType: "IDE2",
 				},
@@ -49,13 +49,13 @@ func TestFlattenExpandVirtualDisks(t *testing.T) {
 					"controller_id": 1,
 					"lun_id":        2,
 					"size_mb":       3,
-					"device_type":   models.VirtualDiskDeviceType("IDE"),
+					"device_type":   openapi.VirtualDiskDeviceType("IDE"),
 				},
 				{
 					"controller_id": 11,
 					"lun_id":        22,
 					"size_mb":       33,
-					"device_type":   models.VirtualDiskDeviceType("IDE2"),
+					"device_type":   openapi.VirtualDiskDeviceType("IDE2"),
 				},
 			},
 		},
@@ -75,7 +75,7 @@ func TestFlattenExpandVirtualDisks(t *testing.T) {
 
 func TestFlattenExpandVirtualNetworkDevices(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.VirtualNetworkDevice
+		expanded  []openapi.VirtualNetworkDevice
 		flattened []map[string]interface{}
 	}{
 		{
@@ -83,10 +83,10 @@ func TestFlattenExpandVirtualNetworkDevices(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.VirtualNetworkDevice{
+			expanded: []openapi.VirtualNetworkDevice{
 				{
-					DeviceID:               "123",
-					VirtualNetworkInstance: &models.VirtualNetworkInstance{VirtualNetworkID: "vnet-id"},
+					DeviceId:               "123",
+					VirtualNetworkInstance: openapi.VirtualNetworkInstance{VirtualNetworkId: "vnet-id"},
 				},
 			},
 			flattened: []map[string]interface{}{
@@ -97,14 +97,14 @@ func TestFlattenExpandVirtualNetworkDevices(t *testing.T) {
 			},
 		},
 		{
-			expanded: []*models.VirtualNetworkDevice{
+			expanded: []openapi.VirtualNetworkDevice{
 				{
-					DeviceID:               "123",
-					VirtualNetworkInstance: &models.VirtualNetworkInstance{VirtualNetworkID: "vnet-id"},
+					DeviceId:               "123",
+					VirtualNetworkInstance: openapi.VirtualNetworkInstance{VirtualNetworkId: "vnet-id"},
 				},
 				{
-					DeviceID:               "1234",
-					VirtualNetworkInstance: &models.VirtualNetworkInstance{VirtualNetworkID: "vnet-id2"},
+					DeviceId:               "1234",
+					VirtualNetworkInstance: openapi.VirtualNetworkInstance{VirtualNetworkId: "vnet-id2"},
 				},
 			},
 			flattened: []map[string]interface{}{

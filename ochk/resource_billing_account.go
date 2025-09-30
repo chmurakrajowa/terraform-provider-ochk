@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -89,7 +89,7 @@ func resourceAccountCreate(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.Errorf("error while creating account: %+v", err)
 	}
 
-	d.SetId(created.AccountID.String())
+	d.SetId(created.GetAccountId())
 	return resourceAccountRead(ctx, d, meta)
 }
 
@@ -97,9 +97,9 @@ func resourceAccountUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	proxy := meta.(*sdk.Client).Accounts
 
 	account := mapResourceDataToAccount(d)
-	account.AccountID = strfmt.UUID(d.Id())
+	account.AccountId = strfmt.UUID(d.Id())
 
-	_, err := proxy.Update(ctx, account)
+	_, err := proxy.Update(ctx, &account)
 	if err != nil {
 		return diag.Errorf("error while modifying account: %+v", err)
 	}
@@ -164,25 +164,25 @@ func resourceAccountDelete(ctx context.Context, d *schema.ResourceData, meta int
 	return nil
 }
 
-func mapResourceDataToAccount(d *schema.ResourceData) *models.AccountInstance {
-	return &models.AccountInstance{
+func mapResourceDataToAccount(d *schema.ResourceData) openapi.AccountInstance {
+	return openapi.AccountInstance{
 		AccountName:        d.Get("display_name").(string),
 		AccountDescription: d.Get("account_description").(string),
 		Projects:           expandAccountProjects(d.Get("projects").(*schema.Set).List()),
 	}
 }
 
-func expandAccountProjects(in []interface{}) []*models.AccountProjectInstance {
+func expandAccountProjects(in []interface{}) []openapi.AccountProjectInstance {
 	if len(in) == 0 {
 		return nil
 	}
 
-	var out = make([]*models.AccountProjectInstance, len(in))
+	var out = make([]openapi.AccountProjectInstance, len(in))
 	for i, v := range in {
 		m := v.(map[string]interface{})
 
-		project := &models.AccountProjectInstance{
-			ProjectID: strfmt.UUID(m["project_id"].(string)),
+		project := openapi.AccountProjectInstance{
+			ProjectId: strfmt.UUID(m["project_id"].(string)),
 			Name:      m["display_name"].(string),
 		}
 

@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -9,7 +9,7 @@ import (
 
 func TestFirewallOscRule(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.FirewallRule
+		expanded  []openapi.FirewallRule
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -18,9 +18,9 @@ func TestFirewallOscRule(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.FirewallRule{
+			expanded: []openapi.FirewallRule{
 				{
-					RuleID: "c3514ee8-ee12-42b8-8dae-6f97c5271721",
+					RuleId: "c3514ee8-ee12-42b8-8dae-6f97c5271721",
 					Name:   "test1",
 				},
 			},

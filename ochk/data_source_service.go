@@ -54,13 +54,13 @@ func datSourceServiceRead(ctx context.Context, d *schema.ResourceData, meta inte
 		return diag.Errorf("more than one service with display_name: %s found!", displayName)
 	}
 
-	d.SetId(services[0].ServiceID.String())
+	d.SetId(services[0].GetServiceId())
 
 	if err := d.Set("created_by", services[0].CreatedBy); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", services[0].CreationDate.String()); err != nil {
+	if err := d.Set("created_at", services[0].GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
@@ -68,7 +68,7 @@ func datSourceServiceRead(ctx context.Context, d *schema.ResourceData, meta inte
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", services[0].ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", services[0].GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 

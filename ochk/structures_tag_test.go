@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -9,7 +9,7 @@ import (
 
 func TestFlattenTags(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.Tag
+		expanded  []openapi.Tag
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -18,17 +18,17 @@ func TestFlattenTags(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.Tag{
+			expanded: []openapi.Tag{
 				{
-					TagID:                  10,
+					TagId:                  10,
 					TagValue:               "Tag1",
-					ProjectID:              strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					ProjectId:              strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					RelatedVirtualMachines: []strfmt.UUID(nil),
 				},
 				{
-					TagID:                  20,
+					TagId:                  20,
 					TagValue:               "Tag2",
-					ProjectID:              strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867aa"),
+					ProjectId:              strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867aa"),
 					RelatedVirtualMachines: []strfmt.UUID(nil),
 				},
 			},

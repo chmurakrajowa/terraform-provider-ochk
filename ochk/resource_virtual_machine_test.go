@@ -471,7 +471,7 @@ func testAccVirtualMachineResourceNotExists(displayName string) resource.TestChe
 		}
 
 		if len(virtualMachines) > 0 {
-			return fmt.Errorf("virtual machine %s still exists", virtualMachines[0].VirtualMachineID)
+			return fmt.Errorf("virtual machine %s still exists", virtualMachines[0].VirtualMachineId)
 		}
 
 		return nil

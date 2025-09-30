@@ -3,7 +3,7 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"strings"
 	"time"
@@ -128,7 +128,7 @@ func resourceKMSKeyCreate(ctx context.Context, d *schema.ResourceData, meta inte
 		return diag.Errorf("error while creating KMS key: %+v", err)
 	}
 
-	d.SetId(keyInstance.ID)
+	d.SetId(keyInstance.Id)
 
 	return resourceKMSKeyRead(ctx, d, meta)
 }
@@ -143,7 +143,7 @@ func resourceKMSKeyImport(ctx context.Context, d *schema.ResourceData, meta inte
 		return diag.Errorf("error while importing KMS key: %+v", err)
 	}
 
-	d.SetId(keyInstance.ID)
+	d.SetId(keyInstance.Id)
 
 	return resourceKMSKeyRead(ctx, d, meta)
 }
@@ -186,7 +186,7 @@ func resourceKMSKeyDelete(ctx context.Context, d *schema.ResourceData, meta inte
 	return nil
 }
 
-func mapKMSKeyToResourceData(d *schema.ResourceData, kmsKey *models.KeyInstance) error {
+func mapKMSKeyToResourceData(d *schema.ResourceData, kmsKey openapi.KeyInstance) error {
 	if err := d.Set("display_name", kmsKey.Name); err != nil {
 		return fmt.Errorf("error setting display_name: %w", err)
 	}
@@ -199,10 +199,10 @@ func mapKMSKeyToResourceData(d *schema.ResourceData, kmsKey *models.KeyInstance)
 	if err := d.Set("size", kmsKey.Size); err != nil {
 		return fmt.Errorf("error setting size: %w", err)
 	}
-	if err := d.Set("activation_date", kmsKey.ActivationDate.String()); err != nil {
+	if err := d.Set("activation_date", kmsKey.GetActivationDate()); err != nil {
 		return fmt.Errorf("error setting activation_date: %w", err)
 	}
-	if err := d.Set("created_at", kmsKey.CreatedAt.String()); err != nil {
+	if err := d.Set("created_at", kmsKey.GetCreatedAt()); err != nil {
 		return fmt.Errorf("error setting created_at: %w", err)
 	}
 	if err := d.Set("default_iv", kmsKey.DefaultIV); err != nil {
@@ -227,9 +227,9 @@ func mapKMSKeyToResourceData(d *schema.ResourceData, kmsKey *models.KeyInstance)
 	return nil
 }
 
-func mapResourceDataToKeyInstance(d *schema.ResourceData) *models.KeyInstance {
-	keyInstance := models.KeyInstance{
-		ID:           d.Id(),
+func mapResourceDataToKeyInstance(d *schema.ResourceData) openapi.KeyInstance {
+	keyInstance := openapi.KeyInstance{
+		Id:           d.Id(),
 		Algorithm:    d.Get("algorithm").(string),
 		KeyUsageList: transformSetToStringSlice(d.Get("key_usage").(*schema.Set)),
 		Name:         d.Get("display_name").(string),
@@ -239,8 +239,8 @@ func mapResourceDataToKeyInstance(d *schema.ResourceData) *models.KeyInstance {
 	return &keyInstance
 }
 
-func mapResourceDataToKeyImport(d *schema.ResourceData) *models.KeyImport {
-	keyInstance := models.KeyImport{
+func mapResourceDataToKeyImport(d *schema.ResourceData) openapi.KeyImport {
+	keyInstance := openapi.KeyImport{
 		Algorithm:    d.Get("algorithm").(string),
 		KeyName:      d.Get("display_name").(string),
 		KeyUsageList: transformSetToSKeyUsage(d.Get("key_usage").(*schema.Set)),
@@ -248,7 +248,7 @@ func mapResourceDataToKeyImport(d *schema.ResourceData) *models.KeyImport {
 	}
 
 	if privateKeyIDToUnwrap, ok := d.GetOk("private_key_id_to_unwrap"); ok && privateKeyIDToUnwrap.(string) != "" {
-		keyInstance.PrivateKeyIDToUnwrap = privateKeyIDToUnwrap.(string)
+		keyInstance.PrivateKeyIdToUnwrap = privateKeyIDToUnwrap.(string)
 	}
 
 	if material, ok := d.GetOk("material"); ok && material.(string) != "" {

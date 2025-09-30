@@ -3,7 +3,7 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -318,7 +318,7 @@ func resourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error while reading virtual machine: %+v", err)
 	}
 
-	if err := mapVirtualMachineToResourceData(d, virtualMachine); err != nil {
+	if err := mapVirtualMachineToResourceData(d, *virtualMachine); err != nil {
 		return diag.Errorf("error setting virtual machine: %v", err)
 	}
 
@@ -334,7 +334,7 @@ func resourceVirtualMachineUpdate(ctx context.Context, d *schema.ResourceData, m
 	}
 
 	virtualMachine := mapResourceDataToVirtualMachine(d)
-	virtualMachine.VirtualMachineID = strfmt.UUID(d.Id())
+	virtualMachine.VirtualMachineId = strfmt.UUID(d.Id())
 
 	request, err := sdkClient.VirtualMachines.Update(ctx, virtualMachine)
 	if err != nil {
@@ -373,12 +373,12 @@ func resourceVirtualMachineDelete(ctx context.Context, d *schema.ResourceData, m
 	return nil
 }
 
-func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *models.VirtualMachineInstance) error {
+func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine openapi.VirtualMachineInstance) error {
 	if err := d.Set("display_name", virtualMachine.VirtualMachineName); err != nil {
 		return fmt.Errorf("error setting display_name: %w", err)
 	}
 	if virtualMachine.DeploymentInstance != nil {
-		if err := d.Set("deployment_id", virtualMachine.DeploymentInstance.DeploymentID); err != nil {
+		if err := d.Set("deployment_id", virtualMachine.DeploymentInstance.DeploymentId); err != nil {
 			return fmt.Errorf("error setting deployment_id: %w", err)
 		}
 	}
@@ -394,7 +394,7 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 		return fmt.Errorf("error setting power_state: %w", err)
 	}
 
-	if err := d.Set("cpu_count", int(virtualMachine.CPUCount)); err != nil {
+	if err := d.Set("cpu_count", int(virtualMachine.CpuCount)); err != nil {
 		return fmt.Errorf("error setting cpu_count: %+v", err)
 	}
 
@@ -405,7 +405,7 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 	if err := d.Set("storage_policy", virtualMachine.StoragePolicy); err != nil {
 		return fmt.Errorf("error setting storage_policy: %w", err)
 	}
-	if err := d.Set("project_id", strings.ToLower(virtualMachine.ProjectID.String())); err != nil {
+	if err := d.Set("project_id", strings.ToLower(virtualMachine.GetProjectId())); err != nil {
 		return fmt.Errorf("error setting project_id: %w", err)
 	}
 	if err := d.Set("virtual_network_devices", flattenVirtualNetworkDevice(virtualMachine.VirtualNetworkDevices)); err != nil {
@@ -421,21 +421,21 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 	//	return fmt.Errorf("error setting deployment_params: %w", err)
 	//}
 
-	if err := d.Set("ip_address", virtualMachine.IPAddress); err != nil {
+	if err := d.Set("ip_address", virtualMachine.IpAddress); err != nil {
 		return fmt.Errorf("error setting ip_address: %w", err)
 	}
 
-	var virtualDisks []*models.VirtualDiskDevice
+	var virtualDisks []openapi.VirtualDiskDevice
 	if virtualMachine.OsVirtualDiskDevice != nil {
-		virtualDisks = append(virtualDisks, virtualMachine.OsVirtualDiskDevice)
+		virtualDisks = append(virtualDisks, *virtualMachine.OsVirtualDiskDevice)
 	}
 
 	if err := d.Set("virtual_disk", flattenVirtualDisks(virtualDisks)); err != nil {
 		return fmt.Errorf("error setting virtual_disk: %w", err)
 	}
 
-	if virtualMachine.SSHKey != "" {
-		if err := d.Set("ssh_key", virtualMachine.SSHKey); err != nil {
+	if virtualMachine.SshKey != "" {
+		if err := d.Set("ssh_key", virtualMachine.SshKey); err != nil {
 			return fmt.Errorf("error setting ssh_key: %w", err)
 		}
 	}
@@ -444,8 +444,8 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 		if err := d.Set("encryption", virtualMachine.EncryptionInstance.Encrypt); err != nil {
 			return fmt.Errorf("error setting created_by: %w", err)
 		}
-		if virtualMachine.EncryptionInstance.EncryptionKeyID != "" {
-			if err := d.Set("encryption_key_id", virtualMachine.EncryptionInstance.EncryptionKeyID); err != nil {
+		if virtualMachine.EncryptionInstance.EncryptionKeyId != "" {
+			if err := d.Set("encryption_key_id", virtualMachine.EncryptionInstance.EncryptionKeyId); err != nil {
 				return fmt.Errorf("error setting created_by: %w", err)
 			}
 		}
@@ -454,11 +454,11 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 	if err := d.Set("created_by", virtualMachine.CreatedBy); err != nil {
 		return fmt.Errorf("error setting created_by: %w", err)
 	}
-	if err := d.Set("created_at", virtualMachine.CreationDate.String()); err != nil {
+	if err := d.Set("created_at", virtualMachine.GetCreationDate()); err != nil {
 		return fmt.Errorf("error setting created_at: %w", err)
 	}
 
-	if err := d.Set("modified_at", virtualMachine.ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", virtualMachine.GetModificationDate()); err != nil {
 		return fmt.Errorf("error setting modified_at: %w", err)
 	}
 	if err := d.Set("modified_by", virtualMachine.ModifiedBy); err != nil {
@@ -473,16 +473,16 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 	if err := d.Set("tags", flattenTagsListsFromIDs(virtualMachine.Tags)); err != nil {
 		return fmt.Errorf("error setting tags: %w", err)
 	}
-	if err := d.Set("primary_dns_address", virtualMachine.PrimaryDNSAddress); err != nil {
+	if err := d.Set("primary_dns_address", virtualMachine.PrimaryDnsAddress); err != nil {
 		return fmt.Errorf("error setting primary_dns_address: %+v", err)
 	}
-	if err := d.Set("secondary_dns_address", virtualMachine.SecondaryDNSAddress); err != nil {
+	if err := d.Set("secondary_dns_address", virtualMachine.SecondaryDnsAddress); err != nil {
 		return fmt.Errorf("error setting secondary_dns_address: %+v", err)
 	}
-	if err := d.Set("dns_suffix", virtualMachine.DNSSuffix); err != nil {
+	if err := d.Set("dns_suffix", virtualMachine.DnsSuffix); err != nil {
 		return fmt.Errorf("error setting dns_suffix: %+v", err)
 	}
-	if err := d.Set("dns_search_suffix", virtualMachine.DNSSearchSuffix); err != nil {
+	if err := d.Set("dns_search_suffix", virtualMachine.DnsSearchSuffix); err != nil {
 		return fmt.Errorf("error setting dns_search_suffix: %+v", err)
 	}
 	if err := d.Set("primary_wins_address", virtualMachine.PrimaryWinsAddress); err != nil {
@@ -495,96 +495,96 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine *mod
 	return nil
 }
 
-func mapResourceDataToVirtualMachine(d *schema.ResourceData) *models.VirtualMachineInstance {
-	var virtualMachineInstance = models.VirtualMachineInstance{
+func mapResourceDataToVirtualMachine(d *schema.ResourceData) openapi.VirtualMachineInstance {
+	var virtualMachineInstance = openapi.VirtualMachineInstance{
 		AdditionalVirtualDiskDeviceCollection: expandVirtualDisks(d.Get("additional_virtual_disks").(*schema.Set).List()),
-		DeploymentInstance: &models.DeploymentInstance{
-			DeploymentID: strfmt.UUID(d.Get("deployment_id").(string)),
+		DeploymentInstance: &openapi.DeploymentInstance{
+			DeploymentId: strfmt.UUID(d.Get("deployment_id").(string)),
 		},
 		InitialPassword:       d.Get("initial_password").(string),
 		PowerState:            castStringToPowerStateEnum(d.Get("power_state").(string)),
 		StoragePolicy:         castStringToStorageEnum(d.Get("storage_policy").(string)),
-		ProjectID:             strfmt.UUID(d.Get("project_id").(string)),
-		VirtualMachineID:      strfmt.UUID(d.Id()),
+		ProjectId:             strfmt.UUID(d.Get("project_id").(string)),
+		VirtualMachineId:      strfmt.UUID(d.Id()),
 		VirtualMachineName:    d.Get("display_name").(string),
-		SSHKey:                d.Get("ssh_key").(string),
+		SshKey:                d.Get("ssh_key").(string),
 		VirtualNetworkDevices: expandVirtualNetworkDevices(d.Get("virtual_network_devices").([]interface{})),
 		//DeploymentParams:      expandVDeploymentParams(d.Get("deployment_params").([]interface{})),
 		BackupListCollection: expandBackupListsFromIDs(d.Get("backup_lists").(*schema.Set).List()),
 		Tags:                 expandTagsListsFromIDs(d.Get("tags").(*schema.Set).List()),
 		OsType:               castStringToOsTypeEnum(d.Get("os_type").(string)),
-		OvfIPConfiguration:   d.Get("ovf_ip_configuration").(bool),
+		OvfIpConfiguration:   d.Get("ovf_ip_configuration").(bool),
 		InitialUserName:      d.Get("initial_user_name").(string),
 		FolderPath:           d.Get("folder_path").(string),
-		DNSSearchSuffix:      d.Get("dns_search_suffix").(string),
-		DNSSuffix:            d.Get("dns_suffix").(string),
-		PrimaryDNSAddress:    d.Get("primary_dns_address").(string),
+		DnsSearchSuffix:      d.Get("dns_search_suffix").(string),
+		DnsSuffix:            d.Get("dns_suffix").(string),
+		PrimaryDnsAddress:    d.Get("primary_dns_address").(string),
 		PrimaryWinsAddress:   d.Get("primary_wins_address").(string),
-		SecondaryDNSAddress:  d.Get("secondary_dns_address").(string),
+		SecondaryDnsAddress:  d.Get("secondary_dns_address").(string),
 		SecondaryWinsAddress: d.Get("secondary_wins_address").(string),
-		CPUCount:             int32(d.Get("cpu_count").(int)),
+		CpuCount:             int32(d.Get("cpu_count").(int)),
 		MemorySizeMB:         int32(d.Get("memory_size_mb").(int)),
 	}
-	encryptionInstance := &models.EncryptionInstance{
+	encryptionInstance := openapi.EncryptionInstance{
 		Encrypt: d.Get("encryption").(bool),
 	}
 
 	if recryptOperation, ok := d.GetOk("encryption_recrypt"); ok && recryptOperation.(string) != "" {
-		encryptionInstance.RecryptOperation = d.Get("encryption_recrypt").(models.RecryptOperation)
+		encryptionInstance.RecryptOperation = d.Get("encryption_recrypt").(*openapi.RecryptOperation)
 	} else {
 		encryptionInstance.RecryptOperation = "NONE"
 	}
 
 	if encryptionKeyId, ok := d.GetOk("encryption_key_id"); ok && encryptionKeyId.(string) != "" {
-		encryptionInstance.EncryptionKeyID = encryptionKeyId.(string)
+		encryptionInstance.EncryptionKeyId = encryptionKeyId.(string)
 		encryptionInstance.Managed = false
 	} else {
 		encryptionInstance.Managed = true
 	}
 
 	if !encryptionInstance.Managed || encryptionInstance.Encrypt {
-		virtualMachineInstance.EncryptionInstance = encryptionInstance
+		virtualMachineInstance.EncryptionInstance = &encryptionInstance
 	}
 
 	virtualDisks := expandVirtualDisks(d.Get("virtual_disk").(*schema.Set).List())
 	if len(virtualDisks) > 0 {
-		virtualMachineInstance.OsVirtualDiskDevice = virtualDisks[0]
+		virtualMachineInstance.OsVirtualDiskDevice = &virtualDisks[0]
 	}
 
-	return &virtualMachineInstance
+	return virtualMachineInstance
 }
 
-func castStringToOsTypeEnum(e string) models.OsType {
+func castStringToOsTypeEnum(e string) openapi.OsType {
 	switch e {
 	case "WINDOWS":
-		return models.OsTypeWINDOWS
+		return openapi.WINDOWS
 	case "LINUX":
-		return models.OsTypeLINUX
+		return openapi.LINUX
 	default:
 		return ""
 	}
 }
 
-func castStringToStorageEnum(e string) models.StoragePolicy {
+func castStringToStorageEnum(e string) openapi.StoragePolicy {
 	switch e {
 	case "UNKNOWN":
-		return models.StoragePolicyUNKNOWN
+		return openapi.UNKNOWN
 	case "STANDARD":
-		return models.StoragePolicySTANDARD
+		return openapi.STANDARD
 	case "STANDARD_W1":
-		return models.StoragePolicySTANDARDW1
+		return openapi.STANDARD_W1
 	case "STANDARD_W2":
-		return models.StoragePolicySTANDARDW2
+		return openapi.STANDARD_W2
 	case "ENTERPRISE":
-		return models.StoragePolicyENTERPRISE
+		return openapi.ENTERPRISE
 	case "STANDARDENCRYPTION":
-		return models.StoragePolicySTANDARDENCRYPTION
+		return openapi.STANDARDENCRYPTION
 	case "ENTERPRISEENCRYPTION":
-		return models.StoragePolicyENTERPRISEENCRYPTION
+		return openapi.ENTERPRISEENCRYPTION
 	case "STANDARD_W1_ENCRYPTION":
-		return models.StoragePolicySTANDARDW1ENCRYPTION
+		return openapi.STANDARD_W1_ENCRYPTION
 	case "STANDARD_W2_ENCRYPTION":
-		return models.StoragePolicySTANDARDW2ENCRYPTION
+		return openapi.STANDARD_W2_ENCRYPTION
 	default:
 		return ""
 	}

@@ -2,12 +2,12 @@ package ochk
 
 import (
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func flattenCustomServicePorts(in []*models.L4PortSetEntry) []interface{} {
+func flattenCustomServicePorts(in []openapi.L4PortSetEntry) []interface{} {
 	if in == nil {
 		return nil
 	}
@@ -16,7 +16,7 @@ func flattenCustomServicePorts(in []*models.L4PortSetEntry) []interface{} {
 
 	for _, v := range in {
 		m := make(map[string]interface{})
-		m["id"] = v.L4PortSetEntryID
+		m["id"] = v.GetL4PortSetEntryId()
 		m["protocol"] = v.L4Protocol
 		m["source"] = flattenStringSlice(v.SourcePorts)
 		m["destination"] = flattenStringSlice(v.DestinationPorts)
@@ -26,18 +26,18 @@ func flattenCustomServicePorts(in []*models.L4PortSetEntry) []interface{} {
 	return out
 }
 
-func expandCustomServicePorts(in []interface{}) []*models.L4PortSetEntry {
+func expandCustomServicePorts(in []interface{}) []openapi.L4PortSetEntry {
 	if len(in) == 0 {
 		return nil
 	}
 
-	var out = make([]*models.L4PortSetEntry, len(in))
+	var out = make([]openapi.L4PortSetEntry, len(in))
 	for i, v := range in {
 		m := v.(map[string]interface{})
 
-		member := &models.L4PortSetEntry{
-			L4PortSetEntryID: strfmt.UUID(m["id"].(string)),
-			L4Protocol:       models.L4Protocol(m["protocol"].(string)),
+		member := openapi.L4PortSetEntry{
+			L4PortSetEntryId: strfmt.UUID(m["id"].(string)),
+			L4Protocol:       openapi.L4PortSetEntry(m["protocol"].(string)),
 			SourcePorts:      transformSetToStringSlice(m["source"].(*schema.Set)),
 			DestinationPorts: transformSetToStringSlice(m["destination"].(*schema.Set)),
 		}
@@ -48,28 +48,28 @@ func expandCustomServicePorts(in []interface{}) []*models.L4PortSetEntry {
 	return out
 }
 
-func flattenCustomServicesFromIDs(in []*models.CustomServiceInstance) *schema.Set {
+func flattenCustomServicesFromIDs(in []openapi.CustomServiceInstance) *schema.Set {
 	out := &schema.Set{
 		F: schema.HashString,
 	}
 
 	for _, v := range in {
-		out.Add(fmt.Sprint(v.ServiceID))
+		out.Add(fmt.Sprint(v.GetServiceId()))
 	}
 	return out
 }
 
-func expandCustomServicesFromIDs(in []interface{}) []*models.CustomServiceInstance {
+func expandCustomServicesFromIDs(in []interface{}) []openapi.CustomServiceInstance {
 	if len(in) == 0 {
 		return nil
 	}
 
-	var out = make([]*models.CustomServiceInstance, len(in))
+	var out = make([]openapi.CustomServiceInstance, len(in))
 
 	for i, v := range in {
 		idValue := strfmt.UUID.String(strfmt.UUID(v.(string)))
-		service := &models.CustomServiceInstance{
-			ServiceID: strfmt.UUID(idValue),
+		service := openapi.CustomServiceInstance{
+			ServiceId: strfmt.UUID(idValue),
 		}
 
 		out[i] = service
@@ -78,7 +78,7 @@ func expandCustomServicesFromIDs(in []interface{}) []*models.CustomServiceInstan
 	return out
 }
 
-func flattenCustomServices(in []*models.CustomServiceInstance) []map[strfmt.UUID]interface{} {
+func flattenCustomServices(in []openapi.CustomServiceInstance) []map[strfmt.UUID]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -87,9 +87,9 @@ func flattenCustomServices(in []*models.CustomServiceInstance) []map[strfmt.UUID
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["custom_service_id"] = v.ServiceID
+		m["custom_service_id"] = v.GetServiceId()
 		m["display_name"] = v.DisplayName
-		m["project_id"] = v.ProjectID
+		m["project_id"] = v.ProjectId
 		out = append(out, m)
 	}
 	return out

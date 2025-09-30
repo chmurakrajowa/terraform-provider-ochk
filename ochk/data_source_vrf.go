@@ -58,13 +58,13 @@ func dataSourceVrfRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("no vrf found for display_name: %s", displayName)
 	}
 
-	d.SetId(vrfs[0].RouterID.String())
+	d.SetId(vrfs[0].GetRouterId())
 
 	if err := d.Set("created_by", vrfs[0].CreatedBy); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", vrfs[0].CreationDate.String()); err != nil {
+	if err := d.Set("created_at", vrfs[0].GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
@@ -72,7 +72,7 @@ func dataSourceVrfRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", vrfs[0].ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", vrfs[0].GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 

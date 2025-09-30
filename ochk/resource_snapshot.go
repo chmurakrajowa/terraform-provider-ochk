@@ -3,7 +3,7 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -105,12 +105,12 @@ func resourceSnapshotCreate(ctx context.Context, d *schema.ResourceData, meta in
 
 	snapshot := mapResourceDataToSnapshot(d)
 
-	created, err := proxy.Create(ctx, virtualMachineId, &ram, snapshot)
+	created, err := proxy.Create(ctx, virtualMachineId, ram, snapshot)
 	if err != nil {
 		return diag.Errorf("error while creating snapshot: %+v", err)
 	}
 
-	d.SetId(created.SnapshotID.String())
+	d.SetId(created.GetSnapshotId())
 	return resourceSnapshotRead(ctx, d, meta)
 }
 
@@ -132,7 +132,7 @@ func resourceSnapshotRead(ctx context.Context, d *schema.ResourceData, meta inte
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("virtual_machine_id", snapshot.VirtualMachineID); err != nil {
+	if err := d.Set("virtual_machine_id", snapshot.VirtualMachineId); err != nil {
 		return diag.Errorf("error setting virtual_machine_id: %+v", err)
 	}
 	if err := d.Set("snapshot_description", snapshot.SnapshotDescription); err != nil {
@@ -141,7 +141,7 @@ func resourceSnapshotRead(ctx context.Context, d *schema.ResourceData, meta inte
 	if err := d.Set("power_state", snapshot.PowerState); err != nil {
 		return diag.Errorf("error setting power_state: %+v", err)
 	}
-	if err := d.Set("parent_id", snapshot.ParentSnapshotID); err != nil {
+	if err := d.Set("parent_id", snapshot.ParentSnapshotId); err != nil {
 		return diag.Errorf("error setting parent_id: %+v", err)
 	}
 	if err := d.Set("child_id", flattenChildsListsFromIDs(snapshot.ChildSnapshots)); err != nil {
@@ -168,23 +168,23 @@ func resourceSnapshotDelete(ctx context.Context, d *schema.ResourceData, meta in
 	return nil
 }
 
-func mapResourceDataToSnapshot(d *schema.ResourceData) *models.SnapshotInstance {
-	return &models.SnapshotInstance{
+func mapResourceDataToSnapshot(d *schema.ResourceData) openapi.SnapshotInstance {
+	return openapi.SnapshotInstance{
 		SnapshotName:        d.Get("display_name").(string),
 		SnapshotDescription: d.Get("snapshot_description").(string),
-		VirtualMachineID:    strfmt.UUID(d.Get("virtual_machine_id").(string)),
+		VirtualMachineId:    strfmt.UUID(d.Get("virtual_machine_id").(string)),
 		PowerState:          castStringToPowerStateEnum(d.Get("power_state").(string)),
-		ParentSnapshotID:    strfmt.UUID(d.Get("parent_id").(string)),
+		ParentSnapshotId:    strfmt.UUID(d.Get("parent_id").(string)),
 		ChildSnapshots:      expandChildSnapshots(d.Get("child_id").(*schema.Set).List()),
 	}
 }
 
-func castStringToPowerStateEnum(e string) models.PowerState {
+func castStringToPowerStateEnum(e string) openapi.PowerState {
 	switch e {
 	case "poweredOff":
-		return models.PowerStatePoweredOff
+		return openapi.POWERED_OFF
 	case "poweredOn":
-		return models.PowerStatePoweredOn
+		return openapi.POWERED_ON
 	default:
 		return ""
 	}

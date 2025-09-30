@@ -1,11 +1,11 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 )
 
-func flattenIPCollections(in []*models.IPCollection) []map[string]interface{} {
+func flattenIPCollections(in []openapi.IpCollection) []map[string]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -14,29 +14,29 @@ func flattenIPCollections(in []*models.IPCollection) []map[string]interface{} {
 
 	for _, v := range in {
 		m := make(map[string]interface{})
-		m["ip_collection_id"] = v.ID
+		m["ip_collection_id"] = v.Id
 		m["display_name"] = v.DisplayName
-		m["ip_addresses"] = flattenStringSlice(v.IPCollectionAddresses)
-		m["project_id"] = v.ProjectID
+		m["ip_addresses"] = flattenStringSlice(v.IpCollectionAddresses)
+		m["project_id"] = v.ProjectId
 
 		out = append(out, m)
 	}
 	return out
 }
 
-func expandIPCollections(in []interface{}) []*models.IPCollection {
+func expandIPCollections(in []interface{}) []openapi.IpCollection {
 	if len(in) == 0 {
 		return nil
 	}
 
-	var out = make([]*models.IPCollection, len(in))
+	var out = make([]openapi.IpCollection, len(in))
 	for i, v := range in {
 		m := v.(map[strfmt.UUID]interface{})
 
-		member := &models.IPCollection{}
+		member := openapi.IpCollection{}
 
 		if paramName, ok := m["ip_collection_id"].(string); ok {
-			member.ID = strfmt.UUID(paramName)
+			member.Id = strfmt.UUID(paramName)
 		}
 
 		if paramType, ok := m["display_name"].(string); ok {
@@ -46,16 +46,16 @@ func expandIPCollections(in []interface{}) []*models.IPCollection {
 		if paramValue, ok := m["ip_addresses"]; ok {
 			n := paramValue.([]string)
 			if len(n) == 0 {
-				member.IPCollectionAddresses = nil
+				member.IpCollectionAddresses = nil
 			} else {
 				for _, x := range n {
-					member.IPCollectionAddresses = append(member.IPCollectionAddresses, x)
+					member.IpCollectionAddresses = append(member.IpCollectionAddresses, x)
 				}
 			}
 		}
 
 		if paramValue, ok := m["project_id"].(string); ok {
-			member.ProjectID = strfmt.UUID(paramValue)
+			member.ProjectId = strfmt.UUID(paramValue)
 		}
 		out[i] = member
 	}

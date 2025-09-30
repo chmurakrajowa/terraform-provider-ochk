@@ -109,7 +109,7 @@ func dataSourceNatRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("error setting description:  %+v", err)
 	}
 
-	if err := d.Set("vrf_id", nats[0].TierZeroRouter.RouterID); err != nil {
+	if err := d.Set("vrf_id", nats[0].TierZeroRouter.RouterId); err != nil {
 		return diag.Errorf("error setting vrf_id:  %+v", err)
 	}
 
@@ -121,11 +121,11 @@ func dataSourceNatRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("error setting created_by:  %+v", err)
 	}
 
-	if err := d.Set("created_at", nats[0].CreationDate.String()); err != nil {
+	if err := d.Set("created_at", nats[0].GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at:  %+v", err)
 	}
 
-	if err := d.Set("modified_at", nats[0].ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", nats[0].GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at:  %+v", err)
 	}
 
@@ -156,7 +156,7 @@ func dataSourceNatRead(ctx context.Context, d *schema.ResourceData, meta interfa
 	if nats[0].NatType == "MANUAL" {
 		if nats[0].Action == "DNAT" {
 			if nats[0].ServiceInstance != nil && nats[0].TranslatedPorts != "" {
-				if err := d.Set("service_id", nats[0].ServiceInstance.ServiceID); err != nil {
+				if err := d.Set("service_id", nats[0].ServiceInstance.ServiceId); err != nil {
 					return diag.Errorf("error setting service: %+v", err)
 				}
 				if err := d.Set("translated_ports", nats[0].TranslatedPorts); err != nil {
@@ -172,12 +172,12 @@ func dataSourceNatRead(ctx context.Context, d *schema.ResourceData, meta interfa
 	}
 
 	if nats[0].NatType == "AUTO" {
-		if err := d.Set("virtual_network_id", nats[0].VirtualNetworkInstance.VirtualNetworkID); err != nil {
+		if err := d.Set("virtual_network_id", nats[0].VirtualNetworkInstance.VirtualNetworkId); err != nil {
 			return diag.Errorf("error setting virtual_network_id: %+v", err)
 		}
 	}
 
-	d.SetId(nats[0].RuleID.String())
+	d.SetId(nats[0].GetRuleId())
 
 	return nil
 }

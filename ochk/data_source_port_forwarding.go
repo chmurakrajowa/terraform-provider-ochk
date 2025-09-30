@@ -107,7 +107,7 @@ func dataSourcePortForwardingRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error setting description: %+v", err)
 	}
 
-	if err := d.Set("port_forwarding_id", portForwarding[0].PortForwardingID); err != nil {
+	if err := d.Set("port_forwarding_id", portForwarding[0].PortForwardingId); err != nil {
 		return diag.Errorf("error setting port_forwarding_id: %+v", err)
 	}
 
@@ -127,11 +127,11 @@ func dataSourcePortForwardingRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error setting internal_port: %+v", err)
 	}
 
-	if err := d.Set("internal_ip_address", portForwarding[0].InternalIPAddress); err != nil {
+	if err := d.Set("internal_ip_address", portForwarding[0].InternalIpAddress); err != nil {
 		return diag.Errorf("error setting internal_ip_address: %+v", err)
 	}
 
-	if err := d.Set("internal_port_id", portForwarding[0].InternalPortID); err != nil {
+	if err := d.Set("internal_port_id", portForwarding[0].InternalPortId); err != nil {
 		return diag.Errorf("error setting internal_port_id: %+v", err)
 	}
 
@@ -147,7 +147,7 @@ func dataSourcePortForwardingRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", portForwarding[0].CreationDate.String()); err != nil {
+	if err := d.Set("created_at", portForwarding[0].GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
@@ -155,10 +155,10 @@ func dataSourcePortForwardingRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", portForwarding[0].ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", portForwarding[0].GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
-	d.SetId(portForwarding[0].PortForwardingID.String())
+	d.SetId(portForwarding[0].GetPortForwardingId())
 	return nil
 }

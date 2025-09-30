@@ -3,7 +3,7 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -135,7 +135,7 @@ func resourceFirewallSNRuleCreate(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error while creating firewall SN rule: %+v", err)
 	}
 
-	d.SetId(created.RuleID.String())
+	d.SetId(created.GetRuleId())
 
 	return resourceFirewallSNRuleRead(ctx, d, meta)
 }
@@ -164,7 +164,7 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", firewallSNRule.ProjectID); err != nil {
+	if err := d.Set("project_id", firewallSNRule.ProjectId); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
@@ -180,7 +180,7 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting disabled: %+v", err)
 	}
 
-	if err := d.Set("ip_protocol", firewallSNRule.IPProtocol); err != nil {
+	if err := d.Set("ip_protocol", firewallSNRule.IpProtocol); err != nil {
 		return diag.Errorf("error setting ip_protocol: %+v", err)
 	}
 
@@ -210,7 +210,7 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", firewallSNRule.CreationDate.String()); err != nil {
+	if err := d.Set("created_at", firewallSNRule.GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
@@ -218,7 +218,7 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", firewallSNRule.ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", firewallSNRule.GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
@@ -236,9 +236,9 @@ func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 	routerID := strfmt.UUID(d.Get("vpc_id").(string))
 
 	rule := mapResourceDataToGFWRule(d)
-	rule.RuleID = strfmt.UUID(d.Id())
+	rule.RuleId = strfmt.UUID(d.Id())
 
-	_, err := proxy.Update(ctx, routerID, rule)
+	_, err := proxy.Update(ctx, routerID, &rule)
 	if err != nil {
 		return diag.Errorf("error while modifying firewall SN rule: %+v", err)
 	}
@@ -246,14 +246,14 @@ func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 	return resourceFirewallSNRuleRead(ctx, d, meta)
 }
 
-func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GfwRule {
-	rule := &models.GfwRule{
+func mapResourceDataToGFWRule(d *schema.ResourceData) openapi.GfwRule {
+	rule := openapi.GfwRule{
 		DisplayName: d.Get("display_name").(string),
-		ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
+		ProjectId:   strfmt.UUID(d.Get("project_id").(string)),
 		Action:      castStringToActionEnum(d.Get("action").(string)),
 		Direction:   castStringToADirectionEnum(d.Get("direction").(string)),
 		Disabled:    d.Get("disabled").(bool),
-		IPProtocol:  castStringToAIPProtocolEnum(d.Get("ip_protocol").(string)),
+		IpProtocol:  castStringToAIPProtocolEnum(d.Get("ip_protocol").(string)),
 		Priority:    int64(d.Get("priority").(int)),
 	}
 
@@ -275,9 +275,9 @@ func mapResourceDataToGFWRule(d *schema.ResourceData) *models.GfwRule {
 
 	if routerId, ok := d.GetOk("vpc_id"); ok {
 
-		var RouterInstanceList = make([]*models.RouterInstance, 1)
-		routerInstanceId := &models.RouterInstance{
-			RouterID: strfmt.UUID(routerId.(string)),
+		var RouterInstanceList = make([]openapi.RouterInstance, 1)
+		routerInstanceId := openapi.RouterInstance{
+			RouterId: strfmt.UUID(routerId.(string)),
 		}
 		RouterInstanceList[0] = routerInstanceId
 		rule.Scope = RouterInstanceList

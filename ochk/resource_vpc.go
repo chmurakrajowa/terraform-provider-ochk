@@ -3,7 +3,7 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -106,7 +106,7 @@ func resourceVpcCreate(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf(E2001, err)
 	}
 
-	d.SetId(created.RouterID.String())
+	d.SetId(created.GetRouterId())
 
 	return resourceVpcRead(ctx, d, meta)
 }
@@ -125,11 +125,11 @@ func resourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf(E2005, err)
 	}
 
-	if err := d.Set("vrf_id", Router.ParentT0ID); err != nil {
+	if err := d.Set("vrf_id", Router.ParentT0Id); err != nil {
 		return diag.Errorf("error setting vrf_id: %+v", err)
 	}
 
-	if err := d.Set("project_id", Router.ProjectID); err != nil {
+	if err := d.Set("project_id", Router.ProjectId); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
@@ -149,7 +149,7 @@ func resourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", Router.CreationDate.String()); err != nil {
+	if err := d.Set("created_at", Router.GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
@@ -157,7 +157,7 @@ func resourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", Router.ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", Router.GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
@@ -175,7 +175,7 @@ func resourceVpcUpdate(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf(E2004, err_vpc)
 	}
 
-	Router.RouterID = strfmt.UUID(d.Id())
+	Router.RouterId = strfmt.UUID(d.Id())
 
 	_, err := proxy.Update(ctx, Router)
 	if err != nil {
@@ -202,12 +202,12 @@ func resourceVpcDelete(ctx context.Context, d *schema.ResourceData, meta interfa
 	return nil
 }
 
-func mapResourceDataToVpc(d *schema.ResourceData, platformType models.PlatformType) (*models.RouterInstance, diag.Diagnostics) {
-	if platformType == models.PlatformTypeOPENSTACK {
-		return &models.RouterInstance{
+func mapResourceDataToVpc(d *schema.ResourceData, platformType openapi.PlatformType) (openapi.RouterInstance, diag.Diagnostics) {
+	if platformType == openapi.OPENSTACK {
+		return openapi.RouterInstance{
 			DisplayName: d.Get("display_name").(string),
-			ParentT0ID:  strfmt.UUID(d.Get("vrf_id").(string)),
-			ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
+			ParentT0Id:  strfmt.UUID(d.Get("vrf_id").(string)),
+			ProjectId:   strfmt.UUID(d.Get("project_id").(string)),
 			SnatEnabled: d.Get("autonat_enabled").(bool),
 			FolderPath:  d.Get("folder_path").(string),
 		}, nil
@@ -215,10 +215,10 @@ func mapResourceDataToVpc(d *schema.ResourceData, platformType models.PlatformTy
 		if d.Get("autonat_enabled").(bool) {
 			return nil, diag.Errorf(E2003, fmt.Sprintf(E2002, "autonat_enabled"))
 		}
-		return &models.RouterInstance{
+		return openapi.RouterInstance{
 			DisplayName: d.Get("display_name").(string),
-			ParentT0ID:  strfmt.UUID(d.Get("vrf_id").(string)),
-			ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
+			ParentT0Id:  strfmt.UUID(d.Get("vrf_id").(string)),
+			ProjectId:   strfmt.UUID(d.Get("project_id").(string)),
 			FolderPath:  d.Get("folder_path").(string),
 		}, nil
 	}

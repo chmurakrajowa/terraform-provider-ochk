@@ -3,7 +3,7 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
@@ -148,10 +148,10 @@ func TestCheckOrderOfSecurityPolicies(t *testing.T) {
 			{},
 		}
 
-		stringArrayToDFWRule := func(strArr []string) []*models.DfwRule {
-			var result []*models.DfwRule
+		stringArrayToDFWRule := func(strArr []string) []openapi.DfwRule {
+			var result []openapi.DfwRule
 			for i := 0; i < len(strArr); i++ {
-				result = append(result, &models.DfwRule{DisplayName: strArr[i]})
+				result = append(result, openapi.DfwRule{DisplayName: strArr[i]})
 			}
 			return result
 		}
@@ -166,7 +166,7 @@ func TestCheckOrderOfSecurityPolicies(t *testing.T) {
 	})
 }
 
-func checkOrderOfSecurityPolicies(securityPolicies []*models.DfwRule, displayNames []string) bool {
+func checkOrderOfSecurityPolicies(securityPolicies []openapi.DfwRule, displayNames []string) bool {
 	indexOfFirstElement := findIndexOfFirstMatch(len(securityPolicies), func(idx int) bool {
 		return securityPolicies[idx].DisplayName == displayNames[0]
 	})
@@ -404,13 +404,13 @@ func testAccFirewallEWRuleResourceDoesntExist(displayName string) resource.TestC
 			return fmt.Errorf("wrong number of routers")
 		}
 
-		firewallRule, err := client.FirewallEWRules.ListByDisplayName(ctx, routers[0].RouterID, displayName)
+		firewallRule, err := client.FirewallEWRules.ListByDisplayName(ctx, routers[0].RouterId, displayName)
 		if err != nil {
 			return err
 		}
 
 		if len(firewallRule) > 0 {
-			return fmt.Errorf("firewall EW rule %s still exists", firewallRule[0].RuleID)
+			return fmt.Errorf("firewall EW rule %s still exists", firewallRule[0].RuleId)
 		}
 
 		return nil

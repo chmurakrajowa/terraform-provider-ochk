@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -9,7 +9,7 @@ import (
 
 func TestFlattenPortForwarding(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.PortForwarding
+		expanded  []openapi.PortForwarding
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -18,12 +18,12 @@ func TestFlattenPortForwarding(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.PortForwarding{
+			expanded: []openapi.PortForwarding{
 				{
-					FloatingIPID:     "f1afcad5-f63e-4d99-9669-6081135bffc2",
+					FloatingIpId:     "f1afcad5-f63e-4d99-9669-6081135bffc2",
 					Name:             "port-fwd-test1",
-					InternalPortID:   "11752b30-9749-4534-8ec1-2b0e9670b92b",
-					PortForwardingID: "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					InternalPortId:   "11752b30-9749-4534-8ec1-2b0e9670b92b",
+					PortForwardingId: "e1675817-f1a1-45c1-988b-ec2f142867e0",
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

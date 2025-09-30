@@ -1,11 +1,11 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 )
 
-func flattenAutoNats(in []*models.NATRuleInstance) []map[strfmt.UUID]interface{} {
+func flattenAutoNats(in []openapi.NATRuleInstance) []map[strfmt.UUID]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -13,20 +13,20 @@ func flattenAutoNats(in []*models.NATRuleInstance) []map[strfmt.UUID]interface{}
 	var out []map[strfmt.UUID]interface{}
 
 	for _, v := range in {
-		if v.NatType == "AUTO" {
+		if *v.NatType == "AUTO" {
 			m := make(map[strfmt.UUID]interface{})
-			m["auto_nat_id"] = v.RuleID
+			m["auto_nat_id"] = v.RuleId
 			m["display_name"] = v.DisplayName
-			m["virtual_network_id"] = v.VirtualNetworkInstance.VirtualNetworkID
+			m["virtual_network_id"] = v.VirtualNetworkInstance.VirtualNetworkId
 			m["enabled"] = v.Enabled
-			m["vrf_id"] = v.TierZeroRouter.RouterID
+			m["vrf_id"] = v.TierZeroRouter.RouterId
 			out = append(out, m)
 		}
 	}
 	return out
 }
 
-func flattenManualNats(in []*models.NATRuleInstance) []map[strfmt.UUID]interface{} {
+func flattenManualNats(in []openapi.NATRuleInstance) []map[strfmt.UUID]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -34,13 +34,13 @@ func flattenManualNats(in []*models.NATRuleInstance) []map[strfmt.UUID]interface
 	var out []map[strfmt.UUID]interface{}
 
 	for _, v := range in {
-		if v.NatType == "MANUAL" {
+		if *v.NatType == "MANUAL" {
 			m := make(map[strfmt.UUID]interface{})
-			m["manual_nat_id"] = v.RuleID
+			m["manual_nat_id"] = v.RuleId
 			m["display_name"] = v.DisplayName
 			m["action"] = v.Action
 			m["enabled"] = v.Enabled
-			m["vrf_id"] = v.TierZeroRouter.RouterID
+			m["vrf_id"] = v.TierZeroRouter.RouterId
 			m["source_network"] = v.SourceNetwork
 			m["destination_network"] = v.DestinationNetwork
 			out = append(out, m)

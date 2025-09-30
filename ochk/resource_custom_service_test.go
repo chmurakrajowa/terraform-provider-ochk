@@ -152,7 +152,7 @@ func testAccCustomServiceResourceNotExists(displayNames ...string) resource.Test
 			}
 
 			if len(customServices) > 0 {
-				return fmt.Errorf("custom service %s still exists", customServices[0].ServiceID)
+				return fmt.Errorf("custom service %s still exists", customServices[0].ServiceId)
 			}
 		}
 

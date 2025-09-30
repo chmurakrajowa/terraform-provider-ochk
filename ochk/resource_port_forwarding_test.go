@@ -97,7 +97,7 @@ func testAccPortForwardingResourceNotExists(displayName string, floatingIpId str
 		}
 
 		if len(PortFwd) > 0 {
-			return fmt.Errorf("port_forwarding %s still exists", PortFwd[0].PortForwardingID)
+			return fmt.Errorf("port_forwarding %s still exists", PortFwd[0].PortForwardingId)
 		}
 		return nil
 	}

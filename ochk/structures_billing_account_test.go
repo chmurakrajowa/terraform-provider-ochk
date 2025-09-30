@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -9,7 +9,7 @@ import (
 
 func TestFlattenExpandAccountProjects(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.AccountProjectInstance
+		expanded  []openapi.AccountProjectInstance
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -18,9 +18,9 @@ func TestFlattenExpandAccountProjects(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.AccountProjectInstance{
+			expanded: []openapi.AccountProjectInstance{
 				{
-					ProjectID: "e1675817-f1a1-45c1-988b-ec2f142867aa",
+					ProjectId: "e1675817-f1a1-45c1-988b-ec2f142867aa",
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

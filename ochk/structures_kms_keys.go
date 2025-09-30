@@ -1,11 +1,11 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 )
 
-func flattenKMSKeys(in []*models.KeyInstance) []map[string]interface{} {
+func flattenKMSKeys(in []openapi.KeyInstance) []map[string]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -14,7 +14,7 @@ func flattenKMSKeys(in []*models.KeyInstance) []map[string]interface{} {
 
 	for _, v := range in {
 		m := make(map[string]interface{})
-		m["kms_key_id"] = v.ID
+		m["kms_key_id"] = v.Id
 		m["display_name"] = v.Name
 		m["key_usage"] = flattenStringSlice(v.KeyUsageList)
 		m["state"] = v.State
@@ -24,19 +24,19 @@ func flattenKMSKeys(in []*models.KeyInstance) []map[string]interface{} {
 	return out
 }
 
-func expandKMSKeys(in []interface{}) []*models.KeyInstance {
+func expandKMSKeys(in []interface{}) []openapi.KeyInstance {
 	if len(in) == 0 {
 		return nil
 	}
 
-	var out = make([]*models.KeyInstance, len(in))
+	var out = make([]openapi.KeyInstance, len(in))
 	for i, v := range in {
 		m := v.(map[strfmt.UUID]interface{})
 
-		member := &models.KeyInstance{}
+		member := openapi.KeyInstance{}
 
 		if paramName, ok := m["kms_key_id"].(string); ok {
-			member.ID = paramName
+			member.Id = paramName
 		}
 
 		if paramType, ok := m["display_name"].(string); ok {

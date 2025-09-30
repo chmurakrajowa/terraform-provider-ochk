@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -9,7 +9,7 @@ import (
 
 func TestFlattenVirtualNetworks(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.VirtualNetworkInstance
+		expanded  []openapi.VirtualNetworkInstance
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -18,20 +18,20 @@ func TestFlattenVirtualNetworks(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.VirtualNetworkInstance{
+			expanded: []openapi.VirtualNetworkInstance{
 				{
-					VirtualNetworkID: "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					VirtualNetworkId: "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					DisplayName:      "VRF1",
-					ProjectID:        "e2655817-f1a1-4c76-bebb-1fee7ee75607",
-					RouterRefID:      "7364ff23-0513-48b6-97cb-637613e29424",
+					ProjectId:        "e2655817-f1a1-4c76-bebb-1fee7ee75607",
+					RouterRefId:      "7364ff23-0513-48b6-97cb-637613e29424",
 					FolderPath:       "/test1",
 					IpamEnabled:      true,
 				},
 				{
-					VirtualNetworkID: "791bf702-22fb-4c76-bebb-1fee7ee75607",
+					VirtualNetworkId: "791bf702-22fb-4c76-bebb-1fee7ee75607",
 					DisplayName:      "VRF2",
-					ProjectID:        "e2655817-f1a1-4c76-bebb-1fee7ee75607",
-					RouterRefID:      "547948e9-b67d-44d1-ad69-ae9b711e289c",
+					ProjectId:        "e2655817-f1a1-4c76-bebb-1fee7ee75607",
+					RouterRefId:      "547948e9-b67d-44d1-ad69-ae9b711e289c",
 					FolderPath:       "/test2",
 					IpamEnabled:      true,
 				},

@@ -54,10 +54,10 @@ func dataSourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error setting virtual machine folder_path: %v", err)
 	}
 
-	if err := d.Set("project_id", virtualMachines[0].ProjectID); err != nil {
+	if err := d.Set("project_id", virtualMachines[0].ProjectId); err != nil {
 		return diag.Errorf("error setting virtual machine project_id: %v", err)
 	}
-	d.SetId(virtualMachines[0].VirtualMachineID.String())
+	d.SetId(virtualMachines[0].GetVirtualMachineId())
 
 	return nil
 }
