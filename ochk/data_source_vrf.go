@@ -54,7 +54,7 @@ func dataSourceVrfRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("more than one vrf with display_name: %s found!", displayName)
 	}
 
-	if vrfs[0].RouterType != "TIER0" {
+	if vrfs[0].GetRouterType() != "TIER0" {
 		return diag.Errorf("no vrf found for display_name: %s", displayName)
 	}
 

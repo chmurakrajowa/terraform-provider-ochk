@@ -149,7 +149,7 @@ func dataSourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error setting destination: %+v", err)
 	}
 
-	if err := d.Set("priority", int(firewallEWRules[0].Priority)); err != nil {
+	if err := d.Set("priority", int(firewallEWRules[0].GetPriority())); err != nil {
 		return diag.Errorf("error setting priority: %+v", err)
 	}
 

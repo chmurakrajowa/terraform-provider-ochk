@@ -158,7 +158,7 @@ func dataSourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting rule_id: %+v", err)
 	}
 
-	if err := d.Set("dest_security_group", flattenSecGroups(firewallRule[0].SecurityGroup)); err != nil {
+	if err := d.Set("dest_security_group", flattenSecGroups(firewallRule[0].GetSecurityGroup())); err != nil {
 		return diag.Errorf("error setting dest_security_group: %+v", err)
 	}
 

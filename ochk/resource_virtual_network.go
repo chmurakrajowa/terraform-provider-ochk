@@ -157,7 +157,7 @@ func resourceVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, met
 	return nil
 }
 
-func mapVirtualNetworkToResourceData(d *schema.ResourceData, virtualNetwork openapi.VirtualNetworkInstance) diag.Diagnostics {
+func mapVirtualNetworkToResourceData(d *schema.ResourceData, virtualNetwork *openapi.VirtualNetworkInstance) diag.Diagnostics {
 	if err := d.Set("display_name", virtualNetwork.DisplayName); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
@@ -207,7 +207,7 @@ func resourceVirtualNetworkUpdate(ctx context.Context, d *schema.ResourceData, m
 	sdkClient := meta.(*sdk.Client)
 
 	virtualNetwork := mapResourceDataToVirtualNetwork(d)
-	virtualNetwork.VirtualNetworkId = strfmt.UUID(d.Id())
+	virtualNetwork.VirtualNetworkId = NewNullableString(d.Id())
 
 	request, err := sdkClient.VirtualNetworks.Update(ctx, virtualNetwork)
 	if err != nil {

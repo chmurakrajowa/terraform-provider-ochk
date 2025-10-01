@@ -97,7 +97,7 @@ func resourceAccountUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	proxy := meta.(*sdk.Client).Accounts
 
 	account := mapResourceDataToAccount(d)
-	account.AccountId = strfmt.UUID(d.Id())
+	account.AccountId = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, &account)
 	if err != nil {
@@ -166,8 +166,8 @@ func resourceAccountDelete(ctx context.Context, d *schema.ResourceData, meta int
 
 func mapResourceDataToAccount(d *schema.ResourceData) openapi.AccountInstance {
 	return openapi.AccountInstance{
-		AccountName:        d.Get("display_name").(string),
-		AccountDescription: d.Get("account_description").(string),
+		AccountName:        NewNullableString(d.Get("display_name").(string)),
+		AccountDescription: NewNullableString(d.Get("account_description").(string)),
 		Projects:           expandAccountProjects(d.Get("projects").(*schema.Set).List()),
 	}
 }
@@ -182,12 +182,12 @@ func expandAccountProjects(in []interface{}) []openapi.AccountProjectInstance {
 		m := v.(map[string]interface{})
 
 		project := openapi.AccountProjectInstance{
-			ProjectId: strfmt.UUID(m["project_id"].(string)),
-			Name:      m["display_name"].(string),
+			ProjectId: NewNullableString(m["project_id"].(string)),
+			Name:      NewNullableString(m["display_name"].(string)),
 		}
 
 		if displayName, ok := m["display_name"].(string); ok && displayName != "" {
-			project.Name = displayName
+			project.Name = NewNullableString(displayName)
 		}
 
 		out[i] = project

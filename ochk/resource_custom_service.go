@@ -161,7 +161,7 @@ func resourceCustomServiceUpdate(ctx context.Context, d *schema.ResourceData, me
 	proxy := meta.(*sdk.Client).CustomServices
 
 	customService := mapResourceDataToCustomService(d)
-	customService.ServiceId = strfmt.UUID(d.Id())
+	customService.ServiceId = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, &customService)
 	if err != nil {
@@ -190,8 +190,8 @@ func resourceCustomServiceDelete(ctx context.Context, d *schema.ResourceData, me
 
 func mapResourceDataToCustomService(d *schema.ResourceData) openapi.CustomServiceInstance {
 	return openapi.CustomServiceInstance{
-		DisplayName:      d.Get("display_name").(string),
-		ProjectId:        strfmt.UUID(d.Get("project_id").(string)),
+		DisplayName:      NewNullableString(d.Get("display_name").(string)),
+		ProjectId:        NewNullableString(d.Get("project_id").(string)),
 		L4PortSetEntries: expandCustomServicePorts(d.Get("ports").([]interface{})),
 	}
 }

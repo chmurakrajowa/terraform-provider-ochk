@@ -87,20 +87,20 @@ func dataSourceKMSKeyRead(ctx context.Context, d *schema.ResourceData, meta inte
 
 	var keyInstance openapi.KeyInstance
 	for _, key := range kmsKeys {
-		if int(key.Version) == version {
+		if castInt32ToInt(key.Version.Get()) == version {
 			keyInstance = key
 			break
 		}
 	}
 
-	if keyInstance == nil {
+	if !keyInstance.Id.IsSet() { // check is Id is set value as boolean
 		return diag.Errorf("no KMS key found for display_name: %s and version: %d", displayName, version)
 	}
 
 	if err := mapKMSKeyToResourceData(d, &keyInstance); err != nil {
 		return nil
 	}
-	d.SetId(keyInstance.Id)
+	d.SetId(keyInstance.GetId())
 
 	return nil
 }

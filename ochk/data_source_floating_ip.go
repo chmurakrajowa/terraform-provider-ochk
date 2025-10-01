@@ -97,7 +97,7 @@ func dataSourceFloatingIPAddressRead(ctx context.Context, d *schema.ResourceData
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", floatingIp[0].GetModificationDate); err != nil {
+	if err := d.Set("modified_at", floatingIp[0].GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 

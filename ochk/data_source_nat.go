@@ -153,9 +153,9 @@ func dataSourceNatRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("error setting destination_network: %+v", err)
 	}
 
-	if nats[0].NatType == "MANUAL" {
-		if nats[0].Action == "DNAT" {
-			if nats[0].ServiceInstance != nil && nats[0].TranslatedPorts != "" {
+	if nats[0].GetNatType() == "MANUAL" {
+		if nats[0].GetAction() == "DNAT" {
+			if nats[0].ServiceInstance != nil && nats[0].GetTranslatedPorts() != "" {
 				if err := d.Set("service_id", nats[0].ServiceInstance.ServiceId); err != nil {
 					return diag.Errorf("error setting service: %+v", err)
 				}
@@ -164,14 +164,14 @@ func dataSourceNatRead(ctx context.Context, d *schema.ResourceData, meta interfa
 				}
 			}
 		}
-		if nats[0].Action == "DNAT" || nats[0].Action == "SNAT" {
+		if nats[0].GetAction() == "DNAT" || nats[0].GetAction() == "SNAT" {
 			if err := d.Set("translated_network", nats[0].TranslatedNetwork); err != nil {
 				return diag.Errorf("error setting translated_network: %+v", err)
 			}
 		}
 	}
 
-	if nats[0].NatType == "AUTO" {
+	if nats[0].GetNatType() == "AUTO" {
 		if err := d.Set("virtual_network_id", nats[0].VirtualNetworkInstance.VirtualNetworkId); err != nil {
 			return diag.Errorf("error setting virtual_network_id: %+v", err)
 		}

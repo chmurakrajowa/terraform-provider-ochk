@@ -58,7 +58,7 @@ func dataSourceDeploymentRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting deployment_category: %+v", err)
 	}
 
-	if err := d.Set("initial_size_gb", int(deployments[0].DeploymentInitialSizeGB)); err != nil {
+	if err := d.Set("initial_size_gb", int(deployments[0].GetDeploymentInitialSizeGB())); err != nil {
 		return diag.Errorf("error setting initial_size_gb: %+v", err)
 	}
 

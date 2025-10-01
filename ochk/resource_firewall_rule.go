@@ -243,7 +243,8 @@ func resourceFirewallRuleUpdate(ctx context.Context, d *schema.ResourceData, met
 	if errRule != nil {
 		return diag.Errorf(E3001_UPDATE, errRule)
 	}
-	firewallRule.RuleId = strfmt.UUID(d.Id())
+	id := d.Id()
+	firewallRule.RuleId = &id
 
 	_, err := proxy.Update(ctx, projectID, securityGroupID, firewallRule)
 	if err != nil {
@@ -253,35 +254,102 @@ func resourceFirewallRuleUpdate(ctx context.Context, d *schema.ResourceData, met
 	return resourceFirewallRuleRead(ctx, d, meta)
 }
 
+func castStringToEtherTypeEnum(e string) *openapi.EtherType {
+	switch e {
+	case "IPv4":
+		return &openapi.AllowedEtherTypeEnumValues[0]
+	case "IPv6":
+		return &openapi.AllowedEtherTypeEnumValues[1]
+	default:
+		return nil
+	}
+}
+
+func castStringToDirectionEnum(e string) *openapi.Direction1 {
+	switch e {
+	case "IPv4":
+		return &openapi.AllowedDirection1EnumValues[0]
+	case "IPv6":
+		return &openapi.AllowedDirection1EnumValues[1]
+	default:
+		return nil
+	}
+}
+
+const (
+	ProtocolANY       openapi.Protocol = "ANY"
+	ProtocolICMP      openapi.Protocol = "ICMP"
+	ProtocolIGMP      openapi.Protocol = "IGMP"
+	ProtocolIPIP      openapi.Protocol = "IPIP"
+	ProtocolTCP       openapi.Protocol = "TCP"
+	ProtocolEGP       openapi.Protocol = "EGP"
+	ProtocolUDP       openapi.Protocol = "UDP"
+	ProtocolDCCP      openapi.Protocol = "DCCP"
+	ProtocolIPv6Encap openapi.Protocol = "ipv6-encap"
+	ProtocolIPv6Route openapi.Protocol = "ipv6-route"
+	ProtocolIPv6Frag  openapi.Protocol = "ipv6-frag"
+	ProtocolRSVP      openapi.Protocol = "RSVP"
+	ProtocolGRE       openapi.Protocol = "GRE"
+	ProtocolESP       openapi.Protocol = "ESP"
+	ProtocolAH        openapi.Protocol = "AH"
+	ProtocolIPv6ICMP  openapi.Protocol = "ipv6-icmp"
+	ProtocolIPv6Nonxt openapi.Protocol = "ipv6-nonxt"
+	ProtocolIPv6Opts  openapi.Protocol = "ipv6-opts"
+	ProtocolOSPF      openapi.Protocol = "OSPF"
+	ProtocolVRRP      openapi.Protocol = "VRRP"
+	ProtocolPGM       openapi.Protocol = "PGM"
+	ProtocolSCTP      openapi.Protocol = "SCTP"
+	ProtocolUDPLite   openapi.Protocol = "UDPLITE"
+)
+
+var AllProtocols = []openapi.Protocol{
+	ProtocolANY, ProtocolICMP,
+	ProtocolIGMP, ProtocolIPIP, ProtocolTCP,
+	ProtocolEGP, ProtocolUDP, ProtocolDCCP, ProtocolIPv6Encap, ProtocolIPv6Route,
+	ProtocolIPv6Frag, ProtocolRSVP, ProtocolGRE, ProtocolESP, ProtocolAH,
+	ProtocolIPv6ICMP, ProtocolIPv6Nonxt, ProtocolIPv6Opts, ProtocolOSPF,
+	ProtocolVRRP, ProtocolPGM, ProtocolSCTP, ProtocolUDPLite,
+}
+
+func ParseProtocol(s string) *openapi.Protocol {
+	for _, p := range AllProtocols {
+		if strings.EqualFold(string(p), s) {
+			return &p
+		}
+	}
+	return nil
+}
+
 func mapResourceDataToRule(d *schema.ResourceData) (openapi.FirewallRule, diag.Diagnostics) {
 	if d.Get("dest_security_group").(string) != "" && d.Get("remote_ip_prefix").(string) != "" {
-		return nil, diag.Errorf(E3004, "[dest_security_group, remote_ip_prefix]")
+		rule := openapi.FirewallRule{} // empty structure FirewallRule
+		return rule, diag.Errorf(E3004, "[dest_security_group, remote_ip_prefix]")
 	}
 
 	if d.Get("dest_security_group").(string) != "" {
 		rule := openapi.FirewallRule{
-			Name:              d.Get("display_name").(string),
-			Description:       d.Get("description").(string),
-			ProjectExternalId: strfmt.UUID(d.Get("project_id").(string)),
-			EtherType:         openapi.EtherType(d.Get("ether_type").(string)),
-			Direction:         openapi.Direction1(d.Get("direction").(string)),
-			Protocol:          openapi.Protocol(d.Get("protocol").(string)),
-			PortRangeMax:      int64(d.Get("port_range_max").(int)),
-			PortRangeMin:      int64(d.Get("port_range_min").(int)),
+			Name:              NewNullableString(d.Get("display_name").(string)),
+			Description:       NewNullableString(d.Get("description").(string)),
+			ProjectExternalId: NewNullableString(d.Get("project_id").(string)),
+			EtherType:         castStringToEtherTypeEnum(d.Get("ether_type").(string)),
+			Direction:         castStringToDirectionEnum(d.Get("direction").(string)),
+			Protocol:          ParseProtocol(d.Get("protocol").(string)),
+			PortRangeMax:      NewNullableInt64(d.Get("port_range_max").(int64)),
+			PortRangeMin:      NewNullableInt64(d.Get("port_range_min").(int64)),
 			SecurityGroup:     expandSecurityGroup(d.Get("dest_security_group").(string)),
 		}
 		return rule, nil
 	} else {
 		rule := openapi.FirewallRule{
-			Name:              d.Get("display_name").(string),
-			Description:       d.Get("description").(string),
-			ProjectExternalId: strfmt.UUID(d.Get("project_id").(string)),
-			EtherType:         openapi.EtherType(d.Get("ether_type").(string)),
-			Direction:         openapi.Direction1(d.Get("direction").(string)),
-			Protocol:          openapi.Protocol(d.Get("protocol").(string)),
-			PortRangeMax:      int64(d.Get("port_range_max").(int)),
-			PortRangeMin:      int64(d.Get("port_range_min").(int)),
-			RemoteIpPrefix:    d.Get("remote_ip_prefix").(string),
+			Name:              NewNullableString(d.Get("display_name").(string)),
+			Description:       NewNullableString(d.Get("description").(string)),
+			ProjectExternalId: NewNullableString(d.Get("project_id").(string)),
+			EtherType:         castStringToEtherTypeEnum(d.Get("ether_type").(string)),
+			Direction:         castStringToDirectionEnum(d.Get("direction").(string)),
+			Protocol:          ParseProtocol(d.Get("protocol").(string)),
+			PortRangeMax:      NewNullableInt64(d.Get("port_range_max").(int64)),
+			PortRangeMin:      NewNullableInt64(d.Get("port_range_min").(int64)),
+			RemoteIpPrefix:    NewNullableString(d.Get("remote_ip_prefix").(string)),
 		}
 		return rule, nil
 	}
@@ -304,9 +372,9 @@ func resourceFirewallRuleDelete(ctx context.Context, d *schema.ResourceData, met
 	return nil
 }
 
-func expandSecurityGroup(dest_security_group string) openapi.SecurityGroup {
+func expandSecurityGroup(dest_security_group string) *openapi.SecurityGroup {
 	sg_dest := openapi.SecurityGroup{
-		Id: strfmt.UUID(dest_security_group),
+		Id: NewNullableString(dest_security_group),
 	}
-	return sg_dest
+	return &sg_dest
 }

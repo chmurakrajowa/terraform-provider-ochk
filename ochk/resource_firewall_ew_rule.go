@@ -198,7 +198,7 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting destination: %+v", err)
 	}
 
-	if err := d.Set("priority", int(firewallEWRule.Priority)); err != nil {
+	if err := d.Set("priority", firewallEWRule.Priority); err != nil {
 		return diag.Errorf("error setting priority: %+v", err)
 	}
 
@@ -231,7 +231,7 @@ func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 	routerID := strfmt.UUID(d.Get("vpc_id").(string))
 
 	firewallEWRule := mapResourceDataToEWRule(d)
-	firewallEWRule.RuleId = strfmt.UUID(d.Id())
+	firewallEWRule.RuleId = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, routerID, &firewallEWRule)
 	if err != nil {
@@ -241,56 +241,56 @@ func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 	return resourceFirewallEWRuleRead(ctx, d, meta)
 }
 
-func castStringToActionEnum(e string) openapi.Action {
+func castStringToActionEnum(e string) *openapi.Action {
 	switch e {
 	case "ALLOW":
-		return openapi.ALLOW
+		return &openapi.AllowedActionEnumValues[0]
 	case "REJECT":
-		return openapi.REJECT
+		return &openapi.AllowedActionEnumValues[1]
 	case "DROP":
-		return openapi.DROP
+		return &openapi.AllowedActionEnumValues[2]
 	default:
-		return ""
+		return nil
 	}
 }
 
-func castStringToADirectionEnum(e string) openapi.Direction {
+func castStringToADirectionEnum(e string) *openapi.Direction {
 	switch e {
 	case "IN_OUT":
-		return openapi.IN_OUT
+		return &openapi.AllowedDirectionEnumValues[0]
 	case "IN":
-		return openapi.IN
+		return &openapi.AllowedDirectionEnumValues[1]
 	case "OUT":
-		return openapi.OUT
+		return &openapi.AllowedDirectionEnumValues[2]
 	default:
-		return ""
+		return nil
 	}
 }
 
-func castStringToAIPProtocolEnum(e string) openapi.IpProtocol {
+func castStringToAIPProtocolEnum(e string) *openapi.IpProtocol {
 	switch e {
 	case "IPV4_IPV6":
-		return openapi.IPV4_IPV6
+		return &openapi.AllowedIpProtocolEnumValues[0]
 	case "IPV4":
-		return openapi.IPV4
+		return &openapi.AllowedIpProtocolEnumValues[1] // IPV4 is duplicated in EtherType
 	case "IPV6":
-		return openapi.IPV6
+		return &openapi.AllowedIpProtocolEnumValues[2] // IPV6 is duplicated in EtherType
 	default:
-		return ""
+		return nil
 	}
 }
 
 func mapResourceDataToEWRule(d *schema.ResourceData) openapi.DfwRule {
 	rule := openapi.DfwRule{
-		DisplayName: d.Get("display_name").(string),
-		ProjectId:   strfmt.UUID(d.Get("project_id").(string)),
+		DisplayName: NewNullableString(d.Get("display_name").(string)),
+		ProjectId:   NewNullableString(d.Get("project_id").(string)),
 		Action:      castStringToActionEnum(d.Get("action").(string)),
 		Direction:   castStringToADirectionEnum(d.Get("direction").(string)),
-		Priority:    int64(d.Get("priority").(int)),
+		Priority:    NewNullableInt64(d.Get("priority").(int64)),
 	}
 
 	if disabled, ok := d.GetOk("disabled"); ok && disabled.(bool) {
-		rule.Disabled = true
+		rule.Disabled = NewNullableBool(true)
 	}
 
 	if ipProtocol, ok := d.GetOk("ip_protocol"); ok {

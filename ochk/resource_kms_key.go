@@ -186,7 +186,7 @@ func resourceKMSKeyDelete(ctx context.Context, d *schema.ResourceData, meta inte
 	return nil
 }
 
-func mapKMSKeyToResourceData(d *schema.ResourceData, kmsKey openapi.KeyInstance) error {
+func mapKMSKeyToResourceData(d *schema.ResourceData, kmsKey *openapi.KeyInstance) error {
 	if err := d.Set("display_name", kmsKey.Name); err != nil {
 		return fmt.Errorf("error setting display_name: %w", err)
 	}
