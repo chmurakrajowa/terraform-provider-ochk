@@ -127,7 +127,8 @@ func resourceFloatingIpUpdate(ctx context.Context, d *schema.ResourceData, meta 
 	proxy := meta.(*sdk.Client).FloatingIPAddresses
 
 	floatingIp := mapResourceDataToFloatingIp(d)
-	floatingIp.FloatingIpId = strfmt.UUID(d.Id())
+	var id = d.Id()
+	floatingIp.FloatingIpId = &id
 
 	_, err := proxy.Update(ctx, floatingIp)
 	if err != nil {
@@ -156,10 +157,10 @@ func resourceFloatingIpDelete(ctx context.Context, d *schema.ResourceData, meta 
 
 func mapResourceDataToFloatingIp(d *schema.ResourceData) openapi.FloatingIp {
 	return openapi.FloatingIp{
-		Description: d.Get("description").(string),
-		Name:        d.Get("display_name").(string),
-		VmName:      d.Get("vm_name").(string),
-		VmPortId:    strfmt.UUID(d.Get("vm_port_id").(string)),
-		VmFixedIp:   d.Get("vm_fixed_ip").(string),
+		Description: NewNullableString(d.Get("description").(string)),
+		Name:        NewNullableString(d.Get("display_name").(string)),
+		VmName:      NewNullableString(d.Get("vm_name").(string)),
+		VmPortId:    NewNullableString(d.Get("vm_port_id").(string)),
+		VmFixedIp:   NewNullableString(d.Get("vm_fixed_ip").(string)),
 	}
 }

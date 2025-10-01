@@ -233,12 +233,12 @@ func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 		return nil
 	}
 
-	routerID := strfmt.UUID(d.Get("vpc_id").(string))
+	routerID := d.Get("vpc_id").(string)
 
 	rule := mapResourceDataToGFWRule(d)
-	rule.RuleId = strfmt.UUID(d.Id())
+	rule.RuleId = NewNullableString(d.Id())
 
-	_, err := proxy.Update(ctx, routerID, &rule)
+	_, err := proxy.Update(ctx, strfmt.UUID(routerID), &rule)
 	if err != nil {
 		return diag.Errorf("error while modifying firewall SN rule: %+v", err)
 	}
@@ -248,13 +248,13 @@ func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 
 func mapResourceDataToGFWRule(d *schema.ResourceData) openapi.GfwRule {
 	rule := openapi.GfwRule{
-		DisplayName: d.Get("display_name").(string),
-		ProjectId:   strfmt.UUID(d.Get("project_id").(string)),
+		DisplayName: NewNullableString(d.Get("display_name").(string)),
+		ProjectId:   NewNullableString(d.Get("project_id").(string)),
 		Action:      castStringToActionEnum(d.Get("action").(string)),
 		Direction:   castStringToADirectionEnum(d.Get("direction").(string)),
-		Disabled:    d.Get("disabled").(bool),
+		Disabled:    NewNullableBool(d.Get("disabled").(bool)),
 		IpProtocol:  castStringToAIPProtocolEnum(d.Get("ip_protocol").(string)),
-		Priority:    int64(d.Get("priority").(int)),
+		Priority:    NewNullableInt64(d.Get("priority").(int64)),
 	}
 
 	if services, ok := d.GetOk("services"); ok {
@@ -277,7 +277,7 @@ func mapResourceDataToGFWRule(d *schema.ResourceData) openapi.GfwRule {
 
 		var RouterInstanceList = make([]openapi.RouterInstance, 1)
 		routerInstanceId := openapi.RouterInstance{
-			RouterId: strfmt.UUID(routerId.(string)),
+			RouterId: NewNullableString(routerId.(string)),
 		}
 		RouterInstanceList[0] = routerInstanceId
 		rule.Scope = RouterInstanceList
