@@ -20,13 +20,13 @@ func TestFlattenVrfs(t *testing.T) {
 		{
 			expanded: []openapi.RouterInstance{
 				{
-					RouterId:    "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName: "VRF1",
+					RouterId:    NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName: NewNullableString("VRF1"),
 					RouterType:  "TIER0",
 				},
 				{
-					RouterId:    "791bf702-22fb-4c76-bebb-1fee7ee75607",
-					DisplayName: "VRF2",
+					RouterId:    NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					DisplayName: NewNullableString("VRF2"),
 					RouterType:  "TIER0",
 				},
 			},

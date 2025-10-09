@@ -138,7 +138,7 @@ func resourceIPCollectionUpdate(ctx context.Context, d *schema.ResourceData, met
 	proxy := meta.(*sdk.Client).IPCollections
 
 	IPCollection := mapResourceDataToIPCollection(d)
-	IPCollection.Id = strfmt.UUID(d.Id())
+	IPCollection.Id = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, IPCollection)
 	if err != nil {
@@ -167,8 +167,8 @@ func resourceIPCollectionDelete(ctx context.Context, d *schema.ResourceData, met
 
 func mapResourceDataToIPCollection(d *schema.ResourceData) openapi.IpCollection {
 	return openapi.IpCollection{
-		DisplayName:           d.Get("display_name").(string),
-		ProjectId:             strfmt.UUID(d.Get("project_id").(string)),
+		DisplayName:           NewNullableString(d.Get("display_name").(string)),
+		ProjectId:             NewNullableString(d.Get("project_id").(string)),
 		IpCollectionAddresses: transformSetToStringSlice(d.Get("ip_addresses").(*schema.Set)),
 	}
 }

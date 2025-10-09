@@ -29,7 +29,7 @@ func expandSecurityGroupFromIDs(in []interface{}) []openapi.SecurityGroup {
 	for i, v := range in {
 		idValue := strfmt.UUID.String(strfmt.UUID(v.(string)))
 		securityGroup := openapi.SecurityGroup{
-			Id: strfmt.UUID(idValue),
+			Id: NewNullableString(idValue),
 		}
 		out[i] = securityGroup
 	}
@@ -47,7 +47,7 @@ func flattenSecurityGroupMembers(in []openapi.SecurityGroupMember) *schema.Set {
 		m["id"] = v.Id
 		m["type"] = v.MemberType
 
-		if v.DisplayName != "" {
+		if v.DisplayName != NewNullableString("") {
 			m["display_name"] = v.DisplayName
 		}
 
@@ -65,7 +65,7 @@ func expandSecurityGroupMembers(in []interface{}, platformType openapi.PlatformT
 		m := v.(map[string]interface{})
 
 		member := openapi.SecurityGroupMember{
-			Id:         strfmt.UUID(m["id"].(string)),
+			Id:         NewNullableString(m["id"].(string)),
 			MemberType: openapi.SecurityGroupMemberType(m["type"].(string)),
 		}
 		if platformType == "OPENSTACK" {
@@ -95,7 +95,7 @@ func expandSecurityGroupMembers(in []interface{}, platformType openapi.PlatformT
 		}
 
 		if displayName, ok := m["display_name"].(string); ok && displayName != "" {
-			member.DisplayName = displayName
+			member.DisplayName = NewNullableString(displayName)
 		}
 		out[i] = member
 	}

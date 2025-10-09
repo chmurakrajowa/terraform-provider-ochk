@@ -171,7 +171,7 @@ func resourceSecurityGroupUpdate(ctx context.Context, d *schema.ResourceData, me
 		return diag.Errorf("resourceSecurityGroupUpdate >>>> error while update security group: %+v", err_pt)
 
 	}
-	securityGroup.Id = strfmt.UUID(d.Id())
+	securityGroup.Id = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, securityGroup)
 	if err != nil {
@@ -204,8 +204,8 @@ func mapResourceDataToSecurityGroup(d *schema.ResourceData, platformType openapi
 		return nil, diag.Errorf("Wrong type member: %+v", wrongMemberType)
 	}
 	return openapi.SecurityGroup{
-		DisplayName: d.Get("display_name").(string),
-		ProjectId:   strfmt.UUID(d.Get("project_id").(string)),
+		DisplayName: NewNullableString(d.Get("display_name").(string)),
+		ProjectId:   NewNullableString(d.Get("project_id").(string)),
 		Members:     members,
 	}, nil
 }

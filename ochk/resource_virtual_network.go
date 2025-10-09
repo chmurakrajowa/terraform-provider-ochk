@@ -248,13 +248,13 @@ func resourceVirtualNetworkDelete(ctx context.Context, d *schema.ResourceData, m
 
 func mapResourceDataToVirtualNetwork(d *schema.ResourceData) openapi.VirtualNetworkInstance {
 	virtualNetworkInstance := openapi.VirtualNetworkInstance{
-		DisplayName:      d.Get("display_name").(string),
-		GatewayAddress:   d.Get("gateway_address").(string),
-		IpamEnabled:      d.Get("ipam_enabled").(bool),
-		RouterRefId:      strfmt.UUID(d.Get("vpc_id").(string)),
-		SubnetMask:       d.Get("subnet_mask").(string),
-		ProjectId:        strfmt.UUID(d.Get("project_id").(string)),
-		VirtualNetworkId: strfmt.UUID(d.Id()),
+		DisplayName:      NewNullableString(d.Get("display_name").(string)),
+		GatewayAddress:   NewNullableString(d.Get("gateway_address").(string)),
+		IpamEnabled:      d.Get("ipam_enabled").(*bool),
+		RouterRefId:      NewNullableString(d.Get("vpc_id").(string)),
+		SubnetMask:       NewNullableString(d.Get("subnet_mask").(string)),
+		ProjectId:        NewNullableString(d.Get("project_id").(string)),
+		VirtualNetworkId: NewNullableString(d.Id()),
 	}
 
 	subnetGatewayAddressCidr, subnetGatewayAddressCidrOk := d.GetOk("subnet_gateway_address_cidr")
@@ -265,10 +265,10 @@ func mapResourceDataToVirtualNetwork(d *schema.ResourceData) openapi.VirtualNetw
 		virtualNetworkInstance.Subnet = &openapi.SegmentSubnetInstance{}
 
 		if subnetGatewayAddressCidrOk {
-			virtualNetworkInstance.Subnet.GatewayAddressCIDR = subnetGatewayAddressCidr.(string)
+			virtualNetworkInstance.Subnet.GatewayAddressCIDR = NewNullableString(subnetGatewayAddressCidr.(string))
 		}
 		if subnetNetworkCidrOk {
-			virtualNetworkInstance.Subnet.NetworkCIDR = subnetNetworkCidr.(string)
+			virtualNetworkInstance.Subnet.NetworkCIDR = NewNullableString(subnetNetworkCidr.(string))
 		}
 
 		if dnsServersOk {
@@ -289,7 +289,7 @@ func expandDnsServers(in []interface{}) []openapi.DnsServerInstance {
 		m := v.(map[string]interface{})
 		member := &openapi.DnsServerInstance{}
 		if address, ok := m["address"].(string); ok {
-			member.Address = address
+			member.Address = NewNullableString(address)
 		}
 		out[i] = *member
 	}

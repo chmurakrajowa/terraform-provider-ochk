@@ -23,7 +23,7 @@ func TestFlattenExpandServicesFromIDs(t *testing.T) {
 		{
 			expanded: []openapi.ServiceInstance{
 				{
-					ServiceId: "afdb07d8-d0d2-11ea-87d0-0242ac130003",
+					ServiceId: NewNullableString("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
 				},
 			},
 			flattened: []interface{}{
@@ -35,8 +35,8 @@ func TestFlattenExpandServicesFromIDs(t *testing.T) {
 		{
 			expanded: []openapi.ServiceInstance{
 				{
-					DisplayName: "http",
-					ServiceId:   "afdb07d8-d0d2-11ea-87d0-0242ac130003",
+					DisplayName: NewNullableString("http"),
+					ServiceId:   NewNullableString("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
 				},
 			},
 			flattened: []interface{}{
@@ -49,10 +49,10 @@ func TestFlattenExpandServicesFromIDs(t *testing.T) {
 		{
 			expanded: []openapi.ServiceInstance{
 				{
-					ServiceId: "afdb07d8-d0d2-11ea-87d0-0242ac130003",
+					ServiceId: NewNullableString("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
 				},
 				{
-					ServiceId: "114d82f0-79cc-4501-a574-dd920b6b6e7e",
+					ServiceId: NewNullableString("114d82f0-79cc-4501-a574-dd920b6b6e7e"),
 				},
 			},
 			flattened: []interface{}{
@@ -88,12 +88,12 @@ func TestFlattenServices(t *testing.T) {
 		{
 			expanded: []openapi.ServiceInstance{
 				{
-					ServiceId:   "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName: "test1",
+					ServiceId:   NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName: NewNullableString("test1"),
 				},
 				{
-					ServiceId:   "791bf702-22fb-4c76-bebb-1fee7ee75607",
-					DisplayName: "test2",
+					ServiceId:   NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					DisplayName: NewNullableString("test2"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

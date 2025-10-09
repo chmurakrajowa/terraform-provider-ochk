@@ -22,9 +22,9 @@ func TestFlattenExpandSecurityGroupMembers(t *testing.T) {
 		{
 			expanded: []openapi.SecurityGroup{
 				{
-					Id:          strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
-					ProjectId:   strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
-					DisplayName: "MySG1",
+					Id:          NewNullableString("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
+					ProjectId:   NewNullableString("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
+					DisplayName: NewNullableString("MySG1"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

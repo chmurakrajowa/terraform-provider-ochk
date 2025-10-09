@@ -328,7 +328,7 @@ func resourceAutoNatUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	proxy := meta.(*sdk.Client).Nats
 
 	Nat := mapResourceDataToAutoNat(d)
-	Nat.RuleId = strfmt.UUID(d.Id())
+	Nat.RuleId = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, &Nat)
 	if err != nil {
@@ -342,7 +342,7 @@ func resourceManualNatUpdate(ctx context.Context, d *schema.ResourceData, meta i
 	proxy := meta.(*sdk.Client).Nats
 
 	Nat := mapResourceDataToManualNat(d)
-	Nat.RuleId = strfmt.UUID(d.Id())
+	Nat.RuleId = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, &Nat)
 	if err != nil {
@@ -371,7 +371,7 @@ func resourceNatDelete(ctx context.Context, d *schema.ResourceData, meta interfa
 
 func mapResourceDataToAutoNat(d *schema.ResourceData) openapi.NATRuleInstance {
 	return openapi.NATRuleInstance{
-		DisplayName:            d.Get("display_name").(string),
+		DisplayName:            NewNullableString(d.Get("display_name").(string)),
 		VirtualNetworkInstance: mapResourceDataToVirtualNetworkInstance(d),
 		NatType:                "AUTO",
 	}
@@ -382,14 +382,14 @@ func mapResourceDataToManualNat(d *schema.ResourceData) openapi.NATRuleInstance 
 	publicPriorityInt64 := int64(d.Get("priority").(int))
 
 	natManualRule := openapi.NATRuleInstance{
-		DisplayName:        d.Get("display_name").(string),
-		Description:        d.Get("description").(string),
-		Enabled:            d.Get("enabled").(bool),
+		DisplayName:        NewNullableString(d.Get("display_name").(string)),
+		Description:        NewNullableString(d.Get("description").(string)),
+		Enabled:            NewNullableBool(d.Get("enabled").(bool)),
 		TierZeroRouter:     mapResourceDataToVrfRouter(d),
 		Action:             openapi.NATRuleAction(d.Get("action").(string)),
-		Priority:           publicPriorityInt64,
-		SourceNetwork:      d.Get("source_network").(string),
-		DestinationNetwork: d.Get("destination_network").(string),
+		Priority:           NewNullableInt64(publicPriorityInt64),
+		SourceNetwork:      NewNullableString(d.Get("source_network").(string)),
+		DestinationNetwork: NewNullableString(d.Get("destination_network").(string)),
 		NatType:            "MANUAL",
 	}
 	natAction := d.Get("action")
@@ -397,12 +397,12 @@ func mapResourceDataToManualNat(d *schema.ResourceData) openapi.NATRuleInstance 
 	if natAction == "DNAT" {
 		if d.Get("translated_ports") != "" && d.Get("service_id") != "" {
 			natManualRule.ServiceInstance = mapResourceDataToServiceInstance(d)
-			natManualRule.TranslatedPorts = d.Get("translated_ports").(string)
+			natManualRule.TranslatedPorts = NewNullableString(d.Get("translated_ports").(string))
 		}
 	}
 
 	if natAction == "DNAT" || natAction == "SNAT" {
-		natManualRule.TranslatedNetwork = d.Get("translated_network").(string)
+		natManualRule.TranslatedNetwork = NewNullableString(d.Get("translated_network").(string))
 	}
 
 	return natManualRule
@@ -411,21 +411,21 @@ func mapResourceDataToManualNat(d *schema.ResourceData) openapi.NATRuleInstance 
 func mapResourceDataToVrfRouter(d *schema.ResourceData) openapi.RouterInstance {
 	var vrf_id = d.Get("vrf_id").(string)
 	routerInstance := openapi.RouterInstance{
-		RouterId: strfmt.UUID(vrf_id),
+		RouterId: NewNullableString(vrf_id),
 	}
 	return routerInstance
 }
 
 func mapResourceDataToVirtualNetworkInstance(d *schema.ResourceData) openapi.VirtualNetworkInstance {
 	virtualNetworkInstance := openapi.VirtualNetworkInstance{
-		VirtualNetworkId: strfmt.UUID(d.Get("virtual_network_id").(string)),
+		VirtualNetworkId: NewNullableString(d.Get("virtual_network_id").(string)),
 	}
 	return virtualNetworkInstance
 }
 
 func mapResourceDataToServiceInstance(d *schema.ResourceData) openapi.ServiceInstance {
 	serviceInstance := openapi.ServiceInstance{
-		ServiceId: strfmt.UUID(d.Get("service_id").(string)),
+		ServiceId: NewNullableString(d.Get("service_id").(string)),
 	}
 	return serviceInstance
 }

@@ -32,7 +32,7 @@ func flattenSecGroups(in openapi.SecurityGroup) *schema.Set {
 	}
 	m := make(map[strfmt.UUID]interface{})
 	m["sec_group_id"] = in.Id
-	if in.DisplayName != "" {
+	if in.DisplayName != NewNullableString("") {
 		m["display_name"] = in.DisplayName
 	}
 	out.Add(m)

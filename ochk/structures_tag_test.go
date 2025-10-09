@@ -21,14 +21,14 @@ func TestFlattenTags(t *testing.T) {
 			expanded: []openapi.Tag{
 				{
 					TagId:                  10,
-					TagValue:               "Tag1",
-					ProjectId:              strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					TagValue:               NewNullableString("Tag1"),
+					ProjectId:              NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					RelatedVirtualMachines: []strfmt.UUID(nil),
 				},
 				{
 					TagId:                  20,
-					TagValue:               "Tag2",
-					ProjectId:              strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867aa"),
+					TagValue:               NewNullableString("Tag2"),
+					ProjectId:              NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867aa"),
 					RelatedVirtualMachines: []strfmt.UUID(nil),
 				},
 			},

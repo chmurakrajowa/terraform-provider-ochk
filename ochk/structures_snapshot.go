@@ -3,7 +3,6 @@ package ochk
 import (
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
-	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -83,7 +82,7 @@ func expandChildSnapshots(in []interface{}) []openapi.SnapshotInstance {
 		}
 
 		snapInstance := openapi.SnapshotInstance{
-			SnapshotId: strfmt.UUID(snapID),
+			SnapshotId: NewNullableString(snapID),
 		}
 
 		out[i] = snapInstance

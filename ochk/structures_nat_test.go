@@ -21,14 +21,14 @@ func TestFlattenAutoNat(t *testing.T) {
 			expanded: []openapi.NATRuleInstance{
 				{
 					NatType:     "AUTO",
-					RuleId:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName: "nat-test1",
+					RuleId:      NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName: NewNullableString("nat-test1"),
 					VirtualNetworkInstance: &openapi.VirtualNetworkInstance{
-						VirtualNetworkId: "2ae951f1-5285-496c-b598-aabe1a792319",
+						VirtualNetworkId: NewNullableString("2ae951f1-5285-496c-b598-aabe1a792319"),
 					},
-					Enabled: true,
+					Enabled: NewNullableBool(true),
 					TierZeroRouter: &openapi.RouterInstance{
-						RouterId: "547948e9-b67d-44d1-ad69-ae9b711e289c",
+						RouterId: NewNullableString("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 					},
 				},
 			},
@@ -46,26 +46,26 @@ func TestFlattenAutoNat(t *testing.T) {
 			expanded: []openapi.NATRuleInstance{
 				{
 					NatType:     "AUTO",
-					RuleId:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName: "nat-test1",
+					RuleId:      NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName: NewNullableString("nat-test1"),
 					VirtualNetworkInstance: &openapi.VirtualNetworkInstance{
-						VirtualNetworkId: "2ae951f1-5285-496c-b598-aabe1a792319",
+						VirtualNetworkId: NewNullableString("2ae951f1-5285-496c-b598-aabe1a792319"),
 					},
-					Enabled: false,
+					Enabled: NewNullableBool(false),
 					TierZeroRouter: &openapi.RouterInstance{
-						RouterId: "547948e9-b67d-44d1-ad69-ae9b711e289c",
+						RouterId: NewNullableString("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 					},
 				},
 				{
 					NatType:     "AUTO",
-					RuleId:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName: "nat-test2",
+					RuleId:      NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName: NewNullableString("nat-test2"),
 					VirtualNetworkInstance: &openapi.VirtualNetworkInstance{
-						VirtualNetworkId: "2ae951f1-5285-496c-b598-aabe1a792319",
+						VirtualNetworkId: NewNullableString("2ae951f1-5285-496c-b598-aabe1a792319"),
 					},
-					Enabled: false,
+					Enabled: NewNullableBool(false),
 					TierZeroRouter: &openapi.RouterInstance{
-						RouterId: "b0908315-4c61-4326-b18d-2d145e6937a3",
+						RouterId: NewNullableString("b0908315-4c61-4326-b18d-2d145e6937a3"),
 					},
 				},
 			},
@@ -109,15 +109,15 @@ func TestFlattenManualNat(t *testing.T) {
 			expanded: []openapi.NATRuleInstance{
 				{
 					NatType:     "MANUAL",
-					RuleId:      strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
-					DisplayName: "nat-test1",
+					RuleId:      NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName: NewNullableString("nat-test1"),
 					Action:      openapi.NATRuleAction("DNAT"),
-					Enabled:     true,
+					Enabled:     NewNullableBool(true),
 					TierZeroRouter: &openapi.RouterInstance{
-						RouterId: strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
+						RouterId: NewNullableString("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 					},
-					SourceNetwork:      "192.168.15.0/24",
-					DestinationNetwork: "192.168.0.0/24",
+					SourceNetwork:      NewNullableString("192.168.15.0/24"),
+					DestinationNetwork: NewNullableString("192.168.0.0/24"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
@@ -136,27 +136,27 @@ func TestFlattenManualNat(t *testing.T) {
 			expanded: []openapi.NATRuleInstance{
 				{
 					NatType:     "MANUAL",
-					RuleId:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName: "nat-test2",
+					RuleId:      NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName: NewNullableString("nat-test2"),
 					Action:      "DNAT",
-					Enabled:     false,
+					Enabled:     NewNullableBool(false),
 					TierZeroRouter: &openapi.RouterInstance{
-						RouterId: "b0908315-4c61-4326-b18d-2d145e6937a3",
+						RouterId: NewNullableString("b0908315-4c61-4326-b18d-2d145e6937a3"),
 					},
-					SourceNetwork:      "192.168.0.0/24",
-					DestinationNetwork: "192.168.1.0/24",
+					SourceNetwork:      NewNullableString("192.168.0.0/24"),
+					DestinationNetwork: NewNullableString("192.168.1.0/24"),
 				},
 				{
 					NatType:     "MANUAL",
-					RuleId:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName: "nat-test1",
+					RuleId:      NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName: NewNullableString("nat-test1"),
 					Action:      "DNAT",
-					Enabled:     true,
+					Enabled:     NewNullableBool(true),
 					TierZeroRouter: &openapi.RouterInstance{
-						RouterId: "547948e9-b67d-44d1-ad69-ae9b711e289c",
+						RouterId: NewNullableString("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 					},
-					SourceNetwork:      "192.168.15.0/24",
-					DestinationNetwork: "192.168.0.0/24",
+					SourceNetwork:      NewNullableString("192.168.15.0/24"),
+					DestinationNetwork: NewNullableString("192.168.0.0/24"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

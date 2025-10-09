@@ -82,9 +82,9 @@ func flattenVirtualDisks(in []openapi.VirtualDiskDevice) *schema.Set {
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["controller_id"] = int(v.ControllerId)
-		m["lun_id"] = int(v.LunId)
-		m["size_mb"] = int(v.SizeMB)
+		m["controller_id"] = openapi.NewNullableInt32(v.ControllerId)
+		m["lun_id"] = openapi.NewNullableInt32(v.LunId)
+		m["size_mb"] = NewNullableInt64(*v.SizeMB)
 		m["device_type"] = v.VirtualDiskDeviceType
 
 		out.Add(m)
@@ -186,12 +186,12 @@ func expandVirtualNetworkDevices(in []interface{}) []openapi.VirtualNetworkDevic
 
 		if virtualNetworkID, ok := m["virtual_network_id"].(string); ok && virtualNetworkID != "" {
 			member.VirtualNetworkInstance = &openapi.VirtualNetworkInstance{
-				VirtualNetworkId: strfmt.UUID(virtualNetworkID),
+				VirtualNetworkId: NewNullableString(virtualNetworkID),
 			}
 		}
 
 		if deviceID, ok := m["device_id"].(string); ok && deviceID != "" {
-			member.DeviceId = deviceID
+			member.DeviceId = NewNullableString(deviceID)
 		}
 
 		out[i] = member
@@ -221,7 +221,7 @@ func expandBackupListsFromIDs(in []interface{}) []openapi.BackupList {
 	for i, v := range in {
 		value := strfmt.UUID.String(strfmt.UUID(v.(string)))
 		BackupListInstance := openapi.BackupList{
-			BackupListId: strfmt.UUID(value),
+			BackupListId: NewNullableString(value),
 		}
 
 		out[i] = BackupListInstance

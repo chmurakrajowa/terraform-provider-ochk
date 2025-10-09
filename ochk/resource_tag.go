@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/go-openapi/strfmt"
 	"strings"
 	"time"
 
@@ -107,7 +106,7 @@ func resourceTagUpdate(ctx context.Context, d *schema.ResourceData, meta interfa
 	}
 
 	tag := mapResourceDataToTag(d)
-	tag.TagId = tagIDInt32
+	*tag.TagId = tagIDInt32
 
 	_, err = proxy.Update(ctx, tag)
 	if err != nil {
@@ -135,7 +134,7 @@ func resourceTagDelete(ctx context.Context, d *schema.ResourceData, meta interfa
 
 func mapResourceDataToTag(d *schema.ResourceData) openapi.Tag {
 	return openapi.Tag{
-		TagValue:  d.Get("display_name").(string),
-		ProjectId: strfmt.UUID(d.Get("project_id").(string)),
+		TagValue:  NewNullableString(d.Get("display_name").(string)),
+		ProjectId: NewNullableString(d.Get("project_id").(string)),
 	}
 }

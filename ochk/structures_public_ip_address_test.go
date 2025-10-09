@@ -20,17 +20,17 @@ func TestFlattenPublicIPAddress(t *testing.T) {
 		{
 			expanded: []openapi.PublicIpAllocation{
 				{
-					Name: "test1",
+					Name: NewNullableString("test1"),
 					PublicIpAddress: &openapi.PublicIpAddress{
-						IpAddress:   "212.86.15.4",
-						IpAddressId: "f3f8c5c3-d3ca-4ec7-b553-81208cbc016b",
+						IpAddress:   NewNullableString("212.86.15.4"),
+						IpAddressId: NewNullableString("f3f8c5c3-d3ca-4ec7-b553-81208cbc016b"),
 					},
 				},
 				{
-					Name: "test2",
+					Name: NewNullableString("test2"),
 					PublicIpAddress: &openapi.PublicIpAddress{
-						IpAddress:   "212.88.15.4",
-						IpAddressId: "a8d33488-f662-43af-9755-2509ce09d24b",
+						IpAddress:   NewNullableString("212.88.15.4"),
+						IpAddressId: NewNullableString("a8d33488-f662-43af-9755-2509ce09d24b"),
 					},
 				},
 			},

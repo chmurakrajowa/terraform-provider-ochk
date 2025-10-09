@@ -20,20 +20,20 @@ func TestFlattenVirtualNetworks(t *testing.T) {
 		{
 			expanded: []openapi.VirtualNetworkInstance{
 				{
-					VirtualNetworkId: "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName:      "VRF1",
-					ProjectId:        "e2655817-f1a1-4c76-bebb-1fee7ee75607",
-					RouterRefId:      "7364ff23-0513-48b6-97cb-637613e29424",
-					FolderPath:       "/test1",
-					IpamEnabled:      true,
+					VirtualNetworkId: NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName:      NewNullableString("VRF1"),
+					ProjectId:        NewNullableString("e2655817-f1a1-4c76-bebb-1fee7ee75607"),
+					RouterRefId:      NewNullableString("7364ff23-0513-48b6-97cb-637613e29424"),
+					FolderPath:       NewNullableString("/test1"),
+					IpamEnabled:      NewNullableBool(true),
 				},
 				{
-					VirtualNetworkId: "791bf702-22fb-4c76-bebb-1fee7ee75607",
-					DisplayName:      "VRF2",
-					ProjectId:        "e2655817-f1a1-4c76-bebb-1fee7ee75607",
-					RouterRefId:      "547948e9-b67d-44d1-ad69-ae9b711e289c",
-					FolderPath:       "/test2",
-					IpamEnabled:      true,
+					VirtualNetworkId: NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					DisplayName:      NewNullableString("VRF2"),
+					ProjectId:        NewNullableString("e2655817-f1a1-4c76-bebb-1fee7ee75607"),
+					RouterRefId:      NewNullableString("547948e9-b67d-44d1-ad69-ae9b711e289c"),
+					FolderPath:       NewNullableString("/test2"),
+					IpamEnabled:      NewNullableBool(true),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

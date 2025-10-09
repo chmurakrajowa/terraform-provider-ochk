@@ -20,14 +20,14 @@ func TestFlattenFolders(t *testing.T) {
 		{
 			expanded: []openapi.FolderInstance{
 				{
-					Id:         "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					Name:       "test1",
-					FolderPath: "/test1",
+					Id:         NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					Name:       NewNullableString("test1"),
+					FolderPath: NewNullableString("/test1"),
 				},
 				{
-					Id:         "791bf702-22fb-4c76-bebb-1fee7ee75607",
-					Name:       "test2",
-					FolderPath: "/test1/test2",
+					Id:         NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					Name:       NewNullableString("test2"),
+					FolderPath: NewNullableString("/test1/test2"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

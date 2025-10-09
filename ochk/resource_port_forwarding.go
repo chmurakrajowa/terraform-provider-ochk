@@ -215,7 +215,7 @@ func resourcePortForwardingUpdate(ctx context.Context, d *schema.ResourceData, m
 
 	floatingIpId := strfmt.UUID(d.Get("floating_ip_id").(string))
 	portForwarding := mapResourceDataToPortForwarding(d)
-	portForwarding.PortForwardingId = strfmt.UUID(d.Id())
+	*portForwarding.PortForwardingId = d.Id()
 
 	_, err := proxy.Update(ctx, floatingIpId, portForwarding)
 	if err != nil {
@@ -227,16 +227,16 @@ func resourcePortForwardingUpdate(ctx context.Context, d *schema.ResourceData, m
 
 func mapResourceDataToPortForwarding(d *schema.ResourceData) openapi.PortForwarding {
 	portForwarding := openapi.PortForwarding{
-		Name:              d.Get("display_name").(string),
-		Description:       d.Get("description").(string),
-		Protocol:          d.Get("protocol").(string),
-		InternalPortId:    strfmt.UUID(d.Get("internal_port_id").(string)),
-		InternalIpAddress: d.Get("internal_ip_address").(string),
+		Name:              NewNullableString(d.Get("display_name").(string)),
+		Description:       NewNullableString(d.Get("description").(string)),
+		Protocol:          NewNullableString(d.Get("protocol").(string)),
+		InternalPortId:    NewNullableString(d.Get("internal_port_id").(string)),
+		InternalIpAddress: NewNullableString(d.Get("internal_ip_address").(string)),
 		InternalPort:      int32(d.Get("internal_port").(int)),
-		InternalPortRange: d.Get("internal_port_range").(string),
-		PublicAddress:     d.Get("public_address").(string),
+		InternalPortRange: NewNullableString(d.Get("internal_port_range").(string)),
+		PublicAddress:     NewNullableString(d.Get("public_address").(string)),
 		ExternalPort:      int32(d.Get("external_port").(int)),
-		ExternalPortRange: d.Get("external_port_range").(string),
+		ExternalPortRange: NewNullableString(d.Get("external_port_range").(string)),
 	}
 
 	return portForwarding

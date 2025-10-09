@@ -175,7 +175,7 @@ func resourceVpcUpdate(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf(E2004, err_vpc)
 	}
 
-	Router.RouterId = strfmt.UUID(d.Id())
+	Router.RouterId = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, Router)
 	if err != nil {
@@ -205,21 +205,21 @@ func resourceVpcDelete(ctx context.Context, d *schema.ResourceData, meta interfa
 func mapResourceDataToVpc(d *schema.ResourceData, platformType openapi.PlatformType) (openapi.RouterInstance, diag.Diagnostics) {
 	if platformType == openapi.OPENSTACK {
 		return openapi.RouterInstance{
-			DisplayName: d.Get("display_name").(string),
-			ParentT0Id:  strfmt.UUID(d.Get("vrf_id").(string)),
-			ProjectId:   strfmt.UUID(d.Get("project_id").(string)),
-			SnatEnabled: d.Get("autonat_enabled").(bool),
-			FolderPath:  d.Get("folder_path").(string),
+			DisplayName: NewNullableString(d.Get("display_name").(string)),
+			ParentT0Id:  NewNullableString(d.Get("vrf_id").(string)),
+			ProjectId:   NewNullableString(d.Get("project_id").(string)),
+			SnatEnabled: d.Get("autonat_enabled").(*bool),
+			FolderPath:  NewNullableString(d.Get("folder_path").(string)),
 		}, nil
 	} else {
 		if d.Get("autonat_enabled").(bool) {
 			return nil, diag.Errorf(E2003, fmt.Sprintf(E2002, "autonat_enabled"))
 		}
 		return openapi.RouterInstance{
-			DisplayName: d.Get("display_name").(string),
-			ParentT0Id:  strfmt.UUID(d.Get("vrf_id").(string)),
-			ProjectId:   strfmt.UUID(d.Get("project_id").(string)),
-			FolderPath:  d.Get("folder_path").(string),
+			DisplayName: NewNullableString(d.Get("display_name").(string)),
+			ParentT0Id:  NewNullableString(d.Get("vrf_id").(string)),
+			ProjectId:   NewNullableString(d.Get("project_id").(string)),
+			FolderPath:  NewNullableString(d.Get("folder_path").(string)),
 		}, nil
 	}
 }

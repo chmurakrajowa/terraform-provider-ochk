@@ -151,7 +151,7 @@ func TestCheckOrderOfSecurityPolicies(t *testing.T) {
 		stringArrayToDFWRule := func(strArr []string) []openapi.DfwRule {
 			var result []openapi.DfwRule
 			for i := 0; i < len(strArr); i++ {
-				result = append(result, openapi.DfwRule{DisplayName: strArr[i]})
+				result = append(result, openapi.DfwRule{DisplayName: NewNullableString(strArr[i])})
 			}
 			return result
 		}
@@ -168,7 +168,7 @@ func TestCheckOrderOfSecurityPolicies(t *testing.T) {
 
 func checkOrderOfSecurityPolicies(securityPolicies []openapi.DfwRule, displayNames []string) bool {
 	indexOfFirstElement := findIndexOfFirstMatch(len(securityPolicies), func(idx int) bool {
-		return securityPolicies[idx].DisplayName == displayNames[0]
+		return securityPolicies[idx].DisplayName == NewNullableString(displayNames[0])
 	})
 
 	if indexOfFirstElement == -1 {
@@ -181,7 +181,7 @@ func checkOrderOfSecurityPolicies(securityPolicies []openapi.DfwRule, displayNam
 
 	leftSlice := securityPolicies[indexOfFirstElement : indexOfFirstElement+len(displayNames)]
 	return slicesEqual(len(leftSlice), len(displayNames), func(lhsIdx int, rhsIdx int) bool {
-		return leftSlice[lhsIdx].DisplayName == displayNames[rhsIdx]
+		return leftSlice[lhsIdx].DisplayName == NewNullableString(displayNames[rhsIdx])
 	})
 }
 

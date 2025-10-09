@@ -20,18 +20,18 @@ func TestFlattenIPCollections(t *testing.T) {
 		{
 			expanded: []openapi.IpCollection{
 				{
-					Id:          "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName: "test1",
+					Id:          NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName: NewNullableString("test1"),
 					//FIXME comparing nested *schema.Set's gives false result
 					//IPCollectionAddresses: transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"192.168.0.1"}).List()),
-					ProjectId: "791bf702-22fb-4c76-bebb-1fee7ee75607",
+					ProjectId: NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
 				},
 				{
-					Id:          "1c1f244a-6ec0-47c6-961a-f255d64e954b",
-					DisplayName: "test2",
+					Id:          NewNullableString("1c1f244a-6ec0-47c6-961a-f255d64e954b"),
+					DisplayName: NewNullableString("test2"),
 					//FIXME comparing nested *schema.Set's gives false result
 					//IPCollectionAddresses: transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"192.168.1.1"}).List()),
-					ProjectId: "0d3f34d8-4364-45b7-ae69-0635fa438cab",
+					ProjectId: NewNullableString("0d3f34d8-4364-45b7-ae69-0635fa438cab"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

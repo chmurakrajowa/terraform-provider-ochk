@@ -36,11 +36,11 @@ func expandKMSKeys(in []interface{}) []openapi.KeyInstance {
 		member := openapi.KeyInstance{}
 
 		if paramName, ok := m["kms_key_id"].(string); ok {
-			member.Id = paramName
+			member.Id = NewNullableString(paramName)
 		}
 
 		if paramType, ok := m["display_name"].(string); ok {
-			member.Name = paramType
+			member.Name = NewNullableString(paramType)
 		}
 
 		if paramValue, ok := m["key_usage"]; ok {
@@ -55,7 +55,7 @@ func expandKMSKeys(in []interface{}) []openapi.KeyInstance {
 		}
 
 		if paramValue, ok := m["state"].(string); ok {
-			member.State = paramValue
+			member.State = NewNullableString(paramValue)
 		}
 		out[i] = member
 	}

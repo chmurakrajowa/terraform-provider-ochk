@@ -20,12 +20,12 @@ func TestFlattenBackupPlans(t *testing.T) {
 		{
 			expanded: []openapi.BackupPlan{
 				{
-					BackupPlanId:   "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					BackupPlanName: "Platinium 1",
+					BackupPlanId:   NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					BackupPlanName: NewNullableString("Platinium 1"),
 				},
 				{
-					BackupPlanId:   "791bf702-22fb-4c76-bebb-1fee7ee75607",
-					BackupPlanName: "Platinium 2",
+					BackupPlanId:   NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					BackupPlanName: NewNullableString("Platinium 2"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

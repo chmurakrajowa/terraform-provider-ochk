@@ -36,11 +36,11 @@ func expandIPCollections(in []interface{}) []openapi.IpCollection {
 		member := openapi.IpCollection{}
 
 		if paramName, ok := m["ip_collection_id"].(string); ok {
-			member.Id = strfmt.UUID(paramName)
+			member.Id = NewNullableString(paramName)
 		}
 
 		if paramType, ok := m["display_name"].(string); ok {
-			member.DisplayName = paramType
+			member.DisplayName = NewNullableString(paramType)
 		}
 
 		if paramValue, ok := m["ip_addresses"]; ok {
@@ -55,7 +55,7 @@ func expandIPCollections(in []interface{}) []openapi.IpCollection {
 		}
 
 		if paramValue, ok := m["project_id"].(string); ok {
-			member.ProjectId = strfmt.UUID(paramValue)
+			member.ProjectId = NewNullableString(paramValue)
 		}
 		out[i] = member
 	}

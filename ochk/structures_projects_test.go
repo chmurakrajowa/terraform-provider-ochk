@@ -20,12 +20,12 @@ func TestFlattenProjects(t *testing.T) {
 		{
 			expanded: []openapi.ProjectInstance{
 				{
-					ProjectId: "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					Name:      "test1",
+					ProjectId: NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					Name:      NewNullableString("test1"),
 				},
 				{
-					ProjectId: "791bf702-22fb-4c76-bebb-1fee7ee75607",
-					Name:      "test2",
+					ProjectId: NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					Name:      NewNullableString("test2"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

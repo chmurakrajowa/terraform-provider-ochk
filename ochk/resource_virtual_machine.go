@@ -334,7 +334,7 @@ func resourceVirtualMachineUpdate(ctx context.Context, d *schema.ResourceData, m
 	}
 
 	virtualMachine := mapResourceDataToVirtualMachine(d)
-	virtualMachine.VirtualMachineId = strfmt.UUID(d.Id())
+	virtualMachine.VirtualMachineId = NewNullableString(d.Id())
 
 	request, err := sdkClient.VirtualMachines.Update(ctx, virtualMachine)
 	if err != nil {
@@ -434,7 +434,7 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine open
 		return fmt.Errorf("error setting virtual_disk: %w", err)
 	}
 
-	if virtualMachine.SshKey != "" {
+	if virtualMachine.SshKey != NewNullableString("") {
 		if err := d.Set("ssh_key", virtualMachine.SshKey); err != nil {
 			return fmt.Errorf("error setting ssh_key: %w", err)
 		}
@@ -444,7 +444,7 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine open
 		if err := d.Set("encryption", virtualMachine.EncryptionInstance.Encrypt); err != nil {
 			return fmt.Errorf("error setting created_by: %w", err)
 		}
-		if virtualMachine.EncryptionInstance.EncryptionKeyId != "" {
+		if virtualMachine.EncryptionInstance.EncryptionKeyId != NewNullableString("") {
 			if err := d.Set("encryption_key_id", virtualMachine.EncryptionInstance.EncryptionKeyId); err != nil {
 				return fmt.Errorf("error setting created_by: %w", err)
 			}
@@ -499,34 +499,34 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) openapi.VirtualMach
 	var virtualMachineInstance = openapi.VirtualMachineInstance{
 		AdditionalVirtualDiskDeviceCollection: expandVirtualDisks(d.Get("additional_virtual_disks").(*schema.Set).List()),
 		DeploymentInstance: &openapi.DeploymentInstance{
-			DeploymentId: strfmt.UUID(d.Get("deployment_id").(string)),
+			DeploymentId: NewNullableString(d.Get("deployment_id").(string)),
 		},
-		InitialPassword:       d.Get("initial_password").(string),
+		InitialPassword:       NewNullableString(d.Get("initial_password").(string)),
 		PowerState:            castStringToPowerStateEnum(d.Get("power_state").(string)),
 		StoragePolicy:         castStringToStorageEnum(d.Get("storage_policy").(string)),
-		ProjectId:             strfmt.UUID(d.Get("project_id").(string)),
-		VirtualMachineId:      strfmt.UUID(d.Id()),
-		VirtualMachineName:    d.Get("display_name").(string),
-		SshKey:                d.Get("ssh_key").(string),
+		ProjectId:             NewNullableString(d.Get("project_id").(string)),
+		VirtualMachineId:      NewNullableString(d.Id()),
+		VirtualMachineName:    NewNullableString(d.Get("display_name").(string)),
+		SshKey:                NewNullableString(d.Get("ssh_key").(string)),
 		VirtualNetworkDevices: expandVirtualNetworkDevices(d.Get("virtual_network_devices").([]interface{})),
 		//DeploymentParams:      expandVDeploymentParams(d.Get("deployment_params").([]interface{})),
 		BackupListCollection: expandBackupListsFromIDs(d.Get("backup_lists").(*schema.Set).List()),
 		Tags:                 expandTagsListsFromIDs(d.Get("tags").(*schema.Set).List()),
 		OsType:               castStringToOsTypeEnum(d.Get("os_type").(string)),
-		OvfIpConfiguration:   d.Get("ovf_ip_configuration").(bool),
-		InitialUserName:      d.Get("initial_user_name").(string),
-		FolderPath:           d.Get("folder_path").(string),
-		DnsSearchSuffix:      d.Get("dns_search_suffix").(string),
-		DnsSuffix:            d.Get("dns_suffix").(string),
-		PrimaryDnsAddress:    d.Get("primary_dns_address").(string),
-		PrimaryWinsAddress:   d.Get("primary_wins_address").(string),
-		SecondaryDnsAddress:  d.Get("secondary_dns_address").(string),
-		SecondaryWinsAddress: d.Get("secondary_wins_address").(string),
+		OvfIpConfiguration:   NewNullableBool(d.Get("ovf_ip_configuration").(bool)),
+		InitialUserName:      NewNullableString(d.Get("initial_user_name").(string)),
+		FolderPath:           NewNullableString(d.Get("folder_path").(string)),
+		DnsSearchSuffix:      NewNullableString(d.Get("dns_search_suffix").(string)),
+		DnsSuffix:            NewNullableString(d.Get("dns_suffix").(string)),
+		PrimaryDnsAddress:    NewNullableString(d.Get("primary_dns_address").(string)),
+		PrimaryWinsAddress:   NewNullableString(d.Get("primary_wins_address").(string)),
+		SecondaryDnsAddress:  NewNullableString(d.Get("secondary_dns_address").(string)),
+		SecondaryWinsAddress: NewNullableString(d.Get("secondary_wins_address").(string)),
 		CpuCount:             int32(d.Get("cpu_count").(int)),
 		MemorySizeMB:         int32(d.Get("memory_size_mb").(int)),
 	}
 	encryptionInstance := openapi.EncryptionInstance{
-		Encrypt: d.Get("encryption").(bool),
+		Encrypt: NewNullableBool(d.Get("encryption").(bool)),
 	}
 
 	if recryptOperation, ok := d.GetOk("encryption_recrypt"); ok && recryptOperation.(string) != "" {
@@ -536,10 +536,10 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) openapi.VirtualMach
 	}
 
 	if encryptionKeyId, ok := d.GetOk("encryption_key_id"); ok && encryptionKeyId.(string) != "" {
-		encryptionInstance.EncryptionKeyId = encryptionKeyId.(string)
-		encryptionInstance.Managed = false
+		encryptionInstance.EncryptionKeyId = NewNullableString(encryptionKeyId.(string))
+		encryptionInstance.Managed = NewNullableBool(false)
 	} else {
-		encryptionInstance.Managed = true
+		encryptionInstance.Managed = NewNullableBool(true)
 	}
 
 	if !encryptionInstance.Managed || encryptionInstance.Encrypt {

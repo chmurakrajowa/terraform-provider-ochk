@@ -117,7 +117,7 @@ func resourceProjectRead(ctx context.Context, d *schema.ResourceData, meta inter
 }
 
 func mapProjectToResourceData(d *schema.ResourceData, project openapi.ProjectInstance) error {
-	if err := d.Set("project_id", strings.ToLower(strfmt.UUID.String(project.ProjectId))); err != nil {
+	if err := d.Set("project_id", strings.ToLower(NewNullableString(project.ProjectId))); err != nil {
 		return fmt.Errorf("error setting project_id: %w", err)
 	}
 
@@ -158,7 +158,7 @@ func resourceProjectUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	platformType, _ := proxy_pt.Read(ctx)
 
 	project := mapResourceDataToProject(d, platformType)
-	project.ProjectId = strfmt.UUID(d.Id())
+	project.ProjectId = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, project)
 	if err != nil {
@@ -191,13 +191,13 @@ func mapResourceDataToProject(d *schema.ResourceData, platformType openapi.Platf
 		factor = 1024
 	}
 	return openapi.ProjectInstance{
-		Description:           d.Get("description").(string),
+		Description:           NewNullableString(d.Get("description").(string)),
 		MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)) * factor,
-		Name:                  d.Get("display_name").(string),
-		StorageReservedSizeGB: int64(d.Get("storage_reserved_size_gb").(int)),
-		VrfId:                 strfmt.UUID(d.Get("vrf_id").(string)),
+		Name:                  NewNullableString(d.Get("display_name").(string)),
+		StorageReservedSizeGB: NewNullableInt64(d.Get("storage_reserved_size_gb").(int64)),
+		VrfId:                 NewNullableString(d.Get("vrf_id").(string)),
 		CpuReserved:           int64(d.Get("vcpu_reserved_quantity").(int)),
-		LimitEnabled:          d.Get("limits_enabled").(bool),
-		ProjectId:             strfmt.UUID(d.Get("project_id").(string)),
+		LimitEnabled:          NewNullableBool(d.Get("limits_enabled").(bool)),
+		ProjectId:             NewNullableString(d.Get("project_id").(string)),
 	}
 }

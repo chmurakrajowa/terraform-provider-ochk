@@ -20,18 +20,18 @@ func TestFlattenKMSKeys(t *testing.T) {
 		{
 			expanded: []openapi.KeyInstance{
 				{
-					Id:   "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					Name: "test1",
+					Id:   NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					Name: NewNullableString("test1"),
 					//FIXME comparing nested *schema.Set's gives false result
 					//KeyUsageList: transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"ENCRYPT", "DECRYPT"}).List()),
-					State: "Active",
+					State: NewNullableString("Active"),
 				},
 				{
-					Id:   "e1675817-f1a1-45c1-988b-ec2f142867e1",
-					Name: "test2",
+					Id:   NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e1"),
+					Name: NewNullableString("test2"),
 					//FIXME comparing nested *schema.Set's gives false result
 					//KeyUsageList: transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"ENCRYPT"}).List()),
-					State: "Inactive",
+					State: NewNullableString("Inactive"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

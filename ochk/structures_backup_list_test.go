@@ -20,12 +20,12 @@ func TestFlattenBackupLists(t *testing.T) {
 		{
 			expanded: []openapi.BackupList{
 				{
-					BackupListId:   "5403439c-38a5-4f98-a58b-134072260bfb",
-					BackupListName: "Platinium (1 week / 24h)",
+					BackupListId:   NewNullableString("5403439c-38a5-4f98-a58b-134072260bfb"),
+					BackupListName: NewNullableString("Platinium (1 week / 24h)"),
 				},
 				{
-					BackupListId:   "791bf702-22fb-4c76-bebb-1fee7ee75607",
-					BackupListName: "Platinium (1 day / 8h)",
+					BackupListId:   NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					BackupListName: NewNullableString("Platinium (1 day / 8h)"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

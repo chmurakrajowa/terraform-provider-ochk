@@ -128,7 +128,7 @@ func resourceKMSKeyCreate(ctx context.Context, d *schema.ResourceData, meta inte
 		return diag.Errorf("error while creating KMS key: %+v", err)
 	}
 
-	d.SetId(keyInstance.Id)
+	d.SetId(keyInstance.GetId())
 
 	return resourceKMSKeyRead(ctx, d, meta)
 }
@@ -143,7 +143,7 @@ func resourceKMSKeyImport(ctx context.Context, d *schema.ResourceData, meta inte
 		return diag.Errorf("error while importing KMS key: %+v", err)
 	}
 
-	d.SetId(keyInstance.Id)
+	d.SetId(keyInstance.GetId())
 
 	return resourceKMSKeyRead(ctx, d, meta)
 }
@@ -229,31 +229,31 @@ func mapKMSKeyToResourceData(d *schema.ResourceData, kmsKey *openapi.KeyInstance
 
 func mapResourceDataToKeyInstance(d *schema.ResourceData) openapi.KeyInstance {
 	keyInstance := openapi.KeyInstance{
-		Id:           d.Id(),
-		Algorithm:    d.Get("algorithm").(string),
+		Id:           NewNullableString(d.Id()),
+		Algorithm:    NewNullableString(d.Get("algorithm").(string)),
 		KeyUsageList: transformSetToStringSlice(d.Get("key_usage").(*schema.Set)),
-		Name:         d.Get("display_name").(string),
+		Name:         NewNullableString(d.Get("display_name").(string)),
 		Size:         int32(d.Get("size").(int)),
 	}
 
-	return &keyInstance
+	return keyInstance
 }
 
 func mapResourceDataToKeyImport(d *schema.ResourceData) openapi.KeyImport {
 	keyInstance := openapi.KeyImport{
-		Algorithm:    d.Get("algorithm").(string),
-		KeyName:      d.Get("display_name").(string),
+		Algorithm:    NewNullableString(d.Get("algorithm").(string)),
+		KeyName:      NewNullableString(d.Get("display_name").(string)),
 		KeyUsageList: transformSetToSKeyUsage(d.Get("key_usage").(*schema.Set)),
 		Size:         int32(d.Get("size").(int)),
 	}
 
 	if privateKeyIDToUnwrap, ok := d.GetOk("private_key_id_to_unwrap"); ok && privateKeyIDToUnwrap.(string) != "" {
-		keyInstance.PrivateKeyIdToUnwrap = privateKeyIDToUnwrap.(string)
+		keyInstance.PrivateKeyIdToUnwrap = NewNullableString(privateKeyIDToUnwrap.(string))
 	}
 
 	if material, ok := d.GetOk("material"); ok && material.(string) != "" {
-		keyInstance.Material = material.(string)
+		keyInstance.Material = NewNullableString(material.(string))
 	}
 
-	return &keyInstance
+	return keyInstance
 }

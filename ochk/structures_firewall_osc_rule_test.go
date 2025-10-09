@@ -20,8 +20,8 @@ func TestFirewallOscRule(t *testing.T) {
 		{
 			expanded: []openapi.FirewallRule{
 				{
-					RuleId: "c3514ee8-ee12-42b8-8dae-6f97c5271721",
-					Name:   "test1",
+					RuleId: NewNullableString("c3514ee8-ee12-42b8-8dae-6f97c5271721"),
+					Name:   NewNullableString("test1"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

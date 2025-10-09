@@ -20,22 +20,22 @@ func TestFlattenDeployments(t *testing.T) {
 		{
 			expanded: []openapi.DeploymentInstance{
 				{
-					DeploymentId:            "3e8b5314-6c6c-4848-9830-6af905c3d878",
-					DisplayName:             "rchlinux.iso",
+					DeploymentId:            NewNullableString("3e8b5314-6c6c-4848-9830-6af905c3d878"),
+					DisplayName:             NewNullableString("rchlinux.iso"),
 					DeploymentCategory:      "LINUX",
 					DeploymentType:          "ISO",
 					DeploymentInitialSizeGB: 30,
 				},
 				{
-					DeploymentId:            "198405db-6d29-41db-b2fa-5f8a0b33de39",
-					DisplayName:             "centOS",
+					DeploymentId:            NewNullableString("198405db-6d29-41db-b2fa-5f8a0b33de39"),
+					DisplayName:             NewNullableString("centOS"),
 					DeploymentCategory:      "LINUX",
 					DeploymentType:          "ISO",
 					DeploymentInitialSizeGB: 40,
 				},
 				{
-					DeploymentId:            "564e684a-b2f2-4236-ba48-ae9bf32d0f1a",
-					DisplayName:             "Rocky 8",
+					DeploymentId:            NewNullableString("564e684a-b2f2-4236-ba48-ae9bf32d0f1a"),
+					DisplayName:             NewNullableString("Rocky 8"),
 					DeploymentCategory:      "LINUX",
 					DeploymentType:          "ISO",
 					DeploymentInitialSizeGB: 50,

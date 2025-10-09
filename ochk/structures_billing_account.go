@@ -32,7 +32,7 @@ func flattenAccProjects(in []openapi.AccountProjectInstance) *schema.Set {
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
 		m["project_id"] = v.GetProjectId()
-		if v.Name != "" {
+		if v.Name != NewNullableString("") {
 			m["display_name"] = v.Name
 		}
 		out.Add(m)
@@ -60,7 +60,7 @@ func expandAcctProjects(in []interface{}) []openapi.AccountProjectInstance {
 		}
 
 		if displayName, ok := m["display_name"].(string); ok && displayName != "" {
-			member.Name = displayName
+			member.Name = NewNullableString(displayName)
 		}
 
 		out[i] = member

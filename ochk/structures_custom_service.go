@@ -36,7 +36,7 @@ func expandCustomServicePorts(in []interface{}) []openapi.L4PortSetEntry {
 		m := v.(map[string]interface{})
 
 		member := openapi.L4PortSetEntry{
-			L4PortSetEntryId: strfmt.UUID(m["id"].(string)),
+			L4PortSetEntryId: NewNullableString(m["id"].(string)),
 			L4Protocol:       openapi.L4PortSetEntry(m["protocol"].(string)),
 			SourcePorts:      transformSetToStringSlice(m["source"].(*schema.Set)),
 			DestinationPorts: transformSetToStringSlice(m["destination"].(*schema.Set)),
@@ -69,7 +69,7 @@ func expandCustomServicesFromIDs(in []interface{}) []openapi.CustomServiceInstan
 	for i, v := range in {
 		idValue := strfmt.UUID.String(strfmt.UUID(v.(string)))
 		service := openapi.CustomServiceInstance{
-			ServiceId: strfmt.UUID(idValue),
+			ServiceId: NewNullableString(idValue),
 		}
 
 		out[i] = service

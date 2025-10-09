@@ -23,7 +23,7 @@ func TestFlattenExpandRouterInstanceFromIDs(t *testing.T) {
 		{
 			expanded: []openapi.RouterInstance{
 				{
-					RouterId: "afdb07d8-d0d2-11ea-87d0-0242ac130003",
+					RouterId: NewNullableString("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
 				},
 			},
 			flattened: []interface{}{
@@ -35,8 +35,8 @@ func TestFlattenExpandRouterInstanceFromIDs(t *testing.T) {
 		{
 			expanded: []openapi.RouterInstance{
 				{
-					DisplayName: "T1",
-					RouterId:    "afdb07d8-d0d2-11ea-87d0-0242ac130003",
+					DisplayName: NewNullableString("T1"),
+					RouterId:    NewNullableString("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
 					RouterType:  "Ingress Router",
 				},
 			},
@@ -50,10 +50,10 @@ func TestFlattenExpandRouterInstanceFromIDs(t *testing.T) {
 		{
 			expanded: []openapi.RouterInstance{
 				{
-					RouterId: "afdb07d8-d0d2-11ea-87d0-0242ac130003",
+					RouterId: NewNullableString("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
 				},
 				{
-					RouterId: "114d82f0-79cc-4501-a574-dd920b6b6e7e",
+					RouterId: NewNullableString("114d82f0-79cc-4501-a574-dd920b6b6e7e"),
 				},
 			},
 			flattened: []interface{}{

@@ -20,14 +20,14 @@ func TestFlattenSecurityGroups(t *testing.T) {
 		{
 			expanded: []openapi.SecurityGroup{
 				{
-					Id:          "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					ProjectId:   strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
-					DisplayName: "test1",
+					Id:          NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					ProjectId:   NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName: NewNullableString("test1"),
 				},
 				{
-					Id:          "791bf702-22fb-4c76-bebb-1fee7ee75607",
-					ProjectId:   strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
-					DisplayName: "test2",
+					Id:          NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					ProjectId:   NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName: NewNullableString("test2"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

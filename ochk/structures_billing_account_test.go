@@ -20,7 +20,7 @@ func TestFlattenExpandAccountProjects(t *testing.T) {
 		{
 			expanded: []openapi.AccountProjectInstance{
 				{
-					ProjectId: "e1675817-f1a1-45c1-988b-ec2f142867aa",
+					ProjectId: NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867aa"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

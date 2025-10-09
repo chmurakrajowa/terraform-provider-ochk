@@ -27,7 +27,7 @@ func expandServicesFromIDs(in []interface{}) []openapi.ServiceInstance {
 	for i, v := range in {
 		idValue := strfmt.UUID.String(strfmt.UUID(v.(string)))
 		service := openapi.ServiceInstance{
-			ServiceId: strfmt.UUID(idValue),
+			ServiceId: NewNullableString(idValue),
 		}
 
 		out[i] = service
