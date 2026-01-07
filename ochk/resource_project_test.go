@@ -63,8 +63,9 @@ func TestAccProjectResource_create(t *testing.T) {
 
 	fmt.Printf("checkPlatformType%s ", platformType)
 	vrfRouter := testData.VRF_OPENSTACK
-	var mem int64 = 23
-	var mem_update int64 = 25
+	//var mem int64 = 23
+	var mem int64 = 23561
+	var mem_update int64 = mem + 2
 	if platformType == "VMWARE" {
 		vrfRouter = testData.VRF
 		mem = 23561

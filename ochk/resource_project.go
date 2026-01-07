@@ -191,8 +191,9 @@ func mapResourceDataToProject(d *schema.ResourceData, platformType openapi.Platf
 		factor = 1024
 	}
 	return openapi.ProjectInstance{
-		Description:           NewNullableString(d.Get("description").(string)),
-		MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)) * factor,
+		Description: NewNullableString(d.Get("description").(string)),
+		//MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)) * factor,
+		MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)),
 		Name:                  NewNullableString(d.Get("display_name").(string)),
 		StorageReservedSizeGB: NewNullableInt64(d.Get("storage_reserved_size_gb").(int64)),
 		VrfId:                 NewNullableString(d.Get("vrf_id").(string)),
