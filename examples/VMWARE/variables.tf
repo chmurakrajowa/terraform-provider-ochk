@@ -19,3 +19,4 @@ variable "backup_list" {}
 
 variable "billing_tag_cc" {}
 variable "system_tag_os" {}
+variable "insecure" {}
