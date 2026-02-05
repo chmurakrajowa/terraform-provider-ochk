@@ -3,6 +3,7 @@ package ochk
 import (
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 )
 
@@ -45,4 +46,20 @@ func castInt32ToInt(ptr *int32) int {
 		return x
 	}
 	return 0
+}
+
+func NullableStringToUUID(ns openapi.NullableString) (*strfmt.UUID, error) {
+	if !ns.IsSet() || ns.Get() == nil {
+		return nil, nil
+	}
+
+	uuid := strfmt.UUID(*ns.Get())
+	return &uuid, nil
+}
+
+func StringValue(s *string) string {
+	if s == nil {
+		return ""
+	}
+	return *s
 }

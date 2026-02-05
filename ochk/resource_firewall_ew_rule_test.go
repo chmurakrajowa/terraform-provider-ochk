@@ -119,7 +119,7 @@ func testAccFirewallEWRuleCheckRulesOrder(securityPolicyResourceName string, dis
 
 		if !checkOrderOfSecurityPolicies(securityPolicies, displayNames) {
 			securityPoliciesDisplayNames := transformToStringSlice(len(securityPolicies), func(idx int) string {
-				return securityPolicies[idx].DisplayName
+				return StringValue(securityPolicies[idx].DisplayName.Get())
 			})
 			return fmt.Errorf("security policies not found in expected order: %+v, security polices: %+v", displayNames, securityPoliciesDisplayNames)
 		}
@@ -404,7 +404,9 @@ func testAccFirewallEWRuleResourceDoesntExist(displayName string) resource.TestC
 			return fmt.Errorf("wrong number of routers")
 		}
 
-		firewallRule, err := client.FirewallEWRules.ListByDisplayName(ctx, routers[0].RouterId, displayName)
+		routerUuid, _ := NullableStringToUUID(routers[0].RouterId)
+
+		firewallRule, err := client.FirewallEWRules.ListByDisplayName(ctx, *routerUuid, displayName)
 		if err != nil {
 			return err
 		}
