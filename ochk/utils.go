@@ -33,12 +33,12 @@ func NewNullableBool(s bool) openapi.NullableBool {
 	return ns
 }
 
-//func GetIntValue(s openapi.NullableInt32) *int32 {
-//	if s.IsSet() {
-//		return s.Get()
-//	}
-//	return nil
-//}
+func GetIntValue(s openapi.NullableInt32) *int32 {
+	if s.IsSet() {
+		return s.Get()
+	}
+	return nil
+}
 
 func castInt32ToInt(ptr *int32) int {
 	if ptr != nil {
@@ -57,9 +57,19 @@ func NullableStringToUUID(ns openapi.NullableString) (*strfmt.UUID, error) {
 	return &uuid, nil
 }
 
+func NullableStringToUUID2(ns *string) (strfmt.UUID, error) {
+	uuid := strfmt.UUID(*ns)
+	return uuid, nil
+}
+
 func StringValue(s *string) string {
 	if s == nil {
 		return ""
 	}
 	return *s
+}
+
+func StringToUUID(ns string) (strfmt.UUID, error) {
+	uuid := strfmt.UUID(ns)
+	return uuid, nil
 }

@@ -228,23 +228,27 @@ func mapKMSKeyToResourceData(d *schema.ResourceData, kmsKey *openapi.KeyInstance
 }
 
 func mapResourceDataToKeyInstance(d *schema.ResourceData) openapi.KeyInstance {
+
+	sizeValue := d.Get("size").(int32)
 	keyInstance := openapi.KeyInstance{
 		Id:           NewNullableString(d.Id()),
 		Algorithm:    NewNullableString(d.Get("algorithm").(string)),
 		KeyUsageList: transformSetToStringSlice(d.Get("key_usage").(*schema.Set)),
 		Name:         NewNullableString(d.Get("display_name").(string)),
-		Size:         int32(d.Get("size").(int)),
+		Size:         &sizeValue,
 	}
 
 	return keyInstance
 }
 
 func mapResourceDataToKeyImport(d *schema.ResourceData) openapi.KeyImport {
+	sizeValue := d.Get("size").(int32)
+
 	keyInstance := openapi.KeyImport{
 		Algorithm:    NewNullableString(d.Get("algorithm").(string)),
 		KeyName:      NewNullableString(d.Get("display_name").(string)),
 		KeyUsageList: transformSetToSKeyUsage(d.Get("key_usage").(*schema.Set)),
-		Size:         int32(d.Get("size").(int)),
+		Size:         &sizeValue,
 	}
 
 	if privateKeyIDToUnwrap, ok := d.GetOk("private_key_id_to_unwrap"); ok && privateKeyIDToUnwrap.(string) != "" {

@@ -116,7 +116,10 @@ func testAccFirewallRuleResourceNotExists(displayName string) resource.TestCheck
 			return fmt.Errorf("wrong number of security groups")
 		}
 
-		firewallRule, err := client.FirewallRules.ListByName(ctx, projects[0].ProjectId(), security_groups[0].Id(), displayName)
+		security_groupId, _ := StringToUUID(security_groups[0].GetId())
+		projectUUID, _ := StringToUUID(projects[0].GetProjectId())
+
+		firewallRule, err := client.FirewallRules.ListByName(ctx, projectUUID, security_groupId, displayName)
 		if err != nil {
 			return err
 		}

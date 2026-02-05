@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-func testAccirewallEWRuleCreateResourceId(firewallRuleResourceName string) resource.ImportStateIdFunc {
+func testAccFirewallEWRuleCreateResourceId(firewallRuleResourceName string) resource.ImportStateIdFunc {
 	return func(s *terraform.State) (string, error) {
 		firewallRuleResource := s.RootModule().Resources[firewallRuleResourceName]
 		resourceID := firewallRuleResource.Primary.Attributes["vpc_id"] + "/" + firewallRuleResource.Primary.ID
@@ -59,7 +59,7 @@ func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
 				ResourceName:      resourceName,
 				ImportState:       true,
 				ImportStateVerify: true,
-				ImportStateIdFunc: testAccirewallEWRuleCreateResourceId(resourceName),
+				ImportStateIdFunc: testAccFirewallEWRuleCreateResourceId(resourceName),
 			},
 			{
 				Config: testAccFirewallEWRuleResourceConfig(displayNameUpdated, source, destination, actionUpdated, ipProtocolUpdated, directionUpdated, 2000, "data.ochk_custom_service.custom_service2.id"),
