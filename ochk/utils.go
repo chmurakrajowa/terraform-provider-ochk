@@ -33,12 +33,12 @@ func NewNullableBool(s bool) openapi.NullableBool {
 	return ns
 }
 
-func GetIntValue(s openapi.NullableInt32) *int32 {
-	if s.IsSet() {
-		return s.Get()
-	}
-	return nil
-}
+//func GetIntValue(s openapi.NullableInt32) *int32 {
+//	if s.IsSet() {
+//		return s.Get()
+//	}
+//	return nil
+//}
 
 func castInt32ToInt(ptr *int32) int {
 	if ptr != nil {
