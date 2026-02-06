@@ -213,7 +213,7 @@ func mapResourceDataToVpc(d *schema.ResourceData, platformType openapi.PlatformT
 		}, nil
 	} else {
 		if d.Get("autonat_enabled").(bool) {
-			return nil, diag.Errorf(E2003, fmt.Sprintf(E2002, "autonat_enabled"))
+			return openapi.RouterInstance{}, diag.Errorf(E2003, fmt.Sprintf(E2002, "autonat_enabled"))
 		}
 		return openapi.RouterInstance{
 			DisplayName: NewNullableString(d.Get("display_name").(string)),

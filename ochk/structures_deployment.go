@@ -19,7 +19,7 @@ func flattenDeployments(in []openapi.DeploymentInstance, deploymentType openapi.
 			m["display_name"] = v.DisplayName
 			m["deployment_type"] = v.DeploymentType
 			m["deployment_category"] = v.DeploymentCategory
-			m["initial_size_gb"] = int(v.DeploymentInitialSizeGB)
+			m["initial_size_gb"] = v.DeploymentInitialSizeGB
 			out = append(out, m)
 		}
 	}

@@ -30,14 +30,13 @@ func expandCustomServicePorts(in []interface{}) []openapi.L4PortSetEntry {
 	if len(in) == 0 {
 		return nil
 	}
-
 	var out = make([]openapi.L4PortSetEntry, len(in))
 	for i, v := range in {
 		m := v.(map[string]interface{})
 
 		member := openapi.L4PortSetEntry{
 			L4PortSetEntryId: NewNullableString(m["id"].(string)),
-			L4Protocol:       openapi.L4PortSetEntry(m["protocol"].(string)),
+			L4Protocol:       castStringToL4ProtocolEnum(m["protocol"].(string)).Ptr(),
 			SourcePorts:      transformSetToStringSlice(m["source"].(*schema.Set)),
 			DestinationPorts: transformSetToStringSlice(m["destination"].(*schema.Set)),
 		}
@@ -93,4 +92,22 @@ func flattenCustomServices(in []openapi.CustomServiceInstance) []map[strfmt.UUID
 		out = append(out, m)
 	}
 	return out
+}
+
+type L4ProtocolType = openapi.L4Protocol
+
+const (
+	TCP L4ProtocolType = "TCP"
+	UDP L4ProtocolType = "UDP"
+)
+
+func castStringToL4ProtocolEnum(e string) openapi.L4Protocol {
+	switch e {
+	case "TCP":
+		return TCP
+	case "UDP":
+		return UDP
+	default:
+		return ""
+	}
 }

@@ -171,10 +171,10 @@ func resourceSnapshotDelete(ctx context.Context, d *schema.ResourceData, meta in
 func mapResourceDataToSnapshot(d *schema.ResourceData) openapi.SnapshotInstance {
 	return openapi.SnapshotInstance{
 		SnapshotName:        NewNullableString(d.Get("display_name").(string)),
-		SnapshotDescription: d.Get("snapshot_description").(string),
-		VirtualMachineId:    strfmt.UUID(d.Get("virtual_machine_id").(string)),
-		PowerState:          castStringToPowerStateEnum(d.Get("power_state").(string)),
-		ParentSnapshotId:    strfmt.UUID(d.Get("parent_id").(string)),
+		SnapshotDescription: NewNullableString(d.Get("snapshot_description").(string)),
+		VirtualMachineId:    NewNullableString(d.Get("virtual_machine_id").(string)),
+		PowerState:          castStringToPowerStateEnum(d.Get("power_state").(string)).Ptr(),
+		ParentSnapshotId:    NewNullableString(d.Get("parent_id").(string)),
 		ChildSnapshots:      expandChildSnapshots(d.Get("child_id").(*schema.Set).List()),
 	}
 }

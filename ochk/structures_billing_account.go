@@ -56,7 +56,7 @@ func expandAcctProjects(in []interface{}) []openapi.AccountProjectInstance {
 		m := v.(map[strfmt.UUID]interface{})
 
 		member := openapi.AccountProjectInstance{
-			ProjectId: m["project_id"].(strfmt.UUID),
+			ProjectId: NewNullableString(m["project_id"].(string)),
 		}
 
 		if displayName, ok := m["display_name"].(string); ok && displayName != "" {

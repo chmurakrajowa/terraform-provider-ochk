@@ -7,7 +7,24 @@ import (
 	"testing"
 )
 
+const (
+	protocol  L4ProtocolType = "protocol"
+	protocol2 L4ProtocolType = "protocol2"
+)
+
+func castTestStringToL4ProtocolEnum(e string) openapi.L4Protocol {
+	switch e {
+	case "protocol":
+		return protocol
+	case "protocol2":
+		return protocol2
+	default:
+		return ""
+	}
+}
+
 func TestFlattenExpandCustomServicePorts(t *testing.T) {
+
 	cases := []struct {
 		expanded  []openapi.L4PortSetEntry
 		flattened []map[string]interface{}
@@ -23,13 +40,13 @@ func TestFlattenExpandCustomServicePorts(t *testing.T) {
 			expanded: []openapi.L4PortSetEntry{
 				{
 					L4PortSetEntryId: NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867aa"),
-					L4Protocol:       "protocol",
+					L4Protocol:       castTestStringToL4ProtocolEnum("protocol").Ptr(),
 					SourcePorts:      transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"1", "2", "3"}).List()),
 					DestinationPorts: transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"3", "4", "5"}).List()),
 				},
 				{
 					L4PortSetEntryId: NewNullableString("21675817-f1a1-45c1-988b-ec2f142867aa"),
-					L4Protocol:       "protocol2",
+					L4Protocol:       castTestStringToL4ProtocolEnum("protocol2").Ptr(),
 					SourcePorts:      transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"11", "22", "33"}).List()),
 					DestinationPorts: transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"33", "44", "55"}).List()),
 				},

@@ -117,7 +117,8 @@ func resourceProjectRead(ctx context.Context, d *schema.ResourceData, meta inter
 }
 
 func mapProjectToResourceData(d *schema.ResourceData, project openapi.ProjectInstance) error {
-	if err := d.Set("project_id", strings.ToLower(NewNullableString(project.ProjectId))); err != nil {
+
+	if err := d.Set("project_id", strings.ToLower(project.GetProjectId())); err != nil {
 		return fmt.Errorf("error setting project_id: %w", err)
 	}
 
@@ -186,19 +187,23 @@ func resourceProjectDelete(ctx context.Context, d *schema.ResourceData, meta int
 }
 
 func mapResourceDataToProject(d *schema.ResourceData, platformType openapi.PlatformType) openapi.ProjectInstance {
-	var factor int64 = 1
-	if platformType == "OPENSTACK" {
-		factor = 1024
-	}
+	//var factor int64 = 1
+	//if platformType == "OPENSTACK" {
+	//	factor = 1024
+	//}
+	MemoryReservedSizeMBValue := d.Get("memory_reserved_size_mb").(int64)
+	StorageReservedSizeGBValue := d.Get("storage_reserved_size_gb").(int64)
+	CpuReservedValue := d.Get("vcpu_reserved_quantity").(int64)
+	LimitEnabledValue := d.Get("limits_enabled").(bool)
 	return openapi.ProjectInstance{
 		Description: NewNullableString(d.Get("description").(string)),
 		//MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)) * factor,
-		MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)),
+		MemoryReservedSizeMB:  &MemoryReservedSizeMBValue,
 		Name:                  NewNullableString(d.Get("display_name").(string)),
-		StorageReservedSizeGB: NewNullableInt64(d.Get("storage_reserved_size_gb").(int64)),
+		StorageReservedSizeGB: &StorageReservedSizeGBValue,
 		VrfId:                 NewNullableString(d.Get("vrf_id").(string)),
-		CpuReserved:           int64(d.Get("vcpu_reserved_quantity").(int)),
-		LimitEnabled:          NewNullableBool(d.Get("limits_enabled").(bool)),
+		CpuReserved:           &CpuReservedValue,
+		LimitEnabled:          &LimitEnabledValue,
 		ProjectId:             NewNullableString(d.Get("project_id").(string)),
 	}
 }

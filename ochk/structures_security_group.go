@@ -64,9 +64,10 @@ func expandSecurityGroupMembers(in []interface{}, platformType openapi.PlatformT
 	for i, v := range in {
 		m := v.(map[string]interface{})
 
+		memberTypeValue := openapi.SecurityGroupMemberType(m["type"].(string))
 		member := openapi.SecurityGroupMember{
 			Id:         NewNullableString(m["id"].(string)),
-			MemberType: openapi.SecurityGroupMemberType(m["type"].(string)),
+			MemberType: &memberTypeValue,
 		}
 		if platformType == "OPENSTACK" {
 			if *member.MemberType == "IPCOLLECTION" {

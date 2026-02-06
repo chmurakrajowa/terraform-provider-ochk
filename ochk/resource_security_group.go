@@ -201,7 +201,7 @@ func resourceSecurityGroupDelete(ctx context.Context, d *schema.ResourceData, me
 func mapResourceDataToSecurityGroup(d *schema.ResourceData, platformType openapi.PlatformType) (openapi.SecurityGroup, diag.Diagnostics) {
 	members, err, wrongMemberType := expandSecurityGroupMembers(d.Get("members").(*schema.Set).List(), platformType)
 	if err != nil {
-		return nil, diag.Errorf("Wrong type member: %+v", wrongMemberType)
+		return openapi.SecurityGroup{}, diag.Errorf("Wrong type member: %+v", wrongMemberType)
 	}
 	return openapi.SecurityGroup{
 		DisplayName: NewNullableString(d.Get("display_name").(string)),

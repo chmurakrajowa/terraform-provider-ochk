@@ -394,11 +394,11 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine open
 		return fmt.Errorf("error setting power_state: %w", err)
 	}
 
-	if err := d.Set("cpu_count", int(virtualMachine.CpuCount)); err != nil {
+	if err := d.Set("cpu_count", virtualMachine.CpuCount); err != nil {
 		return fmt.Errorf("error setting cpu_count: %+v", err)
 	}
 
-	if err := d.Set("memory_size_mb", int(virtualMachine.MemorySizeMB)); err != nil {
+	if err := d.Set("memory_size_mb", virtualMachine.MemorySizeMB); err != nil {
 		return fmt.Errorf("error setting memory_size_mb: %w", err)
 	}
 
@@ -496,14 +496,17 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine open
 }
 
 func mapResourceDataToVirtualMachine(d *schema.ResourceData) openapi.VirtualMachineInstance {
+
+	CpuCountValue := int32(d.Get("cpu_count").(int))
+	MemorySizeMBValue := int32(d.Get("memory_size_mb").(int))
 	var virtualMachineInstance = openapi.VirtualMachineInstance{
 		AdditionalVirtualDiskDeviceCollection: expandVirtualDisks(d.Get("additional_virtual_disks").(*schema.Set).List()),
 		DeploymentInstance: &openapi.DeploymentInstance{
 			DeploymentId: NewNullableString(d.Get("deployment_id").(string)),
 		},
 		InitialPassword:       NewNullableString(d.Get("initial_password").(string)),
-		PowerState:            castStringToPowerStateEnum(d.Get("power_state").(string)),
-		StoragePolicy:         castStringToStorageEnum(d.Get("storage_policy").(string)),
+		PowerState:            castStringToPowerStateEnum(d.Get("power_state").(string)).Ptr(),
+		StoragePolicy:         castStringToStorageEnum(d.Get("storage_policy").(string)).Ptr(),
 		ProjectId:             NewNullableString(d.Get("project_id").(string)),
 		VirtualMachineId:      NewNullableString(d.Id()),
 		VirtualMachineName:    NewNullableString(d.Get("display_name").(string)),
@@ -512,7 +515,7 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) openapi.VirtualMach
 		//DeploymentParams:      expandVDeploymentParams(d.Get("deployment_params").([]interface{})),
 		BackupListCollection: expandBackupListsFromIDs(d.Get("backup_lists").(*schema.Set).List()),
 		Tags:                 expandTagsListsFromIDs(d.Get("tags").(*schema.Set).List()),
-		OsType:               castStringToOsTypeEnum(d.Get("os_type").(string)),
+		OsType:               castStringToOsTypeEnum(d.Get("os_type").(string)).Ptr(),
 		OvfIpConfiguration:   NewNullableBool(d.Get("ovf_ip_configuration").(bool)),
 		InitialUserName:      NewNullableString(d.Get("initial_user_name").(string)),
 		FolderPath:           NewNullableString(d.Get("folder_path").(string)),
@@ -522,8 +525,8 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) openapi.VirtualMach
 		PrimaryWinsAddress:   NewNullableString(d.Get("primary_wins_address").(string)),
 		SecondaryDnsAddress:  NewNullableString(d.Get("secondary_dns_address").(string)),
 		SecondaryWinsAddress: NewNullableString(d.Get("secondary_wins_address").(string)),
-		CpuCount:             int32(d.Get("cpu_count").(int)),
-		MemorySizeMB:         int32(d.Get("memory_size_mb").(int)),
+		CpuCount:             &CpuCountValue,
+		MemorySizeMB:         &MemorySizeMBValue,
 	}
 	encryptionInstance := openapi.EncryptionInstance{
 		Encrypt: NewNullableBool(d.Get("encryption").(bool)),
@@ -532,7 +535,7 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) openapi.VirtualMach
 	if recryptOperation, ok := d.GetOk("encryption_recrypt"); ok && recryptOperation.(string) != "" {
 		encryptionInstance.RecryptOperation = d.Get("encryption_recrypt").(*openapi.RecryptOperation)
 	} else {
-		encryptionInstance.RecryptOperation = "NONE"
+		encryptionInstance.RecryptOperation = openapi.NONE.Ptr()
 	}
 
 	if encryptionKeyId, ok := d.GetOk("encryption_key_id"); ok && encryptionKeyId.(string) != "" {
@@ -542,7 +545,7 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) openapi.VirtualMach
 		encryptionInstance.Managed = NewNullableBool(true)
 	}
 
-	if !encryptionInstance.Managed || encryptionInstance.Encrypt {
+	if !encryptionInstance.GetManaged() || encryptionInstance.GetEncrypt() {
 		virtualMachineInstance.EncryptionInstance = &encryptionInstance
 	}
 
