@@ -25,7 +25,7 @@ func TestFlattenVpcs(t *testing.T) {
 					ProjectId:   NewNullableString("e2655817-f1a1-4c76-bebb-1fee7ee75607"),
 					ParentT0Id:  NewNullableString("7364ff23-0513-48b6-97cb-637613e29424"),
 					FolderPath:  NewNullableString("/test1"),
-					RouterType:  "TIER1",
+					RouterType:  openapi.TIER1.Ptr(),
 				},
 				{
 					RouterId:    NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
@@ -33,7 +33,7 @@ func TestFlattenVpcs(t *testing.T) {
 					ProjectId:   NewNullableString("e2655817-f1a1-4c76-bebb-1fee7ee75607"),
 					ParentT0Id:  NewNullableString("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 					FolderPath:  NewNullableString("/test2"),
-					RouterType:  "TIER1",
+					RouterType:  openapi.TIER1.Ptr(),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

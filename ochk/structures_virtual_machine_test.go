@@ -7,6 +7,14 @@ import (
 )
 
 func TestFlattenExpandVirtualDisks(t *testing.T) {
+	ControllerIdValue := int32(1)
+	LunIdValue := int32(2)
+	SizeMBValue := int64(3)
+
+	ControllerIdValue2 := int32(11)
+	LunIdValue2 := int32(22)
+	SizeMBValue2 := int64(33)
+
 	cases := []struct {
 		expanded  []openapi.VirtualDiskDevice
 		flattened []map[string]interface{}
@@ -14,10 +22,10 @@ func TestFlattenExpandVirtualDisks(t *testing.T) {
 		{
 			expanded: []openapi.VirtualDiskDevice{
 				{
-					ControllerId:          1,
-					LunId:                 2,
-					SizeMB:                3,
-					VirtualDiskDeviceType: openapi.VirtualDiskDeviceType("IDE"),
+					ControllerId:          &ControllerIdValue,
+					LunId:                 &LunIdValue,
+					SizeMB:                &SizeMBValue,
+					VirtualDiskDeviceType: openapi.IDE.Ptr(),
 				},
 			},
 			flattened: []map[string]interface{}{
@@ -32,16 +40,16 @@ func TestFlattenExpandVirtualDisks(t *testing.T) {
 		{
 			expanded: []openapi.VirtualDiskDevice{
 				{
-					ControllerId:          1,
-					LunId:                 2,
-					SizeMB:                3,
-					VirtualDiskDeviceType: "IDE",
+					ControllerId:          &ControllerIdValue,
+					LunId:                 &LunIdValue,
+					SizeMB:                &SizeMBValue,
+					VirtualDiskDeviceType: openapi.IDE.Ptr(),
 				},
 				{
-					ControllerId:          11,
-					LunId:                 22,
-					SizeMB:                33,
-					VirtualDiskDeviceType: openapi.VirtualDiskDeviceType("IDE2"),
+					ControllerId:          &ControllerIdValue2,
+					LunId:                 &LunIdValue2,
+					SizeMB:                &SizeMBValue2,
+					VirtualDiskDeviceType: openapi.SATA.Ptr(), // before it was IDE2
 				},
 			},
 			flattened: []map[string]interface{}{
@@ -86,7 +94,7 @@ func TestFlattenExpandVirtualNetworkDevices(t *testing.T) {
 			expanded: []openapi.VirtualNetworkDevice{
 				{
 					DeviceId:               NewNullableString("123"),
-					VirtualNetworkInstance: openapi.VirtualNetworkInstance{VirtualNetworkId: NewNullableString("vnet-id")},
+					VirtualNetworkInstance: &openapi.VirtualNetworkInstance{VirtualNetworkId: NewNullableString("vnet-id")},
 				},
 			},
 			flattened: []map[string]interface{}{
@@ -100,11 +108,11 @@ func TestFlattenExpandVirtualNetworkDevices(t *testing.T) {
 			expanded: []openapi.VirtualNetworkDevice{
 				{
 					DeviceId:               NewNullableString("123"),
-					VirtualNetworkInstance: openapi.VirtualNetworkInstance{VirtualNetworkId: NewNullableString("vnet-id")},
+					VirtualNetworkInstance: &openapi.VirtualNetworkInstance{VirtualNetworkId: NewNullableString("vnet-id")},
 				},
 				{
 					DeviceId:               NewNullableString("1234"),
-					VirtualNetworkInstance: openapi.VirtualNetworkInstance{VirtualNetworkId: NewNullableString("vnet-id2")},
+					VirtualNetworkInstance: &openapi.VirtualNetworkInstance{VirtualNetworkId: NewNullableString("vnet-id2")},
 				},
 			},
 			flattened: []map[string]interface{}{

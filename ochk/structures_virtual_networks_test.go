@@ -8,6 +8,7 @@ import (
 )
 
 func TestFlattenVirtualNetworks(t *testing.T) {
+	IpamEnabledValue := true
 	cases := []struct {
 		expanded  []openapi.VirtualNetworkInstance
 		flattened []map[strfmt.UUID]interface{}
@@ -25,7 +26,7 @@ func TestFlattenVirtualNetworks(t *testing.T) {
 					ProjectId:        NewNullableString("e2655817-f1a1-4c76-bebb-1fee7ee75607"),
 					RouterRefId:      NewNullableString("7364ff23-0513-48b6-97cb-637613e29424"),
 					FolderPath:       NewNullableString("/test1"),
-					IpamEnabled:      NewNullableBool(true),
+					IpamEnabled:      &IpamEnabledValue,
 				},
 				{
 					VirtualNetworkId: NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
@@ -33,7 +34,7 @@ func TestFlattenVirtualNetworks(t *testing.T) {
 					ProjectId:        NewNullableString("e2655817-f1a1-4c76-bebb-1fee7ee75607"),
 					RouterRefId:      NewNullableString("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 					FolderPath:       NewNullableString("/test2"),
-					IpamEnabled:      NewNullableBool(true),
+					IpamEnabled:      &IpamEnabledValue,
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
