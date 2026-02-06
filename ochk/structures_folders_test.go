@@ -8,6 +8,8 @@ import (
 )
 
 func TestFlattenFolders(t *testing.T) {
+	IdValue := "e1675817-f1a1-45c1-988b-ec2f142867e0"
+	IdValue2 := "791bf702-22fb-4c76-bebb-1fee7ee75607"
 	cases := []struct {
 		expanded  []openapi.FolderInstance
 		flattened []map[strfmt.UUID]interface{}
@@ -20,12 +22,12 @@ func TestFlattenFolders(t *testing.T) {
 		{
 			expanded: []openapi.FolderInstance{
 				{
-					Id:         NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					Id:         &IdValue,
 					Name:       NewNullableString("test1"),
 					FolderPath: NewNullableString("/test1"),
 				},
 				{
-					Id:         NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					Id:         &IdValue2,
 					Name:       NewNullableString("test2"),
 					FolderPath: NewNullableString("/test1/test2"),
 				},

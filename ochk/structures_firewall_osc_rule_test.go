@@ -8,6 +8,8 @@ import (
 )
 
 func TestFirewallOscRule(t *testing.T) {
+
+	RuleIdValue := "c3514ee8-ee12-42b8-8dae-6f97c5271721"
 	cases := []struct {
 		expanded  []openapi.FirewallRule
 		flattened []map[strfmt.UUID]interface{}
@@ -20,7 +22,7 @@ func TestFirewallOscRule(t *testing.T) {
 		{
 			expanded: []openapi.FirewallRule{
 				{
-					RuleId: NewNullableString("c3514ee8-ee12-42b8-8dae-6f97c5271721"),
+					RuleId: &RuleIdValue,
 					Name:   NewNullableString("test1"),
 				},
 			},

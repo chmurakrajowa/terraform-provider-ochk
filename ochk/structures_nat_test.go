@@ -7,6 +7,13 @@ import (
 	"testing"
 )
 
+//type NetworkNATType = openapi.NATType
+//
+//const (
+//	NetworkManual NetworkNATType = "MANUAL"
+//	NetworkAuto   NetworkNATType = "AUTO"
+//)
+
 func TestFlattenAutoNat(t *testing.T) {
 	cases := []struct {
 		expanded  []openapi.NATRuleInstance
@@ -20,7 +27,7 @@ func TestFlattenAutoNat(t *testing.T) {
 		{
 			expanded: []openapi.NATRuleInstance{
 				{
-					NatType:     "AUTO",
+					NatType:     openapi.AUTO.Ptr(),
 					RuleId:      NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					DisplayName: NewNullableString("nat-test1"),
 					VirtualNetworkInstance: &openapi.VirtualNetworkInstance{
@@ -45,7 +52,7 @@ func TestFlattenAutoNat(t *testing.T) {
 		{
 			expanded: []openapi.NATRuleInstance{
 				{
-					NatType:     "AUTO",
+					NatType:     openapi.AUTO.Ptr(),
 					RuleId:      NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					DisplayName: NewNullableString("nat-test1"),
 					VirtualNetworkInstance: &openapi.VirtualNetworkInstance{
@@ -57,7 +64,7 @@ func TestFlattenAutoNat(t *testing.T) {
 					},
 				},
 				{
-					NatType:     "AUTO",
+					NatType:     openapi.AUTO.Ptr(),
 					RuleId:      NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					DisplayName: NewNullableString("nat-test2"),
 					VirtualNetworkInstance: &openapi.VirtualNetworkInstance{
@@ -108,10 +115,10 @@ func TestFlattenManualNat(t *testing.T) {
 		{
 			expanded: []openapi.NATRuleInstance{
 				{
-					NatType:     "MANUAL",
+					NatType:     NetworkManual.Ptr(),
 					RuleId:      NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					DisplayName: NewNullableString("nat-test1"),
-					Action:      openapi.NATRuleAction("DNAT"),
+					Action:      openapi.DNAT.Ptr(),
 					Enabled:     NewNullableBool(true),
 					TierZeroRouter: &openapi.RouterInstance{
 						RouterId: NewNullableString("547948e9-b67d-44d1-ad69-ae9b711e289c"),
@@ -135,10 +142,10 @@ func TestFlattenManualNat(t *testing.T) {
 		{
 			expanded: []openapi.NATRuleInstance{
 				{
-					NatType:     "MANUAL",
+					NatType:     NetworkManual.Ptr(),
 					RuleId:      NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					DisplayName: NewNullableString("nat-test2"),
-					Action:      "DNAT",
+					Action:      openapi.DNAT.Ptr(),
 					Enabled:     NewNullableBool(false),
 					TierZeroRouter: &openapi.RouterInstance{
 						RouterId: NewNullableString("b0908315-4c61-4326-b18d-2d145e6937a3"),
@@ -147,10 +154,10 @@ func TestFlattenManualNat(t *testing.T) {
 					DestinationNetwork: NewNullableString("192.168.1.0/24"),
 				},
 				{
-					NatType:     "MANUAL",
+					NatType:     NetworkManual.Ptr(),
 					RuleId:      NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					DisplayName: NewNullableString("nat-test1"),
-					Action:      "DNAT",
+					Action:      openapi.DNAT.Ptr(),
 					Enabled:     NewNullableBool(true),
 					TierZeroRouter: &openapi.RouterInstance{
 						RouterId: NewNullableString("547948e9-b67d-44d1-ad69-ae9b711e289c"),

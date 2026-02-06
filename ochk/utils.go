@@ -21,6 +21,12 @@ func NewNullableString(s string) openapi.NullableString {
 	return ns
 }
 
+func NewNullableFloat32(s float32) openapi.NullableFloat32 {
+	var ns openapi.NullableFloat32
+	ns.Set(&s)
+	return ns
+}
+
 func NewNullableInt64(s int64) openapi.NullableInt64 {
 	var ns openapi.NullableInt64
 	ns.Set(&s)

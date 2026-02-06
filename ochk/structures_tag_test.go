@@ -8,6 +8,10 @@ import (
 )
 
 func TestFlattenTags(t *testing.T) {
+	TagIdValue := int32(10)
+	TagIdValue2 := int32(20)
+	var virtualMachines []*string
+
 	cases := []struct {
 		expanded  []openapi.Tag
 		flattened []map[strfmt.UUID]interface{}
@@ -20,16 +24,16 @@ func TestFlattenTags(t *testing.T) {
 		{
 			expanded: []openapi.Tag{
 				{
-					TagId:                  10,
+					TagId:                  &TagIdValue,
 					TagValue:               NewNullableString("Tag1"),
 					ProjectId:              NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
-					RelatedVirtualMachines: []strfmt.UUID(nil),
+					RelatedVirtualMachines: virtualMachines,
 				},
 				{
-					TagId:                  20,
+					TagId:                  &TagIdValue2,
 					TagValue:               NewNullableString("Tag2"),
 					ProjectId:              NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867aa"),
-					RelatedVirtualMachines: []strfmt.UUID(nil),
+					RelatedVirtualMachines: virtualMachines,
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

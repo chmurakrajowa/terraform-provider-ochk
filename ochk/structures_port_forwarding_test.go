@@ -8,6 +8,10 @@ import (
 )
 
 func TestFlattenPortForwarding(t *testing.T) {
+	FloatingIpIdValue := "f1afcad5-f63e-4d99-9669-6081135bffc2"
+	InternalPortIdValue := "11752b30-9749-4534-8ec1-2b0e9670b92b"
+	PortForwardingId := "e1675817-f1a1-45c1-988b-ec2f142867e0"
+
 	cases := []struct {
 		expanded  []openapi.PortForwarding
 		flattened []map[strfmt.UUID]interface{}
@@ -20,10 +24,10 @@ func TestFlattenPortForwarding(t *testing.T) {
 		{
 			expanded: []openapi.PortForwarding{
 				{
-					FloatingIpId:     NewNullableString("f1afcad5-f63e-4d99-9669-6081135bffc2"),
+					FloatingIpId:     &FloatingIpIdValue,
 					Name:             NewNullableString("port-fwd-test1"),
-					InternalPortId:   NewNullableString("11752b30-9749-4534-8ec1-2b0e9670b92b"),
-					PortForwardingId: NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					InternalPortId:   &InternalPortIdValue,
+					PortForwardingId: &PortForwardingId,
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

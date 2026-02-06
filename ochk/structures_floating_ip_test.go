@@ -9,6 +9,7 @@ import (
 )
 
 func TestFlattenFloatingIpAddress(t *testing.T) {
+	FloatingIpIdValue := "92457621-e5af-49d6-921e-184566018fa9"
 	cases := []struct {
 		expanded  []openapi.FloatingIp
 		flattened []map[strfmt.UUID]interface{}
@@ -21,7 +22,7 @@ func TestFlattenFloatingIpAddress(t *testing.T) {
 		{
 			expanded: []openapi.FloatingIp{
 				{
-					FloatingIpId:  NewNullableString("92457621-e5af-49d6-921e-184566018fa9"),
+					FloatingIpId:  &FloatingIpIdValue,
 					Name:          NewNullableString("publicIp1"),
 					PublicAddress: NewNullableString("203.0.113.15"),
 				},

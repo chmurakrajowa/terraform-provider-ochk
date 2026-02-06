@@ -7,6 +7,22 @@ import (
 	"testing"
 )
 
+//const (
+//	WINDOWS DeploymentCategory = "WINDOWS"
+//	LINUX DeploymentCategory = "LINUX"
+//)
+
+//func castTestStringToL4ProtocolEnum(e string) openapi.L4Protocol {
+//	switch e {
+//	case "protocol":
+//		return protocol
+//	case "protocol2":
+//		return protocol2
+//	default:
+//		return ""
+//	}
+//}
+
 func TestFlattenDeployments(t *testing.T) {
 	cases := []struct {
 		expanded  []openapi.DeploymentInstance
@@ -22,23 +38,23 @@ func TestFlattenDeployments(t *testing.T) {
 				{
 					DeploymentId:            NewNullableString("3e8b5314-6c6c-4848-9830-6af905c3d878"),
 					DisplayName:             NewNullableString("rchlinux.iso"),
-					DeploymentCategory:      "LINUX",
-					DeploymentType:          "ISO",
-					DeploymentInitialSizeGB: 30,
+					DeploymentCategory:      openapi.DeploymentCategory("LINUX").Ptr(),
+					DeploymentType:          openapi.ISO.Ptr(),
+					DeploymentInitialSizeGB: NewNullableFloat32(32),
 				},
 				{
 					DeploymentId:            NewNullableString("198405db-6d29-41db-b2fa-5f8a0b33de39"),
 					DisplayName:             NewNullableString("centOS"),
-					DeploymentCategory:      "LINUX",
-					DeploymentType:          "ISO",
-					DeploymentInitialSizeGB: 40,
+					DeploymentCategory:      openapi.DeploymentCategory("LINUX").Ptr(),
+					DeploymentType:          openapi.ISO.Ptr(),
+					DeploymentInitialSizeGB: NewNullableFloat32(40),
 				},
 				{
 					DeploymentId:            NewNullableString("564e684a-b2f2-4236-ba48-ae9bf32d0f1a"),
 					DisplayName:             NewNullableString("Rocky 8"),
-					DeploymentCategory:      "LINUX",
-					DeploymentType:          "ISO",
-					DeploymentInitialSizeGB: 50,
+					DeploymentCategory:      openapi.DeploymentCategory("LINUX").Ptr(),
+					DeploymentType:          openapi.ISO.Ptr(),
+					DeploymentInitialSizeGB: NewNullableFloat32(50),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{

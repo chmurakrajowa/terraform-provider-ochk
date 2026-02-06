@@ -136,16 +136,19 @@ func expandVirtualDisks(in []interface{}) []openapi.VirtualDiskDevice {
 		//m := v.(map[strfmt.UUID]interface{})
 
 		member := openapi.VirtualDiskDevice{}
-
 		if controllerID, ok := m["controller_id"].(int); ok {
-			member.ControllerId = int32(controllerID)
+			controllerIDValue := int32(controllerID)
+			member.ControllerId = &controllerIDValue
 		}
 
 		if lunID, ok := m["lun_id"].(int); ok {
-			member.LunId = int32(lunID)
+			lunIdIntValue := int32(lunID)
+			member.LunId = &lunIdIntValue
 		}
 		if sizeMB, ok := m["size_mb"].(int); ok {
-			member.SizeMB = int64(sizeMB)
+			sizeMBValue := int64(sizeMB)
+
+			member.SizeMB = &sizeMBValue
 		}
 
 		if deviceType, ok := m["device_type"].(openapi.VirtualDiskDeviceType); ok {
@@ -206,7 +209,7 @@ func flattenBackupListsFromIDs(m []openapi.BackupList) *schema.Set {
 	}
 
 	for _, v := range m {
-		s.Add(strfmt.UUID.String(v.BackupListId))
+		s.Add(v.BackupListId)
 	}
 
 	return s

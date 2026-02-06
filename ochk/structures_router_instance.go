@@ -2,7 +2,6 @@ package ochk
 
 import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
-	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -33,7 +32,7 @@ func expandRouterInstancesFromIDs(in []interface{}) []openapi.RouterInstance {
 
 	for i, v := range in {
 		securityGroup := openapi.RouterInstance{
-			RouterId: v.(strfmt.UUID),
+			RouterId: NewNullableString(v.(string)),
 		}
 
 		out[i] = securityGroup

@@ -27,7 +27,7 @@ func flattenSecGroups(in openapi.SecurityGroup) *schema.Set {
 		F: secGroupsHash,
 	}
 
-	if in == nil {
+	if in.GetId() == "" {
 		return out
 	}
 	m := make(map[strfmt.UUID]interface{})

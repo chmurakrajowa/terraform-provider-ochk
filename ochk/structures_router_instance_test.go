@@ -37,7 +37,7 @@ func TestFlattenExpandRouterInstanceFromIDs(t *testing.T) {
 				{
 					DisplayName: NewNullableString("T1"),
 					RouterId:    NewNullableString("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
-					RouterType:  "Ingress Router",
+					RouterType:  openapi.TIER1.Ptr(), // tutaj było coś takiego "Ingress Router"
 				},
 			},
 			flattened: []interface{}{
