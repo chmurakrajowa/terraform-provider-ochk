@@ -27,6 +27,12 @@ func NewNullableInt64(s int64) openapi.NullableInt64 {
 	return ns
 }
 
+func NewNullableInt32(s int32) openapi.NullableInt32 {
+	var ns openapi.NullableInt32
+	ns.Set(&s)
+	return ns
+}
+
 func NewNullableBool(s bool) openapi.NullableBool {
 	var ns openapi.NullableBool
 	ns.Set(&s)

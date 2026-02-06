@@ -226,16 +226,18 @@ func resourcePortForwardingUpdate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func mapResourceDataToPortForwarding(d *schema.ResourceData) openapi.PortForwarding {
+	internalPortValue := d.Get("internal_port").(string)
+
 	portForwarding := openapi.PortForwarding{
 		Name:              NewNullableString(d.Get("display_name").(string)),
 		Description:       NewNullableString(d.Get("description").(string)),
 		Protocol:          NewNullableString(d.Get("protocol").(string)),
-		InternalPortId:    NewNullableString(d.Get("internal_port_id").(string)),
+		InternalPortId:    &internalPortValue,
 		InternalIpAddress: NewNullableString(d.Get("internal_ip_address").(string)),
-		InternalPort:      int32(d.Get("internal_port").(int)),
+		InternalPort:      NewNullableInt32(d.Get("internal_port").(int32)),
 		InternalPortRange: NewNullableString(d.Get("internal_port_range").(string)),
 		PublicAddress:     NewNullableString(d.Get("public_address").(string)),
-		ExternalPort:      int32(d.Get("external_port").(int)),
+		ExternalPort:      NewNullableInt32(d.Get("external_port").(int32)),
 		ExternalPortRange: NewNullableString(d.Get("external_port_range").(string)),
 	}
 
