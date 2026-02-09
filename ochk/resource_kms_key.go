@@ -243,7 +243,6 @@ func mapResourceDataToKeyInstance(d *schema.ResourceData) openapi.KeyInstance {
 
 func mapResourceDataToKeyImport(d *schema.ResourceData) openapi.KeyImport {
 	sizeValue := d.Get("size").(int32)
-
 	keyInstance := openapi.KeyImport{
 		Algorithm:    NewNullableString(d.Get("algorithm").(string)),
 		KeyName:      NewNullableString(d.Get("display_name").(string)),
