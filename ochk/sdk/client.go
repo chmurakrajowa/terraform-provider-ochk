@@ -4,7 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/runtime/logger"
 	"net/http"

@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 )
 
 //todo check what with posistion?

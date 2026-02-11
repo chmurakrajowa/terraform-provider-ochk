@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/openapi/v3"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -121,7 +121,7 @@ func resourceAccountRead(ctx context.Context, d *schema.ResourceData, meta inter
 		return diag.Errorf("error while reading account: %+v", err)
 	}
 
-	if err := d.Set("display_name", account.AccountName); err != nil {
+	if err := d.Set("display_name", account); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
