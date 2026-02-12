@@ -11650,14 +11650,6 @@
         },
         "additionalProperties": false
       },
-      "Action": {
-        "enum": [
-          "ALLOW",
-          "REJECT",
-          "DROP"
-        ],
-        "type": "string"
-      },
       "ActionContext": {
         "type": "object",
         "properties": {
@@ -11774,43 +11766,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "AddressFamily": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          13,
-          14,
-          15,
-          16,
-          17,
-          18,
-          19,
-          21,
-          22,
-          23,
-          24,
-          25,
-          26,
-          28,
-          29,
-          65536,
-          65537,
-          -1
-        ],
-        "type": "integer",
-        "format": "int32"
       },
       "AllocationPool": {
         "type": "object",
@@ -11957,7 +11912,14 @@
             "readOnly": true
           },
           "securityRuleSet": {
-            "$ref": "#/components/schemas/SecurityRuleSet"
+            "enum": [
+              0,
+              1,
+              2
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -12211,13 +12173,31 @@
             "nullable": true
           },
           "cpuAllocationOperator": {
-            "$ref": "#/components/schemas/BillingAlarmOperator"
+            "enum": [
+              "HIGHER",
+              "LOWER",
+              "EQUALS"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "ramAllocationOperator": {
-            "$ref": "#/components/schemas/BillingAlarmOperator"
+            "enum": [
+              "HIGHER",
+              "LOWER",
+              "EQUALS"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "storageAllocationOperator": {
-            "$ref": "#/components/schemas/BillingAlarmOperator"
+            "enum": [
+              "HIGHER",
+              "LOWER",
+              "EQUALS"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "cpuUsageAlarmEnabled": {
             "type": "boolean"
@@ -12252,16 +12232,40 @@
             "nullable": true
           },
           "cpuUsageOperator": {
-            "$ref": "#/components/schemas/BillingAlarmOperator"
+            "enum": [
+              "HIGHER",
+              "LOWER",
+              "EQUALS"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "ramUsageOperator": {
-            "$ref": "#/components/schemas/BillingAlarmOperator"
+            "enum": [
+              "HIGHER",
+              "LOWER",
+              "EQUALS"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "storageUsageOperator": {
-            "$ref": "#/components/schemas/BillingAlarmOperator"
+            "enum": [
+              "HIGHER",
+              "LOWER",
+              "EQUALS"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "totalCostUsageOperator": {
-            "$ref": "#/components/schemas/BillingAlarmOperator"
+            "enum": [
+              "HIGHER",
+              "LOWER",
+              "EQUALS"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "allCriteriaMustBeMeet": {
             "type": "boolean"
@@ -12325,14 +12329,6 @@
         },
         "additionalProperties": false
       },
-      "BillingAlarmOperator": {
-        "enum": [
-          "HIGHER",
-          "LOWER",
-          "EQUALS"
-        ],
-        "type": "string"
-      },
       "BillingPeriodInstance": {
         "type": "object",
         "properties": {
@@ -12367,7 +12363,13 @@
             "$ref": "#/components/schemas/ActionContextBooleanFunc"
           },
           "emptyBodyBehavior": {
-            "$ref": "#/components/schemas/EmptyBodyBehavior"
+            "enum": [
+              0,
+              1,
+              2
+            ],
+            "type": "integer",
+            "format": "int32"
           },
           "serviceKey": {
             "nullable": true
@@ -12427,17 +12429,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "CallingConventions": {
-        "enum": [
-          1,
-          2,
-          3,
-          32,
-          64
-        ],
-        "type": "integer",
-        "format": "int32"
       },
       "CancellationToken": {
         "type": "object",
@@ -13206,20 +13197,17 @@
             "nullable": true
           },
           "computeSiteType": {
-            "$ref": "#/components/schemas/ComputeSiteType"
+            "enum": [
+              "VCenter",
+              "OpenStack"
+            ],
+            "type": "string"
           },
           "isDefaultForAll": {
             "type": "boolean"
           }
         },
         "additionalProperties": false
-      },
-      "ComputeSiteType": {
-        "enum": [
-          "VCenter",
-          "OpenStack"
-        ],
-        "type": "string"
       },
       "ConnectionInfo": {
         "type": "object",
@@ -13247,15 +13235,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "ConnectionStatus": {
-        "enum": [
-          "ok",
-          "recoverableError",
-          "unrecoverableError",
-          "untried"
-        ],
-        "type": "string"
       },
       "ConstructorInfo": {
         "type": "object",
@@ -13292,13 +13271,67 @@
             "readOnly": true
           },
           "attributes": {
-            "$ref": "#/components/schemas/MethodAttributes"
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096,
+              8192,
+              16384,
+              32768,
+              53248
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "methodImplementationFlags": {
-            "$ref": "#/components/schemas/MethodImplAttributes"
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              4096,
+              8192,
+              65535
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "callingConvention": {
-            "$ref": "#/components/schemas/CallingConventions"
+            "enum": [
+              1,
+              2,
+              3,
+              32,
+              64
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "isAbstract": {
             "type": "boolean",
@@ -13384,7 +13417,20 @@
             "readOnly": true
           },
           "memberType": {
-            "$ref": "#/components/schemas/MemberTypes"
+            "enum": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              191
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -15162,13 +15208,6 @@
         },
         "additionalProperties": false
       },
-      "DeploymentCategory": {
-        "enum": [
-          "WINDOWS",
-          "LINUX"
-        ],
-        "type": "string"
-      },
       "DeploymentInstance": {
         "type": "object",
         "properties": {
@@ -15196,10 +15235,19 @@
             "nullable": true
           },
           "deploymentCategory": {
-            "$ref": "#/components/schemas/DeploymentCategory"
+            "enum": [
+              "WINDOWS",
+              "LINUX"
+            ],
+            "type": "string"
           },
           "deploymentType": {
-            "$ref": "#/components/schemas/DeploymentType"
+            "enum": [
+              "TEMPLATE",
+              "OVF",
+              "ISO"
+            ],
+            "type": "string"
           },
           "deploymentTemplatePattern": {
             "type": "string",
@@ -15233,14 +15281,6 @@
         },
         "additionalProperties": false
       },
-      "DeploymentType": {
-        "enum": [
-          "TEMPLATE",
-          "OVF",
-          "ISO"
-        ],
-        "type": "string"
-      },
       "DfwRule": {
         "type": "object",
         "properties": {
@@ -15258,13 +15298,28 @@
             "nullable": true
           },
           "action": {
-            "$ref": "#/components/schemas/Action"
+            "enum": [
+              "ALLOW",
+              "REJECT",
+              "DROP"
+            ],
+            "type": "string"
           },
           "direction": {
-            "$ref": "#/components/schemas/Direction"
+            "enum": [
+              "IN_OUT",
+              "IN",
+              "OUT"
+            ],
+            "type": "string"
           },
           "ipProtocol": {
-            "$ref": "#/components/schemas/IpProtocol"
+            "enum": [
+              "IPV4_IPV6",
+              "IPV4",
+              "IPV6"
+            ],
+            "type": "string"
           },
           "disabled": {
             "type": "boolean",
@@ -15404,21 +15459,6 @@
         },
         "additionalProperties": false
       },
-      "Direction": {
-        "enum": [
-          "IN_OUT",
-          "IN",
-          "OUT"
-        ],
-        "type": "string"
-      },
-      "Direction1": {
-        "enum": [
-          "INGRESS",
-          "EGRESS"
-        ],
-        "type": "string"
-      },
       "DiskInstance": {
         "type": "object",
         "properties": {
@@ -15501,15 +15541,6 @@
         },
         "additionalProperties": false
       },
-      "EmptyBodyBehavior": {
-        "enum": [
-          0,
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
       "EncryptionInstance": {
         "type": "object",
         "properties": {
@@ -15526,7 +15557,12 @@
             "nullable": true
           },
           "recryptOperation": {
-            "$ref": "#/components/schemas/RecryptOperation"
+            "enum": [
+              "NONE",
+              "SHALLOW",
+              "DEEP"
+            ],
+            "type": "string"
           },
           "managed": {
             "type": "boolean",
@@ -15539,7 +15575,13 @@
         "type": "object",
         "properties": {
           "errorType": {
-            "$ref": "#/components/schemas/ErrorType"
+            "enum": [
+              0,
+              1,
+              2
+            ],
+            "type": "integer",
+            "format": "int32"
           },
           "messages": {
             "type": "array",
@@ -15550,31 +15592,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "ErrorType": {
-        "enum": [
-          0,
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "EtherType": {
-        "enum": [
-          "IPv4",
-          "IPv6"
-        ],
-        "type": "string"
-      },
-      "EventAttributes": {
-        "enum": [
-          0,
-          512,
-          1024
-        ],
-        "type": "integer",
-        "format": "int32"
       },
       "EventInfo": {
         "type": "object",
@@ -15611,10 +15628,30 @@
             "readOnly": true
           },
           "memberType": {
-            "$ref": "#/components/schemas/MemberTypes"
+            "enum": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              191
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "attributes": {
-            "$ref": "#/components/schemas/EventAttributes"
+            "enum": [
+              0,
+              512,
+              1024
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "isSpecialName": {
             "type": "boolean",
@@ -15721,38 +15758,6 @@
         },
         "additionalProperties": false
       },
-      "FailureDomain": {
-        "enum": [
-          "Standard_W1",
-          "Standard_W2"
-        ],
-        "type": "string"
-      },
-      "FieldAttributes": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          16,
-          32,
-          64,
-          128,
-          256,
-          512,
-          1024,
-          4096,
-          8192,
-          32768,
-          38144
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
       "FieldInfo": {
         "type": "object",
         "properties": {
@@ -15788,10 +15793,46 @@
             "readOnly": true
           },
           "memberType": {
-            "$ref": "#/components/schemas/MemberTypes"
+            "enum": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              191
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "attributes": {
-            "$ref": "#/components/schemas/FieldAttributes"
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              4096,
+              8192,
+              32768,
+              38144
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "fieldType": {
             "$ref": "#/components/schemas/Type"
@@ -15881,14 +15922,6 @@
         },
         "additionalProperties": false
       },
-      "FirewallMatch": {
-        "enum": [
-          "MATCH_EXTERNAL_ADDRESS",
-          "MATCH_INTERNAL_ADDRESS",
-          "BYPASS"
-        ],
-        "type": "string"
-      },
       "FirewallRule": {
         "type": "object",
         "properties": {
@@ -15910,13 +15943,49 @@
             "nullable": true
           },
           "etherType": {
-            "$ref": "#/components/schemas/EtherType"
+            "enum": [
+              "IPv4",
+              "IPv6"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "direction": {
-            "$ref": "#/components/schemas/Direction1"
+            "enum": [
+              "INGRESS",
+              "EGRESS"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "protocol": {
-            "$ref": "#/components/schemas/Protocol"
+            "enum": [
+              "ANY",
+              "ICMP",
+              "IGMP",
+              "IPIP",
+              "TCP",
+              "EGP",
+              "UDP",
+              "DCCP",
+              "ipv6-encap",
+              "ipv6-route",
+              "ipv6-frag",
+              "RSVP",
+              "GRE",
+              "ESP",
+              "AH",
+              "ipv6-icmp",
+              "ipv6-nonxt",
+              "ipv6-opts",
+              "OSPF",
+              "VRRP",
+              "PGM",
+              "SCTP",
+              "UDPLITE"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "portRangeMin": {
             "type": "integer",
@@ -16225,21 +16294,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "GenericParameterAttributes": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          8,
-          16,
-          28,
-          32
-        ],
-        "type": "integer",
-        "format": "int32"
       },
       "GetAccountResponse": {
         "type": "object",
@@ -16738,7 +16792,11 @@
             "$ref": "#/components/schemas/ErrorInstance"
           },
           "platformType": {
-            "$ref": "#/components/schemas/PlatformType"
+            "enum": [
+              "VMWARE",
+              "OPENSTACK"
+            ],
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -17063,13 +17121,28 @@
             "nullable": true
           },
           "action": {
-            "$ref": "#/components/schemas/Action"
+            "enum": [
+              "ALLOW",
+              "REJECT",
+              "DROP"
+            ],
+            "type": "string"
           },
           "direction": {
-            "$ref": "#/components/schemas/Direction"
+            "enum": [
+              "IN_OUT",
+              "IN",
+              "OUT"
+            ],
+            "type": "string"
           },
           "ipProtocol": {
-            "$ref": "#/components/schemas/IpProtocol"
+            "enum": [
+              "IPV4_IPV6",
+              "IPV4",
+              "IPV6"
+            ],
+            "type": "string"
           },
           "disabled": {
             "type": "boolean",
@@ -17252,10 +17325,21 @@
             "format": "int32"
           },
           "toolsRunningStatus": {
-            "$ref": "#/components/schemas/RunningStatus"
+            "enum": [
+              "guestToolsExecutingScripts",
+              "guestToolsNotRunning",
+              "guestToolsRunning"
+            ],
+            "type": "string"
           },
           "toolsStatus": {
-            "$ref": "#/components/schemas/Status"
+            "enum": [
+              "toolsNotInstalled",
+              "toolsNotRunning",
+              "toolsOk",
+              "toolsOld"
+            ],
+            "type": "string"
           },
           "toolsVersion": {
             "type": "string",
@@ -17289,18 +17373,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "HMonitorType": {
-        "enum": [
-          "HTTP",
-          "HTTPS",
-          "PING",
-          "SCTP",
-          "TCP",
-          "TLS-HELLO",
-          "UDP-CONNECT"
-        ],
-        "type": "string"
       },
       "HealthCheckInstance": {
         "type": "object",
@@ -17650,7 +17722,42 @@
         "type": "object",
         "properties": {
           "addressFamily": {
-            "$ref": "#/components/schemas/AddressFamily"
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              28,
+              29,
+              65536,
+              65537,
+              -1
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "scopeId": {
             "type": "integer",
@@ -17858,7 +17965,15 @@
             "nullable": true
           },
           "memberType": {
-            "$ref": "#/components/schemas/SecurityGroupMemberType"
+            "enum": [
+              "IPSET",
+              "LOGICAL_PORT",
+              "VIRTUAL_MACHINE",
+              "IPCOLLECTION",
+              "SEGMENT",
+              "GROUP"
+            ],
+            "type": "string"
           },
           "createdBy": {
             "type": "string",
@@ -17896,14 +18011,6 @@
         },
         "additionalProperties": false
       },
-      "IpProtocol": {
-        "enum": [
-          "IPV4_IPV6",
-          "IPV4",
-          "IPV6"
-        ],
-        "type": "string"
-      },
       "IsoInstance": {
         "type": "object",
         "properties": {
@@ -17924,7 +18031,11 @@
         "type": "object",
         "properties": {
           "format": {
-            "$ref": "#/components/schemas/KeyExportFormat"
+            "enum": [
+              "pkcs1",
+              "pkcs8"
+            ],
+            "type": "string"
           },
           "wrapPublicKey": {
             "type": "string",
@@ -17932,13 +18043,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "KeyExportFormat": {
-        "enum": [
-          "pkcs1",
-          "pkcs8"
-        ],
-        "type": "string"
       },
       "KeyGetResponse": {
         "type": "object",
@@ -18064,7 +18168,17 @@
             "nullable": true
           },
           "revocationReason": {
-            "$ref": "#/components/schemas/KeyRevocationReason"
+            "enum": [
+              "Unspecified",
+              "KeyCompromise",
+              "CACompromise",
+              "AffiliationChanged",
+              "Superseded",
+              "CessationOfOperation",
+              "PrivilegeWithdrawn"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "pbjectType": {
             "type": "string",
@@ -18268,22 +18382,19 @@
         "type": "object",
         "properties": {
           "reason": {
-            "$ref": "#/components/schemas/KeyRevocationReason"
+            "enum": [
+              "Unspecified",
+              "KeyCompromise",
+              "CACompromise",
+              "AffiliationChanged",
+              "Superseded",
+              "CessationOfOperation",
+              "PrivilegeWithdrawn"
+            ],
+            "type": "string"
           }
         },
         "additionalProperties": false
-      },
-      "KeyRevocationReason": {
-        "enum": [
-          "Unspecified",
-          "KeyCompromise",
-          "CACompromise",
-          "AffiliationChanged",
-          "Superseded",
-          "CessationOfOperation",
-          "PrivilegeWithdrawn"
-        ],
-        "type": "string"
       },
       "KeyRotationSchedule": {
         "type": "object",
@@ -18445,7 +18556,11 @@
             "$ref": "#/components/schemas/ResourceType"
           },
           "l4Protocol": {
-            "$ref": "#/components/schemas/L4Protocol"
+            "enum": [
+              "TCP",
+              "UDP"
+            ],
+            "type": "string"
           },
           "sourcePorts": {
             "type": "array",
@@ -18463,31 +18578,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "L4Protocol": {
-        "enum": [
-          "TCP",
-          "UDP"
-        ],
-        "type": "string"
-      },
-      "LayoutKind": {
-        "enum": [
-          0,
-          2,
-          3
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "LbAlgorithm": {
-        "enum": [
-          "LEAST_CONNECTIONS",
-          "ROUND_ROBIN",
-          "SOURCE_IP",
-          "SOURCE_IP_PORT"
-        ],
-        "type": "string"
       },
       "LbPool": {
         "type": "object",
@@ -19306,25 +19396,6 @@
         },
         "additionalProperties": false
       },
-      "ListenerProtocol": {
-        "enum": [
-          "HTTP",
-          "HTTPS",
-          "SCTP",
-          "PROMETHEUS",
-          "TCP",
-          "TERMINATED_HTTPS",
-          "UDP"
-        ],
-        "type": "string"
-      },
-      "LoadBalancerType": {
-        "enum": [
-          "OPENSTACK_OCTAVIA_OVN",
-          "NSX"
-        ],
-        "type": "string"
-      },
       "LogCategory": {
         "type": "object",
         "properties": {
@@ -19367,35 +19438,24 @@
         },
         "additionalProperties": false
       },
-      "LogSeverity": {
-        "enum": [
-          "DEFAULT",
-          "INFO",
-          "DEBUG",
-          "NOTICE",
-          "WARN",
-          "WARNING",
-          "ERROR",
-          "CRITICAL",
-          "FATAL",
-          "ALERT",
-          "EMERGENCY"
-        ],
-        "type": "string"
-      },
-      "MacType": {
-        "enum": [
-          "assigned",
-          "generated",
-          "manual"
-        ],
-        "type": "string"
-      },
       "MemberInfo": {
         "type": "object",
         "properties": {
           "memberType": {
-            "$ref": "#/components/schemas/MemberTypes"
+            "enum": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              191
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "name": {
             "type": "string",
@@ -19431,54 +19491,24 @@
         },
         "additionalProperties": false
       },
-      "MemberTypes": {
-        "enum": [
-          1,
-          2,
-          4,
-          8,
-          16,
-          32,
-          64,
-          128,
-          191
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "MethodAttributes": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          16,
-          32,
-          64,
-          128,
-          256,
-          512,
-          1024,
-          2048,
-          4096,
-          8192,
-          16384,
-          32768,
-          53248
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
       "MethodBase": {
         "type": "object",
         "properties": {
           "memberType": {
-            "$ref": "#/components/schemas/MemberTypes"
+            "enum": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              191
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "name": {
             "type": "string",
@@ -19512,13 +19542,67 @@
             "readOnly": true
           },
           "attributes": {
-            "$ref": "#/components/schemas/MethodAttributes"
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096,
+              8192,
+              16384,
+              32768,
+              53248
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "methodImplementationFlags": {
-            "$ref": "#/components/schemas/MethodImplAttributes"
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              4096,
+              8192,
+              65535
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "callingConvention": {
-            "$ref": "#/components/schemas/CallingConventions"
+            "enum": [
+              1,
+              2,
+              3,
+              32,
+              64
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "isAbstract": {
             "type": "boolean",
@@ -19605,27 +19689,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "MethodImplAttributes": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          8,
-          16,
-          32,
-          64,
-          128,
-          256,
-          512,
-          4096,
-          8192,
-          65535
-        ],
-        "type": "integer",
-        "format": "int32"
       },
       "MethodInfo": {
         "type": "object",
@@ -19662,13 +19725,67 @@
             "readOnly": true
           },
           "attributes": {
-            "$ref": "#/components/schemas/MethodAttributes"
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+              4096,
+              8192,
+              16384,
+              32768,
+              53248
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "methodImplementationFlags": {
-            "$ref": "#/components/schemas/MethodImplAttributes"
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              256,
+              512,
+              4096,
+              8192,
+              65535
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "callingConvention": {
-            "$ref": "#/components/schemas/CallingConventions"
+            "enum": [
+              1,
+              2,
+              3,
+              32,
+              64
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "isAbstract": {
             "type": "boolean",
@@ -19754,7 +19871,20 @@
             "readOnly": true
           },
           "memberType": {
-            "$ref": "#/components/schemas/MemberTypes"
+            "enum": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              191
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "returnParameter": {
             "$ref": "#/components/schemas/ParameterInfo"
@@ -19814,7 +19944,14 @@
             "readOnly": true
           },
           "validationState": {
-            "$ref": "#/components/schemas/ModelValidationState"
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "type": "integer",
+            "format": "int32"
           },
           "isContainerNode": {
             "type": "boolean",
@@ -19830,16 +19967,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "ModelValidationState": {
-        "enum": [
-          0,
-          1,
-          2,
-          3
-        ],
-        "type": "integer",
-        "format": "int32"
       },
       "Module": {
         "type": "object",
@@ -19902,17 +20029,6 @@
         },
         "additionalProperties": false
       },
-      "NATRuleAction": {
-        "enum": [
-          "SNAT",
-          "DNAT",
-          "NAT64",
-          "NO_DNAT",
-          "NO_SNAT",
-          "REFLEXIVE"
-        ],
-        "type": "string"
-      },
       "NATRuleInstance": {
         "type": "object",
         "properties": {
@@ -19937,7 +20053,11 @@
             "$ref": "#/components/schemas/ResourceType"
           },
           "natType": {
-            "$ref": "#/components/schemas/NATType"
+            "enum": [
+              "MANUAL",
+              "AUTO"
+            ],
+            "type": "string"
           },
           "createdBy": {
             "type": "string",
@@ -19970,7 +20090,15 @@
             "nullable": true
           },
           "action": {
-            "$ref": "#/components/schemas/NATRuleAction"
+            "enum": [
+              "SNAT",
+              "DNAT",
+              "NAT64",
+              "NO_DNAT",
+              "NO_SNAT",
+              "REFLEXIVE"
+            ],
+            "type": "string"
           },
           "protection": {
             "$ref": "#/components/schemas/Protection"
@@ -19984,7 +20112,12 @@
             "nullable": true
           },
           "firewallMatch": {
-            "$ref": "#/components/schemas/FirewallMatch"
+            "enum": [
+              "MATCH_EXTERNAL_ADDRESS",
+              "MATCH_INTERNAL_ADDRESS",
+              "BYPASS"
+            ],
+            "type": "string"
           },
           "logging": {
             "type": "boolean",
@@ -20038,13 +20171,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "NATType": {
-        "enum": [
-          "MANUAL",
-          "AUTO"
-        ],
-        "type": "string"
       },
       "Network": {
         "type": "object",
@@ -20141,7 +20267,11 @@
             "nullable": true
           },
           "networkType": {
-            "$ref": "#/components/schemas/NetworkType"
+            "enum": [
+              "OpaqueNetwork",
+              "DistributedVirtualPortgroup"
+            ],
+            "type": "string"
           },
           "createdBy": {
             "type": "string",
@@ -20182,10 +20312,24 @@
             "nullable": true
           },
           "nicType": {
-            "$ref": "#/components/schemas/NicType"
+            "enum": [
+              "VirtualE1000",
+              "VirtualE1000e",
+              "VirtualPCNet32",
+              "VirtualSriovEthernetCard",
+              "VirtualVmxnet2",
+              "VirtualVmxnet3",
+              "OscVirtualAdapter"
+            ],
+            "type": "string"
           },
           "macType": {
-            "$ref": "#/components/schemas/MacType"
+            "enum": [
+              "assigned",
+              "generated",
+              "manual"
+            ],
+            "type": "string"
           },
           "uptCompatibilityEnabled": {
             "type": "boolean",
@@ -20210,7 +20354,13 @@
             "type": "boolean"
           },
           "status": {
-            "$ref": "#/components/schemas/ConnectionStatus"
+            "enum": [
+              "ok",
+              "recoverableError",
+              "unrecoverableError",
+              "untried"
+            ],
+            "type": "string"
           },
           "networkInstance": {
             "$ref": "#/components/schemas/NetworkInstance"
@@ -20268,25 +20418,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "NetworkType": {
-        "enum": [
-          "OpaqueNetwork",
-          "DistributedVirtualPortgroup"
-        ],
-        "type": "string"
-      },
-      "NicType": {
-        "enum": [
-          "VirtualE1000",
-          "VirtualE1000e",
-          "VirtualPCNet32",
-          "VirtualSriovEthernetCard",
-          "VirtualVmxnet2",
-          "VirtualVmxnet3",
-          "OscVirtualAdapter"
-        ],
-        "type": "string"
       },
       "NsxLb": {
         "type": "object",
@@ -20387,24 +20518,6 @@
         },
         "additionalProperties": false
       },
-      "OperatingStatus": {
-        "enum": [
-          "ONLINE",
-          "DRAINING",
-          "OFFLINE",
-          "DEGRADED",
-          "ERROR",
-          "NO_MONITOR"
-        ],
-        "type": "string"
-      },
-      "OsType": {
-        "enum": [
-          "WINDOWS",
-          "LINUX"
-        ],
-        "type": "string"
-      },
       "OvnHealthMon": {
         "type": "object",
         "properties": {
@@ -20459,13 +20572,41 @@
             "nullable": true
           },
           "provisioningStatus": {
-            "$ref": "#/components/schemas/ProvisioningStatus"
+            "enum": [
+              "ACTIVE",
+              "DELETED",
+              "ERROR",
+              "PENDING_CREATE",
+              "PENDING_UPDATE",
+              "PENDING_DELETE"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "operatingStatus": {
-            "$ref": "#/components/schemas/OperatingStatus"
+            "enum": [
+              "ONLINE",
+              "DRAINING",
+              "OFFLINE",
+              "DEGRADED",
+              "ERROR",
+              "NO_MONITOR"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "monitorType": {
-            "$ref": "#/components/schemas/HMonitorType"
+            "enum": [
+              "HTTP",
+              "HTTPS",
+              "PING",
+              "SCTP",
+              "TCP",
+              "TLS-HELLO",
+              "UDP-CONNECT"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "delay": {
             "type": "integer",
@@ -20539,13 +20680,41 @@
             "nullable": true
           },
           "provisioningStatus": {
-            "$ref": "#/components/schemas/ProvisioningStatus"
+            "enum": [
+              "ACTIVE",
+              "DELETED",
+              "ERROR",
+              "PENDING_CREATE",
+              "PENDING_UPDATE",
+              "PENDING_DELETE"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "operatingStatus": {
-            "$ref": "#/components/schemas/OperatingStatus"
+            "enum": [
+              "ONLINE",
+              "DRAINING",
+              "OFFLINE",
+              "DEGRADED",
+              "ERROR",
+              "NO_MONITOR"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "protocol": {
-            "$ref": "#/components/schemas/ListenerProtocol"
+            "enum": [
+              "HTTP",
+              "HTTPS",
+              "SCTP",
+              "PROMETHEUS",
+              "TCP",
+              "TERMINATED_HTTPS",
+              "UDP"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "protocolPort": {
             "type": "integer",
@@ -20582,7 +20751,11 @@
             "nullable": true
           },
           "loadBalancerType": {
-            "$ref": "#/components/schemas/LoadBalancerType"
+            "enum": [
+              "OPENSTACK_OCTAVIA_OVN",
+              "NSX"
+            ],
+            "type": "string"
           },
           "displayName": {
             "type": "string",
@@ -20597,10 +20770,28 @@
             "nullable": true
           },
           "provisioningStatus": {
-            "$ref": "#/components/schemas/ProvisioningStatus"
+            "enum": [
+              "ACTIVE",
+              "DELETED",
+              "ERROR",
+              "PENDING_CREATE",
+              "PENDING_UPDATE",
+              "PENDING_DELETE"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "operatingStatus": {
-            "$ref": "#/components/schemas/OperatingStatus"
+            "enum": [
+              "ONLINE",
+              "DRAINING",
+              "OFFLINE",
+              "DEGRADED",
+              "ERROR",
+              "NO_MONITOR"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "createdBy": {
             "type": "string",
@@ -20781,16 +20972,51 @@
             "nullable": true
           },
           "provisioningStatus": {
-            "$ref": "#/components/schemas/ProvisioningStatus"
+            "enum": [
+              "ACTIVE",
+              "DELETED",
+              "ERROR",
+              "PENDING_CREATE",
+              "PENDING_UPDATE",
+              "PENDING_DELETE"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "operatingStatus": {
-            "$ref": "#/components/schemas/OperatingStatus"
+            "enum": [
+              "ONLINE",
+              "DRAINING",
+              "OFFLINE",
+              "DEGRADED",
+              "ERROR",
+              "NO_MONITOR"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "protocol": {
-            "$ref": "#/components/schemas/PoolProtocol"
+            "enum": [
+              "HTTP",
+              "HTTPS",
+              "PROXY",
+              "PROXYV2",
+              "SCTP",
+              "TCP",
+              "UDP"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "lbAlgorithm": {
-            "$ref": "#/components/schemas/LbAlgorithm"
+            "enum": [
+              "LEAST_CONNECTIONS",
+              "ROUND_ROBIN",
+              "SOURCE_IP",
+              "SOURCE_IP_PORT"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "listenerId": {
             "type": "string",
@@ -20869,10 +21095,28 @@
             "nullable": true
           },
           "provisioningStatus": {
-            "$ref": "#/components/schemas/ProvisioningStatus"
+            "enum": [
+              "ACTIVE",
+              "DELETED",
+              "ERROR",
+              "PENDING_CREATE",
+              "PENDING_UPDATE",
+              "PENDING_DELETE"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "operatingStatus": {
-            "$ref": "#/components/schemas/OperatingStatus"
+            "enum": [
+              "ONLINE",
+              "DRAINING",
+              "OFFLINE",
+              "DEGRADED",
+              "ERROR",
+              "NO_MONITOR"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "address": {
             "type": "string",
@@ -20939,23 +21183,6 @@
         },
         "additionalProperties": false
       },
-      "ParameterAttributes": {
-        "enum": [
-          0,
-          1,
-          2,
-          4,
-          8,
-          16,
-          4096,
-          8192,
-          16384,
-          32768,
-          61440
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
       "ParameterDescriptor": {
         "type": "object",
         "properties": {
@@ -20976,7 +21203,22 @@
         "type": "object",
         "properties": {
           "attributes": {
-            "$ref": "#/components/schemas/ParameterAttributes"
+            "enum": [
+              0,
+              1,
+              2,
+              4,
+              8,
+              16,
+              4096,
+              8192,
+              16384,
+              32768,
+              61440
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "member": {
             "$ref": "#/components/schemas/MemberInfo"
@@ -21104,7 +21346,11 @@
             "type": "boolean"
           },
           "platformType": {
-            "$ref": "#/components/schemas/PlatformType"
+            "enum": [
+              "VMWARE",
+              "OPENSTACK"
+            ],
+            "type": "string"
           },
           "oscPlatformId": {
             "type": "string",
@@ -21131,25 +21377,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "PlatformType": {
-        "enum": [
-          "VMWARE",
-          "OPENSTACK"
-        ],
-        "type": "string"
-      },
-      "PoolProtocol": {
-        "enum": [
-          "HTTP",
-          "HTTPS",
-          "PROXY",
-          "PROXYV2",
-          "SCTP",
-          "TCP",
-          "UDP"
-        ],
-        "type": "string"
       },
       "PortForwarding": {
         "type": "object",
@@ -21266,14 +21493,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "PowerState": {
-        "enum": [
-          "poweredOff",
-          "poweredOn",
-          "suspended"
-        ],
-        "type": "string"
       },
       "ProblemDetails": {
         "type": "object",
@@ -21392,20 +21611,6 @@
         },
         "additionalProperties": false
       },
-      "PropertyAttributes": {
-        "enum": [
-          0,
-          512,
-          1024,
-          4096,
-          8192,
-          16384,
-          32768,
-          62464
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
       "PropertyInfo": {
         "type": "object",
         "properties": {
@@ -21441,13 +21646,38 @@
             "readOnly": true
           },
           "memberType": {
-            "$ref": "#/components/schemas/MemberTypes"
+            "enum": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              191
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "propertyType": {
             "$ref": "#/components/schemas/Type"
           },
           "attributes": {
-            "$ref": "#/components/schemas/PropertyAttributes"
+            "enum": [
+              0,
+              512,
+              1024,
+              4096,
+              8192,
+              16384,
+              32768,
+              62464
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "isSpecialName": {
             "type": "boolean",
@@ -21483,45 +21713,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "Protocol": {
-        "enum": [
-          "ANY",
-          "ICMP",
-          "IGMP",
-          "IPIP",
-          "TCP",
-          "EGP",
-          "UDP",
-          "DCCP",
-          "ipv6-encap",
-          "ipv6-route",
-          "ipv6-frag",
-          "RSVP",
-          "GRE",
-          "ESP",
-          "AH",
-          "ipv6-icmp",
-          "ipv6-nonxt",
-          "ipv6-opts",
-          "OSPF",
-          "VRRP",
-          "PGM",
-          "SCTP",
-          "UDPLITE"
-        ],
-        "type": "string"
-      },
-      "ProvisioningStatus": {
-        "enum": [
-          "ACTIVE",
-          "DELETED",
-          "ERROR",
-          "PENDING_CREATE",
-          "PENDING_UPDATE",
-          "PENDING_DELETE"
-        ],
-        "type": "string"
       },
       "PublicIpAddress": {
         "type": "object",
@@ -21597,7 +21788,21 @@
         "type": "object",
         "properties": {
           "logSeverity": {
-            "$ref": "#/components/schemas/LogSeverity"
+            "enum": [
+              "DEFAULT",
+              "INFO",
+              "DEBUG",
+              "NOTICE",
+              "WARN",
+              "WARNING",
+              "ERROR",
+              "CRITICAL",
+              "FATAL",
+              "ALERT",
+              "EMERGENCY"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "userName": {
             "type": "string",
@@ -21642,14 +21847,6 @@
         },
         "additionalProperties": false
       },
-      "RecryptOperation": {
-        "enum": [
-          "NONE",
-          "SHALLOW",
-          "DEEP"
-        ],
-        "type": "string"
-      },
       "RemoveAllSnapshotsResponse": {
         "type": "object",
         "properties": {
@@ -21684,17 +21881,162 @@
             "nullable": true
           },
           "requestPhase": {
-            "$ref": "#/components/schemas/RequestPhase"
+            "enum": [
+              "NEW",
+              "PROCESSING",
+              "FINISHED",
+              "CANCELLED",
+              "TIMEOUT",
+              "QUEUEING"
+            ],
+            "type": "string"
           },
           "requestStatus": {
-            "$ref": "#/components/schemas/RequestStatus"
+            "enum": [
+              "SUCCESS",
+              "FAILED"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "lastErrorMessage": {
             "type": "string",
             "nullable": true
           },
           "requestType": {
-            "$ref": "#/components/schemas/RequestType"
+            "enum": [
+              "SECURITY_GROUP_CREATE",
+              "SECURITY_GROUP_DELETE",
+              "FIREWALL_DFW_RULE_CREATE",
+              "FIREWALL_DFW_RULE_DELETE",
+              "FIREWALL_GFW_RULE_CREATE",
+              "FIREWALL_GFW_RULE_DELETE",
+              "SECURITY_GROUP_UPDATE",
+              "FIREWALL_DFW_RULE_UPDATE",
+              "FIREWALL_GFW_RULE_UPDATE",
+              "ROUTER_CREATE",
+              "ROUTER_UPDATE",
+              "ROUTER_DELETE",
+              "GROUP_CREATE",
+              "GROUP_DELETE",
+              "SUBTENANT_CREATE",
+              "SUBTENANT_UPDATE",
+              "SUBTENANT_DELETE",
+              "PROJECT_CREATE",
+              "PROJECT_UPDATE",
+              "PROJECT_DELETE",
+              "GROUP_MEMBER_CREATE",
+              "GROUP_MEMBER_DELETE",
+              "CATALOG_ENTITLEMENT_CREATE",
+              "CATALOG_ENTITLEMENT_UPDATE",
+              "CATALOG_ENTITLEMENT_DELETE",
+              "SEGMENT_CREATE",
+              "SEGMENT_UPDATE",
+              "SEGMENT_DELETE",
+              "NETWORK_CREATE",
+              "NETWORK_UPDATE",
+              "NETWORK_DELETE",
+              "IPCOLLECTION_CREATE",
+              "IPCOLLECTION_UPDATE",
+              "IPCOLLECTION_DELETE",
+              "BILLING_ALARM_DEFINITION_CREATE",
+              "BILLING_ALARM_DEFINITION_UPDATE",
+              "BILLING_ALARM_DEFINITION_DELETE",
+              "VIRTUAL_MACHINE_CREATE",
+              "VIRTUAL_MACHINE_MODIFY",
+              "VIRTUAL_MACHINE_DELETE",
+              "CUSTOM_SERVICE_CREATE",
+              "CUSTOM_SERVICE_MODIFY",
+              "CUSTOM_SERVICE_DELETE",
+              "KMS_KEY_CREATE",
+              "KMS_KEY_REVOKE",
+              "KMS_KEY_NEW_VERSION",
+              "KMS_KEY_DELETE",
+              "KMS_KEY_EXPORT",
+              "KMS_KEY_IMPORT",
+              "KMS_KEY_ROTATION_SCHEDULE_CREATE",
+              "KMS_KEY_ROTATION_SCHEDULE_UPDATE",
+              "KMS_KEY_ROTATION_SCHEDULE_DELETE",
+              "ADS_SYNC",
+              "GROUP_UPDATE",
+              "SNAPSHOT_CREATE",
+              "SNAPSHOT_REVERT",
+              "SNAPSHOT_DELETE",
+              "SECURITY_POLICY_CREATE",
+              "SECURITY_POLICY_UPDATE",
+              "SECURITY_POLICY_DELETE",
+              "BILLING_TAG_CREATE",
+              "BILLING_TAG_UPDATE",
+              "BILLING_TAG_DELETE",
+              "SYSTEM_TAG_CREATE",
+              "SYSTEM_TAG_UPDATE",
+              "SYSTEM_TAG_DELETE",
+              "TAG_CREATE",
+              "TAG_UPDATE",
+              "TAG_DELETE",
+              "UPDATE_LOG_CATEGORY",
+              "IPAM_PUBLIC_IP_ALLOCATION_CREATE",
+              "IPAM_PUBLIC_IP_ALLOCATION_UPDATE",
+              "IPAM_PUBLIC_IP_ALLOCATION_DELETE",
+              "NAT_RULE_CREATE",
+              "NAT_RULE_UPDATE",
+              "NAT_RULE_DELETE",
+              "AD_USER_CREATE",
+              "AD_USER_MODIFY",
+              "AD_USER_ENABLE",
+              "AD_USER_DISABLE",
+              "AD_USER_DELETE",
+              "AD_GROUP_CREATE",
+              "AD_GROUP_MODIFY",
+              "AD_GROUP_DELETE",
+              "VIRTUAL_MACHINE_RESET",
+              "VIRTUAL_MACHINE_REMOVE_ALL_SNAPSHOTS",
+              "BILLING_ACCOUNT_CREATE",
+              "BILLING_ACCOUNT_UPDATE",
+              "BILLING_ACCOUNT_DELETE",
+              "ACCESS_POLICY_ADD_USER",
+              "ACCESS_POLICY_ADD_GROUP",
+              "ACCESS_POLICY_REMOVE_USER",
+              "ACCESS_POLICY_REMOVE_GROUP",
+              "ACCESS_POLICY_REMOVE_USER_BY_NODE",
+              "ACCESS_POLICY_REMOVE_GROUP_BY_NODE",
+              "MODIFY_PLATFORM_ACCESS",
+              "VPN_REQUEST_CREATE",
+              "VIRTUAL_MACHINE_UPDATE",
+              "FIREWALL_RULE_CREATE",
+              "FIREWALL_RULE_UPDATE",
+              "FIREWALL_RULE_DELETE",
+              "FILES_MANAGER_CREATE",
+              "FILES_MANAGER_DELETE",
+              "FILES_MANAGER_UPDATE",
+              "FILES_MANAGER_UPDATE_STATUS",
+              "PORT_FORWARDING_CREATE",
+              "PORT_FORWARDING_UPDATE",
+              "PORT_FORWARDING_DELETE",
+              "VIRTUAL_MACHINE_IMPORT",
+              "SECURITY_GROUP_IMPORT",
+              "ONBOARDING",
+              "LOAD_BALANCER_CREATE",
+              "LOAD_BALANCER_UPDATE",
+              "LOAD_BALANCER_DELETE",
+              "KUBE_CLUSTER_CREATE",
+              "KUBE_CLUSTER_UPDATE",
+              "KUBE_CLUSTER_DELETE",
+              "MONITOR_PROFILE_CREATE",
+              "MONITOR_PROFILE_UPDATE",
+              "MONITOR_PROFILE_DELETE",
+              "VIRTUAL_SERVER_CREATE",
+              "VIRTUAL_SERVER_UPDATE",
+              "VIRTUAL_SERVER_DELETE",
+              "SERVER_POOL_CREATE",
+              "SERVER_POOL_UPDATE",
+              "SERVER_POOL_DELETE",
+              "APPLICATION_PROFILE_CREATE",
+              "APPLICATION_PROFILE_UPDATE",
+              "APPLICATION_PROFILE_DELETE"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "startDate": {
             "type": "string",
@@ -21769,158 +22111,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "RequestPhase": {
-        "enum": [
-          "NEW",
-          "PROCESSING",
-          "FINISHED",
-          "CANCELLED",
-          "TIMEOUT",
-          "QUEUEING"
-        ],
-        "type": "string"
-      },
-      "RequestStatus": {
-        "enum": [
-          "SUCCESS",
-          "FAILED"
-        ],
-        "type": "string"
-      },
-      "RequestType": {
-        "enum": [
-          "SECURITY_GROUP_CREATE",
-          "SECURITY_GROUP_DELETE",
-          "FIREWALL_DFW_RULE_CREATE",
-          "FIREWALL_DFW_RULE_DELETE",
-          "FIREWALL_GFW_RULE_CREATE",
-          "FIREWALL_GFW_RULE_DELETE",
-          "SECURITY_GROUP_UPDATE",
-          "FIREWALL_DFW_RULE_UPDATE",
-          "FIREWALL_GFW_RULE_UPDATE",
-          "ROUTER_CREATE",
-          "ROUTER_UPDATE",
-          "ROUTER_DELETE",
-          "GROUP_CREATE",
-          "GROUP_DELETE",
-          "SUBTENANT_CREATE",
-          "SUBTENANT_UPDATE",
-          "SUBTENANT_DELETE",
-          "PROJECT_CREATE",
-          "PROJECT_UPDATE",
-          "PROJECT_DELETE",
-          "GROUP_MEMBER_CREATE",
-          "GROUP_MEMBER_DELETE",
-          "CATALOG_ENTITLEMENT_CREATE",
-          "CATALOG_ENTITLEMENT_UPDATE",
-          "CATALOG_ENTITLEMENT_DELETE",
-          "SEGMENT_CREATE",
-          "SEGMENT_UPDATE",
-          "SEGMENT_DELETE",
-          "NETWORK_CREATE",
-          "NETWORK_UPDATE",
-          "NETWORK_DELETE",
-          "IPCOLLECTION_CREATE",
-          "IPCOLLECTION_UPDATE",
-          "IPCOLLECTION_DELETE",
-          "BILLING_ALARM_DEFINITION_CREATE",
-          "BILLING_ALARM_DEFINITION_UPDATE",
-          "BILLING_ALARM_DEFINITION_DELETE",
-          "VIRTUAL_MACHINE_CREATE",
-          "VIRTUAL_MACHINE_MODIFY",
-          "VIRTUAL_MACHINE_DELETE",
-          "CUSTOM_SERVICE_CREATE",
-          "CUSTOM_SERVICE_MODIFY",
-          "CUSTOM_SERVICE_DELETE",
-          "KMS_KEY_CREATE",
-          "KMS_KEY_REVOKE",
-          "KMS_KEY_NEW_VERSION",
-          "KMS_KEY_DELETE",
-          "KMS_KEY_EXPORT",
-          "KMS_KEY_IMPORT",
-          "KMS_KEY_ROTATION_SCHEDULE_CREATE",
-          "KMS_KEY_ROTATION_SCHEDULE_UPDATE",
-          "KMS_KEY_ROTATION_SCHEDULE_DELETE",
-          "ADS_SYNC",
-          "GROUP_UPDATE",
-          "SNAPSHOT_CREATE",
-          "SNAPSHOT_REVERT",
-          "SNAPSHOT_DELETE",
-          "SECURITY_POLICY_CREATE",
-          "SECURITY_POLICY_UPDATE",
-          "SECURITY_POLICY_DELETE",
-          "BILLING_TAG_CREATE",
-          "BILLING_TAG_UPDATE",
-          "BILLING_TAG_DELETE",
-          "SYSTEM_TAG_CREATE",
-          "SYSTEM_TAG_UPDATE",
-          "SYSTEM_TAG_DELETE",
-          "TAG_CREATE",
-          "TAG_UPDATE",
-          "TAG_DELETE",
-          "UPDATE_LOG_CATEGORY",
-          "IPAM_PUBLIC_IP_ALLOCATION_CREATE",
-          "IPAM_PUBLIC_IP_ALLOCATION_UPDATE",
-          "IPAM_PUBLIC_IP_ALLOCATION_DELETE",
-          "NAT_RULE_CREATE",
-          "NAT_RULE_UPDATE",
-          "NAT_RULE_DELETE",
-          "AD_USER_CREATE",
-          "AD_USER_MODIFY",
-          "AD_USER_ENABLE",
-          "AD_USER_DISABLE",
-          "AD_USER_DELETE",
-          "AD_GROUP_CREATE",
-          "AD_GROUP_MODIFY",
-          "AD_GROUP_DELETE",
-          "VIRTUAL_MACHINE_RESET",
-          "VIRTUAL_MACHINE_REMOVE_ALL_SNAPSHOTS",
-          "BILLING_ACCOUNT_CREATE",
-          "BILLING_ACCOUNT_UPDATE",
-          "BILLING_ACCOUNT_DELETE",
-          "ACCESS_POLICY_ADD_USER",
-          "ACCESS_POLICY_ADD_GROUP",
-          "ACCESS_POLICY_REMOVE_USER",
-          "ACCESS_POLICY_REMOVE_GROUP",
-          "ACCESS_POLICY_REMOVE_USER_BY_NODE",
-          "ACCESS_POLICY_REMOVE_GROUP_BY_NODE",
-          "MODIFY_PLATFORM_ACCESS",
-          "VPN_REQUEST_CREATE",
-          "VIRTUAL_MACHINE_UPDATE",
-          "FIREWALL_RULE_CREATE",
-          "FIREWALL_RULE_UPDATE",
-          "FIREWALL_RULE_DELETE",
-          "FILES_MANAGER_CREATE",
-          "FILES_MANAGER_DELETE",
-          "FILES_MANAGER_UPDATE",
-          "FILES_MANAGER_UPDATE_STATUS",
-          "PORT_FORWARDING_CREATE",
-          "PORT_FORWARDING_UPDATE",
-          "PORT_FORWARDING_DELETE",
-          "VIRTUAL_MACHINE_IMPORT",
-          "SECURITY_GROUP_IMPORT",
-          "ONBOARDING",
-          "LOAD_BALANCER_CREATE",
-          "LOAD_BALANCER_UPDATE",
-          "LOAD_BALANCER_DELETE",
-          "KUBE_CLUSTER_CREATE",
-          "KUBE_CLUSTER_UPDATE",
-          "KUBE_CLUSTER_DELETE",
-          "MONITOR_PROFILE_CREATE",
-          "MONITOR_PROFILE_UPDATE",
-          "MONITOR_PROFILE_DELETE",
-          "VIRTUAL_SERVER_CREATE",
-          "VIRTUAL_SERVER_UPDATE",
-          "VIRTUAL_SERVER_DELETE",
-          "SERVER_POOL_CREATE",
-          "SERVER_POOL_UPDATE",
-          "SERVER_POOL_DELETE",
-          "APPLICATION_PROFILE_CREATE",
-          "APPLICATION_PROFILE_UPDATE",
-          "APPLICATION_PROFILE_DELETE"
-        ],
-        "type": "string"
       },
       "ResetVirtualMachineResponse": {
         "type": "object",
@@ -22162,7 +22352,12 @@
             "nullable": true
           },
           "routerType": {
-            "$ref": "#/components/schemas/RouterType"
+            "enum": [
+              "TIER0",
+              "TIER1"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "displayName": {
             "type": "string",
@@ -22309,13 +22504,6 @@
         },
         "additionalProperties": false
       },
-      "RouterType": {
-        "enum": [
-          "TIER0",
-          "TIER1"
-        ],
-        "type": "string"
-      },
       "RuleInstance": {
         "type": "object",
         "properties": {
@@ -22333,13 +22521,28 @@
             "nullable": true
           },
           "action": {
-            "$ref": "#/components/schemas/Action"
+            "enum": [
+              "ALLOW",
+              "REJECT",
+              "DROP"
+            ],
+            "type": "string"
           },
           "direction": {
-            "$ref": "#/components/schemas/Direction"
+            "enum": [
+              "IN_OUT",
+              "IN",
+              "OUT"
+            ],
+            "type": "string"
           },
           "ipProtocol": {
-            "$ref": "#/components/schemas/IpProtocol"
+            "enum": [
+              "IPV4_IPV6",
+              "IPV4",
+              "IPV6"
+            ],
+            "type": "string"
           },
           "disabled": {
             "type": "boolean",
@@ -22445,14 +22648,6 @@
         },
         "additionalProperties": false
       },
-      "RunningStatus": {
-        "enum": [
-          "guestToolsExecutingScripts",
-          "guestToolsNotRunning",
-          "guestToolsRunning"
-        ],
-        "type": "string"
-      },
       "RuntimeFieldHandle": {
         "type": "object",
         "properties": {
@@ -22498,7 +22693,15 @@
         "type": "object",
         "properties": {
           "memberType": {
-            "$ref": "#/components/schemas/SecurityGroupMemberType"
+            "enum": [
+              "IPSET",
+              "LOGICAL_PORT",
+              "VIRTUAL_MACHINE",
+              "IPCOLLECTION",
+              "SEGMENT",
+              "GROUP"
+            ],
+            "type": "string"
           },
           "id": {
             "type": "string",
@@ -22595,30 +22798,18 @@
             "nullable": true
           },
           "memberType": {
-            "$ref": "#/components/schemas/SecurityGroupMemberType"
+            "enum": [
+              "IPSET",
+              "LOGICAL_PORT",
+              "VIRTUAL_MACHINE",
+              "IPCOLLECTION",
+              "SEGMENT",
+              "GROUP"
+            ],
+            "type": "string"
           }
         },
         "additionalProperties": false
-      },
-      "SecurityGroupMemberType": {
-        "enum": [
-          "IPSET",
-          "LOGICAL_PORT",
-          "VIRTUAL_MACHINE",
-          "IPCOLLECTION",
-          "SEGMENT",
-          "GROUP"
-        ],
-        "type": "string"
-      },
-      "SecurityRuleSet": {
-        "enum": [
-          0,
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
       },
       "SegmentSubnetInstance": {
         "type": "object",
@@ -22772,7 +22963,12 @@
             "nullable": true
           },
           "powerState": {
-            "$ref": "#/components/schemas/PowerState"
+            "enum": [
+              "poweredOff",
+              "poweredOn",
+              "suspended"
+            ],
+            "type": "string"
           },
           "quiesced": {
             "type": "boolean"
@@ -22839,15 +23035,6 @@
         },
         "additionalProperties": false
       },
-      "Status": {
-        "enum": [
-          "toolsNotInstalled",
-          "toolsNotRunning",
-          "toolsOk",
-          "toolsOld"
-        ],
-        "type": "string"
-      },
       "StatusAddress": {
         "type": "object",
         "properties": {
@@ -22891,26 +23078,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "StoragePolicy": {
-        "enum": [
-          "UNKNOWN",
-          "STANDARD",
-          "STANDARD_W1",
-          "STANDARD_W2",
-          "ENTERPRISE",
-          "STANDARDENCRYPTION",
-          "ENTERPRISEENCRYPTION",
-          "STANDARD_W1_ENCRYPTION",
-          "STANDARD_W2_ENCRYPTION"
-        ],
-        "type": "string"
-      },
-      "StrategyType": {
-        "enum": [
-          "RollingUpdate"
-        ],
-        "type": "string"
       },
       "StringApiResponse": {
         "type": "object",
@@ -22979,7 +23146,14 @@
             "readOnly": true
           },
           "value": {
-            "$ref": "#/components/schemas/LayoutKind"
+            "enum": [
+              0,
+              2,
+              3
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -23223,7 +23397,11 @@
             "nullable": true
           },
           "platformType": {
-            "$ref": "#/components/schemas/PlatformType"
+            "enum": [
+              "VMWARE",
+              "OPENSTACK"
+            ],
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -23361,7 +23539,20 @@
             "readOnly": true
           },
           "memberType": {
-            "$ref": "#/components/schemas/MemberTypes"
+            "enum": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              191
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "namespace": {
             "type": "string",
@@ -23482,10 +23673,53 @@
             "readOnly": true
           },
           "genericParameterAttributes": {
-            "$ref": "#/components/schemas/GenericParameterAttributes"
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              8,
+              16,
+              28,
+              32
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "attributes": {
-            "$ref": "#/components/schemas/TypeAttributes"
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              16,
+              24,
+              32,
+              128,
+              256,
+              1024,
+              2048,
+              4096,
+              8192,
+              16384,
+              65536,
+              131072,
+              196608,
+              262144,
+              264192,
+              1048576,
+              12582912
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "isAbstract": {
             "type": "boolean",
@@ -23636,38 +23870,6 @@
         },
         "additionalProperties": false
       },
-      "TypeAttributes": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          16,
-          24,
-          32,
-          128,
-          256,
-          1024,
-          2048,
-          4096,
-          8192,
-          16384,
-          65536,
-          131072,
-          196608,
-          262144,
-          264192,
-          1048576,
-          12582912
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
       "TypeInfo": {
         "type": "object",
         "properties": {
@@ -23694,7 +23896,20 @@
             "readOnly": true
           },
           "memberType": {
-            "$ref": "#/components/schemas/MemberTypes"
+            "enum": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              32,
+              64,
+              128,
+              191
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "namespace": {
             "type": "string",
@@ -23815,10 +24030,53 @@
             "readOnly": true
           },
           "genericParameterAttributes": {
-            "$ref": "#/components/schemas/GenericParameterAttributes"
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              8,
+              16,
+              28,
+              32
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "attributes": {
-            "$ref": "#/components/schemas/TypeAttributes"
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              16,
+              24,
+              32,
+              128,
+              256,
+              1024,
+              2048,
+              4096,
+              8192,
+              16384,
+              65536,
+              131072,
+              196608,
+              262144,
+              264192,
+              1048576,
+              12582912
+            ],
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "isAbstract": {
             "type": "boolean",
@@ -24645,7 +24903,11 @@
         "type": "object",
         "properties": {
           "type": {
-            "$ref": "#/components/schemas/StrategyType"
+            "enum": [
+              "RollingUpdate"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "maxSurge": {
             "type": "integer",
@@ -24796,7 +25058,12 @@
             "format": "int64"
           },
           "virtualDiskDeviceType": {
-            "$ref": "#/components/schemas/VirtualDiskDeviceType"
+            "enum": [
+              "SCSI",
+              "IDE",
+              "SATA"
+            ],
+            "type": "string"
           },
           "controllerId": {
             "type": "integer",
@@ -24808,14 +25075,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "VirtualDiskDeviceType": {
-        "enum": [
-          "SCSI",
-          "IDE",
-          "SATA"
-        ],
-        "type": "string"
       },
       "VirtualMachineImport": {
         "type": "object",
@@ -24841,7 +25100,18 @@
             "nullable": true
           },
           "storagePolicy": {
-            "$ref": "#/components/schemas/StoragePolicy"
+            "enum": [
+              "UNKNOWN",
+              "STANDARD",
+              "STANDARD_W1",
+              "STANDARD_W2",
+              "ENTERPRISE",
+              "STANDARDENCRYPTION",
+              "ENTERPRISEENCRYPTION",
+              "STANDARD_W1_ENCRYPTION",
+              "STANDARD_W2_ENCRYPTION"
+            ],
+            "type": "string"
           },
           "byol": {
             "type": "boolean"
@@ -24869,7 +25139,15 @@
             "$ref": "#/components/schemas/DeploymentInstance"
           },
           "resourceProfile": {
-            "$ref": "#/components/schemas/VirtualMachineResourceProfile"
+            "enum": [
+              "SIZE_XS",
+              "SIZE_S",
+              "SIZE_M",
+              "SIZE_L",
+              "SIZE_XL",
+              "CUSTOM"
+            ],
+            "type": "string"
           },
           "cpuCount": {
             "type": "integer",
@@ -24937,7 +25215,18 @@
             "nullable": true
           },
           "storagePolicy": {
-            "$ref": "#/components/schemas/StoragePolicy"
+            "enum": [
+              "UNKNOWN",
+              "STANDARD",
+              "STANDARD_W1",
+              "STANDARD_W2",
+              "ENTERPRISE",
+              "STANDARDENCRYPTION",
+              "ENTERPRISEENCRYPTION",
+              "STANDARD_W1_ENCRYPTION",
+              "STANDARD_W2_ENCRYPTION"
+            ],
+            "type": "string"
           },
           "numCoresPerSocket": {
             "type": "integer",
@@ -25000,7 +25289,12 @@
             "format": "int64"
           },
           "powerState": {
-            "$ref": "#/components/schemas/PowerState"
+            "enum": [
+              "poweredOff",
+              "poweredOn",
+              "suspended"
+            ],
+            "type": "string"
           },
           "template": {
             "type": "boolean"
@@ -25069,7 +25363,11 @@
             "nullable": true
           },
           "osType": {
-            "$ref": "#/components/schemas/OsType"
+            "enum": [
+              "WINDOWS",
+              "LINUX"
+            ],
+            "type": "string"
           },
           "licSettings": {
             "$ref": "#/components/schemas/LicSettings"
@@ -25176,7 +25474,11 @@
             "nullable": true
           },
           "osType": {
-            "$ref": "#/components/schemas/OsType"
+            "enum": [
+              "WINDOWS",
+              "LINUX"
+            ],
+            "type": "string"
           },
           "storagePolicy": {
             "type": "string",
@@ -25305,17 +25607,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "VirtualMachineResourceProfile": {
-        "enum": [
-          "SIZE_XS",
-          "SIZE_S",
-          "SIZE_M",
-          "SIZE_L",
-          "SIZE_XL",
-          "CUSTOM"
-        ],
-        "type": "string"
       },
       "VirtualMachineTicket": {
         "type": "object",
@@ -25486,7 +25777,12 @@
             "nullable": true
           },
           "failureDomain": {
-            "$ref": "#/components/schemas/FailureDomain"
+            "enum": [
+              "Standard_W1",
+              "Standard_W2"
+            ],
+            "type": "string",
+            "nullable": true
           },
           "encryptWorkers": {
             "type": "boolean",
