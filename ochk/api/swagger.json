@@ -17565,13 +17565,11 @@
           },
           "body": {
             "type": "string",
-            "format": "binary",
-            "nullable": true
+            "format": "binary"
           },
           "bodyReader": {
             "type": "string",
             "format": "binary",
-            "nullable": true,
             "readOnly": true
           },
           "hasFormContentType": {
@@ -17616,8 +17614,7 @@
           },
           "body": {
             "type": "string",
-            "format": "binary",
-            "nullable": true
+            "format": "binary"
           },
           "bodyWriter": {
             "$ref": "#/components/schemas/PipeWriter"
