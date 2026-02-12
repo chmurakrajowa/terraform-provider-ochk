@@ -17429,7 +17429,7 @@
             "type": "string",
             "nullable": true
           },
-          "hasValue": {
+          "valuePresent": {
             "type": "boolean",
             "readOnly": true
           },
@@ -21264,7 +21264,7 @@
             "nullable": true,
             "readOnly": true
           },
-          "hasDefaultValue": {
+          "defaultValuePresent": {
             "type": "boolean",
             "readOnly": true
           },
@@ -21291,7 +21291,7 @@
             "type": "string",
             "nullable": true
           },
-          "hasValue": {
+          "valueAvailable": {
             "type": "boolean",
             "readOnly": true
           }
@@ -21840,7 +21840,7 @@
             "type": "string",
             "nullable": true
           },
-          "hasValue": {
+          "valueExists": {
             "type": "boolean",
             "readOnly": true
           }
@@ -25909,7 +25909,7 @@
             "type": "string",
             "nullable": true
           },
-          "hasPrivateKey": {
+          "privateKeyPresent": {
             "type": "boolean",
             "readOnly": true
           },
