@@ -109,7 +109,7 @@ func dataSourceNatRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("error setting description:  %+v", err)
 	}
 
-	if err := d.Set("vrf_id", nats[0].TierZeroRouter.RouterId); err != nil {
+	if err := d.Set("vrf_id", nats[0].TierZeroRouterId); err != nil {
 		return diag.Errorf("error setting vrf_id:  %+v", err)
 	}
 
@@ -172,7 +172,7 @@ func dataSourceNatRead(ctx context.Context, d *schema.ResourceData, meta interfa
 	}
 
 	if nats[0].GetNatType() == "AUTO" {
-		if err := d.Set("virtual_network_id", nats[0].VirtualNetworkInstance.VirtualNetworkId); err != nil {
+		if err := d.Set("virtual_network_id", nats[0].GetVirtualNetworkId()); err != nil {
 			return diag.Errorf("error setting virtual_network_id: %+v", err)
 		}
 	}

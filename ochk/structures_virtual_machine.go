@@ -103,7 +103,7 @@ func validateVirtualMachine(d *schema.ResourceData, platformType openapi.Platfor
 		}
 	}
 
-	if platformType == openapi.OPENSTACK {
+	if platformType == openapi.PLATFORMTYPE_OPENSTACK {
 		if len(d.Get("backup_lists").(*schema.Set).List()) > 0 {
 			return fmt.Sprintf(E1003, "backup_lists", "backup_lists")
 		}

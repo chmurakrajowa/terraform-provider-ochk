@@ -199,7 +199,7 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("vrf_id", Nat.TierZeroRouter.RouterId); err != nil {
+	if err := d.Set("vrf_id", Nat.TierZeroRouterId); err != nil {
 		return diag.Errorf("error setting vrf_id: %+v", err)
 	}
 
@@ -231,8 +231,9 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error setting priority: %+v", err)
 	}
 
+	Nat.GetVirtualNetworkId()
 	if *Nat.NatType == "AUTO" {
-		if err := d.Set("virtual_network_id", Nat.VirtualNetworkInstance.VirtualNetworkId); err != nil {
+		if err := d.Set("virtual_network_id", Nat.GetVirtualNetworkId()); err != nil {
 			return diag.Errorf("error setting virtual_network_id: %+v", err)
 		}
 	}
@@ -378,9 +379,9 @@ const (
 
 func mapResourceDataToAutoNat(d *schema.ResourceData) openapi.NATRuleInstance {
 	return openapi.NATRuleInstance{
-		DisplayName:            NewNullableString(d.Get("display_name").(string)),
-		VirtualNetworkInstance: mapResourceDataToVirtualNetworkInstance(d),
-		NatType:                NetworkAuto.Ptr(),
+		DisplayName:      NewNullableString(d.Get("display_name").(string)),
+		VirtualNetworkId: mapResourceDataToVirtualNetworkInstance(d).VirtualNetworkId,
+		NatType:          NetworkAuto.Ptr(),
 	}
 }
 
@@ -392,7 +393,7 @@ func mapResourceDataToManualNat(d *schema.ResourceData) openapi.NATRuleInstance 
 		DisplayName:        NewNullableString(d.Get("display_name").(string)),
 		Description:        NewNullableString(d.Get("description").(string)),
 		Enabled:            NewNullableBool(d.Get("enabled").(bool)),
-		TierZeroRouter:     mapResourceDataToVrfRouter(d),
+		TierZeroRouterId:   mapResourceDataToVrfRouter(d).RouterId,
 		Action:             &actionValue,
 		Priority:           NewNullableInt64(publicPriorityInt64),
 		SourceNetwork:      NewNullableString(d.Get("source_network").(string)),

@@ -535,7 +535,7 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) openapi.VirtualMach
 	if recryptOperation, ok := d.GetOk("encryption_recrypt"); ok && recryptOperation.(string) != "" {
 		encryptionInstance.RecryptOperation = d.Get("encryption_recrypt").(*openapi.RecryptOperation)
 	} else {
-		encryptionInstance.RecryptOperation = openapi.NONE.Ptr()
+		encryptionInstance.RecryptOperation = openapi.RECRYPTOPERATION_NONE.Ptr()
 	}
 
 	if encryptionKeyId, ok := d.GetOk("encryption_key_id"); ok && encryptionKeyId.(string) != "" {
@@ -560,9 +560,9 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) openapi.VirtualMach
 func castStringToOsTypeEnum(e string) openapi.OsType {
 	switch e {
 	case "WINDOWS":
-		return openapi.WINDOWS
+		return openapi.OSTYPE_WINDOWS
 	case "LINUX":
-		return openapi.LINUX
+		return openapi.OSTYPE_LINUX
 	default:
 		return ""
 	}
@@ -571,23 +571,23 @@ func castStringToOsTypeEnum(e string) openapi.OsType {
 func castStringToStorageEnum(e string) openapi.StoragePolicy {
 	switch e {
 	case "UNKNOWN":
-		return openapi.UNKNOWN
+		return openapi.STORAGEPOLICY_UNKNOWN
 	case "STANDARD":
-		return openapi.STANDARD
+		return openapi.STORAGEPOLICY_STANDARD
 	case "STANDARD_W1":
-		return openapi.STANDARD_W1
+		return openapi.STORAGEPOLICY_STANDARD_W1
 	case "STANDARD_W2":
-		return openapi.STANDARD_W2
+		return openapi.STORAGEPOLICY_STANDARD_W2
 	case "ENTERPRISE":
-		return openapi.ENTERPRISE
+		return openapi.STORAGEPOLICY_ENTERPRISE
 	case "STANDARDENCRYPTION":
-		return openapi.STANDARDENCRYPTION
+		return openapi.STORAGEPOLICY_STANDARDENCRYPTION
 	case "ENTERPRISEENCRYPTION":
-		return openapi.ENTERPRISEENCRYPTION
+		return openapi.STORAGEPOLICY_ENTERPRISEENCRYPTION
 	case "STANDARD_W1_ENCRYPTION":
-		return openapi.STANDARD_W1_ENCRYPTION
+		return openapi.STORAGEPOLICY_STANDARD_W1_ENCRYPTION
 	case "STANDARD_W2_ENCRYPTION":
-		return openapi.STANDARD_W2_ENCRYPTION
+		return openapi.STORAGEPOLICY_STANDARD_W2
 	default:
 		return ""
 	}

@@ -203,7 +203,7 @@ func resourceVpcDelete(ctx context.Context, d *schema.ResourceData, meta interfa
 }
 
 func mapResourceDataToVpc(d *schema.ResourceData, platformType openapi.PlatformType) (openapi.RouterInstance, diag.Diagnostics) {
-	if platformType == openapi.OPENSTACK {
+	if platformType == openapi.PLATFORMTYPE_OPENSTACK {
 		return openapi.RouterInstance{
 			DisplayName: NewNullableString(d.Get("display_name").(string)),
 			ParentT0Id:  NewNullableString(d.Get("vrf_id").(string)),

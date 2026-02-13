@@ -182,9 +182,9 @@ func mapResourceDataToSnapshot(d *schema.ResourceData) openapi.SnapshotInstance 
 func castStringToPowerStateEnum(e string) openapi.PowerState {
 	switch e {
 	case "poweredOff":
-		return openapi.POWERED_OFF
+		return openapi.POWERSTATE_POWERED_OFF
 	case "poweredOn":
-		return openapi.POWERED_ON
+		return openapi.POWERSTATE_POWERED_ON
 	default:
 		return ""
 	}

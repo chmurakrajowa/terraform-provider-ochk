@@ -83,7 +83,7 @@ func dataSourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
-	if platformType == openapi.OPENSTACK {
+	if platformType == openapi.PLATFORMTYPE_OPENSTACK {
 		if err := d.Set("autonat_enabled", routers[0].SnatEnabled); err != nil {
 			return diag.Errorf("error setting autonat_enabled: %+v", err)
 		}
