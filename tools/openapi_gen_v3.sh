@@ -64,6 +64,7 @@ rm ./ochk/api/v3/.openapi-generator-ignore
 rm ./ochk/api/v3/git_push.sh
 rm ./ochk/api/v3/README.md
 rm -rf ./ochk/api/v3/go.mod
+rm ./ochk/api/v3/go.sum
 
 
 
