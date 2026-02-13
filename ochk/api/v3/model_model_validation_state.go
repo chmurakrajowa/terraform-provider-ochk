@@ -21,10 +21,10 @@ type ModelValidationState int32
 
 // List of ModelValidationState
 const (
-	_0 ModelValidationState = 0
-	_1 ModelValidationState = 1
-	_2 ModelValidationState = 2
-	_3 ModelValidationState = 3
+	MODELVALIDATIONSTATE__0 ModelValidationState = 0
+	MODELVALIDATIONSTATE__1 ModelValidationState = 1
+	MODELVALIDATIONSTATE__2 ModelValidationState = 2
+	MODELVALIDATIONSTATE__3 ModelValidationState = 3
 )
 
 // All allowed values of ModelValidationState enum

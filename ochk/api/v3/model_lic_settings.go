@@ -105,14 +105,6 @@ func (o *LicSettings) SetUseDedicatedHosts(v bool) {
 	o.UseDedicatedHosts = &v
 }
 
-func (o LicSettings) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o LicSettings) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.ByolEnabled) {

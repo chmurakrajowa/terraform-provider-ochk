@@ -138,14 +138,6 @@ func (o *FilterDescriptor) SetScope(v int32) {
 	o.Scope = &v
 }
 
-func (o FilterDescriptor) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o FilterDescriptor) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Filter) {

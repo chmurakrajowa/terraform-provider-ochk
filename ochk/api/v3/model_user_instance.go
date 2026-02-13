@@ -844,14 +844,6 @@ func (o *UserInstance) UnsetExternalId() {
 	o.ExternalId.Unset()
 }
 
-func (o UserInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o UserInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.UserId.IsSet() {

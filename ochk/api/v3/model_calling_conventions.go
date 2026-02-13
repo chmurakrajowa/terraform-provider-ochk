@@ -21,11 +21,11 @@ type CallingConventions int32
 
 // List of CallingConventions
 const (
-	_1  CallingConventions = 1
-	_2  CallingConventions = 2
-	_3  CallingConventions = 3
-	_32 CallingConventions = 32
-	_64 CallingConventions = 64
+	CALLINGCONVENTIONS__1  CallingConventions = 1
+	CALLINGCONVENTIONS__2  CallingConventions = 2
+	CALLINGCONVENTIONS__3  CallingConventions = 3
+	CALLINGCONVENTIONS__32 CallingConventions = 32
+	CALLINGCONVENTIONS__64 CallingConventions = 64
 )
 
 // All allowed values of CallingConventions enum

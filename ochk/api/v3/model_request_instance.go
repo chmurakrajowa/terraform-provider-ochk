@@ -701,14 +701,6 @@ func (o *RequestInstance) SetCustomerInstance(v CustomerInstance) {
 	o.CustomerInstance = &v
 }
 
-func (o RequestInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o RequestInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.RequestId.IsSet() {

@@ -481,14 +481,6 @@ func (o *L4PortSetEntry) SetDestinationPorts(v []string) {
 	o.DestinationPorts = v
 }
 
-func (o L4PortSetEntry) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o L4PortSetEntry) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.L4PortSetEntryId.IsSet() {

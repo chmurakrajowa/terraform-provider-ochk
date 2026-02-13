@@ -427,14 +427,6 @@ func (o *GroupInstance) UnsetModificationDate() {
 	o.ModificationDate.Unset()
 }
 
-func (o GroupInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o GroupInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.GroupId.IsSet() {

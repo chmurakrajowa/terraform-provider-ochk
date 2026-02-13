@@ -227,14 +227,6 @@ func (o *GetServiceResponse) SetServiceInstance(v ServiceInstance) {
 	o.ServiceInstance = &v
 }
 
-func (o GetServiceResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o GetServiceResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

@@ -21,8 +21,8 @@ type NetworkType string
 
 // List of NetworkType
 const (
-	OPAQUE_NETWORK                NetworkType = "OpaqueNetwork"
-	DISTRIBUTED_VIRTUAL_PORTGROUP NetworkType = "DistributedVirtualPortgroup"
+	NETWORKTYPE_OPAQUE_NETWORK                NetworkType = "OpaqueNetwork"
+	NETWORKTYPE_DISTRIBUTED_VIRTUAL_PORTGROUP NetworkType = "DistributedVirtualPortgroup"
 )
 
 // All allowed values of NetworkType enum

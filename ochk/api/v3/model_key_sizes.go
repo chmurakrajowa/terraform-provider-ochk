@@ -138,14 +138,6 @@ func (o *KeySizes) SetSkipSize(v int32) {
 	o.SkipSize = &v
 }
 
-func (o KeySizes) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o KeySizes) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.MinSize) {

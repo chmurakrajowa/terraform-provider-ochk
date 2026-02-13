@@ -259,14 +259,6 @@ func (o *FolderInstance) SetInherit(v bool) {
 	o.Inherit = &v
 }
 
-func (o FolderInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o FolderInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Id) {

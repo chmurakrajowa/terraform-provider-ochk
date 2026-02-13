@@ -21,12 +21,12 @@ type VirtualMachineResourceProfile string
 
 // List of VirtualMachineResourceProfile
 const (
-	SIZE_XS VirtualMachineResourceProfile = "SIZE_XS"
-	SIZE_S  VirtualMachineResourceProfile = "SIZE_S"
-	SIZE_M  VirtualMachineResourceProfile = "SIZE_M"
-	SIZE_L  VirtualMachineResourceProfile = "SIZE_L"
-	SIZE_XL VirtualMachineResourceProfile = "SIZE_XL"
-	CUSTOM  VirtualMachineResourceProfile = "CUSTOM"
+	VIRTUALMACHINERESOURCEPROFILE_SIZE_XS VirtualMachineResourceProfile = "SIZE_XS"
+	VIRTUALMACHINERESOURCEPROFILE_SIZE_S  VirtualMachineResourceProfile = "SIZE_S"
+	VIRTUALMACHINERESOURCEPROFILE_SIZE_M  VirtualMachineResourceProfile = "SIZE_M"
+	VIRTUALMACHINERESOURCEPROFILE_SIZE_L  VirtualMachineResourceProfile = "SIZE_L"
+	VIRTUALMACHINERESOURCEPROFILE_SIZE_XL VirtualMachineResourceProfile = "SIZE_XL"
+	VIRTUALMACHINERESOURCEPROFILE_CUSTOM  VirtualMachineResourceProfile = "CUSTOM"
 )
 
 // All allowed values of VirtualMachineResourceProfile enum

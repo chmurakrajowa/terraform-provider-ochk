@@ -21,8 +21,8 @@ type NATType string
 
 // List of NATType
 const (
-	MANUAL NATType = "MANUAL"
-	AUTO   NATType = "AUTO"
+	NATTYPE_MANUAL NATType = "MANUAL"
+	NATTYPE_AUTO   NATType = "AUTO"
 )
 
 // All allowed values of NATType enum

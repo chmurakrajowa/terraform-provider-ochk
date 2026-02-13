@@ -127,14 +127,6 @@ func (o *VirtualMachineTicket) UnsetTicket() {
 	o.Ticket.Unset()
 }
 
-func (o VirtualMachineTicket) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o VirtualMachineTicket) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Host.IsSet() {

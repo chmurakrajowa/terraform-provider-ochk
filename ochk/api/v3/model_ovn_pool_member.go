@@ -722,14 +722,6 @@ func (o *OvnPoolMember) UnsetSubnetId() {
 	o.SubnetId.Unset()
 }
 
-func (o OvnPoolMember) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o OvnPoolMember) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.PoolMemberId.IsSet() {

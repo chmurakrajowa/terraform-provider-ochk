@@ -260,14 +260,6 @@ func (o *UpdateProjectResponse) SetRequestInstance(v RequestInstance) {
 	o.RequestInstance = &v
 }
 
-func (o UpdateProjectResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o UpdateProjectResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

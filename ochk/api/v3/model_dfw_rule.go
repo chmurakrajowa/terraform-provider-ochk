@@ -1278,14 +1278,6 @@ func (o *DfwRule) SetBuildIn(v bool) {
 	o.BuildIn = &v
 }
 
-func (o DfwRule) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o DfwRule) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.RuleId.IsSet() {

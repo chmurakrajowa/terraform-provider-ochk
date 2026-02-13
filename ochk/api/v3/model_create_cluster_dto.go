@@ -878,14 +878,6 @@ func (o *CreateClusterDto) SetConfigMap(v CreateConfigMapDto) {
 	o.ConfigMap = &v
 }
 
-func (o CreateClusterDto) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o CreateClusterDto) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.ClusterId) {

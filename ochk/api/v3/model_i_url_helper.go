@@ -72,14 +72,6 @@ func (o *IUrlHelper) SetActionContext(v ActionContext) {
 	o.ActionContext = &v
 }
 
-func (o IUrlHelper) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o IUrlHelper) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.ActionContext) {

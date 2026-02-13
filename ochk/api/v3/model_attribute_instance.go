@@ -316,14 +316,6 @@ func (o *AttributeInstance) SetSubAttributeList(v []SubAttributeInstance) {
 	o.SubAttributeList = v
 }
 
-func (o AttributeInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o AttributeInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.AttributeId) {

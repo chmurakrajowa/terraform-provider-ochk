@@ -171,14 +171,6 @@ func (o *CreateConfigMapDto) UnsetClientLbIpPoolName() {
 	o.ClientLbIpPoolName.Unset()
 }
 
-func (o CreateConfigMapDto) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o CreateConfigMapDto) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ClientLbExtId.IsSet() {

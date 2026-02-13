@@ -106,14 +106,6 @@ func (o *CustomAttributeTypedArgument) SetValue(v interface{}) {
 	o.Value = v
 }
 
-func (o CustomAttributeTypedArgument) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o CustomAttributeTypedArgument) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.ArgumentType) {

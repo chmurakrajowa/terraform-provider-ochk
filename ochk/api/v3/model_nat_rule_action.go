@@ -21,12 +21,12 @@ type NATRuleAction string
 
 // List of NATRuleAction
 const (
-	SNAT      NATRuleAction = "SNAT"
-	DNAT      NATRuleAction = "DNAT"
-	NAT64     NATRuleAction = "NAT64"
-	NO_DNAT   NATRuleAction = "NO_DNAT"
-	NO_SNAT   NATRuleAction = "NO_SNAT"
-	REFLEXIVE NATRuleAction = "REFLEXIVE"
+	NATRULEACTION_SNAT      NATRuleAction = "SNAT"
+	NATRULEACTION_DNAT      NATRuleAction = "DNAT"
+	NATRULEACTION_NAT64     NATRuleAction = "NAT64"
+	NATRULEACTION_NO_DNAT   NATRuleAction = "NO_DNAT"
+	NATRULEACTION_NO_SNAT   NATRuleAction = "NO_SNAT"
+	NATRULEACTION_REFLEXIVE NATRuleAction = "REFLEXIVE"
 )
 
 // All allowed values of NATRuleAction enum

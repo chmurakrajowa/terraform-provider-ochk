@@ -21,9 +21,9 @@ type RunningStatus string
 
 // List of RunningStatus
 const (
-	GUEST_TOOLS_EXECUTING_SCRIPTS RunningStatus = "guestToolsExecutingScripts"
-	GUEST_TOOLS_NOT_RUNNING       RunningStatus = "guestToolsNotRunning"
-	GUEST_TOOLS_RUNNING           RunningStatus = "guestToolsRunning"
+	RUNNINGSTATUS_GUEST_TOOLS_EXECUTING_SCRIPTS RunningStatus = "guestToolsExecutingScripts"
+	RUNNINGSTATUS_GUEST_TOOLS_NOT_RUNNING       RunningStatus = "guestToolsNotRunning"
+	RUNNINGSTATUS_GUEST_TOOLS_RUNNING           RunningStatus = "guestToolsRunning"
 )
 
 // All allowed values of RunningStatus enum

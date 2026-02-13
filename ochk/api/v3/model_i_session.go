@@ -150,14 +150,6 @@ func (o *ISession) SetKeys(v []string) {
 	o.Keys = v
 }
 
-func (o ISession) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ISession) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.IsAvailable) {

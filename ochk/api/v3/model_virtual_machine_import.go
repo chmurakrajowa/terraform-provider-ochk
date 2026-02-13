@@ -281,14 +281,6 @@ func (o *VirtualMachineImport) SetByol(v bool) {
 	o.Byol = &v
 }
 
-func (o VirtualMachineImport) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o VirtualMachineImport) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ExternalId.IsSet() {

@@ -105,14 +105,6 @@ func (o *ByteReadOnlySpan) SetIsEmpty(v bool) {
 	o.IsEmpty = &v
 }
 
-func (o ByteReadOnlySpan) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ByteReadOnlySpan) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Length) {

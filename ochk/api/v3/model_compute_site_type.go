@@ -21,8 +21,8 @@ type ComputeSiteType string
 
 // List of ComputeSiteType
 const (
-	V_CENTER   ComputeSiteType = "VCenter"
-	OPEN_STACK ComputeSiteType = "OpenStack"
+	COMPUTESITETYPE_V_CENTER   ComputeSiteType = "VCenter"
+	COMPUTESITETYPE_OPEN_STACK ComputeSiteType = "OpenStack"
 )
 
 // All allowed values of ComputeSiteType enum

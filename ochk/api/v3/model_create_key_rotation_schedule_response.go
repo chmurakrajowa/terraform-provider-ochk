@@ -260,14 +260,6 @@ func (o *CreateKeyRotationScheduleResponse) SetRequestInstance(v RequestInstance
 	o.RequestInstance = &v
 }
 
-func (o CreateKeyRotationScheduleResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o CreateKeyRotationScheduleResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

@@ -21,8 +21,8 @@ type EtherType string
 
 // List of EtherType
 const (
-	IPV4 EtherType = "IPv4"
-	IPV6 EtherType = "IPv6"
+	ETHERTYPE_IPV4 EtherType = "IPv4"
+	ETHERTYPE_IPV6 EtherType = "IPv6"
 )
 
 // All allowed values of EtherType enum

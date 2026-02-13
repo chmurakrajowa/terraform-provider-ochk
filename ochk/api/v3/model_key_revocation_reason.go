@@ -21,13 +21,13 @@ type KeyRevocationReason string
 
 // List of KeyRevocationReason
 const (
-	UNSPECIFIED            KeyRevocationReason = "Unspecified"
-	KEY_COMPROMISE         KeyRevocationReason = "KeyCompromise"
-	CA_COMPROMISE          KeyRevocationReason = "CACompromise"
-	AFFILIATION_CHANGED    KeyRevocationReason = "AffiliationChanged"
-	SUPERSEDED             KeyRevocationReason = "Superseded"
-	CESSATION_OF_OPERATION KeyRevocationReason = "CessationOfOperation"
-	PRIVILEGE_WITHDRAWN    KeyRevocationReason = "PrivilegeWithdrawn"
+	KEYREVOCATIONREASON_UNSPECIFIED            KeyRevocationReason = "Unspecified"
+	KEYREVOCATIONREASON_KEY_COMPROMISE         KeyRevocationReason = "KeyCompromise"
+	KEYREVOCATIONREASON_CA_COMPROMISE          KeyRevocationReason = "CACompromise"
+	KEYREVOCATIONREASON_AFFILIATION_CHANGED    KeyRevocationReason = "AffiliationChanged"
+	KEYREVOCATIONREASON_SUPERSEDED             KeyRevocationReason = "Superseded"
+	KEYREVOCATIONREASON_CESSATION_OF_OPERATION KeyRevocationReason = "CessationOfOperation"
+	KEYREVOCATIONREASON_PRIVILEGE_WITHDRAWN    KeyRevocationReason = "PrivilegeWithdrawn"
 )
 
 // All allowed values of KeyRevocationReason enum

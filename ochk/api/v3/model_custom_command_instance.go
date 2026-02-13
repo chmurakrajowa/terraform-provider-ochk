@@ -325,14 +325,6 @@ func (o *CustomCommandInstance) SetLoadArgumentsFromFile(v bool) {
 	o.LoadArgumentsFromFile = &v
 }
 
-func (o CustomCommandInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o CustomCommandInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.CustomCommandId.IsSet() {

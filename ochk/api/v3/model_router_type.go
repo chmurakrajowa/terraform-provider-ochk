@@ -21,8 +21,8 @@ type RouterType string
 
 // List of RouterType
 const (
-	TIER0 RouterType = "TIER0"
-	TIER1 RouterType = "TIER1"
+	ROUTERTYPE_TIER0 RouterType = "TIER0"
+	ROUTERTYPE_TIER1 RouterType = "TIER1"
 )
 
 // All allowed values of RouterType enum

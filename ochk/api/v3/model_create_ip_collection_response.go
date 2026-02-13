@@ -260,14 +260,6 @@ func (o *CreateIpCollectionResponse) SetRequestInstance(v RequestInstance) {
 	o.RequestInstance = &v
 }
 
-func (o CreateIpCollectionResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o CreateIpCollectionResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

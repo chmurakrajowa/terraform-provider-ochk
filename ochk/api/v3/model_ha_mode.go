@@ -116,14 +116,6 @@ func (o *HAMode) UnsetHaMode() {
 	o.HaMode.Unset()
 }
 
-func (o HAMode) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o HAMode) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.HaModeId) {

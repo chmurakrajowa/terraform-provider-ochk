@@ -21,9 +21,9 @@ type Direction string
 
 // List of Direction
 const (
-	IN_OUT Direction = "IN_OUT"
-	IN     Direction = "IN"
-	OUT    Direction = "OUT"
+	DIRECTION_IN_OUT Direction = "IN_OUT"
+	DIRECTION_IN     Direction = "IN"
+	DIRECTION_OUT    Direction = "OUT"
 )
 
 // All allowed values of Direction enum

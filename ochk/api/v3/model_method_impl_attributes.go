@@ -21,21 +21,21 @@ type MethodImplAttributes int32
 
 // List of MethodImplAttributes
 const (
-	_0     MethodImplAttributes = 0
-	_1     MethodImplAttributes = 1
-	_2     MethodImplAttributes = 2
-	_3     MethodImplAttributes = 3
-	_4     MethodImplAttributes = 4
-	_8     MethodImplAttributes = 8
-	_16    MethodImplAttributes = 16
-	_32    MethodImplAttributes = 32
-	_64    MethodImplAttributes = 64
-	_128   MethodImplAttributes = 128
-	_256   MethodImplAttributes = 256
-	_512   MethodImplAttributes = 512
-	_4096  MethodImplAttributes = 4096
-	_8192  MethodImplAttributes = 8192
-	_65535 MethodImplAttributes = 65535
+	METHODIMPLATTRIBUTES__0     MethodImplAttributes = 0
+	METHODIMPLATTRIBUTES__1     MethodImplAttributes = 1
+	METHODIMPLATTRIBUTES__2     MethodImplAttributes = 2
+	METHODIMPLATTRIBUTES__3     MethodImplAttributes = 3
+	METHODIMPLATTRIBUTES__4     MethodImplAttributes = 4
+	METHODIMPLATTRIBUTES__8     MethodImplAttributes = 8
+	METHODIMPLATTRIBUTES__16    MethodImplAttributes = 16
+	METHODIMPLATTRIBUTES__32    MethodImplAttributes = 32
+	METHODIMPLATTRIBUTES__64    MethodImplAttributes = 64
+	METHODIMPLATTRIBUTES__128   MethodImplAttributes = 128
+	METHODIMPLATTRIBUTES__256   MethodImplAttributes = 256
+	METHODIMPLATTRIBUTES__512   MethodImplAttributes = 512
+	METHODIMPLATTRIBUTES__4096  MethodImplAttributes = 4096
+	METHODIMPLATTRIBUTES__8192  MethodImplAttributes = 8192
+	METHODIMPLATTRIBUTES__65535 MethodImplAttributes = 65535
 )
 
 // All allowed values of MethodImplAttributes enum

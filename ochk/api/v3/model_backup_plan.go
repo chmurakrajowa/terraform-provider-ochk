@@ -127,14 +127,6 @@ func (o *BackupPlan) UnsetBackupPlanName() {
 	o.BackupPlanName.Unset()
 }
 
-func (o BackupPlan) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o BackupPlan) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.BackupPlanId.IsSet() {

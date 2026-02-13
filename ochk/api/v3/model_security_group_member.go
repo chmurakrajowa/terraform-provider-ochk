@@ -204,14 +204,6 @@ func (o *SecurityGroupMember) SetMemberType(v SecurityGroupMemberType) {
 	o.MemberType = &v
 }
 
-func (o SecurityGroupMember) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o SecurityGroupMember) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id.IsSet() {

@@ -206,14 +206,6 @@ func (o *ControllerContext) SetValueProviderFactories(v []map[string]interface{}
 	o.ValueProviderFactories = v
 }
 
-func (o ControllerContext) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ControllerContext) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.ActionDescriptor) {

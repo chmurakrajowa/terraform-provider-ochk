@@ -227,14 +227,6 @@ func (o *DeleteBillingAlarmDefinitionResponse) SetRequestInstance(v RequestInsta
 	o.RequestInstance = &v
 }
 
-func (o DeleteBillingAlarmDefinitionResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o DeleteBillingAlarmDefinitionResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

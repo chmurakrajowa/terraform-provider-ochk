@@ -21,9 +21,9 @@ type FirewallMatch string
 
 // List of FirewallMatch
 const (
-	MATCH_EXTERNAL_ADDRESS FirewallMatch = "MATCH_EXTERNAL_ADDRESS"
-	MATCH_INTERNAL_ADDRESS FirewallMatch = "MATCH_INTERNAL_ADDRESS"
-	BYPASS                 FirewallMatch = "BYPASS"
+	FIREWALLMATCH_MATCH_EXTERNAL_ADDRESS FirewallMatch = "MATCH_EXTERNAL_ADDRESS"
+	FIREWALLMATCH_MATCH_INTERNAL_ADDRESS FirewallMatch = "MATCH_INTERNAL_ADDRESS"
+	FIREWALLMATCH_BYPASS                 FirewallMatch = "BYPASS"
 )
 
 // All allowed values of FirewallMatch enum

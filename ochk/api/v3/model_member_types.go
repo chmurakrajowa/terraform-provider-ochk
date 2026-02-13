@@ -21,15 +21,15 @@ type MemberTypes int32
 
 // List of MemberTypes
 const (
-	_1   MemberTypes = 1
-	_2   MemberTypes = 2
-	_4   MemberTypes = 4
-	_8   MemberTypes = 8
-	_16  MemberTypes = 16
-	_32  MemberTypes = 32
-	_64  MemberTypes = 64
-	_128 MemberTypes = 128
-	_191 MemberTypes = 191
+	MEMBERTYPES__1   MemberTypes = 1
+	MEMBERTYPES__2   MemberTypes = 2
+	MEMBERTYPES__4   MemberTypes = 4
+	MEMBERTYPES__8   MemberTypes = 8
+	MEMBERTYPES__16  MemberTypes = 16
+	MEMBERTYPES__32  MemberTypes = 32
+	MEMBERTYPES__64  MemberTypes = 64
+	MEMBERTYPES__128 MemberTypes = 128
+	MEMBERTYPES__191 MemberTypes = 191
 )
 
 // All allowed values of MemberTypes enum

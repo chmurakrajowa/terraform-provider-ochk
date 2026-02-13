@@ -248,14 +248,6 @@ func (o *EncryptionInstance) UnsetManaged() {
 	o.Managed.Unset()
 }
 
-func (o EncryptionInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o EncryptionInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Encrypt.IsSet() {

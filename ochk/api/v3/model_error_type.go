@@ -21,9 +21,9 @@ type ErrorType int32
 
 // List of ErrorType
 const (
-	_0 ErrorType = 0
-	_1 ErrorType = 1
-	_2 ErrorType = 2
+	ERRORTYPE__0 ErrorType = 0
+	ERRORTYPE__1 ErrorType = 1
+	ERRORTYPE__2 ErrorType = 2
 )
 
 // All allowed values of ErrorType enum

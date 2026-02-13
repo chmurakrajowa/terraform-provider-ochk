@@ -327,14 +327,6 @@ func (o *NetworkSettings) UnsetSecondaryWINS() {
 	o.SecondaryWINS.Unset()
 }
 
-func (o NetworkSettings) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o NetworkSettings) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.IpAddress.IsSet() {

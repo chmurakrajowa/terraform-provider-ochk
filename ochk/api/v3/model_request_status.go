@@ -21,8 +21,8 @@ type RequestStatus string
 
 // List of RequestStatus
 const (
-	SUCCESS RequestStatus = "SUCCESS"
-	FAILED  RequestStatus = "FAILED"
+	REQUESTSTATUS_SUCCESS RequestStatus = "SUCCESS"
+	REQUESTSTATUS_FAILED  RequestStatus = "FAILED"
 )
 
 // All allowed values of RequestStatus enum

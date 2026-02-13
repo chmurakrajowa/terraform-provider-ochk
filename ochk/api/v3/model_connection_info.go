@@ -248,14 +248,6 @@ func (o *ConnectionInfo) SetClientCertificate(v X509Certificate2) {
 	o.ClientCertificate = &v
 }
 
-func (o ConnectionInfo) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ConnectionInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id.IsSet() {

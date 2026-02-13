@@ -262,14 +262,6 @@ func (o *ProblemDetails) UnsetInstance() {
 	o.Instance.Unset()
 }
 
-func (o ProblemDetails) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ProblemDetails) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Type.IsSet() {

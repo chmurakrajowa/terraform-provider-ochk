@@ -105,14 +105,6 @@ func (o *WaitHandle) SetSafeWaitHandle(v SafeWaitHandle) {
 	o.SafeWaitHandle = &v
 }
 
-func (o WaitHandle) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o WaitHandle) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Handle) {

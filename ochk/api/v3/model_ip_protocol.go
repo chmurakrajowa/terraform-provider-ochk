@@ -21,9 +21,9 @@ type IpProtocol string
 
 // List of IpProtocol
 const (
-	IPV4_IPV6 IpProtocol = "IPV4_IPV6"
-	IPV4      IpProtocol = "IPV4"
-	IPV6      IpProtocol = "IPV6"
+	IPPROTOCOL_IPV4_IPV6 IpProtocol = "IPV4_IPV6"
+	IPPROTOCOL_IPV4      IpProtocol = "IPV4"
+	IPPROTOCOL_IPV6      IpProtocol = "IPV6"
 )
 
 // All allowed values of IpProtocol enum

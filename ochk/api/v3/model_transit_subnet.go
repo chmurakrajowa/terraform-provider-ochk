@@ -116,14 +116,6 @@ func (o *TransitSubnet) UnsetTransitSubnetName() {
 	o.TransitSubnetName.Unset()
 }
 
-func (o TransitSubnet) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o TransitSubnet) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.TransitSubnetId) {

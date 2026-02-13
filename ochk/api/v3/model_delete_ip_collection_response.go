@@ -227,14 +227,6 @@ func (o *DeleteIpCollectionResponse) SetRequestInstance(v RequestInstance) {
 	o.RequestInstance = &v
 }
 
-func (o DeleteIpCollectionResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o DeleteIpCollectionResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

@@ -116,14 +116,6 @@ func (o *BillingPeriodInstance) UnsetMonthN() {
 	o.MonthN.Unset()
 }
 
-func (o BillingPeriodInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o BillingPeriodInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.PeriodId) {

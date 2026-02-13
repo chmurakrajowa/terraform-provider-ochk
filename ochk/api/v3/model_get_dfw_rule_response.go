@@ -227,14 +227,6 @@ func (o *GetDfwRuleResponse) SetRuleInstance(v DfwRule) {
 	o.RuleInstance = &v
 }
 
-func (o GetDfwRuleResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o GetDfwRuleResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

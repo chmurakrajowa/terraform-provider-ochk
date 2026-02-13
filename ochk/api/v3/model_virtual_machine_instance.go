@@ -2928,14 +2928,6 @@ func (o *VirtualMachineInstance) UnsetExternalUniqueIdentifier() {
 	o.ExternalUniqueIdentifier.Unset()
 }
 
-func (o VirtualMachineInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o VirtualMachineInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.VirtualMachineId.IsSet() {

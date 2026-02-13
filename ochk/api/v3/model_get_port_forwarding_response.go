@@ -227,14 +227,6 @@ func (o *GetPortForwardingResponse) SetPortForwarding(v PortForwarding) {
 	o.PortForwarding = &v
 }
 
-func (o GetPortForwardingResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o GetPortForwardingResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

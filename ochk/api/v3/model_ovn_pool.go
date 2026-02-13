@@ -811,14 +811,6 @@ func (o *OvnPool) SetHealthMonitor(v OvnHealthMon) {
 	o.HealthMonitor = &v
 }
 
-func (o OvnPool) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o OvnPool) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.PoolId.IsSet() {

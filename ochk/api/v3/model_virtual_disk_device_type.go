@@ -21,9 +21,9 @@ type VirtualDiskDeviceType string
 
 // List of VirtualDiskDeviceType
 const (
-	SCSI VirtualDiskDeviceType = "SCSI"
-	IDE  VirtualDiskDeviceType = "IDE"
-	SATA VirtualDiskDeviceType = "SATA"
+	VIRTUALDISKDEVICETYPE_SCSI VirtualDiskDeviceType = "SCSI"
+	VIRTUALDISKDEVICETYPE_IDE  VirtualDiskDeviceType = "IDE"
+	VIRTUALDISKDEVICETYPE_SATA VirtualDiskDeviceType = "SATA"
 )
 
 // All allowed values of VirtualDiskDeviceType enum

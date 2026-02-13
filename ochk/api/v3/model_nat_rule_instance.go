@@ -1240,14 +1240,6 @@ func (o *NATRuleInstance) UnsetVirtualNetworkId() {
 	o.VirtualNetworkId.Unset()
 }
 
-func (o NATRuleInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o NATRuleInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.RuleId.IsSet() {

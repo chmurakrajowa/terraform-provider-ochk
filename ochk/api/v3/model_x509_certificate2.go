@@ -28,7 +28,7 @@ type X509Certificate2 struct {
 	Archived           *bool                  `json:"archived,omitempty"`
 	Extensions         []X509Extension        `json:"extensions,omitempty"`
 	FriendlyName       NullableString         `json:"friendlyName,omitempty"`
-	HasPrivateKey      *bool                  `json:"hasPrivateKey,omitempty"`
+	PrivateKeyPresent  *bool                  `json:"privateKeyPresent,omitempty"`
 	PrivateKey         *AsymmetricAlgorithm   `json:"privateKey,omitempty"`
 	IssuerName         *X500DistinguishedName `json:"issuerName,omitempty"`
 	NotAfter           *time.Time             `json:"notAfter,omitempty"`
@@ -318,36 +318,36 @@ func (o *X509Certificate2) UnsetFriendlyName() {
 	o.FriendlyName.Unset()
 }
 
-// GetHasPrivateKey returns the HasPrivateKey field value if set, zero value otherwise.
-func (o *X509Certificate2) GetHasPrivateKey() bool {
-	if o == nil || IsNil(o.HasPrivateKey) {
+// GetPrivateKeyPresent returns the PrivateKeyPresent field value if set, zero value otherwise.
+func (o *X509Certificate2) GetPrivateKeyPresent() bool {
+	if o == nil || IsNil(o.PrivateKeyPresent) {
 		var ret bool
 		return ret
 	}
-	return *o.HasPrivateKey
+	return *o.PrivateKeyPresent
 }
 
-// GetHasPrivateKeyOk returns a tuple with the HasPrivateKey field value if set, nil otherwise
+// GetPrivateKeyPresentOk returns a tuple with the PrivateKeyPresent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *X509Certificate2) GetHasPrivateKeyOk() (*bool, bool) {
-	if o == nil || IsNil(o.HasPrivateKey) {
+func (o *X509Certificate2) GetPrivateKeyPresentOk() (*bool, bool) {
+	if o == nil || IsNil(o.PrivateKeyPresent) {
 		return nil, false
 	}
-	return o.HasPrivateKey, true
+	return o.PrivateKeyPresent, true
 }
 
-// HasHasPrivateKey returns a boolean if a field has been set.
-func (o *X509Certificate2) HasHasPrivateKey() bool {
-	if o != nil && !IsNil(o.HasPrivateKey) {
+// HasPrivateKeyPresent returns a boolean if a field has been set.
+func (o *X509Certificate2) HasPrivateKeyPresent() bool {
+	if o != nil && !IsNil(o.PrivateKeyPresent) {
 		return true
 	}
 
 	return false
 }
 
-// SetHasPrivateKey gets a reference to the given bool and assigns it to the HasPrivateKey field.
-func (o *X509Certificate2) SetHasPrivateKey(v bool) {
-	o.HasPrivateKey = &v
+// SetPrivateKeyPresent gets a reference to the given bool and assigns it to the PrivateKeyPresent field.
+func (o *X509Certificate2) SetPrivateKeyPresent(v bool) {
+	o.PrivateKeyPresent = &v
 }
 
 // GetPrivateKey returns the PrivateKey field value if set, zero value otherwise.
@@ -767,14 +767,6 @@ func (o *X509Certificate2) SetVersion(v int32) {
 	o.Version = &v
 }
 
-func (o X509Certificate2) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o X509Certificate2) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Handle) {
@@ -798,8 +790,8 @@ func (o X509Certificate2) ToMap() (map[string]interface{}, error) {
 	if o.FriendlyName.IsSet() {
 		toSerialize["friendlyName"] = o.FriendlyName.Get()
 	}
-	if !IsNil(o.HasPrivateKey) {
-		toSerialize["hasPrivateKey"] = o.HasPrivateKey
+	if !IsNil(o.PrivateKeyPresent) {
+		toSerialize["privateKeyPresent"] = o.PrivateKeyPresent
 	}
 	if !IsNil(o.PrivateKey) {
 		toSerialize["privateKey"] = o.PrivateKey

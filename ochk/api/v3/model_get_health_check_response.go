@@ -227,14 +227,6 @@ func (o *GetHealthCheckResponse) SetHealthCheckInstance(v HealthCheckInstance) {
 	o.HealthCheckInstance = &v
 }
 
-func (o GetHealthCheckResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o GetHealthCheckResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

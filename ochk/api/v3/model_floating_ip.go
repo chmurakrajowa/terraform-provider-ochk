@@ -635,14 +635,6 @@ func (o *FloatingIp) UnsetVmName() {
 	o.VmName.Unset()
 }
 
-func (o FloatingIp) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o FloatingIp) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.FloatingIpId) {

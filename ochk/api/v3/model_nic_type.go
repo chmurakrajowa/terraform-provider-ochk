@@ -21,13 +21,13 @@ type NicType string
 
 // List of NicType
 const (
-	VIRTUAL_E1000               NicType = "VirtualE1000"
-	VIRTUAL_E1000E              NicType = "VirtualE1000e"
-	VIRTUAL_PC_NET32            NicType = "VirtualPCNet32"
-	VIRTUAL_SRIOV_ETHERNET_CARD NicType = "VirtualSriovEthernetCard"
-	VIRTUAL_VMXNET2             NicType = "VirtualVmxnet2"
-	VIRTUAL_VMXNET3             NicType = "VirtualVmxnet3"
-	OSC_VIRTUAL_ADAPTER         NicType = "OscVirtualAdapter"
+	NICTYPE_VIRTUAL_E1000               NicType = "VirtualE1000"
+	NICTYPE_VIRTUAL_E1000E              NicType = "VirtualE1000e"
+	NICTYPE_VIRTUAL_PC_NET32            NicType = "VirtualPCNet32"
+	NICTYPE_VIRTUAL_SRIOV_ETHERNET_CARD NicType = "VirtualSriovEthernetCard"
+	NICTYPE_VIRTUAL_VMXNET2             NicType = "VirtualVmxnet2"
+	NICTYPE_VIRTUAL_VMXNET3             NicType = "VirtualVmxnet3"
+	NICTYPE_OSC_VIRTUAL_ADAPTER         NicType = "OscVirtualAdapter"
 )
 
 // All allowed values of NicType enum

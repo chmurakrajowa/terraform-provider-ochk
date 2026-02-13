@@ -700,14 +700,6 @@ func (o *OvnListener) SetDefaultPool(v OvnPool) {
 	o.DefaultPool = &v
 }
 
-func (o OvnListener) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o OvnListener) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ListenerId.IsSet() {

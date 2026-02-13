@@ -515,14 +515,6 @@ func (o *PlatformInstance) SetGroups(v []GroupInstance) {
 	o.Groups = v
 }
 
-func (o PlatformInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o PlatformInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.PlatformId) {

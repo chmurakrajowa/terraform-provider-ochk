@@ -623,14 +623,6 @@ func (o *ServiceInstance) UnsetModificationDate() {
 	o.ModificationDate.Unset()
 }
 
-func (o ServiceInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ServiceInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ServiceId.IsSet() {

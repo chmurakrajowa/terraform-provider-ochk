@@ -260,14 +260,6 @@ func (o *CreateKmsKeyResponse) SetRequestInstance(v RequestInstance) {
 	o.RequestInstance = &v
 }
 
-func (o CreateKmsKeyResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o CreateKmsKeyResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

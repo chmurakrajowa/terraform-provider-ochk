@@ -492,14 +492,6 @@ func (o *IpCollection) SetBuildIn(v bool) {
 	o.BuildIn = &v
 }
 
-func (o IpCollection) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o IpCollection) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id.IsSet() {

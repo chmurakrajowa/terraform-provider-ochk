@@ -228,14 +228,6 @@ func (o *ListBackupListResponse) SetBackupListCollection(v []BackupList) {
 	o.BackupListCollection = v
 }
 
-func (o ListBackupListResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ListBackupListResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

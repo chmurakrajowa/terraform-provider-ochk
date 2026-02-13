@@ -105,14 +105,6 @@ func (o *PipeWriter) SetUnflushedBytes(v int64) {
 	o.UnflushedBytes = &v
 }
 
-func (o PipeWriter) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o PipeWriter) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.CanGetUnflushedBytes) {

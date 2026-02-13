@@ -72,14 +72,6 @@ func (o *ModuleHandle) SetMdStreamVersion(v int32) {
 	o.MdStreamVersion = &v
 }
 
-func (o ModuleHandle) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ModuleHandle) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.MdStreamVersion) {

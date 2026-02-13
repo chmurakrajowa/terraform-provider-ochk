@@ -149,14 +149,6 @@ func (o *ParameterDescriptor) SetBindingInfo(v BindingInfo) {
 	o.BindingInfo = &v
 }
 
-func (o ParameterDescriptor) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ParameterDescriptor) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Name.IsSet() {

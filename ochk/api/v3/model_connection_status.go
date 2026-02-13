@@ -21,10 +21,10 @@ type ConnectionStatus string
 
 // List of ConnectionStatus
 const (
-	OK                  ConnectionStatus = "ok"
-	RECOVERABLE_ERROR   ConnectionStatus = "recoverableError"
-	UNRECOVERABLE_ERROR ConnectionStatus = "unrecoverableError"
-	UNTRIED             ConnectionStatus = "untried"
+	CONNECTIONSTATUS_OK                  ConnectionStatus = "ok"
+	CONNECTIONSTATUS_RECOVERABLE_ERROR   ConnectionStatus = "recoverableError"
+	CONNECTIONSTATUS_UNRECOVERABLE_ERROR ConnectionStatus = "unrecoverableError"
+	CONNECTIONSTATUS_UNTRIED             ConnectionStatus = "untried"
 )
 
 // All allowed values of ConnectionStatus enum

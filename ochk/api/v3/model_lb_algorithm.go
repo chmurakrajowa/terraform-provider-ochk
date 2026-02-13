@@ -21,10 +21,10 @@ type LbAlgorithm string
 
 // List of LbAlgorithm
 const (
-	LEAST_CONNECTIONS LbAlgorithm = "LEAST_CONNECTIONS"
-	ROUND_ROBIN       LbAlgorithm = "ROUND_ROBIN"
-	SOURCE_IP         LbAlgorithm = "SOURCE_IP"
-	SOURCE_IP_PORT    LbAlgorithm = "SOURCE_IP_PORT"
+	LBALGORITHM_LEAST_CONNECTIONS LbAlgorithm = "LEAST_CONNECTIONS"
+	LBALGORITHM_ROUND_ROBIN       LbAlgorithm = "ROUND_ROBIN"
+	LBALGORITHM_SOURCE_IP         LbAlgorithm = "SOURCE_IP"
+	LBALGORITHM_SOURCE_IP_PORT    LbAlgorithm = "SOURCE_IP_PORT"
 )
 
 // All allowed values of LbAlgorithm enum

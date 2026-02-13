@@ -21,17 +21,17 @@ type ParameterAttributes int32
 
 // List of ParameterAttributes
 const (
-	_0     ParameterAttributes = 0
-	_1     ParameterAttributes = 1
-	_2     ParameterAttributes = 2
-	_4     ParameterAttributes = 4
-	_8     ParameterAttributes = 8
-	_16    ParameterAttributes = 16
-	_4096  ParameterAttributes = 4096
-	_8192  ParameterAttributes = 8192
-	_16384 ParameterAttributes = 16384
-	_32768 ParameterAttributes = 32768
-	_61440 ParameterAttributes = 61440
+	PARAMETERATTRIBUTES__0     ParameterAttributes = 0
+	PARAMETERATTRIBUTES__1     ParameterAttributes = 1
+	PARAMETERATTRIBUTES__2     ParameterAttributes = 2
+	PARAMETERATTRIBUTES__4     ParameterAttributes = 4
+	PARAMETERATTRIBUTES__8     ParameterAttributes = 8
+	PARAMETERATTRIBUTES__16    ParameterAttributes = 16
+	PARAMETERATTRIBUTES__4096  ParameterAttributes = 4096
+	PARAMETERATTRIBUTES__8192  ParameterAttributes = 8192
+	PARAMETERATTRIBUTES__16384 ParameterAttributes = 16384
+	PARAMETERATTRIBUTES__32768 ParameterAttributes = 32768
+	PARAMETERATTRIBUTES__61440 ParameterAttributes = 61440
 )
 
 // All allowed values of ParameterAttributes enum

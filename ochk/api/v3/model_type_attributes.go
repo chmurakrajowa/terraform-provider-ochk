@@ -21,32 +21,32 @@ type TypeAttributes int32
 
 // List of TypeAttributes
 const (
-	_0        TypeAttributes = 0
-	_1        TypeAttributes = 1
-	_2        TypeAttributes = 2
-	_3        TypeAttributes = 3
-	_4        TypeAttributes = 4
-	_5        TypeAttributes = 5
-	_6        TypeAttributes = 6
-	_7        TypeAttributes = 7
-	_8        TypeAttributes = 8
-	_16       TypeAttributes = 16
-	_24       TypeAttributes = 24
-	_32       TypeAttributes = 32
-	_128      TypeAttributes = 128
-	_256      TypeAttributes = 256
-	_1024     TypeAttributes = 1024
-	_2048     TypeAttributes = 2048
-	_4096     TypeAttributes = 4096
-	_8192     TypeAttributes = 8192
-	_16384    TypeAttributes = 16384
-	_65536    TypeAttributes = 65536
-	_131072   TypeAttributes = 131072
-	_196608   TypeAttributes = 196608
-	_262144   TypeAttributes = 262144
-	_264192   TypeAttributes = 264192
-	_1048576  TypeAttributes = 1048576
-	_12582912 TypeAttributes = 12582912
+	TYPEATTRIBUTES__0        TypeAttributes = 0
+	TYPEATTRIBUTES__1        TypeAttributes = 1
+	TYPEATTRIBUTES__2        TypeAttributes = 2
+	TYPEATTRIBUTES__3        TypeAttributes = 3
+	TYPEATTRIBUTES__4        TypeAttributes = 4
+	TYPEATTRIBUTES__5        TypeAttributes = 5
+	TYPEATTRIBUTES__6        TypeAttributes = 6
+	TYPEATTRIBUTES__7        TypeAttributes = 7
+	TYPEATTRIBUTES__8        TypeAttributes = 8
+	TYPEATTRIBUTES__16       TypeAttributes = 16
+	TYPEATTRIBUTES__24       TypeAttributes = 24
+	TYPEATTRIBUTES__32       TypeAttributes = 32
+	TYPEATTRIBUTES__128      TypeAttributes = 128
+	TYPEATTRIBUTES__256      TypeAttributes = 256
+	TYPEATTRIBUTES__1024     TypeAttributes = 1024
+	TYPEATTRIBUTES__2048     TypeAttributes = 2048
+	TYPEATTRIBUTES__4096     TypeAttributes = 4096
+	TYPEATTRIBUTES__8192     TypeAttributes = 8192
+	TYPEATTRIBUTES__16384    TypeAttributes = 16384
+	TYPEATTRIBUTES__65536    TypeAttributes = 65536
+	TYPEATTRIBUTES__131072   TypeAttributes = 131072
+	TYPEATTRIBUTES__196608   TypeAttributes = 196608
+	TYPEATTRIBUTES__262144   TypeAttributes = 262144
+	TYPEATTRIBUTES__264192   TypeAttributes = 264192
+	TYPEATTRIBUTES__1048576  TypeAttributes = 1048576
+	TYPEATTRIBUTES__12582912 TypeAttributes = 12582912
 )
 
 // All allowed values of TypeAttributes enum

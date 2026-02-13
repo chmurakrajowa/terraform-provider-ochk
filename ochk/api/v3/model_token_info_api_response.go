@@ -261,14 +261,6 @@ func (o *TokenInfoApiResponse) SetRequestInstance(v interface{}) {
 	o.RequestInstance = v
 }
 
-func (o TokenInfoApiResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o TokenInfoApiResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Timestamp) {

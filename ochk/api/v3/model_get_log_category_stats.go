@@ -227,14 +227,6 @@ func (o *GetLogCategoryStats) SetLogCategoryStats(v LogCategoryStats) {
 	o.LogCategoryStats = &v
 }
 
-func (o GetLogCategoryStats) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o GetLogCategoryStats) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

@@ -227,14 +227,6 @@ func (o *AvailablePublicIpGetResponse) SetPublicIpAddress(v PublicIpAddress) {
 	o.PublicIpAddress = &v
 }
 
-func (o AvailablePublicIpGetResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o AvailablePublicIpGetResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

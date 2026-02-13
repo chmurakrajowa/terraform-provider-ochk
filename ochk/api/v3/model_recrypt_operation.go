@@ -21,9 +21,9 @@ type RecryptOperation string
 
 // List of RecryptOperation
 const (
-	NONE    RecryptOperation = "NONE"
-	SHALLOW RecryptOperation = "SHALLOW"
-	DEEP    RecryptOperation = "DEEP"
+	RECRYPTOPERATION_NONE    RecryptOperation = "NONE"
+	RECRYPTOPERATION_SHALLOW RecryptOperation = "SHALLOW"
+	RECRYPTOPERATION_DEEP    RecryptOperation = "DEEP"
 )
 
 // All allowed values of RecryptOperation enum

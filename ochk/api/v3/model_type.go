@@ -2498,14 +2498,6 @@ func (o *Type) SetIsVisible(v bool) {
 	o.IsVisible = &v
 }
 
-func (o Type) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o Type) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Name.IsSet() {

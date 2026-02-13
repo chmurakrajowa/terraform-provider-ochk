@@ -21,9 +21,9 @@ type SecurityRuleSet int32
 
 // List of SecurityRuleSet
 const (
-	_0 SecurityRuleSet = 0
-	_1 SecurityRuleSet = 1
-	_2 SecurityRuleSet = 2
+	SECURITYRULESET__0 SecurityRuleSet = 0
+	SECURITYRULESET__1 SecurityRuleSet = 1
+	SECURITYRULESET__2 SecurityRuleSet = 2
 )
 
 // All allowed values of SecurityRuleSet enum

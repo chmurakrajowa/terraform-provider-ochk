@@ -337,14 +337,6 @@ func (o *VRFReportElement) SetScoringValue(v float32) {
 	o.ScoringValue = &v
 }
 
-func (o VRFReportElement) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o VRFReportElement) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.RouterId.IsSet() {

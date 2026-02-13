@@ -398,14 +398,6 @@ func (o *ActionDescriptor) SetProperties(v map[string]interface{}) {
 	o.Properties = v
 }
 
-func (o ActionDescriptor) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ActionDescriptor) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id.IsSet() {

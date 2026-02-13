@@ -228,14 +228,6 @@ func (o *ListBackupPlansResponse) SetBackupPlanCollection(v []BackupPlan) {
 	o.BackupPlanCollection = v
 }
 
-func (o ListBackupPlansResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ListBackupPlansResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

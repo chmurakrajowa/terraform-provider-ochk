@@ -1206,14 +1206,6 @@ func (o *MethodInfo) SetReturnTypeCustomAttributes(v map[string]interface{}) {
 	o.ReturnTypeCustomAttributes = v
 }
 
-func (o MethodInfo) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o MethodInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Name.IsSet() {

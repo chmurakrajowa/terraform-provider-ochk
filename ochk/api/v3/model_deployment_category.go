@@ -21,8 +21,8 @@ type DeploymentCategory string
 
 // List of DeploymentCategory
 const (
-	WINDOWS DeploymentCategory = "WINDOWS"
-	LINUX   DeploymentCategory = "LINUX"
+	DEPLOYMENTCATEGORY_WINDOWS DeploymentCategory = "WINDOWS"
+	DEPLOYMENTCATEGORY_LINUX   DeploymentCategory = "LINUX"
 )
 
 // All allowed values of DeploymentCategory enum

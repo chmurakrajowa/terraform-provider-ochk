@@ -20,10 +20,10 @@ var _ MappedNullable = &HostString{}
 
 // HostString struct for HostString
 type HostString struct {
-	Value    NullableString `json:"value,omitempty"`
-	HasValue *bool          `json:"hasValue,omitempty"`
-	Host     NullableString `json:"host,omitempty"`
-	Port     NullableInt32  `json:"port,omitempty"`
+	Value        NullableString `json:"value,omitempty"`
+	ValuePresent *bool          `json:"valuePresent,omitempty"`
+	Host         NullableString `json:"host,omitempty"`
+	Port         NullableInt32  `json:"port,omitempty"`
 }
 
 // NewHostString instantiates a new HostString object
@@ -86,36 +86,36 @@ func (o *HostString) UnsetValue() {
 	o.Value.Unset()
 }
 
-// GetHasValue returns the HasValue field value if set, zero value otherwise.
-func (o *HostString) GetHasValue() bool {
-	if o == nil || IsNil(o.HasValue) {
+// GetValuePresent returns the ValuePresent field value if set, zero value otherwise.
+func (o *HostString) GetValuePresent() bool {
+	if o == nil || IsNil(o.ValuePresent) {
 		var ret bool
 		return ret
 	}
-	return *o.HasValue
+	return *o.ValuePresent
 }
 
-// GetHasValueOk returns a tuple with the HasValue field value if set, nil otherwise
+// GetValuePresentOk returns a tuple with the ValuePresent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *HostString) GetHasValueOk() (*bool, bool) {
-	if o == nil || IsNil(o.HasValue) {
+func (o *HostString) GetValuePresentOk() (*bool, bool) {
+	if o == nil || IsNil(o.ValuePresent) {
 		return nil, false
 	}
-	return o.HasValue, true
+	return o.ValuePresent, true
 }
 
-// HasHasValue returns a boolean if a field has been set.
-func (o *HostString) HasHasValue() bool {
-	if o != nil && !IsNil(o.HasValue) {
+// HasValuePresent returns a boolean if a field has been set.
+func (o *HostString) HasValuePresent() bool {
+	if o != nil && !IsNil(o.ValuePresent) {
 		return true
 	}
 
 	return false
 }
 
-// SetHasValue gets a reference to the given bool and assigns it to the HasValue field.
-func (o *HostString) SetHasValue(v bool) {
-	o.HasValue = &v
+// SetValuePresent gets a reference to the given bool and assigns it to the ValuePresent field.
+func (o *HostString) SetValuePresent(v bool) {
+	o.ValuePresent = &v
 }
 
 // GetHost returns the Host field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -204,21 +204,13 @@ func (o *HostString) UnsetPort() {
 	o.Port.Unset()
 }
 
-func (o HostString) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o HostString) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Value.IsSet() {
 		toSerialize["value"] = o.Value.Get()
 	}
-	if !IsNil(o.HasValue) {
-		toSerialize["hasValue"] = o.HasValue
+	if !IsNil(o.ValuePresent) {
+		toSerialize["valuePresent"] = o.ValuePresent
 	}
 	if o.Host.IsSet() {
 		toSerialize["host"] = o.Host.Get()

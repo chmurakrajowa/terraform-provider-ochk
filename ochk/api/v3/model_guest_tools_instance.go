@@ -314,14 +314,6 @@ func (o *GuestToolsInstance) UnsetHostName() {
 	o.HostName.Unset()
 }
 
-func (o GuestToolsInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o GuestToolsInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.ToolsId) {

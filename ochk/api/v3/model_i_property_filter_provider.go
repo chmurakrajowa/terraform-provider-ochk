@@ -72,14 +72,6 @@ func (o *IPropertyFilterProvider) SetPropertyFilter(v ModelMetadataBooleanFunc) 
 	o.PropertyFilter = &v
 }
 
-func (o IPropertyFilterProvider) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o IPropertyFilterProvider) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.PropertyFilter) {

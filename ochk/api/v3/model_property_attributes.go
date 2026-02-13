@@ -21,14 +21,14 @@ type PropertyAttributes int32
 
 // List of PropertyAttributes
 const (
-	_0     PropertyAttributes = 0
-	_512   PropertyAttributes = 512
-	_1024  PropertyAttributes = 1024
-	_4096  PropertyAttributes = 4096
-	_8192  PropertyAttributes = 8192
-	_16384 PropertyAttributes = 16384
-	_32768 PropertyAttributes = 32768
-	_62464 PropertyAttributes = 62464
+	PROPERTYATTRIBUTES__0     PropertyAttributes = 0
+	PROPERTYATTRIBUTES__512   PropertyAttributes = 512
+	PROPERTYATTRIBUTES__1024  PropertyAttributes = 1024
+	PROPERTYATTRIBUTES__4096  PropertyAttributes = 4096
+	PROPERTYATTRIBUTES__8192  PropertyAttributes = 8192
+	PROPERTYATTRIBUTES__16384 PropertyAttributes = 16384
+	PROPERTYATTRIBUTES__32768 PropertyAttributes = 32768
+	PROPERTYATTRIBUTES__62464 PropertyAttributes = 62464
 )
 
 // All allowed values of PropertyAttributes enum

@@ -21,13 +21,13 @@ type ListenerProtocol string
 
 // List of ListenerProtocol
 const (
-	HTTP             ListenerProtocol = "HTTP"
-	HTTPS            ListenerProtocol = "HTTPS"
-	SCTP             ListenerProtocol = "SCTP"
-	PROMETHEUS       ListenerProtocol = "PROMETHEUS"
-	TCP              ListenerProtocol = "TCP"
-	TERMINATED_HTTPS ListenerProtocol = "TERMINATED_HTTPS"
-	UDP              ListenerProtocol = "UDP"
+	LISTENERPROTOCOL_HTTP             ListenerProtocol = "HTTP"
+	LISTENERPROTOCOL_HTTPS            ListenerProtocol = "HTTPS"
+	LISTENERPROTOCOL_SCTP             ListenerProtocol = "SCTP"
+	LISTENERPROTOCOL_PROMETHEUS       ListenerProtocol = "PROMETHEUS"
+	LISTENERPROTOCOL_TCP              ListenerProtocol = "TCP"
+	LISTENERPROTOCOL_TERMINATED_HTTPS ListenerProtocol = "TERMINATED_HTTPS"
+	LISTENERPROTOCOL_UDP              ListenerProtocol = "UDP"
 )
 
 // All allowed values of ListenerProtocol enum

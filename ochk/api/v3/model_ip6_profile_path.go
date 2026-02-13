@@ -116,14 +116,6 @@ func (o *IP6ProfilePath) UnsetIp6ProfilePath() {
 	o.Ip6ProfilePath.Unset()
 }
 
-func (o IP6ProfilePath) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o IP6ProfilePath) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Ip6ProfilePathId) {

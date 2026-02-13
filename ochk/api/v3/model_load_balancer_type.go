@@ -21,8 +21,8 @@ type LoadBalancerType string
 
 // List of LoadBalancerType
 const (
-	OPENSTACK_OCTAVIA_OVN LoadBalancerType = "OPENSTACK_OCTAVIA_OVN"
-	NSX                   LoadBalancerType = "NSX"
+	LOADBALANCERTYPE_OPENSTACK_OCTAVIA_OVN LoadBalancerType = "OPENSTACK_OCTAVIA_OVN"
+	LOADBALANCERTYPE_NSX                   LoadBalancerType = "NSX"
 )
 
 // All allowed values of LoadBalancerType enum

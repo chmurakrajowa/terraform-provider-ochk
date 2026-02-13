@@ -426,14 +426,6 @@ func (o *Source) UnsetTenant() {
 	o.Tenant.Unset()
 }
 
-func (o Source) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o Source) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Severity.IsSet() {

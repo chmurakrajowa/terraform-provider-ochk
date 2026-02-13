@@ -21,12 +21,12 @@ type ProvisioningStatus string
 
 // List of ProvisioningStatus
 const (
-	ACTIVE         ProvisioningStatus = "ACTIVE"
-	DELETED        ProvisioningStatus = "DELETED"
-	ERROR          ProvisioningStatus = "ERROR"
-	PENDING_CREATE ProvisioningStatus = "PENDING_CREATE"
-	PENDING_UPDATE ProvisioningStatus = "PENDING_UPDATE"
-	PENDING_DELETE ProvisioningStatus = "PENDING_DELETE"
+	PROVISIONINGSTATUS_ACTIVE         ProvisioningStatus = "ACTIVE"
+	PROVISIONINGSTATUS_DELETED        ProvisioningStatus = "DELETED"
+	PROVISIONINGSTATUS_ERROR          ProvisioningStatus = "ERROR"
+	PROVISIONINGSTATUS_PENDING_CREATE ProvisioningStatus = "PENDING_CREATE"
+	PROVISIONINGSTATUS_PENDING_UPDATE ProvisioningStatus = "PENDING_UPDATE"
+	PROVISIONINGSTATUS_PENDING_DELETE ProvisioningStatus = "PENDING_DELETE"
 )
 
 // All allowed values of ProvisioningStatus enum

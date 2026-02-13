@@ -393,14 +393,6 @@ func (o *ClaimsIdentity) UnsetRoleClaimType() {
 	o.RoleClaimType.Unset()
 }
 
-func (o ClaimsIdentity) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ClaimsIdentity) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.AuthenticationType.IsSet() {

@@ -21,13 +21,13 @@ type HMonitorType string
 
 // List of HMonitorType
 const (
-	HTTP        HMonitorType = "HTTP"
-	HTTPS       HMonitorType = "HTTPS"
-	PING        HMonitorType = "PING"
-	SCTP        HMonitorType = "SCTP"
-	TCP         HMonitorType = "TCP"
-	TLS_HELLO   HMonitorType = "TLS-HELLO"
-	UDP_CONNECT HMonitorType = "UDP-CONNECT"
+	HMONITORTYPE_HTTP        HMonitorType = "HTTP"
+	HMONITORTYPE_HTTPS       HMonitorType = "HTTPS"
+	HMONITORTYPE_PING        HMonitorType = "PING"
+	HMONITORTYPE_SCTP        HMonitorType = "SCTP"
+	HMONITORTYPE_TCP         HMonitorType = "TCP"
+	HMONITORTYPE_TLS_HELLO   HMonitorType = "TLS-HELLO"
+	HMONITORTYPE_UDP_CONNECT HMonitorType = "UDP-CONNECT"
 )
 
 // All allowed values of HMonitorType enum

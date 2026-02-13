@@ -20,8 +20,8 @@ var _ MappedNullable = &QueryString{}
 
 // QueryString struct for QueryString
 type QueryString struct {
-	Value    NullableString `json:"value,omitempty"`
-	HasValue *bool          `json:"hasValue,omitempty"`
+	Value       NullableString `json:"value,omitempty"`
+	ValueExists *bool          `json:"valueExists,omitempty"`
 }
 
 // NewQueryString instantiates a new QueryString object
@@ -84,44 +84,36 @@ func (o *QueryString) UnsetValue() {
 	o.Value.Unset()
 }
 
-// GetHasValue returns the HasValue field value if set, zero value otherwise.
-func (o *QueryString) GetHasValue() bool {
-	if o == nil || IsNil(o.HasValue) {
+// GetValueExists returns the ValueExists field value if set, zero value otherwise.
+func (o *QueryString) GetValueExists() bool {
+	if o == nil || IsNil(o.ValueExists) {
 		var ret bool
 		return ret
 	}
-	return *o.HasValue
+	return *o.ValueExists
 }
 
-// GetHasValueOk returns a tuple with the HasValue field value if set, nil otherwise
+// GetValueExistsOk returns a tuple with the ValueExists field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *QueryString) GetHasValueOk() (*bool, bool) {
-	if o == nil || IsNil(o.HasValue) {
+func (o *QueryString) GetValueExistsOk() (*bool, bool) {
+	if o == nil || IsNil(o.ValueExists) {
 		return nil, false
 	}
-	return o.HasValue, true
+	return o.ValueExists, true
 }
 
-// HasHasValue returns a boolean if a field has been set.
-func (o *QueryString) HasHasValue() bool {
-	if o != nil && !IsNil(o.HasValue) {
+// HasValueExists returns a boolean if a field has been set.
+func (o *QueryString) HasValueExists() bool {
+	if o != nil && !IsNil(o.ValueExists) {
 		return true
 	}
 
 	return false
 }
 
-// SetHasValue gets a reference to the given bool and assigns it to the HasValue field.
-func (o *QueryString) SetHasValue(v bool) {
-	o.HasValue = &v
-}
-
-func (o QueryString) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
+// SetValueExists gets a reference to the given bool and assigns it to the ValueExists field.
+func (o *QueryString) SetValueExists(v bool) {
+	o.ValueExists = &v
 }
 
 func (o QueryString) ToMap() (map[string]interface{}, error) {
@@ -129,8 +121,8 @@ func (o QueryString) ToMap() (map[string]interface{}, error) {
 	if o.Value.IsSet() {
 		toSerialize["value"] = o.Value.Get()
 	}
-	if !IsNil(o.HasValue) {
-		toSerialize["hasValue"] = o.HasValue
+	if !IsNil(o.ValueExists) {
+		toSerialize["valueExists"] = o.ValueExists
 	}
 	return toSerialize, nil
 }

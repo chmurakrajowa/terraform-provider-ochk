@@ -1234,14 +1234,6 @@ func (o *GfwRule) SetBuildIn(v bool) {
 	o.BuildIn = &v
 }
 
-func (o GfwRule) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o GfwRule) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.RuleId.IsSet() {

@@ -21,37 +21,37 @@ type AddressFamily int32
 
 // List of AddressFamily
 const (
-	_0       AddressFamily = 0
-	_1       AddressFamily = 1
-	_2       AddressFamily = 2
-	_3       AddressFamily = 3
-	_4       AddressFamily = 4
-	_5       AddressFamily = 5
-	_6       AddressFamily = 6
-	_7       AddressFamily = 7
-	_8       AddressFamily = 8
-	_9       AddressFamily = 9
-	_10      AddressFamily = 10
-	_11      AddressFamily = 11
-	_12      AddressFamily = 12
-	_13      AddressFamily = 13
-	_14      AddressFamily = 14
-	_15      AddressFamily = 15
-	_16      AddressFamily = 16
-	_17      AddressFamily = 17
-	_18      AddressFamily = 18
-	_19      AddressFamily = 19
-	_21      AddressFamily = 21
-	_22      AddressFamily = 22
-	_23      AddressFamily = 23
-	_24      AddressFamily = 24
-	_25      AddressFamily = 25
-	_26      AddressFamily = 26
-	_28      AddressFamily = 28
-	_29      AddressFamily = 29
-	_65536   AddressFamily = 65536
-	_65537   AddressFamily = 65537
-	_MINUS_1 AddressFamily = -1
+	ADDRESSFAMILY__0       AddressFamily = 0
+	ADDRESSFAMILY__1       AddressFamily = 1
+	ADDRESSFAMILY__2       AddressFamily = 2
+	ADDRESSFAMILY__3       AddressFamily = 3
+	ADDRESSFAMILY__4       AddressFamily = 4
+	ADDRESSFAMILY__5       AddressFamily = 5
+	ADDRESSFAMILY__6       AddressFamily = 6
+	ADDRESSFAMILY__7       AddressFamily = 7
+	ADDRESSFAMILY__8       AddressFamily = 8
+	ADDRESSFAMILY__9       AddressFamily = 9
+	ADDRESSFAMILY__10      AddressFamily = 10
+	ADDRESSFAMILY__11      AddressFamily = 11
+	ADDRESSFAMILY__12      AddressFamily = 12
+	ADDRESSFAMILY__13      AddressFamily = 13
+	ADDRESSFAMILY__14      AddressFamily = 14
+	ADDRESSFAMILY__15      AddressFamily = 15
+	ADDRESSFAMILY__16      AddressFamily = 16
+	ADDRESSFAMILY__17      AddressFamily = 17
+	ADDRESSFAMILY__18      AddressFamily = 18
+	ADDRESSFAMILY__19      AddressFamily = 19
+	ADDRESSFAMILY__21      AddressFamily = 21
+	ADDRESSFAMILY__22      AddressFamily = 22
+	ADDRESSFAMILY__23      AddressFamily = 23
+	ADDRESSFAMILY__24      AddressFamily = 24
+	ADDRESSFAMILY__25      AddressFamily = 25
+	ADDRESSFAMILY__26      AddressFamily = 26
+	ADDRESSFAMILY__28      AddressFamily = 28
+	ADDRESSFAMILY__29      AddressFamily = 29
+	ADDRESSFAMILY__65536   AddressFamily = 65536
+	ADDRESSFAMILY__65537   AddressFamily = 65537
+	ADDRESSFAMILY__MINUS_1 AddressFamily = -1
 )
 
 // All allowed values of AddressFamily enum

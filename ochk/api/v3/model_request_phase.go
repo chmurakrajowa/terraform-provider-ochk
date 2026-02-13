@@ -21,12 +21,12 @@ type RequestPhase string
 
 // List of RequestPhase
 const (
-	NEW        RequestPhase = "NEW"
-	PROCESSING RequestPhase = "PROCESSING"
-	FINISHED   RequestPhase = "FINISHED"
-	CANCELLED  RequestPhase = "CANCELLED"
-	TIMEOUT    RequestPhase = "TIMEOUT"
-	QUEUEING   RequestPhase = "QUEUEING"
+	REQUESTPHASE_NEW        RequestPhase = "NEW"
+	REQUESTPHASE_PROCESSING RequestPhase = "PROCESSING"
+	REQUESTPHASE_FINISHED   RequestPhase = "FINISHED"
+	REQUESTPHASE_CANCELLED  RequestPhase = "CANCELLED"
+	REQUESTPHASE_TIMEOUT    RequestPhase = "TIMEOUT"
+	REQUESTPHASE_QUEUEING   RequestPhase = "QUEUEING"
 )
 
 // All allowed values of RequestPhase enum

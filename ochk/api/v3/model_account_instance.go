@@ -679,14 +679,6 @@ func (o *AccountInstance) SetScoringConst(v float32) {
 	o.ScoringConst = &v
 }
 
-func (o AccountInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o AccountInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.AccountId.IsSet() {

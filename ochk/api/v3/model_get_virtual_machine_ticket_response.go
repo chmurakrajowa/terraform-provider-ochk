@@ -227,14 +227,6 @@ func (o *GetVirtualMachineTicketResponse) SetVirtualMachineTicket(v VirtualMachi
 	o.VirtualMachineTicket = &v
 }
 
-func (o GetVirtualMachineTicketResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o GetVirtualMachineTicketResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

@@ -21,8 +21,8 @@ type Direction1 string
 
 // List of Direction1
 const (
-	INGRESS Direction1 = "INGRESS"
-	EGRESS  Direction1 = "EGRESS"
+	DIRECTION1_INGRESS Direction1 = "INGRESS"
+	DIRECTION1_EGRESS  Direction1 = "EGRESS"
 )
 
 // All allowed values of Direction1 enum

@@ -21,17 +21,17 @@ type LogSeverity string
 
 // List of LogSeverity
 const (
-	DEFAULT   LogSeverity = "DEFAULT"
-	INFO      LogSeverity = "INFO"
-	DEBUG     LogSeverity = "DEBUG"
-	NOTICE    LogSeverity = "NOTICE"
-	WARN      LogSeverity = "WARN"
-	WARNING   LogSeverity = "WARNING"
-	ERROR     LogSeverity = "ERROR"
-	CRITICAL  LogSeverity = "CRITICAL"
-	FATAL     LogSeverity = "FATAL"
-	ALERT     LogSeverity = "ALERT"
-	EMERGENCY LogSeverity = "EMERGENCY"
+	LOGSEVERITY_DEFAULT   LogSeverity = "DEFAULT"
+	LOGSEVERITY_INFO      LogSeverity = "INFO"
+	LOGSEVERITY_DEBUG     LogSeverity = "DEBUG"
+	LOGSEVERITY_NOTICE    LogSeverity = "NOTICE"
+	LOGSEVERITY_WARN      LogSeverity = "WARN"
+	LOGSEVERITY_WARNING   LogSeverity = "WARNING"
+	LOGSEVERITY_ERROR     LogSeverity = "ERROR"
+	LOGSEVERITY_CRITICAL  LogSeverity = "CRITICAL"
+	LOGSEVERITY_FATAL     LogSeverity = "FATAL"
+	LOGSEVERITY_ALERT     LogSeverity = "ALERT"
+	LOGSEVERITY_EMERGENCY LogSeverity = "EMERGENCY"
 )
 
 // All allowed values of LogSeverity enum

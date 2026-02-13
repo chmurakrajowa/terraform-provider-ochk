@@ -21,9 +21,9 @@ type EventAttributes int32
 
 // List of EventAttributes
 const (
-	_0    EventAttributes = 0
-	_512  EventAttributes = 512
-	_1024 EventAttributes = 1024
+	EVENTATTRIBUTES__0    EventAttributes = 0
+	EVENTATTRIBUTES__512  EventAttributes = 512
+	EVENTATTRIBUTES__1024 EventAttributes = 1024
 )
 
 // All allowed values of EventAttributes enum

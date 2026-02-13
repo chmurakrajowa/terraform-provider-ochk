@@ -348,14 +348,6 @@ func (o *KeyRotationSchedule) UnsetStaticDate() {
 	o.StaticDate.Unset()
 }
 
-func (o KeyRotationSchedule) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o KeyRotationSchedule) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.EntryId.IsSet() {

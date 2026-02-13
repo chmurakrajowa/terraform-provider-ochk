@@ -21,9 +21,9 @@ type BillingAlarmOperator string
 
 // List of BillingAlarmOperator
 const (
-	HIGHER BillingAlarmOperator = "HIGHER"
-	LOWER  BillingAlarmOperator = "LOWER"
-	EQUALS BillingAlarmOperator = "EQUALS"
+	BILLINGALARMOPERATOR_HIGHER BillingAlarmOperator = "HIGHER"
+	BILLINGALARMOPERATOR_LOWER  BillingAlarmOperator = "LOWER"
+	BILLINGALARMOPERATOR_EQUALS BillingAlarmOperator = "EQUALS"
 )
 
 // All allowed values of BillingAlarmOperator enum

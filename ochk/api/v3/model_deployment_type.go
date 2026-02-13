@@ -21,9 +21,9 @@ type DeploymentType string
 
 // List of DeploymentType
 const (
-	TEMPLATE DeploymentType = "TEMPLATE"
-	OVF      DeploymentType = "OVF"
-	ISO      DeploymentType = "ISO"
+	DEPLOYMENTTYPE_TEMPLATE DeploymentType = "TEMPLATE"
+	DEPLOYMENTTYPE_OVF      DeploymentType = "OVF"
+	DEPLOYMENTTYPE_ISO      DeploymentType = "ISO"
 )
 
 // All allowed values of DeploymentType enum

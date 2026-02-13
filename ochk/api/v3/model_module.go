@@ -370,14 +370,6 @@ func (o *Module) SetMetadataToken(v int32) {
 	o.MetadataToken = &v
 }
 
-func (o Module) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o Module) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Assembly) {

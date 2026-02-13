@@ -239,14 +239,6 @@ func (o *SegmentSubnetInstance) SetDnsServers(v []DnsServerInstance) {
 	o.DnsServers = v
 }
 
-func (o SegmentSubnetInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o SegmentSubnetInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.SegmentSubnetId.IsSet() {

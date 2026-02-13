@@ -613,14 +613,6 @@ func (o *SnapshotInstance) UnsetCurrent() {
 	o.Current.Unset()
 }
 
-func (o SnapshotInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o SnapshotInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.SnapshotId.IsSet() {

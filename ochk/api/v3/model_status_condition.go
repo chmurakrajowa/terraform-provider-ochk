@@ -282,14 +282,6 @@ func (o *StatusCondition) UnsetType() {
 	o.Type.Unset()
 }
 
-func (o StatusCondition) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o StatusCondition) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Id) {

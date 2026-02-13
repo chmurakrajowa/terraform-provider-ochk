@@ -227,14 +227,6 @@ func (o *KeyRotationScheduleGetResponse) SetKeyRotationSchedule(v KeyRotationSch
 	o.KeyRotationSchedule = &v
 }
 
-func (o KeyRotationScheduleGetResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o KeyRotationScheduleGetResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

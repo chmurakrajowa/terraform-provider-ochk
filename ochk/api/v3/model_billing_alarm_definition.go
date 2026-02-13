@@ -1483,14 +1483,6 @@ func (o *BillingAlarmDefinition) SetBlockResourceDeployment(v bool) {
 	o.BlockResourceDeployment = &v
 }
 
-func (o BillingAlarmDefinition) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o BillingAlarmDefinition) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.AlarmDefinitionId.IsSet() {

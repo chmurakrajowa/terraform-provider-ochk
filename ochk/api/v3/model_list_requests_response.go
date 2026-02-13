@@ -228,14 +228,6 @@ func (o *ListRequestsResponse) SetRequestInstanceCollection(v []RequestInstance)
 	o.RequestInstanceCollection = v
 }
 
-func (o ListRequestsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ListRequestsResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

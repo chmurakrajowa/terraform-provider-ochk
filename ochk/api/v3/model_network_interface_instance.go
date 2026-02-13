@@ -600,14 +600,6 @@ func (o *NetworkInterfaceInstance) SetOscNetwork(v Network) {
 	o.OscNetwork = &v
 }
 
-func (o NetworkInterfaceInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o NetworkInterfaceInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.NetworkInterfaceId.IsSet() {

@@ -228,14 +228,6 @@ func (o *ListIPAMServicesResponse) SetServiceInstanceCollection(v []IPAMServiceI
 	o.ServiceInstanceCollection = v
 }
 
-func (o ListIPAMServicesResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ListIPAMServicesResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

@@ -173,14 +173,6 @@ func (o *CustomAttributeData) SetNamedArguments(v []CustomAttributeNamedArgument
 	o.NamedArguments = v
 }
 
-func (o CustomAttributeData) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o CustomAttributeData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.AttributeType) {

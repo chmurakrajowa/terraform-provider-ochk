@@ -21,9 +21,9 @@ type Action string
 
 // List of Action
 const (
-	ALLOW  Action = "ALLOW"
-	REJECT Action = "REJECT"
-	DROP   Action = "DROP"
+	ACTION_ALLOW  Action = "ALLOW"
+	ACTION_REJECT Action = "REJECT"
+	ACTION_DROP   Action = "DROP"
 )
 
 // All allowed values of Action enum

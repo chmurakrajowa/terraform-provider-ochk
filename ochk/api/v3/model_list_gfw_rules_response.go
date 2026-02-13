@@ -228,14 +228,6 @@ func (o *ListGfwRulesResponse) SetRuleInstances(v []GfwRule) {
 	o.RuleInstances = v
 }
 
-func (o ListGfwRulesResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ListGfwRulesResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

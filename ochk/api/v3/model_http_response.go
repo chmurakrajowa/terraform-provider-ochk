@@ -24,7 +24,7 @@ type HttpResponse struct {
 	HttpContext   *HttpContext           `json:"httpContext,omitempty"`
 	StatusCode    *int32                 `json:"statusCode,omitempty"`
 	Headers       map[string][]string    `json:"headers,omitempty"`
-	Body          *os.File               `json:"body,omitempty"`
+	Body          **os.File              `json:"body,omitempty"`
 	BodyWriter    *PipeWriter            `json:"bodyWriter,omitempty"`
 	ContentLength NullableInt64          `json:"contentLength,omitempty"`
 	ContentType   NullableString         `json:"contentType,omitempty"`
@@ -146,47 +146,36 @@ func (o *HttpResponse) SetHeaders(v map[string][]string) {
 	o.Headers = v
 }
 
-// GetBody returns the Body field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetBody returns the Body field value if set, zero value otherwise.
 func (o *HttpResponse) GetBody() *os.File {
-	if o == nil || IsNil(o.Body.Get()) {
+	if o == nil || IsNil(o.Body) {
 		var ret *os.File
 		return ret
 	}
-	return *o.Body.Get()
+	return *o.Body
 }
 
 // GetBodyOk returns a tuple with the Body field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *HttpResponse) GetBodyOk() (**os.File, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Body) {
 		return nil, false
 	}
-	return o.Body.Get(), o.Body.IsSet()
+	return o.Body, true
 }
 
 // HasBody returns a boolean if a field has been set.
 func (o *HttpResponse) HasBody() bool {
-	if o != nil && o.Body.IsSet() {
+	if o != nil && !IsNil(o.Body) {
 		return true
 	}
 
 	return false
 }
 
-// SetBody gets a reference to the given Nullable*os.File and assigns it to the Body field.
+// SetBody gets a reference to the given *os.File and assigns it to the Body field.
 func (o *HttpResponse) SetBody(v *os.File) {
-	o.Body.Set(&v)
-}
-
-// SetBodyNil sets the value for Body to be an explicit nil
-func (o *HttpResponse) SetBodyNil() {
-	o.Body.Set(nil)
-}
-
-// UnsetBody ensures that no value is present for Body, not even an explicit nil
-func (o *HttpResponse) UnsetBody() {
-	o.Body.Unset()
+	o.Body = &v
 }
 
 // GetBodyWriter returns the BodyWriter field value if set, zero value otherwise.
@@ -371,14 +360,6 @@ func (o *HttpResponse) SetHasStarted(v bool) {
 	o.HasStarted = &v
 }
 
-func (o HttpResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o HttpResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.HttpContext) {
@@ -390,8 +371,8 @@ func (o HttpResponse) ToMap() (map[string]interface{}, error) {
 	if o.Headers != nil {
 		toSerialize["headers"] = o.Headers
 	}
-	if o.Body.IsSet() {
-		toSerialize["body"] = o.Body.Get()
+	if !IsNil(o.Body) {
+		toSerialize["body"] = o.Body
 	}
 	if !IsNil(o.BodyWriter) {
 		toSerialize["bodyWriter"] = o.BodyWriter

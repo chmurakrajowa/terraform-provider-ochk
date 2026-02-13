@@ -227,14 +227,6 @@ func (o *GetBillingAlarmDefinitionResponse) SetBillingAlarmDefinition(v BillingA
 	o.BillingAlarmDefinition = &v
 }
 
-func (o GetBillingAlarmDefinitionResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o GetBillingAlarmDefinitionResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

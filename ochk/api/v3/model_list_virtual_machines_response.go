@@ -228,14 +228,6 @@ func (o *ListVirtualMachinesResponse) SetVcsVirtualMachineInstanceCollection(v [
 	o.VcsVirtualMachineInstanceCollection = v
 }
 
-func (o ListVirtualMachinesResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ListVirtualMachinesResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

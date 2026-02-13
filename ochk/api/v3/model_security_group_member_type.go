@@ -21,12 +21,12 @@ type SecurityGroupMemberType string
 
 // List of SecurityGroupMemberType
 const (
-	IPSET           SecurityGroupMemberType = "IPSET"
-	LOGICAL_PORT    SecurityGroupMemberType = "LOGICAL_PORT"
-	VIRTUAL_MACHINE SecurityGroupMemberType = "VIRTUAL_MACHINE"
-	IPCOLLECTION    SecurityGroupMemberType = "IPCOLLECTION"
-	SEGMENT         SecurityGroupMemberType = "SEGMENT"
-	GROUP           SecurityGroupMemberType = "GROUP"
+	SECURITYGROUPMEMBERTYPE_IPSET           SecurityGroupMemberType = "IPSET"
+	SECURITYGROUPMEMBERTYPE_LOGICAL_PORT    SecurityGroupMemberType = "LOGICAL_PORT"
+	SECURITYGROUPMEMBERTYPE_VIRTUAL_MACHINE SecurityGroupMemberType = "VIRTUAL_MACHINE"
+	SECURITYGROUPMEMBERTYPE_IPCOLLECTION    SecurityGroupMemberType = "IPCOLLECTION"
+	SECURITYGROUPMEMBERTYPE_SEGMENT         SecurityGroupMemberType = "SEGMENT"
+	SECURITYGROUPMEMBERTYPE_GROUP           SecurityGroupMemberType = "GROUP"
 )
 
 // All allowed values of SecurityGroupMemberType enum

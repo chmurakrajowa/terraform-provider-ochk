@@ -261,14 +261,6 @@ func (o *OvnLoadBalancerApiResponse) SetRequestInstance(v interface{}) {
 	o.RequestInstance = v
 }
 
-func (o OvnLoadBalancerApiResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o OvnLoadBalancerApiResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Timestamp) {

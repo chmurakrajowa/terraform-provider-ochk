@@ -72,14 +72,6 @@ func (o *KeyRevocation) SetReason(v KeyRevocationReason) {
 	o.Reason = &v
 }
 
-func (o KeyRevocation) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o KeyRevocation) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Reason) {

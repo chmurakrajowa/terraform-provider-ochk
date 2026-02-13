@@ -21,9 +21,9 @@ type EmptyBodyBehavior int32
 
 // List of EmptyBodyBehavior
 const (
-	_0 EmptyBodyBehavior = 0
-	_1 EmptyBodyBehavior = 1
-	_2 EmptyBodyBehavior = 2
+	EMPTYBODYBEHAVIOR__0 EmptyBodyBehavior = 0
+	EMPTYBODYBEHAVIOR__1 EmptyBodyBehavior = 1
+	EMPTYBODYBEHAVIOR__2 EmptyBodyBehavior = 2
 )
 
 // All allowed values of EmptyBodyBehavior enum

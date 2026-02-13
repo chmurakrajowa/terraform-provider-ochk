@@ -21,9 +21,9 @@ type PowerState string
 
 // List of PowerState
 const (
-	POWERED_OFF PowerState = "poweredOff"
-	POWERED_ON  PowerState = "poweredOn"
-	SUSPENDED   PowerState = "suspended"
+	POWERSTATE_POWERED_OFF PowerState = "poweredOff"
+	POWERSTATE_POWERED_ON  PowerState = "poweredOn"
+	POWERSTATE_SUSPENDED   PowerState = "suspended"
 )
 
 // All allowed values of PowerState enum

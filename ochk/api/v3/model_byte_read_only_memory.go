@@ -138,14 +138,6 @@ func (o *ByteReadOnlyMemory) SetSpan(v ByteReadOnlySpan) {
 	o.Span = &v
 }
 
-func (o ByteReadOnlyMemory) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ByteReadOnlyMemory) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Length) {

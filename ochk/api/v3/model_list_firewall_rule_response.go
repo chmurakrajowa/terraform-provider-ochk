@@ -228,14 +228,6 @@ func (o *ListFirewallRuleResponse) SetFirewallRuleCollection(v []FirewallRule) {
 	o.FirewallRuleCollection = v
 }
 
-func (o ListFirewallRuleResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ListFirewallRuleResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

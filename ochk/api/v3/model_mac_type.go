@@ -21,9 +21,9 @@ type MacType string
 
 // List of MacType
 const (
-	ASSIGNED  MacType = "assigned"
-	GENERATED MacType = "generated"
-	MANUAL    MacType = "manual"
+	MACTYPE_ASSIGNED  MacType = "assigned"
+	MACTYPE_GENERATED MacType = "generated"
+	MACTYPE_MANUAL    MacType = "manual"
 )
 
 // All allowed values of MacType enum

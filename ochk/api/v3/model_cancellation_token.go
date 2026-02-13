@@ -138,14 +138,6 @@ func (o *CancellationToken) SetWaitHandle(v WaitHandle) {
 	o.WaitHandle = &v
 }
 
-func (o CancellationToken) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o CancellationToken) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.IsCancellationRequested) {

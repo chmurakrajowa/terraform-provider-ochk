@@ -227,14 +227,6 @@ func (o *GetIPAMServiceResponse) SetServiceInstance(v IPAMServiceInstance) {
 	o.ServiceInstance = &v
 }
 
-func (o GetIPAMServiceResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o GetIPAMServiceResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

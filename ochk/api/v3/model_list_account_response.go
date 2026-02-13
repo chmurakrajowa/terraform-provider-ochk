@@ -228,14 +228,6 @@ func (o *ListAccountResponse) SetAccountInstanceCollection(v []AccountInstance) 
 	o.AccountInstanceCollection = v
 }
 
-func (o ListAccountResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ListAccountResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

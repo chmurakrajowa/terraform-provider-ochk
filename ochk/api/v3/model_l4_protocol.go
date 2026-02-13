@@ -21,8 +21,8 @@ type L4Protocol string
 
 // List of L4Protocol
 const (
-	TCP L4Protocol = "TCP"
-	UDP L4Protocol = "UDP"
+	L4PROTOCOL_TCP L4Protocol = "TCP"
+	L4PROTOCOL_UDP L4Protocol = "UDP"
 )
 
 // All allowed values of L4Protocol enum

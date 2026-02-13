@@ -21,25 +21,25 @@ type FieldAttributes int32
 
 // List of FieldAttributes
 const (
-	_0     FieldAttributes = 0
-	_1     FieldAttributes = 1
-	_2     FieldAttributes = 2
-	_3     FieldAttributes = 3
-	_4     FieldAttributes = 4
-	_5     FieldAttributes = 5
-	_6     FieldAttributes = 6
-	_7     FieldAttributes = 7
-	_16    FieldAttributes = 16
-	_32    FieldAttributes = 32
-	_64    FieldAttributes = 64
-	_128   FieldAttributes = 128
-	_256   FieldAttributes = 256
-	_512   FieldAttributes = 512
-	_1024  FieldAttributes = 1024
-	_4096  FieldAttributes = 4096
-	_8192  FieldAttributes = 8192
-	_32768 FieldAttributes = 32768
-	_38144 FieldAttributes = 38144
+	FIELDATTRIBUTES__0     FieldAttributes = 0
+	FIELDATTRIBUTES__1     FieldAttributes = 1
+	FIELDATTRIBUTES__2     FieldAttributes = 2
+	FIELDATTRIBUTES__3     FieldAttributes = 3
+	FIELDATTRIBUTES__4     FieldAttributes = 4
+	FIELDATTRIBUTES__5     FieldAttributes = 5
+	FIELDATTRIBUTES__6     FieldAttributes = 6
+	FIELDATTRIBUTES__7     FieldAttributes = 7
+	FIELDATTRIBUTES__16    FieldAttributes = 16
+	FIELDATTRIBUTES__32    FieldAttributes = 32
+	FIELDATTRIBUTES__64    FieldAttributes = 64
+	FIELDATTRIBUTES__128   FieldAttributes = 128
+	FIELDATTRIBUTES__256   FieldAttributes = 256
+	FIELDATTRIBUTES__512   FieldAttributes = 512
+	FIELDATTRIBUTES__1024  FieldAttributes = 1024
+	FIELDATTRIBUTES__4096  FieldAttributes = 4096
+	FIELDATTRIBUTES__8192  FieldAttributes = 8192
+	FIELDATTRIBUTES__32768 FieldAttributes = 32768
+	FIELDATTRIBUTES__38144 FieldAttributes = 38144
 )
 
 // All allowed values of FieldAttributes enum

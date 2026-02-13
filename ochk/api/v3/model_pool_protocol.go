@@ -21,13 +21,13 @@ type PoolProtocol string
 
 // List of PoolProtocol
 const (
-	HTTP    PoolProtocol = "HTTP"
-	HTTPS   PoolProtocol = "HTTPS"
-	PROXY   PoolProtocol = "PROXY"
-	PROXYV2 PoolProtocol = "PROXYV2"
-	SCTP    PoolProtocol = "SCTP"
-	TCP     PoolProtocol = "TCP"
-	UDP     PoolProtocol = "UDP"
+	POOLPROTOCOL_HTTP    PoolProtocol = "HTTP"
+	POOLPROTOCOL_HTTPS   PoolProtocol = "HTTPS"
+	POOLPROTOCOL_PROXY   PoolProtocol = "PROXY"
+	POOLPROTOCOL_PROXYV2 PoolProtocol = "PROXYV2"
+	POOLPROTOCOL_SCTP    PoolProtocol = "SCTP"
+	POOLPROTOCOL_TCP     PoolProtocol = "TCP"
+	POOLPROTOCOL_UDP     PoolProtocol = "UDP"
 )
 
 // All allowed values of PoolProtocol enum

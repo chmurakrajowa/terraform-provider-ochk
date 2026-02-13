@@ -160,14 +160,6 @@ func (o *IIdentity) SetIsAuthenticated(v bool) {
 	o.IsAuthenticated = &v
 }
 
-func (o IIdentity) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o IIdentity) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Name.IsSet() {

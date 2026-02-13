@@ -755,14 +755,6 @@ func (o *PortForwarding) SetFloatingIpId(v string) {
 	o.FloatingIpId = &v
 }
 
-func (o PortForwarding) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o PortForwarding) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.PortForwardingId) {

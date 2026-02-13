@@ -227,14 +227,6 @@ func (o *GetCustomServiceResponse) SetCustomServiceInstance(v CustomServiceInsta
 	o.CustomServiceInstance = &v
 }
 
-func (o GetCustomServiceResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o GetCustomServiceResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

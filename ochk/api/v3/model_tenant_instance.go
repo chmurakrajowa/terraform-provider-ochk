@@ -337,14 +337,6 @@ func (o *TenantInstance) SetPlatformType(v PlatformType) {
 	o.PlatformType = &v
 }
 
-func (o TenantInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o TenantInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.TenantId.IsSet() {

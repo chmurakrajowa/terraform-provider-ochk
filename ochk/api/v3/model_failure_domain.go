@@ -21,8 +21,8 @@ type FailureDomain string
 
 // List of FailureDomain
 const (
-	W1 FailureDomain = "Standard_W1"
-	W2 FailureDomain = "Standard_W2"
+	FAILUREDOMAIN_W1 FailureDomain = "Standard_W1"
+	FAILUREDOMAIN_W2 FailureDomain = "Standard_W2"
 )
 
 // All allowed values of FailureDomain enum

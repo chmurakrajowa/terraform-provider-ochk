@@ -601,14 +601,6 @@ func (o *DeploymentInstance) UnsetOscImageExternalId() {
 	o.OscImageExternalId.Unset()
 }
 
-func (o DeploymentInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o DeploymentInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.DeploymentId.IsSet() {

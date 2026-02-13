@@ -160,14 +160,6 @@ func (o *X500DistinguishedName) UnsetName() {
 	o.Name.Unset()
 }
 
-func (o X500DistinguishedName) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o X500DistinguishedName) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Oid) {

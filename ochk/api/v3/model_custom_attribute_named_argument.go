@@ -182,14 +182,6 @@ func (o *CustomAttributeNamedArgument) SetIsField(v bool) {
 	o.IsField = &v
 }
 
-func (o CustomAttributeNamedArgument) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o CustomAttributeNamedArgument) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.MemberInfo) {

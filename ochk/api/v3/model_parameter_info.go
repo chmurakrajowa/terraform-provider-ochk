@@ -20,21 +20,21 @@ var _ MappedNullable = &ParameterInfo{}
 
 // ParameterInfo struct for ParameterInfo
 type ParameterInfo struct {
-	Attributes       *ParameterAttributes  `json:"attributes,omitempty"`
-	Member           *MemberInfo           `json:"member,omitempty"`
-	Name             NullableString        `json:"name,omitempty"`
-	ParameterType    *Type                 `json:"parameterType,omitempty"`
-	Position         *int32                `json:"position,omitempty"`
-	IsIn             *bool                 `json:"isIn,omitempty"`
-	IsLcid           *bool                 `json:"isLcid,omitempty"`
-	IsOptional       *bool                 `json:"isOptional,omitempty"`
-	IsOut            *bool                 `json:"isOut,omitempty"`
-	IsRetval         *bool                 `json:"isRetval,omitempty"`
-	DefaultValue     interface{}           `json:"defaultValue,omitempty"`
-	RawDefaultValue  interface{}           `json:"rawDefaultValue,omitempty"`
-	HasDefaultValue  *bool                 `json:"hasDefaultValue,omitempty"`
-	CustomAttributes []CustomAttributeData `json:"customAttributes,omitempty"`
-	MetadataToken    *int32                `json:"metadataToken,omitempty"`
+	Attributes          *ParameterAttributes  `json:"attributes,omitempty"`
+	Member              *MemberInfo           `json:"member,omitempty"`
+	Name                NullableString        `json:"name,omitempty"`
+	ParameterType       *Type                 `json:"parameterType,omitempty"`
+	Position            *int32                `json:"position,omitempty"`
+	IsIn                *bool                 `json:"isIn,omitempty"`
+	IsLcid              *bool                 `json:"isLcid,omitempty"`
+	IsOptional          *bool                 `json:"isOptional,omitempty"`
+	IsOut               *bool                 `json:"isOut,omitempty"`
+	IsRetval            *bool                 `json:"isRetval,omitempty"`
+	DefaultValue        interface{}           `json:"defaultValue,omitempty"`
+	RawDefaultValue     interface{}           `json:"rawDefaultValue,omitempty"`
+	DefaultValuePresent *bool                 `json:"defaultValuePresent,omitempty"`
+	CustomAttributes    []CustomAttributeData `json:"customAttributes,omitempty"`
+	MetadataToken       *int32                `json:"metadataToken,omitempty"`
 }
 
 // NewParameterInfo instantiates a new ParameterInfo object
@@ -451,36 +451,36 @@ func (o *ParameterInfo) SetRawDefaultValue(v interface{}) {
 	o.RawDefaultValue = v
 }
 
-// GetHasDefaultValue returns the HasDefaultValue field value if set, zero value otherwise.
-func (o *ParameterInfo) GetHasDefaultValue() bool {
-	if o == nil || IsNil(o.HasDefaultValue) {
+// GetDefaultValuePresent returns the DefaultValuePresent field value if set, zero value otherwise.
+func (o *ParameterInfo) GetDefaultValuePresent() bool {
+	if o == nil || IsNil(o.DefaultValuePresent) {
 		var ret bool
 		return ret
 	}
-	return *o.HasDefaultValue
+	return *o.DefaultValuePresent
 }
 
-// GetHasDefaultValueOk returns a tuple with the HasDefaultValue field value if set, nil otherwise
+// GetDefaultValuePresentOk returns a tuple with the DefaultValuePresent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ParameterInfo) GetHasDefaultValueOk() (*bool, bool) {
-	if o == nil || IsNil(o.HasDefaultValue) {
+func (o *ParameterInfo) GetDefaultValuePresentOk() (*bool, bool) {
+	if o == nil || IsNil(o.DefaultValuePresent) {
 		return nil, false
 	}
-	return o.HasDefaultValue, true
+	return o.DefaultValuePresent, true
 }
 
-// HasHasDefaultValue returns a boolean if a field has been set.
-func (o *ParameterInfo) HasHasDefaultValue() bool {
-	if o != nil && !IsNil(o.HasDefaultValue) {
+// HasDefaultValuePresent returns a boolean if a field has been set.
+func (o *ParameterInfo) HasDefaultValuePresent() bool {
+	if o != nil && !IsNil(o.DefaultValuePresent) {
 		return true
 	}
 
 	return false
 }
 
-// SetHasDefaultValue gets a reference to the given bool and assigns it to the HasDefaultValue field.
-func (o *ParameterInfo) SetHasDefaultValue(v bool) {
-	o.HasDefaultValue = &v
+// SetDefaultValuePresent gets a reference to the given bool and assigns it to the DefaultValuePresent field.
+func (o *ParameterInfo) SetDefaultValuePresent(v bool) {
+	o.DefaultValuePresent = &v
 }
 
 // GetCustomAttributes returns the CustomAttributes field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -548,14 +548,6 @@ func (o *ParameterInfo) SetMetadataToken(v int32) {
 	o.MetadataToken = &v
 }
 
-func (o ParameterInfo) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ParameterInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Attributes) {
@@ -594,8 +586,8 @@ func (o ParameterInfo) ToMap() (map[string]interface{}, error) {
 	if o.RawDefaultValue != nil {
 		toSerialize["rawDefaultValue"] = o.RawDefaultValue
 	}
-	if !IsNil(o.HasDefaultValue) {
-		toSerialize["hasDefaultValue"] = o.HasDefaultValue
+	if !IsNil(o.DefaultValuePresent) {
+		toSerialize["defaultValuePresent"] = o.DefaultValuePresent
 	}
 	if o.CustomAttributes != nil {
 		toSerialize["customAttributes"] = o.CustomAttributes

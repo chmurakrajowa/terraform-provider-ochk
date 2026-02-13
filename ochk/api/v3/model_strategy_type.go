@@ -21,7 +21,7 @@ type StrategyType string
 
 // List of StrategyType
 const (
-	ROLLING_UPDATE StrategyType = "RollingUpdate"
+	STRATEGYTYPE_ROLLING_UPDATE StrategyType = "RollingUpdate"
 )
 
 // All allowed values of StrategyType enum

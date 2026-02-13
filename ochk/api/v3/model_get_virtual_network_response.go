@@ -227,14 +227,6 @@ func (o *GetVirtualNetworkResponse) SetVirtualNetworkInstance(v VirtualNetworkIn
 	o.VirtualNetworkInstance = &v
 }
 
-func (o GetVirtualNetworkResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o GetVirtualNetworkResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

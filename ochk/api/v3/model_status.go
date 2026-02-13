@@ -21,10 +21,10 @@ type Status string
 
 // List of Status
 const (
-	TOOLS_NOT_INSTALLED Status = "toolsNotInstalled"
-	TOOLS_NOT_RUNNING   Status = "toolsNotRunning"
-	TOOLS_OK            Status = "toolsOk"
-	TOOLS_OLD           Status = "toolsOld"
+	STATUS_TOOLS_NOT_INSTALLED Status = "toolsNotInstalled"
+	STATUS_TOOLS_NOT_RUNNING   Status = "toolsNotRunning"
+	STATUS_TOOLS_OK            Status = "toolsOk"
+	STATUS_TOOLS_OLD           Status = "toolsOld"
 )
 
 // All allowed values of Status enum

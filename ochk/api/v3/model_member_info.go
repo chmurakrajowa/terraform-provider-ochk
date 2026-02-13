@@ -315,14 +315,6 @@ func (o *MemberInfo) SetMetadataToken(v int32) {
 	o.MetadataToken = &v
 }
 
-func (o MemberInfo) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o MemberInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.MemberType) {

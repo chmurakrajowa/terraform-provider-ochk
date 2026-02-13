@@ -127,14 +127,6 @@ func (o *Oid) UnsetFriendlyName() {
 	o.FriendlyName.Unset()
 }
 
-func (o Oid) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o Oid) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Value.IsSet() {

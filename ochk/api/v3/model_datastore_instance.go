@@ -358,14 +358,6 @@ func (o *DatastoreInstance) UnsetVraId() {
 	o.VraId.Unset()
 }
 
-func (o DatastoreInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o DatastoreInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.DatastoreId.IsSet() {

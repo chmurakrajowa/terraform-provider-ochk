@@ -171,14 +171,6 @@ func (o *Taint) UnsetEffect() {
 	o.Effect.Unset()
 }
 
-func (o Taint) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o Taint) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Key.IsSet() {

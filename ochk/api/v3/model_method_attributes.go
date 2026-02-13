@@ -21,28 +21,28 @@ type MethodAttributes int32
 
 // List of MethodAttributes
 const (
-	_0     MethodAttributes = 0
-	_1     MethodAttributes = 1
-	_2     MethodAttributes = 2
-	_3     MethodAttributes = 3
-	_4     MethodAttributes = 4
-	_5     MethodAttributes = 5
-	_6     MethodAttributes = 6
-	_7     MethodAttributes = 7
-	_8     MethodAttributes = 8
-	_16    MethodAttributes = 16
-	_32    MethodAttributes = 32
-	_64    MethodAttributes = 64
-	_128   MethodAttributes = 128
-	_256   MethodAttributes = 256
-	_512   MethodAttributes = 512
-	_1024  MethodAttributes = 1024
-	_2048  MethodAttributes = 2048
-	_4096  MethodAttributes = 4096
-	_8192  MethodAttributes = 8192
-	_16384 MethodAttributes = 16384
-	_32768 MethodAttributes = 32768
-	_53248 MethodAttributes = 53248
+	METHODATTRIBUTES__0     MethodAttributes = 0
+	METHODATTRIBUTES__1     MethodAttributes = 1
+	METHODATTRIBUTES__2     MethodAttributes = 2
+	METHODATTRIBUTES__3     MethodAttributes = 3
+	METHODATTRIBUTES__4     MethodAttributes = 4
+	METHODATTRIBUTES__5     MethodAttributes = 5
+	METHODATTRIBUTES__6     MethodAttributes = 6
+	METHODATTRIBUTES__7     MethodAttributes = 7
+	METHODATTRIBUTES__8     MethodAttributes = 8
+	METHODATTRIBUTES__16    MethodAttributes = 16
+	METHODATTRIBUTES__32    MethodAttributes = 32
+	METHODATTRIBUTES__64    MethodAttributes = 64
+	METHODATTRIBUTES__128   MethodAttributes = 128
+	METHODATTRIBUTES__256   MethodAttributes = 256
+	METHODATTRIBUTES__512   MethodAttributes = 512
+	METHODATTRIBUTES__1024  MethodAttributes = 1024
+	METHODATTRIBUTES__2048  MethodAttributes = 2048
+	METHODATTRIBUTES__4096  MethodAttributes = 4096
+	METHODATTRIBUTES__8192  MethodAttributes = 8192
+	METHODATTRIBUTES__16384 MethodAttributes = 16384
+	METHODATTRIBUTES__32768 MethodAttributes = 32768
+	METHODATTRIBUTES__53248 MethodAttributes = 53248
 )
 
 // All allowed values of MethodAttributes enum

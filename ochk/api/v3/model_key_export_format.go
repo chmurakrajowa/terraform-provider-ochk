@@ -21,8 +21,8 @@ type KeyExportFormat string
 
 // List of KeyExportFormat
 const (
-	PKCS1 KeyExportFormat = "pkcs1"
-	PKCS8 KeyExportFormat = "pkcs8"
+	KEYEXPORTFORMAT_PKCS1 KeyExportFormat = "pkcs1"
+	KEYEXPORTFORMAT_PKCS8 KeyExportFormat = "pkcs8"
 )
 
 // All allowed values of KeyExportFormat enum

@@ -105,14 +105,6 @@ func (o *ElkResponse) SetHits(v Hits) {
 	o.Hits = &v
 }
 
-func (o ElkResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ElkResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.TimedOut) {

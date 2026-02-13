@@ -149,14 +149,6 @@ func (o *X509Extension) SetCritical(v bool) {
 	o.Critical = &v
 }
 
-func (o X509Extension) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o X509Extension) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Oid) {

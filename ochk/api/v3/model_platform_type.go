@@ -21,8 +21,8 @@ type PlatformType string
 
 // List of PlatformType
 const (
-	VMWARE    PlatformType = "VMWARE"
-	OPENSTACK PlatformType = "OPENSTACK"
+	PLATFORMTYPE_VMWARE    PlatformType = "VMWARE"
+	PLATFORMTYPE_OPENSTACK PlatformType = "OPENSTACK"
 )
 
 // All allowed values of PlatformType enum

@@ -227,14 +227,6 @@ func (o *GetNATRuleResponse) SetNatRuleInstance(v NATRuleInstance) {
 	o.NatRuleInstance = &v
 }
 
-func (o GetNATRuleResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o GetNATRuleResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

@@ -20,8 +20,8 @@ var _ MappedNullable = &PathString{}
 
 // PathString struct for PathString
 type PathString struct {
-	Value    NullableString `json:"value,omitempty"`
-	HasValue *bool          `json:"hasValue,omitempty"`
+	Value          NullableString `json:"value,omitempty"`
+	ValueAvailable *bool          `json:"valueAvailable,omitempty"`
 }
 
 // NewPathString instantiates a new PathString object
@@ -84,44 +84,36 @@ func (o *PathString) UnsetValue() {
 	o.Value.Unset()
 }
 
-// GetHasValue returns the HasValue field value if set, zero value otherwise.
-func (o *PathString) GetHasValue() bool {
-	if o == nil || IsNil(o.HasValue) {
+// GetValueAvailable returns the ValueAvailable field value if set, zero value otherwise.
+func (o *PathString) GetValueAvailable() bool {
+	if o == nil || IsNil(o.ValueAvailable) {
 		var ret bool
 		return ret
 	}
-	return *o.HasValue
+	return *o.ValueAvailable
 }
 
-// GetHasValueOk returns a tuple with the HasValue field value if set, nil otherwise
+// GetValueAvailableOk returns a tuple with the ValueAvailable field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PathString) GetHasValueOk() (*bool, bool) {
-	if o == nil || IsNil(o.HasValue) {
+func (o *PathString) GetValueAvailableOk() (*bool, bool) {
+	if o == nil || IsNil(o.ValueAvailable) {
 		return nil, false
 	}
-	return o.HasValue, true
+	return o.ValueAvailable, true
 }
 
-// HasHasValue returns a boolean if a field has been set.
-func (o *PathString) HasHasValue() bool {
-	if o != nil && !IsNil(o.HasValue) {
+// HasValueAvailable returns a boolean if a field has been set.
+func (o *PathString) HasValueAvailable() bool {
+	if o != nil && !IsNil(o.ValueAvailable) {
 		return true
 	}
 
 	return false
 }
 
-// SetHasValue gets a reference to the given bool and assigns it to the HasValue field.
-func (o *PathString) SetHasValue(v bool) {
-	o.HasValue = &v
-}
-
-func (o PathString) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
+// SetValueAvailable gets a reference to the given bool and assigns it to the ValueAvailable field.
+func (o *PathString) SetValueAvailable(v bool) {
+	o.ValueAvailable = &v
 }
 
 func (o PathString) ToMap() (map[string]interface{}, error) {
@@ -129,8 +121,8 @@ func (o PathString) ToMap() (map[string]interface{}, error) {
 	if o.Value.IsSet() {
 		toSerialize["value"] = o.Value.Get()
 	}
-	if !IsNil(o.HasValue) {
-		toSerialize["hasValue"] = o.HasValue
+	if !IsNil(o.ValueAvailable) {
+		toSerialize["valueAvailable"] = o.ValueAvailable
 	}
 	return toSerialize, nil
 }

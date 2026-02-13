@@ -21,9 +21,9 @@ type LayoutKind int32
 
 // List of LayoutKind
 const (
-	_0 LayoutKind = 0
-	_2 LayoutKind = 2
-	_3 LayoutKind = 3
+	LAYOUTKIND__0 LayoutKind = 0
+	LAYOUTKIND__2 LayoutKind = 2
+	LAYOUTKIND__3 LayoutKind = 3
 )
 
 // All allowed values of LayoutKind enum

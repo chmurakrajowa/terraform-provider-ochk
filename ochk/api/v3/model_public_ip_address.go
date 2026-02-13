@@ -127,14 +127,6 @@ func (o *PublicIpAddress) UnsetIpAddress() {
 	o.IpAddress.Unset()
 }
 
-func (o PublicIpAddress) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o PublicIpAddress) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.IpAddressId.IsSet() {

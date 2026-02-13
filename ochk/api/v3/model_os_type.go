@@ -21,8 +21,8 @@ type OsType string
 
 // List of OsType
 const (
-	WINDOWS OsType = "WINDOWS"
-	LINUX   OsType = "LINUX"
+	OSTYPE_WINDOWS OsType = "WINDOWS"
+	OSTYPE_LINUX   OsType = "LINUX"
 )
 
 // All allowed values of OsType enum

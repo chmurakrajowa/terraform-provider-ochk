@@ -127,14 +127,6 @@ func (o *AllocationPool) UnsetEnd() {
 	o.End.Unset()
 }
 
-func (o AllocationPool) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o AllocationPool) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Start.IsSet() {

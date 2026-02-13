@@ -21,12 +21,12 @@ type OperatingStatus string
 
 // List of OperatingStatus
 const (
-	ONLINE     OperatingStatus = "ONLINE"
-	DRAINING   OperatingStatus = "DRAINING"
-	OFFLINE    OperatingStatus = "OFFLINE"
-	DEGRADED   OperatingStatus = "DEGRADED"
-	ERROR      OperatingStatus = "ERROR"
-	NO_MONITOR OperatingStatus = "NO_MONITOR"
+	OPERATINGSTATUS_ONLINE     OperatingStatus = "ONLINE"
+	OPERATINGSTATUS_DRAINING   OperatingStatus = "DRAINING"
+	OPERATINGSTATUS_OFFLINE    OperatingStatus = "OFFLINE"
+	OPERATINGSTATUS_DEGRADED   OperatingStatus = "DEGRADED"
+	OPERATINGSTATUS_ERROR      OperatingStatus = "ERROR"
+	OPERATINGSTATUS_NO_MONITOR OperatingStatus = "NO_MONITOR"
 )
 
 // All allowed values of OperatingStatus enum

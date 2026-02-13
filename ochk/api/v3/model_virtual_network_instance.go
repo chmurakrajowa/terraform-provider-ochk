@@ -799,14 +799,6 @@ func (o *VirtualNetworkInstance) SetBuildIn(v bool) {
 	o.BuildIn = &v
 }
 
-func (o VirtualNetworkInstance) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o VirtualNetworkInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.VirtualNetworkId.IsSet() {

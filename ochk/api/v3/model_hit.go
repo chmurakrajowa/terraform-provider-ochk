@@ -106,14 +106,6 @@ func (o *Hit) SetSort(v []int64) {
 	o.Sort = v
 }
 
-func (o Hit) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o Hit) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Source) {

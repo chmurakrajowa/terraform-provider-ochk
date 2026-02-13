@@ -105,14 +105,6 @@ func (o *SafeWaitHandle) SetIsInvalid(v bool) {
 	o.IsInvalid = &v
 }
 
-func (o SafeWaitHandle) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o SafeWaitHandle) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.IsClosed) {

@@ -1107,14 +1107,6 @@ func (o *MethodBase) SetIsSecurityTransparent(v bool) {
 	o.IsSecurityTransparent = &v
 }
 
-func (o MethodBase) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o MethodBase) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.MemberType) {

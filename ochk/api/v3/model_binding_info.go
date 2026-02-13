@@ -282,14 +282,6 @@ func (o *BindingInfo) SetServiceKey(v interface{}) {
 	o.ServiceKey = v
 }
 
-func (o BindingInfo) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o BindingInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.BindingSource) {

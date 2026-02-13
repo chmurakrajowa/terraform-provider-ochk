@@ -228,14 +228,6 @@ func (o *ListSnapshotsResponse) SetSnapshotInstanceCollection(v []SnapshotInstan
 	o.SnapshotInstanceCollection = v
 }
 
-func (o ListSnapshotsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o ListSnapshotsResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ErrorCode.IsSet() {

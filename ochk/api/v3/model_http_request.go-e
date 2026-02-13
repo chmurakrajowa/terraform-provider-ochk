@@ -35,8 +35,8 @@ type HttpRequest struct {
 	Cookies []StringStringKeyValuePair `json:"cookies,omitempty"`
 	ContentLength NullableInt64 `json:"contentLength,omitempty"`
 	ContentType NullableString `json:"contentType,omitempty"`
-	Body *os.File `json:"body,omitempty"`
-	Body *os.File `json:"bodyReader,omitempty"`
+	Body **os.File `json:"body,omitempty"`
+	BodyReader **os.File `json:"bodyReader,omitempty"`
 	HasFormContentType *bool `json:"hasFormContentType,omitempty"`
 	Form []StringStringValuesKeyValuePair `json:"form,omitempty"`
 	RouteValues map[string]interface{} `json:"routeValues,omitempty"`
@@ -560,88 +560,68 @@ func (o *HttpRequest) UnsetContentType() {
 	o.ContentType.Unset()
 }
 
-// GetBody returns the Body field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetBody returns the Body field value if set, zero value otherwise.
 func (o *HttpRequest) GetBody() *os.File {
-	if o == nil || IsNil(o.Body.Get()) {
+	if o == nil || IsNil(o.Body) {
 		var ret *os.File
 		return ret
 	}
-	return *o.Body.Get()
+	return *o.Body
 }
 
 // GetBodyOk returns a tuple with the Body field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *HttpRequest) GetBodyOk() (**os.File, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Body) {
 		return nil, false
 	}
-	return o.Body.Get(), o.Body.IsSet()
+	return o.Body, true
 }
 
 // HasBody returns a boolean if a field has been set.
 func (o *HttpRequest) HasBody() bool {
-	if o != nil && o.Body.IsSet() {
+	if o != nil && !IsNil(o.Body) {
 		return true
 	}
 
 	return false
 }
 
-// SetBody gets a reference to the given Nullable*os.File and assigns it to the Body field.
+// SetBody gets a reference to the given *os.File and assigns it to the Body field.
 func (o *HttpRequest) SetBody(v *os.File) {
-	o.Body.Set(&v)
-}
-// SetBodyNil sets the value for Body to be an explicit nil
-func (o *HttpRequest) SetBodyNil() {
-	o.Body.Set(nil)
+	o.Body = &v
 }
 
-// UnsetBody ensures that no value is present for Body, not even an explicit nil
-func (o *HttpRequest) UnsetBody() {
-	o.Body.Unset()
-}
-
-// GetBodyReader returns the BodyReader field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetBodyReader returns the BodyReader field value if set, zero value otherwise.
 func (o *HttpRequest) GetBodyReader() *os.File {
-	if o == nil || IsNil(o.BodyReader.Get()) {
+	if o == nil || IsNil(o.BodyReader) {
 		var ret *os.File
 		return ret
 	}
-	return *o.BodyReader.Get()
+	return *o.BodyReader
 }
 
 // GetBodyReaderOk returns a tuple with the BodyReader field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *HttpRequest) GetBodyReaderOk() (**os.File, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.BodyReader) {
 		return nil, false
 	}
-	return o.BodyReader.Get(), o.BodyReader.IsSet()
+	return o.BodyReader, true
 }
 
 // HasBodyReader returns a boolean if a field has been set.
 func (o *HttpRequest) HasBodyReader() bool {
-	if o != nil && o.BodyReader.IsSet() {
+	if o != nil && !IsNil(o.BodyReader) {
 		return true
 	}
 
 	return false
 }
 
-// SetBodyReader gets a reference to the given Nullable*os.File and assigns it to the BodyReader field.
+// SetBodyReader gets a reference to the given *os.File and assigns it to the BodyReader field.
 func (o *HttpRequest) SetBodyReader(v *os.File) {
-	o.BodyReader.Set(&v)
-}
-// SetBodyReaderNil sets the value for BodyReader to be an explicit nil
-func (o *HttpRequest) SetBodyReaderNil() {
-	o.BodyReader.Set(nil)
-}
-
-// UnsetBodyReader ensures that no value is present for BodyReader, not even an explicit nil
-func (o *HttpRequest) UnsetBodyReader() {
-	o.BodyReader.Unset()
+	o.BodyReader = &v
 }
 
 // GetHasFormContentType returns the HasFormContentType field value if set, zero value otherwise.
@@ -742,14 +722,6 @@ func (o *HttpRequest) SetRouteValues(v map[string]interface{}) {
 	o.RouteValues = v
 }
 
-func (o HttpRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o HttpRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.HttpContext) {
@@ -794,11 +766,11 @@ func (o HttpRequest) ToMap() (map[string]interface{}, error) {
 	if o.ContentType.IsSet() {
 		toSerialize["contentType"] = o.ContentType.Get()
 	}
-	if o.Body.IsSet() {
-		toSerialize["body"] = o.Body.Get()
+	if !IsNil(o.Body) {
+		toSerialize["body"] = o.Body
 	}
-	if o.BodyReader.IsSet() {
-		toSerialize["bodyReader"] = o.BodyReader.Get()
+	if !IsNil(o.BodyReader) {
+		toSerialize["bodyReader"] = o.BodyReader
 	}
 	if !IsNil(o.HasFormContentType) {
 		toSerialize["hasFormContentType"] = o.HasFormContentType

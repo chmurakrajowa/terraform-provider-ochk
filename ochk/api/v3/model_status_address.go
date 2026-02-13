@@ -127,14 +127,6 @@ func (o *StatusAddress) UnsetType() {
 	o.Type.Unset()
 }
 
-func (o StatusAddress) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
 func (o StatusAddress) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Address.IsSet() {

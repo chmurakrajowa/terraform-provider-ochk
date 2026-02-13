@@ -21,15 +21,15 @@ type GenericParameterAttributes int32
 
 // List of GenericParameterAttributes
 const (
-	_0  GenericParameterAttributes = 0
-	_1  GenericParameterAttributes = 1
-	_2  GenericParameterAttributes = 2
-	_3  GenericParameterAttributes = 3
-	_4  GenericParameterAttributes = 4
-	_8  GenericParameterAttributes = 8
-	_16 GenericParameterAttributes = 16
-	_28 GenericParameterAttributes = 28
-	_32 GenericParameterAttributes = 32
+	GENERICPARAMETERATTRIBUTES__0  GenericParameterAttributes = 0
+	GENERICPARAMETERATTRIBUTES__1  GenericParameterAttributes = 1
+	GENERICPARAMETERATTRIBUTES__2  GenericParameterAttributes = 2
+	GENERICPARAMETERATTRIBUTES__3  GenericParameterAttributes = 3
+	GENERICPARAMETERATTRIBUTES__4  GenericParameterAttributes = 4
+	GENERICPARAMETERATTRIBUTES__8  GenericParameterAttributes = 8
+	GENERICPARAMETERATTRIBUTES__16 GenericParameterAttributes = 16
+	GENERICPARAMETERATTRIBUTES__28 GenericParameterAttributes = 28
+	GENERICPARAMETERATTRIBUTES__32 GenericParameterAttributes = 32
 )
 
 // All allowed values of GenericParameterAttributes enum
