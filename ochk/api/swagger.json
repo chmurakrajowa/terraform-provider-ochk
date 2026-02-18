@@ -380,6 +380,407 @@
         }
       }
     },
+    "/projects/{projectId}/network/app-profiles": {
+      "get": {
+        "tags": [
+          "AppProfile"
+        ],
+        "summary": "List application profiles",
+        "description": "List application profiles",
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListAppProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "AppProfile"
+        ],
+        "summary": "Create application profile",
+        "description": "Create application profile",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppProfileInstance"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppProfileInstance"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppProfileInstance"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateAppProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/network/app-profiles/{appProfileId}": {
+      "get": {
+        "tags": [
+          "AppProfile"
+        ],
+        "summary": "Get application profile",
+        "description": "Get application profile",
+        "parameters": [
+          {
+            "name": "appProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAppProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "AppProfile"
+        ],
+        "summary": "Update application profile",
+        "description": "Update application profile",
+        "parameters": [
+          {
+            "name": "appProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppProfileInstance"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppProfileInstance"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppProfileInstance"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAppProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "AppProfile"
+        ],
+        "summary": "Delete application profile",
+        "description": "Delete application profile",
+        "parameters": [
+          {
+            "name": "appProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteAppProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/authentik/token": {
       "post": {
         "tags": [
@@ -5710,6 +6111,407 @@
         }
       }
     },
+    "/projects/{projectId}/network/load-balancers": {
+      "get": {
+        "tags": [
+          "LoadBalancer"
+        ],
+        "summary": "List load balancers",
+        "description": "List load balancers",
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListNsxLoadBalancerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "LoadBalancer"
+        ],
+        "summary": "Create load balancer",
+        "description": "Create load balancer",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NsxLoadBalancer"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NsxLoadBalancer"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NsxLoadBalancer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateNsxLoadBalancerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/network/load-balancers/{loadBalancerId}": {
+      "get": {
+        "tags": [
+          "LoadBalancer"
+        ],
+        "summary": "Get load balancer",
+        "description": "Get load balancer",
+        "parameters": [
+          {
+            "name": "loadBalancerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNsxLoadBalancerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "LoadBalancer"
+        ],
+        "summary": "Update load balancer",
+        "description": "Update load balancer",
+        "parameters": [
+          {
+            "name": "loadBalancerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NsxLoadBalancer"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NsxLoadBalancer"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NsxLoadBalancer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateNsxLoadBalancerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "LoadBalancer"
+        ],
+        "summary": "Delete load balancer",
+        "description": "Delete load balancer",
+        "parameters": [
+          {
+            "name": "loadBalancerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteNsxLoadBalancerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/log/categories/{logCategoryId}/generate": {
       "post": {
         "tags": [
@@ -6771,6 +7573,407 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GetLogsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/network/monitor-profiles": {
+      "get": {
+        "tags": [
+          "MonitorProfile"
+        ],
+        "summary": "List monitor profiles",
+        "description": "List monitor profiles",
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListMonitorProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "MonitorProfile"
+        ],
+        "summary": "Create monitor profile",
+        "description": "Create monitor profile",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonitorProfileInstance"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonitorProfileInstance"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonitorProfileInstance"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateMonitorProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/network/monitor-profiles/{monitorProfileId}": {
+      "get": {
+        "tags": [
+          "MonitorProfile"
+        ],
+        "summary": "Get monitor profile",
+        "description": "Get monitor profile",
+        "parameters": [
+          {
+            "name": "monitorProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetMonitorProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "MonitorProfile"
+        ],
+        "summary": "Update monitor profile",
+        "description": "Update monitor profile",
+        "parameters": [
+          {
+            "name": "monitorProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonitorProfileInstance"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonitorProfileInstance"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonitorProfileInstance"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateMonitorProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "MonitorProfile"
+        ],
+        "summary": "Delete monitor profile",
+        "description": "Delete monitor profile",
+        "parameters": [
+          {
+            "name": "monitorProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteMonitorProfileResponse"
                 }
               }
             }
@@ -9599,6 +10802,407 @@
         }
       }
     },
+    "/projects/{projectId}/network/server-pools": {
+      "get": {
+        "tags": [
+          "ServerPool"
+        ],
+        "summary": "List server pools",
+        "description": "List server pools",
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListServerPoolResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ServerPool"
+        ],
+        "summary": "Create server pool",
+        "description": "Create server pool",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServerPoolInstance"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServerPoolInstance"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServerPoolInstance"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateServerPoolResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/network/server-pools/{serverPoolId}": {
+      "get": {
+        "tags": [
+          "ServerPool"
+        ],
+        "summary": "Get server pool",
+        "description": "Get server pool",
+        "parameters": [
+          {
+            "name": "serverPoolId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetServerPoolResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ServerPool"
+        ],
+        "summary": "Update server pool",
+        "description": "Update server pool",
+        "parameters": [
+          {
+            "name": "serverPoolId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServerPoolInstance"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServerPoolInstance"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServerPoolInstance"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateServerPoolResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ServerPool"
+        ],
+        "summary": "Delete server pool",
+        "description": "Delete server pool",
+        "parameters": [
+          {
+            "name": "serverPoolId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteServerPoolResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tags": {
       "get": {
         "tags": [
@@ -11483,6 +13087,407 @@
           }
         }
       }
+    },
+    "/projects/{projectId}/network/virtual-servers": {
+      "get": {
+        "tags": [
+          "VirtualServer"
+        ],
+        "summary": "List virtual servers",
+        "description": "List virtual servers",
+        "parameters": [
+          {
+            "name": "displayName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListVirtualServerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "VirtualServer"
+        ],
+        "summary": "Create virtual server",
+        "description": "Create virtual server",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VirtualServerInstance"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VirtualServerInstance"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VirtualServerInstance"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateVirtualServerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/network/virtual-servers/{virtualServerId}": {
+      "get": {
+        "tags": [
+          "VirtualServer"
+        ],
+        "summary": "Get virtual server",
+        "description": "Get virtual server",
+        "parameters": [
+          {
+            "name": "virtualServerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVirtualServerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "VirtualServer"
+        ],
+        "summary": "Update virtual server",
+        "description": "Update virtual server",
+        "parameters": [
+          {
+            "name": "virtualServerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VirtualServerInstance"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VirtualServerInstance"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VirtualServerInstance"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateVirtualServerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "VirtualServer"
+        ],
+        "summary": "Delete virtual server",
+        "description": "Delete virtual server",
+        "parameters": [
+          {
+            "name": "virtualServerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteVirtualServerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -11847,6 +13852,98 @@
           }
         },
         "additionalProperties": false
+      },
+      "AppProfileInstance": {
+        "type": "object",
+        "properties": {
+          "appProfileId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "externalId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "pckProjectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "resourceType": {
+            "$ref": "#/components/schemas/AppProfileResourceType"
+          },
+          "idleTimeout": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "haFlowMirroringEnabled": {
+            "type": "boolean"
+          },
+          "path": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestHeaderSize": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "responseHeaderSize": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "responseTimeout": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "serverKeepAlive": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "responseBuffering": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AppProfileResourceType": {
+        "enum": [
+          "LBFastTcpProfile",
+          "LBFastUdpProfile",
+          "LBHttpProfile"
+        ],
+        "type": "string"
       },
       "AsnEncodedData": {
         "type": "object",
@@ -13624,6 +15721,34 @@
         },
         "additionalProperties": false
       },
+      "CreateAppProfileResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "appProfileInstance": {
+            "$ref": "#/components/schemas/AppProfileInstance"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateBillingAlarmDefinitionResponse": {
         "type": "object",
         "properties": {
@@ -14024,6 +16149,34 @@
         },
         "additionalProperties": false
       },
+      "CreateMonitorProfileResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "monitorProfileInstance": {
+            "$ref": "#/components/schemas/MonitorProfileInstance"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateNATRuleResponse": {
         "type": "object",
         "properties": {
@@ -14073,6 +16226,34 @@
           },
           "keyInstance": {
             "$ref": "#/components/schemas/KeyInstance"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateNsxLoadBalancerResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "loadBalancerInstance": {
+            "$ref": "#/components/schemas/NsxLoadBalancer"
           },
           "requestInstance": {
             "$ref": "#/components/schemas/RequestInstance"
@@ -14220,6 +16401,34 @@
         },
         "additionalProperties": false
       },
+      "CreateServerPoolResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "serverPoolInstance": {
+            "$ref": "#/components/schemas/ServerPoolInstance"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateSnapshotResponse": {
         "type": "object",
         "properties": {
@@ -14325,6 +16534,34 @@
           },
           "virtualNetworkInstance": {
             "$ref": "#/components/schemas/VirtualNetworkInstance"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateVirtualServerResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "virtualServerInstance": {
+            "$ref": "#/components/schemas/VirtualServerInstance"
           },
           "requestInstance": {
             "$ref": "#/components/schemas/RequestInstance"
@@ -14656,6 +16893,31 @@
         },
         "additionalProperties": false
       },
+      "DeleteAppProfileResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
       "DeleteBillingAlarmDefinitionResponse": {
         "type": "object",
         "properties": {
@@ -14912,7 +17174,57 @@
         },
         "additionalProperties": false
       },
+      "DeleteMonitorProfileResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
       "DeleteNATRuleResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteNsxLoadBalancerResponse": {
         "type": "object",
         "properties": {
           "errorCode": {
@@ -15062,6 +17374,31 @@
         },
         "additionalProperties": false
       },
+      "DeleteServerPoolResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
       "DeleteSnapshotResponse": {
         "type": "object",
         "properties": {
@@ -15138,6 +17475,31 @@
         "additionalProperties": false
       },
       "DeleteVirtualNetworkResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteVirtualServerResponse": {
         "type": "object",
         "properties": {
           "errorCode": {
@@ -15550,6 +17912,18 @@
           }
         },
         "additionalProperties": false
+      },
+      "ErrorLogLevel": {
+        "enum": [
+          "DEBUG",
+          "INFO",
+          "WARNING",
+          "ERROR",
+          "CRITICAL",
+          "FATAL",
+          "EMERGENCY"
+        ],
+        "type": "string"
       },
       "ErrorType": {
         "enum": [
@@ -16266,6 +18640,31 @@
         },
         "additionalProperties": false
       },
+      "GetAppProfileResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "appProfileInstance": {
+            "$ref": "#/components/schemas/AppProfileInstance"
+          }
+        },
+        "additionalProperties": false
+      },
       "GetBackupListResponse": {
         "type": "object",
         "properties": {
@@ -16695,6 +19094,31 @@
         },
         "additionalProperties": false
       },
+      "GetMonitorProfileResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "monitorProfileInstance": {
+            "$ref": "#/components/schemas/MonitorProfileInstance"
+          }
+        },
+        "additionalProperties": false
+      },
       "GetNATRuleResponse": {
         "type": "object",
         "properties": {
@@ -16716,6 +19140,31 @@
           },
           "natRuleInstance": {
             "$ref": "#/components/schemas/NATRuleInstance"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetNsxLoadBalancerResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "nsxLoadBalancer": {
+            "$ref": "#/components/schemas/NsxLoadBalancer"
           }
         },
         "additionalProperties": false
@@ -16896,6 +19345,31 @@
         },
         "additionalProperties": false
       },
+      "GetServerPoolResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "serverPoolInstance": {
+            "$ref": "#/components/schemas/ServerPoolInstance"
+          }
+        },
+        "additionalProperties": false
+      },
       "GetServiceResponse": {
         "type": "object",
         "properties": {
@@ -17042,6 +19516,31 @@
           },
           "virtualNetworkInstance": {
             "$ref": "#/components/schemas/VirtualNetworkInstance"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetVirtualServerResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "virtualServerInstance": {
+            "$ref": "#/components/schemas/VirtualServerInstance"
           }
         },
         "additionalProperties": false
@@ -18468,6 +20967,91 @@
         ],
         "type": "string"
       },
+      "LBPoolMember": {
+        "type": "object",
+        "properties": {
+          "poolMemberId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "serverPoolId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "adminState": {
+            "type": "string",
+            "nullable": true
+          },
+          "backupMember": {
+            "type": "boolean"
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "ipAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "maxConcurrentConnections": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "port": {
+            "type": "string",
+            "nullable": true
+          },
+          "weight": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LBPoolMemberGroup": {
+        "type": "object",
+        "properties": {
+          "poolMemberGroupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "serverPoolId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "customizedMembers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PoolMemberSettings"
+            },
+            "nullable": true
+          },
+          "groupPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "ipRevisionFilter": {
+            "type": "string",
+            "nullable": true
+          },
+          "maxIpListSize": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "port": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "LayoutKind": {
         "enum": [
           0,
@@ -18572,6 +21156,35 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AccountInstance"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ListAppProfileResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "appProfilesCollection": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AppProfileInstance"
             },
             "nullable": true
           }
@@ -18926,6 +21539,35 @@
         },
         "additionalProperties": false
       },
+      "ListMonitorProfileResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "monitorProfilesCollection": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MonitorProfileInstance"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ListNATRulesResponse": {
         "type": "object",
         "properties": {
@@ -18949,6 +21591,35 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/NATRuleInstance"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ListNsxLoadBalancerResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "loadBalancerCollection": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NsxLoadBalancer"
             },
             "nullable": true
           }
@@ -19158,6 +21829,35 @@
         },
         "additionalProperties": false
       },
+      "ListServerPoolResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "serverPoolsCollection": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServerPoolInstance"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ListServicesResponse": {
         "type": "object",
         "properties": {
@@ -19297,6 +21997,35 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/VirtualNetworkInstance"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ListVirtualServerResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "virtualServersCollection": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VirtualServerInstance"
             },
             "nullable": true
           }
@@ -19899,6 +22628,91 @@
         },
         "additionalProperties": false
       },
+      "MonitorProfileInstance": {
+        "type": "object",
+        "properties": {
+          "monitorProfileId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "externalId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "pckProjectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "resourceType": {
+            "$ref": "#/components/schemas/MonitorProfileResourceType"
+          },
+          "path": {
+            "type": "string",
+            "nullable": true
+          },
+          "monitorPort": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "interval": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "timeout": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "riseCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fallCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MonitorProfileResourceType": {
+        "enum": [
+          "LBTcpMonitorProfile",
+          "LBHttpMonitorProfile",
+          "LBHttpsMonitorProfile",
+          "LBUdpMonitorProfile",
+          "LBIcmpMonitorProfile",
+          "LBPassiveMonitorProfile"
+        ],
+        "type": "string"
+      },
       "NATRuleAction": {
         "enum": [
           "SNAT",
@@ -20336,6 +23150,92 @@
           },
           "gfwIngressRuleExtId": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NsxLoadBalancer": {
+        "type": "object",
+        "properties": {
+          "loadBalancerId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "externalId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "pckProjectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "loadBalancerType": {
+            "$ref": "#/components/schemas/LoadBalancerType"
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "enabled": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "provisioningStatus": {
+            "$ref": "#/components/schemas/ProvisioningStatus"
+          },
+          "operatingStatus": {
+            "$ref": "#/components/schemas/OperatingStatus"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "size": {
+            "$ref": "#/components/schemas/Size"
+          },
+          "connectivityPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "connectivityT1": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "errorLogLevel": {
+            "$ref": "#/components/schemas/ErrorLogLevel"
+          },
+          "path": {
+            "type": "string",
+            "nullable": true
+          },
+          "virtualServers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VirtualServerInstance"
+            },
             "nullable": true
           }
         },
@@ -21135,6 +24035,37 @@
           "OPENSTACK"
         ],
         "type": "string"
+      },
+      "PoolMemberSettings": {
+        "type": "object",
+        "properties": {
+          "poolMemberSettingsId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "adminState": {
+            "type": "string",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "ipAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "port": {
+            "type": "string",
+            "nullable": true
+          },
+          "weight": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
       },
       "PoolProtocol": {
         "enum": [
@@ -22650,6 +25581,85 @@
         },
         "additionalProperties": false
       },
+      "ServerPoolInstance": {
+        "type": "object",
+        "properties": {
+          "serverPoolId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "externalId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "pckProjectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "resourceType": {
+            "type": "string",
+            "nullable": true
+          },
+          "activeMonitorPaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LBPoolMember"
+            },
+            "nullable": true
+          },
+          "memberGroup": {
+            "$ref": "#/components/schemas/LBPoolMemberGroup"
+          },
+          "path": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "monitors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MonitorProfileInstance"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ServiceInstance": {
         "type": "object",
         "properties": {
@@ -22725,6 +25735,15 @@
           }
         },
         "additionalProperties": false
+      },
+      "Size": {
+        "enum": [
+          "SMALL",
+          "MEDIUM",
+          "LARGE",
+          "XLARGE"
+        ],
+        "type": "string"
       },
       "SnapshotInstance": {
         "type": "object",
@@ -24078,6 +27097,34 @@
         },
         "additionalProperties": false
       },
+      "UpdateAppProfileResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "appProfileInstance": {
+            "$ref": "#/components/schemas/AppProfileInstance"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateBillingAlarmDefinitionResponse": {
         "type": "object",
         "properties": {
@@ -24358,6 +27405,34 @@
         },
         "additionalProperties": false
       },
+      "UpdateMonitorProfileResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "monitorProfileInstance": {
+            "$ref": "#/components/schemas/MonitorProfileInstance"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateNATRuleResponse": {
         "type": "object",
         "properties": {
@@ -24379,6 +27454,34 @@
           },
           "natRuleInstance": {
             "$ref": "#/components/schemas/NATRuleInstance"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateNsxLoadBalancerResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "loadBalancerInstance": {
+            "$ref": "#/components/schemas/NsxLoadBalancer"
           },
           "requestInstance": {
             "$ref": "#/components/schemas/RequestInstance"
@@ -24526,6 +27629,34 @@
         },
         "additionalProperties": false
       },
+      "UpdateServerPoolResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "serverPoolInstance": {
+            "$ref": "#/components/schemas/ServerPoolInstance"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateSnapshotResponse": {
         "type": "object",
         "properties": {
@@ -24631,6 +27762,34 @@
           },
           "virtualNetworkInstance": {
             "$ref": "#/components/schemas/VirtualNetworkInstance"
+          },
+          "requestInstance": {
+            "$ref": "#/components/schemas/RequestInstance"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateVirtualServerResponse": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "virtualServerInstance": {
+            "$ref": "#/components/schemas/VirtualServerInstance"
           },
           "requestInstance": {
             "$ref": "#/components/schemas/RequestInstance"
@@ -25425,6 +28584,108 @@
         },
         "additionalProperties": false
       },
+      "VirtualServerInstance": {
+        "type": "object",
+        "properties": {
+          "virtualServerId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "externalId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "pckProjectId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "resourceType": {
+            "type": "string",
+            "nullable": true
+          },
+          "ipAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "ports": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "applicationProfilePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "path": {
+            "type": "string",
+            "nullable": true
+          },
+          "poolPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "lbServicePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "loadBalancerId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "serverPoolId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "appProfileId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "serverPoolInstance": {
+            "$ref": "#/components/schemas/ServerPoolInstance"
+          },
+          "appProfileInstance": {
+            "$ref": "#/components/schemas/AppProfileInstance"
+          }
+        },
+        "additionalProperties": false
+      },
       "WaitHandle": {
         "type": "object",
         "properties": {
@@ -25690,6 +28951,9 @@
       "name": "Accounts"
     },
     {
+      "name": "AppProfile"
+    },
+    {
       "name": "Auth"
     },
     {
@@ -25765,6 +29029,9 @@
       "name": "KeySchedule"
     },
     {
+      "name": "LoadBalancer"
+    },
+    {
       "name": "Log"
     },
     {
@@ -25784,6 +29051,9 @@
     },
     {
       "name": "LogUser"
+    },
+    {
+      "name": "MonitorProfile"
     },
     {
       "name": "NatRule"
@@ -25813,6 +29083,9 @@
       "name": "SecurityGroup"
     },
     {
+      "name": "ServerPool"
+    },
+    {
       "name": "Tags"
     },
     {
@@ -25826,6 +29099,9 @@
     },
     {
       "name": "VirtualNetwork"
+    },
+    {
+      "name": "VirtualServer"
     }
   ]
 }
