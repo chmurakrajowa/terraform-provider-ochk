@@ -51,6 +51,8 @@ type APIClient struct {
 
 	AccountsAPI *AccountsAPIService
 
+	AppProfileAPI *AppProfileAPIService
+
 	AuthAPI *AuthAPIService
 
 	AvailablePublicIpAPI *AvailablePublicIpAPIService
@@ -101,6 +103,8 @@ type APIClient struct {
 
 	KeyScheduleAPI *KeyScheduleAPIService
 
+	LoadBalancerAPI *LoadBalancerAPIService
+
 	LogAPI *LogAPIService
 
 	LogCategoryAPI *LogCategoryAPIService
@@ -114,6 +118,8 @@ type APIClient struct {
 	LogUserAPI *LogUserAPIService
 
 	LogoutAPI *LogoutAPIService
+
+	MonitorProfileAPI *MonitorProfileAPIService
 
 	NatRuleAPI *NatRuleAPIService
 
@@ -133,6 +139,8 @@ type APIClient struct {
 
 	SecurityGroupAPI *SecurityGroupAPIService
 
+	ServerPoolAPI *ServerPoolAPIService
+
 	TagsAPI *TagsAPIService
 
 	TokenInfoAPI *TokenInfoAPIService
@@ -142,6 +150,8 @@ type APIClient struct {
 	VirtualMachineSnapshotAPI *VirtualMachineSnapshotAPIService
 
 	VirtualNetworkAPI *VirtualNetworkAPIService
+
+	VirtualServerAPI *VirtualServerAPIService
 }
 
 type service struct {
@@ -161,6 +171,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.AccountsAPI = (*AccountsAPIService)(&c.common)
+	c.AppProfileAPI = (*AppProfileAPIService)(&c.common)
 	c.AuthAPI = (*AuthAPIService)(&c.common)
 	c.AvailablePublicIpAPI = (*AvailablePublicIpAPIService)(&c.common)
 	c.BackupsAPI = (*BackupsAPIService)(&c.common)
@@ -186,6 +197,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.IpamServiceAPI = (*IpamServiceAPIService)(&c.common)
 	c.KeyAPI = (*KeyAPIService)(&c.common)
 	c.KeyScheduleAPI = (*KeyScheduleAPIService)(&c.common)
+	c.LoadBalancerAPI = (*LoadBalancerAPIService)(&c.common)
 	c.LogAPI = (*LogAPIService)(&c.common)
 	c.LogCategoryAPI = (*LogCategoryAPIService)(&c.common)
 	c.LogCategoryUserAPI = (*LogCategoryUserAPIService)(&c.common)
@@ -193,6 +205,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.LogStatsUserAPI = (*LogStatsUserAPIService)(&c.common)
 	c.LogUserAPI = (*LogUserAPIService)(&c.common)
 	c.LogoutAPI = (*LogoutAPIService)(&c.common)
+	c.MonitorProfileAPI = (*MonitorProfileAPIService)(&c.common)
 	c.NatRuleAPI = (*NatRuleAPIService)(&c.common)
 	c.OvnLbAPI = (*OvnLbAPIService)(&c.common)
 	c.PortForwardingAPI = (*PortForwardingAPIService)(&c.common)
@@ -202,11 +215,13 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.RequestsAPI = (*RequestsAPIService)(&c.common)
 	c.RouterAPI = (*RouterAPIService)(&c.common)
 	c.SecurityGroupAPI = (*SecurityGroupAPIService)(&c.common)
+	c.ServerPoolAPI = (*ServerPoolAPIService)(&c.common)
 	c.TagsAPI = (*TagsAPIService)(&c.common)
 	c.TokenInfoAPI = (*TokenInfoAPIService)(&c.common)
 	c.VirtualMachineAPI = (*VirtualMachineAPIService)(&c.common)
 	c.VirtualMachineSnapshotAPI = (*VirtualMachineSnapshotAPIService)(&c.common)
 	c.VirtualNetworkAPI = (*VirtualNetworkAPIService)(&c.common)
+	c.VirtualServerAPI = (*VirtualServerAPIService)(&c.common)
 
 	return c
 }
