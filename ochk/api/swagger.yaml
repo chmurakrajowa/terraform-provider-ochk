@@ -239,13 +239,14 @@ paths:
       summary: List application profiles
       description: List application profiles
       parameters:
-        - name: displayName
-          in: query
-          schema:
-            type: string
         - name: projectId
           in: path
           required: true
+          schema:
+            type: string
+            format: uuid
+        - name: displayName
+          in: query
           schema:
             type: string
       responses:
@@ -254,7 +255,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListAppProfileResponse'
+                $ref: '#/components/schemas/AppProfileInstanceListApiResponse'
         '400':
           description: Bad Request
           content:
@@ -284,6 +285,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       requestBody:
         content:
           application/json:
@@ -301,7 +303,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateAppProfileResponse'
+                $ref: '#/components/schemas/AppProfileInstanceApiResponse'
         '400':
           description: Bad Request
           content:
@@ -333,24 +335,25 @@ paths:
       summary: Get application profile
       description: Get application profile
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: appProfileId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetAppProfileResponse'
+                $ref: '#/components/schemas/AppProfileInstanceApiResponse'
         '400':
           description: Bad Request
           content:
@@ -381,17 +384,18 @@ paths:
       summary: Update application profile
       description: Update application profile
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: appProfileId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       requestBody:
         content:
           application/json:
@@ -409,7 +413,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UpdateAppProfileResponse'
+                $ref: '#/components/schemas/AppProfileInstanceApiResponse'
         '400':
           description: Bad Request
           content:
@@ -440,24 +444,25 @@ paths:
       summary: Delete application profile
       description: Delete application profile
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: appProfileId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteAppProfileResponse'
+                $ref: '#/components/schemas/StringApiResponse'
         '400':
           description: Bad Request
           content:
@@ -3735,13 +3740,14 @@ paths:
       summary: List load balancers
       description: List load balancers
       parameters:
-        - name: displayName
-          in: query
-          schema:
-            type: string
         - name: projectId
           in: path
           required: true
+          schema:
+            type: string
+            format: uuid
+        - name: displayName
+          in: query
           schema:
             type: string
       responses:
@@ -3750,7 +3756,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListNsxLoadBalancerResponse'
+                $ref: '#/components/schemas/NsxLoadBalancerListApiResponse'
         '400':
           description: Bad Request
           content:
@@ -3780,6 +3786,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       requestBody:
         content:
           application/json:
@@ -3797,7 +3804,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateNsxLoadBalancerResponse'
+                $ref: '#/components/schemas/NsxLoadBalancerApiResponse'
         '400':
           description: Bad Request
           content:
@@ -3829,24 +3836,25 @@ paths:
       summary: Get load balancer
       description: Get load balancer
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: loadBalancerId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetNsxLoadBalancerResponse'
+                $ref: '#/components/schemas/NsxLoadBalancerApiResponse'
         '400':
           description: Bad Request
           content:
@@ -3877,17 +3885,18 @@ paths:
       summary: Update load balancer
       description: Update load balancer
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: loadBalancerId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       requestBody:
         content:
           application/json:
@@ -3905,7 +3914,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UpdateNsxLoadBalancerResponse'
+                $ref: '#/components/schemas/NsxLoadBalancerApiResponse'
         '400':
           description: Bad Request
           content:
@@ -3936,24 +3945,25 @@ paths:
       summary: Delete load balancer
       description: Delete load balancer
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: loadBalancerId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteNsxLoadBalancerResponse'
+                $ref: '#/components/schemas/StringApiResponse'
         '400':
           description: Bad Request
           content:
@@ -4645,13 +4655,14 @@ paths:
       summary: List monitor profiles
       description: List monitor profiles
       parameters:
-        - name: displayName
-          in: query
-          schema:
-            type: string
         - name: projectId
           in: path
           required: true
+          schema:
+            type: string
+            format: uuid
+        - name: displayName
+          in: query
           schema:
             type: string
       responses:
@@ -4660,7 +4671,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListMonitorProfileResponse'
+                $ref: '#/components/schemas/MonitorProfileInstanceListApiResponse'
         '400':
           description: Bad Request
           content:
@@ -4690,6 +4701,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       requestBody:
         content:
           application/json:
@@ -4707,7 +4719,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateMonitorProfileResponse'
+                $ref: '#/components/schemas/MonitorProfileInstanceApiResponse'
         '400':
           description: Bad Request
           content:
@@ -4739,24 +4751,25 @@ paths:
       summary: Get monitor profile
       description: Get monitor profile
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: monitorProfileId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetMonitorProfileResponse'
+                $ref: '#/components/schemas/MonitorProfileInstanceApiResponse'
         '400':
           description: Bad Request
           content:
@@ -4787,17 +4800,18 @@ paths:
       summary: Update monitor profile
       description: Update monitor profile
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: monitorProfileId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       requestBody:
         content:
           application/json:
@@ -4815,7 +4829,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UpdateMonitorProfileResponse'
+                $ref: '#/components/schemas/MonitorProfileInstanceApiResponse'
         '400':
           description: Bad Request
           content:
@@ -4846,24 +4860,25 @@ paths:
       summary: Delete monitor profile
       description: Delete monitor profile
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: monitorProfileId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteMonitorProfileResponse'
+                $ref: '#/components/schemas/StringApiResponse'
         '400':
           description: Bad Request
           content:
@@ -6588,13 +6603,14 @@ paths:
       summary: List server pools
       description: List server pools
       parameters:
-        - name: displayName
-          in: query
-          schema:
-            type: string
         - name: projectId
           in: path
           required: true
+          schema:
+            type: string
+            format: uuid
+        - name: displayName
+          in: query
           schema:
             type: string
       responses:
@@ -6603,7 +6619,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListServerPoolResponse'
+                $ref: '#/components/schemas/ServerPoolInstanceListApiResponse'
         '400':
           description: Bad Request
           content:
@@ -6633,6 +6649,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       requestBody:
         content:
           application/json:
@@ -6650,7 +6667,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateServerPoolResponse'
+                $ref: '#/components/schemas/ServerPoolInstanceApiResponse'
         '400':
           description: Bad Request
           content:
@@ -6682,24 +6699,25 @@ paths:
       summary: Get server pool
       description: Get server pool
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: serverPoolId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetServerPoolResponse'
+                $ref: '#/components/schemas/ServerPoolInstanceApiResponse'
         '400':
           description: Bad Request
           content:
@@ -6730,17 +6748,18 @@ paths:
       summary: Update server pool
       description: Update server pool
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: serverPoolId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       requestBody:
         content:
           application/json:
@@ -6758,7 +6777,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UpdateServerPoolResponse'
+                $ref: '#/components/schemas/ServerPoolInstanceApiResponse'
         '400':
           description: Bad Request
           content:
@@ -6789,24 +6808,25 @@ paths:
       summary: Delete server pool
       description: Delete server pool
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: serverPoolId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteServerPoolResponse'
+                $ref: '#/components/schemas/StringApiResponse'
         '400':
           description: Bad Request
           content:
@@ -7980,13 +8000,14 @@ paths:
       summary: List virtual servers
       description: List virtual servers
       parameters:
-        - name: displayName
-          in: query
-          schema:
-            type: string
         - name: projectId
           in: path
           required: true
+          schema:
+            type: string
+            format: uuid
+        - name: displayName
+          in: query
           schema:
             type: string
       responses:
@@ -7995,7 +8016,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListVirtualServerResponse'
+                $ref: '#/components/schemas/VirtualServerInstanceListApiResponse'
         '400':
           description: Bad Request
           content:
@@ -8025,6 +8046,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       requestBody:
         content:
           application/json:
@@ -8042,7 +8064,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateVirtualServerResponse'
+                $ref: '#/components/schemas/VirtualServerInstanceApiResponse'
         '400':
           description: Bad Request
           content:
@@ -8074,24 +8096,25 @@ paths:
       summary: Get virtual server
       description: Get virtual server
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: virtualServerId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetVirtualServerResponse'
+                $ref: '#/components/schemas/VirtualServerInstanceApiResponse'
         '400':
           description: Bad Request
           content:
@@ -8122,17 +8145,18 @@ paths:
       summary: Update virtual server
       description: Update virtual server
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: virtualServerId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       requestBody:
         content:
           application/json:
@@ -8150,7 +8174,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UpdateVirtualServerResponse'
+                $ref: '#/components/schemas/VirtualServerInstanceApiResponse'
         '400':
           description: Bad Request
           content:
@@ -8181,24 +8205,25 @@ paths:
       summary: Delete virtual server
       description: Delete virtual server
       parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
         - name: virtualServerId
           in: path
           required: true
           schema:
             type: string
             format: uuid
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteVirtualServerResponse'
+                $ref: '#/components/schemas/StringApiResponse'
         '400':
           description: Bad Request
           content:
@@ -8520,6 +8545,9 @@ components:
           format: int32
         haFlowMirroringEnabled:
           type: boolean
+        flowMirroringEnabled:
+          type: boolean
+          nullable: true
         path:
           type: string
           nullable: true
@@ -8554,6 +8582,63 @@ components:
         modificationDate:
           type: string
           format: date-time
+          nullable: true
+        httpRedirectTo:
+          type: string
+          nullable: true
+        httpRedirectToHttps:
+          type: boolean
+          nullable: true
+        xForwardedFor:
+          type: string
+          nullable: true
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagInstance'
+          nullable: true
+      additionalProperties: false
+    AppProfileInstanceApiResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        errorCode:
+          type: integer
+          format: int32
+          nullable: true
+        success:
+          type: boolean
+        messages:
+          type: string
+          nullable: true
+        result:
+          $ref: '#/components/schemas/AppProfileInstance'
+        requestInstance:
+          nullable: true
+      additionalProperties: false
+    AppProfileInstanceListApiResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        errorCode:
+          type: integer
+          format: int32
+          nullable: true
+        success:
+          type: boolean
+        messages:
+          type: string
+          nullable: true
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppProfileInstance'
+          nullable: true
+        requestInstance:
           nullable: true
       additionalProperties: false
     AppProfileResourceType:
@@ -9875,26 +9960,6 @@ components:
         requestInstance:
           $ref: '#/components/schemas/RequestInstance'
       additionalProperties: false
-    CreateAppProfileResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        appProfileInstance:
-          $ref: '#/components/schemas/AppProfileInstance'
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
     CreateBillingAlarmDefinitionResponse:
       type: object
       properties:
@@ -10183,26 +10248,6 @@ components:
         requestInstance:
           $ref: '#/components/schemas/RequestInstance'
       additionalProperties: false
-    CreateMonitorProfileResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        monitorProfileInstance:
-          $ref: '#/components/schemas/MonitorProfileInstance'
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
     CreateNATRuleResponse:
       type: object
       properties:
@@ -10240,26 +10285,6 @@ components:
           format: date-time
         keyInstance:
           $ref: '#/components/schemas/KeyInstance'
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
-    CreateNsxLoadBalancerResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        loadBalancerInstance:
-          $ref: '#/components/schemas/NsxLoadBalancer'
         requestInstance:
           $ref: '#/components/schemas/RequestInstance'
       additionalProperties: false
@@ -10363,26 +10388,6 @@ components:
         requestInstance:
           $ref: '#/components/schemas/RequestInstance'
       additionalProperties: false
-    CreateServerPoolResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        serverPoolInstance:
-          $ref: '#/components/schemas/ServerPoolInstance'
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
     CreateSnapshotResponse:
       type: object
       properties:
@@ -10460,26 +10465,6 @@ components:
           format: date-time
         virtualNetworkInstance:
           $ref: '#/components/schemas/VirtualNetworkInstance'
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
-    CreateVirtualServerResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        virtualServerInstance:
-          $ref: '#/components/schemas/VirtualServerInstance'
         requestInstance:
           $ref: '#/components/schemas/RequestInstance'
       additionalProperties: false
@@ -10720,24 +10705,6 @@ components:
         requestInstance:
           $ref: '#/components/schemas/RequestInstance'
       additionalProperties: false
-    DeleteAppProfileResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
     DeleteBillingAlarmDefinitionResponse:
       type: object
       properties:
@@ -10922,43 +10889,7 @@ components:
         requestInstance:
           $ref: '#/components/schemas/RequestInstance'
       additionalProperties: false
-    DeleteMonitorProfileResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
     DeleteNATRuleResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
-    DeleteNsxLoadBalancerResponse:
       type: object
       properties:
         errorCode:
@@ -11066,24 +10997,6 @@ components:
         requestInstance:
           $ref: '#/components/schemas/RequestInstance'
       additionalProperties: false
-    DeleteServerPoolResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
     DeleteSnapshotResponse:
       type: object
       properties:
@@ -11139,24 +11052,6 @@ components:
           $ref: '#/components/schemas/RequestInstance'
       additionalProperties: false
     DeleteVirtualNetworkResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
-    DeleteVirtualServerResponse:
       type: object
       properties:
         errorCode:
@@ -11824,6 +11719,11 @@ components:
         vmName:
           type: string
           nullable: true
+        ovnLoadBalancers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OvnLoadBalancer'
+          nullable: true
       additionalProperties: false
     FolderGetResponse:
       type: object
@@ -11998,24 +11898,6 @@ components:
           format: date-time
         accountInstance:
           $ref: '#/components/schemas/AccountInstance'
-      additionalProperties: false
-    GetAppProfileResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        appProfileInstance:
-          $ref: '#/components/schemas/AppProfileInstance'
       additionalProperties: false
     GetBackupListResponse:
       type: object
@@ -12326,24 +12208,6 @@ components:
         content:
           $ref: '#/components/schemas/ElkResponse'
       additionalProperties: false
-    GetMonitorProfileResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        monitorProfileInstance:
-          $ref: '#/components/schemas/MonitorProfileInstance'
-      additionalProperties: false
     GetNATRuleResponse:
       type: object
       properties:
@@ -12361,24 +12225,6 @@ components:
           format: date-time
         natRuleInstance:
           $ref: '#/components/schemas/NATRuleInstance'
-      additionalProperties: false
-    GetNsxLoadBalancerResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        nsxLoadBalancer:
-          $ref: '#/components/schemas/NsxLoadBalancer'
       additionalProperties: false
     GetPlatformTypeResponse:
       type: object
@@ -12506,24 +12352,6 @@ components:
         securityGroup:
           $ref: '#/components/schemas/SecurityGroup'
       additionalProperties: false
-    GetServerPoolResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        serverPoolInstance:
-          $ref: '#/components/schemas/ServerPoolInstance'
-      additionalProperties: false
     GetServiceResponse:
       type: object
       properties:
@@ -12631,24 +12459,6 @@ components:
           format: date-time
         virtualNetworkInstance:
           $ref: '#/components/schemas/VirtualNetworkInstance'
-      additionalProperties: false
-    GetVirtualServerResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        virtualServerInstance:
-          $ref: '#/components/schemas/VirtualServerInstance'
       additionalProperties: false
     GfwRule:
       type: object
@@ -13838,27 +13648,6 @@ components:
             $ref: '#/components/schemas/AccountInstance'
           nullable: true
       additionalProperties: false
-    ListAppProfileResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        appProfilesCollection:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppProfileInstance'
-          nullable: true
-      additionalProperties: false
     ListBackupListResponse:
       type: object
       properties:
@@ -14111,27 +13900,6 @@ components:
             $ref: '#/components/schemas/LogCategory'
           nullable: true
       additionalProperties: false
-    ListMonitorProfileResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        monitorProfilesCollection:
-          type: array
-          items:
-            $ref: '#/components/schemas/MonitorProfileInstance'
-          nullable: true
-      additionalProperties: false
     ListNATRulesResponse:
       type: object
       properties:
@@ -14151,27 +13919,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/NATRuleInstance'
-          nullable: true
-      additionalProperties: false
-    ListNsxLoadBalancerResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        loadBalancerCollection:
-          type: array
-          items:
-            $ref: '#/components/schemas/NsxLoadBalancer'
           nullable: true
       additionalProperties: false
     ListPortForwardingResponse:
@@ -14321,27 +14068,6 @@ components:
             $ref: '#/components/schemas/SecurityGroup'
           nullable: true
       additionalProperties: false
-    ListServerPoolResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        serverPoolsCollection:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServerPoolInstance'
-          nullable: true
-      additionalProperties: false
     ListServicesResponse:
       type: object
       properties:
@@ -14445,27 +14171,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VirtualNetworkInstance'
-          nullable: true
-      additionalProperties: false
-    ListVirtualServerResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        virtualServersCollection:
-          type: array
-          items:
-            $ref: '#/components/schemas/VirtualServerInstance'
           nullable: true
       additionalProperties: false
     ListenerProtocol:
@@ -14974,6 +14679,54 @@ components:
           type: string
           format: date-time
           nullable: true
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagInstance'
+          nullable: true
+      additionalProperties: false
+    MonitorProfileInstanceApiResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        errorCode:
+          type: integer
+          format: int32
+          nullable: true
+        success:
+          type: boolean
+        messages:
+          type: string
+          nullable: true
+        result:
+          $ref: '#/components/schemas/MonitorProfileInstance'
+        requestInstance:
+          nullable: true
+      additionalProperties: false
+    MonitorProfileInstanceListApiResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        errorCode:
+          type: integer
+          format: int32
+          nullable: true
+        success:
+          type: boolean
+        messages:
+          type: string
+          nullable: true
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitorProfileInstance'
+          nullable: true
+        requestInstance:
+          nullable: true
       additionalProperties: false
     MonitorProfileResourceType:
       enum:
@@ -15375,6 +15128,54 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VirtualServerInstance'
+          nullable: true
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagInstance'
+          nullable: true
+      additionalProperties: false
+    NsxLoadBalancerApiResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        errorCode:
+          type: integer
+          format: int32
+          nullable: true
+        success:
+          type: boolean
+        messages:
+          type: string
+          nullable: true
+        result:
+          $ref: '#/components/schemas/NsxLoadBalancer'
+        requestInstance:
+          nullable: true
+      additionalProperties: false
+    NsxLoadBalancerListApiResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        errorCode:
+          type: integer
+          format: int32
+          nullable: true
+        success:
+          type: boolean
+        messages:
+          type: string
+          nullable: true
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/NsxLoadBalancer'
+          nullable: true
+        requestInstance:
           nullable: true
       additionalProperties: false
     Oid:
@@ -17163,7 +16964,6 @@ components:
           nullable: true
         externalId:
           type: string
-          format: uuid
           nullable: true
         pckProjectId:
           type: string
@@ -17211,6 +17011,54 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MonitorProfileInstance'
+          nullable: true
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagInstance'
+          nullable: true
+      additionalProperties: false
+    ServerPoolInstanceApiResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        errorCode:
+          type: integer
+          format: int32
+          nullable: true
+        success:
+          type: boolean
+        messages:
+          type: string
+          nullable: true
+        result:
+          $ref: '#/components/schemas/ServerPoolInstance'
+        requestInstance:
+          nullable: true
+      additionalProperties: false
+    ServerPoolInstanceListApiResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        errorCode:
+          type: integer
+          format: int32
+          nullable: true
+        success:
+          type: boolean
+        messages:
+          type: string
+          nullable: true
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServerPoolInstance'
+          nullable: true
+        requestInstance:
           nullable: true
       additionalProperties: false
     ServiceInstance:
@@ -18279,26 +18127,6 @@ components:
         requestInstance:
           $ref: '#/components/schemas/RequestInstance'
       additionalProperties: false
-    UpdateAppProfileResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        appProfileInstance:
-          $ref: '#/components/schemas/AppProfileInstance'
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
     UpdateBillingAlarmDefinitionResponse:
       type: object
       properties:
@@ -18499,26 +18327,6 @@ components:
         requestInstance:
           $ref: '#/components/schemas/RequestInstance'
       additionalProperties: false
-    UpdateMonitorProfileResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        monitorProfileInstance:
-          $ref: '#/components/schemas/MonitorProfileInstance'
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
     UpdateNATRuleResponse:
       type: object
       properties:
@@ -18536,26 +18344,6 @@ components:
           format: date-time
         natRuleInstance:
           $ref: '#/components/schemas/NATRuleInstance'
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
-    UpdateNsxLoadBalancerResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        loadBalancerInstance:
-          $ref: '#/components/schemas/NsxLoadBalancer'
         requestInstance:
           $ref: '#/components/schemas/RequestInstance'
       additionalProperties: false
@@ -18659,26 +18447,6 @@ components:
         requestInstance:
           $ref: '#/components/schemas/RequestInstance'
       additionalProperties: false
-    UpdateServerPoolResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        serverPoolInstance:
-          $ref: '#/components/schemas/ServerPoolInstance'
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
     UpdateSnapshotResponse:
       type: object
       properties:
@@ -18756,26 +18524,6 @@ components:
           format: date-time
         virtualNetworkInstance:
           $ref: '#/components/schemas/VirtualNetworkInstance'
-        requestInstance:
-          $ref: '#/components/schemas/RequestInstance'
-      additionalProperties: false
-    UpdateVirtualServerResponse:
-      type: object
-      properties:
-        errorCode:
-          type: integer
-          format: int32
-          nullable: true
-        messages:
-          type: string
-          nullable: true
-        success:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-        virtualServerInstance:
-          $ref: '#/components/schemas/VirtualServerInstance'
         requestInstance:
           $ref: '#/components/schemas/RequestInstance'
       additionalProperties: false
@@ -19372,7 +19120,6 @@ components:
           nullable: true
         externalId:
           type: string
-          format: uuid
           nullable: true
         pckProjectId:
           type: string
@@ -19439,6 +19186,54 @@ components:
           $ref: '#/components/schemas/ServerPoolInstance'
         appProfileInstance:
           $ref: '#/components/schemas/AppProfileInstance'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagInstance'
+          nullable: true
+      additionalProperties: false
+    VirtualServerInstanceApiResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        errorCode:
+          type: integer
+          format: int32
+          nullable: true
+        success:
+          type: boolean
+        messages:
+          type: string
+          nullable: true
+        result:
+          $ref: '#/components/schemas/VirtualServerInstance'
+        requestInstance:
+          nullable: true
+      additionalProperties: false
+    VirtualServerInstanceListApiResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        errorCode:
+          type: integer
+          format: int32
+          nullable: true
+        success:
+          type: boolean
+        messages:
+          type: string
+          nullable: true
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/VirtualServerInstance'
+          nullable: true
+        requestInstance:
+          nullable: true
       additionalProperties: false
     WaitHandle:
       type: object

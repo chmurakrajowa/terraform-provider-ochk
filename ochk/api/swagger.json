@@ -389,16 +389,17 @@
         "description": "List application profiles",
         "parameters": [
           {
-            "name": "displayName",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "projectId",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "displayName",
+            "in": "query",
             "schema": {
               "type": "string"
             }
@@ -410,7 +411,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ListAppProfileResponse"
+                  "$ref": "#/components/schemas/AppProfileInstanceListApiResponse"
                 }
               }
             }
@@ -459,7 +460,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -488,7 +490,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateAppProfileResponse"
+                  "$ref": "#/components/schemas/AppProfileInstanceApiResponse"
                 }
               }
             }
@@ -545,7 +547,7 @@
         "description": "Get application profile",
         "parameters": [
           {
-            "name": "appProfileId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -554,11 +556,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "appProfileId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -568,7 +571,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetAppProfileResponse"
+                  "$ref": "#/components/schemas/AppProfileInstanceApiResponse"
                 }
               }
             }
@@ -623,7 +626,7 @@
         "description": "Update application profile",
         "parameters": [
           {
-            "name": "appProfileId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -632,11 +635,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "appProfileId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -665,7 +669,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UpdateAppProfileResponse"
+                  "$ref": "#/components/schemas/AppProfileInstanceApiResponse"
                 }
               }
             }
@@ -720,7 +724,7 @@
         "description": "Delete application profile",
         "parameters": [
           {
-            "name": "appProfileId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -729,11 +733,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "appProfileId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -743,7 +748,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeleteAppProfileResponse"
+                  "$ref": "#/components/schemas/StringApiResponse"
                 }
               }
             }
@@ -6120,16 +6125,17 @@
         "description": "List load balancers",
         "parameters": [
           {
-            "name": "displayName",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "projectId",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "displayName",
+            "in": "query",
             "schema": {
               "type": "string"
             }
@@ -6141,7 +6147,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ListNsxLoadBalancerResponse"
+                  "$ref": "#/components/schemas/NsxLoadBalancerListApiResponse"
                 }
               }
             }
@@ -6190,7 +6196,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -6219,7 +6226,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateNsxLoadBalancerResponse"
+                  "$ref": "#/components/schemas/NsxLoadBalancerApiResponse"
                 }
               }
             }
@@ -6276,7 +6283,7 @@
         "description": "Get load balancer",
         "parameters": [
           {
-            "name": "loadBalancerId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -6285,11 +6292,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "loadBalancerId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -6299,7 +6307,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetNsxLoadBalancerResponse"
+                  "$ref": "#/components/schemas/NsxLoadBalancerApiResponse"
                 }
               }
             }
@@ -6354,7 +6362,7 @@
         "description": "Update load balancer",
         "parameters": [
           {
-            "name": "loadBalancerId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -6363,11 +6371,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "loadBalancerId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -6396,7 +6405,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UpdateNsxLoadBalancerResponse"
+                  "$ref": "#/components/schemas/NsxLoadBalancerApiResponse"
                 }
               }
             }
@@ -6451,7 +6460,7 @@
         "description": "Delete load balancer",
         "parameters": [
           {
-            "name": "loadBalancerId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -6460,11 +6469,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "loadBalancerId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -6474,7 +6484,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeleteNsxLoadBalancerResponse"
+                  "$ref": "#/components/schemas/StringApiResponse"
                 }
               }
             }
@@ -7619,16 +7629,17 @@
         "description": "List monitor profiles",
         "parameters": [
           {
-            "name": "displayName",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "projectId",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "displayName",
+            "in": "query",
             "schema": {
               "type": "string"
             }
@@ -7640,7 +7651,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ListMonitorProfileResponse"
+                  "$ref": "#/components/schemas/MonitorProfileInstanceListApiResponse"
                 }
               }
             }
@@ -7689,7 +7700,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -7718,7 +7730,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateMonitorProfileResponse"
+                  "$ref": "#/components/schemas/MonitorProfileInstanceApiResponse"
                 }
               }
             }
@@ -7775,7 +7787,7 @@
         "description": "Get monitor profile",
         "parameters": [
           {
-            "name": "monitorProfileId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -7784,11 +7796,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "monitorProfileId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -7798,7 +7811,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetMonitorProfileResponse"
+                  "$ref": "#/components/schemas/MonitorProfileInstanceApiResponse"
                 }
               }
             }
@@ -7853,7 +7866,7 @@
         "description": "Update monitor profile",
         "parameters": [
           {
-            "name": "monitorProfileId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -7862,11 +7875,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "monitorProfileId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -7895,7 +7909,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UpdateMonitorProfileResponse"
+                  "$ref": "#/components/schemas/MonitorProfileInstanceApiResponse"
                 }
               }
             }
@@ -7950,7 +7964,7 @@
         "description": "Delete monitor profile",
         "parameters": [
           {
-            "name": "monitorProfileId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -7959,11 +7973,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "monitorProfileId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -7973,7 +7988,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeleteMonitorProfileResponse"
+                  "$ref": "#/components/schemas/StringApiResponse"
                 }
               }
             }
@@ -10811,16 +10826,17 @@
         "description": "List server pools",
         "parameters": [
           {
-            "name": "displayName",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "projectId",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "displayName",
+            "in": "query",
             "schema": {
               "type": "string"
             }
@@ -10832,7 +10848,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ListServerPoolResponse"
+                  "$ref": "#/components/schemas/ServerPoolInstanceListApiResponse"
                 }
               }
             }
@@ -10881,7 +10897,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -10910,7 +10927,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateServerPoolResponse"
+                  "$ref": "#/components/schemas/ServerPoolInstanceApiResponse"
                 }
               }
             }
@@ -10967,7 +10984,7 @@
         "description": "Get server pool",
         "parameters": [
           {
-            "name": "serverPoolId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -10976,11 +10993,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "serverPoolId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -10990,7 +11008,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetServerPoolResponse"
+                  "$ref": "#/components/schemas/ServerPoolInstanceApiResponse"
                 }
               }
             }
@@ -11045,7 +11063,7 @@
         "description": "Update server pool",
         "parameters": [
           {
-            "name": "serverPoolId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -11054,11 +11072,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "serverPoolId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -11087,7 +11106,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UpdateServerPoolResponse"
+                  "$ref": "#/components/schemas/ServerPoolInstanceApiResponse"
                 }
               }
             }
@@ -11142,7 +11161,7 @@
         "description": "Delete server pool",
         "parameters": [
           {
-            "name": "serverPoolId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -11151,11 +11170,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "serverPoolId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -11165,7 +11185,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeleteServerPoolResponse"
+                  "$ref": "#/components/schemas/StringApiResponse"
                 }
               }
             }
@@ -13097,16 +13117,17 @@
         "description": "List virtual servers",
         "parameters": [
           {
-            "name": "displayName",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "projectId",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "displayName",
+            "in": "query",
             "schema": {
               "type": "string"
             }
@@ -13118,7 +13139,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ListVirtualServerResponse"
+                  "$ref": "#/components/schemas/VirtualServerInstanceListApiResponse"
                 }
               }
             }
@@ -13167,7 +13188,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -13196,7 +13218,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateVirtualServerResponse"
+                  "$ref": "#/components/schemas/VirtualServerInstanceApiResponse"
                 }
               }
             }
@@ -13253,7 +13275,7 @@
         "description": "Get virtual server",
         "parameters": [
           {
-            "name": "virtualServerId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -13262,11 +13284,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "virtualServerId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -13276,7 +13299,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetVirtualServerResponse"
+                  "$ref": "#/components/schemas/VirtualServerInstanceApiResponse"
                 }
               }
             }
@@ -13331,7 +13354,7 @@
         "description": "Update virtual server",
         "parameters": [
           {
-            "name": "virtualServerId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -13340,11 +13363,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "virtualServerId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -13373,7 +13397,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UpdateVirtualServerResponse"
+                  "$ref": "#/components/schemas/VirtualServerInstanceApiResponse"
                 }
               }
             }
@@ -13428,7 +13452,7 @@
         "description": "Delete virtual server",
         "parameters": [
           {
-            "name": "virtualServerId",
+            "name": "projectId",
             "in": "path",
             "required": true,
             "schema": {
@@ -13437,11 +13461,12 @@
             }
           },
           {
-            "name": "projectId",
+            "name": "virtualServerId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -13451,7 +13476,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeleteVirtualServerResponse"
+                  "$ref": "#/components/schemas/StringApiResponse"
                 }
               }
             }
@@ -13889,6 +13914,10 @@
           "haFlowMirroringEnabled": {
             "type": "boolean"
           },
+          "flowMirroringEnabled": {
+            "type": "boolean",
+            "nullable": true
+          },
           "path": {
             "type": "string",
             "nullable": true
@@ -13932,6 +13961,85 @@
           "modificationDate": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "httpRedirectTo": {
+            "type": "string",
+            "nullable": true
+          },
+          "httpRedirectToHttps": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "xForwardedFor": {
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagInstance"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AppProfileInstanceApiResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "result": {
+            "$ref": "#/components/schemas/AppProfileInstance"
+          },
+          "requestInstance": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AppProfileInstanceListApiResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AppProfileInstance"
+            },
+            "nullable": true
+          },
+          "requestInstance": {
             "nullable": true
           }
         },
@@ -15721,34 +15829,6 @@
         },
         "additionalProperties": false
       },
-      "CreateAppProfileResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "appProfileInstance": {
-            "$ref": "#/components/schemas/AppProfileInstance"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
       "CreateBillingAlarmDefinitionResponse": {
         "type": "object",
         "properties": {
@@ -16149,34 +16229,6 @@
         },
         "additionalProperties": false
       },
-      "CreateMonitorProfileResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "monitorProfileInstance": {
-            "$ref": "#/components/schemas/MonitorProfileInstance"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
       "CreateNATRuleResponse": {
         "type": "object",
         "properties": {
@@ -16226,34 +16278,6 @@
           },
           "keyInstance": {
             "$ref": "#/components/schemas/KeyInstance"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateNsxLoadBalancerResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "loadBalancerInstance": {
-            "$ref": "#/components/schemas/NsxLoadBalancer"
           },
           "requestInstance": {
             "$ref": "#/components/schemas/RequestInstance"
@@ -16401,34 +16425,6 @@
         },
         "additionalProperties": false
       },
-      "CreateServerPoolResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "serverPoolInstance": {
-            "$ref": "#/components/schemas/ServerPoolInstance"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
       "CreateSnapshotResponse": {
         "type": "object",
         "properties": {
@@ -16534,34 +16530,6 @@
           },
           "virtualNetworkInstance": {
             "$ref": "#/components/schemas/VirtualNetworkInstance"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateVirtualServerResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "virtualServerInstance": {
-            "$ref": "#/components/schemas/VirtualServerInstance"
           },
           "requestInstance": {
             "$ref": "#/components/schemas/RequestInstance"
@@ -16893,31 +16861,6 @@
         },
         "additionalProperties": false
       },
-      "DeleteAppProfileResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
       "DeleteBillingAlarmDefinitionResponse": {
         "type": "object",
         "properties": {
@@ -17174,57 +17117,7 @@
         },
         "additionalProperties": false
       },
-      "DeleteMonitorProfileResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
       "DeleteNATRuleResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DeleteNsxLoadBalancerResponse": {
         "type": "object",
         "properties": {
           "errorCode": {
@@ -17374,31 +17267,6 @@
         },
         "additionalProperties": false
       },
-      "DeleteServerPoolResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
       "DeleteSnapshotResponse": {
         "type": "object",
         "properties": {
@@ -17475,31 +17343,6 @@
         "additionalProperties": false
       },
       "DeleteVirtualNetworkResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DeleteVirtualServerResponse": {
         "type": "object",
         "properties": {
           "errorCode": {
@@ -18398,6 +18241,13 @@
           "vmName": {
             "type": "string",
             "nullable": true
+          },
+          "ovnLoadBalancers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OvnLoadBalancer"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -18636,31 +18486,6 @@
           },
           "accountInstance": {
             "$ref": "#/components/schemas/AccountInstance"
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetAppProfileResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "appProfileInstance": {
-            "$ref": "#/components/schemas/AppProfileInstance"
           }
         },
         "additionalProperties": false
@@ -19094,31 +18919,6 @@
         },
         "additionalProperties": false
       },
-      "GetMonitorProfileResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "monitorProfileInstance": {
-            "$ref": "#/components/schemas/MonitorProfileInstance"
-          }
-        },
-        "additionalProperties": false
-      },
       "GetNATRuleResponse": {
         "type": "object",
         "properties": {
@@ -19140,31 +18940,6 @@
           },
           "natRuleInstance": {
             "$ref": "#/components/schemas/NATRuleInstance"
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetNsxLoadBalancerResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "nsxLoadBalancer": {
-            "$ref": "#/components/schemas/NsxLoadBalancer"
           }
         },
         "additionalProperties": false
@@ -19345,31 +19120,6 @@
         },
         "additionalProperties": false
       },
-      "GetServerPoolResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "serverPoolInstance": {
-            "$ref": "#/components/schemas/ServerPoolInstance"
-          }
-        },
-        "additionalProperties": false
-      },
       "GetServiceResponse": {
         "type": "object",
         "properties": {
@@ -19516,31 +19266,6 @@
           },
           "virtualNetworkInstance": {
             "$ref": "#/components/schemas/VirtualNetworkInstance"
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetVirtualServerResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "virtualServerInstance": {
-            "$ref": "#/components/schemas/VirtualServerInstance"
           }
         },
         "additionalProperties": false
@@ -21162,35 +20887,6 @@
         },
         "additionalProperties": false
       },
-      "ListAppProfileResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "appProfilesCollection": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppProfileInstance"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "ListBackupListResponse": {
         "type": "object",
         "properties": {
@@ -21539,35 +21235,6 @@
         },
         "additionalProperties": false
       },
-      "ListMonitorProfileResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "monitorProfilesCollection": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MonitorProfileInstance"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "ListNATRulesResponse": {
         "type": "object",
         "properties": {
@@ -21591,35 +21258,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/NATRuleInstance"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ListNsxLoadBalancerResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "loadBalancerCollection": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/NsxLoadBalancer"
             },
             "nullable": true
           }
@@ -21829,35 +21467,6 @@
         },
         "additionalProperties": false
       },
-      "ListServerPoolResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "serverPoolsCollection": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ServerPoolInstance"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "ListServicesResponse": {
         "type": "object",
         "properties": {
@@ -21997,35 +21606,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/VirtualNetworkInstance"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ListVirtualServerResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "virtualServersCollection": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/VirtualServerInstance"
             },
             "nullable": true
           }
@@ -22698,6 +22278,73 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagInstance"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MonitorProfileInstanceApiResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "result": {
+            "$ref": "#/components/schemas/MonitorProfileInstance"
+          },
+          "requestInstance": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MonitorProfileInstanceListApiResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MonitorProfileInstance"
+            },
+            "nullable": true
+          },
+          "requestInstance": {
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -23236,6 +22883,73 @@
             "items": {
               "$ref": "#/components/schemas/VirtualServerInstance"
             },
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagInstance"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NsxLoadBalancerApiResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "result": {
+            "$ref": "#/components/schemas/NsxLoadBalancer"
+          },
+          "requestInstance": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NsxLoadBalancerListApiResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NsxLoadBalancer"
+            },
+            "nullable": true
+          },
+          "requestInstance": {
             "nullable": true
           }
         },
@@ -25591,7 +25305,6 @@
           },
           "externalId": {
             "type": "string",
-            "format": "uuid",
             "nullable": true
           },
           "pckProjectId": {
@@ -25655,6 +25368,73 @@
             "items": {
               "$ref": "#/components/schemas/MonitorProfileInstance"
             },
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagInstance"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ServerPoolInstanceApiResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "result": {
+            "$ref": "#/components/schemas/ServerPoolInstance"
+          },
+          "requestInstance": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ServerPoolInstanceListApiResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServerPoolInstance"
+            },
+            "nullable": true
+          },
+          "requestInstance": {
             "nullable": true
           }
         },
@@ -27097,34 +26877,6 @@
         },
         "additionalProperties": false
       },
-      "UpdateAppProfileResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "appProfileInstance": {
-            "$ref": "#/components/schemas/AppProfileInstance"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
       "UpdateBillingAlarmDefinitionResponse": {
         "type": "object",
         "properties": {
@@ -27405,34 +27157,6 @@
         },
         "additionalProperties": false
       },
-      "UpdateMonitorProfileResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "monitorProfileInstance": {
-            "$ref": "#/components/schemas/MonitorProfileInstance"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
       "UpdateNATRuleResponse": {
         "type": "object",
         "properties": {
@@ -27454,34 +27178,6 @@
           },
           "natRuleInstance": {
             "$ref": "#/components/schemas/NATRuleInstance"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateNsxLoadBalancerResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "loadBalancerInstance": {
-            "$ref": "#/components/schemas/NsxLoadBalancer"
           },
           "requestInstance": {
             "$ref": "#/components/schemas/RequestInstance"
@@ -27629,34 +27325,6 @@
         },
         "additionalProperties": false
       },
-      "UpdateServerPoolResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "serverPoolInstance": {
-            "$ref": "#/components/schemas/ServerPoolInstance"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
       "UpdateSnapshotResponse": {
         "type": "object",
         "properties": {
@@ -27762,34 +27430,6 @@
           },
           "virtualNetworkInstance": {
             "$ref": "#/components/schemas/VirtualNetworkInstance"
-          },
-          "requestInstance": {
-            "$ref": "#/components/schemas/RequestInstance"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateVirtualServerResponse": {
-        "type": "object",
-        "properties": {
-          "errorCode": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "messages": {
-            "type": "string",
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "virtualServerInstance": {
-            "$ref": "#/components/schemas/VirtualServerInstance"
           },
           "requestInstance": {
             "$ref": "#/components/schemas/RequestInstance"
@@ -28594,7 +28234,6 @@
           },
           "externalId": {
             "type": "string",
-            "format": "uuid",
             "nullable": true
           },
           "pckProjectId": {
@@ -28682,6 +28321,73 @@
           },
           "appProfileInstance": {
             "$ref": "#/components/schemas/AppProfileInstance"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagInstance"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VirtualServerInstanceApiResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "result": {
+            "$ref": "#/components/schemas/VirtualServerInstance"
+          },
+          "requestInstance": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VirtualServerInstanceListApiResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "messages": {
+            "type": "string",
+            "nullable": true
+          },
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VirtualServerInstance"
+            },
+            "nullable": true
+          },
+          "requestInstance": {
+            "nullable": true
           }
         },
         "additionalProperties": false
