@@ -36,6 +36,7 @@ type ServerPoolInstance struct {
 	CreationDate       NullableTime             `json:"creationDate,omitempty"`
 	ModificationDate   NullableTime             `json:"modificationDate,omitempty"`
 	Monitors           []MonitorProfileInstance `json:"monitors,omitempty"`
+	Tags               []TagInstance            `json:"tags,omitempty"`
 }
 
 // NewServerPoolInstance instantiates a new ServerPoolInstance object
@@ -659,6 +660,39 @@ func (o *ServerPoolInstance) SetMonitors(v []MonitorProfileInstance) {
 	o.Monitors = v
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ServerPoolInstance) GetTags() []TagInstance {
+	if o == nil {
+		var ret []TagInstance
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ServerPoolInstance) GetTagsOk() ([]TagInstance, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *ServerPoolInstance) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []TagInstance and assigns it to the Tags field.
+func (o *ServerPoolInstance) SetTags(v []TagInstance) {
+	o.Tags = v
+}
+
 func (o ServerPoolInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ServerPoolId.IsSet() {
@@ -705,6 +739,9 @@ func (o ServerPoolInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Monitors != nil {
 		toSerialize["monitors"] = o.Monitors
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	return toSerialize, nil
 }

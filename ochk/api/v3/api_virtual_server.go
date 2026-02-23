@@ -35,7 +35,7 @@ func (r ApiProjectsProjectIdNetworkVirtualServersGetRequest) DisplayName(display
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkVirtualServersGetRequest) Execute() (*ListVirtualServerResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkVirtualServersGetRequest) Execute() (*VirtualServerInstanceListApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkVirtualServersGetExecute(r)
 }
 
@@ -58,13 +58,13 @@ func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersGet(ctx 
 
 // Execute executes the request
 //
-//	@return ListVirtualServerResponse
-func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersGetExecute(r ApiProjectsProjectIdNetworkVirtualServersGetRequest) (*ListVirtualServerResponse, *http.Response, error) {
+//	@return VirtualServerInstanceListApiResponse
+func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersGetExecute(r ApiProjectsProjectIdNetworkVirtualServersGetRequest) (*VirtualServerInstanceListApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *ListVirtualServerResponse
+		localVarReturnValue *VirtualServerInstanceListApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VirtualServerAPIService.ProjectsProjectIdNetworkVirtualServersGet")
@@ -180,7 +180,7 @@ func (r ApiProjectsProjectIdNetworkVirtualServersPutRequest) VirtualServerInstan
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkVirtualServersPutRequest) Execute() (*CreateVirtualServerResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkVirtualServersPutRequest) Execute() (*VirtualServerInstanceApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkVirtualServersPutExecute(r)
 }
 
@@ -203,13 +203,13 @@ func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersPut(ctx 
 
 // Execute executes the request
 //
-//	@return CreateVirtualServerResponse
-func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersPutExecute(r ApiProjectsProjectIdNetworkVirtualServersPutRequest) (*CreateVirtualServerResponse, *http.Response, error) {
+//	@return VirtualServerInstanceApiResponse
+func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersPutExecute(r ApiProjectsProjectIdNetworkVirtualServersPutRequest) (*VirtualServerInstanceApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *CreateVirtualServerResponse
+		localVarReturnValue *VirtualServerInstanceApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VirtualServerAPIService.ProjectsProjectIdNetworkVirtualServersPut")
@@ -326,11 +326,11 @@ func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersPutExecu
 type ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdDeleteRequest struct {
 	ctx             context.Context
 	ApiService      *VirtualServerAPIService
-	virtualServerId string
 	projectId       string
+	virtualServerId string
 }
 
-func (r ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdDeleteRequest) Execute() (*DeleteVirtualServerResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdDeleteRequest) Execute() (*StringApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkVirtualServersVirtualServerIdDeleteExecute(r)
 }
 
@@ -340,28 +340,28 @@ ProjectsProjectIdNetworkVirtualServersVirtualServerIdDelete Delete virtual serve
 Delete virtual server
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param virtualServerId
 	@param projectId
+	@param virtualServerId
 	@return ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdDeleteRequest
 */
-func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualServerIdDelete(ctx context.Context, virtualServerId string, projectId string) ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdDeleteRequest {
+func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualServerIdDelete(ctx context.Context, projectId string, virtualServerId string) ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdDeleteRequest {
 	return ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdDeleteRequest{
 		ApiService:      a,
 		ctx:             ctx,
-		virtualServerId: virtualServerId,
 		projectId:       projectId,
+		virtualServerId: virtualServerId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return DeleteVirtualServerResponse
-func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualServerIdDeleteExecute(r ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdDeleteRequest) (*DeleteVirtualServerResponse, *http.Response, error) {
+//	@return StringApiResponse
+func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualServerIdDeleteExecute(r ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdDeleteRequest) (*StringApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodDelete
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DeleteVirtualServerResponse
+		localVarReturnValue *StringApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VirtualServerAPIService.ProjectsProjectIdNetworkVirtualServersVirtualServerIdDelete")
@@ -370,8 +370,8 @@ func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualS
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/virtual-servers/{virtualServerId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"virtualServerId"+"}", url.PathEscape(parameterValueToString(r.virtualServerId, "virtualServerId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"virtualServerId"+"}", url.PathEscape(parameterValueToString(r.virtualServerId, "virtualServerId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -466,11 +466,11 @@ func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualS
 type ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdGetRequest struct {
 	ctx             context.Context
 	ApiService      *VirtualServerAPIService
-	virtualServerId string
 	projectId       string
+	virtualServerId string
 }
 
-func (r ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdGetRequest) Execute() (*GetVirtualServerResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdGetRequest) Execute() (*VirtualServerInstanceApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkVirtualServersVirtualServerIdGetExecute(r)
 }
 
@@ -480,28 +480,28 @@ ProjectsProjectIdNetworkVirtualServersVirtualServerIdGet Get virtual server
 Get virtual server
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param virtualServerId
 	@param projectId
+	@param virtualServerId
 	@return ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdGetRequest
 */
-func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualServerIdGet(ctx context.Context, virtualServerId string, projectId string) ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdGetRequest {
+func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualServerIdGet(ctx context.Context, projectId string, virtualServerId string) ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdGetRequest {
 	return ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdGetRequest{
 		ApiService:      a,
 		ctx:             ctx,
-		virtualServerId: virtualServerId,
 		projectId:       projectId,
+		virtualServerId: virtualServerId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return GetVirtualServerResponse
-func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualServerIdGetExecute(r ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdGetRequest) (*GetVirtualServerResponse, *http.Response, error) {
+//	@return VirtualServerInstanceApiResponse
+func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualServerIdGetExecute(r ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdGetRequest) (*VirtualServerInstanceApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *GetVirtualServerResponse
+		localVarReturnValue *VirtualServerInstanceApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VirtualServerAPIService.ProjectsProjectIdNetworkVirtualServersVirtualServerIdGet")
@@ -510,8 +510,8 @@ func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualS
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/virtual-servers/{virtualServerId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"virtualServerId"+"}", url.PathEscape(parameterValueToString(r.virtualServerId, "virtualServerId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"virtualServerId"+"}", url.PathEscape(parameterValueToString(r.virtualServerId, "virtualServerId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -617,8 +617,8 @@ func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualS
 type ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdPutRequest struct {
 	ctx                   context.Context
 	ApiService            *VirtualServerAPIService
-	virtualServerId       string
 	projectId             string
+	virtualServerId       string
 	virtualServerInstance *VirtualServerInstance
 }
 
@@ -627,7 +627,7 @@ func (r ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdPutRequest) Virt
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdPutRequest) Execute() (*UpdateVirtualServerResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdPutRequest) Execute() (*VirtualServerInstanceApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkVirtualServersVirtualServerIdPutExecute(r)
 }
 
@@ -637,28 +637,28 @@ ProjectsProjectIdNetworkVirtualServersVirtualServerIdPut Update virtual server
 Update virtual server
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param virtualServerId
 	@param projectId
+	@param virtualServerId
 	@return ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdPutRequest
 */
-func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualServerIdPut(ctx context.Context, virtualServerId string, projectId string) ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdPutRequest {
+func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualServerIdPut(ctx context.Context, projectId string, virtualServerId string) ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdPutRequest {
 	return ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdPutRequest{
 		ApiService:      a,
 		ctx:             ctx,
-		virtualServerId: virtualServerId,
 		projectId:       projectId,
+		virtualServerId: virtualServerId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return UpdateVirtualServerResponse
-func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualServerIdPutExecute(r ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdPutRequest) (*UpdateVirtualServerResponse, *http.Response, error) {
+//	@return VirtualServerInstanceApiResponse
+func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualServerIdPutExecute(r ApiProjectsProjectIdNetworkVirtualServersVirtualServerIdPutRequest) (*VirtualServerInstanceApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *UpdateVirtualServerResponse
+		localVarReturnValue *VirtualServerInstanceApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VirtualServerAPIService.ProjectsProjectIdNetworkVirtualServersVirtualServerIdPut")
@@ -667,8 +667,8 @@ func (a *VirtualServerAPIService) ProjectsProjectIdNetworkVirtualServersVirtualS
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/virtual-servers/{virtualServerId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"virtualServerId"+"}", url.PathEscape(parameterValueToString(r.virtualServerId, "virtualServerId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"virtualServerId"+"}", url.PathEscape(parameterValueToString(r.virtualServerId, "virtualServerId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

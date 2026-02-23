@@ -26,11 +26,11 @@ type AppProfileAPIService service
 type ApiProjectsProjectIdNetworkAppProfilesAppProfileIdDeleteRequest struct {
 	ctx          context.Context
 	ApiService   *AppProfileAPIService
-	appProfileId string
 	projectId    string
+	appProfileId string
 }
 
-func (r ApiProjectsProjectIdNetworkAppProfilesAppProfileIdDeleteRequest) Execute() (*DeleteAppProfileResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkAppProfilesAppProfileIdDeleteRequest) Execute() (*StringApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkAppProfilesAppProfileIdDeleteExecute(r)
 }
 
@@ -40,28 +40,28 @@ ProjectsProjectIdNetworkAppProfilesAppProfileIdDelete Delete application profile
 Delete application profile
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param appProfileId
 	@param projectId
+	@param appProfileId
 	@return ApiProjectsProjectIdNetworkAppProfilesAppProfileIdDeleteRequest
 */
-func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdDelete(ctx context.Context, appProfileId string, projectId string) ApiProjectsProjectIdNetworkAppProfilesAppProfileIdDeleteRequest {
+func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdDelete(ctx context.Context, projectId string, appProfileId string) ApiProjectsProjectIdNetworkAppProfilesAppProfileIdDeleteRequest {
 	return ApiProjectsProjectIdNetworkAppProfilesAppProfileIdDeleteRequest{
 		ApiService:   a,
 		ctx:          ctx,
-		appProfileId: appProfileId,
 		projectId:    projectId,
+		appProfileId: appProfileId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return DeleteAppProfileResponse
-func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdDeleteExecute(r ApiProjectsProjectIdNetworkAppProfilesAppProfileIdDeleteRequest) (*DeleteAppProfileResponse, *http.Response, error) {
+//	@return StringApiResponse
+func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdDeleteExecute(r ApiProjectsProjectIdNetworkAppProfilesAppProfileIdDeleteRequest) (*StringApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodDelete
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DeleteAppProfileResponse
+		localVarReturnValue *StringApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AppProfileAPIService.ProjectsProjectIdNetworkAppProfilesAppProfileIdDelete")
@@ -70,8 +70,8 @@ func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdDe
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/app-profiles/{appProfileId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"appProfileId"+"}", url.PathEscape(parameterValueToString(r.appProfileId, "appProfileId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"appProfileId"+"}", url.PathEscape(parameterValueToString(r.appProfileId, "appProfileId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -166,11 +166,11 @@ func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdDe
 type ApiProjectsProjectIdNetworkAppProfilesAppProfileIdGetRequest struct {
 	ctx          context.Context
 	ApiService   *AppProfileAPIService
-	appProfileId string
 	projectId    string
+	appProfileId string
 }
 
-func (r ApiProjectsProjectIdNetworkAppProfilesAppProfileIdGetRequest) Execute() (*GetAppProfileResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkAppProfilesAppProfileIdGetRequest) Execute() (*AppProfileInstanceApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkAppProfilesAppProfileIdGetExecute(r)
 }
 
@@ -180,28 +180,28 @@ ProjectsProjectIdNetworkAppProfilesAppProfileIdGet Get application profile
 Get application profile
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param appProfileId
 	@param projectId
+	@param appProfileId
 	@return ApiProjectsProjectIdNetworkAppProfilesAppProfileIdGetRequest
 */
-func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdGet(ctx context.Context, appProfileId string, projectId string) ApiProjectsProjectIdNetworkAppProfilesAppProfileIdGetRequest {
+func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdGet(ctx context.Context, projectId string, appProfileId string) ApiProjectsProjectIdNetworkAppProfilesAppProfileIdGetRequest {
 	return ApiProjectsProjectIdNetworkAppProfilesAppProfileIdGetRequest{
 		ApiService:   a,
 		ctx:          ctx,
-		appProfileId: appProfileId,
 		projectId:    projectId,
+		appProfileId: appProfileId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return GetAppProfileResponse
-func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdGetExecute(r ApiProjectsProjectIdNetworkAppProfilesAppProfileIdGetRequest) (*GetAppProfileResponse, *http.Response, error) {
+//	@return AppProfileInstanceApiResponse
+func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdGetExecute(r ApiProjectsProjectIdNetworkAppProfilesAppProfileIdGetRequest) (*AppProfileInstanceApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *GetAppProfileResponse
+		localVarReturnValue *AppProfileInstanceApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AppProfileAPIService.ProjectsProjectIdNetworkAppProfilesAppProfileIdGet")
@@ -210,8 +210,8 @@ func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdGe
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/app-profiles/{appProfileId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"appProfileId"+"}", url.PathEscape(parameterValueToString(r.appProfileId, "appProfileId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"appProfileId"+"}", url.PathEscape(parameterValueToString(r.appProfileId, "appProfileId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -317,8 +317,8 @@ func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdGe
 type ApiProjectsProjectIdNetworkAppProfilesAppProfileIdPutRequest struct {
 	ctx                context.Context
 	ApiService         *AppProfileAPIService
-	appProfileId       string
 	projectId          string
+	appProfileId       string
 	appProfileInstance *AppProfileInstance
 }
 
@@ -327,7 +327,7 @@ func (r ApiProjectsProjectIdNetworkAppProfilesAppProfileIdPutRequest) AppProfile
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkAppProfilesAppProfileIdPutRequest) Execute() (*UpdateAppProfileResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkAppProfilesAppProfileIdPutRequest) Execute() (*AppProfileInstanceApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkAppProfilesAppProfileIdPutExecute(r)
 }
 
@@ -337,28 +337,28 @@ ProjectsProjectIdNetworkAppProfilesAppProfileIdPut Update application profile
 Update application profile
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param appProfileId
 	@param projectId
+	@param appProfileId
 	@return ApiProjectsProjectIdNetworkAppProfilesAppProfileIdPutRequest
 */
-func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdPut(ctx context.Context, appProfileId string, projectId string) ApiProjectsProjectIdNetworkAppProfilesAppProfileIdPutRequest {
+func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdPut(ctx context.Context, projectId string, appProfileId string) ApiProjectsProjectIdNetworkAppProfilesAppProfileIdPutRequest {
 	return ApiProjectsProjectIdNetworkAppProfilesAppProfileIdPutRequest{
 		ApiService:   a,
 		ctx:          ctx,
-		appProfileId: appProfileId,
 		projectId:    projectId,
+		appProfileId: appProfileId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return UpdateAppProfileResponse
-func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdPutExecute(r ApiProjectsProjectIdNetworkAppProfilesAppProfileIdPutRequest) (*UpdateAppProfileResponse, *http.Response, error) {
+//	@return AppProfileInstanceApiResponse
+func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdPutExecute(r ApiProjectsProjectIdNetworkAppProfilesAppProfileIdPutRequest) (*AppProfileInstanceApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *UpdateAppProfileResponse
+		localVarReturnValue *AppProfileInstanceApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AppProfileAPIService.ProjectsProjectIdNetworkAppProfilesAppProfileIdPut")
@@ -367,8 +367,8 @@ func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesAppProfileIdPu
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/app-profiles/{appProfileId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"appProfileId"+"}", url.PathEscape(parameterValueToString(r.appProfileId, "appProfileId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"appProfileId"+"}", url.PathEscape(parameterValueToString(r.appProfileId, "appProfileId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -485,7 +485,7 @@ func (r ApiProjectsProjectIdNetworkAppProfilesGetRequest) DisplayName(displayNam
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkAppProfilesGetRequest) Execute() (*ListAppProfileResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkAppProfilesGetRequest) Execute() (*AppProfileInstanceListApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkAppProfilesGetExecute(r)
 }
 
@@ -508,13 +508,13 @@ func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesGet(ctx contex
 
 // Execute executes the request
 //
-//	@return ListAppProfileResponse
-func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesGetExecute(r ApiProjectsProjectIdNetworkAppProfilesGetRequest) (*ListAppProfileResponse, *http.Response, error) {
+//	@return AppProfileInstanceListApiResponse
+func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesGetExecute(r ApiProjectsProjectIdNetworkAppProfilesGetRequest) (*AppProfileInstanceListApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *ListAppProfileResponse
+		localVarReturnValue *AppProfileInstanceListApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AppProfileAPIService.ProjectsProjectIdNetworkAppProfilesGet")
@@ -630,7 +630,7 @@ func (r ApiProjectsProjectIdNetworkAppProfilesPutRequest) AppProfileInstance(app
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkAppProfilesPutRequest) Execute() (*CreateAppProfileResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkAppProfilesPutRequest) Execute() (*AppProfileInstanceApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkAppProfilesPutExecute(r)
 }
 
@@ -653,13 +653,13 @@ func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesPut(ctx contex
 
 // Execute executes the request
 //
-//	@return CreateAppProfileResponse
-func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesPutExecute(r ApiProjectsProjectIdNetworkAppProfilesPutRequest) (*CreateAppProfileResponse, *http.Response, error) {
+//	@return AppProfileInstanceApiResponse
+func (a *AppProfileAPIService) ProjectsProjectIdNetworkAppProfilesPutExecute(r ApiProjectsProjectIdNetworkAppProfilesPutRequest) (*AppProfileInstanceApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *CreateAppProfileResponse
+		localVarReturnValue *AppProfileInstanceApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AppProfileAPIService.ProjectsProjectIdNetworkAppProfilesPut")

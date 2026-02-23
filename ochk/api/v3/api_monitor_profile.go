@@ -35,7 +35,7 @@ func (r ApiProjectsProjectIdNetworkMonitorProfilesGetRequest) DisplayName(displa
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkMonitorProfilesGetRequest) Execute() (*ListMonitorProfileResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkMonitorProfilesGetRequest) Execute() (*MonitorProfileInstanceListApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkMonitorProfilesGetExecute(r)
 }
 
@@ -58,13 +58,13 @@ func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesGet(ct
 
 // Execute executes the request
 //
-//	@return ListMonitorProfileResponse
-func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesGetExecute(r ApiProjectsProjectIdNetworkMonitorProfilesGetRequest) (*ListMonitorProfileResponse, *http.Response, error) {
+//	@return MonitorProfileInstanceListApiResponse
+func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesGetExecute(r ApiProjectsProjectIdNetworkMonitorProfilesGetRequest) (*MonitorProfileInstanceListApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *ListMonitorProfileResponse
+		localVarReturnValue *MonitorProfileInstanceListApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MonitorProfileAPIService.ProjectsProjectIdNetworkMonitorProfilesGet")
@@ -171,11 +171,11 @@ func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesGetExe
 type ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDeleteRequest struct {
 	ctx              context.Context
 	ApiService       *MonitorProfileAPIService
-	monitorProfileId string
 	projectId        string
+	monitorProfileId string
 }
 
-func (r ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDeleteRequest) Execute() (*DeleteMonitorProfileResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDeleteRequest) Execute() (*StringApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDeleteExecute(r)
 }
 
@@ -185,28 +185,28 @@ ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDelete Delete monitor pro
 Delete monitor profile
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param monitorProfileId
 	@param projectId
+	@param monitorProfileId
 	@return ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDeleteRequest
 */
-func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDelete(ctx context.Context, monitorProfileId string, projectId string) ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDeleteRequest {
+func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDelete(ctx context.Context, projectId string, monitorProfileId string) ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDeleteRequest {
 	return ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDeleteRequest{
 		ApiService:       a,
 		ctx:              ctx,
-		monitorProfileId: monitorProfileId,
 		projectId:        projectId,
+		monitorProfileId: monitorProfileId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return DeleteMonitorProfileResponse
-func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDeleteExecute(r ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDeleteRequest) (*DeleteMonitorProfileResponse, *http.Response, error) {
+//	@return StringApiResponse
+func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDeleteExecute(r ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDeleteRequest) (*StringApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodDelete
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DeleteMonitorProfileResponse
+		localVarReturnValue *StringApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MonitorProfileAPIService.ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdDelete")
@@ -215,8 +215,8 @@ func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonito
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/monitor-profiles/{monitorProfileId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"monitorProfileId"+"}", url.PathEscape(parameterValueToString(r.monitorProfileId, "monitorProfileId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"monitorProfileId"+"}", url.PathEscape(parameterValueToString(r.monitorProfileId, "monitorProfileId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -311,11 +311,11 @@ func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonito
 type ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGetRequest struct {
 	ctx              context.Context
 	ApiService       *MonitorProfileAPIService
-	monitorProfileId string
 	projectId        string
+	monitorProfileId string
 }
 
-func (r ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGetRequest) Execute() (*GetMonitorProfileResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGetRequest) Execute() (*MonitorProfileInstanceApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGetExecute(r)
 }
 
@@ -325,28 +325,28 @@ ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGet Get monitor profile
 Get monitor profile
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param monitorProfileId
 	@param projectId
+	@param monitorProfileId
 	@return ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGetRequest
 */
-func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGet(ctx context.Context, monitorProfileId string, projectId string) ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGetRequest {
+func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGet(ctx context.Context, projectId string, monitorProfileId string) ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGetRequest {
 	return ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGetRequest{
 		ApiService:       a,
 		ctx:              ctx,
-		monitorProfileId: monitorProfileId,
 		projectId:        projectId,
+		monitorProfileId: monitorProfileId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return GetMonitorProfileResponse
-func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGetExecute(r ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGetRequest) (*GetMonitorProfileResponse, *http.Response, error) {
+//	@return MonitorProfileInstanceApiResponse
+func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGetExecute(r ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGetRequest) (*MonitorProfileInstanceApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *GetMonitorProfileResponse
+		localVarReturnValue *MonitorProfileInstanceApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MonitorProfileAPIService.ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdGet")
@@ -355,8 +355,8 @@ func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonito
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/monitor-profiles/{monitorProfileId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"monitorProfileId"+"}", url.PathEscape(parameterValueToString(r.monitorProfileId, "monitorProfileId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"monitorProfileId"+"}", url.PathEscape(parameterValueToString(r.monitorProfileId, "monitorProfileId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -462,8 +462,8 @@ func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonito
 type ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPutRequest struct {
 	ctx                    context.Context
 	ApiService             *MonitorProfileAPIService
-	monitorProfileId       string
 	projectId              string
+	monitorProfileId       string
 	monitorProfileInstance *MonitorProfileInstance
 }
 
@@ -472,7 +472,7 @@ func (r ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPutRequest) Mo
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPutRequest) Execute() (*UpdateMonitorProfileResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPutRequest) Execute() (*MonitorProfileInstanceApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPutExecute(r)
 }
 
@@ -482,28 +482,28 @@ ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPut Update monitor profil
 Update monitor profile
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param monitorProfileId
 	@param projectId
+	@param monitorProfileId
 	@return ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPutRequest
 */
-func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPut(ctx context.Context, monitorProfileId string, projectId string) ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPutRequest {
+func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPut(ctx context.Context, projectId string, monitorProfileId string) ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPutRequest {
 	return ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPutRequest{
 		ApiService:       a,
 		ctx:              ctx,
-		monitorProfileId: monitorProfileId,
 		projectId:        projectId,
+		monitorProfileId: monitorProfileId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return UpdateMonitorProfileResponse
-func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPutExecute(r ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPutRequest) (*UpdateMonitorProfileResponse, *http.Response, error) {
+//	@return MonitorProfileInstanceApiResponse
+func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPutExecute(r ApiProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPutRequest) (*MonitorProfileInstanceApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *UpdateMonitorProfileResponse
+		localVarReturnValue *MonitorProfileInstanceApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MonitorProfileAPIService.ProjectsProjectIdNetworkMonitorProfilesMonitorProfileIdPut")
@@ -512,8 +512,8 @@ func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesMonito
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/monitor-profiles/{monitorProfileId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"monitorProfileId"+"}", url.PathEscape(parameterValueToString(r.monitorProfileId, "monitorProfileId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"monitorProfileId"+"}", url.PathEscape(parameterValueToString(r.monitorProfileId, "monitorProfileId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -630,7 +630,7 @@ func (r ApiProjectsProjectIdNetworkMonitorProfilesPutRequest) MonitorProfileInst
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkMonitorProfilesPutRequest) Execute() (*CreateMonitorProfileResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkMonitorProfilesPutRequest) Execute() (*MonitorProfileInstanceApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkMonitorProfilesPutExecute(r)
 }
 
@@ -653,13 +653,13 @@ func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesPut(ct
 
 // Execute executes the request
 //
-//	@return CreateMonitorProfileResponse
-func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesPutExecute(r ApiProjectsProjectIdNetworkMonitorProfilesPutRequest) (*CreateMonitorProfileResponse, *http.Response, error) {
+//	@return MonitorProfileInstanceApiResponse
+func (a *MonitorProfileAPIService) ProjectsProjectIdNetworkMonitorProfilesPutExecute(r ApiProjectsProjectIdNetworkMonitorProfilesPutRequest) (*MonitorProfileInstanceApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *CreateMonitorProfileResponse
+		localVarReturnValue *MonitorProfileInstanceApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MonitorProfileAPIService.ProjectsProjectIdNetworkMonitorProfilesPut")

@@ -35,7 +35,7 @@ func (r ApiProjectsProjectIdNetworkServerPoolsGetRequest) DisplayName(displayNam
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkServerPoolsGetRequest) Execute() (*ListServerPoolResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkServerPoolsGetRequest) Execute() (*ServerPoolInstanceListApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkServerPoolsGetExecute(r)
 }
 
@@ -58,13 +58,13 @@ func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsGet(ctx contex
 
 // Execute executes the request
 //
-//	@return ListServerPoolResponse
-func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsGetExecute(r ApiProjectsProjectIdNetworkServerPoolsGetRequest) (*ListServerPoolResponse, *http.Response, error) {
+//	@return ServerPoolInstanceListApiResponse
+func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsGetExecute(r ApiProjectsProjectIdNetworkServerPoolsGetRequest) (*ServerPoolInstanceListApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *ListServerPoolResponse
+		localVarReturnValue *ServerPoolInstanceListApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServerPoolAPIService.ProjectsProjectIdNetworkServerPoolsGet")
@@ -180,7 +180,7 @@ func (r ApiProjectsProjectIdNetworkServerPoolsPutRequest) ServerPoolInstance(ser
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkServerPoolsPutRequest) Execute() (*CreateServerPoolResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkServerPoolsPutRequest) Execute() (*ServerPoolInstanceApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkServerPoolsPutExecute(r)
 }
 
@@ -203,13 +203,13 @@ func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsPut(ctx contex
 
 // Execute executes the request
 //
-//	@return CreateServerPoolResponse
-func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsPutExecute(r ApiProjectsProjectIdNetworkServerPoolsPutRequest) (*CreateServerPoolResponse, *http.Response, error) {
+//	@return ServerPoolInstanceApiResponse
+func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsPutExecute(r ApiProjectsProjectIdNetworkServerPoolsPutRequest) (*ServerPoolInstanceApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *CreateServerPoolResponse
+		localVarReturnValue *ServerPoolInstanceApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServerPoolAPIService.ProjectsProjectIdNetworkServerPoolsPut")
@@ -326,11 +326,11 @@ func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsPutExecute(r A
 type ApiProjectsProjectIdNetworkServerPoolsServerPoolIdDeleteRequest struct {
 	ctx          context.Context
 	ApiService   *ServerPoolAPIService
-	serverPoolId string
 	projectId    string
+	serverPoolId string
 }
 
-func (r ApiProjectsProjectIdNetworkServerPoolsServerPoolIdDeleteRequest) Execute() (*DeleteServerPoolResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkServerPoolsServerPoolIdDeleteRequest) Execute() (*StringApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkServerPoolsServerPoolIdDeleteExecute(r)
 }
 
@@ -340,28 +340,28 @@ ProjectsProjectIdNetworkServerPoolsServerPoolIdDelete Delete server pool
 Delete server pool
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param serverPoolId
 	@param projectId
+	@param serverPoolId
 	@return ApiProjectsProjectIdNetworkServerPoolsServerPoolIdDeleteRequest
 */
-func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdDelete(ctx context.Context, serverPoolId string, projectId string) ApiProjectsProjectIdNetworkServerPoolsServerPoolIdDeleteRequest {
+func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdDelete(ctx context.Context, projectId string, serverPoolId string) ApiProjectsProjectIdNetworkServerPoolsServerPoolIdDeleteRequest {
 	return ApiProjectsProjectIdNetworkServerPoolsServerPoolIdDeleteRequest{
 		ApiService:   a,
 		ctx:          ctx,
-		serverPoolId: serverPoolId,
 		projectId:    projectId,
+		serverPoolId: serverPoolId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return DeleteServerPoolResponse
-func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdDeleteExecute(r ApiProjectsProjectIdNetworkServerPoolsServerPoolIdDeleteRequest) (*DeleteServerPoolResponse, *http.Response, error) {
+//	@return StringApiResponse
+func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdDeleteExecute(r ApiProjectsProjectIdNetworkServerPoolsServerPoolIdDeleteRequest) (*StringApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodDelete
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DeleteServerPoolResponse
+		localVarReturnValue *StringApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServerPoolAPIService.ProjectsProjectIdNetworkServerPoolsServerPoolIdDelete")
@@ -370,8 +370,8 @@ func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdDe
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/server-pools/{serverPoolId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"serverPoolId"+"}", url.PathEscape(parameterValueToString(r.serverPoolId, "serverPoolId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"serverPoolId"+"}", url.PathEscape(parameterValueToString(r.serverPoolId, "serverPoolId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -466,11 +466,11 @@ func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdDe
 type ApiProjectsProjectIdNetworkServerPoolsServerPoolIdGetRequest struct {
 	ctx          context.Context
 	ApiService   *ServerPoolAPIService
-	serverPoolId string
 	projectId    string
+	serverPoolId string
 }
 
-func (r ApiProjectsProjectIdNetworkServerPoolsServerPoolIdGetRequest) Execute() (*GetServerPoolResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkServerPoolsServerPoolIdGetRequest) Execute() (*ServerPoolInstanceApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkServerPoolsServerPoolIdGetExecute(r)
 }
 
@@ -480,28 +480,28 @@ ProjectsProjectIdNetworkServerPoolsServerPoolIdGet Get server pool
 Get server pool
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param serverPoolId
 	@param projectId
+	@param serverPoolId
 	@return ApiProjectsProjectIdNetworkServerPoolsServerPoolIdGetRequest
 */
-func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdGet(ctx context.Context, serverPoolId string, projectId string) ApiProjectsProjectIdNetworkServerPoolsServerPoolIdGetRequest {
+func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdGet(ctx context.Context, projectId string, serverPoolId string) ApiProjectsProjectIdNetworkServerPoolsServerPoolIdGetRequest {
 	return ApiProjectsProjectIdNetworkServerPoolsServerPoolIdGetRequest{
 		ApiService:   a,
 		ctx:          ctx,
-		serverPoolId: serverPoolId,
 		projectId:    projectId,
+		serverPoolId: serverPoolId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return GetServerPoolResponse
-func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdGetExecute(r ApiProjectsProjectIdNetworkServerPoolsServerPoolIdGetRequest) (*GetServerPoolResponse, *http.Response, error) {
+//	@return ServerPoolInstanceApiResponse
+func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdGetExecute(r ApiProjectsProjectIdNetworkServerPoolsServerPoolIdGetRequest) (*ServerPoolInstanceApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *GetServerPoolResponse
+		localVarReturnValue *ServerPoolInstanceApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServerPoolAPIService.ProjectsProjectIdNetworkServerPoolsServerPoolIdGet")
@@ -510,8 +510,8 @@ func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdGe
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/server-pools/{serverPoolId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"serverPoolId"+"}", url.PathEscape(parameterValueToString(r.serverPoolId, "serverPoolId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"serverPoolId"+"}", url.PathEscape(parameterValueToString(r.serverPoolId, "serverPoolId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -617,8 +617,8 @@ func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdGe
 type ApiProjectsProjectIdNetworkServerPoolsServerPoolIdPutRequest struct {
 	ctx                context.Context
 	ApiService         *ServerPoolAPIService
-	serverPoolId       string
 	projectId          string
+	serverPoolId       string
 	serverPoolInstance *ServerPoolInstance
 }
 
@@ -627,7 +627,7 @@ func (r ApiProjectsProjectIdNetworkServerPoolsServerPoolIdPutRequest) ServerPool
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkServerPoolsServerPoolIdPutRequest) Execute() (*UpdateServerPoolResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkServerPoolsServerPoolIdPutRequest) Execute() (*ServerPoolInstanceApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkServerPoolsServerPoolIdPutExecute(r)
 }
 
@@ -637,28 +637,28 @@ ProjectsProjectIdNetworkServerPoolsServerPoolIdPut Update server pool
 Update server pool
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param serverPoolId
 	@param projectId
+	@param serverPoolId
 	@return ApiProjectsProjectIdNetworkServerPoolsServerPoolIdPutRequest
 */
-func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdPut(ctx context.Context, serverPoolId string, projectId string) ApiProjectsProjectIdNetworkServerPoolsServerPoolIdPutRequest {
+func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdPut(ctx context.Context, projectId string, serverPoolId string) ApiProjectsProjectIdNetworkServerPoolsServerPoolIdPutRequest {
 	return ApiProjectsProjectIdNetworkServerPoolsServerPoolIdPutRequest{
 		ApiService:   a,
 		ctx:          ctx,
-		serverPoolId: serverPoolId,
 		projectId:    projectId,
+		serverPoolId: serverPoolId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return UpdateServerPoolResponse
-func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdPutExecute(r ApiProjectsProjectIdNetworkServerPoolsServerPoolIdPutRequest) (*UpdateServerPoolResponse, *http.Response, error) {
+//	@return ServerPoolInstanceApiResponse
+func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdPutExecute(r ApiProjectsProjectIdNetworkServerPoolsServerPoolIdPutRequest) (*ServerPoolInstanceApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *UpdateServerPoolResponse
+		localVarReturnValue *ServerPoolInstanceApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServerPoolAPIService.ProjectsProjectIdNetworkServerPoolsServerPoolIdPut")
@@ -667,8 +667,8 @@ func (a *ServerPoolAPIService) ProjectsProjectIdNetworkServerPoolsServerPoolIdPu
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/server-pools/{serverPoolId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"serverPoolId"+"}", url.PathEscape(parameterValueToString(r.serverPoolId, "serverPoolId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"serverPoolId"+"}", url.PathEscape(parameterValueToString(r.serverPoolId, "serverPoolId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

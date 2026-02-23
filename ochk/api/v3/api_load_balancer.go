@@ -35,7 +35,7 @@ func (r ApiProjectsProjectIdNetworkLoadBalancersGetRequest) DisplayName(displayN
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkLoadBalancersGetRequest) Execute() (*ListNsxLoadBalancerResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkLoadBalancersGetRequest) Execute() (*NsxLoadBalancerListApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkLoadBalancersGetExecute(r)
 }
 
@@ -58,13 +58,13 @@ func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersGet(ctx co
 
 // Execute executes the request
 //
-//	@return ListNsxLoadBalancerResponse
-func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersGetExecute(r ApiProjectsProjectIdNetworkLoadBalancersGetRequest) (*ListNsxLoadBalancerResponse, *http.Response, error) {
+//	@return NsxLoadBalancerListApiResponse
+func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersGetExecute(r ApiProjectsProjectIdNetworkLoadBalancersGetRequest) (*NsxLoadBalancerListApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *ListNsxLoadBalancerResponse
+		localVarReturnValue *NsxLoadBalancerListApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoadBalancerAPIService.ProjectsProjectIdNetworkLoadBalancersGet")
@@ -171,11 +171,11 @@ func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersGetExecute
 type ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDeleteRequest struct {
 	ctx            context.Context
 	ApiService     *LoadBalancerAPIService
-	loadBalancerId string
 	projectId      string
+	loadBalancerId string
 }
 
-func (r ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDeleteRequest) Execute() (*DeleteNsxLoadBalancerResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDeleteRequest) Execute() (*StringApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDeleteExecute(r)
 }
 
@@ -185,28 +185,28 @@ ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDelete Delete load balancer
 Delete load balancer
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param loadBalancerId
 	@param projectId
+	@param loadBalancerId
 	@return ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDeleteRequest
 */
-func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDelete(ctx context.Context, loadBalancerId string, projectId string) ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDeleteRequest {
+func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDelete(ctx context.Context, projectId string, loadBalancerId string) ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDeleteRequest {
 	return ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDeleteRequest{
 		ApiService:     a,
 		ctx:            ctx,
-		loadBalancerId: loadBalancerId,
 		projectId:      projectId,
+		loadBalancerId: loadBalancerId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return DeleteNsxLoadBalancerResponse
-func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDeleteExecute(r ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDeleteRequest) (*DeleteNsxLoadBalancerResponse, *http.Response, error) {
+//	@return StringApiResponse
+func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDeleteExecute(r ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDeleteRequest) (*StringApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodDelete
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *DeleteNsxLoadBalancerResponse
+		localVarReturnValue *StringApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoadBalancerAPIService.ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdDelete")
@@ -215,8 +215,8 @@ func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalanc
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/load-balancers/{loadBalancerId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"loadBalancerId"+"}", url.PathEscape(parameterValueToString(r.loadBalancerId, "loadBalancerId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"loadBalancerId"+"}", url.PathEscape(parameterValueToString(r.loadBalancerId, "loadBalancerId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -311,11 +311,11 @@ func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalanc
 type ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGetRequest struct {
 	ctx            context.Context
 	ApiService     *LoadBalancerAPIService
-	loadBalancerId string
 	projectId      string
+	loadBalancerId string
 }
 
-func (r ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGetRequest) Execute() (*GetNsxLoadBalancerResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGetRequest) Execute() (*NsxLoadBalancerApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGetExecute(r)
 }
 
@@ -325,28 +325,28 @@ ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGet Get load balancer
 Get load balancer
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param loadBalancerId
 	@param projectId
+	@param loadBalancerId
 	@return ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGetRequest
 */
-func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGet(ctx context.Context, loadBalancerId string, projectId string) ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGetRequest {
+func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGet(ctx context.Context, projectId string, loadBalancerId string) ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGetRequest {
 	return ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGetRequest{
 		ApiService:     a,
 		ctx:            ctx,
-		loadBalancerId: loadBalancerId,
 		projectId:      projectId,
+		loadBalancerId: loadBalancerId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return GetNsxLoadBalancerResponse
-func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGetExecute(r ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGetRequest) (*GetNsxLoadBalancerResponse, *http.Response, error) {
+//	@return NsxLoadBalancerApiResponse
+func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGetExecute(r ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGetRequest) (*NsxLoadBalancerApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *GetNsxLoadBalancerResponse
+		localVarReturnValue *NsxLoadBalancerApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoadBalancerAPIService.ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdGet")
@@ -355,8 +355,8 @@ func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalanc
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/load-balancers/{loadBalancerId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"loadBalancerId"+"}", url.PathEscape(parameterValueToString(r.loadBalancerId, "loadBalancerId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"loadBalancerId"+"}", url.PathEscape(parameterValueToString(r.loadBalancerId, "loadBalancerId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -462,8 +462,8 @@ func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalanc
 type ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPutRequest struct {
 	ctx             context.Context
 	ApiService      *LoadBalancerAPIService
-	loadBalancerId  string
 	projectId       string
+	loadBalancerId  string
 	nsxLoadBalancer *NsxLoadBalancer
 }
 
@@ -472,7 +472,7 @@ func (r ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPutRequest) NsxLoa
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPutRequest) Execute() (*UpdateNsxLoadBalancerResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPutRequest) Execute() (*NsxLoadBalancerApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPutExecute(r)
 }
 
@@ -482,28 +482,28 @@ ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPut Update load balancer
 Update load balancer
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param loadBalancerId
 	@param projectId
+	@param loadBalancerId
 	@return ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPutRequest
 */
-func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPut(ctx context.Context, loadBalancerId string, projectId string) ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPutRequest {
+func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPut(ctx context.Context, projectId string, loadBalancerId string) ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPutRequest {
 	return ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPutRequest{
 		ApiService:     a,
 		ctx:            ctx,
-		loadBalancerId: loadBalancerId,
 		projectId:      projectId,
+		loadBalancerId: loadBalancerId,
 	}
 }
 
 // Execute executes the request
 //
-//	@return UpdateNsxLoadBalancerResponse
-func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPutExecute(r ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPutRequest) (*UpdateNsxLoadBalancerResponse, *http.Response, error) {
+//	@return NsxLoadBalancerApiResponse
+func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPutExecute(r ApiProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPutRequest) (*NsxLoadBalancerApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *UpdateNsxLoadBalancerResponse
+		localVarReturnValue *NsxLoadBalancerApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoadBalancerAPIService.ProjectsProjectIdNetworkLoadBalancersLoadBalancerIdPut")
@@ -512,8 +512,8 @@ func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersLoadBalanc
 	}
 
 	localVarPath := localBasePath + "/projects/{projectId}/network/load-balancers/{loadBalancerId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"loadBalancerId"+"}", url.PathEscape(parameterValueToString(r.loadBalancerId, "loadBalancerId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"loadBalancerId"+"}", url.PathEscape(parameterValueToString(r.loadBalancerId, "loadBalancerId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -630,7 +630,7 @@ func (r ApiProjectsProjectIdNetworkLoadBalancersPutRequest) NsxLoadBalancer(nsxL
 	return r
 }
 
-func (r ApiProjectsProjectIdNetworkLoadBalancersPutRequest) Execute() (*CreateNsxLoadBalancerResponse, *http.Response, error) {
+func (r ApiProjectsProjectIdNetworkLoadBalancersPutRequest) Execute() (*NsxLoadBalancerApiResponse, *http.Response, error) {
 	return r.ApiService.ProjectsProjectIdNetworkLoadBalancersPutExecute(r)
 }
 
@@ -653,13 +653,13 @@ func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersPut(ctx co
 
 // Execute executes the request
 //
-//	@return CreateNsxLoadBalancerResponse
-func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersPutExecute(r ApiProjectsProjectIdNetworkLoadBalancersPutRequest) (*CreateNsxLoadBalancerResponse, *http.Response, error) {
+//	@return NsxLoadBalancerApiResponse
+func (a *LoadBalancerAPIService) ProjectsProjectIdNetworkLoadBalancersPutExecute(r ApiProjectsProjectIdNetworkLoadBalancersPutRequest) (*NsxLoadBalancerApiResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *CreateNsxLoadBalancerResponse
+		localVarReturnValue *NsxLoadBalancerApiResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LoadBalancerAPIService.ProjectsProjectIdNetworkLoadBalancersPut")

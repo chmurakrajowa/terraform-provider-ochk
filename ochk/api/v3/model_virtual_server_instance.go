@@ -43,6 +43,7 @@ type VirtualServerInstance struct {
 	AppProfileId           NullableString      `json:"appProfileId,omitempty"`
 	ServerPoolInstance     *ServerPoolInstance `json:"serverPoolInstance,omitempty"`
 	AppProfileInstance     *AppProfileInstance `json:"appProfileInstance,omitempty"`
+	Tags                   []TagInstance       `json:"tags,omitempty"`
 }
 
 // NewVirtualServerInstance instantiates a new VirtualServerInstance object
@@ -965,6 +966,39 @@ func (o *VirtualServerInstance) SetAppProfileInstance(v AppProfileInstance) {
 	o.AppProfileInstance = &v
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *VirtualServerInstance) GetTags() []TagInstance {
+	if o == nil {
+		var ret []TagInstance
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *VirtualServerInstance) GetTagsOk() ([]TagInstance, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *VirtualServerInstance) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []TagInstance and assigns it to the Tags field.
+func (o *VirtualServerInstance) SetTags(v []TagInstance) {
+	o.Tags = v
+}
+
 func (o VirtualServerInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.VirtualServerId.IsSet() {
@@ -1032,6 +1066,9 @@ func (o VirtualServerInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AppProfileInstance) {
 		toSerialize["appProfileInstance"] = o.AppProfileInstance
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	return toSerialize, nil
 }

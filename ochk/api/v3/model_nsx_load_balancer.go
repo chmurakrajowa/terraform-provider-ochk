@@ -40,6 +40,7 @@ type NsxLoadBalancer struct {
 	ErrorLogLevel      *ErrorLogLevel          `json:"errorLogLevel,omitempty"`
 	Path               NullableString          `json:"path,omitempty"`
 	VirtualServers     []VirtualServerInstance `json:"virtualServers,omitempty"`
+	Tags               []TagInstance           `json:"tags,omitempty"`
 }
 
 // NewNsxLoadBalancer instantiates a new NsxLoadBalancer object
@@ -811,6 +812,39 @@ func (o *NsxLoadBalancer) SetVirtualServers(v []VirtualServerInstance) {
 	o.VirtualServers = v
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NsxLoadBalancer) GetTags() []TagInstance {
+	if o == nil {
+		var ret []TagInstance
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NsxLoadBalancer) GetTagsOk() ([]TagInstance, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *NsxLoadBalancer) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []TagInstance and assigns it to the Tags field.
+func (o *NsxLoadBalancer) SetTags(v []TagInstance) {
+	o.Tags = v
+}
+
 func (o NsxLoadBalancer) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.LoadBalancerId.IsSet() {
@@ -869,6 +903,9 @@ func (o NsxLoadBalancer) ToMap() (map[string]interface{}, error) {
 	}
 	if o.VirtualServers != nil {
 		toSerialize["virtualServers"] = o.VirtualServers
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	return toSerialize, nil
 }

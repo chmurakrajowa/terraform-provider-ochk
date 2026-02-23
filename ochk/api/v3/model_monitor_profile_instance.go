@@ -37,6 +37,7 @@ type MonitorProfileInstance struct {
 	ModifiedBy       NullableString              `json:"modifiedBy,omitempty"`
 	CreationDate     NullableTime                `json:"creationDate,omitempty"`
 	ModificationDate NullableTime                `json:"modificationDate,omitempty"`
+	Tags             []TagInstance               `json:"tags,omitempty"`
 }
 
 // NewMonitorProfileInstance instantiates a new MonitorProfileInstance object
@@ -678,6 +679,39 @@ func (o *MonitorProfileInstance) UnsetModificationDate() {
 	o.ModificationDate.Unset()
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *MonitorProfileInstance) GetTags() []TagInstance {
+	if o == nil {
+		var ret []TagInstance
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *MonitorProfileInstance) GetTagsOk() ([]TagInstance, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *MonitorProfileInstance) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []TagInstance and assigns it to the Tags field.
+func (o *MonitorProfileInstance) SetTags(v []TagInstance) {
+	o.Tags = v
+}
+
 func (o MonitorProfileInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.MonitorProfileId.IsSet() {
@@ -727,6 +761,9 @@ func (o MonitorProfileInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if o.ModificationDate.IsSet() {
 		toSerialize["modificationDate"] = o.ModificationDate.Get()
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	return toSerialize, nil
 }

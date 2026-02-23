@@ -21,20 +21,21 @@ var _ MappedNullable = &FloatingIp{}
 
 // FloatingIp struct for FloatingIp
 type FloatingIp struct {
-	FloatingIpId     *string          `json:"floatingIpId,omitempty"`
-	ExternalId       NullableString   `json:"externalId,omitempty"`
-	Name             NullableString   `json:"name,omitempty"`
-	Description      NullableString   `json:"description,omitempty"`
-	CreationDate     NullableTime     `json:"creationDate,omitempty"`
-	CreatedBy        NullableString   `json:"createdBy,omitempty"`
-	ModificationDate NullableTime     `json:"modificationDate,omitempty"`
-	ModifiedBy       NullableString   `json:"modifiedBy,omitempty"`
-	PublicAddress    NullableString   `json:"publicAddress,omitempty"`
-	PortForwardings  []PortForwarding `json:"portForwardings,omitempty"`
-	OscProjectId     NullableString   `json:"oscProjectId,omitempty"`
-	VmPortId         NullableString   `json:"vmPortId,omitempty"`
-	VmFixedIp        NullableString   `json:"vmFixedIp,omitempty"`
-	VmName           NullableString   `json:"vmName,omitempty"`
+	FloatingIpId     *string           `json:"floatingIpId,omitempty"`
+	ExternalId       NullableString    `json:"externalId,omitempty"`
+	Name             NullableString    `json:"name,omitempty"`
+	Description      NullableString    `json:"description,omitempty"`
+	CreationDate     NullableTime      `json:"creationDate,omitempty"`
+	CreatedBy        NullableString    `json:"createdBy,omitempty"`
+	ModificationDate NullableTime      `json:"modificationDate,omitempty"`
+	ModifiedBy       NullableString    `json:"modifiedBy,omitempty"`
+	PublicAddress    NullableString    `json:"publicAddress,omitempty"`
+	PortForwardings  []PortForwarding  `json:"portForwardings,omitempty"`
+	OscProjectId     NullableString    `json:"oscProjectId,omitempty"`
+	VmPortId         NullableString    `json:"vmPortId,omitempty"`
+	VmFixedIp        NullableString    `json:"vmFixedIp,omitempty"`
+	VmName           NullableString    `json:"vmName,omitempty"`
+	OvnLoadBalancers []OvnLoadBalancer `json:"ovnLoadBalancers,omitempty"`
 }
 
 // NewFloatingIp instantiates a new FloatingIp object
@@ -635,6 +636,39 @@ func (o *FloatingIp) UnsetVmName() {
 	o.VmName.Unset()
 }
 
+// GetOvnLoadBalancers returns the OvnLoadBalancers field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *FloatingIp) GetOvnLoadBalancers() []OvnLoadBalancer {
+	if o == nil {
+		var ret []OvnLoadBalancer
+		return ret
+	}
+	return o.OvnLoadBalancers
+}
+
+// GetOvnLoadBalancersOk returns a tuple with the OvnLoadBalancers field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *FloatingIp) GetOvnLoadBalancersOk() ([]OvnLoadBalancer, bool) {
+	if o == nil || IsNil(o.OvnLoadBalancers) {
+		return nil, false
+	}
+	return o.OvnLoadBalancers, true
+}
+
+// HasOvnLoadBalancers returns a boolean if a field has been set.
+func (o *FloatingIp) HasOvnLoadBalancers() bool {
+	if o != nil && !IsNil(o.OvnLoadBalancers) {
+		return true
+	}
+
+	return false
+}
+
+// SetOvnLoadBalancers gets a reference to the given []OvnLoadBalancer and assigns it to the OvnLoadBalancers field.
+func (o *FloatingIp) SetOvnLoadBalancers(v []OvnLoadBalancer) {
+	o.OvnLoadBalancers = v
+}
+
 func (o FloatingIp) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.FloatingIpId) {
@@ -678,6 +712,9 @@ func (o FloatingIp) ToMap() (map[string]interface{}, error) {
 	}
 	if o.VmName.IsSet() {
 		toSerialize["vmName"] = o.VmName.Get()
+	}
+	if o.OvnLoadBalancers != nil {
+		toSerialize["ovnLoadBalancers"] = o.OvnLoadBalancers
 	}
 	return toSerialize, nil
 }

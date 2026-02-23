@@ -29,6 +29,7 @@ type AppProfileInstance struct {
 	ResourceType           *AppProfileResourceType `json:"resourceType,omitempty"`
 	IdleTimeout            *int32                  `json:"idleTimeout,omitempty"`
 	HaFlowMirroringEnabled *bool                   `json:"haFlowMirroringEnabled,omitempty"`
+	FlowMirroringEnabled   NullableBool            `json:"flowMirroringEnabled,omitempty"`
 	Path                   NullableString          `json:"path,omitempty"`
 	RequestHeaderSize      NullableInt64           `json:"requestHeaderSize,omitempty"`
 	ResponseHeaderSize     NullableInt64           `json:"responseHeaderSize,omitempty"`
@@ -39,6 +40,10 @@ type AppProfileInstance struct {
 	ModifiedBy             NullableString          `json:"modifiedBy,omitempty"`
 	CreationDate           NullableTime            `json:"creationDate,omitempty"`
 	ModificationDate       NullableTime            `json:"modificationDate,omitempty"`
+	HttpRedirectTo         NullableString          `json:"httpRedirectTo,omitempty"`
+	HttpRedirectToHttps    NullableBool            `json:"httpRedirectToHttps,omitempty"`
+	XForwardedFor          NullableString          `json:"xForwardedFor,omitempty"`
+	Tags                   []TagInstance           `json:"tags,omitempty"`
 }
 
 // NewAppProfileInstance instantiates a new AppProfileInstance object
@@ -367,6 +372,49 @@ func (o *AppProfileInstance) HasHaFlowMirroringEnabled() bool {
 // SetHaFlowMirroringEnabled gets a reference to the given bool and assigns it to the HaFlowMirroringEnabled field.
 func (o *AppProfileInstance) SetHaFlowMirroringEnabled(v bool) {
 	o.HaFlowMirroringEnabled = &v
+}
+
+// GetFlowMirroringEnabled returns the FlowMirroringEnabled field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppProfileInstance) GetFlowMirroringEnabled() bool {
+	if o == nil || IsNil(o.FlowMirroringEnabled.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.FlowMirroringEnabled.Get()
+}
+
+// GetFlowMirroringEnabledOk returns a tuple with the FlowMirroringEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppProfileInstance) GetFlowMirroringEnabledOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.FlowMirroringEnabled.Get(), o.FlowMirroringEnabled.IsSet()
+}
+
+// HasFlowMirroringEnabled returns a boolean if a field has been set.
+func (o *AppProfileInstance) HasFlowMirroringEnabled() bool {
+	if o != nil && o.FlowMirroringEnabled.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetFlowMirroringEnabled gets a reference to the given NullableBool and assigns it to the FlowMirroringEnabled field.
+func (o *AppProfileInstance) SetFlowMirroringEnabled(v bool) {
+	o.FlowMirroringEnabled.Set(&v)
+}
+
+// SetFlowMirroringEnabledNil sets the value for FlowMirroringEnabled to be an explicit nil
+func (o *AppProfileInstance) SetFlowMirroringEnabledNil() {
+	o.FlowMirroringEnabled.Set(nil)
+}
+
+// UnsetFlowMirroringEnabled ensures that no value is present for FlowMirroringEnabled, not even an explicit nil
+func (o *AppProfileInstance) UnsetFlowMirroringEnabled() {
+	o.FlowMirroringEnabled.Unset()
 }
 
 // GetPath returns the Path field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -799,6 +847,168 @@ func (o *AppProfileInstance) UnsetModificationDate() {
 	o.ModificationDate.Unset()
 }
 
+// GetHttpRedirectTo returns the HttpRedirectTo field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppProfileInstance) GetHttpRedirectTo() string {
+	if o == nil || IsNil(o.HttpRedirectTo.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.HttpRedirectTo.Get()
+}
+
+// GetHttpRedirectToOk returns a tuple with the HttpRedirectTo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppProfileInstance) GetHttpRedirectToOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HttpRedirectTo.Get(), o.HttpRedirectTo.IsSet()
+}
+
+// HasHttpRedirectTo returns a boolean if a field has been set.
+func (o *AppProfileInstance) HasHttpRedirectTo() bool {
+	if o != nil && o.HttpRedirectTo.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHttpRedirectTo gets a reference to the given NullableString and assigns it to the HttpRedirectTo field.
+func (o *AppProfileInstance) SetHttpRedirectTo(v string) {
+	o.HttpRedirectTo.Set(&v)
+}
+
+// SetHttpRedirectToNil sets the value for HttpRedirectTo to be an explicit nil
+func (o *AppProfileInstance) SetHttpRedirectToNil() {
+	o.HttpRedirectTo.Set(nil)
+}
+
+// UnsetHttpRedirectTo ensures that no value is present for HttpRedirectTo, not even an explicit nil
+func (o *AppProfileInstance) UnsetHttpRedirectTo() {
+	o.HttpRedirectTo.Unset()
+}
+
+// GetHttpRedirectToHttps returns the HttpRedirectToHttps field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppProfileInstance) GetHttpRedirectToHttps() bool {
+	if o == nil || IsNil(o.HttpRedirectToHttps.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.HttpRedirectToHttps.Get()
+}
+
+// GetHttpRedirectToHttpsOk returns a tuple with the HttpRedirectToHttps field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppProfileInstance) GetHttpRedirectToHttpsOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HttpRedirectToHttps.Get(), o.HttpRedirectToHttps.IsSet()
+}
+
+// HasHttpRedirectToHttps returns a boolean if a field has been set.
+func (o *AppProfileInstance) HasHttpRedirectToHttps() bool {
+	if o != nil && o.HttpRedirectToHttps.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHttpRedirectToHttps gets a reference to the given NullableBool and assigns it to the HttpRedirectToHttps field.
+func (o *AppProfileInstance) SetHttpRedirectToHttps(v bool) {
+	o.HttpRedirectToHttps.Set(&v)
+}
+
+// SetHttpRedirectToHttpsNil sets the value for HttpRedirectToHttps to be an explicit nil
+func (o *AppProfileInstance) SetHttpRedirectToHttpsNil() {
+	o.HttpRedirectToHttps.Set(nil)
+}
+
+// UnsetHttpRedirectToHttps ensures that no value is present for HttpRedirectToHttps, not even an explicit nil
+func (o *AppProfileInstance) UnsetHttpRedirectToHttps() {
+	o.HttpRedirectToHttps.Unset()
+}
+
+// GetXForwardedFor returns the XForwardedFor field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppProfileInstance) GetXForwardedFor() string {
+	if o == nil || IsNil(o.XForwardedFor.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.XForwardedFor.Get()
+}
+
+// GetXForwardedForOk returns a tuple with the XForwardedFor field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppProfileInstance) GetXForwardedForOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.XForwardedFor.Get(), o.XForwardedFor.IsSet()
+}
+
+// HasXForwardedFor returns a boolean if a field has been set.
+func (o *AppProfileInstance) HasXForwardedFor() bool {
+	if o != nil && o.XForwardedFor.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetXForwardedFor gets a reference to the given NullableString and assigns it to the XForwardedFor field.
+func (o *AppProfileInstance) SetXForwardedFor(v string) {
+	o.XForwardedFor.Set(&v)
+}
+
+// SetXForwardedForNil sets the value for XForwardedFor to be an explicit nil
+func (o *AppProfileInstance) SetXForwardedForNil() {
+	o.XForwardedFor.Set(nil)
+}
+
+// UnsetXForwardedFor ensures that no value is present for XForwardedFor, not even an explicit nil
+func (o *AppProfileInstance) UnsetXForwardedFor() {
+	o.XForwardedFor.Unset()
+}
+
+// GetTags returns the Tags field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AppProfileInstance) GetTags() []TagInstance {
+	if o == nil {
+		var ret []TagInstance
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AppProfileInstance) GetTagsOk() ([]TagInstance, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *AppProfileInstance) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []TagInstance and assigns it to the Tags field.
+func (o *AppProfileInstance) SetTags(v []TagInstance) {
+	o.Tags = v
+}
+
 func (o AppProfileInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.AppProfileId.IsSet() {
@@ -824,6 +1034,9 @@ func (o AppProfileInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.HaFlowMirroringEnabled) {
 		toSerialize["haFlowMirroringEnabled"] = o.HaFlowMirroringEnabled
+	}
+	if o.FlowMirroringEnabled.IsSet() {
+		toSerialize["flowMirroringEnabled"] = o.FlowMirroringEnabled.Get()
 	}
 	if o.Path.IsSet() {
 		toSerialize["path"] = o.Path.Get()
@@ -854,6 +1067,18 @@ func (o AppProfileInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if o.ModificationDate.IsSet() {
 		toSerialize["modificationDate"] = o.ModificationDate.Get()
+	}
+	if o.HttpRedirectTo.IsSet() {
+		toSerialize["httpRedirectTo"] = o.HttpRedirectTo.Get()
+	}
+	if o.HttpRedirectToHttps.IsSet() {
+		toSerialize["httpRedirectToHttps"] = o.HttpRedirectToHttps.Get()
+	}
+	if o.XForwardedFor.IsSet() {
+		toSerialize["xForwardedFor"] = o.XForwardedFor.Get()
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	return toSerialize, nil
 }
