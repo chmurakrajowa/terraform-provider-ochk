@@ -13546,7 +13546,7 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "string",
             "nullable": true
           },
           "modifiedBy": {
@@ -13555,7 +13555,7 @@
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "string",
             "nullable": true
           },
           "cost": {
@@ -13651,12 +13651,12 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "string",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "string",
             "nullable": true
           },
           "cost": {
@@ -24005,12 +24005,12 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "string",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "string",
             "nullable": true
           },
           "cost": {
@@ -24908,7 +24908,7 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "string",
             "nullable": true
           },
           "modifiedBy": {
@@ -24917,7 +24917,7 @@
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "string",
             "nullable": true
           },
           "edgeClusterInstance": {
