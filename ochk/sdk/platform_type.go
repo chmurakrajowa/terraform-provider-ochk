@@ -18,7 +18,7 @@ func (p *PlatformTypeProxy) Read(ctx context.Context) (openapi.PlatformType, err
 	mutex := sync.Mutex{}
 	mutex.Lock()
 	action := p.service.IdentificationPlatformTypeGet(ctx)
-	response, err, _ := action.Execute()
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
 	var unknown openapi.PlatformType = "UNKNOWN"
@@ -28,7 +28,6 @@ func (p *PlatformTypeProxy) Read(ctx context.Context) (openapi.PlatformType, err
 		//if ok := errors.As(err, &badRequest); ok {
 		//	return unknown, &NotFoundError{Err: err}
 		//}
-
 		return unknown, fmt.Errorf("error while reading platform type: %w", err)
 	}
 	isSuccess := *response.Success
