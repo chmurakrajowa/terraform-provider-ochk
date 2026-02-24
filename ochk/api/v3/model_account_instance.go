@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the AccountInstance type satisfies the MappedNullable interface at compile time
@@ -27,9 +26,9 @@ type AccountInstance struct {
 	Discount                  *float32                 `json:"discount,omitempty"`
 	Alarms                    *bool                    `json:"alarms,omitempty"`
 	CreatedBy                 NullableString           `json:"createdBy,omitempty"`
-	CreationDate              NullableTime             `json:"creationDate,omitempty"`
+	CreationDate              NullableString           `json:"creationDate,omitempty"`
 	ModifiedBy                NullableString           `json:"modifiedBy,omitempty"`
-	ModificationDate          NullableTime             `json:"modificationDate,omitempty"`
+	ModificationDate          NullableString           `json:"modificationDate,omitempty"`
 	Cost                      *float32                 `json:"cost,omitempty"`
 	CostWithDiscount          *float32                 `json:"costWithDiscount,omitempty"`
 	EstimatedCost             *float32                 `json:"estimatedCost,omitempty"`
@@ -294,9 +293,9 @@ func (o *AccountInstance) UnsetCreatedBy() {
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *AccountInstance) GetCreationDate() time.Time {
+func (o *AccountInstance) GetCreationDate() string {
 	if o == nil || IsNil(o.CreationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationDate.Get()
@@ -305,7 +304,7 @@ func (o *AccountInstance) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *AccountInstance) GetCreationDateOk() (*time.Time, bool) {
+func (o *AccountInstance) GetCreationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -321,8 +320,8 @@ func (o *AccountInstance) HasCreationDate() bool {
 	return false
 }
 
-// SetCreationDate gets a reference to the given NullableTime and assigns it to the CreationDate field.
-func (o *AccountInstance) SetCreationDate(v time.Time) {
+// SetCreationDate gets a reference to the given NullableString and assigns it to the CreationDate field.
+func (o *AccountInstance) SetCreationDate(v string) {
 	o.CreationDate.Set(&v)
 }
 
@@ -380,9 +379,9 @@ func (o *AccountInstance) UnsetModifiedBy() {
 }
 
 // GetModificationDate returns the ModificationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *AccountInstance) GetModificationDate() time.Time {
+func (o *AccountInstance) GetModificationDate() string {
 	if o == nil || IsNil(o.ModificationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ModificationDate.Get()
@@ -391,7 +390,7 @@ func (o *AccountInstance) GetModificationDate() time.Time {
 // GetModificationDateOk returns a tuple with the ModificationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *AccountInstance) GetModificationDateOk() (*time.Time, bool) {
+func (o *AccountInstance) GetModificationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -407,8 +406,8 @@ func (o *AccountInstance) HasModificationDate() bool {
 	return false
 }
 
-// SetModificationDate gets a reference to the given NullableTime and assigns it to the ModificationDate field.
-func (o *AccountInstance) SetModificationDate(v time.Time) {
+// SetModificationDate gets a reference to the given NullableString and assigns it to the ModificationDate field.
+func (o *AccountInstance) SetModificationDate(v string) {
 	o.ModificationDate.Set(&v)
 }
 
