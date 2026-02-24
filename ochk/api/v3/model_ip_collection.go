@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the IpCollection type satisfies the MappedNullable interface at compile time
@@ -27,8 +26,8 @@ type IpCollection struct {
 	MemberType            *SecurityGroupMemberType `json:"memberType,omitempty"`
 	CreatedBy             NullableString           `json:"createdBy,omitempty"`
 	ModifiedBy            NullableString           `json:"modifiedBy,omitempty"`
-	CreationDate          NullableTime             `json:"creationDate,omitempty"`
-	ModificationDate      NullableTime             `json:"modificationDate,omitempty"`
+	CreationDate          NullableString           `json:"creationDate,omitempty"`
+	ModificationDate      NullableString           `json:"modificationDate,omitempty"`
 	IpCollectionAddresses []string                 `json:"ipCollectionAddresses,omitempty"`
 	ProjectId             NullableString           `json:"projectId,omitempty"`
 	BuildIn               *bool                    `json:"buildIn,omitempty"`
@@ -299,9 +298,9 @@ func (o *IpCollection) UnsetModifiedBy() {
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *IpCollection) GetCreationDate() time.Time {
+func (o *IpCollection) GetCreationDate() string {
 	if o == nil || IsNil(o.CreationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationDate.Get()
@@ -310,7 +309,7 @@ func (o *IpCollection) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *IpCollection) GetCreationDateOk() (*time.Time, bool) {
+func (o *IpCollection) GetCreationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -326,8 +325,8 @@ func (o *IpCollection) HasCreationDate() bool {
 	return false
 }
 
-// SetCreationDate gets a reference to the given NullableTime and assigns it to the CreationDate field.
-func (o *IpCollection) SetCreationDate(v time.Time) {
+// SetCreationDate gets a reference to the given NullableString and assigns it to the CreationDate field.
+func (o *IpCollection) SetCreationDate(v string) {
 	o.CreationDate.Set(&v)
 }
 
@@ -342,9 +341,9 @@ func (o *IpCollection) UnsetCreationDate() {
 }
 
 // GetModificationDate returns the ModificationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *IpCollection) GetModificationDate() time.Time {
+func (o *IpCollection) GetModificationDate() string {
 	if o == nil || IsNil(o.ModificationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ModificationDate.Get()
@@ -353,7 +352,7 @@ func (o *IpCollection) GetModificationDate() time.Time {
 // GetModificationDateOk returns a tuple with the ModificationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *IpCollection) GetModificationDateOk() (*time.Time, bool) {
+func (o *IpCollection) GetModificationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -369,8 +368,8 @@ func (o *IpCollection) HasModificationDate() bool {
 	return false
 }
 
-// SetModificationDate gets a reference to the given NullableTime and assigns it to the ModificationDate field.
-func (o *IpCollection) SetModificationDate(v time.Time) {
+// SetModificationDate gets a reference to the given NullableString and assigns it to the ModificationDate field.
+func (o *IpCollection) SetModificationDate(v string) {
 	o.ModificationDate.Set(&v)
 }
 
