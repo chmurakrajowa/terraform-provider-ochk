@@ -25180,12 +25180,12 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "string",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "string",
             "nullable": true
           },
           "tags": {
@@ -28170,12 +28170,12 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "string",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
+            "format": "string",
             "nullable": true
           },
           "subnet": {
