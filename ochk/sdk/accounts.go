@@ -84,7 +84,7 @@ func (p *AccountsProxy) Delete(ctx context.Context, accountID strfmt.UUID) error
 	response, _, err := action.Execute()
 	if err != nil {
 
-		return fmt.Errorf("error while deleting accountt: %w", err)
+		return fmt.Errorf("error while deleting account: %w", err)
 	}
 
 	isSuccess := *response.Success
@@ -96,8 +96,8 @@ func (p *AccountsProxy) Delete(ctx context.Context, accountID strfmt.UUID) error
 	return nil
 }
 
-func (p *AccountsProxy) Update(ctx context.Context, account *openapi.AccountInstance) (*openapi.AccountInstance, error) {
-	action := p.service.BillingAccountsAccountIdPut(ctx, account.GetAccountId())
+func (p *AccountsProxy) Update(ctx context.Context, account openapi.AccountInstance) (*openapi.AccountInstance, error) {
+	action := p.service.BillingAccountsAccountIdPut(ctx, account.GetAccountId()).AccountInstance(account)
 
 	put, _, err := action.Execute()
 
