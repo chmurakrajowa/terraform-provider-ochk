@@ -39,6 +39,10 @@ func dataSourceProject() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"account_id": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -61,37 +65,41 @@ func dataSourceProjectRead(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.Errorf("more than one project with name: %s found!", name)
 	}
 
-	if err := d.Set("vrf_id", projects[0].VrfId); err != nil {
+	if err := d.Set("vrf_id", projects[0].VrfId.Get()); err != nil {
 		return diag.Errorf("error setting vrf_id:  %+v", err)
 	}
 
 	d.SetId(projects[0].GetProjectId())
 
-	if err := d.Set("display_name", projects[0].Name); err != nil {
+	if err := d.Set("display_name", projects[0].GetName()); err != nil {
 		return diag.Errorf("error setting name: %s", err)
 	}
 
-	if err := d.Set("vrf_id", projects[0].VrfId); err != nil {
+	if err := d.Set("vrf_id", projects[0].GetVrfId()); err != nil {
 		return diag.Errorf("error setting vrf_id: %s", err)
 	}
 
-	if err := d.Set("description", projects[0].Description); err != nil {
+	if err := d.Set("account_id", projects[0].GetAccountId()); err != nil {
+		return diag.Errorf("error setting account_id: %s", err)
+	}
+
+	if err := d.Set("description", projects[0].GetDescription()); err != nil {
 		return diag.Errorf("error setting description: %s", err)
 	}
 
-	if err := d.Set("limits_enabled", projects[0].LimitEnabled); err != nil {
+	if err := d.Set("limits_enabled", projects[0].GetLimitEnabled()); err != nil {
 		return diag.Errorf("error setting limits_enabled: %s", err)
 	}
 
-	if err := d.Set("memory_reserved_size_mb", projects[0].MemoryReservedSizeMB); err != nil {
+	if err := d.Set("memory_reserved_size_mb", projects[0].GetMemoryReservedSizeMB()); err != nil {
 		return diag.Errorf("error setting memory_reserved_size_mb: %s", err)
 	}
 
-	if err := d.Set("storage_reserved_size_gb", projects[0].StorageReservedSizeGB); err != nil {
+	if err := d.Set("storage_reserved_size_gb", projects[0].GetStorageReservedSizeGB()); err != nil {
 		return diag.Errorf("error setting storage_reserved_size_gb: %s", err)
 	}
 
-	if err := d.Set("vcpu_reserved_quantity", projects[0].CpuReserved); err != nil {
+	if err := d.Set("vcpu_reserved_quantity", projects[0].GetCpuReserved()); err != nil {
 		return diag.Errorf("error setting vcpu_reserved_quantity: %s", err)
 	}
 	return nil

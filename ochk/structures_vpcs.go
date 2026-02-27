@@ -15,11 +15,11 @@ func flattenVpcs(in []openapi.RouterInstance) []map[strfmt.UUID]interface{} {
 	for _, v := range in {
 		if *v.RouterType == "TIER1" {
 			m := make(map[strfmt.UUID]interface{})
-			m["vpc_id"] = v.RouterId
-			m["vrf_id"] = v.ParentT0Id
-			m["display_name"] = v.DisplayName
-			m["project_id"] = v.ProjectId
-			m["folder_path"] = v.FolderPath
+			m["vpc_id"] = v.GetRouterId()
+			m["vrf_id"] = v.ParentT0Id.Get()
+			m["display_name"] = v.GetDisplayName()
+			m["project_id"] = v.GetProjectId()
+			m["folder_path"] = v.GetFolderPath()
 			out = append(out, m)
 		}
 	}

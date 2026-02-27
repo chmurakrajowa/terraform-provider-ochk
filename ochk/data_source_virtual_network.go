@@ -47,6 +47,10 @@ func dataSourceVirtualNetwork() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"build_in": {
+				Type:     schema.TypeBool,
+				Computed: true,
+			},
 			"dns_servers": {
 				Type:     schema.TypeSet,
 				Computed: true,

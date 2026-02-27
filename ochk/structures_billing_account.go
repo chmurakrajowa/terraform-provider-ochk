@@ -17,7 +17,7 @@ func flattenAccount(in []openapi.AccountInstance) []map[string]interface{} {
 	for _, v := range in {
 		m := make(map[string]interface{})
 		m["account_id"] = fmt.Sprint(v.GetAccountId())
-		m["display_name"] = v.AccountName
+		m["display_name"] = v.AccountName.Get()
 
 		out = append(out, m)
 	}
@@ -30,20 +30,28 @@ func flattenAccProjects(in []openapi.AccountProjectInstance) *schema.Set {
 	}
 
 	for _, v := range in {
-		m := make(map[strfmt.UUID]interface{})
+		m := make(map[string]interface{})
 		m["project_id"] = v.GetProjectId()
 		if v.Name != NewNullableString("") {
-			m["display_name"] = v.Name
+			m["display_name"] = v.Name.Get()
 		}
 		out.Add(m)
 	}
 	return out
 }
 
-func projectsHash(v interface{}) int {
-	m := v.(map[strfmt.UUID]interface{})
+//func projectsHash(v interface{}) int {
+//	m := v.(map[strfmt.UUID]interface{})
+//
+//	return schema.HashString((m["project_id"].(strfmt.UUID)).String())
+//}
 
-	return schema.HashString((m["project_id"].(strfmt.UUID)).String())
+func projectsHash(v interface{}) int {
+	m := v.(map[string]interface{})
+
+	projectID := m["project_id"].(string)
+
+	return schema.HashString(projectID)
 }
 
 func expandAcctProjects(in []interface{}) []openapi.AccountProjectInstance {

@@ -47,7 +47,7 @@ func resourceBillingAccount() *schema.Resource {
 			},
 			"alarms": {
 				Type:     schema.TypeBool,
-				Optional: true,
+				Required: true,
 			},
 			"cost": {
 				Type:     schema.TypeFloat,
@@ -61,7 +61,7 @@ func resourceBillingAccount() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"project_id": {
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"display_name": {
 							Type:     schema.TypeString,
@@ -99,7 +99,9 @@ func resourceAccountUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	account := mapResourceDataToAccount(d)
 	account.AccountId = NewNullableString(d.Id())
 
-	_, err := proxy.Update(ctx, &account)
+	//b, _ := json.MarshalIndent(req, "", "  ")
+	//fmt.Println(string(b))
+	_, err := proxy.Update(ctx, account)
 	if err != nil {
 		return diag.Errorf("error while modifying account: %+v", err)
 	}
@@ -121,23 +123,23 @@ func resourceAccountRead(ctx context.Context, d *schema.ResourceData, meta inter
 		return diag.Errorf("error while reading account: %+v", err)
 	}
 
-	if err := d.Set("display_name", account); err != nil {
+	if err := d.Set("display_name", account.GetAccountName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("account_description", account.AccountDescription); err != nil {
+	if err := d.Set("account_description", account.GetAccountDescription()); err != nil {
 		return diag.Errorf("error setting account_description: %+v", err)
 	}
 
-	if err := d.Set("discount", account.Discount); err != nil {
+	if err := d.Set("discount", account.GetDiscount()); err != nil {
 		return diag.Errorf("error setting discount: %+v", err)
 	}
 
-	if err := d.Set("alarms", account.Alarms); err != nil {
+	if err := d.Set("alarms", account.GetAlarms()); err != nil {
 		return diag.Errorf("error setting alarms: %+v", err)
 	}
 
-	if err := d.Set("cost", account.Cost); err != nil {
+	if err := d.Set("cost", account.GetCost()); err != nil {
 		return diag.Errorf("error setting cost: %+v", err)
 	}
 
@@ -175,6 +177,13 @@ func mapResourceDataToAccount(d *schema.ResourceData) openapi.AccountInstance {
 func expandAccountProjects(in []interface{}) []openapi.AccountProjectInstance {
 	if len(in) == 0 {
 		return nil
+	}
+
+	for _, v := range in {
+		m := v.(map[string]interface{})
+		if m["project_id"].(string) == "" { // for account without assigned project we can not send empty array projects - error in core
+			return nil
+		}
 	}
 
 	var out = make([]openapi.AccountProjectInstance, len(in))

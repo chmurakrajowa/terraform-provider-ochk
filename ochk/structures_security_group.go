@@ -44,11 +44,11 @@ func flattenSecurityGroupMembers(in []openapi.SecurityGroupMember) *schema.Set {
 
 	for _, v := range in {
 		m := make(map[string]interface{})
-		m["id"] = v.Id
-		m["type"] = v.MemberType
+		m["id"] = v.GetId()
+		m["type"] = v.GetMemberType()
 
 		if v.DisplayName != NewNullableString("") {
-			m["display_name"] = v.DisplayName
+			m["display_name"] = v.GetDisplayName()
 		}
 
 		out.Add(m)
@@ -105,6 +105,5 @@ func expandSecurityGroupMembers(in []interface{}, platformType openapi.PlatformT
 
 func securityGroupMembersHash(v interface{}) int {
 	m := v.(map[string]interface{})
-
-	return schema.HashString(m["id"].(strfmt.UUID).String())
+	return schema.HashString(m["id"].(string))
 }

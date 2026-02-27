@@ -14,10 +14,10 @@ func flattenIPCollections(in []openapi.IpCollection) []map[string]interface{} {
 
 	for _, v := range in {
 		m := make(map[string]interface{})
-		m["ip_collection_id"] = v.Id
-		m["display_name"] = v.DisplayName
+		m["ip_collection_id"] = v.GetId()
+		m["display_name"] = v.GetDisplayName()
 		m["ip_addresses"] = flattenStringSlice(v.IpCollectionAddresses)
-		m["project_id"] = v.ProjectId
+		m["project_id"] = v.GetProjectId()
 
 		out = append(out, m)
 	}

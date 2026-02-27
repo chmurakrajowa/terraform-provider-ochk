@@ -15,8 +15,8 @@ func flattenFolders(in []openapi.FolderInstance) []map[strfmt.UUID]interface{} {
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
 		m["folder_id"] = v.Id
-		m["folder_name"] = v.Name
-		m["folder_path"] = v.FolderPath
+		m["folder_name"] = v.Name.Get()
+		m["folder_path"] = v.FolderPath.Get()
 		out = append(out, m)
 	}
 	return out

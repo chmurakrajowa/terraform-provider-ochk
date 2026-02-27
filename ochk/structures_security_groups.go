@@ -14,9 +14,9 @@ func flattenSecurityGroups(in []openapi.SecurityGroup) []map[strfmt.UUID]interfa
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["security_group_id"] = v.Id
-		m["display_name"] = v.DisplayName
-		m["project_id"] = v.ProjectId
+		m["security_group_id"] = v.GetId()
+		m["display_name"] = v.GetDisplayName()
+		m["project_id"] = v.GetProjectId()
 		out = append(out, m)
 	}
 	return out

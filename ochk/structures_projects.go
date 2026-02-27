@@ -14,8 +14,8 @@ func flattenProjects(in []openapi.ProjectInstance) []map[strfmt.UUID]interface{}
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["project_id"] = v.ProjectId
-		m["display_name"] = v.Name
+		m["project_id"] = v.ProjectId.Get()
+		m["display_name"] = v.Name.Get()
 		out = append(out, m)
 	}
 	return out

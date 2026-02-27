@@ -158,15 +158,19 @@ func resourceVirtualNetworkRead(ctx context.Context, d *schema.ResourceData, met
 }
 
 func mapVirtualNetworkToResourceData(d *schema.ResourceData, virtualNetwork *openapi.VirtualNetworkInstance) diag.Diagnostics {
-	if err := d.Set("display_name", virtualNetwork.DisplayName); err != nil {
+	if err := d.Set("display_name", virtualNetwork.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", virtualNetwork.ProjectId); err != nil {
+	if err := d.Set("project_id", virtualNetwork.GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
-	if err := d.Set("folder_path", virtualNetwork.FolderPath); err != nil {
+	if err := d.Set("build_in", virtualNetwork.GetBuildIn()); err != nil {
+		return diag.Errorf("error setting buildIn: %+v", err)
+	}
+
+	if err := d.Set("folder_path", virtualNetwork.GetFolderPath()); err != nil {
 		return diag.Errorf("error setting folder_path: %+v", err)
 	}
 
@@ -174,23 +178,23 @@ func mapVirtualNetworkToResourceData(d *schema.ResourceData, virtualNetwork *ope
 		return diag.Errorf("error setting ipam_enabled: %+v", err)
 	}
 
-	if err := d.Set("gateway_address", virtualNetwork.GatewayAddress); err != nil {
+	if err := d.Set("gateway_address", virtualNetwork.GatewayAddress.Get()); err != nil {
 		return diag.Errorf("error setting gateway_address: %+v", err)
 	}
 
-	if err := d.Set("subnet_mask", virtualNetwork.SubnetMask); err != nil {
+	if err := d.Set("subnet_mask", virtualNetwork.SubnetMask.Get()); err != nil {
 		return diag.Errorf("error setting subnet_mask: %+v", err)
 	}
 
-	if err := d.Set("vpc_id", virtualNetwork.RouterRefId); err != nil {
+	if err := d.Set("vpc_id", virtualNetwork.GetRouterRefId()); err != nil {
 		return diag.Errorf("error setting vpc: %+v", err)
 	}
 
 	if virtualNetwork.Subnet != nil {
-		if err := d.Set("subnet_gateway_address_cidr", virtualNetwork.Subnet.GatewayAddressCIDR); err != nil {
+		if err := d.Set("subnet_gateway_address_cidr", virtualNetwork.Subnet.GatewayAddressCIDR.Get()); err != nil {
 			return diag.Errorf("error setting subnet_gateway_address_cidr: %+v", err)
 		}
-		if err := d.Set("subnet_network_cidr", virtualNetwork.Subnet.NetworkCIDR); err != nil {
+		if err := d.Set("subnet_network_cidr", virtualNetwork.Subnet.NetworkCIDR.Get()); err != nil {
 			return diag.Errorf("error setting subnet_network_cidr: %+v", err)
 		}
 		if virtualNetwork.Subnet.DnsServers != nil && len(virtualNetwork.Subnet.DnsServers) > 0 {

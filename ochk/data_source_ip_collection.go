@@ -65,11 +65,11 @@ func dataSourceIPCollectionRead(ctx context.Context, d *schema.ResourceData, met
 
 	d.SetId(ipCollections[0].GetId())
 
-	if err := d.Set("project_id", ipCollections[0].ProjectId); err != nil {
+	if err := d.Set("project_id", ipCollections[0].GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
-	if err := d.Set("created_by", ipCollections[0].CreatedBy); err != nil {
+	if err := d.Set("created_by", ipCollections[0].GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
@@ -77,7 +77,7 @@ func dataSourceIPCollectionRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", ipCollections[0].ModifiedBy); err != nil {
+	if err := d.Set("modified_by", ipCollections[0].GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 

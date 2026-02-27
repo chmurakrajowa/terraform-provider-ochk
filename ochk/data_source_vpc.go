@@ -75,11 +75,11 @@ func dataSourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interfa
 
 	d.SetId(routers[0].GetRouterId())
 
-	if err := d.Set("vrf_id", routers[0].ParentT0Id); err != nil {
+	if err := d.Set("vrf_id", routers[0].GetParentT0Id()); err != nil {
 		return diag.Errorf("error setting vrf_id: %+v", err)
 	}
 
-	if err := d.Set("project_id", routers[0].ProjectId); err != nil {
+	if err := d.Set("project_id", routers[0].GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
@@ -89,11 +89,11 @@ func dataSourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		}
 	}
 
-	if err := d.Set("folder_path", routers[0].FolderPath); err != nil {
+	if err := d.Set("folder_path", routers[0].GetFolderPath()); err != nil {
 		return diag.Errorf("error setting folder_path: %+v", err)
 	}
 
-	if err := d.Set("created_by", routers[0].CreatedBy); err != nil {
+	if err := d.Set("created_by", routers[0].GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
@@ -101,7 +101,7 @@ func dataSourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", routers[0].ModifiedBy); err != nil {
+	if err := d.Set("modified_by", routers[0].GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 

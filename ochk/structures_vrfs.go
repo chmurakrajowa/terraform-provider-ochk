@@ -15,8 +15,8 @@ func flattenVrfs(in []openapi.RouterInstance) []map[strfmt.UUID]interface{} {
 	for _, v := range in {
 		if *v.RouterType == "TIER0" {
 			m := make(map[strfmt.UUID]interface{})
-			m["vrf_id"] = v.RouterId
-			m["display_name"] = v.DisplayName
+			m["vrf_id"] = v.RouterId.Get()
+			m["display_name"] = v.DisplayName.Get()
 			out = append(out, m)
 		}
 	}

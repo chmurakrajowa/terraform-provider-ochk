@@ -29,12 +29,12 @@ func flattenVirtualNetworks(in []openapi.VirtualNetworkInstance) []map[strfmt.UU
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["virtual_network_id"] = v.VirtualNetworkId
-		m["display_name"] = v.DisplayName
+		m["virtual_network_id"] = v.GetVirtualNetworkId()
+		m["display_name"] = v.GetDisplayName()
 		m["ipam_enabled"] = v.IpamEnabled
-		m["vpc_id"] = v.RouterRefId
-		m["folder_path"] = v.FolderPath
-		m["project_id"] = v.ProjectId
+		m["vpc_id"] = v.GetRouterRefId()
+		m["folder_path"] = v.GetFolderPath()
+		m["project_id"] = v.GetProjectId()
 		out = append(out, m)
 	}
 	return out
@@ -47,8 +47,8 @@ func flattenDnsServers(in []openapi.DnsServerInstance) []map[strfmt.UUID]interfa
 	var out []map[strfmt.UUID]interface{}
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["id"] = v.Id
-		m["address"] = v.Address
+		m["id"] = v.GetId()
+		m["address"] = v.GetAddress()
 		out = append(out, m)
 	}
 	return out
