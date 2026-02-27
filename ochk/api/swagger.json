@@ -13546,7 +13546,6 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "string",
             "nullable": true
           },
           "modifiedBy": {
@@ -13555,7 +13554,6 @@
           },
           "modificationDate": {
             "type": "string",
-            "format": "string",
             "nullable": true
           },
           "cost": {
@@ -13651,12 +13649,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "string",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "string",
             "nullable": true
           },
           "cost": {
@@ -20091,12 +20087,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "string",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "string",
             "nullable": true
           },
           "ipCollectionAddresses": {
@@ -24005,13 +23999,13 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "string",
-            "nullable": true
+            "nullable": true,
+            "format": "string"
           },
           "modificationDate": {
             "type": "string",
-            "format": "string",
-            "nullable": true
+            "nullable": true,
+            "format": "string"
           },
           "cost": {
             "type": "number",
@@ -24339,12 +24333,10 @@
             "$ref": "#/components/schemas/RequestType"
           },
           "startDate": {
-            "type": "string",
-            "format": "date-time"
+            "type": "string"
           },
           "endDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "requestBody": {
@@ -24402,7 +24394,6 @@
           },
           "messageDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "messageValue": {
@@ -24908,7 +24899,6 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "string",
             "nullable": true
           },
           "modifiedBy": {
@@ -24917,7 +24907,6 @@
           },
           "modificationDate": {
             "type": "string",
-            "format": "string",
             "nullable": true
           },
           "edgeClusterInstance": {
@@ -25180,12 +25169,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "string",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "string",
             "nullable": true
           },
           "tags": {
@@ -28170,12 +28157,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "string",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "string",
             "nullable": true
           },
           "subnet": {
