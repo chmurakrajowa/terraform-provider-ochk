@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the RequestInstance type satisfies the MappedNullable interface at compile time
@@ -26,8 +25,8 @@ type RequestInstance struct {
 	RequestStatus      *RequestStatus    `json:"requestStatus,omitempty"`
 	LastErrorMessage   NullableString    `json:"lastErrorMessage,omitempty"`
 	RequestType        *RequestType      `json:"requestType,omitempty"`
-	StartDate          *time.Time        `json:"startDate,omitempty"`
-	EndDate            NullableTime      `json:"endDate,omitempty"`
+	StartDate          *string           `json:"startDate,omitempty"`
+	EndDate            NullableString    `json:"endDate,omitempty"`
 	RequestBody        NullableString    `json:"requestBody,omitempty"`
 	ContextBody        NullableString    `json:"contextBody,omitempty"`
 	RequestorId        NullableString    `json:"requestorId,omitempty"`
@@ -240,9 +239,9 @@ func (o *RequestInstance) SetRequestType(v RequestType) {
 }
 
 // GetStartDate returns the StartDate field value if set, zero value otherwise.
-func (o *RequestInstance) GetStartDate() time.Time {
+func (o *RequestInstance) GetStartDate() string {
 	if o == nil || IsNil(o.StartDate) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.StartDate
@@ -250,7 +249,7 @@ func (o *RequestInstance) GetStartDate() time.Time {
 
 // GetStartDateOk returns a tuple with the StartDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RequestInstance) GetStartDateOk() (*time.Time, bool) {
+func (o *RequestInstance) GetStartDateOk() (*string, bool) {
 	if o == nil || IsNil(o.StartDate) {
 		return nil, false
 	}
@@ -266,15 +265,15 @@ func (o *RequestInstance) HasStartDate() bool {
 	return false
 }
 
-// SetStartDate gets a reference to the given time.Time and assigns it to the StartDate field.
-func (o *RequestInstance) SetStartDate(v time.Time) {
+// SetStartDate gets a reference to the given string and assigns it to the StartDate field.
+func (o *RequestInstance) SetStartDate(v string) {
 	o.StartDate = &v
 }
 
 // GetEndDate returns the EndDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *RequestInstance) GetEndDate() time.Time {
+func (o *RequestInstance) GetEndDate() string {
 	if o == nil || IsNil(o.EndDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.EndDate.Get()
@@ -283,7 +282,7 @@ func (o *RequestInstance) GetEndDate() time.Time {
 // GetEndDateOk returns a tuple with the EndDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *RequestInstance) GetEndDateOk() (*time.Time, bool) {
+func (o *RequestInstance) GetEndDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -299,8 +298,8 @@ func (o *RequestInstance) HasEndDate() bool {
 	return false
 }
 
-// SetEndDate gets a reference to the given NullableTime and assigns it to the EndDate field.
-func (o *RequestInstance) SetEndDate(v time.Time) {
+// SetEndDate gets a reference to the given NullableString and assigns it to the EndDate field.
+func (o *RequestInstance) SetEndDate(v string) {
 	o.EndDate.Set(&v)
 }
 

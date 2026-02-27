@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the RequestMessage type satisfies the MappedNullable interface at compile time
@@ -22,7 +21,7 @@ var _ MappedNullable = &RequestMessage{}
 // RequestMessage struct for RequestMessage
 type RequestMessage struct {
 	MessageId    *int32         `json:"messageId,omitempty"`
-	MessageDate  NullableTime   `json:"messageDate,omitempty"`
+	MessageDate  NullableString `json:"messageDate,omitempty"`
 	MessageValue NullableString `json:"messageValue,omitempty"`
 }
 
@@ -76,9 +75,9 @@ func (o *RequestMessage) SetMessageId(v int32) {
 }
 
 // GetMessageDate returns the MessageDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *RequestMessage) GetMessageDate() time.Time {
+func (o *RequestMessage) GetMessageDate() string {
 	if o == nil || IsNil(o.MessageDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.MessageDate.Get()
@@ -87,7 +86,7 @@ func (o *RequestMessage) GetMessageDate() time.Time {
 // GetMessageDateOk returns a tuple with the MessageDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *RequestMessage) GetMessageDateOk() (*time.Time, bool) {
+func (o *RequestMessage) GetMessageDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -103,8 +102,8 @@ func (o *RequestMessage) HasMessageDate() bool {
 	return false
 }
 
-// SetMessageDate gets a reference to the given NullableTime and assigns it to the MessageDate field.
-func (o *RequestMessage) SetMessageDate(v time.Time) {
+// SetMessageDate gets a reference to the given NullableString and assigns it to the MessageDate field.
+func (o *RequestMessage) SetMessageDate(v string) {
 	o.MessageDate.Set(&v)
 }
 
