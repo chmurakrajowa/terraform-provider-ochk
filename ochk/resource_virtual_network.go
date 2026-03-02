@@ -73,6 +73,11 @@ func resourceVirtualNetwork() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"build_in": {
+				Type:     schema.TypeBool,
+				Computed: true,
+				Default:  nil,
+			},
 			"project_id": {
 				Type:     schema.TypeString,
 				Required: true,
@@ -251,14 +256,15 @@ func resourceVirtualNetworkDelete(ctx context.Context, d *schema.ResourceData, m
 }
 
 func mapResourceDataToVirtualNetwork(d *schema.ResourceData) openapi.VirtualNetworkInstance {
+	IpamEnabledValue := d.Get("ipam_enabled").(bool)
 	virtualNetworkInstance := openapi.VirtualNetworkInstance{
 		DisplayName:      NewNullableString(d.Get("display_name").(string)),
 		GatewayAddress:   NewNullableString(d.Get("gateway_address").(string)),
-		IpamEnabled:      d.Get("ipam_enabled").(*bool),
+		IpamEnabled:      &IpamEnabledValue,
 		RouterRefId:      NewNullableString(d.Get("vpc_id").(string)),
 		SubnetMask:       NewNullableString(d.Get("subnet_mask").(string)),
 		ProjectId:        NewNullableString(d.Get("project_id").(string)),
-		VirtualNetworkId: NewNullableString(d.Id()),
+		VirtualNetworkId: openapi.NullableString{},
 	}
 
 	subnetGatewayAddressCidr, subnetGatewayAddressCidrOk := d.GetOk("subnet_gateway_address_cidr")

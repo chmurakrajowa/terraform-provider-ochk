@@ -125,27 +125,27 @@ func resourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf(E2005, err)
 	}
 
-	if err := d.Set("vrf_id", Router.ParentT0Id); err != nil {
+	if err := d.Set("vrf_id", Router.GetParentT0Id()); err != nil {
 		return diag.Errorf("error setting vrf_id: %+v", err)
 	}
 
-	if err := d.Set("project_id", Router.ProjectId); err != nil {
+	if err := d.Set("project_id", Router.GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
-	if err := d.Set("display_name", Router.DisplayName); err != nil {
+	if err := d.Set("display_name", Router.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("autonat_enabled", Router.SnatEnabled); err != nil {
+	if err := d.Set("autonat_enabled", Router.GetSnatEnabled()); err != nil {
 		return diag.Errorf("error setting autonat_enabled: %+v", err)
 	}
 
-	if err := d.Set("folder_path", Router.FolderPath); err != nil {
+	if err := d.Set("folder_path", Router.GetFolderPath()); err != nil {
 		return diag.Errorf("error setting folder_path: %+v", err)
 	}
 
-	if err := d.Set("created_by", Router.CreatedBy); err != nil {
+	if err := d.Set("created_by", Router.GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
@@ -153,7 +153,7 @@ func resourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", Router.ModifiedBy); err != nil {
+	if err := d.Set("modified_by", Router.GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 

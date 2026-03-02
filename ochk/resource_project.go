@@ -43,6 +43,10 @@ func resourceProject() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"account_id": {
+				Type:     schema.TypeString,
+				Required: true,
+			},
 			"vrf_id": {
 				Type:     schema.TypeString,
 				Required: true,
@@ -122,31 +126,31 @@ func mapProjectToResourceData(d *schema.ResourceData, project openapi.ProjectIns
 		return fmt.Errorf("error setting project_id: %w", err)
 	}
 
-	if err := d.Set("display_name", project.Name); err != nil {
+	if err := d.Set("display_name", project.GetName()); err != nil {
 		return fmt.Errorf("error setting name: %w", err)
 	}
 
-	if err := d.Set("vrf_id", project.VrfId); err != nil {
+	if err := d.Set("vrf_id", project.GetVrfId()); err != nil {
 		return fmt.Errorf("error setting vrf_id: %w", err)
 	}
 
-	if err := d.Set("description", project.Description); err != nil {
+	if err := d.Set("description", project.GetDescription()); err != nil {
 		return fmt.Errorf("error setting description: %w", err)
 	}
 
-	if err := d.Set("limits_enabled", project.LimitEnabled); err != nil {
+	if err := d.Set("limits_enabled", project.GetLimitEnabled()); err != nil {
 		return fmt.Errorf("error setting limits_enabled: %w", err)
 	}
 
-	if err := d.Set("memory_reserved_size_mb", project.MemoryReservedSizeMB); err != nil {
+	if err := d.Set("memory_reserved_size_mb", project.GetMemoryReservedSizeMB()); err != nil {
 		return fmt.Errorf("error setting memory_reserved_size_mb: %w", err)
 	}
 
-	if err := d.Set("storage_reserved_size_gb", project.StorageReservedSizeGB); err != nil {
+	if err := d.Set("storage_reserved_size_gb", project.GetStorageReservedSizeGB()); err != nil {
 		return fmt.Errorf("error setting storage_reserved_size_gb: %w", err)
 	}
 
-	if err := d.Set("vcpu_reserved_quantity", project.CpuReserved); err != nil {
+	if err := d.Set("vcpu_reserved_quantity", project.GetCpuReserved()); err != nil {
 		return fmt.Errorf("error setting vcpu_reserved_quantity: %w", err)
 	}
 	return nil
@@ -191,9 +195,10 @@ func mapResourceDataToProject(d *schema.ResourceData, platformType openapi.Platf
 	//if platformType == "OPENSTACK" {
 	//	factor = 1024
 	//}
-	MemoryReservedSizeMBValue := d.Get("memory_reserved_size_mb").(int64)
-	StorageReservedSizeGBValue := d.Get("storage_reserved_size_gb").(int64)
-	CpuReservedValue := d.Get("vcpu_reserved_quantity").(int64)
+	MemoryReservedSizeMBValue := int64(d.Get("memory_reserved_size_mb").(int))
+
+	StorageReservedSizeGBValue := int64(d.Get("storage_reserved_size_gb").(int))
+	CpuReservedValue := int64(d.Get("vcpu_reserved_quantity").(int))
 	LimitEnabledValue := d.Get("limits_enabled").(bool)
 	return openapi.ProjectInstance{
 		Description: NewNullableString(d.Get("description").(string)),
@@ -204,6 +209,10 @@ func mapResourceDataToProject(d *schema.ResourceData, platformType openapi.Platf
 		VrfId:                 NewNullableString(d.Get("vrf_id").(string)),
 		CpuReserved:           &CpuReservedValue,
 		LimitEnabled:          &LimitEnabledValue,
-		ProjectId:             NewNullableString(d.Get("project_id").(string)),
+		ProjectId:             openapi.NullableString{},
+		Id:                    openapi.NullableString{},
+		CreationDate:          openapi.NullableString{},
+		ModificationDate:      openapi.NullableString{},
+		AccountId:             NewNullableString(d.Get("account_id").(string)),
 	}
 }
