@@ -13951,12 +13951,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "httpRedirectTo": {
@@ -14477,12 +14475,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "userInstanceList": {
@@ -14789,7 +14785,6 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "createdById": {
@@ -14803,7 +14798,6 @@
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modifiedById": {
@@ -15050,7 +15044,6 @@
           },
           "creationTimestamp": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "labels": {
@@ -15128,7 +15121,6 @@
           },
           "creationTimestamp": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "labels": {
@@ -16678,12 +16670,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "tenantInstance": {
@@ -16779,7 +16769,6 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "status": {
@@ -17556,7 +17545,6 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modifiedBy": {
@@ -17565,7 +17553,6 @@
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "scope": {
@@ -18150,7 +18137,6 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "createdBy": {
@@ -18158,7 +18144,6 @@
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modifiedBy": {
@@ -18193,7 +18178,6 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "createdBy": {
@@ -18202,7 +18186,6 @@
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modifiedBy": {
@@ -19380,7 +19363,6 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modifiedBy": {
@@ -19389,7 +19371,6 @@
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "scope": {
@@ -19453,12 +19434,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           }
         },
@@ -20238,7 +20217,6 @@
           },
           "createdAt": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "name": {
@@ -20247,12 +20225,10 @@
           },
           "updatedAt": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "activationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "state": {
@@ -20527,12 +20503,10 @@
           },
           "startTime": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "staticDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           }
         },
@@ -20614,7 +20588,6 @@
           },
           "insertDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "scoringValue": {
@@ -20829,12 +20802,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           }
         },
@@ -22265,12 +22236,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "tags": {
@@ -22533,12 +22502,10 @@
           },
           "createdAt": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "updatedAt": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "status": {
@@ -22603,12 +22570,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "computeSiteId": {
@@ -22843,12 +22808,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "size": {
@@ -23048,12 +23011,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "poolId": {
@@ -23133,12 +23094,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "provisioningStatus": {
@@ -23215,12 +23174,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "provider": {
@@ -23375,12 +23332,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "provisioningStatus": {
@@ -23463,12 +23418,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "provisioningStatus": {
@@ -23532,7 +23485,6 @@
           },
           "insertDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "scoringValue": {
@@ -23695,12 +23647,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "enabled": {
@@ -23836,7 +23786,6 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "createdBy": {
@@ -23845,7 +23794,6 @@
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modifiedBy": {
@@ -24199,7 +24147,6 @@
           },
           "assignmentDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "services": {
@@ -24251,12 +24198,10 @@
           },
           "startDateTime": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "endDateTime": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           }
         },
@@ -25059,7 +25004,6 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modifiedBy": {
@@ -25068,7 +25012,6 @@
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           }
         },
@@ -25340,12 +25283,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "monitors": {
@@ -25543,7 +25484,6 @@
           },
           "createTime": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "snapshotDescription": {
@@ -25591,12 +25531,10 @@
           },
           "timestamp": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "receiveTimestamp": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "id": {
@@ -25839,12 +25777,10 @@
           },
           "createdAt": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "updatedAt": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "status": {
@@ -25993,12 +25929,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "platformType": {
@@ -27501,12 +27435,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "tfaEnabled": {
@@ -27557,7 +27489,6 @@
           },
           "insertDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "scoringValue": {
@@ -27689,12 +27620,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "sshKey": {
@@ -27759,7 +27688,6 @@
           },
           "modified": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "version": {
@@ -28075,7 +28003,6 @@
           },
           "insertDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "scoringValue": {
@@ -28274,12 +28201,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "loadBalancerId": {
@@ -28570,12 +28495,10 @@
           },
           "notAfter": {
             "type": "string",
-            "format": "date-time",
             "readOnly": true
           },
           "notBefore": {
             "type": "string",
-            "format": "date-time",
             "readOnly": true
           },
           "publicKey": {
