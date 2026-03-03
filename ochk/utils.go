@@ -45,6 +45,15 @@ func NewNullableBool(s bool) openapi.NullableBool {
 	return ns
 }
 
+func contains(slice []string, target string) bool {
+	for _, s := range slice {
+		if s == target {
+			return true
+		}
+	}
+	return false
+}
+
 //func GetIntValue(s openapi.NullableInt32) *int32 {
 //	if s.IsSet() {
 //		return s.Get()

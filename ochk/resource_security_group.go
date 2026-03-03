@@ -19,6 +19,7 @@ const (
 	IPSET                     MemberType = "IPSET"
 	SEGMENT                   MemberType = "SEGMENT"
 	GROUP                     MemberType = "GROUP"
+	VIRTUAL_MACHINE           MemberType = "VIRTUAL_MACHINE"
 )
 
 func resourceSecurityGroup() *schema.Resource {
@@ -130,11 +131,11 @@ func resourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error while reading security group: %+v", err)
 	}
 
-	if err := d.Set("display_name", securityGroup.DisplayName); err != nil {
+	if err := d.Set("display_name", securityGroup.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", securityGroup.ProjectId); err != nil {
+	if err := d.Set("project_id", securityGroup.GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
@@ -142,7 +143,7 @@ func resourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error setting members: %+v", err)
 	}
 
-	if err := d.Set("created_by", securityGroup.CreatedBy); err != nil {
+	if err := d.Set("created_by", securityGroup.GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
@@ -150,7 +151,7 @@ func resourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", securityGroup.ModifiedBy); err != nil {
+	if err := d.Set("modified_by", securityGroup.GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
