@@ -107,15 +107,15 @@ func resourceIPCollectionRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting ip_addresses: %+v", err)
 	}
 
-	if err := d.Set("display_name", ipCollection.DisplayName); err != nil {
+	if err := d.Set("display_name", ipCollection.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", ipCollection.ProjectId); err != nil {
+	if err := d.Set("project_id", ipCollection.GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
-	if err := d.Set("created_by", ipCollection.CreatedBy); err != nil {
+	if err := d.Set("created_by", ipCollection.GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
@@ -123,7 +123,7 @@ func resourceIPCollectionRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", ipCollection.ModifiedBy); err != nil {
+	if err := d.Set("modified_by", ipCollection.GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
