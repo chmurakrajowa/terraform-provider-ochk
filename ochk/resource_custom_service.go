@@ -38,6 +38,15 @@ func resourceCustomService() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"description": {
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"build_in": {
+				Type:     schema.TypeBool,
+				Computed: true,
+				Default:  nil,
+			},
 			"project_id": {
 				Type:     schema.TypeString,
 				Required: true,
@@ -126,11 +135,15 @@ func resourceCustomServiceRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error while reading custom service: %+v", err)
 	}
 
-	if err := d.Set("display_name", customService.DisplayName); err != nil {
+	if err := d.Set("display_name", customService.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", customService.ProjectId); err != nil {
+	if err := d.Set("description", customService.GetDescription()); err != nil {
+		return diag.Errorf("error setting description: %+v", err)
+	}
+
+	if err := d.Set("project_id", customService.GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
@@ -138,7 +151,11 @@ func resourceCustomServiceRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error setting members: %+v", err)
 	}
 
-	if err := d.Set("created_by", customService.CreatedBy); err != nil {
+	//if err := d.Set("build_in", customService.GetBuildIn()); err != nil {
+	//	return diag.Errorf("error setting buildIn: %+v", err)
+	//}
+
+	if err := d.Set("created_by", customService.GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
@@ -146,7 +163,7 @@ func resourceCustomServiceRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", customService.ModifiedBy); err != nil {
+	if err := d.Set("modified_by", customService.GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
@@ -163,7 +180,7 @@ func resourceCustomServiceUpdate(ctx context.Context, d *schema.ResourceData, me
 	customService := mapResourceDataToCustomService(d)
 	customService.ServiceId = NewNullableString(d.Id())
 
-	_, err := proxy.Update(ctx, &customService)
+	_, err := proxy.Update(ctx, customService)
 	if err != nil {
 		return diag.Errorf("error while modifying custom service: %+v", err)
 	}
@@ -189,9 +206,20 @@ func resourceCustomServiceDelete(ctx context.Context, d *schema.ResourceData, me
 }
 
 func mapResourceDataToCustomService(d *schema.ResourceData) openapi.CustomServiceInstance {
-	return openapi.CustomServiceInstance{
-		DisplayName:      NewNullableString(d.Get("display_name").(string)),
-		ProjectId:        NewNullableString(d.Get("project_id").(string)),
-		L4PortSetEntries: expandCustomServicePorts(d.Get("ports").([]interface{})),
+
+	if d.Get("description") == "" {
+		return openapi.CustomServiceInstance{
+			DisplayName:      NewNullableString(d.Get("display_name").(string)),
+			ProjectId:        NewNullableString(d.Get("project_id").(string)),
+			Description:      openapi.NullableString{},
+			L4PortSetEntries: expandCustomServicePorts(d.Get("ports").([]interface{})),
+		}
+	} else {
+		return openapi.CustomServiceInstance{
+			DisplayName:      NewNullableString(d.Get("display_name").(string)),
+			ProjectId:        NewNullableString(d.Get("project_id").(string)),
+			Description:      NewNullableString(d.Get("description").(string)),
+			L4PortSetEntries: expandCustomServicePorts(d.Get("ports").([]interface{})),
+		}
 	}
 }

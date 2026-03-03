@@ -35,7 +35,7 @@ func expandCustomServicePorts(in []interface{}) []openapi.L4PortSetEntry {
 		m := v.(map[string]interface{})
 
 		member := openapi.L4PortSetEntry{
-			L4PortSetEntryId: NewNullableString(m["id"].(string)),
+			L4PortSetEntryId: openapi.NullableString{},
 			L4Protocol:       castStringToL4ProtocolEnum(m["protocol"].(string)).Ptr(),
 			SourcePorts:      transformSetToStringSlice(m["source"].(*schema.Set)),
 			DestinationPorts: transformSetToStringSlice(m["destination"].(*schema.Set)),
