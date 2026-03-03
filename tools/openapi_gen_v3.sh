@@ -51,6 +51,8 @@ sed -i -e 's/hasDefaultValue/defaultValuePresent/g' ./ochk/api/swagger.json
 
 
 
+sed -i -e 's/"format": "date-time",//g' ./ochk/api/swagger.json
+
 openapi-generator generate -i ./ochk/api/swagger.json -g go -o ./ochk/api/v3 \
     --additional-properties=enumClassPrefix=true,useOneOfDiscriminatorLookup=true,generateMarshalJSON=false
 
@@ -105,6 +107,28 @@ jq '
 ' ./ochk/api/swagger.json > ./ochk/api/tmp.json && mv ./ochk/api/tmp.json ./ochk/api/swagger.json
 
 
+
+
+# change date-time type field to string in modification and creation date
+
+# for AccountInstance
+#jq '
+#  .components.schemas.AccountInstance.properties.creationDate.format = "string"
+#' ./ochk/api/swagger.json > ./ochk/api/tmp.json && mv ./ochk/api/tmp.json ./ochk/api/swagger.json
+#
+#
+#jq '
+#  .components.schemas.AccountInstance.properties.modificationDate.format = "string"
+#' ./ochk/api/swagger.json > ./ochk/api/tmp.json && mv ./ochk/api/tmp.json ./ochk/api/swagger.json
+
+# for ProjectInstance
+#jq '
+#  .components.schemas.ProjectInstance.properties.creationDate.format = "string"
+#' ./ochk/api/swagger.json > ./ochk/api/tmp.json && mv ./ochk/api/tmp.json ./ochk/api/swagger.json
+#
+#jq '
+#  .components.schemas.ProjectInstance.properties.modificationDate.format = "string"
+#' ./ochk/api/swagger.json > ./ochk/api/tmp.json && mv ./ochk/api/tmp.json ./ochk/api/swagger.json
 make fmt
 
 go mod tidy
