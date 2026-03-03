@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the Source type satisfies the MappedNullable interface at compile time
@@ -24,8 +23,8 @@ type Source struct {
 	Severity         NullableString `json:"severity,omitempty"`
 	Resource         NullableString `json:"resource,omitempty"`
 	JsonPayload      interface{}    `json:"jsonPayload,omitempty"`
-	Timestamp        NullableTime   `json:"timestamp,omitempty"`
-	ReceiveTimestamp NullableTime   `json:"receiveTimestamp,omitempty"`
+	Timestamp        NullableString `json:"timestamp,omitempty"`
+	ReceiveTimestamp NullableString `json:"receiveTimestamp,omitempty"`
 	Id               NullableString `json:"id,omitempty"`
 	Category         NullableString `json:"category,omitempty"`
 	User             NullableString `json:"user,omitempty"`
@@ -169,9 +168,9 @@ func (o *Source) SetJsonPayload(v interface{}) {
 }
 
 // GetTimestamp returns the Timestamp field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Source) GetTimestamp() time.Time {
+func (o *Source) GetTimestamp() string {
 	if o == nil || IsNil(o.Timestamp.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.Timestamp.Get()
@@ -180,7 +179,7 @@ func (o *Source) GetTimestamp() time.Time {
 // GetTimestampOk returns a tuple with the Timestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Source) GetTimestampOk() (*time.Time, bool) {
+func (o *Source) GetTimestampOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -196,8 +195,8 @@ func (o *Source) HasTimestamp() bool {
 	return false
 }
 
-// SetTimestamp gets a reference to the given NullableTime and assigns it to the Timestamp field.
-func (o *Source) SetTimestamp(v time.Time) {
+// SetTimestamp gets a reference to the given NullableString and assigns it to the Timestamp field.
+func (o *Source) SetTimestamp(v string) {
 	o.Timestamp.Set(&v)
 }
 
@@ -212,9 +211,9 @@ func (o *Source) UnsetTimestamp() {
 }
 
 // GetReceiveTimestamp returns the ReceiveTimestamp field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Source) GetReceiveTimestamp() time.Time {
+func (o *Source) GetReceiveTimestamp() string {
 	if o == nil || IsNil(o.ReceiveTimestamp.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ReceiveTimestamp.Get()
@@ -223,7 +222,7 @@ func (o *Source) GetReceiveTimestamp() time.Time {
 // GetReceiveTimestampOk returns a tuple with the ReceiveTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Source) GetReceiveTimestampOk() (*time.Time, bool) {
+func (o *Source) GetReceiveTimestampOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -239,8 +238,8 @@ func (o *Source) HasReceiveTimestamp() bool {
 	return false
 }
 
-// SetReceiveTimestamp gets a reference to the given NullableTime and assigns it to the ReceiveTimestamp field.
-func (o *Source) SetReceiveTimestamp(v time.Time) {
+// SetReceiveTimestamp gets a reference to the given NullableString and assigns it to the ReceiveTimestamp field.
+func (o *Source) SetReceiveTimestamp(v string) {
 	o.ReceiveTimestamp.Set(&v)
 }
 

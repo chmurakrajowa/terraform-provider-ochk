@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the ServiceInstance type satisfies the MappedNullable interface at compile time
@@ -33,8 +32,8 @@ type ServiceInstance struct {
 	ServiceType      *ServiceType   `json:"serviceType,omitempty"`
 	CreatedBy        NullableString `json:"createdBy,omitempty"`
 	ModifiedBy       NullableString `json:"modifiedBy,omitempty"`
-	CreationDate     NullableTime   `json:"creationDate,omitempty"`
-	ModificationDate NullableTime   `json:"modificationDate,omitempty"`
+	CreationDate     NullableString `json:"creationDate,omitempty"`
+	ModificationDate NullableString `json:"modificationDate,omitempty"`
 }
 
 // NewServiceInstance instantiates a new ServiceInstance object
@@ -538,9 +537,9 @@ func (o *ServiceInstance) UnsetModifiedBy() {
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ServiceInstance) GetCreationDate() time.Time {
+func (o *ServiceInstance) GetCreationDate() string {
 	if o == nil || IsNil(o.CreationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationDate.Get()
@@ -549,7 +548,7 @@ func (o *ServiceInstance) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ServiceInstance) GetCreationDateOk() (*time.Time, bool) {
+func (o *ServiceInstance) GetCreationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -565,8 +564,8 @@ func (o *ServiceInstance) HasCreationDate() bool {
 	return false
 }
 
-// SetCreationDate gets a reference to the given NullableTime and assigns it to the CreationDate field.
-func (o *ServiceInstance) SetCreationDate(v time.Time) {
+// SetCreationDate gets a reference to the given NullableString and assigns it to the CreationDate field.
+func (o *ServiceInstance) SetCreationDate(v string) {
 	o.CreationDate.Set(&v)
 }
 
@@ -581,9 +580,9 @@ func (o *ServiceInstance) UnsetCreationDate() {
 }
 
 // GetModificationDate returns the ModificationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ServiceInstance) GetModificationDate() time.Time {
+func (o *ServiceInstance) GetModificationDate() string {
 	if o == nil || IsNil(o.ModificationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ModificationDate.Get()
@@ -592,7 +591,7 @@ func (o *ServiceInstance) GetModificationDate() time.Time {
 // GetModificationDateOk returns a tuple with the ModificationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ServiceInstance) GetModificationDateOk() (*time.Time, bool) {
+func (o *ServiceInstance) GetModificationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -608,8 +607,8 @@ func (o *ServiceInstance) HasModificationDate() bool {
 	return false
 }
 
-// SetModificationDate gets a reference to the given NullableTime and assigns it to the ModificationDate field.
-func (o *ServiceInstance) SetModificationDate(v time.Time) {
+// SetModificationDate gets a reference to the given NullableString and assigns it to the ModificationDate field.
+func (o *ServiceInstance) SetModificationDate(v string) {
 	o.ModificationDate.Set(&v)
 }
 

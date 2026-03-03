@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the VirtualMachineInstance type satisfies the MappedNullable interface at compile time
@@ -34,8 +33,8 @@ type VirtualMachineInstance struct {
 	InitialPassword                       NullableString                 `json:"initialPassword,omitempty"`
 	CreatedBy                             NullableString                 `json:"createdBy,omitempty"`
 	ModifiedBy                            NullableString                 `json:"modifiedBy,omitempty"`
-	CreationDate                          NullableTime                   `json:"creationDate,omitempty"`
-	ModificationDate                      NullableTime                   `json:"modificationDate,omitempty"`
+	CreationDate                          NullableString                 `json:"creationDate,omitempty"`
+	ModificationDate                      NullableString                 `json:"modificationDate,omitempty"`
 	SshKey                                NullableString                 `json:"sshKey,omitempty"`
 	Tags                                  []Tag                          `json:"tags,omitempty"`
 	BackupListCollection                  []BackupList                   `json:"backupListCollection,omitempty"`
@@ -49,7 +48,7 @@ type VirtualMachineInstance struct {
 	GuestFullName                         NullableString                 `json:"guestFullName,omitempty"`
 	GuestId                               NullableString                 `json:"guestId,omitempty"`
 	Uuid                                  NullableString                 `json:"uuid,omitempty"`
-	Modified                              NullableTime                   `json:"modified,omitempty"`
+	Modified                              NullableString                 `json:"modified,omitempty"`
 	Version                               NullableString                 `json:"version,omitempty"`
 	VmPathName                            NullableString                 `json:"vmPathName,omitempty"`
 	StorageCommitted                      *int64                         `json:"storageCommitted,omitempty"`
@@ -599,9 +598,9 @@ func (o *VirtualMachineInstance) UnsetModifiedBy() {
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VirtualMachineInstance) GetCreationDate() time.Time {
+func (o *VirtualMachineInstance) GetCreationDate() string {
 	if o == nil || IsNil(o.CreationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationDate.Get()
@@ -610,7 +609,7 @@ func (o *VirtualMachineInstance) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VirtualMachineInstance) GetCreationDateOk() (*time.Time, bool) {
+func (o *VirtualMachineInstance) GetCreationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -626,8 +625,8 @@ func (o *VirtualMachineInstance) HasCreationDate() bool {
 	return false
 }
 
-// SetCreationDate gets a reference to the given NullableTime and assigns it to the CreationDate field.
-func (o *VirtualMachineInstance) SetCreationDate(v time.Time) {
+// SetCreationDate gets a reference to the given NullableString and assigns it to the CreationDate field.
+func (o *VirtualMachineInstance) SetCreationDate(v string) {
 	o.CreationDate.Set(&v)
 }
 
@@ -642,9 +641,9 @@ func (o *VirtualMachineInstance) UnsetCreationDate() {
 }
 
 // GetModificationDate returns the ModificationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VirtualMachineInstance) GetModificationDate() time.Time {
+func (o *VirtualMachineInstance) GetModificationDate() string {
 	if o == nil || IsNil(o.ModificationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ModificationDate.Get()
@@ -653,7 +652,7 @@ func (o *VirtualMachineInstance) GetModificationDate() time.Time {
 // GetModificationDateOk returns a tuple with the ModificationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VirtualMachineInstance) GetModificationDateOk() (*time.Time, bool) {
+func (o *VirtualMachineInstance) GetModificationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -669,8 +668,8 @@ func (o *VirtualMachineInstance) HasModificationDate() bool {
 	return false
 }
 
-// SetModificationDate gets a reference to the given NullableTime and assigns it to the ModificationDate field.
-func (o *VirtualMachineInstance) SetModificationDate(v time.Time) {
+// SetModificationDate gets a reference to the given NullableString and assigns it to the ModificationDate field.
+func (o *VirtualMachineInstance) SetModificationDate(v string) {
 	o.ModificationDate.Set(&v)
 }
 
@@ -1213,9 +1212,9 @@ func (o *VirtualMachineInstance) UnsetUuid() {
 }
 
 // GetModified returns the Modified field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VirtualMachineInstance) GetModified() time.Time {
+func (o *VirtualMachineInstance) GetModified() string {
 	if o == nil || IsNil(o.Modified.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.Modified.Get()
@@ -1224,7 +1223,7 @@ func (o *VirtualMachineInstance) GetModified() time.Time {
 // GetModifiedOk returns a tuple with the Modified field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VirtualMachineInstance) GetModifiedOk() (*time.Time, bool) {
+func (o *VirtualMachineInstance) GetModifiedOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1240,8 +1239,8 @@ func (o *VirtualMachineInstance) HasModified() bool {
 	return false
 }
 
-// SetModified gets a reference to the given NullableTime and assigns it to the Modified field.
-func (o *VirtualMachineInstance) SetModified(v time.Time) {
+// SetModified gets a reference to the given NullableString and assigns it to the Modified field.
+func (o *VirtualMachineInstance) SetModified(v string) {
 	o.Modified.Set(&v)
 }
 

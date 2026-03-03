@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the AppProfileInstance type satisfies the MappedNullable interface at compile time
@@ -38,8 +37,8 @@ type AppProfileInstance struct {
 	ResponseBuffering      NullableBool            `json:"responseBuffering,omitempty"`
 	CreatedBy              NullableString          `json:"createdBy,omitempty"`
 	ModifiedBy             NullableString          `json:"modifiedBy,omitempty"`
-	CreationDate           NullableTime            `json:"creationDate,omitempty"`
-	ModificationDate       NullableTime            `json:"modificationDate,omitempty"`
+	CreationDate           NullableString          `json:"creationDate,omitempty"`
+	ModificationDate       NullableString          `json:"modificationDate,omitempty"`
 	HttpRedirectTo         NullableString          `json:"httpRedirectTo,omitempty"`
 	HttpRedirectToHttps    NullableBool            `json:"httpRedirectToHttps,omitempty"`
 	XForwardedFor          NullableString          `json:"xForwardedFor,omitempty"`
@@ -762,9 +761,9 @@ func (o *AppProfileInstance) UnsetModifiedBy() {
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *AppProfileInstance) GetCreationDate() time.Time {
+func (o *AppProfileInstance) GetCreationDate() string {
 	if o == nil || IsNil(o.CreationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationDate.Get()
@@ -773,7 +772,7 @@ func (o *AppProfileInstance) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *AppProfileInstance) GetCreationDateOk() (*time.Time, bool) {
+func (o *AppProfileInstance) GetCreationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -789,8 +788,8 @@ func (o *AppProfileInstance) HasCreationDate() bool {
 	return false
 }
 
-// SetCreationDate gets a reference to the given NullableTime and assigns it to the CreationDate field.
-func (o *AppProfileInstance) SetCreationDate(v time.Time) {
+// SetCreationDate gets a reference to the given NullableString and assigns it to the CreationDate field.
+func (o *AppProfileInstance) SetCreationDate(v string) {
 	o.CreationDate.Set(&v)
 }
 
@@ -805,9 +804,9 @@ func (o *AppProfileInstance) UnsetCreationDate() {
 }
 
 // GetModificationDate returns the ModificationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *AppProfileInstance) GetModificationDate() time.Time {
+func (o *AppProfileInstance) GetModificationDate() string {
 	if o == nil || IsNil(o.ModificationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ModificationDate.Get()
@@ -816,7 +815,7 @@ func (o *AppProfileInstance) GetModificationDate() time.Time {
 // GetModificationDateOk returns a tuple with the ModificationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *AppProfileInstance) GetModificationDateOk() (*time.Time, bool) {
+func (o *AppProfileInstance) GetModificationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -832,8 +831,8 @@ func (o *AppProfileInstance) HasModificationDate() bool {
 	return false
 }
 
-// SetModificationDate gets a reference to the given NullableTime and assigns it to the ModificationDate field.
-func (o *AppProfileInstance) SetModificationDate(v time.Time) {
+// SetModificationDate gets a reference to the given NullableString and assigns it to the ModificationDate field.
+func (o *AppProfileInstance) SetModificationDate(v string) {
 	o.ModificationDate.Set(&v)
 }
 

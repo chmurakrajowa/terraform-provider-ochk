@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the Subnet type satisfies the MappedNullable interface at compile time
@@ -28,8 +27,8 @@ type Subnet struct {
 	Description     NullableString   `json:"description,omitempty"`
 	AdminStateUp    NullableBool     `json:"adminStateUp,omitempty"`
 	Tags            []string         `json:"tags,omitempty"`
-	CreatedAt       NullableTime     `json:"createdAt,omitempty"`
-	UpdatedAt       NullableTime     `json:"updatedAt,omitempty"`
+	CreatedAt       NullableString   `json:"createdAt,omitempty"`
+	UpdatedAt       NullableString   `json:"updatedAt,omitempty"`
 	Status          NullableString   `json:"status,omitempty"`
 	NetworkId       NullableString   `json:"networkId,omitempty"`
 	GatewayIp       NullableString   `json:"gatewayIp,omitempty"`
@@ -348,9 +347,9 @@ func (o *Subnet) SetTags(v []string) {
 }
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Subnet) GetCreatedAt() time.Time {
+func (o *Subnet) GetCreatedAt() string {
 	if o == nil || IsNil(o.CreatedAt.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreatedAt.Get()
@@ -359,7 +358,7 @@ func (o *Subnet) GetCreatedAt() time.Time {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Subnet) GetCreatedAtOk() (*time.Time, bool) {
+func (o *Subnet) GetCreatedAtOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -375,8 +374,8 @@ func (o *Subnet) HasCreatedAt() bool {
 	return false
 }
 
-// SetCreatedAt gets a reference to the given NullableTime and assigns it to the CreatedAt field.
-func (o *Subnet) SetCreatedAt(v time.Time) {
+// SetCreatedAt gets a reference to the given NullableString and assigns it to the CreatedAt field.
+func (o *Subnet) SetCreatedAt(v string) {
 	o.CreatedAt.Set(&v)
 }
 
@@ -391,9 +390,9 @@ func (o *Subnet) UnsetCreatedAt() {
 }
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Subnet) GetUpdatedAt() time.Time {
+func (o *Subnet) GetUpdatedAt() string {
 	if o == nil || IsNil(o.UpdatedAt.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.UpdatedAt.Get()
@@ -402,7 +401,7 @@ func (o *Subnet) GetUpdatedAt() time.Time {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Subnet) GetUpdatedAtOk() (*time.Time, bool) {
+func (o *Subnet) GetUpdatedAtOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -418,8 +417,8 @@ func (o *Subnet) HasUpdatedAt() bool {
 	return false
 }
 
-// SetUpdatedAt gets a reference to the given NullableTime and assigns it to the UpdatedAt field.
-func (o *Subnet) SetUpdatedAt(v time.Time) {
+// SetUpdatedAt gets a reference to the given NullableString and assigns it to the UpdatedAt field.
+func (o *Subnet) SetUpdatedAt(v string) {
 	o.UpdatedAt.Set(&v)
 }
 

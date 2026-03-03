@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the KeyRotationSchedule type satisfies the MappedNullable interface at compile time
@@ -26,8 +25,8 @@ type KeyRotationSchedule struct {
 	Enabled       NullableBool   `json:"enabled,omitempty"`
 	Cycle         NullableBool   `json:"cycle,omitempty"`
 	IntervalHours NullableInt32  `json:"intervalHours,omitempty"`
-	StartTime     NullableTime   `json:"startTime,omitempty"`
-	StaticDate    NullableTime   `json:"staticDate,omitempty"`
+	StartTime     NullableString `json:"startTime,omitempty"`
+	StaticDate    NullableString `json:"staticDate,omitempty"`
 }
 
 // NewKeyRotationSchedule instantiates a new KeyRotationSchedule object
@@ -263,9 +262,9 @@ func (o *KeyRotationSchedule) UnsetIntervalHours() {
 }
 
 // GetStartTime returns the StartTime field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *KeyRotationSchedule) GetStartTime() time.Time {
+func (o *KeyRotationSchedule) GetStartTime() string {
 	if o == nil || IsNil(o.StartTime.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.StartTime.Get()
@@ -274,7 +273,7 @@ func (o *KeyRotationSchedule) GetStartTime() time.Time {
 // GetStartTimeOk returns a tuple with the StartTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *KeyRotationSchedule) GetStartTimeOk() (*time.Time, bool) {
+func (o *KeyRotationSchedule) GetStartTimeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -290,8 +289,8 @@ func (o *KeyRotationSchedule) HasStartTime() bool {
 	return false
 }
 
-// SetStartTime gets a reference to the given NullableTime and assigns it to the StartTime field.
-func (o *KeyRotationSchedule) SetStartTime(v time.Time) {
+// SetStartTime gets a reference to the given NullableString and assigns it to the StartTime field.
+func (o *KeyRotationSchedule) SetStartTime(v string) {
 	o.StartTime.Set(&v)
 }
 
@@ -306,9 +305,9 @@ func (o *KeyRotationSchedule) UnsetStartTime() {
 }
 
 // GetStaticDate returns the StaticDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *KeyRotationSchedule) GetStaticDate() time.Time {
+func (o *KeyRotationSchedule) GetStaticDate() string {
 	if o == nil || IsNil(o.StaticDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.StaticDate.Get()
@@ -317,7 +316,7 @@ func (o *KeyRotationSchedule) GetStaticDate() time.Time {
 // GetStaticDateOk returns a tuple with the StaticDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *KeyRotationSchedule) GetStaticDateOk() (*time.Time, bool) {
+func (o *KeyRotationSchedule) GetStaticDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -333,8 +332,8 @@ func (o *KeyRotationSchedule) HasStaticDate() bool {
 	return false
 }
 
-// SetStaticDate gets a reference to the given NullableTime and assigns it to the StaticDate field.
-func (o *KeyRotationSchedule) SetStaticDate(v time.Time) {
+// SetStaticDate gets a reference to the given NullableString and assigns it to the StaticDate field.
+func (o *KeyRotationSchedule) SetStaticDate(v string) {
 	o.StaticDate.Set(&v)
 }
 

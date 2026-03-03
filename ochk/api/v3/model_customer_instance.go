@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the CustomerInstance type satisfies the MappedNullable interface at compile time
@@ -30,7 +29,7 @@ type CustomerInstance struct {
 	Nip              NullableString `json:"nip,omitempty"`
 	Regon            NullableString `json:"regon,omitempty"`
 	Logo             NullableString `json:"logo,omitempty"`
-	CreationDate     NullableTime   `json:"creationDate,omitempty"`
+	CreationDate     NullableString `json:"creationDate,omitempty"`
 	Status           *bool          `json:"status,omitempty"`
 	ExternalId       NullableString `json:"externalId,omitempty"`
 }
@@ -440,9 +439,9 @@ func (o *CustomerInstance) UnsetLogo() {
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CustomerInstance) GetCreationDate() time.Time {
+func (o *CustomerInstance) GetCreationDate() string {
 	if o == nil || IsNil(o.CreationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationDate.Get()
@@ -451,7 +450,7 @@ func (o *CustomerInstance) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CustomerInstance) GetCreationDateOk() (*time.Time, bool) {
+func (o *CustomerInstance) GetCreationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -467,8 +466,8 @@ func (o *CustomerInstance) HasCreationDate() bool {
 	return false
 }
 
-// SetCreationDate gets a reference to the given NullableTime and assigns it to the CreationDate field.
-func (o *CustomerInstance) SetCreationDate(v time.Time) {
+// SetCreationDate gets a reference to the given NullableString and assigns it to the CreationDate field.
+func (o *CustomerInstance) SetCreationDate(v string) {
 	o.CreationDate.Set(&v)
 }
 

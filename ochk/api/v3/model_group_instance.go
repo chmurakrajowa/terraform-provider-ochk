@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the GroupInstance type satisfies the MappedNullable interface at compile time
@@ -29,8 +28,8 @@ type GroupInstance struct {
 	MemberCount      *int32          `json:"memberCount,omitempty"`
 	BuiltIn          *bool           `json:"builtIn,omitempty"`
 	PlatformGroup    *bool           `json:"platformGroup,omitempty"`
-	CreationDate     NullableTime    `json:"creationDate,omitempty"`
-	ModificationDate NullableTime    `json:"modificationDate,omitempty"`
+	CreationDate     NullableString  `json:"creationDate,omitempty"`
+	ModificationDate NullableString  `json:"modificationDate,omitempty"`
 }
 
 // NewGroupInstance instantiates a new GroupInstance object
@@ -342,9 +341,9 @@ func (o *GroupInstance) SetPlatformGroup(v bool) {
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GroupInstance) GetCreationDate() time.Time {
+func (o *GroupInstance) GetCreationDate() string {
 	if o == nil || IsNil(o.CreationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationDate.Get()
@@ -353,7 +352,7 @@ func (o *GroupInstance) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GroupInstance) GetCreationDateOk() (*time.Time, bool) {
+func (o *GroupInstance) GetCreationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -369,8 +368,8 @@ func (o *GroupInstance) HasCreationDate() bool {
 	return false
 }
 
-// SetCreationDate gets a reference to the given NullableTime and assigns it to the CreationDate field.
-func (o *GroupInstance) SetCreationDate(v time.Time) {
+// SetCreationDate gets a reference to the given NullableString and assigns it to the CreationDate field.
+func (o *GroupInstance) SetCreationDate(v string) {
 	o.CreationDate.Set(&v)
 }
 
@@ -385,9 +384,9 @@ func (o *GroupInstance) UnsetCreationDate() {
 }
 
 // GetModificationDate returns the ModificationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GroupInstance) GetModificationDate() time.Time {
+func (o *GroupInstance) GetModificationDate() string {
 	if o == nil || IsNil(o.ModificationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ModificationDate.Get()
@@ -396,7 +395,7 @@ func (o *GroupInstance) GetModificationDate() time.Time {
 // GetModificationDateOk returns a tuple with the ModificationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GroupInstance) GetModificationDateOk() (*time.Time, bool) {
+func (o *GroupInstance) GetModificationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -412,8 +411,8 @@ func (o *GroupInstance) HasModificationDate() bool {
 	return false
 }
 
-// SetModificationDate gets a reference to the given NullableTime and assigns it to the ModificationDate field.
-func (o *GroupInstance) SetModificationDate(v time.Time) {
+// SetModificationDate gets a reference to the given NullableString and assigns it to the ModificationDate field.
+func (o *GroupInstance) SetModificationDate(v string) {
 	o.ModificationDate.Set(&v)
 }
 

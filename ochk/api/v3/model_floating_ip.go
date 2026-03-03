@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the FloatingIp type satisfies the MappedNullable interface at compile time
@@ -25,9 +24,9 @@ type FloatingIp struct {
 	ExternalId       NullableString    `json:"externalId,omitempty"`
 	Name             NullableString    `json:"name,omitempty"`
 	Description      NullableString    `json:"description,omitempty"`
-	CreationDate     NullableTime      `json:"creationDate,omitempty"`
+	CreationDate     NullableString    `json:"creationDate,omitempty"`
 	CreatedBy        NullableString    `json:"createdBy,omitempty"`
-	ModificationDate NullableTime      `json:"modificationDate,omitempty"`
+	ModificationDate NullableString    `json:"modificationDate,omitempty"`
 	ModifiedBy       NullableString    `json:"modifiedBy,omitempty"`
 	PublicAddress    NullableString    `json:"publicAddress,omitempty"`
 	PortForwardings  []PortForwarding  `json:"portForwardings,omitempty"`
@@ -217,9 +216,9 @@ func (o *FloatingIp) UnsetDescription() {
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *FloatingIp) GetCreationDate() time.Time {
+func (o *FloatingIp) GetCreationDate() string {
 	if o == nil || IsNil(o.CreationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationDate.Get()
@@ -228,7 +227,7 @@ func (o *FloatingIp) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *FloatingIp) GetCreationDateOk() (*time.Time, bool) {
+func (o *FloatingIp) GetCreationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -244,8 +243,8 @@ func (o *FloatingIp) HasCreationDate() bool {
 	return false
 }
 
-// SetCreationDate gets a reference to the given NullableTime and assigns it to the CreationDate field.
-func (o *FloatingIp) SetCreationDate(v time.Time) {
+// SetCreationDate gets a reference to the given NullableString and assigns it to the CreationDate field.
+func (o *FloatingIp) SetCreationDate(v string) {
 	o.CreationDate.Set(&v)
 }
 
@@ -303,9 +302,9 @@ func (o *FloatingIp) UnsetCreatedBy() {
 }
 
 // GetModificationDate returns the ModificationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *FloatingIp) GetModificationDate() time.Time {
+func (o *FloatingIp) GetModificationDate() string {
 	if o == nil || IsNil(o.ModificationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ModificationDate.Get()
@@ -314,7 +313,7 @@ func (o *FloatingIp) GetModificationDate() time.Time {
 // GetModificationDateOk returns a tuple with the ModificationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *FloatingIp) GetModificationDateOk() (*time.Time, bool) {
+func (o *FloatingIp) GetModificationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -330,8 +329,8 @@ func (o *FloatingIp) HasModificationDate() bool {
 	return false
 }
 
-// SetModificationDate gets a reference to the given NullableTime and assigns it to the ModificationDate field.
-func (o *FloatingIp) SetModificationDate(v time.Time) {
+// SetModificationDate gets a reference to the given NullableString and assigns it to the ModificationDate field.
+func (o *FloatingIp) SetModificationDate(v string) {
 	o.ModificationDate.Set(&v)
 }
 

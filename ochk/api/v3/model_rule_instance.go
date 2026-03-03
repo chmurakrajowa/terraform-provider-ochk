@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the RuleInstance type satisfies the MappedNullable interface at compile time
@@ -45,9 +44,9 @@ type RuleInstance struct {
 	DefaultServices     []ServiceInstance        `json:"defaultServices,omitempty"`
 	CustomServices      []CustomServiceInstance  `json:"customServices,omitempty"`
 	CreatedBy           NullableString           `json:"createdBy,omitempty"`
-	CreationDate        NullableTime             `json:"creationDate,omitempty"`
+	CreationDate        NullableString           `json:"creationDate,omitempty"`
 	ModifiedBy          NullableString           `json:"modifiedBy,omitempty"`
-	ModificationDate    NullableTime             `json:"modificationDate,omitempty"`
+	ModificationDate    NullableString           `json:"modificationDate,omitempty"`
 }
 
 // NewRuleInstance instantiates a new RuleInstance object
@@ -995,9 +994,9 @@ func (o *RuleInstance) UnsetCreatedBy() {
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *RuleInstance) GetCreationDate() time.Time {
+func (o *RuleInstance) GetCreationDate() string {
 	if o == nil || IsNil(o.CreationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationDate.Get()
@@ -1006,7 +1005,7 @@ func (o *RuleInstance) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *RuleInstance) GetCreationDateOk() (*time.Time, bool) {
+func (o *RuleInstance) GetCreationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1022,8 +1021,8 @@ func (o *RuleInstance) HasCreationDate() bool {
 	return false
 }
 
-// SetCreationDate gets a reference to the given NullableTime and assigns it to the CreationDate field.
-func (o *RuleInstance) SetCreationDate(v time.Time) {
+// SetCreationDate gets a reference to the given NullableString and assigns it to the CreationDate field.
+func (o *RuleInstance) SetCreationDate(v string) {
 	o.CreationDate.Set(&v)
 }
 
@@ -1081,9 +1080,9 @@ func (o *RuleInstance) UnsetModifiedBy() {
 }
 
 // GetModificationDate returns the ModificationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *RuleInstance) GetModificationDate() time.Time {
+func (o *RuleInstance) GetModificationDate() string {
 	if o == nil || IsNil(o.ModificationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ModificationDate.Get()
@@ -1092,7 +1091,7 @@ func (o *RuleInstance) GetModificationDate() time.Time {
 // GetModificationDateOk returns a tuple with the ModificationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *RuleInstance) GetModificationDateOk() (*time.Time, bool) {
+func (o *RuleInstance) GetModificationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1108,8 +1107,8 @@ func (o *RuleInstance) HasModificationDate() bool {
 	return false
 }
 
-// SetModificationDate gets a reference to the given NullableTime and assigns it to the ModificationDate field.
-func (o *RuleInstance) SetModificationDate(v time.Time) {
+// SetModificationDate gets a reference to the given NullableString and assigns it to the ModificationDate field.
+func (o *RuleInstance) SetModificationDate(v string) {
 	o.ModificationDate.Set(&v)
 }
 

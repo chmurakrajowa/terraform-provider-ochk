@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the VirtualMachineReportElement type satisfies the MappedNullable interface at compile time
@@ -54,7 +53,7 @@ type VirtualMachineReportElement struct {
 	CurrentReportHours                 *int32         `json:"currentReportHours,omitempty"`
 	ConfigCounts                       *int32         `json:"configCounts,omitempty"`
 	RunningTimePerc                    *int32         `json:"runningTimePerc,omitempty"`
-	InsertDate                         NullableTime   `json:"insertDate,omitempty"`
+	InsertDate                         NullableString `json:"insertDate,omitempty"`
 	ScoringValue                       *float32       `json:"scoringValue,omitempty"`
 }
 
@@ -1198,9 +1197,9 @@ func (o *VirtualMachineReportElement) SetRunningTimePerc(v int32) {
 }
 
 // GetInsertDate returns the InsertDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VirtualMachineReportElement) GetInsertDate() time.Time {
+func (o *VirtualMachineReportElement) GetInsertDate() string {
 	if o == nil || IsNil(o.InsertDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.InsertDate.Get()
@@ -1209,7 +1208,7 @@ func (o *VirtualMachineReportElement) GetInsertDate() time.Time {
 // GetInsertDateOk returns a tuple with the InsertDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VirtualMachineReportElement) GetInsertDateOk() (*time.Time, bool) {
+func (o *VirtualMachineReportElement) GetInsertDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -1225,8 +1224,8 @@ func (o *VirtualMachineReportElement) HasInsertDate() bool {
 	return false
 }
 
-// SetInsertDate gets a reference to the given NullableTime and assigns it to the InsertDate field.
-func (o *VirtualMachineReportElement) SetInsertDate(v time.Time) {
+// SetInsertDate gets a reference to the given NullableString and assigns it to the InsertDate field.
+func (o *VirtualMachineReportElement) SetInsertDate(v string) {
 	o.InsertDate.Set(&v)
 }
 

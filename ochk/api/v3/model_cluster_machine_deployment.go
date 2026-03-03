@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the ClusterMachineDeployment type satisfies the MappedNullable interface at compile time
@@ -24,7 +23,7 @@ type ClusterMachineDeployment struct {
 	MachineDeploymentId *string           `json:"machineDeploymentId,omitempty"`
 	Name                NullableString    `json:"name,omitempty"`
 	ExternalId          NullableString    `json:"externalId,omitempty"`
-	CreationTimestamp   NullableTime      `json:"creationTimestamp,omitempty"`
+	CreationTimestamp   NullableString    `json:"creationTimestamp,omitempty"`
 	Labels              map[string]string `json:"labels,omitempty"`
 	ClusterName         NullableString    `json:"clusterName,omitempty"`
 	AvailableReplicas   NullableInt32     `json:"availableReplicas,omitempty"`
@@ -172,9 +171,9 @@ func (o *ClusterMachineDeployment) UnsetExternalId() {
 }
 
 // GetCreationTimestamp returns the CreationTimestamp field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ClusterMachineDeployment) GetCreationTimestamp() time.Time {
+func (o *ClusterMachineDeployment) GetCreationTimestamp() string {
 	if o == nil || IsNil(o.CreationTimestamp.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationTimestamp.Get()
@@ -183,7 +182,7 @@ func (o *ClusterMachineDeployment) GetCreationTimestamp() time.Time {
 // GetCreationTimestampOk returns a tuple with the CreationTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ClusterMachineDeployment) GetCreationTimestampOk() (*time.Time, bool) {
+func (o *ClusterMachineDeployment) GetCreationTimestampOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -199,8 +198,8 @@ func (o *ClusterMachineDeployment) HasCreationTimestamp() bool {
 	return false
 }
 
-// SetCreationTimestamp gets a reference to the given NullableTime and assigns it to the CreationTimestamp field.
-func (o *ClusterMachineDeployment) SetCreationTimestamp(v time.Time) {
+// SetCreationTimestamp gets a reference to the given NullableString and assigns it to the CreationTimestamp field.
+func (o *ClusterMachineDeployment) SetCreationTimestamp(v string) {
 	o.CreationTimestamp.Set(&v)
 }
 

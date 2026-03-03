@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the VRFReportElement type satisfies the MappedNullable interface at compile time
@@ -27,7 +26,7 @@ type VRFReportElement struct {
 	UnitPrice     *float32       `json:"unitPrice,omitempty"`
 	TotalCost     *float32       `json:"totalCost,omitempty"`
 	EstimatedCost *float32       `json:"estimatedCost,omitempty"`
-	InsertDate    NullableTime   `json:"insertDate,omitempty"`
+	InsertDate    NullableString `json:"insertDate,omitempty"`
 	ScoringValue  *float32       `json:"scoringValue,omitempty"`
 }
 
@@ -263,9 +262,9 @@ func (o *VRFReportElement) SetEstimatedCost(v float32) {
 }
 
 // GetInsertDate returns the InsertDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VRFReportElement) GetInsertDate() time.Time {
+func (o *VRFReportElement) GetInsertDate() string {
 	if o == nil || IsNil(o.InsertDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.InsertDate.Get()
@@ -274,7 +273,7 @@ func (o *VRFReportElement) GetInsertDate() time.Time {
 // GetInsertDateOk returns a tuple with the InsertDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VRFReportElement) GetInsertDateOk() (*time.Time, bool) {
+func (o *VRFReportElement) GetInsertDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -290,8 +289,8 @@ func (o *VRFReportElement) HasInsertDate() bool {
 	return false
 }
 
-// SetInsertDate gets a reference to the given NullableTime and assigns it to the InsertDate field.
-func (o *VRFReportElement) SetInsertDate(v time.Time) {
+// SetInsertDate gets a reference to the given NullableString and assigns it to the InsertDate field.
+func (o *VRFReportElement) SetInsertDate(v string) {
 	o.InsertDate.Set(&v)
 }
 

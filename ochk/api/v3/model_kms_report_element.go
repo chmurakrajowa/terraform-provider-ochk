@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the KmsReportElement type satisfies the MappedNullable interface at compile time
@@ -28,7 +27,7 @@ type KmsReportElement struct {
 	UnitPrice     *float32       `json:"unitPrice,omitempty"`
 	TotalCost     *float32       `json:"totalCost,omitempty"`
 	EstimatedCost *float32       `json:"estimatedCost,omitempty"`
-	InsertDate    NullableTime   `json:"insertDate,omitempty"`
+	InsertDate    NullableString `json:"insertDate,omitempty"`
 	ScoringValue  *float32       `json:"scoringValue,omitempty"`
 }
 
@@ -307,9 +306,9 @@ func (o *KmsReportElement) SetEstimatedCost(v float32) {
 }
 
 // GetInsertDate returns the InsertDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *KmsReportElement) GetInsertDate() time.Time {
+func (o *KmsReportElement) GetInsertDate() string {
 	if o == nil || IsNil(o.InsertDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.InsertDate.Get()
@@ -318,7 +317,7 @@ func (o *KmsReportElement) GetInsertDate() time.Time {
 // GetInsertDateOk returns a tuple with the InsertDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *KmsReportElement) GetInsertDateOk() (*time.Time, bool) {
+func (o *KmsReportElement) GetInsertDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -334,8 +333,8 @@ func (o *KmsReportElement) HasInsertDate() bool {
 	return false
 }
 
-// SetInsertDate gets a reference to the given NullableTime and assigns it to the InsertDate field.
-func (o *KmsReportElement) SetInsertDate(v time.Time) {
+// SetInsertDate gets a reference to the given NullableString and assigns it to the InsertDate field.
+func (o *KmsReportElement) SetInsertDate(v string) {
 	o.InsertDate.Set(&v)
 }
 

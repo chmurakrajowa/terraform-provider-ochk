@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the QueryFilter type satisfies the MappedNullable interface at compile time
@@ -26,8 +25,8 @@ type QueryFilter struct {
 	ResourceName  NullableString `json:"resourceName,omitempty"`
 	Id            NullableString `json:"id,omitempty"`
 	QueryString   NullableString `json:"queryString,omitempty"`
-	StartDateTime NullableTime   `json:"startDateTime,omitempty"`
-	EndDateTime   NullableTime   `json:"endDateTime,omitempty"`
+	StartDateTime NullableString `json:"startDateTime,omitempty"`
+	EndDateTime   NullableString `json:"endDateTime,omitempty"`
 }
 
 // NewQueryFilter instantiates a new QueryFilter object
@@ -252,9 +251,9 @@ func (o *QueryFilter) UnsetQueryString() {
 }
 
 // GetStartDateTime returns the StartDateTime field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *QueryFilter) GetStartDateTime() time.Time {
+func (o *QueryFilter) GetStartDateTime() string {
 	if o == nil || IsNil(o.StartDateTime.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.StartDateTime.Get()
@@ -263,7 +262,7 @@ func (o *QueryFilter) GetStartDateTime() time.Time {
 // GetStartDateTimeOk returns a tuple with the StartDateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *QueryFilter) GetStartDateTimeOk() (*time.Time, bool) {
+func (o *QueryFilter) GetStartDateTimeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -279,8 +278,8 @@ func (o *QueryFilter) HasStartDateTime() bool {
 	return false
 }
 
-// SetStartDateTime gets a reference to the given NullableTime and assigns it to the StartDateTime field.
-func (o *QueryFilter) SetStartDateTime(v time.Time) {
+// SetStartDateTime gets a reference to the given NullableString and assigns it to the StartDateTime field.
+func (o *QueryFilter) SetStartDateTime(v string) {
 	o.StartDateTime.Set(&v)
 }
 
@@ -295,9 +294,9 @@ func (o *QueryFilter) UnsetStartDateTime() {
 }
 
 // GetEndDateTime returns the EndDateTime field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *QueryFilter) GetEndDateTime() time.Time {
+func (o *QueryFilter) GetEndDateTime() string {
 	if o == nil || IsNil(o.EndDateTime.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.EndDateTime.Get()
@@ -306,7 +305,7 @@ func (o *QueryFilter) GetEndDateTime() time.Time {
 // GetEndDateTimeOk returns a tuple with the EndDateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *QueryFilter) GetEndDateTimeOk() (*time.Time, bool) {
+func (o *QueryFilter) GetEndDateTimeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -322,8 +321,8 @@ func (o *QueryFilter) HasEndDateTime() bool {
 	return false
 }
 
-// SetEndDateTime gets a reference to the given NullableTime and assigns it to the EndDateTime field.
-func (o *QueryFilter) SetEndDateTime(v time.Time) {
+// SetEndDateTime gets a reference to the given NullableString and assigns it to the EndDateTime field.
+func (o *QueryFilter) SetEndDateTime(v string) {
 	o.EndDateTime.Set(&v)
 }
 

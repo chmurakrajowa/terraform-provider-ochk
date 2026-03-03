@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the OvnPool type satisfies the MappedNullable interface at compile time
@@ -29,8 +28,8 @@ type OvnPool struct {
 	Enabled            NullableBool        `json:"enabled,omitempty"`
 	CreatedBy          NullableString      `json:"createdBy,omitempty"`
 	ModifiedBy         NullableString      `json:"modifiedBy,omitempty"`
-	CreationDate       NullableTime        `json:"creationDate,omitempty"`
-	ModificationDate   NullableTime        `json:"modificationDate,omitempty"`
+	CreationDate       NullableString      `json:"creationDate,omitempty"`
+	ModificationDate   NullableString      `json:"modificationDate,omitempty"`
 	ProvisioningStatus *ProvisioningStatus `json:"provisioningStatus,omitempty"`
 	OperatingStatus    *OperatingStatus    `json:"operatingStatus,omitempty"`
 	Protocol           *PoolProtocol       `json:"protocol,omitempty"`
@@ -404,9 +403,9 @@ func (o *OvnPool) UnsetModifiedBy() {
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *OvnPool) GetCreationDate() time.Time {
+func (o *OvnPool) GetCreationDate() string {
 	if o == nil || IsNil(o.CreationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationDate.Get()
@@ -415,7 +414,7 @@ func (o *OvnPool) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *OvnPool) GetCreationDateOk() (*time.Time, bool) {
+func (o *OvnPool) GetCreationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -431,8 +430,8 @@ func (o *OvnPool) HasCreationDate() bool {
 	return false
 }
 
-// SetCreationDate gets a reference to the given NullableTime and assigns it to the CreationDate field.
-func (o *OvnPool) SetCreationDate(v time.Time) {
+// SetCreationDate gets a reference to the given NullableString and assigns it to the CreationDate field.
+func (o *OvnPool) SetCreationDate(v string) {
 	o.CreationDate.Set(&v)
 }
 
@@ -447,9 +446,9 @@ func (o *OvnPool) UnsetCreationDate() {
 }
 
 // GetModificationDate returns the ModificationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *OvnPool) GetModificationDate() time.Time {
+func (o *OvnPool) GetModificationDate() string {
 	if o == nil || IsNil(o.ModificationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ModificationDate.Get()
@@ -458,7 +457,7 @@ func (o *OvnPool) GetModificationDate() time.Time {
 // GetModificationDateOk returns a tuple with the ModificationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *OvnPool) GetModificationDateOk() (*time.Time, bool) {
+func (o *OvnPool) GetModificationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -474,8 +473,8 @@ func (o *OvnPool) HasModificationDate() bool {
 	return false
 }
 
-// SetModificationDate gets a reference to the given NullableTime and assigns it to the ModificationDate field.
-func (o *OvnPool) SetModificationDate(v time.Time) {
+// SetModificationDate gets a reference to the given NullableString and assigns it to the ModificationDate field.
+func (o *OvnPool) SetModificationDate(v string) {
 	o.ModificationDate.Set(&v)
 }
 

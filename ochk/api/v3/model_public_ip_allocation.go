@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the PublicIpAllocation type satisfies the MappedNullable interface at compile time
@@ -26,7 +25,7 @@ type PublicIpAllocation struct {
 	Description     NullableString        `json:"description,omitempty"`
 	PublicIpAddress *PublicIpAddress      `json:"publicIpAddress,omitempty"`
 	ServiceList     []IPAMServiceInstance `json:"serviceList,omitempty"`
-	AssignmentDate  NullableTime          `json:"assignmentDate,omitempty"`
+	AssignmentDate  NullableString        `json:"assignmentDate,omitempty"`
 	Services        NullableString        `json:"services,omitempty"`
 }
 
@@ -231,9 +230,9 @@ func (o *PublicIpAllocation) SetServiceList(v []IPAMServiceInstance) {
 }
 
 // GetAssignmentDate returns the AssignmentDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *PublicIpAllocation) GetAssignmentDate() time.Time {
+func (o *PublicIpAllocation) GetAssignmentDate() string {
 	if o == nil || IsNil(o.AssignmentDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.AssignmentDate.Get()
@@ -242,7 +241,7 @@ func (o *PublicIpAllocation) GetAssignmentDate() time.Time {
 // GetAssignmentDateOk returns a tuple with the AssignmentDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PublicIpAllocation) GetAssignmentDateOk() (*time.Time, bool) {
+func (o *PublicIpAllocation) GetAssignmentDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -258,8 +257,8 @@ func (o *PublicIpAllocation) HasAssignmentDate() bool {
 	return false
 }
 
-// SetAssignmentDate gets a reference to the given NullableTime and assigns it to the AssignmentDate field.
-func (o *PublicIpAllocation) SetAssignmentDate(v time.Time) {
+// SetAssignmentDate gets a reference to the given NullableString and assigns it to the AssignmentDate field.
+func (o *PublicIpAllocation) SetAssignmentDate(v string) {
 	o.AssignmentDate.Set(&v)
 }
 

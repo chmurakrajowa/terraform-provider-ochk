@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the SnapshotInstance type satisfies the MappedNullable interface at compile time
@@ -28,7 +27,7 @@ type SnapshotInstance struct {
 	VirtualMachineMoRef NullableString     `json:"virtualMachineMoRef,omitempty"`
 	VirtualMachineId    NullableString     `json:"virtualMachineId,omitempty"`
 	VirtualMachineName  NullableString     `json:"virtualMachineName,omitempty"`
-	CreateTime          NullableTime       `json:"createTime,omitempty"`
+	CreateTime          NullableString     `json:"createTime,omitempty"`
 	SnapshotDescription NullableString     `json:"snapshotDescription,omitempty"`
 	PowerState          *PowerState        `json:"powerState,omitempty"`
 	Quiesced            *bool              `json:"quiesced,omitempty"`
@@ -345,9 +344,9 @@ func (o *SnapshotInstance) UnsetVirtualMachineName() {
 }
 
 // GetCreateTime returns the CreateTime field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SnapshotInstance) GetCreateTime() time.Time {
+func (o *SnapshotInstance) GetCreateTime() string {
 	if o == nil || IsNil(o.CreateTime.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreateTime.Get()
@@ -356,7 +355,7 @@ func (o *SnapshotInstance) GetCreateTime() time.Time {
 // GetCreateTimeOk returns a tuple with the CreateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SnapshotInstance) GetCreateTimeOk() (*time.Time, bool) {
+func (o *SnapshotInstance) GetCreateTimeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -372,8 +371,8 @@ func (o *SnapshotInstance) HasCreateTime() bool {
 	return false
 }
 
-// SetCreateTime gets a reference to the given NullableTime and assigns it to the CreateTime field.
-func (o *SnapshotInstance) SetCreateTime(v time.Time) {
+// SetCreateTime gets a reference to the given NullableString and assigns it to the CreateTime field.
+func (o *SnapshotInstance) SetCreateTime(v string) {
 	o.CreateTime.Set(&v)
 }
 

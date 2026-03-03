@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the PlatformInstance type satisfies the MappedNullable interface at compile time
@@ -25,8 +24,8 @@ type PlatformInstance struct {
 	PlatformName          NullableString  `json:"platformName,omitempty"`
 	CreatedBy             NullableString  `json:"createdBy,omitempty"`
 	ModifiedBy            NullableString  `json:"modifiedBy,omitempty"`
-	CreationDate          NullableTime    `json:"creationDate,omitempty"`
-	ModificationDate      NullableTime    `json:"modificationDate,omitempty"`
+	CreationDate          NullableString  `json:"creationDate,omitempty"`
+	ModificationDate      NullableString  `json:"modificationDate,omitempty"`
 	Enabled               *bool           `json:"enabled,omitempty"`
 	PlatformType          *PlatformType   `json:"platformType,omitempty"`
 	OscPlatformId         NullableString  `json:"oscPlatformId,omitempty"`
@@ -214,9 +213,9 @@ func (o *PlatformInstance) UnsetModifiedBy() {
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *PlatformInstance) GetCreationDate() time.Time {
+func (o *PlatformInstance) GetCreationDate() string {
 	if o == nil || IsNil(o.CreationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationDate.Get()
@@ -225,7 +224,7 @@ func (o *PlatformInstance) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PlatformInstance) GetCreationDateOk() (*time.Time, bool) {
+func (o *PlatformInstance) GetCreationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -241,8 +240,8 @@ func (o *PlatformInstance) HasCreationDate() bool {
 	return false
 }
 
-// SetCreationDate gets a reference to the given NullableTime and assigns it to the CreationDate field.
-func (o *PlatformInstance) SetCreationDate(v time.Time) {
+// SetCreationDate gets a reference to the given NullableString and assigns it to the CreationDate field.
+func (o *PlatformInstance) SetCreationDate(v string) {
 	o.CreationDate.Set(&v)
 }
 
@@ -257,9 +256,9 @@ func (o *PlatformInstance) UnsetCreationDate() {
 }
 
 // GetModificationDate returns the ModificationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *PlatformInstance) GetModificationDate() time.Time {
+func (o *PlatformInstance) GetModificationDate() string {
 	if o == nil || IsNil(o.ModificationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ModificationDate.Get()
@@ -268,7 +267,7 @@ func (o *PlatformInstance) GetModificationDate() time.Time {
 // GetModificationDateOk returns a tuple with the ModificationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PlatformInstance) GetModificationDateOk() (*time.Time, bool) {
+func (o *PlatformInstance) GetModificationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -284,8 +283,8 @@ func (o *PlatformInstance) HasModificationDate() bool {
 	return false
 }
 
-// SetModificationDate gets a reference to the given NullableTime and assigns it to the ModificationDate field.
-func (o *PlatformInstance) SetModificationDate(v time.Time) {
+// SetModificationDate gets a reference to the given NullableString and assigns it to the ModificationDate field.
+func (o *PlatformInstance) SetModificationDate(v string) {
 	o.ModificationDate.Set(&v)
 }
 

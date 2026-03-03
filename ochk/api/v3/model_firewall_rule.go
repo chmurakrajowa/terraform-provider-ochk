@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the FirewallRule type satisfies the MappedNullable interface at compile time
@@ -32,9 +31,9 @@ type FirewallRule struct {
 	PortRangeMax      NullableInt64  `json:"portRangeMax,omitempty"`
 	RemoteIpPrefix    NullableString `json:"remoteIpPrefix,omitempty"`
 	SecurityGroup     *SecurityGroup `json:"securityGroup,omitempty"`
-	CreationDate      NullableTime   `json:"creationDate,omitempty"`
+	CreationDate      NullableString `json:"creationDate,omitempty"`
 	CreatedBy         *UserInstance  `json:"createdBy,omitempty"`
-	ModificationDate  NullableTime   `json:"modificationDate,omitempty"`
+	ModificationDate  NullableString `json:"modificationDate,omitempty"`
 	ModifiedBy        *UserInstance  `json:"modifiedBy,omitempty"`
 	ProjectExternalId NullableString `json:"projectExternalId,omitempty"`
 }
@@ -475,9 +474,9 @@ func (o *FirewallRule) SetSecurityGroup(v SecurityGroup) {
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *FirewallRule) GetCreationDate() time.Time {
+func (o *FirewallRule) GetCreationDate() string {
 	if o == nil || IsNil(o.CreationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationDate.Get()
@@ -486,7 +485,7 @@ func (o *FirewallRule) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *FirewallRule) GetCreationDateOk() (*time.Time, bool) {
+func (o *FirewallRule) GetCreationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -502,8 +501,8 @@ func (o *FirewallRule) HasCreationDate() bool {
 	return false
 }
 
-// SetCreationDate gets a reference to the given NullableTime and assigns it to the CreationDate field.
-func (o *FirewallRule) SetCreationDate(v time.Time) {
+// SetCreationDate gets a reference to the given NullableString and assigns it to the CreationDate field.
+func (o *FirewallRule) SetCreationDate(v string) {
 	o.CreationDate.Set(&v)
 }
 
@@ -550,9 +549,9 @@ func (o *FirewallRule) SetCreatedBy(v UserInstance) {
 }
 
 // GetModificationDate returns the ModificationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *FirewallRule) GetModificationDate() time.Time {
+func (o *FirewallRule) GetModificationDate() string {
 	if o == nil || IsNil(o.ModificationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ModificationDate.Get()
@@ -561,7 +560,7 @@ func (o *FirewallRule) GetModificationDate() time.Time {
 // GetModificationDateOk returns a tuple with the ModificationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *FirewallRule) GetModificationDateOk() (*time.Time, bool) {
+func (o *FirewallRule) GetModificationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -577,8 +576,8 @@ func (o *FirewallRule) HasModificationDate() bool {
 	return false
 }
 
-// SetModificationDate gets a reference to the given NullableTime and assigns it to the ModificationDate field.
-func (o *FirewallRule) SetModificationDate(v time.Time) {
+// SetModificationDate gets a reference to the given NullableString and assigns it to the ModificationDate field.
+func (o *FirewallRule) SetModificationDate(v string) {
 	o.ModificationDate.Set(&v)
 }
 

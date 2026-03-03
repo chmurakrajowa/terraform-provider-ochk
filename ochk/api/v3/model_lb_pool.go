@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the LbPool type satisfies the MappedNullable interface at compile time
@@ -29,8 +28,8 @@ type LbPool struct {
 	Enabled          NullableBool   `json:"enabled,omitempty"`
 	CreatedBy        NullableString `json:"createdBy,omitempty"`
 	ModifiedBy       NullableString `json:"modifiedBy,omitempty"`
-	CreationDate     NullableTime   `json:"creationDate,omitempty"`
-	ModificationDate NullableTime   `json:"modificationDate,omitempty"`
+	CreationDate     NullableString `json:"creationDate,omitempty"`
+	ModificationDate NullableString `json:"modificationDate,omitempty"`
 }
 
 // NewLbPool instantiates a new LbPool object
@@ -395,9 +394,9 @@ func (o *LbPool) UnsetModifiedBy() {
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *LbPool) GetCreationDate() time.Time {
+func (o *LbPool) GetCreationDate() string {
 	if o == nil || IsNil(o.CreationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationDate.Get()
@@ -406,7 +405,7 @@ func (o *LbPool) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *LbPool) GetCreationDateOk() (*time.Time, bool) {
+func (o *LbPool) GetCreationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -422,8 +421,8 @@ func (o *LbPool) HasCreationDate() bool {
 	return false
 }
 
-// SetCreationDate gets a reference to the given NullableTime and assigns it to the CreationDate field.
-func (o *LbPool) SetCreationDate(v time.Time) {
+// SetCreationDate gets a reference to the given NullableString and assigns it to the CreationDate field.
+func (o *LbPool) SetCreationDate(v string) {
 	o.CreationDate.Set(&v)
 }
 
@@ -438,9 +437,9 @@ func (o *LbPool) UnsetCreationDate() {
 }
 
 // GetModificationDate returns the ModificationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *LbPool) GetModificationDate() time.Time {
+func (o *LbPool) GetModificationDate() string {
 	if o == nil || IsNil(o.ModificationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ModificationDate.Get()
@@ -449,7 +448,7 @@ func (o *LbPool) GetModificationDate() time.Time {
 // GetModificationDateOk returns a tuple with the ModificationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *LbPool) GetModificationDateOk() (*time.Time, bool) {
+func (o *LbPool) GetModificationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -465,8 +464,8 @@ func (o *LbPool) HasModificationDate() bool {
 	return false
 }
 
-// SetModificationDate gets a reference to the given NullableTime and assigns it to the ModificationDate field.
-func (o *LbPool) SetModificationDate(v time.Time) {
+// SetModificationDate gets a reference to the given NullableString and assigns it to the ModificationDate field.
+func (o *LbPool) SetModificationDate(v string) {
 	o.ModificationDate.Set(&v)
 }
 

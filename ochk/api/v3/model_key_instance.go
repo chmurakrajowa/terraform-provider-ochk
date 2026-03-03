@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the KeyInstance type satisfies the MappedNullable interface at compile time
@@ -26,10 +25,10 @@ type KeyInstance struct {
 	Account           NullableString       `json:"account,omitempty"`
 	Dpplication       NullableString       `json:"dpplication,omitempty"`
 	DevAccount        NullableString       `json:"devAccount,omitempty"`
-	CreatedAt         NullableTime         `json:"createdAt,omitempty"`
+	CreatedAt         NullableString       `json:"createdAt,omitempty"`
 	Name              NullableString       `json:"name,omitempty"`
-	UpdatedAt         NullableTime         `json:"updatedAt,omitempty"`
-	ActivationDate    NullableTime         `json:"activationDate,omitempty"`
+	UpdatedAt         NullableString       `json:"updatedAt,omitempty"`
+	ActivationDate    NullableString       `json:"activationDate,omitempty"`
 	State             NullableString       `json:"state,omitempty"`
 	Usage             NullableString       `json:"usage,omitempty"`
 	UsageMask         NullableInt32        `json:"usageMask,omitempty"`
@@ -289,9 +288,9 @@ func (o *KeyInstance) UnsetDevAccount() {
 }
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *KeyInstance) GetCreatedAt() time.Time {
+func (o *KeyInstance) GetCreatedAt() string {
 	if o == nil || IsNil(o.CreatedAt.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreatedAt.Get()
@@ -300,7 +299,7 @@ func (o *KeyInstance) GetCreatedAt() time.Time {
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *KeyInstance) GetCreatedAtOk() (*time.Time, bool) {
+func (o *KeyInstance) GetCreatedAtOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -316,8 +315,8 @@ func (o *KeyInstance) HasCreatedAt() bool {
 	return false
 }
 
-// SetCreatedAt gets a reference to the given NullableTime and assigns it to the CreatedAt field.
-func (o *KeyInstance) SetCreatedAt(v time.Time) {
+// SetCreatedAt gets a reference to the given NullableString and assigns it to the CreatedAt field.
+func (o *KeyInstance) SetCreatedAt(v string) {
 	o.CreatedAt.Set(&v)
 }
 
@@ -375,9 +374,9 @@ func (o *KeyInstance) UnsetName() {
 }
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *KeyInstance) GetUpdatedAt() time.Time {
+func (o *KeyInstance) GetUpdatedAt() string {
 	if o == nil || IsNil(o.UpdatedAt.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.UpdatedAt.Get()
@@ -386,7 +385,7 @@ func (o *KeyInstance) GetUpdatedAt() time.Time {
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *KeyInstance) GetUpdatedAtOk() (*time.Time, bool) {
+func (o *KeyInstance) GetUpdatedAtOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -402,8 +401,8 @@ func (o *KeyInstance) HasUpdatedAt() bool {
 	return false
 }
 
-// SetUpdatedAt gets a reference to the given NullableTime and assigns it to the UpdatedAt field.
-func (o *KeyInstance) SetUpdatedAt(v time.Time) {
+// SetUpdatedAt gets a reference to the given NullableString and assigns it to the UpdatedAt field.
+func (o *KeyInstance) SetUpdatedAt(v string) {
 	o.UpdatedAt.Set(&v)
 }
 
@@ -418,9 +417,9 @@ func (o *KeyInstance) UnsetUpdatedAt() {
 }
 
 // GetActivationDate returns the ActivationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *KeyInstance) GetActivationDate() time.Time {
+func (o *KeyInstance) GetActivationDate() string {
 	if o == nil || IsNil(o.ActivationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ActivationDate.Get()
@@ -429,7 +428,7 @@ func (o *KeyInstance) GetActivationDate() time.Time {
 // GetActivationDateOk returns a tuple with the ActivationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *KeyInstance) GetActivationDateOk() (*time.Time, bool) {
+func (o *KeyInstance) GetActivationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -445,8 +444,8 @@ func (o *KeyInstance) HasActivationDate() bool {
 	return false
 }
 
-// SetActivationDate gets a reference to the given NullableTime and assigns it to the ActivationDate field.
-func (o *KeyInstance) SetActivationDate(v time.Time) {
+// SetActivationDate gets a reference to the given NullableString and assigns it to the ActivationDate field.
+func (o *KeyInstance) SetActivationDate(v string) {
 	o.ActivationDate.Set(&v)
 }
 

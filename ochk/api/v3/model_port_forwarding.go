@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the PortForwarding type satisfies the MappedNullable interface at compile time
@@ -32,9 +31,9 @@ type PortForwarding struct {
 	ExternalPort      NullableInt32  `json:"externalPort,omitempty"`
 	ExternalPortRange NullableString `json:"externalPortRange,omitempty"`
 	Protocol          NullableString `json:"protocol,omitempty"`
-	CreationDate      NullableTime   `json:"creationDate,omitempty"`
+	CreationDate      NullableString `json:"creationDate,omitempty"`
 	CreatedBy         NullableString `json:"createdBy,omitempty"`
-	ModificationDate  NullableTime   `json:"modificationDate,omitempty"`
+	ModificationDate  NullableString `json:"modificationDate,omitempty"`
 	ModifiedBy        NullableString `json:"modifiedBy,omitempty"`
 	PublicAddress     NullableString `json:"publicAddress,omitempty"`
 	FloatingIpId      *string        `json:"floatingIpId,omitempty"`
@@ -509,9 +508,9 @@ func (o *PortForwarding) UnsetProtocol() {
 }
 
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *PortForwarding) GetCreationDate() time.Time {
+func (o *PortForwarding) GetCreationDate() string {
 	if o == nil || IsNil(o.CreationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.CreationDate.Get()
@@ -520,7 +519,7 @@ func (o *PortForwarding) GetCreationDate() time.Time {
 // GetCreationDateOk returns a tuple with the CreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PortForwarding) GetCreationDateOk() (*time.Time, bool) {
+func (o *PortForwarding) GetCreationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -536,8 +535,8 @@ func (o *PortForwarding) HasCreationDate() bool {
 	return false
 }
 
-// SetCreationDate gets a reference to the given NullableTime and assigns it to the CreationDate field.
-func (o *PortForwarding) SetCreationDate(v time.Time) {
+// SetCreationDate gets a reference to the given NullableString and assigns it to the CreationDate field.
+func (o *PortForwarding) SetCreationDate(v string) {
 	o.CreationDate.Set(&v)
 }
 
@@ -595,9 +594,9 @@ func (o *PortForwarding) UnsetCreatedBy() {
 }
 
 // GetModificationDate returns the ModificationDate field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *PortForwarding) GetModificationDate() time.Time {
+func (o *PortForwarding) GetModificationDate() string {
 	if o == nil || IsNil(o.ModificationDate.Get()) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.ModificationDate.Get()
@@ -606,7 +605,7 @@ func (o *PortForwarding) GetModificationDate() time.Time {
 // GetModificationDateOk returns a tuple with the ModificationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PortForwarding) GetModificationDateOk() (*time.Time, bool) {
+func (o *PortForwarding) GetModificationDateOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -622,8 +621,8 @@ func (o *PortForwarding) HasModificationDate() bool {
 	return false
 }
 
-// SetModificationDate gets a reference to the given NullableTime and assigns it to the ModificationDate field.
-func (o *PortForwarding) SetModificationDate(v time.Time) {
+// SetModificationDate gets a reference to the given NullableString and assigns it to the ModificationDate field.
+func (o *PortForwarding) SetModificationDate(v string) {
 	o.ModificationDate.Set(&v)
 }
 

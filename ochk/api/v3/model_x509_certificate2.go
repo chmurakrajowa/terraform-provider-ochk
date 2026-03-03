@@ -13,7 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // checks if the X509Certificate2 type satisfies the MappedNullable interface at compile time
@@ -31,8 +30,8 @@ type X509Certificate2 struct {
 	PrivateKeyPresent  *bool                  `json:"privateKeyPresent,omitempty"`
 	PrivateKey         *AsymmetricAlgorithm   `json:"privateKey,omitempty"`
 	IssuerName         *X500DistinguishedName `json:"issuerName,omitempty"`
-	NotAfter           *time.Time             `json:"notAfter,omitempty"`
-	NotBefore          *time.Time             `json:"notBefore,omitempty"`
+	NotAfter           *string                `json:"notAfter,omitempty"`
+	NotBefore          *string                `json:"notBefore,omitempty"`
 	PublicKey          *PublicKey             `json:"publicKey,omitempty"`
 	RawData            NullableString         `json:"rawData,omitempty"`
 	RawDataMemory      *ByteReadOnlyMemory    `json:"rawDataMemory,omitempty"`
@@ -415,9 +414,9 @@ func (o *X509Certificate2) SetIssuerName(v X500DistinguishedName) {
 }
 
 // GetNotAfter returns the NotAfter field value if set, zero value otherwise.
-func (o *X509Certificate2) GetNotAfter() time.Time {
+func (o *X509Certificate2) GetNotAfter() string {
 	if o == nil || IsNil(o.NotAfter) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.NotAfter
@@ -425,7 +424,7 @@ func (o *X509Certificate2) GetNotAfter() time.Time {
 
 // GetNotAfterOk returns a tuple with the NotAfter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *X509Certificate2) GetNotAfterOk() (*time.Time, bool) {
+func (o *X509Certificate2) GetNotAfterOk() (*string, bool) {
 	if o == nil || IsNil(o.NotAfter) {
 		return nil, false
 	}
@@ -441,15 +440,15 @@ func (o *X509Certificate2) HasNotAfter() bool {
 	return false
 }
 
-// SetNotAfter gets a reference to the given time.Time and assigns it to the NotAfter field.
-func (o *X509Certificate2) SetNotAfter(v time.Time) {
+// SetNotAfter gets a reference to the given string and assigns it to the NotAfter field.
+func (o *X509Certificate2) SetNotAfter(v string) {
 	o.NotAfter = &v
 }
 
 // GetNotBefore returns the NotBefore field value if set, zero value otherwise.
-func (o *X509Certificate2) GetNotBefore() time.Time {
+func (o *X509Certificate2) GetNotBefore() string {
 	if o == nil || IsNil(o.NotBefore) {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 	return *o.NotBefore
@@ -457,7 +456,7 @@ func (o *X509Certificate2) GetNotBefore() time.Time {
 
 // GetNotBeforeOk returns a tuple with the NotBefore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *X509Certificate2) GetNotBeforeOk() (*time.Time, bool) {
+func (o *X509Certificate2) GetNotBeforeOk() (*string, bool) {
 	if o == nil || IsNil(o.NotBefore) {
 		return nil, false
 	}
@@ -473,8 +472,8 @@ func (o *X509Certificate2) HasNotBefore() bool {
 	return false
 }
 
-// SetNotBefore gets a reference to the given time.Time and assigns it to the NotBefore field.
-func (o *X509Certificate2) SetNotBefore(v time.Time) {
+// SetNotBefore gets a reference to the given string and assigns it to the NotBefore field.
+func (o *X509Certificate2) SetNotBefore(v string) {
 	o.NotBefore = &v
 }
 
