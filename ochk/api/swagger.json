@@ -25476,12 +25476,10 @@
           },
           "creationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           }
         },
