@@ -56,11 +56,11 @@ func (p *FirewallEWRulesProxy) Read(ctx context.Context, routerID strfmt.UUID, r
 	return response.RuleInstance, nil
 }
 
-func (p *FirewallEWRulesProxy) Update(ctx context.Context, routerID strfmt.UUID, rule *openapi.DfwRule) (*openapi.DfwRule, error) {
+func (p *FirewallEWRulesProxy) Update(ctx context.Context, routerID strfmt.UUID, rule openapi.DfwRule) (*openapi.DfwRule, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	action := p.service.NetworkRoutersRouterIdRulesEWRuleIdPut(ctx, string(routerID), rule.GetRuleId())
+	action := p.service.NetworkRoutersRouterIdRulesEWRuleIdPut(ctx, string(routerID), rule.GetRuleId()).DfwRule(rule)
 	put, _, err := action.Execute()
 	mutex.Unlock()
 

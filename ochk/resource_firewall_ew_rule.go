@@ -156,27 +156,27 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error while reading firewall EW rule: %+v", err)
 	}
 
-	if err := d.Set("display_name", firewallEWRule.DisplayName); err != nil {
+	if err := d.Set("display_name", firewallEWRule.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", firewallEWRule.ProjectId); err != nil {
+	if err := d.Set("project_id", firewallEWRule.GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
-	if err := d.Set("action", firewallEWRule.Action); err != nil {
+	if err := d.Set("action", firewallEWRule.GetAction()); err != nil {
 		return diag.Errorf("error setting action: %+v", err)
 	}
 
-	if err := d.Set("direction", firewallEWRule.Direction); err != nil {
+	if err := d.Set("direction", firewallEWRule.GetDirection()); err != nil {
 		return diag.Errorf("error setting direction: %+v", err)
 	}
 
-	if err := d.Set("disabled", firewallEWRule.Disabled); err != nil {
+	if err := d.Set("disabled", firewallEWRule.GetDisabled()); err != nil {
 		return diag.Errorf("error setting disabled: %+v", err)
 	}
 
-	if err := d.Set("ip_protocol", firewallEWRule.IpProtocol); err != nil {
+	if err := d.Set("ip_protocol", firewallEWRule.GetIpProtocol()); err != nil {
 		return diag.Errorf("error setting ip_protocol: %+v", err)
 	}
 
@@ -198,11 +198,11 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting destination: %+v", err)
 	}
 
-	if err := d.Set("priority", firewallEWRule.Priority); err != nil {
+	if err := d.Set("priority", firewallEWRule.GetPriority()); err != nil {
 		return diag.Errorf("error setting priority: %+v", err)
 	}
 
-	if err := d.Set("created_by", firewallEWRule.CreatedBy); err != nil {
+	if err := d.Set("created_by", firewallEWRule.GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
@@ -210,7 +210,7 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", firewallEWRule.ModifiedBy); err != nil {
+	if err := d.Set("modified_by", firewallEWRule.GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
@@ -233,7 +233,7 @@ func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 	firewallEWRule := mapResourceDataToEWRule(d)
 	firewallEWRule.RuleId = NewNullableString(d.Id())
 
-	_, err := proxy.Update(ctx, routerID, &firewallEWRule)
+	_, err := proxy.Update(ctx, routerID, firewallEWRule)
 	if err != nil {
 		return diag.Errorf("error while creating firewall EW rule: %+v", err)
 	}
@@ -281,12 +281,13 @@ func castStringToAIPProtocolEnum(e string) *openapi.IpProtocol {
 }
 
 func mapResourceDataToEWRule(d *schema.ResourceData) openapi.DfwRule {
+	priorityValue := d.Get("priority").(int)
 	rule := openapi.DfwRule{
 		DisplayName: NewNullableString(d.Get("display_name").(string)),
 		ProjectId:   NewNullableString(d.Get("project_id").(string)),
 		Action:      castStringToActionEnum(d.Get("action").(string)),
 		Direction:   castStringToADirectionEnum(d.Get("direction").(string)),
-		Priority:    NewNullableInt64(d.Get("priority").(int64)),
+		Priority:    NewNullableInt64(int64(priorityValue)),
 	}
 
 	if disabled, ok := d.GetOk("disabled"); ok && disabled.(bool) {

@@ -14,7 +14,7 @@ func flattenSecurityGroupFromIDs(m []openapi.SecurityGroup) *schema.Set {
 	}
 
 	for _, v := range m {
-		s.Add(fmt.Sprint(v.Id))
+		s.Add(fmt.Sprint(v.GetId()))
 	}
 	return s
 }
