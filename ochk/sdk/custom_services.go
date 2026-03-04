@@ -37,14 +37,14 @@ func (p *CustomServicesProxy) Create(ctx context.Context, customService openapi.
 	return put.CustomServiceInstance, nil
 }
 
-func (p *CustomServicesProxy) Update(ctx context.Context, customService *openapi.CustomServiceInstance) (*openapi.CustomServiceInstance, error) {
+func (p *CustomServicesProxy) Update(ctx context.Context, customService openapi.CustomServiceInstance) (*openapi.CustomServiceInstance, error) {
 	//if err := customService.Validate(strfmt.Default); err != nil {
 	//	return nil, fmt.Errorf("error while validating custom service struct: %w", err)
 	//}
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	action := p.service.NetworkCustomServicesServiceIdPut(ctx, customService.GetServiceId())
+	action := p.service.NetworkCustomServicesServiceIdPut(ctx, customService.GetServiceId()).CustomServiceInstance(customService)
 	put, _, err := action.Execute()
 
 	mutex.Unlock()
