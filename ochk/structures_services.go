@@ -45,8 +45,8 @@ func flattenServices(in []openapi.ServiceInstance) []map[strfmt.UUID]interface{}
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["service_id"] = v.ServiceId
-		m["display_name"] = v.DisplayName
+		m["service_id"] = v.GetServiceId()
+		m["display_name"] = v.GetDisplayName()
 		out = append(out, m)
 	}
 	return out

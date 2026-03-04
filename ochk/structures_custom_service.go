@@ -87,8 +87,8 @@ func flattenCustomServices(in []openapi.CustomServiceInstance) []map[strfmt.UUID
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
 		m["custom_service_id"] = v.GetServiceId()
-		m["display_name"] = v.DisplayName
-		m["project_id"] = v.ProjectId
+		m["display_name"] = v.GetDisplayName()
+		m["project_id"] = v.GetProjectId()
 		out = append(out, m)
 	}
 	return out

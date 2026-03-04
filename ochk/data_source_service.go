@@ -56,7 +56,7 @@ func datSourceServiceRead(ctx context.Context, d *schema.ResourceData, meta inte
 
 	d.SetId(services[0].GetServiceId())
 
-	if err := d.Set("created_by", services[0].CreatedBy); err != nil {
+	if err := d.Set("created_by", services[0].GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
@@ -64,7 +64,7 @@ func datSourceServiceRead(ctx context.Context, d *schema.ResourceData, meta inte
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", services[0].ModifiedBy); err != nil {
+	if err := d.Set("modified_by", services[0].GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 

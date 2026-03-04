@@ -61,9 +61,9 @@ func flattenFirewallSNRulesLists(in []openapi.GfwRule) []map[string]interface{} 
 
 	for _, v := range in {
 		m := make(map[string]interface{})
-		m["firewall_sn_rule_id"] = v.RuleId
-		m["display_name"] = v.DisplayName
-		m["project_id"] = v.ProjectId
+		m["firewall_sn_rule_id"] = v.GetRuleId()
+		m["display_name"] = v.GetDisplayName()
+		m["project_id"] = v.GetProjectId()
 		out = append(out, m)
 	}
 	return out

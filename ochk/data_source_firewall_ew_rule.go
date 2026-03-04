@@ -109,27 +109,27 @@ func dataSourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, m
 
 	d.SetId(firewallEWRules[0].GetRuleId())
 
-	if err := d.Set("display_name", firewallEWRules[0].DisplayName); err != nil {
+	if err := d.Set("display_name", firewallEWRules[0].GetDisplayName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", firewallEWRules[0].ProjectId); err != nil {
+	if err := d.Set("project_id", firewallEWRules[0].GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
-	if err := d.Set("action", firewallEWRules[0].Action); err != nil {
+	if err := d.Set("action", firewallEWRules[0].GetAction()); err != nil {
 		return diag.Errorf("error setting action: %+v", err)
 	}
 
-	if err := d.Set("direction", firewallEWRules[0].Direction); err != nil {
+	if err := d.Set("direction", firewallEWRules[0].GetDirection()); err != nil {
 		return diag.Errorf("error setting direction: %+v", err)
 	}
 
-	if err := d.Set("disabled", firewallEWRules[0].Disabled); err != nil {
+	if err := d.Set("disabled", firewallEWRules[0].GetDisabled()); err != nil {
 		return diag.Errorf("error setting disabled: %+v", err)
 	}
 
-	if err := d.Set("ip_protocol", firewallEWRules[0].IpProtocol); err != nil {
+	if err := d.Set("ip_protocol", firewallEWRules[0].GetIpProtocol()); err != nil {
 		return diag.Errorf("error setting ip_protocol: %+v", err)
 	}
 
@@ -153,7 +153,7 @@ func dataSourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error setting priority: %+v", err)
 	}
 
-	if err := d.Set("created_by", firewallEWRules[0].CreatedBy); err != nil {
+	if err := d.Set("created_by", firewallEWRules[0].GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
@@ -161,7 +161,7 @@ func dataSourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", firewallEWRules[0].ModifiedBy); err != nil {
+	if err := d.Set("modified_by", firewallEWRules[0].GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
