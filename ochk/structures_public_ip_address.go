@@ -14,9 +14,9 @@ func flattenPublicIPAddress(in []openapi.PublicIpAllocation) []map[strfmt.UUID]i
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["public_ip_address_id"] = v.PublicIpAddress.IpAddressId
-		m["display_name"] = v.Name
-		m["ip_address"] = v.PublicIpAddress.IpAddress
+		m["public_ip_address_id"] = v.PublicIpAddress.GetIpAddressId()
+		m["display_name"] = v.GetName()
+		m["ip_address"] = v.PublicIpAddress.GetIpAddress()
 		out = append(out, m)
 	}
 	return out

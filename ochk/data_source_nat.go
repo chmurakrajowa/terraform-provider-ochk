@@ -105,19 +105,19 @@ func dataSourceNatRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("error setting nat display name: %+v", err)
 	}
 
-	if err := d.Set("description", nats[0].Description); err != nil {
+	if err := d.Set("description", nats[0].GetDescription()); err != nil {
 		return diag.Errorf("error setting description:  %+v", err)
 	}
 
-	if err := d.Set("vrf_id", nats[0].TierZeroRouterId); err != nil {
+	if err := d.Set("vrf_id", nats[0].GetTierZeroRouterId()); err != nil {
 		return diag.Errorf("error setting vrf_id:  %+v", err)
 	}
 
-	if err := d.Set("nat_type", nats[0].NatType); err != nil {
+	if err := d.Set("nat_type", nats[0].GetNatType()); err != nil {
 		return diag.Errorf("error setting nat_type:  %+v", err)
 	}
 
-	if err := d.Set("created_by", nats[0].CreatedBy); err != nil {
+	if err := d.Set("created_by", nats[0].GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by:  %+v", err)
 	}
 
@@ -129,27 +129,27 @@ func dataSourceNatRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("error setting modified_at:  %+v", err)
 	}
 
-	if err := d.Set("modified_by", nats[0].ModifiedBy); err != nil {
+	if err := d.Set("modified_by", nats[0].GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by:  %+v", err)
 	}
 
-	if err := d.Set("action", nats[0].Action); err != nil {
+	if err := d.Set("action", nats[0].GetAction()); err != nil {
 		return diag.Errorf("error setting action:  %+v", err)
 	}
 
-	if err := d.Set("enabled", nats[0].Enabled); err != nil {
+	if err := d.Set("enabled", nats[0].GetEnabled()); err != nil {
 		return diag.Errorf("error setting enabled: %+v", err)
 	}
 
-	if err := d.Set("priority", nats[0].Priority); err != nil {
+	if err := d.Set("priority", nats[0].GetPriority()); err != nil {
 		return diag.Errorf("error setting priority: %+v", err)
 	}
 
-	if err := d.Set("source_network", nats[0].SourceNetwork); err != nil {
+	if err := d.Set("source_network", nats[0].GetSourceNetwork()); err != nil {
 		return diag.Errorf("error setting source_network: %+v", err)
 	}
 
-	if err := d.Set("destination_network", nats[0].DestinationNetwork); err != nil {
+	if err := d.Set("destination_network", nats[0].GetDestinationNetwork()); err != nil {
 		return diag.Errorf("error setting destination_network: %+v", err)
 	}
 

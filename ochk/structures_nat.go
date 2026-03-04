@@ -15,11 +15,11 @@ func flattenAutoNats(in []openapi.NATRuleInstance) []map[strfmt.UUID]interface{}
 	for _, v := range in {
 		if *v.NatType == "AUTO" {
 			m := make(map[strfmt.UUID]interface{})
-			m["auto_nat_id"] = v.RuleId
-			m["display_name"] = v.DisplayName
-			m["virtual_network_id"] = v.VirtualNetworkId
-			m["enabled"] = v.Enabled
-			m["vrf_id"] = v.TierZeroRouterId
+			m["auto_nat_id"] = v.GetRuleId()
+			m["display_name"] = v.GetDisplayName()
+			m["virtual_network_id"] = v.GetVirtualNetworkId()
+			m["enabled"] = v.GetEnabled()
+			m["vrf_id"] = v.GetTierZeroRouterId()
 			out = append(out, m)
 		}
 	}
