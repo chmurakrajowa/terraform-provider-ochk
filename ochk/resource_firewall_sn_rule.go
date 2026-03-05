@@ -160,27 +160,27 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting vpc_id: %+v", err)
 	}
 
-	if err := d.Set("display_name", firewallSNRule.DisplayName); err != nil {
+	if err := d.Set("display_name", firewallSNRule.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", firewallSNRule.ProjectId); err != nil {
+	if err := d.Set("project_id", firewallSNRule.GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
-	if err := d.Set("action", firewallSNRule.Action); err != nil {
+	if err := d.Set("action", firewallSNRule.GetAction()); err != nil {
 		return diag.Errorf("error setting action: %+v", err)
 	}
 
-	if err := d.Set("direction", firewallSNRule.Direction); err != nil {
+	if err := d.Set("direction", firewallSNRule.GetDirection()); err != nil {
 		return diag.Errorf("error setting direction: %+v", err)
 	}
 
-	if err := d.Set("disabled", firewallSNRule.Disabled); err != nil {
+	if err := d.Set("disabled", firewallSNRule.GetDisabled()); err != nil {
 		return diag.Errorf("error setting disabled: %+v", err)
 	}
 
-	if err := d.Set("ip_protocol", firewallSNRule.IpProtocol); err != nil {
+	if err := d.Set("ip_protocol", firewallSNRule.GetIpProtocol()); err != nil {
 		return diag.Errorf("error setting ip_protocol: %+v", err)
 	}
 
@@ -202,11 +202,11 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting destination: %+v", err)
 	}
 
-	if err := d.Set("priority", firewallSNRule.Priority); err != nil {
+	if err := d.Set("priority", firewallSNRule.GetPriority()); err != nil {
 		return diag.Errorf("error setting priority: %+v", err)
 	}
 
-	if err := d.Set("created_by", firewallSNRule.CreatedBy); err != nil {
+	if err := d.Set("created_by", firewallSNRule.GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
@@ -214,7 +214,7 @@ func resourceFirewallSNRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", firewallSNRule.ModifiedBy); err != nil {
+	if err := d.Set("modified_by", firewallSNRule.GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
@@ -238,7 +238,7 @@ func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 	rule := mapResourceDataToGFWRule(d)
 	rule.RuleId = NewNullableString(d.Id())
 
-	_, err := proxy.Update(ctx, strfmt.UUID(routerID), &rule)
+	_, err := proxy.Update(ctx, strfmt.UUID(routerID), rule)
 	if err != nil {
 		return diag.Errorf("error while modifying firewall SN rule: %+v", err)
 	}
@@ -247,6 +247,8 @@ func resourceFirewallSNRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func mapResourceDataToGFWRule(d *schema.ResourceData) openapi.GfwRule {
+	priorityValue := d.Get("priority").(int)
+
 	rule := openapi.GfwRule{
 		DisplayName: NewNullableString(d.Get("display_name").(string)),
 		ProjectId:   NewNullableString(d.Get("project_id").(string)),
@@ -254,7 +256,7 @@ func mapResourceDataToGFWRule(d *schema.ResourceData) openapi.GfwRule {
 		Direction:   castStringToADirectionEnum(d.Get("direction").(string)),
 		Disabled:    NewNullableBool(d.Get("disabled").(bool)),
 		IpProtocol:  castStringToAIPProtocolEnum(d.Get("ip_protocol").(string)),
-		Priority:    NewNullableInt64(d.Get("priority").(int64)),
+		Priority:    NewNullableInt64(int64(priorityValue)),
 	}
 
 	if services, ok := d.GetOk("services"); ok {

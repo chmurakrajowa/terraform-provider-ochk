@@ -35,11 +35,11 @@ func (p *FirewallSNRulesProxy) Create(ctx context.Context, routerID strfmt.UUID,
 	return put.GfwRule, nil
 }
 
-func (p *FirewallSNRulesProxy) Update(ctx context.Context, routerID strfmt.UUID, rule *openapi.GfwRule) (*openapi.GfwRule, error) {
+func (p *FirewallSNRulesProxy) Update(ctx context.Context, routerID strfmt.UUID, rule openapi.GfwRule) (*openapi.GfwRule, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	action := p.service.NetworkRoutersRouterIdRulesSNRuleIdPut(ctx, string(routerID), rule.GetRuleId())
+	action := p.service.NetworkRoutersRouterIdRulesSNRuleIdPut(ctx, string(routerID), rule.GetRuleId()).GfwRule(rule)
 	put, _, err := action.Execute()
 	mutex.Unlock()
 
