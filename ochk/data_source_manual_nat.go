@@ -7,9 +7,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func dataSourceNat() *schema.Resource {
+func dataSourceManualNat() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: dataSourceNatRead,
+		ReadContext: dataSourceManualNatRead,
 		Schema: map[string]*schema.Schema{
 			"display_name": {
 				Type:     schema.TypeString,
@@ -82,12 +82,17 @@ func dataSourceNat() *schema.Resource {
 		},
 	}
 }
-func dataSourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func dataSourceManualNatRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client)
 
 	displayName := d.Get("display_name").(string)
 
 	nats, err := proxy.Nats.ListNatsByName(ctx, displayName)
+
+	if nats[0].GetNatType() == "AUTO" {
+		return diag.Errorf("no manual nat found for display name: %+v", displayName)
+
+	}
 
 	if err != nil {
 		return diag.Errorf("error while listing nats: %+v", err)
@@ -99,10 +104,6 @@ func dataSourceNatRead(ctx context.Context, d *schema.ResourceData, meta interfa
 
 	if len(nats) > 1 {
 		return diag.Errorf("more than one nat with display name: %s found!", displayName)
-	}
-
-	if nats[0].GetNatType() == "MANUAL" {
-		return diag.Errorf("no auto nat found for display name: %+v", err)
 	}
 
 	if err := d.Set("display_name", displayName); err != nil {

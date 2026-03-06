@@ -84,7 +84,7 @@ func Provider() *schema.Provider {
 			"ochk_tags":                    dataSourceTags(),
 			"ochk_auto_nat":                dataSourceNat(),
 			"ochk_auto_nats":               dataSourceAutoNats(),
-			"ochk_manual_nat":              dataSourceNat(),
+			"ochk_manual_nat":              dataSourceManualNat(),
 			"ochk_manual_nats":             dataSourceManualNats(),
 			"ochk_ports_forwarding":        dataSourcePortsForwarding(),
 			"ochk_port_forwarding":         dataSourcePortForwarding(),

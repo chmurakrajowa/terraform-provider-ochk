@@ -36,13 +36,13 @@ func flattenManualNats(in []openapi.NATRuleInstance) []map[strfmt.UUID]interface
 	for _, v := range in {
 		if *v.NatType == "MANUAL" {
 			m := make(map[strfmt.UUID]interface{})
-			m["manual_nat_id"] = v.RuleId
-			m["display_name"] = v.DisplayName
-			m["action"] = v.Action
-			m["enabled"] = v.Enabled
-			m["vrf_id"] = v.TierZeroRouterId
-			m["source_network"] = v.SourceNetwork
-			m["destination_network"] = v.DestinationNetwork
+			m["manual_nat_id"] = v.GetRuleId()
+			m["display_name"] = v.GetDisplayName()
+			m["action"] = v.GetAction()
+			m["enabled"] = v.GetAction()
+			m["vrf_id"] = v.GetTierZeroRouterId()
+			m["source_network"] = v.GetSourceNetwork()
+			m["destination_network"] = v.GetDestinationNetwork()
 			out = append(out, m)
 		}
 	}
