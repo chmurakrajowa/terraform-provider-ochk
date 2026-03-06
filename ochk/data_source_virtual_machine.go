@@ -46,15 +46,15 @@ func dataSourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("more than one virtual machine with display_name: %s found!", displayName)
 	}
 
-	if err := d.Set("display_name", virtualMachines[0].VirtualMachineName); err != nil {
+	if err := d.Set("display_name", virtualMachines[0].GetVirtualMachineName()); err != nil {
 		return diag.Errorf("error setting virtual machine display_name: %v", err)
 	}
 
-	if err := d.Set("folder_path", virtualMachines[0].FolderPath); err != nil {
+	if err := d.Set("folder_path", virtualMachines[0].GetFolderPath()); err != nil {
 		return diag.Errorf("error setting virtual machine folder_path: %v", err)
 	}
 
-	if err := d.Set("project_id", virtualMachines[0].ProjectId); err != nil {
+	if err := d.Set("project_id", virtualMachines[0].GetProjectId()); err != nil {
 		return diag.Errorf("error setting virtual machine project_id: %v", err)
 	}
 	d.SetId(virtualMachines[0].GetVirtualMachineId())

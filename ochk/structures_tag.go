@@ -16,10 +16,10 @@ func flattenTags(in []openapi.Tag) []map[strfmt.UUID]interface{} {
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["tag_id"] = fmt.Sprint(v.TagId)
-		m["display_name"] = v.TagValue
-		m["project_id"] = v.ProjectId
-		m["related_virtual_machines"] = v.RelatedVirtualMachines
+		m["tag_id"] = fmt.Sprint(v.GetTagId())
+		m["display_name"] = v.GetTagValue()
+		m["project_id"] = v.GetProjectId()
+		m["related_virtual_machines"] = v.GetRelatedVirtualMachines()
 		out = append(out, m)
 	}
 	return out

@@ -45,12 +45,12 @@ func dataSourceTagRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("more than one billing tag with name: %s found!", tagName)
 	}
 
-	d.SetId(fmt.Sprint(tags[0].TagId))
+	d.SetId(fmt.Sprint(tags[0].GetTagId()))
 
-	if err := d.Set("display_name", tags[0].TagValue); err != nil {
+	if err := d.Set("display_name", tags[0].GetTagValue()); err != nil {
 		return diag.Errorf("error setting tag name: %+v", err)
 	}
-	if err := d.Set("project_id", tags[0].ProjectId); err != nil {
+	if err := d.Set("project_id", tags[0].GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 

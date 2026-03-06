@@ -21,10 +21,10 @@ func flattenVirtualMachines(in []openapi.VirtualMachineInstance) []map[string]in
 
 	for _, v := range in {
 		m := make(map[string]interface{})
-		m["virtual_machine_id"] = v.VirtualMachineId
-		m["display_name"] = v.VirtualMachineName
-		m["folder_path"] = v.FolderPath
-		m["project_id"] = v.ProjectId
+		m["virtual_machine_id"] = v.GetVirtualMachineId()
+		m["display_name"] = v.GetVirtualMachineName()
+		m["folder_path"] = v.GetFolderPath()
+		m["project_id"] = v.GetProjectId()
 		out = append(out, m)
 	}
 	return out
@@ -82,10 +82,10 @@ func flattenVirtualDisks(in []openapi.VirtualDiskDevice) *schema.Set {
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["controller_id"] = openapi.NewNullableInt32(v.ControllerId)
-		m["lun_id"] = openapi.NewNullableInt32(v.LunId)
-		m["size_mb"] = NewNullableInt64(*v.SizeMB)
-		m["device_type"] = v.VirtualDiskDeviceType
+		m["controller_id"] = v.GetControllerId()
+		m["lun_id"] = v.GetLunId()
+		m["size_mb"] = v.GetSizeMB()
+		m["device_type"] = v.GetVirtualDiskDeviceType()
 
 		out.Add(m)
 	}
@@ -165,9 +165,9 @@ func flattenVirtualNetworkDevice(in []openapi.VirtualNetworkDevice) []map[strfmt
 	var out []map[strfmt.UUID]interface{}
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["device_id"] = v.DeviceId
+		m["device_id"] = v.GetDeviceId()
 		if v.VirtualNetworkInstance != nil {
-			m["virtual_network_id"] = v.VirtualNetworkInstance.VirtualNetworkId
+			m["virtual_network_id"] = v.VirtualNetworkInstance.GetVirtualNetworkId()
 		}
 
 		out = append(out, m)
@@ -209,7 +209,7 @@ func flattenBackupListsFromIDs(m []openapi.BackupList) *schema.Set {
 	}
 
 	for _, v := range m {
-		s.Add(v.BackupListId)
+		s.Add(v.GetBackupListId())
 	}
 
 	return s
@@ -238,7 +238,7 @@ func flattenTagsListsFromIDs(m []openapi.Tag) *schema.Set {
 	}
 
 	for _, v := range m {
-		s.Add(fmt.Sprint(v.TagId))
+		s.Add(fmt.Sprint(v.GetTagId()))
 	}
 
 	return s

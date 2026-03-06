@@ -61,7 +61,7 @@ func resourceTagCreate(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("error while creating tag: %+v", err)
 	}
 
-	d.SetId(fmt.Sprint(created.TagId))
+	d.SetId(fmt.Sprint(created.GetTagId()))
 	return resourceTagRead(ctx, d, meta)
 }
 
@@ -85,11 +85,11 @@ func resourceTagRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error while reading tag: %+v", err)
 	}
 
-	if err := d.Set("display_name", tag.TagValue); err != nil {
+	if err := d.Set("display_name", tag.GetTagValue()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", tag.ProjectId); err != nil {
+	if err := d.Set("project_id", tag.GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 

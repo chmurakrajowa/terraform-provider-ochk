@@ -374,35 +374,35 @@ func resourceVirtualMachineDelete(ctx context.Context, d *schema.ResourceData, m
 }
 
 func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine openapi.VirtualMachineInstance) error {
-	if err := d.Set("display_name", virtualMachine.VirtualMachineName); err != nil {
+	if err := d.Set("display_name", virtualMachine.GetVirtualMachineName()); err != nil {
 		return fmt.Errorf("error setting display_name: %w", err)
 	}
 	if virtualMachine.DeploymentInstance != nil {
-		if err := d.Set("deployment_id", virtualMachine.DeploymentInstance.DeploymentId); err != nil {
+		if err := d.Set("deployment_id", virtualMachine.DeploymentInstance.GetDeploymentId()); err != nil {
 			return fmt.Errorf("error setting deployment_id: %w", err)
 		}
 	}
 
-	if err := d.Set("folder_path", virtualMachine.FolderPath); err != nil {
+	if err := d.Set("folder_path", virtualMachine.GetFolderPath()); err != nil {
 		return fmt.Errorf("error setting folder_path: %w", err)
 	}
 
 	if err := d.Set("initial_password", "<hidden>"); err != nil {
 		return fmt.Errorf("error setting initial_password: %w", err)
 	}
-	if err := d.Set("power_state", virtualMachine.PowerState); err != nil {
+	if err := d.Set("power_state", virtualMachine.GetPowerState()); err != nil {
 		return fmt.Errorf("error setting power_state: %w", err)
 	}
 
-	if err := d.Set("cpu_count", virtualMachine.CpuCount); err != nil {
+	if err := d.Set("cpu_count", virtualMachine.GetCpuCount()); err != nil {
 		return fmt.Errorf("error setting cpu_count: %+v", err)
 	}
 
-	if err := d.Set("memory_size_mb", virtualMachine.MemorySizeMB); err != nil {
+	if err := d.Set("memory_size_mb", virtualMachine.GetMemorySizeMB()); err != nil {
 		return fmt.Errorf("error setting memory_size_mb: %w", err)
 	}
 
-	if err := d.Set("storage_policy", virtualMachine.StoragePolicy); err != nil {
+	if err := d.Set("storage_policy", virtualMachine.GetStoragePolicy()); err != nil {
 		return fmt.Errorf("error setting storage_policy: %w", err)
 	}
 	if err := d.Set("project_id", strings.ToLower(virtualMachine.GetProjectId())); err != nil {
@@ -421,7 +421,7 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine open
 	//	return fmt.Errorf("error setting deployment_params: %w", err)
 	//}
 
-	if err := d.Set("ip_address", virtualMachine.IpAddress); err != nil {
+	if err := d.Set("ip_address", virtualMachine.GetIpAddress()); err != nil {
 		return fmt.Errorf("error setting ip_address: %w", err)
 	}
 
@@ -435,23 +435,23 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine open
 	}
 
 	if virtualMachine.SshKey != NewNullableString("") {
-		if err := d.Set("ssh_key", virtualMachine.SshKey); err != nil {
+		if err := d.Set("ssh_key", virtualMachine.GetSshKey()); err != nil {
 			return fmt.Errorf("error setting ssh_key: %w", err)
 		}
 	}
 
 	if virtualMachine.EncryptionInstance != nil {
-		if err := d.Set("encryption", virtualMachine.EncryptionInstance.Encrypt); err != nil {
+		if err := d.Set("encryption", virtualMachine.EncryptionInstance.GetEncrypt()); err != nil {
 			return fmt.Errorf("error setting created_by: %w", err)
 		}
 		if virtualMachine.EncryptionInstance.EncryptionKeyId != NewNullableString("") {
-			if err := d.Set("encryption_key_id", virtualMachine.EncryptionInstance.EncryptionKeyId); err != nil {
+			if err := d.Set("encryption_key_id", virtualMachine.EncryptionInstance.GetEncryptionKeyId()); err != nil {
 				return fmt.Errorf("error setting created_by: %w", err)
 			}
 		}
 	}
 
-	if err := d.Set("created_by", virtualMachine.CreatedBy); err != nil {
+	if err := d.Set("created_by", virtualMachine.GetCreatedBy()); err != nil {
 		return fmt.Errorf("error setting created_by: %w", err)
 	}
 	if err := d.Set("created_at", virtualMachine.GetCreationDate()); err != nil {
@@ -461,7 +461,7 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine open
 	if err := d.Set("modified_at", virtualMachine.GetModificationDate()); err != nil {
 		return fmt.Errorf("error setting modified_at: %w", err)
 	}
-	if err := d.Set("modified_by", virtualMachine.ModifiedBy); err != nil {
+	if err := d.Set("modified_by", virtualMachine.GetModifiedBy()); err != nil {
 		return fmt.Errorf("error setting modified_by: %w", err)
 	}
 
@@ -473,22 +473,22 @@ func mapVirtualMachineToResourceData(d *schema.ResourceData, virtualMachine open
 	if err := d.Set("tags", flattenTagsListsFromIDs(virtualMachine.Tags)); err != nil {
 		return fmt.Errorf("error setting tags: %w", err)
 	}
-	if err := d.Set("primary_dns_address", virtualMachine.PrimaryDnsAddress); err != nil {
+	if err := d.Set("primary_dns_address", virtualMachine.GetPrimaryDnsAddress()); err != nil {
 		return fmt.Errorf("error setting primary_dns_address: %+v", err)
 	}
-	if err := d.Set("secondary_dns_address", virtualMachine.SecondaryDnsAddress); err != nil {
+	if err := d.Set("secondary_dns_address", virtualMachine.GetSecondaryDnsAddress()); err != nil {
 		return fmt.Errorf("error setting secondary_dns_address: %+v", err)
 	}
-	if err := d.Set("dns_suffix", virtualMachine.DnsSuffix); err != nil {
+	if err := d.Set("dns_suffix", virtualMachine.GetDnsSuffix()); err != nil {
 		return fmt.Errorf("error setting dns_suffix: %+v", err)
 	}
-	if err := d.Set("dns_search_suffix", virtualMachine.DnsSearchSuffix); err != nil {
+	if err := d.Set("dns_search_suffix", virtualMachine.GetDnsSearchSuffix()); err != nil {
 		return fmt.Errorf("error setting dns_search_suffix: %+v", err)
 	}
-	if err := d.Set("primary_wins_address", virtualMachine.PrimaryWinsAddress); err != nil {
+	if err := d.Set("primary_wins_address", virtualMachine.GetPrimaryWinsAddress()); err != nil {
 		return fmt.Errorf("error setting primary_wins_address: %+v", err)
 	}
-	if err := d.Set("secondary_wins_address", virtualMachine.SecondaryWinsAddress); err != nil {
+	if err := d.Set("secondary_wins_address", virtualMachine.GetSecondaryWinsAddress()); err != nil {
 		return fmt.Errorf("error setting secondary_wins_address: %+v", err)
 	}
 
@@ -508,7 +508,7 @@ func mapResourceDataToVirtualMachine(d *schema.ResourceData) openapi.VirtualMach
 		PowerState:            castStringToPowerStateEnum(d.Get("power_state").(string)).Ptr(),
 		StoragePolicy:         castStringToStorageEnum(d.Get("storage_policy").(string)).Ptr(),
 		ProjectId:             NewNullableString(d.Get("project_id").(string)),
-		VirtualMachineId:      NewNullableString(d.Id()),
+		VirtualMachineId:      openapi.NullableString{},
 		VirtualMachineName:    NewNullableString(d.Get("display_name").(string)),
 		SshKey:                NewNullableString(d.Get("ssh_key").(string)),
 		VirtualNetworkDevices: expandVirtualNetworkDevices(d.Get("virtual_network_devices").([]interface{})),
