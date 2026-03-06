@@ -14,10 +14,10 @@ func flattenKMSKeys(in []openapi.KeyInstance) []map[string]interface{} {
 
 	for _, v := range in {
 		m := make(map[string]interface{})
-		m["kms_key_id"] = v.Id
-		m["display_name"] = v.Name
+		m["kms_key_id"] = v.GetId()
+		m["display_name"] = v.GetName()
 		m["key_usage"] = flattenStringSlice(v.KeyUsageList)
-		m["state"] = v.State
+		m["state"] = v.GetState()
 
 		out = append(out, m)
 	}
