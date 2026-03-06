@@ -92,11 +92,11 @@ func (p *NatProxy) CreateNat(ctx context.Context, natRuleInstance openapi.NATRul
 	return put.RequestInstance, nil
 }
 
-func (p *NatProxy) Update(ctx context.Context, natRuleInstance *openapi.NATRuleInstance) (*openapi.RequestInstance, error) {
+func (p *NatProxy) Update(ctx context.Context, natRuleInstance openapi.NATRuleInstance) (*openapi.RequestInstance, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	action := p.service.NetworkNatRulesRuleIdPut(ctx, natRuleInstance.GetRuleId())
+	action := p.service.NetworkNatRulesRuleIdPut(ctx, natRuleInstance.GetRuleId()).NATRuleInstance(natRuleInstance)
 	put, _, err := action.Execute()
 
 	mutex.Unlock()

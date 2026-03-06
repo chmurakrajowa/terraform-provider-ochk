@@ -331,7 +331,7 @@ func resourceAutoNatUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	Nat := mapResourceDataToAutoNat(d)
 	Nat.RuleId = NewNullableString(d.Id())
 
-	_, err := proxy.Update(ctx, &Nat)
+	_, err := proxy.Update(ctx, Nat)
 	if err != nil {
 		return diag.Errorf("error while modifying nat: %+v", err)
 	}
@@ -345,7 +345,7 @@ func resourceManualNatUpdate(ctx context.Context, d *schema.ResourceData, meta i
 	Nat := mapResourceDataToManualNat(d)
 	Nat.RuleId = NewNullableString(d.Id())
 
-	_, err := proxy.Update(ctx, &Nat)
+	_, err := proxy.Update(ctx, Nat)
 	if err != nil {
 		return diag.Errorf("error while modifying nat: %+v", err)
 	}
