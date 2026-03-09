@@ -50,7 +50,7 @@ func dataSourceKMSKeysRead(ctx context.Context, d *schema.ResourceData, meta int
 	}
 
 	if err := d.Set("kms_keys", flattenKMSKeys(kmsKeys)); err != nil {
-		return diag.Errorf("error setting ip_collections: %v", err)
+		return diag.Errorf("error setting KMS keys: %v", err)
 	}
 
 	d.SetId("kms-keys-list")
