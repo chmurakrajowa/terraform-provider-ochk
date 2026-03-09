@@ -22,6 +22,16 @@ func resourceKMSKey() *schema.Resource {
 		ReadContext:   resourceKMSKeyRead,
 		DeleteContext: resourceKMSKeyDelete,
 
+		CustomizeDiff: func(ctx context.Context, d *schema.ResourceDiff, m interface{}) error {
+			algorithmType := d.Get("algorithm").(string)
+			size := d.Get("size").(int)
+
+			if algorithmType == "AES" && size != 256 {
+				return fmt.Errorf("Size field has value: %d. In AES algorithm, the allowed size is 256", size)
+			}
+			return nil
+		},
+
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(KMSKeyRetryTimeout),
 			Delete: schema.DefaultTimeout(KMSKeyRetryTimeout),
