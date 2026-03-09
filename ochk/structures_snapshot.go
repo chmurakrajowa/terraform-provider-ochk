@@ -15,13 +15,13 @@ func flattenSnapshot(in []openapi.SnapshotInstance) []map[string]interface{} {
 
 	for _, v := range in {
 		m := make(map[string]interface{})
-		m["snapshot_id"] = v.SnapshotId
-		m["display_name"] = v.SnapshotName
-		m["virtual_machine_id"] = v.VirtualMachineId
-		m["parent_id"] = v.ParentSnapshotId
-		for i := 0; i < len(v.ChildSnapshots); i++ {
-			m["child_id"] = v.ChildSnapshots[i].SnapshotId
-			out = getChildSnap(v.ChildSnapshots)
+		m["snapshot_id"] = v.GetSnapshotId()
+		m["display_name"] = v.GetSnapshotName()
+		m["virtual_machine_id"] = v.GetVirtualMachineId()
+		m["parent_id"] = v.GetParentSnapshotId()
+		for i := 0; i < len(v.GetChildSnapshots()); i++ {
+			m["child_id"] = v.ChildSnapshots[i].GetSnapshotId()
+			out = getChildSnap(v.GetChildSnapshots())
 		}
 		out = append(out, m)
 	}
@@ -37,14 +37,14 @@ func getChildSnap(in []openapi.SnapshotInstance) []map[string]interface{} {
 
 	for _, v := range in {
 		n := make(map[string]interface{})
-		n["snapshot_id"] = v.SnapshotId
-		n["display_name"] = v.SnapshotName
-		n["virtual_machine_id"] = v.VirtualMachineId
-		n["parent_id"] = v.ParentSnapshotId
-		if len(v.ChildSnapshots) != 0 {
-			for i := 0; i < len(v.ChildSnapshots); i++ {
-				n["child_id"] = v.ChildSnapshots[i].SnapshotId
-				out = getChildSnap(v.ChildSnapshots)
+		n["snapshot_id"] = v.GetSnapshotId()
+		n["display_name"] = v.GetSnapshotName()
+		n["virtual_machine_id"] = v.GetVirtualMachineId()
+		n["parent_id"] = v.GetParentSnapshotId()
+		if len(v.GetChildSnapshots()) != 0 {
+			for i := 0; i < len(v.GetChildSnapshots()); i++ {
+				n["child_id"] = v.ChildSnapshots[i].GetSnapshotId()
+				out = getChildSnap(v.GetChildSnapshots())
 			}
 		}
 		out = append(out, n)
@@ -62,7 +62,7 @@ func flattenChildsListsFromIDs(m []openapi.SnapshotInstance) *schema.Set {
 	}
 
 	for _, v := range m {
-		s.Add(fmt.Sprint(v.SnapshotId))
+		s.Add(fmt.Sprint(v.GetSnapshotId()))
 	}
 
 	return s

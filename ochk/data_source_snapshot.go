@@ -67,28 +67,28 @@ func dataSourceSnapshotRead(ctx context.Context, d *schema.ResourceData, meta in
 		return diag.Errorf("more than one snapshot with name: %s found!", snapshotName)
 	}
 
-	d.SetId(fmt.Sprint(snapshots[0].SnapshotId))
+	d.SetId(fmt.Sprint(snapshots[0].GetSnapshotId()))
 
-	if err := d.Set("display_name", snapshots[0].SnapshotName); err != nil {
+	if err := d.Set("display_name", snapshots[0].GetSnapshotName()); err != nil {
 		return diag.Errorf("error setting display name: %+v", err)
 	}
-	if err := d.Set("virtual_machine_id", snapshots[0].VirtualMachineId); err != nil {
+	if err := d.Set("virtual_machine_id", snapshots[0].GetVirtualMachineId()); err != nil {
 		return diag.Errorf("error setting virtual_machine_id: %+v", err)
 	}
-	if err := d.Set("snapshot_description", snapshots[0].SnapshotDescription); err != nil {
+	if err := d.Set("snapshot_description", snapshots[0].GetSnapshotDescription()); err != nil {
 		return diag.Errorf("error setting snapshot_description: %+v", err)
 	}
-	if err := d.Set("snapshot_id", snapshots[0].SnapshotId); err != nil {
+	if err := d.Set("snapshot_id", snapshots[0].GetSnapshotId()); err != nil {
 		return diag.Errorf("error setting snapshot_id: %+v", err)
 	}
-	if err := d.Set("power_state", snapshots[0].PowerState); err != nil {
+	if err := d.Set("power_state", snapshots[0].GetPowerState()); err != nil {
 		return diag.Errorf("error setting power_state: %+v", err)
 	}
-	if err := d.Set("parent_id", snapshots[0].ParentSnapshotId); err != nil {
+	if err := d.Set("parent_id", snapshots[0].GetParentSnapshotId()); err != nil {
 		return diag.Errorf("error setting parent_id: %+v", err)
 	}
 	if len(snapshots[0].ChildSnapshots) > 0 { // != nil {
-		if err := d.Set("child_id", snapshots[0].ChildSnapshots[0].SnapshotId); err != nil {
+		if err := d.Set("child_id", snapshots[0].ChildSnapshots[0].GetSnapshotId()); err != nil {
 			return diag.Errorf("error setting child_id: %+v", err)
 		}
 	}
