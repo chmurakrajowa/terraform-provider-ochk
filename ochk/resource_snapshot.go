@@ -91,17 +91,17 @@ func resourceSnapshotCreate(ctx context.Context, d *schema.ResourceData, meta in
 	virtualMachineId := strfmt.UUID(d.Get("virtual_machine_id").(string))
 	ram := d.Get("ram").(bool)
 
-	//if ram {
-	//	err := d.Set("power_state", models.PowerStatePoweredOn)
-	//	if err != nil {
-	//		return nil
-	//	}
-	//} else {
-	//	err := d.Set("power_state", models.PowerStatePoweredOff)
-	//	if err != nil {
-	//		return nil
-	//	}
-	//}
+	if ram {
+		err := d.Set("power_state", openapi.POWERSTATE_POWERED_ON)
+		if err != nil {
+			return nil
+		}
+	} else {
+		err := d.Set("power_state", openapi.POWERSTATE_POWERED_OFF)
+		if err != nil {
+			return nil
+		}
+	}
 
 	snapshot := mapResourceDataToSnapshot(d)
 
@@ -128,20 +128,20 @@ func resourceSnapshotRead(ctx context.Context, d *schema.ResourceData, meta inte
 		return diag.Errorf("error while reading snpashot: %+v", err)
 	}
 
-	if err := d.Set("display_name", snapshot.SnapshotName); err != nil {
+	if err := d.Set("display_name", snapshot.GetSnapshotName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("virtual_machine_id", snapshot.VirtualMachineId); err != nil {
+	if err := d.Set("virtual_machine_id", snapshot.GetVirtualMachineId()); err != nil {
 		return diag.Errorf("error setting virtual_machine_id: %+v", err)
 	}
-	if err := d.Set("snapshot_description", snapshot.SnapshotDescription); err != nil {
+	if err := d.Set("snapshot_description", snapshot.GetSnapshotDescription()); err != nil {
 		return diag.Errorf("error setting snapshot_description: %+v", err)
 	}
-	if err := d.Set("power_state", snapshot.PowerState); err != nil {
+	if err := d.Set("power_state", snapshot.GetPowerState()); err != nil {
 		return diag.Errorf("error setting power_state: %+v", err)
 	}
-	if err := d.Set("parent_id", snapshot.ParentSnapshotId); err != nil {
+	if err := d.Set("parent_id", snapshot.GetParentSnapshotId()); err != nil {
 		return diag.Errorf("error setting parent_id: %+v", err)
 	}
 	if err := d.Set("child_id", flattenChildsListsFromIDs(snapshot.ChildSnapshots)); err != nil {
@@ -174,8 +174,9 @@ func mapResourceDataToSnapshot(d *schema.ResourceData) openapi.SnapshotInstance 
 		SnapshotDescription: NewNullableString(d.Get("snapshot_description").(string)),
 		VirtualMachineId:    NewNullableString(d.Get("virtual_machine_id").(string)),
 		PowerState:          castStringToPowerStateEnum(d.Get("power_state").(string)).Ptr(),
-		ParentSnapshotId:    NewNullableString(d.Get("parent_id").(string)),
+		ParentSnapshotId:    openapi.NullableString{},
 		ChildSnapshots:      expandChildSnapshots(d.Get("child_id").(*schema.Set).List()),
+		SnapshotId:          openapi.NullableString{},
 	}
 }
 
