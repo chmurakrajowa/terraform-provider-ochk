@@ -22,6 +22,16 @@ func resourceKMSKey() *schema.Resource {
 		ReadContext:   resourceKMSKeyRead,
 		DeleteContext: resourceKMSKeyDelete,
 
+		CustomizeDiff: func(ctx context.Context, d *schema.ResourceDiff, m interface{}) error {
+			algorithmType := d.Get("algorithm").(string)
+			size := d.Get("size").(int)
+
+			if algorithmType == "AES" && size != 256 {
+				return fmt.Errorf("Size field has value: %d. In AES algorithm, the allowed size is 256", size)
+			}
+			return nil
+		},
+
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(KMSKeyRetryTimeout),
 			Delete: schema.DefaultTimeout(KMSKeyRetryTimeout),
@@ -122,7 +132,6 @@ func resourceKMSKeyCreate(ctx context.Context, d *schema.ResourceData, meta inte
 	}
 
 	kmsKey := mapResourceDataToKeyInstance(d)
-
 	keyInstance, err := client.KMSKeys.Create(ctx, kmsKey)
 	if err != nil {
 		return diag.Errorf("error while creating KMS key: %+v", err)
@@ -151,7 +160,11 @@ func resourceKMSKeyImport(ctx context.Context, d *schema.ResourceData, meta inte
 func resourceKMSKeyRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).KMSKeys
 
-	kmsKey, err := proxy.Read(ctx, d.Id())
+	kmsKey, httpResponse, err := proxy.Read(ctx, d.Id())
+
+	if kmsKey == nil && httpResponse.StatusCode == 404 {
+		return diag.Errorf("kms Key with id %s not found: %+v Check your state file.", d.Id(), err)
+	}
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
 			id := d.Id()
@@ -187,16 +200,16 @@ func resourceKMSKeyDelete(ctx context.Context, d *schema.ResourceData, meta inte
 }
 
 func mapKMSKeyToResourceData(d *schema.ResourceData, kmsKey *openapi.KeyInstance) error {
-	if err := d.Set("display_name", kmsKey.Name); err != nil {
+	if err := d.Set("display_name", kmsKey.GetName()); err != nil {
 		return fmt.Errorf("error setting display_name: %w", err)
 	}
 	if err := d.Set("key_usage", flattenStringSlice(kmsKey.KeyUsageList)); err != nil {
 		return fmt.Errorf("error setting key_usage: %w", err)
 	}
-	if err := d.Set("algorithm", kmsKey.Algorithm); err != nil {
+	if err := d.Set("algorithm", kmsKey.GetAlgorithm()); err != nil {
 		return fmt.Errorf("error setting algorithm: %w", err)
 	}
-	if err := d.Set("size", kmsKey.Size); err != nil {
+	if err := d.Set("size", kmsKey.GetSize()); err != nil {
 		return fmt.Errorf("error setting size: %w", err)
 	}
 	if err := d.Set("activation_date", kmsKey.GetActivationDate()); err != nil {
@@ -205,22 +218,22 @@ func mapKMSKeyToResourceData(d *schema.ResourceData, kmsKey *openapi.KeyInstance
 	if err := d.Set("created_at", kmsKey.GetCreatedAt()); err != nil {
 		return fmt.Errorf("error setting created_at: %w", err)
 	}
-	if err := d.Set("default_iv", kmsKey.DefaultIV); err != nil {
+	if err := d.Set("default_iv", kmsKey.GetDefaultIV()); err != nil {
 		return fmt.Errorf("error setting default_iv: %w", err)
 	}
-	if err := d.Set("object_type", kmsKey.ObjectType); err != nil {
+	if err := d.Set("object_type", kmsKey.GetObjectType()); err != nil {
 		return fmt.Errorf("error setting object_type: %w", err)
 	}
-	if err := d.Set("revocation_reason", kmsKey.RevocationReason); err != nil {
+	if err := d.Set("revocation_reason", kmsKey.GetRevocationReason()); err != nil {
 		return fmt.Errorf("error setting revocation_reason: %w", err)
 	}
-	if err := d.Set("sha1_fingerprint", kmsKey.Sha1Fingerprint); err != nil {
+	if err := d.Set("sha1_fingerprint", kmsKey.GetSha1Fingerprint()); err != nil {
 		return fmt.Errorf("error setting sha1_fingerprint: %w", err)
 	}
-	if err := d.Set("sha256_fingerprint", kmsKey.Sha256Fingerprint); err != nil {
+	if err := d.Set("sha256_fingerprint", kmsKey.GetSha256Fingerprint()); err != nil {
 		return fmt.Errorf("error setting sha256_fingerprint: %w", err)
 	}
-	if err := d.Set("state", kmsKey.State); err != nil {
+	if err := d.Set("state", kmsKey.GetState()); err != nil {
 		return fmt.Errorf("error setting state: %w", err)
 	}
 
@@ -229,13 +242,14 @@ func mapKMSKeyToResourceData(d *schema.ResourceData, kmsKey *openapi.KeyInstance
 
 func mapResourceDataToKeyInstance(d *schema.ResourceData) openapi.KeyInstance {
 
-	sizeValue := d.Get("size").(int32)
+	sizeValueInt := d.Get("size").(int)
+	sizeValueInt32 := int32(sizeValueInt)
 	keyInstance := openapi.KeyInstance{
 		Id:           NewNullableString(d.Id()),
 		Algorithm:    NewNullableString(d.Get("algorithm").(string)),
 		KeyUsageList: transformSetToStringSlice(d.Get("key_usage").(*schema.Set)),
 		Name:         NewNullableString(d.Get("display_name").(string)),
-		Size:         &sizeValue,
+		Size:         &sizeValueInt32,
 	}
 
 	return keyInstance
