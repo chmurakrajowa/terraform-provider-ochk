@@ -39,7 +39,7 @@ func flattenManualNats(in []openapi.NATRuleInstance) []map[strfmt.UUID]interface
 			m["manual_nat_id"] = v.GetRuleId()
 			m["display_name"] = v.GetDisplayName()
 			m["action"] = v.GetAction()
-			m["enabled"] = v.GetAction()
+			m["enabled"] = v.GetEnabled()
 			m["vrf_id"] = v.GetTierZeroRouterId()
 			m["source_network"] = v.GetSourceNetwork()
 			m["destination_network"] = v.GetDestinationNetwork()
