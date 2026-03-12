@@ -63,21 +63,42 @@ func (p *SnapshotsProxy) ListSnapshots(ctx context.Context, virtualMachineID str
 	return response.SnapshotInstanceCollection, nil
 }
 
-func (p *SnapshotsProxy) Create(ctx context.Context, virtualMachineID strfmt.UUID, ram bool, snapshot openapi.SnapshotInstance) (*openapi.SnapshotInstance, error) {
+func (p *SnapshotsProxy) Create(ctx context.Context, virtualMachineID strfmt.UUID, ram bool, snapshot openapi.SnapshotInstance) (*openapi.SnapshotInstance, *http.Response, error) {
 
 	action := p.service.VcsVirtualMachinesVirtualMachineIdSnapshotsPut(ctx, string(virtualMachineID)).SnapshotInstance(snapshot).RamSnapshot(ram)
-	put, _, err := action.Execute()
+	put, httpResponse, err := action.Execute()
+
+	if httpResponse.StatusCode == 504 {
+		return nil, httpResponse, fmt.Errorf("error while creating snapshot: Timeout error. %+v", err)
+	}
 	if err != nil {
-		return nil, fmt.Errorf("error while creating snapshot: %w", err)
+		return nil, httpResponse, fmt.Errorf("error while creating snapshot: %w", err)
 	}
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating snapshot failed: %s", put.Messages)
+		return nil, httpResponse, fmt.Errorf("creating snapshot failed: %s", put.Messages)
 	}
 
-	return put.SnapshotInstance, nil
+	return put.SnapshotInstance, httpResponse, nil
 }
+
+/*func (p *SnapshotsProxy) Update(ctx context.Context, virtualMachineID strfmt.UUID, snapshotId strfmt.UUID, snapshot openapi.SnapshotInstance) (*openapi.SnapshotInstance, *http.Response, error) {
+
+	action := p.service.VcsVirtualMachinesVirtualMachineIdSnapshotsSnapshotIdPut(ctx, string(virtualMachineID), string(snapshotId)).SnapshotInstance(snapshot)
+	put, httpResponse, err := action.Execute()
+
+	if err != nil {
+		return nil, httpResponse, fmt.Errorf("error while updating snapshot: %w", err)
+	}
+	isSuccess := *put.Success
+
+	if !isSuccess {
+		return nil, httpResponse, fmt.Errorf("updating snapshot failed: %s", put.Messages)
+	}
+
+	return put.SnapshotInstance, httpResponse, nil
+}*/
 
 func (p *SnapshotsProxy) Delete(ctx context.Context, virtualMachineID strfmt.UUID, snapshotID strfmt.UUID) error {
 
