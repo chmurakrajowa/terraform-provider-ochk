@@ -52,23 +52,22 @@ func (p *KMSKeysProxy) Import(ctx context.Context, keyImport openapi.KeyImport) 
 	return post.KeyInstance, nil
 }
 
-func (p *KMSKeysProxy) Read(ctx context.Context, keyID string) (*openapi.KeyInstance, error) {
+func (p *KMSKeysProxy) Read(ctx context.Context, keyID string) (*openapi.KeyInstance, *http.Response, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
 	action := p.service.KmsKeyIdGet(ctx, keyID)
-	response, _, err := action.Execute()
+	response, httpResponse, err := action.Execute()
 	mutex.Unlock()
-
 	if err != nil {
-		return nil, fmt.Errorf("error while reading KMS key: %w", err)
+		return nil, httpResponse, fmt.Errorf("error while reading KMS key: %w", err)
 	}
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving KMS key failed: %s", response.Messages)
+		return nil, httpResponse, fmt.Errorf("retrieving KMS key failed: %s", response.Messages)
 	}
 
-	return response.KeyInstance, nil
+	return response.KeyInstance, httpResponse, nil
 }
 
 func (p *KMSKeysProxy) ListByDisplayName(ctx context.Context, displayName string) ([]openapi.KeyInstance, error) {
