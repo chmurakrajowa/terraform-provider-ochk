@@ -63,9 +63,10 @@ func dataSourceSnapshotRead(ctx context.Context, d *schema.ResourceData, meta in
 		return diag.Errorf("no snapshot for name: %s", snapshotName)
 	}
 
-	if len(snapshots) > 1 {
-		return diag.Errorf("more than one snapshot with name: %s found!", snapshotName)
-	}
+	//if len(snapshots) > 1 {
+	//
+	//	return diag.Errorf("more than one snapshot with name: %s found!", snapshotName)
+	//}
 
 	d.SetId(fmt.Sprint(snapshots[0].GetSnapshotId()))
 
