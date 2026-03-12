@@ -27,3 +27,4 @@ The following arguments are supported:
 * `ram` - Taking a snapshot with or without the ram
 * `snapshot_description` - The short description of the snapshot
 
+It is not possible to modify the snapshot
