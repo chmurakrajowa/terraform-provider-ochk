@@ -11,12 +11,12 @@ func flattenFloatingIPVmsList(in []openapi.PortFwdVm) []map[strfmt.UUID]interfac
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["virtual_machine_id"] = v.VirtualMachineId
-		m["virtual_machine_name"] = v.VirtualMachineName
-		m["osc_port_id"] = v.OscPortId
-		m["ip_address"] = v.IpAddress
-		m["mac_address"] = v.MacAddress
-		m["network_name"] = v.NetworkName
+		m["virtual_machine_id"] = v.GetVirtualMachineId()
+		m["virtual_machine_name"] = v.GetVirtualMachineName()
+		m["osc_port_id"] = v.GetOscPortId()
+		m["ip_address"] = v.GetIpAddress()
+		m["mac_address"] = v.GetMacAddress()
+		m["network_name"] = v.GetNetworkName()
 		out = append(out, m)
 	}
 	return out
