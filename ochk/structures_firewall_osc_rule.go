@@ -15,8 +15,8 @@ func flattenFirewallRulesLists(in []openapi.FirewallRule) []map[strfmt.UUID]inte
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["rule_id"] = v.RuleId
-		m["name"] = v.Name
+		m["rule_id"] = v.GetRuleId()
+		m["name"] = v.GetName()
 		out = append(out, m)
 	}
 	return out

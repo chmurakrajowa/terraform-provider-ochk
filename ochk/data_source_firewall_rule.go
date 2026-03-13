@@ -112,49 +112,49 @@ func dataSourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("more than one firewall ew rule with display_name: %s found!", name)
 	}
 
-	if err := d.Set("display_name", firewallRule[0].Name); err != nil {
+	if err := d.Set("display_name", firewallRule[0].GetName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("ether_type", firewallRule[0].EtherType); err != nil {
+	if err := d.Set("ether_type", firewallRule[0].GetEtherType()); err != nil {
 		return diag.Errorf("error setting ether_type: %+v", err)
 	}
 
-	if err := d.Set("description", firewallRule[0].Description); err != nil {
+	if err := d.Set("description", firewallRule[0].GetDescription()); err != nil {
 		return diag.Errorf("error setting description: %+v", err)
 	}
 
-	if err := d.Set("direction", firewallRule[0].Direction); err != nil {
+	if err := d.Set("direction", firewallRule[0].GetDirection()); err != nil {
 		return diag.Errorf("error setting direction: %+v", err)
 	}
 
-	if err := d.Set("ether_type", firewallRule[0].EtherType); err != nil {
+	if err := d.Set("ether_type", firewallRule[0].GetEtherType()); err != nil {
 		return diag.Errorf("error setting ether_type: %+v", err)
 	}
 
-	// jezeli jest port domyslny czyli wsztskie porty są dopuszczone to API nie zwraca Port_Range_Min , stąd int32 mapuje null'a na 0
-	if err := d.Set("port_range_min", firewallRule[0].PortRangeMin); err != nil {
+	// jezeli jest port domyslny czyli wszystkie porty są dopuszczone to API nie zwraca Port_Range_Min , stąd int32 mapuje null'a na 0
+	if err := d.Set("port_range_min", firewallRule[0].GetPortRangeMin()); err != nil {
 		return diag.Errorf("error setting port_range_min: %+v", err)
 	}
 	// jezeli jest port domyslny czyli wsztskie porty są dopuszczone to API nie zwraca Port_Range_Max, stąd int32 mapuje null'a na 0
 
-	if err := d.Set("port_range_max", firewallRule[0].PortRangeMax); err != nil {
+	if err := d.Set("port_range_max", firewallRule[0].GetPortRangeMax()); err != nil {
 		return diag.Errorf("error setting port_range_max: %+v", err)
 	}
 
-	if err := d.Set("protocol", firewallRule[0].Protocol); err != nil {
+	if err := d.Set("protocol", firewallRule[0].GetProtocol()); err != nil {
 		return diag.Errorf("error setting protocol: %+v", err)
 	}
 
-	if err := d.Set("remote_ip_prefix", firewallRule[0].RemoteIpPrefix); err != nil {
+	if err := d.Set("remote_ip_prefix", firewallRule[0].GetRemoteIpPrefix()); err != nil {
 		return diag.Errorf("error setting remote_ip_prefix: %+v", err)
 	}
 
-	if err := d.Set("remote_ip_prefix", firewallRule[0].RemoteIpPrefix); err != nil {
+	if err := d.Set("remote_ip_prefix", firewallRule[0].GetRemoteIpPrefix()); err != nil {
 		return diag.Errorf("error setting remote_ip_prefix: %+v", err)
 	}
 
-	if err := d.Set("rule_id", firewallRule[0].RuleId); err != nil {
+	if err := d.Set("rule_id", firewallRule[0].GetRuleId()); err != nil {
 		return diag.Errorf("error setting rule_id: %+v", err)
 	}
 
@@ -162,7 +162,7 @@ func dataSourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting dest_security_group: %+v", err)
 	}
 
-	if err := d.Set("created_by", firewallRule[0].CreatedBy.DisplayName); err != nil {
+	if err := d.Set("created_by", firewallRule[0].CreatedBy.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
@@ -170,7 +170,7 @@ func dataSourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", firewallRule[0].ModifiedBy.DisplayName); err != nil {
+	if err := d.Set("modified_by", firewallRule[0].ModifiedBy.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
