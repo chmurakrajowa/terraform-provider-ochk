@@ -99,51 +99,51 @@ func dataSourcePortForwardingRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("more than one firewall ew rule with display_name: %s found!", name)
 	}
 
-	if err := d.Set("display_name", portForwarding[0].Name); err != nil {
+	if err := d.Set("display_name", portForwarding[0].GetName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("description", portForwarding[0].Description); err != nil {
+	if err := d.Set("description", portForwarding[0].GetDescription()); err != nil {
 		return diag.Errorf("error setting description: %+v", err)
 	}
 
-	if err := d.Set("port_forwarding_id", portForwarding[0].PortForwardingId); err != nil {
+	if err := d.Set("port_forwarding_id", portForwarding[0].GetPortForwardingId()); err != nil {
 		return diag.Errorf("error setting port_forwarding_id: %+v", err)
 	}
 
-	if err := d.Set("public_address", portForwarding[0].PublicAddress); err != nil {
+	if err := d.Set("public_address", portForwarding[0].GetPublicAddress()); err != nil {
 		return diag.Errorf("error setting public_address: %+v", err)
 	}
 
-	if err := d.Set("external_port", portForwarding[0].ExternalPort); err != nil {
+	if err := d.Set("external_port", portForwarding[0].GetExternalPort()); err != nil {
 		return diag.Errorf("error setting external_port: %+v", err)
 	}
 
-	if err := d.Set("external_port_range", portForwarding[0].ExternalPortRange); err != nil {
+	if err := d.Set("external_port_range", portForwarding[0].GetExternalPortRange()); err != nil {
 		return diag.Errorf("error setting external_port_range: %+v", err)
 	}
 
-	if err := d.Set("internal_port", portForwarding[0].InternalPort); err != nil {
+	if err := d.Set("internal_port", portForwarding[0].GetInternalPort()); err != nil {
 		return diag.Errorf("error setting internal_port: %+v", err)
 	}
 
-	if err := d.Set("internal_ip_address", portForwarding[0].InternalIpAddress); err != nil {
+	if err := d.Set("internal_ip_address", portForwarding[0].GetInternalIpAddress()); err != nil {
 		return diag.Errorf("error setting internal_ip_address: %+v", err)
 	}
 
-	if err := d.Set("internal_port_id", portForwarding[0].InternalPortId); err != nil {
+	if err := d.Set("internal_port_id", portForwarding[0].GetInternalPortId()); err != nil {
 		return diag.Errorf("error setting internal_port_id: %+v", err)
 	}
 
-	if err := d.Set("internal_port_range", portForwarding[0].InternalPortRange); err != nil {
+	if err := d.Set("internal_port_range", portForwarding[0].GetInternalPortRange()); err != nil {
 		return diag.Errorf("error setting internal_port_range: %+v", err)
 	}
 
-	if err := d.Set("protocol", portForwarding[0].Protocol); err != nil {
+	if err := d.Set("protocol", portForwarding[0].GetProtocol()); err != nil {
 		return diag.Errorf("error setting protocol: %+v", err)
 	}
 
-	if err := d.Set("created_by", portForwarding[0].CreatedBy); err != nil {
+	if err := d.Set("created_by", portForwarding[0].GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
@@ -151,7 +151,7 @@ func dataSourcePortForwardingRead(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", portForwarding[0].ModifiedBy); err != nil {
+	if err := d.Set("modified_by", portForwarding[0].GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 

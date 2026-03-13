@@ -14,10 +14,10 @@ func flattenPortsForwardingLists(in []openapi.PortForwarding) []map[strfmt.UUID]
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["port_forwarding_id"] = v.PortForwardingId
-		m["display_name"] = v.Name
-		m["floating_ip_id"] = v.FloatingIpId
-		m["internal_port_id"] = v.InternalPortId
+		m["port_forwarding_id"] = v.GetPortForwardingId()
+		m["display_name"] = v.GetName()
+		m["floating_ip_id"] = v.GetFloatingIpId()
+		m["internal_port_id"] = v.GetInternalPortId()
 		out = append(out, m)
 	}
 	return out
