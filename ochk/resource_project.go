@@ -153,6 +153,10 @@ func mapProjectToResourceData(d *schema.ResourceData, project openapi.ProjectIns
 	if err := d.Set("vcpu_reserved_quantity", project.GetCpuReserved()); err != nil {
 		return fmt.Errorf("error setting vcpu_reserved_quantity: %w", err)
 	}
+
+	if err := d.Set("account_id", project.GetAccountId()); err != nil {
+		return fmt.Errorf("error setting account_id: %w", err)
+	}
 	return nil
 }
 

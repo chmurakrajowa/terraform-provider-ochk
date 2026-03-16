@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
+	"io"
 
 	"net/http"
 	"sync"
@@ -19,15 +20,21 @@ func (p *ProjectsProxy) Create(ctx context.Context, project openapi.ProjectInsta
 	mutex := sync.Mutex{}
 	mutex.Lock()
 	action := p.service.ProjectsPut(ctx).ProjectInstance(project)
-	put, _, err := action.Execute()
+	put, resp, err := action.Execute()
 
+	if resp != nil {
+		bodyBytes, _ := io.ReadAll(resp.Body)
+		if resp.StatusCode == 400 {
+			return nil, fmt.Errorf("error while creating project: %s", string(bodyBytes))
+		}
+	}
 	mutex.Unlock()
 	if err != nil {
 		return nil, fmt.Errorf("error while creating project: %w", err)
 	}
-	isSuccess := *put.Success
 
-	if !isSuccess {
+	isSuccess := put.Success
+	if !*isSuccess {
 		return nil, fmt.Errorf("creating project failed: %s", put.Messages)
 	}
 
