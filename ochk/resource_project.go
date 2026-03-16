@@ -195,18 +195,16 @@ func resourceProjectDelete(ctx context.Context, d *schema.ResourceData, meta int
 }
 
 func mapResourceDataToProject(d *schema.ResourceData, platformType openapi.PlatformType) openapi.ProjectInstance {
-	//var factor int64 = 1
-	//if platformType == "OPENSTACK" {
-	//	factor = 1024
-	//}
-	MemoryReservedSizeMBValue := int64(d.Get("memory_reserved_size_mb").(int))
-
+	var factor int64 = 1
+	if platformType == "OPENSTACK" {
+		factor = 1 // fix in PCK-4431 for project in Openstack we need to multiply size by 1024, temporary stay with this multiplication
+	}
+	MemoryReservedSizeMBValue := int64(d.Get("memory_reserved_size_mb").(int)) * factor
 	StorageReservedSizeGBValue := int64(d.Get("storage_reserved_size_gb").(int))
 	CpuReservedValue := int64(d.Get("vcpu_reserved_quantity").(int))
 	LimitEnabledValue := d.Get("limits_enabled").(bool)
 	return openapi.ProjectInstance{
-		Description: NewNullableString(d.Get("description").(string)),
-		//MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)) * factor,
+		Description:           NewNullableString(d.Get("description").(string)),
 		MemoryReservedSizeMB:  &MemoryReservedSizeMBValue,
 		Name:                  NewNullableString(d.Get("display_name").(string)),
 		StorageReservedSizeGB: &StorageReservedSizeGBValue,
