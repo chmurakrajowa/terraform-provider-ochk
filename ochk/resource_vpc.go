@@ -204,11 +204,12 @@ func resourceVpcDelete(ctx context.Context, d *schema.ResourceData, meta interfa
 
 func mapResourceDataToVpc(d *schema.ResourceData, platformType openapi.PlatformType) (openapi.RouterInstance, diag.Diagnostics) {
 	if platformType == openapi.PLATFORMTYPE_OPENSTACK {
+		autoNatEnabledValue := NewNullableBool(d.Get("autonat_enabled").(bool))
 		return openapi.RouterInstance{
 			DisplayName: NewNullableString(d.Get("display_name").(string)),
 			ParentT0Id:  NewNullableString(d.Get("vrf_id").(string)),
 			ProjectId:   NewNullableString(d.Get("project_id").(string)),
-			SnatEnabled: d.Get("autonat_enabled").(*bool),
+			SnatEnabled: autoNatEnabledValue.Get(),
 			FolderPath:  NewNullableString(d.Get("folder_path").(string)),
 		}, nil
 	} else {
