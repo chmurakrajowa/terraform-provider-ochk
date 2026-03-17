@@ -81,6 +81,11 @@ func expandSecurityGroupMembers(in []interface{}, platformType openapi.PlatformT
 			} else if *member.MemberType == "GROUP" {
 				return nil, diag.Errorf("error while expand security group:'' %+v", GROUP), "GROUP"
 			}
+
+			if !contains([]string{string(VIRTUAL_MACHINE)}, string(memberTypeValue)) {
+				return nil, diag.Errorf("error while expand security group:'' %+v", VIRTUAL_MACHINE),
+					"Available MemberType: " + string(VIRTUAL_MACHINE)
+			}
 		}
 
 		if platformType == "VMWARE" {
