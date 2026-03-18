@@ -160,7 +160,7 @@ func resourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf(E3006, err)
 	}
 
-	if err := d.Set("display_name", firewallRule.Name); err != nil {
+	if err := d.Set("display_name", firewallRule.GetName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
@@ -172,45 +172,45 @@ func resourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting security_group_id: %+v", err)
 	}
 
-	if err := d.Set("rule_id", firewallRule.RuleId); err != nil {
+	if err := d.Set("rule_id", firewallRule.GetRuleId()); err != nil {
 		return diag.Errorf("error setting rule_id: %+v", err)
 	}
 
-	if err := d.Set("direction", firewallRule.Direction); err != nil {
+	if err := d.Set("direction", firewallRule.GetDirection()); err != nil {
 		return diag.Errorf("error setting direction: %+v", err)
 	}
 
-	if err := d.Set("description", firewallRule.Description); err != nil {
+	if err := d.Set("description", firewallRule.GetDescription()); err != nil {
 		return diag.Errorf("error setting description: %+v", err)
 	}
 
-	if err := d.Set("ether_type", firewallRule.EtherType); err != nil {
+	if err := d.Set("ether_type", firewallRule.GetEtherType()); err != nil {
 		return diag.Errorf("error setting ether_type: %+v", err)
 	}
 
-	if err := d.Set("protocol", firewallRule.Protocol); err != nil {
+	if err := d.Set("protocol", firewallRule.GetProtocol()); err != nil {
 		return diag.Errorf("error setting protocol: %+v", err)
 	}
 
-	if err := d.Set("port_range_min", firewallRule.PortRangeMin); err != nil {
+	if err := d.Set("port_range_min", firewallRule.GetPortRangeMin()); err != nil {
 		return diag.Errorf("error setting port_range_min: %+v", err)
 	}
 
-	if err := d.Set("port_range_max", firewallRule.PortRangeMax); err != nil {
+	if err := d.Set("port_range_max", firewallRule.GetPortRangeMax()); err != nil {
 		return diag.Errorf("error setting port_range_max: %+v", err)
 	}
 
-	if err := d.Set("remote_ip_prefix", firewallRule.RemoteIpPrefix); err != nil {
+	if err := d.Set("remote_ip_prefix", firewallRule.GetRemoteIpPrefix()); err != nil {
 		return diag.Errorf("error setting remote_ip_prefix: %+v", err)
 	}
 
 	if firewallRule.SecurityGroup != nil {
-		if err := d.Set("dest_security_group", firewallRule.SecurityGroup.Id); err != nil {
+		if err := d.Set("dest_security_group", firewallRule.SecurityGroup.GetId()); err != nil {
 			return diag.Errorf("error setting dest_security_group: %+v", err)
 		}
 	}
 
-	if err := d.Set("created_by", firewallRule.CreatedBy.DisplayName); err != nil {
+	if err := d.Set("created_by", firewallRule.CreatedBy.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
@@ -218,7 +218,7 @@ func resourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", firewallRule.ModifiedBy.DisplayName); err != nil {
+	if err := d.Set("modified_by", firewallRule.ModifiedBy.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
@@ -267,9 +267,9 @@ func castStringToEtherTypeEnum(e string) *openapi.EtherType {
 
 func castStringToDirectionEnum(e string) *openapi.Direction1 {
 	switch e {
-	case "IPv4":
+	case "INGRESS":
 		return &openapi.AllowedDirection1EnumValues[0]
-	case "IPv6":
+	case "EGRESS":
 		return &openapi.AllowedDirection1EnumValues[1]
 	default:
 		return nil
@@ -326,6 +326,9 @@ func mapResourceDataToRule(d *schema.ResourceData) (openapi.FirewallRule, diag.D
 		return rule, diag.Errorf(E3004, "[dest_security_group, remote_ip_prefix]")
 	}
 
+	portRangeMaxValue := d.Get("port_range_max").(int)
+	portRangeMinValue := d.Get("port_range_min").(int)
+
 	if d.Get("dest_security_group").(string) != "" {
 		rule := openapi.FirewallRule{
 			Name:              NewNullableString(d.Get("display_name").(string)),
@@ -334,8 +337,8 @@ func mapResourceDataToRule(d *schema.ResourceData) (openapi.FirewallRule, diag.D
 			EtherType:         castStringToEtherTypeEnum(d.Get("ether_type").(string)),
 			Direction:         castStringToDirectionEnum(d.Get("direction").(string)),
 			Protocol:          ParseProtocol(d.Get("protocol").(string)),
-			PortRangeMax:      NewNullableInt64(d.Get("port_range_max").(int64)),
-			PortRangeMin:      NewNullableInt64(d.Get("port_range_min").(int64)),
+			PortRangeMax:      NewNullableInt64(int64(portRangeMaxValue)),
+			PortRangeMin:      NewNullableInt64(int64(portRangeMinValue)),
 			SecurityGroup:     expandSecurityGroup(d.Get("dest_security_group").(string)),
 		}
 		return rule, nil
@@ -347,8 +350,8 @@ func mapResourceDataToRule(d *schema.ResourceData) (openapi.FirewallRule, diag.D
 			EtherType:         castStringToEtherTypeEnum(d.Get("ether_type").(string)),
 			Direction:         castStringToDirectionEnum(d.Get("direction").(string)),
 			Protocol:          ParseProtocol(d.Get("protocol").(string)),
-			PortRangeMax:      NewNullableInt64(d.Get("port_range_max").(int64)),
-			PortRangeMin:      NewNullableInt64(d.Get("port_range_min").(int64)),
+			PortRangeMax:      NewNullableInt64(int64(portRangeMaxValue)),
+			PortRangeMin:      NewNullableInt64(int64(portRangeMinValue)),
 			RemoteIpPrefix:    NewNullableString(d.Get("remote_ip_prefix").(string)),
 		}
 		return rule, nil
