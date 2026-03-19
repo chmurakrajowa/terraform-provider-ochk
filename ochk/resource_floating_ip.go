@@ -97,23 +97,23 @@ func resourceFloatingIpRead(ctx context.Context, d *schema.ResourceData, meta in
 		return diag.Errorf("error while reading floating ip: %+v", err)
 	}
 
-	if err := d.Set("display_name", floating_ip.Name); err != nil {
+	if err := d.Set("display_name", floating_ip.GetName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("description", floating_ip.Description); err != nil {
+	if err := d.Set("description", floating_ip.GetDescription()); err != nil {
 		return diag.Errorf("error setting description: %+v", err)
 	}
 
-	if err := d.Set("vm_name", floating_ip.VmName); err != nil {
+	if err := d.Set("vm_name", floating_ip.GetVmName()); err != nil {
 		return diag.Errorf("error setting vm_name: %+v", err)
 	}
 
-	if err := d.Set("vm_port_id", floating_ip.VmPortId); err != nil {
+	if err := d.Set("vm_port_id", floating_ip.GetVmPortId()); err != nil {
 		return diag.Errorf("error setting vm_port_id: %+v", err)
 	}
 
-	if err := d.Set("vm_fixed_ip", floating_ip.VmFixedIp); err != nil {
+	if err := d.Set("vm_fixed_ip", floating_ip.GetVmFixedIp()); err != nil {
 		return diag.Errorf("error setting vm_fixed_ip: %+v", err)
 	}
 
