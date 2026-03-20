@@ -18,6 +18,13 @@ func flattenPortsForwardingLists(in []openapi.PortForwarding) []map[strfmt.UUID]
 		m["display_name"] = v.GetName()
 		m["floating_ip_id"] = v.GetFloatingIpId()
 		m["internal_port_id"] = v.GetInternalPortId()
+		m["description"] = v.GetDescription()
+		m["internal_ip_address"] = v.GetInternalIpAddress()
+		m["internal_port"] = v.GetInternalPort()
+		m["internal_port_range"] = v.GetInternalPortRange()
+		m["external_port"] = v.GetExternalPort()
+		m["external_port_range"] = v.GetExternalPortRange()
+		m["protocol"] = v.GetProtocol()
 		out = append(out, m)
 	}
 	return out
