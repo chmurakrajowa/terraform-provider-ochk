@@ -32,5 +32,6 @@ The following arguments are supported:
   
 ## Attribute Reference
 
-No additional attributes are exported. 
- 
+No additional attributes are exported.
+
+Attention! The TF user has permissions to the project created at the TF level. If you want to use the project in GUI level, you must add appropriate permissions to other users in GUI.
