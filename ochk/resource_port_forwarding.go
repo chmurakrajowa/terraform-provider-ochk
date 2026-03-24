@@ -215,7 +215,9 @@ func resourcePortForwardingUpdate(ctx context.Context, d *schema.ResourceData, m
 
 	floatingIpId := strfmt.UUID(d.Get("floating_ip_id").(string))
 	portForwarding := mapResourceDataToPortForwarding(d)
-	*portForwarding.PortForwardingId = d.Id()
+
+	idValue := d.Id()
+	portForwarding.PortForwardingId = &idValue
 
 	_, err := proxy.Update(ctx, floatingIpId, portForwarding)
 	if err != nil {
@@ -232,19 +234,32 @@ func mapResourceDataToPortForwarding(d *schema.ResourceData) openapi.PortForward
 
 	externalPort := d.Get("external_port").(int)
 	externalPortValue := int32(externalPort)
-	portForwarding := openapi.PortForwarding{
-		Name:              NewNullableString(d.Get("display_name").(string)),
-		Description:       NewNullableString(d.Get("description").(string)),
-		Protocol:          NewNullableString(d.Get("protocol").(string)),
-		InternalPortId:    &internalPortIdValue,
-		InternalIpAddress: NewNullableString(d.Get("internal_ip_address").(string)),
-		InternalPort:      NewNullableInt32(internalPortValue),
-		InternalPortRange: NewNullableString(d.Get("internal_port_range").(string)),
-		PublicAddress:     NewNullableString(d.Get("public_address").(string)),
-		ExternalPort:      NewNullableInt32(externalPortValue),
-		ExternalPortRange: NewNullableString(d.Get("external_port_range").(string)),
+	portForwarding := openapi.PortForwarding{}
+	if internalPortValue == 0 || externalPortValue == 0 {
+		portForwarding = openapi.PortForwarding{
+			Name:              NewNullableString(d.Get("display_name").(string)),
+			Description:       NewNullableString(d.Get("description").(string)),
+			Protocol:          NewNullableString(d.Get("protocol").(string)),
+			InternalPortId:    &internalPortIdValue,
+			InternalIpAddress: NewNullableString(d.Get("internal_ip_address").(string)),
+			InternalPortRange: NewNullableString(d.Get("internal_port_range").(string)),
+			PublicAddress:     NewNullableString(d.Get("public_address").(string)),
+			ExternalPortRange: NewNullableString(d.Get("external_port_range").(string)),
+		}
+	} else {
+		portForwarding = openapi.PortForwarding{
+			Name:              NewNullableString(d.Get("display_name").(string)),
+			Description:       NewNullableString(d.Get("description").(string)),
+			Protocol:          NewNullableString(d.Get("protocol").(string)),
+			InternalPortId:    &internalPortIdValue,
+			InternalIpAddress: NewNullableString(d.Get("internal_ip_address").(string)),
+			InternalPort:      NewNullableInt32(internalPortValue),
+			InternalPortRange: NewNullableString(d.Get("internal_port_range").(string)),
+			PublicAddress:     NewNullableString(d.Get("public_address").(string)),
+			ExternalPort:      NewNullableInt32(externalPortValue),
+			ExternalPortRange: NewNullableString(d.Get("external_port_range").(string)),
+		}
 	}
-
 	return portForwarding
 }
 
