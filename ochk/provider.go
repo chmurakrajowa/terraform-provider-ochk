@@ -122,6 +122,7 @@ func Provider() *schema.Provider {
 			"ochk_billing_account":     resourceBillingAccount(),
 			"ochk_floating_ip_address": resourceFloatingIp(),
 			"ochk_port_forwarding":     resourcePortForwarding(),
+			"ochk_public_ip_address":   resourcePublicIp(),
 		},
 		ConfigureContextFunc: func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 			client, err := sdk.NewClient(

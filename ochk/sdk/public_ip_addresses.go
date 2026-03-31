@@ -6,7 +6,6 @@ import (
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"net/http"
 	"sync"
-	"time"
 )
 
 type PublicIPAddressProxy struct {
@@ -92,7 +91,7 @@ func (p *PublicIPAddressProxy) ListByIp(ctx context.Context, ipAddress string) (
 	return response.PublicIpAllocationCollection, nil
 }
 
-func (p *PublicIPAddressProxy) Create(ctx context.Context, publicIPAllocation openapi.PublicIpAllocation, timeout time.Duration) (*openapi.RequestInstance, error) {
+func (p *PublicIPAddressProxy) Create(ctx context.Context, publicIPAllocation openapi.PublicIpAllocation) (*openapi.PublicIpAllocation, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
 	action := p.service.IpamIpaddressPublicAllocationPut(ctx).PublicIpAllocation(publicIPAllocation)
@@ -108,10 +107,10 @@ func (p *PublicIPAddressProxy) Create(ctx context.Context, publicIPAllocation op
 		return nil, fmt.Errorf("creating public ip allocation failed: %s", put.Messages)
 	}
 
-	return put.RequestInstance, nil
+	return put.PublicIpAllocation, nil
 }
 
-func (p *PublicIPAddressProxy) Update(ctx context.Context, publicIPAllocation openapi.PublicIpAllocation) (*openapi.RequestInstance, error) {
+func (p *PublicIPAddressProxy) Update(ctx context.Context, publicIPAllocation openapi.PublicIpAllocation) (*openapi.PublicIpAllocation, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
@@ -128,22 +127,44 @@ func (p *PublicIPAddressProxy) Update(ctx context.Context, publicIPAllocation op
 		return nil, fmt.Errorf("modifying public ip allocation failed: %s", put.Messages)
 	}
 
-	return put.RequestInstance, nil
+	return put.PublicIpAllocation, nil
 }
 
-func (p *PublicIPAddressProxy) Delete(ctx context.Context, publicIPAllocationID int32) (*openapi.RequestInstance, error) {
+func (p *PublicIPAddressProxy) Delete(ctx context.Context, publicIPAllocationID int32) error {
 
 	action := p.service.IpamIpaddressPublicAllocationAllocationIdDelete(ctx, publicIPAllocationID)
 	response, _, err := action.Execute()
 
 	if err != nil {
-		return nil, fmt.Errorf("error while deleting public ip allocation: %w", err)
+		return fmt.Errorf("error while deleting public ip allocation: %w", err)
 	}
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("deleting public ip allocation failed: %s", response.Messages)
+		return fmt.Errorf("deleting public ip allocation failed: %s", response.Messages)
 	}
 
-	return response.RequestInstance, nil
+	return nil
+}
+
+func (p *PublicIPAddressProxy) Read(ctx context.Context, publicIPAllocationID int32) (*openapi.PublicIpAllocation, error) {
+	mutex := sync.Mutex{}
+	mutex.Lock()
+	action := p.service.IpamIpaddressPublicAllocationAllocationIdGet(ctx, publicIPAllocationID)
+	response, _, err := action.Execute()
+	mutex.Unlock()
+
+	if err != nil {
+		return nil, fmt.Errorf("error while reading public ip adresses: %w", err)
+	}
+	isSuccess := *response.Success
+
+	if !isSuccess {
+		return nil, fmt.Errorf("retrieving public ip adress: failed: %s", response.Messages)
+	}
+	if response.PublicIpAllocation != nil {
+		return response.PublicIpAllocation, nil
+	} else {
+		return nil, nil
+	}
 }
