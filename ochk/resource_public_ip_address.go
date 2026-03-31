@@ -101,8 +101,14 @@ func resourcePublicIpDelete(ctx context.Context, d *schema.ResourceData, meta in
 }
 
 func mapResourceDataToPublicIp(d *schema.ResourceData, platformType openapi.PlatformType) openapi.PublicIpAllocation {
+	PublicIpAddressValue := d.Get("ip_address").(string)
+	IpAddressValue := d.Get("public_ip_address_id").(string)
+	PublicIpAddress := openapi.PublicIpAddress{}
+	PublicIpAddress.IpAddressId = NewNullableString(IpAddressValue)
+	PublicIpAddress.IpAddress = NewNullableString(PublicIpAddressValue)
+
 	return openapi.PublicIpAllocation{
-		//PublicIpAddress:   d.Get("ip_address").(string),
-		Name: NewNullableString(d.Get("display_name").(string)),
+		PublicIpAddress: &PublicIpAddress,
+		Name:            NewNullableString(d.Get("display_name").(string)),
 	}
 }
