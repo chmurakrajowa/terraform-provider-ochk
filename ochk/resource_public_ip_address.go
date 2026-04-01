@@ -2,6 +2,7 @@ package ochk
 
 import (
 	"context"
+	"fmt"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"strconv"
@@ -34,17 +35,25 @@ func resourcePublicIp() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
-			"public_ip_address_id": {
-				Type:     schema.TypeString,
+			"allocation_id": {
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
-			"ip_address": {
+			"public_address_ip": {
 				Type:     schema.TypeString,
-				Computed: true,
+				Required: true,
+			},
+			"public_address_ip_id": {
+				Type:     schema.TypeString,
+				Required: true,
 			},
 			"display_name": {
 				Type:     schema.TypeString,
 				Required: true,
+			},
+			"description": {
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 		},
 	}
@@ -64,8 +73,8 @@ func resourcePublicIpCreate(ctx context.Context, d *schema.ResourceData, meta in
 	if err != nil {
 		return diag.Errorf("error while creating public ip address: %+v", err)
 	}
-	allocation_id_value := (string)(created.GetAllocationId())
-	d.SetId(allocation_id_value)
+
+	d.SetId(fmt.Sprint(created.GetAllocationId()))
 	return resourcePublicIpRead(ctx, d, meta)
 }
 
@@ -89,9 +98,21 @@ func resourcePublicIpRead(ctx context.Context, d *schema.ResourceData, meta inte
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("ip_address", public_ip.GetPublicIpAddress().IpAddress); err != nil {
+	if err := d.Set("description", public_ip.GetDescription()); err != nil {
 		return diag.Errorf("error setting description: %+v", err)
 	}
+
+	if err := d.Set("allocation_id", public_ip.GetAllocationId()); err != nil {
+		return diag.Errorf("error setting allocation_id: %+v", err)
+	}
+
+	//if err := d.Set("public_address_ip", public_ip.PublicIpAddress.GetIpAddress()); err != nil {
+	//	return diag.Errorf("error setting public_address_ip: %+v", err)
+	//}
+	//
+	//if err := d.Set("public_address_ip_id", public_ip.PublicIpAddress.GetIpAddressId()); err != nil {
+	//	return diag.Errorf("error setting public_address_ip_id: %+v", err)
+	//}
 
 	return nil
 }
@@ -135,18 +156,21 @@ func resourcePublicIpDelete(ctx context.Context, d *schema.ResourceData, meta in
 }
 
 func mapResourceDataToPublicIp(d *schema.ResourceData) openapi.PublicIpAllocation {
-	PublicIpAddressValue := d.Get("ip_address").(string)
-	IpAddressValue := d.Get("public_ip_address_id").(string)
+	PublicIpAddressValue := d.Get("public_address_ip").(string)
+	IpAddressValue := d.Get("public_address_ip_id").(string)
 	PublicIpAddress := openapi.PublicIpAddress{}
 	PublicIpAddress.IpAddressId = NewNullableString(IpAddressValue)
 	PublicIpAddress.IpAddress = NewNullableString(PublicIpAddressValue)
 
-	id_v, _ := strconv.Atoi(d.Get("public_ip_address_id").(string))
+	id_v, _ := d.Get("allocation_id").(int)
 	id_value := (int32)(id_v)
 
 	return openapi.PublicIpAllocation{
 		AllocationId:    &id_value,
 		PublicIpAddress: &PublicIpAddress,
 		Name:            NewNullableString(d.Get("display_name").(string)),
+		Description:     NewNullableString(d.Get("description").(string)),
+		ServiceList:     []openapi.IPAMServiceInstance{},
+		//Services:        openapi.NullableString{},
 	}
 }

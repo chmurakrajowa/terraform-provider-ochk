@@ -1,0 +1,3 @@
+1. Dodanie pola autonat_enable do Resource VPC aby można było włącząc internet dla Router'a dla Openstacka.
+2. Zignorowanie pola autonat_enable w Resource VPC dla platformy VMWARE. Włączanie internetu w VMWARE realizowane jest na Segmencie
+3. Rozszerzenie data_source Deployment oraz Deployments o pole depoloyment_category
