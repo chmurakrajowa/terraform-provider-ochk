@@ -7,6 +7,7 @@ import (
 	openapi "github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/runtime/logger"
+	"log"
 	"net/http"
 	"sync"
 	"time"
@@ -36,6 +37,7 @@ type Client struct {
 	PortForwarding      PortsForwardingProxy
 	Folders             FoldersProxy
 	PublicIPAddresses   PublicIPAddressProxy
+	AvailablePublicIp   AvailablePublicIpProxy
 	Snapshots           SnapshotsProxy
 	Accounts            AccountsProxy
 	PlatformType        PlatformTypeProxy
@@ -57,7 +59,7 @@ var HOST = ""
 const (
 	// DefaultHost is the default Host
 	// found in Meta (info) section of spec file
-	DefaultHost string = "localhost"
+	//DefaultHost string = "localhost" // set if provider is run locally build from code
 	// DefaultBasePath is the default BasePath
 	// found in Meta (info) section of spec file
 	DefaultBasePath string = "/"
@@ -126,13 +128,25 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 
 	configuration := openapi.NewConfiguration()
 	configuration.HTTPClient = httpClient
+	if insecure {
+		configuration.Servers = openapi.ServerConfigurations{
+			{
+				URL: "http://" + HOST,
+			},
+		}
+		log.Printf("Base URL: %+v", configuration.Servers)
 
-	configuration.Servers = openapi.ServerConfigurations{
-		{
-			URL: HOST,
-		},
+		configuration.Scheme = "http"
+	} else {
+		configuration.Servers = openapi.ServerConfigurations{
+			{
+				URL: HOST,
+			},
+		}
+		configuration.Scheme = "https"
+
 	}
-	configuration.Scheme = "https"
+	configuration.Debug = true
 
 	authClient := openapi.NewAPIClient(configuration)
 
@@ -220,6 +234,10 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		PublicIPAddresses: PublicIPAddressProxy{
 			httpClient: httpClient,
 			service:    authClient.PublicIpAPI,
+		},
+		AvailablePublicIp: AvailablePublicIpProxy{
+			httpClient: httpClient,
+			service:    authClient.AvailablePublicIpAPI,
 		},
 		FloatingIPAddresses: FloatingIPAddressProxy{
 			httpClient: httpClient,

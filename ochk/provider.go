@@ -102,6 +102,7 @@ func Provider() *schema.Provider {
 			"ochk_billing_account":         dataSourceBillingAccount(),
 			"ochk_billing_accounts":        dataSourceBillingAccounts(),
 			"ochk_floating_ip_vms":         dataSourceFloatingIPVms(),
+			"ochk_available_public_ip":     dataSourceFirstAvailablePublicIp(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"ochk_firewall_ew_rule":    resourceFirewallEWRule(),
