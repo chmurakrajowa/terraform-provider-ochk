@@ -13546,7 +13546,8 @@
           },
           "creationDate": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "format": "string"
           },
           "modifiedBy": {
             "type": "string",
@@ -24305,8 +24306,7 @@
             "$ref": "#/components/schemas/RequestType"
           },
           "startDate": {
-            "type": "string",
-            "format": "date-time"
+            "type": "string"
           },
           "endDate": {
             "type": "string",

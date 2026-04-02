@@ -24,7 +24,7 @@ type PublicIpAllocation struct {
 	Name            NullableString        `json:"name,omitempty"`
 	Description     NullableString        `json:"description,omitempty"`
 	PublicIpAddress *PublicIpAddress      `json:"publicIpAddress,omitempty"`
-	ServiceList     []IPAMServiceInstance `json:"serviceList,omitempty"`
+	ServiceList     []IPAMServiceInstance `json:"serviceList"`
 	AssignmentDate  NullableString        `json:"assignmentDate,omitempty"`
 	Services        NullableString        `json:"services,omitempty"`
 }
