@@ -27,6 +27,7 @@ type VirtualServerInstance struct {
 	Description            NullableString      `json:"description,omitempty"`
 	ResourceType           NullableString      `json:"resourceType,omitempty"`
 	IpAddress              NullableString      `json:"ipAddress,omitempty"`
+	IsPublicIp             *bool               `json:"isPublicIp,omitempty"`
 	Ports                  []string            `json:"ports,omitempty"`
 	ApplicationProfilePath NullableString      `json:"applicationProfilePath,omitempty"`
 	Path                   NullableString      `json:"path,omitempty"`
@@ -43,6 +44,8 @@ type VirtualServerInstance struct {
 	ServerPoolInstance     *ServerPoolInstance `json:"serverPoolInstance,omitempty"`
 	AppProfileInstance     *AppProfileInstance `json:"appProfileInstance,omitempty"`
 	Tags                   []TagInstance       `json:"tags,omitempty"`
+	Status                 *StatusInstance     `json:"status,omitempty"`
+	NatRuleInstance        *NATRuleInstance    `json:"natRuleInstance,omitempty"`
 }
 
 // NewVirtualServerInstance instantiates a new VirtualServerInstance object
@@ -361,6 +364,38 @@ func (o *VirtualServerInstance) SetIpAddressNil() {
 // UnsetIpAddress ensures that no value is present for IpAddress, not even an explicit nil
 func (o *VirtualServerInstance) UnsetIpAddress() {
 	o.IpAddress.Unset()
+}
+
+// GetIsPublicIp returns the IsPublicIp field value if set, zero value otherwise.
+func (o *VirtualServerInstance) GetIsPublicIp() bool {
+	if o == nil || IsNil(o.IsPublicIp) {
+		var ret bool
+		return ret
+	}
+	return *o.IsPublicIp
+}
+
+// GetIsPublicIpOk returns a tuple with the IsPublicIp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualServerInstance) GetIsPublicIpOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsPublicIp) {
+		return nil, false
+	}
+	return o.IsPublicIp, true
+}
+
+// HasIsPublicIp returns a boolean if a field has been set.
+func (o *VirtualServerInstance) HasIsPublicIp() bool {
+	if o != nil && !IsNil(o.IsPublicIp) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsPublicIp gets a reference to the given bool and assigns it to the IsPublicIp field.
+func (o *VirtualServerInstance) SetIsPublicIp(v bool) {
+	o.IsPublicIp = &v
 }
 
 // GetPorts returns the Ports field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -998,6 +1033,70 @@ func (o *VirtualServerInstance) SetTags(v []TagInstance) {
 	o.Tags = v
 }
 
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *VirtualServerInstance) GetStatus() StatusInstance {
+	if o == nil || IsNil(o.Status) {
+		var ret StatusInstance
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualServerInstance) GetStatusOk() (*StatusInstance, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *VirtualServerInstance) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given StatusInstance and assigns it to the Status field.
+func (o *VirtualServerInstance) SetStatus(v StatusInstance) {
+	o.Status = &v
+}
+
+// GetNatRuleInstance returns the NatRuleInstance field value if set, zero value otherwise.
+func (o *VirtualServerInstance) GetNatRuleInstance() NATRuleInstance {
+	if o == nil || IsNil(o.NatRuleInstance) {
+		var ret NATRuleInstance
+		return ret
+	}
+	return *o.NatRuleInstance
+}
+
+// GetNatRuleInstanceOk returns a tuple with the NatRuleInstance field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VirtualServerInstance) GetNatRuleInstanceOk() (*NATRuleInstance, bool) {
+	if o == nil || IsNil(o.NatRuleInstance) {
+		return nil, false
+	}
+	return o.NatRuleInstance, true
+}
+
+// HasNatRuleInstance returns a boolean if a field has been set.
+func (o *VirtualServerInstance) HasNatRuleInstance() bool {
+	if o != nil && !IsNil(o.NatRuleInstance) {
+		return true
+	}
+
+	return false
+}
+
+// SetNatRuleInstance gets a reference to the given NATRuleInstance and assigns it to the NatRuleInstance field.
+func (o *VirtualServerInstance) SetNatRuleInstance(v NATRuleInstance) {
+	o.NatRuleInstance = &v
+}
+
 func (o VirtualServerInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.VirtualServerId.IsSet() {
@@ -1020,6 +1119,9 @@ func (o VirtualServerInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if o.IpAddress.IsSet() {
 		toSerialize["ipAddress"] = o.IpAddress.Get()
+	}
+	if !IsNil(o.IsPublicIp) {
+		toSerialize["isPublicIp"] = o.IsPublicIp
 	}
 	if o.Ports != nil {
 		toSerialize["ports"] = o.Ports
@@ -1068,6 +1170,12 @@ func (o VirtualServerInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Tags != nil {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.NatRuleInstance) {
+		toSerialize["natRuleInstance"] = o.NatRuleInstance
 	}
 	return toSerialize, nil
 }

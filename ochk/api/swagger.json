@@ -13588,6 +13588,11 @@
           "scoringConst": {
             "type": "number",
             "format": "float"
+          },
+          "projectsCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -15943,6 +15948,13 @@
           },
           "configMap": {
             "$ref": "#/components/schemas/CreateConfigMapDto"
+          },
+          "workerNodeSecurityGroups": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -16704,6 +16716,9 @@
               "$ref": "#/components/schemas/RuleInstance"
             },
             "nullable": true
+          },
+          "buildIn": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -22226,6 +22241,14 @@
             "type": "integer",
             "format": "int32"
           },
+          "receive": {
+            "type": "string",
+            "nullable": true
+          },
+          "send": {
+            "type": "string",
+            "nullable": true
+          },
           "createdBy": {
             "type": "string",
             "nullable": true
@@ -22451,6 +22474,11 @@
             "nullable": true
           },
           "virtualNetworkId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "virtualServerId": {
             "type": "string",
             "format": "uuid",
             "nullable": true
@@ -22846,6 +22874,9 @@
               "$ref": "#/components/schemas/TagInstance"
             },
             "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusInstance"
           }
         },
         "additionalProperties": false
@@ -23945,13 +23976,11 @@
           },
           "creationDate": {
             "type": "string",
-            "nullable": true,
-            "format": "string"
+            "nullable": true
           },
           "modificationDate": {
             "type": "string",
-            "nullable": true,
-            "format": "string"
+            "nullable": true
           },
           "cost": {
             "type": "number",
@@ -24276,7 +24305,8 @@
             "$ref": "#/components/schemas/RequestType"
           },
           "startDate": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time"
           },
           "endDate": {
             "type": "string",
@@ -24879,6 +24909,10 @@
           "snatIp": {
             "type": "string",
             "nullable": true
+          },
+          "poolAllocation": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -25302,6 +25336,9 @@
               "$ref": "#/components/schemas/TagInstance"
             },
             "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusInstance"
           }
         },
         "additionalProperties": false
@@ -25603,6 +25640,28 @@
             "nullable": true
           },
           "type": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StatusInstance": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "publishStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "intentVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "intentPath": {
             "type": "string",
             "nullable": true
           }
@@ -28165,6 +28224,9 @@
             "type": "string",
             "nullable": true
           },
+          "isPublicIp": {
+            "type": "boolean"
+          },
           "ports": {
             "type": "array",
             "items": {
@@ -28234,6 +28296,12 @@
               "$ref": "#/components/schemas/TagInstance"
             },
             "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusInstance"
+          },
+          "natRuleInstance": {
+            "$ref": "#/components/schemas/NATRuleInstance"
           }
         },
         "additionalProperties": false

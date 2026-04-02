@@ -13,6 +13,7 @@ package openapi
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the RequestInstance type satisfies the MappedNullable interface at compile time
@@ -25,7 +26,7 @@ type RequestInstance struct {
 	RequestStatus      *RequestStatus    `json:"requestStatus,omitempty"`
 	LastErrorMessage   NullableString    `json:"lastErrorMessage,omitempty"`
 	RequestType        *RequestType      `json:"requestType,omitempty"`
-	StartDate          *string           `json:"startDate,omitempty"`
+	StartDate          *time.Time        `json:"startDate,omitempty"`
 	EndDate            NullableString    `json:"endDate,omitempty"`
 	RequestBody        NullableString    `json:"requestBody,omitempty"`
 	ContextBody        NullableString    `json:"contextBody,omitempty"`
@@ -239,9 +240,9 @@ func (o *RequestInstance) SetRequestType(v RequestType) {
 }
 
 // GetStartDate returns the StartDate field value if set, zero value otherwise.
-func (o *RequestInstance) GetStartDate() string {
+func (o *RequestInstance) GetStartDate() time.Time {
 	if o == nil || IsNil(o.StartDate) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.StartDate
@@ -249,7 +250,7 @@ func (o *RequestInstance) GetStartDate() string {
 
 // GetStartDateOk returns a tuple with the StartDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RequestInstance) GetStartDateOk() (*string, bool) {
+func (o *RequestInstance) GetStartDateOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.StartDate) {
 		return nil, false
 	}
@@ -265,8 +266,8 @@ func (o *RequestInstance) HasStartDate() bool {
 	return false
 }
 
-// SetStartDate gets a reference to the given string and assigns it to the StartDate field.
-func (o *RequestInstance) SetStartDate(v string) {
+// SetStartDate gets a reference to the given time.Time and assigns it to the StartDate field.
+func (o *RequestInstance) SetStartDate(v time.Time) {
 	o.StartDate = &v
 }
 

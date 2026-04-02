@@ -55,6 +55,7 @@ type RouterInstance struct {
 	FolderPath                NullableString          `json:"folderPath,omitempty"`
 	SnatEnabled               *bool                   `json:"snatEnabled,omitempty"`
 	SnatIp                    NullableString          `json:"snatIp,omitempty"`
+	PoolAllocation            NullableString          `json:"poolAllocation,omitempty"`
 }
 
 // NewRouterInstance instantiates a new RouterInstance object
@@ -1452,6 +1453,49 @@ func (o *RouterInstance) UnsetSnatIp() {
 	o.SnatIp.Unset()
 }
 
+// GetPoolAllocation returns the PoolAllocation field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RouterInstance) GetPoolAllocation() string {
+	if o == nil || IsNil(o.PoolAllocation.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.PoolAllocation.Get()
+}
+
+// GetPoolAllocationOk returns a tuple with the PoolAllocation field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RouterInstance) GetPoolAllocationOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PoolAllocation.Get(), o.PoolAllocation.IsSet()
+}
+
+// HasPoolAllocation returns a boolean if a field has been set.
+func (o *RouterInstance) HasPoolAllocation() bool {
+	if o != nil && o.PoolAllocation.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPoolAllocation gets a reference to the given NullableString and assigns it to the PoolAllocation field.
+func (o *RouterInstance) SetPoolAllocation(v string) {
+	o.PoolAllocation.Set(&v)
+}
+
+// SetPoolAllocationNil sets the value for PoolAllocation to be an explicit nil
+func (o *RouterInstance) SetPoolAllocationNil() {
+	o.PoolAllocation.Set(nil)
+}
+
+// UnsetPoolAllocation ensures that no value is present for PoolAllocation, not even an explicit nil
+func (o *RouterInstance) UnsetPoolAllocation() {
+	o.PoolAllocation.Unset()
+}
+
 func (o RouterInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.RouterId.IsSet() {
@@ -1558,6 +1602,9 @@ func (o RouterInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if o.SnatIp.IsSet() {
 		toSerialize["snatIp"] = o.SnatIp.Get()
+	}
+	if o.PoolAllocation.IsSet() {
+		toSerialize["poolAllocation"] = o.PoolAllocation.Get()
 	}
 	return toSerialize, nil
 }

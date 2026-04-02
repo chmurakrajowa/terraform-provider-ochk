@@ -32,6 +32,8 @@ type MonitorProfileInstance struct {
 	Timeout          *int32                      `json:"timeout,omitempty"`
 	RiseCount        *int32                      `json:"riseCount,omitempty"`
 	FallCount        *int32                      `json:"fallCount,omitempty"`
+	Receive          NullableString              `json:"receive,omitempty"`
+	Send             NullableString              `json:"send,omitempty"`
 	CreatedBy        NullableString              `json:"createdBy,omitempty"`
 	ModifiedBy       NullableString              `json:"modifiedBy,omitempty"`
 	CreationDate     NullableString              `json:"creationDate,omitempty"`
@@ -506,6 +508,92 @@ func (o *MonitorProfileInstance) SetFallCount(v int32) {
 	o.FallCount = &v
 }
 
+// GetReceive returns the Receive field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *MonitorProfileInstance) GetReceive() string {
+	if o == nil || IsNil(o.Receive.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Receive.Get()
+}
+
+// GetReceiveOk returns a tuple with the Receive field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *MonitorProfileInstance) GetReceiveOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Receive.Get(), o.Receive.IsSet()
+}
+
+// HasReceive returns a boolean if a field has been set.
+func (o *MonitorProfileInstance) HasReceive() bool {
+	if o != nil && o.Receive.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetReceive gets a reference to the given NullableString and assigns it to the Receive field.
+func (o *MonitorProfileInstance) SetReceive(v string) {
+	o.Receive.Set(&v)
+}
+
+// SetReceiveNil sets the value for Receive to be an explicit nil
+func (o *MonitorProfileInstance) SetReceiveNil() {
+	o.Receive.Set(nil)
+}
+
+// UnsetReceive ensures that no value is present for Receive, not even an explicit nil
+func (o *MonitorProfileInstance) UnsetReceive() {
+	o.Receive.Unset()
+}
+
+// GetSend returns the Send field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *MonitorProfileInstance) GetSend() string {
+	if o == nil || IsNil(o.Send.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Send.Get()
+}
+
+// GetSendOk returns a tuple with the Send field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *MonitorProfileInstance) GetSendOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Send.Get(), o.Send.IsSet()
+}
+
+// HasSend returns a boolean if a field has been set.
+func (o *MonitorProfileInstance) HasSend() bool {
+	if o != nil && o.Send.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSend gets a reference to the given NullableString and assigns it to the Send field.
+func (o *MonitorProfileInstance) SetSend(v string) {
+	o.Send.Set(&v)
+}
+
+// SetSendNil sets the value for Send to be an explicit nil
+func (o *MonitorProfileInstance) SetSendNil() {
+	o.Send.Set(nil)
+}
+
+// UnsetSend ensures that no value is present for Send, not even an explicit nil
+func (o *MonitorProfileInstance) UnsetSend() {
+	o.Send.Unset()
+}
+
 // GetCreatedBy returns the CreatedBy field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *MonitorProfileInstance) GetCreatedBy() string {
 	if o == nil || IsNil(o.CreatedBy.Get()) {
@@ -748,6 +836,12 @@ func (o MonitorProfileInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.FallCount) {
 		toSerialize["fallCount"] = o.FallCount
+	}
+	if o.Receive.IsSet() {
+		toSerialize["receive"] = o.Receive.Get()
+	}
+	if o.Send.IsSet() {
+		toSerialize["send"] = o.Send.Get()
 	}
 	if o.CreatedBy.IsSet() {
 		toSerialize["createdBy"] = o.CreatedBy.Get()

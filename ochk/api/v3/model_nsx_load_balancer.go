@@ -40,6 +40,7 @@ type NsxLoadBalancer struct {
 	Path               NullableString          `json:"path,omitempty"`
 	VirtualServers     []VirtualServerInstance `json:"virtualServers,omitempty"`
 	Tags               []TagInstance           `json:"tags,omitempty"`
+	Status             *StatusInstance         `json:"status,omitempty"`
 }
 
 // NewNsxLoadBalancer instantiates a new NsxLoadBalancer object
@@ -844,6 +845,38 @@ func (o *NsxLoadBalancer) SetTags(v []TagInstance) {
 	o.Tags = v
 }
 
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *NsxLoadBalancer) GetStatus() StatusInstance {
+	if o == nil || IsNil(o.Status) {
+		var ret StatusInstance
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NsxLoadBalancer) GetStatusOk() (*StatusInstance, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *NsxLoadBalancer) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given StatusInstance and assigns it to the Status field.
+func (o *NsxLoadBalancer) SetStatus(v StatusInstance) {
+	o.Status = &v
+}
+
 func (o NsxLoadBalancer) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.LoadBalancerId.IsSet() {
@@ -905,6 +938,9 @@ func (o NsxLoadBalancer) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Tags != nil {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
 	}
 	return toSerialize, nil
 }

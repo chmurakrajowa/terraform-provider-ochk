@@ -49,6 +49,7 @@ type NATRuleInstance struct {
 	TranslatedPorts    NullableString   `json:"translatedPorts,omitempty"`
 	TierZeroRouterId   NullableString   `json:"tierZeroRouterId,omitempty"`
 	VirtualNetworkId   NullableString   `json:"virtualNetworkId,omitempty"`
+	VirtualServerId    NullableString   `json:"virtualServerId,omitempty"`
 }
 
 // NewNATRuleInstance instantiates a new NATRuleInstance object
@@ -1239,6 +1240,49 @@ func (o *NATRuleInstance) UnsetVirtualNetworkId() {
 	o.VirtualNetworkId.Unset()
 }
 
+// GetVirtualServerId returns the VirtualServerId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NATRuleInstance) GetVirtualServerId() string {
+	if o == nil || IsNil(o.VirtualServerId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.VirtualServerId.Get()
+}
+
+// GetVirtualServerIdOk returns a tuple with the VirtualServerId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NATRuleInstance) GetVirtualServerIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.VirtualServerId.Get(), o.VirtualServerId.IsSet()
+}
+
+// HasVirtualServerId returns a boolean if a field has been set.
+func (o *NATRuleInstance) HasVirtualServerId() bool {
+	if o != nil && o.VirtualServerId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetVirtualServerId gets a reference to the given NullableString and assigns it to the VirtualServerId field.
+func (o *NATRuleInstance) SetVirtualServerId(v string) {
+	o.VirtualServerId.Set(&v)
+}
+
+// SetVirtualServerIdNil sets the value for VirtualServerId to be an explicit nil
+func (o *NATRuleInstance) SetVirtualServerIdNil() {
+	o.VirtualServerId.Set(nil)
+}
+
+// UnsetVirtualServerId ensures that no value is present for VirtualServerId, not even an explicit nil
+func (o *NATRuleInstance) UnsetVirtualServerId() {
+	o.VirtualServerId.Unset()
+}
+
 func (o NATRuleInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.RuleId.IsSet() {
@@ -1327,6 +1371,9 @@ func (o NATRuleInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if o.VirtualNetworkId.IsSet() {
 		toSerialize["virtualNetworkId"] = o.VirtualNetworkId.Get()
+	}
+	if o.VirtualServerId.IsSet() {
+		toSerialize["virtualServerId"] = o.VirtualServerId.Get()
 	}
 	return toSerialize, nil
 }

@@ -37,6 +37,7 @@ type AccountInstance struct {
 	Projects                  []AccountProjectInstance `json:"projects,omitempty"`
 	IsDeleted                 *bool                    `json:"isDeleted,omitempty"`
 	ScoringConst              *float32                 `json:"scoringConst,omitempty"`
+	ProjectsCount             NullableInt32            `json:"projectsCount,omitempty"`
 }
 
 // NewAccountInstance instantiates a new AccountInstance object
@@ -678,6 +679,49 @@ func (o *AccountInstance) SetScoringConst(v float32) {
 	o.ScoringConst = &v
 }
 
+// GetProjectsCount returns the ProjectsCount field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AccountInstance) GetProjectsCount() int32 {
+	if o == nil || IsNil(o.ProjectsCount.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.ProjectsCount.Get()
+}
+
+// GetProjectsCountOk returns a tuple with the ProjectsCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AccountInstance) GetProjectsCountOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ProjectsCount.Get(), o.ProjectsCount.IsSet()
+}
+
+// HasProjectsCount returns a boolean if a field has been set.
+func (o *AccountInstance) HasProjectsCount() bool {
+	if o != nil && o.ProjectsCount.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetProjectsCount gets a reference to the given NullableInt32 and assigns it to the ProjectsCount field.
+func (o *AccountInstance) SetProjectsCount(v int32) {
+	o.ProjectsCount.Set(&v)
+}
+
+// SetProjectsCountNil sets the value for ProjectsCount to be an explicit nil
+func (o *AccountInstance) SetProjectsCountNil() {
+	o.ProjectsCount.Set(nil)
+}
+
+// UnsetProjectsCount ensures that no value is present for ProjectsCount, not even an explicit nil
+func (o *AccountInstance) UnsetProjectsCount() {
+	o.ProjectsCount.Unset()
+}
+
 func (o AccountInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.AccountId.IsSet() {
@@ -730,6 +774,9 @@ func (o AccountInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ScoringConst) {
 		toSerialize["scoringConst"] = o.ScoringConst
+	}
+	if o.ProjectsCount.IsSet() {
+		toSerialize["projectsCount"] = o.ProjectsCount.Get()
 	}
 	return toSerialize, nil
 }

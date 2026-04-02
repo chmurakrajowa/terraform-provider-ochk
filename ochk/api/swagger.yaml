@@ -8300,6 +8300,10 @@ components:
         scoringConst:
           type: number
           format: float
+        projectsCount:
+          type: integer
+          format: int32
+          nullable: true
       additionalProperties: false
     AccountProjectInstance:
       type: object
@@ -10054,6 +10058,11 @@ components:
           nullable: true
         configMap:
           $ref: '#/components/schemas/CreateConfigMapDto'
+        workerNodeSecurityGroups:
+          type: array
+          items:
+            type: string
+          nullable: true
       additionalProperties: false
     CreateClusterResponse:
       type: object
@@ -10601,6 +10610,8 @@ components:
           items:
             $ref: '#/components/schemas/RuleInstance'
           nullable: true
+        buildIn:
+          type: boolean
       additionalProperties: false
     CustomSpecificationInstance:
       type: object
@@ -14665,6 +14676,12 @@ components:
         fallCount:
           type: integer
           format: int32
+        receive:
+          type: string
+          nullable: true
+        send:
+          type: string
+          nullable: true
         createdBy:
           type: string
           nullable: true
@@ -14836,6 +14853,10 @@ components:
           format: uuid
           nullable: true
         virtualNetworkId:
+          type: string
+          format: uuid
+          nullable: true
+        virtualServerId:
           type: string
           format: uuid
           nullable: true
@@ -15134,6 +15155,8 @@ components:
           items:
             $ref: '#/components/schemas/TagInstance'
           nullable: true
+        status:
+          $ref: '#/components/schemas/StatusInstance'
       additionalProperties: false
     NsxLoadBalancerApiResponse:
       type: object
@@ -16702,6 +16725,9 @@ components:
         snatIp:
           type: string
           nullable: true
+        poolAllocation:
+          type: string
+          nullable: true
       additionalProperties: false
     RouterType:
       enum:
@@ -17017,6 +17043,8 @@ components:
           items:
             $ref: '#/components/schemas/TagInstance'
           nullable: true
+        status:
+          $ref: '#/components/schemas/StatusInstance'
       additionalProperties: false
     ServerPoolInstanceApiResponse:
       type: object
@@ -17242,6 +17270,22 @@ components:
           type: string
           nullable: true
         type:
+          type: string
+          nullable: true
+      additionalProperties: false
+    StatusInstance:
+      type: object
+      properties:
+        status:
+          type: string
+          nullable: true
+        publishStatus:
+          type: string
+          nullable: true
+        intentVersion:
+          type: string
+          nullable: true
+        intentPath:
           type: string
           nullable: true
       additionalProperties: false
@@ -19137,6 +19181,8 @@ components:
         ipAddress:
           type: string
           nullable: true
+        isPublicIp:
+          type: boolean
         ports:
           type: array
           items:
@@ -19191,6 +19237,10 @@ components:
           items:
             $ref: '#/components/schemas/TagInstance'
           nullable: true
+        status:
+          $ref: '#/components/schemas/StatusInstance'
+        natRuleInstance:
+          $ref: '#/components/schemas/NATRuleInstance'
       additionalProperties: false
     VirtualServerInstanceApiResponse:
       type: object

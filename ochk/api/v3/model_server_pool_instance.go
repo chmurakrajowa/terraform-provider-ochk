@@ -36,6 +36,7 @@ type ServerPoolInstance struct {
 	ModificationDate   NullableString           `json:"modificationDate,omitempty"`
 	Monitors           []MonitorProfileInstance `json:"monitors,omitempty"`
 	Tags               []TagInstance            `json:"tags,omitempty"`
+	Status             *StatusInstance          `json:"status,omitempty"`
 }
 
 // NewServerPoolInstance instantiates a new ServerPoolInstance object
@@ -692,6 +693,38 @@ func (o *ServerPoolInstance) SetTags(v []TagInstance) {
 	o.Tags = v
 }
 
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *ServerPoolInstance) GetStatus() StatusInstance {
+	if o == nil || IsNil(o.Status) {
+		var ret StatusInstance
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServerPoolInstance) GetStatusOk() (*StatusInstance, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *ServerPoolInstance) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given StatusInstance and assigns it to the Status field.
+func (o *ServerPoolInstance) SetStatus(v StatusInstance) {
+	o.Status = &v
+}
+
 func (o ServerPoolInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ServerPoolId.IsSet() {
@@ -741,6 +774,9 @@ func (o ServerPoolInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Tags != nil {
 		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
 	}
 	return toSerialize, nil
 }

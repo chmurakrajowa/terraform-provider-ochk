@@ -39,6 +39,7 @@ type CustomServiceInstance struct {
 	L4PortSetEntries []L4PortSetEntry `json:"l4PortSetEntries,omitempty"`
 	ProjectId        NullableString   `json:"projectId,omitempty"`
 	RelatedFwRules   []RuleInstance   `json:"relatedFwRules,omitempty"`
+	BuildIn          *bool            `json:"buildIn,omitempty"`
 }
 
 // NewCustomServiceInstance instantiates a new CustomServiceInstance object
@@ -801,6 +802,38 @@ func (o *CustomServiceInstance) SetRelatedFwRules(v []RuleInstance) {
 	o.RelatedFwRules = v
 }
 
+// GetBuildIn returns the BuildIn field value if set, zero value otherwise.
+func (o *CustomServiceInstance) GetBuildIn() bool {
+	if o == nil || IsNil(o.BuildIn) {
+		var ret bool
+		return ret
+	}
+	return *o.BuildIn
+}
+
+// GetBuildInOk returns a tuple with the BuildIn field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CustomServiceInstance) GetBuildInOk() (*bool, bool) {
+	if o == nil || IsNil(o.BuildIn) {
+		return nil, false
+	}
+	return o.BuildIn, true
+}
+
+// HasBuildIn returns a boolean if a field has been set.
+func (o *CustomServiceInstance) HasBuildIn() bool {
+	if o != nil && !IsNil(o.BuildIn) {
+		return true
+	}
+
+	return false
+}
+
+// SetBuildIn gets a reference to the given bool and assigns it to the BuildIn field.
+func (o *CustomServiceInstance) SetBuildIn(v bool) {
+	o.BuildIn = &v
+}
+
 func (o CustomServiceInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ServiceId.IsSet() {
@@ -859,6 +892,9 @@ func (o CustomServiceInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if o.RelatedFwRules != nil {
 		toSerialize["relatedFwRules"] = o.RelatedFwRules
+	}
+	if !IsNil(o.BuildIn) {
+		toSerialize["buildIn"] = o.BuildIn
 	}
 	return toSerialize, nil
 }
