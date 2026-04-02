@@ -3,7 +3,7 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	openapi "github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"strconv"
 	"strings"
@@ -106,13 +106,13 @@ func resourcePublicIpRead(ctx context.Context, d *schema.ResourceData, meta inte
 		return diag.Errorf("error setting allocation_id: %+v", err)
 	}
 
-	//if err := d.Set("public_address_ip", public_ip.PublicIpAddress.GetIpAddress()); err != nil {
-	//	return diag.Errorf("error setting public_address_ip: %+v", err)
-	//}
-	//
-	//if err := d.Set("public_address_ip_id", public_ip.PublicIpAddress.GetIpAddressId()); err != nil {
-	//	return diag.Errorf("error setting public_address_ip_id: %+v", err)
-	//}
+	if err := d.Set("public_address_ip", public_ip.PublicIpAddress.GetIpAddress()); err != nil {
+		return diag.Errorf("error setting public_address_ip: %+v", err)
+	}
+
+	if err := d.Set("public_address_ip_id", public_ip.PublicIpAddress.GetIpAddressId()); err != nil {
+		return diag.Errorf("error setting public_address_ip_id: %+v", err)
+	}
 
 	return nil
 }
@@ -134,7 +134,7 @@ func resourcePublicIpUpdate(ctx context.Context, d *schema.ResourceData, meta in
 		return diag.Errorf("error while modifying floating ip: %+v", err)
 	}
 
-	return resourceFloatingIpRead(ctx, d, meta)
+	return resourcePublicIpRead(ctx, d, meta)
 }
 
 func resourcePublicIpDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
@@ -171,6 +171,5 @@ func mapResourceDataToPublicIp(d *schema.ResourceData) openapi.PublicIpAllocatio
 		Name:            NewNullableString(d.Get("display_name").(string)),
 		Description:     NewNullableString(d.Get("description").(string)),
 		ServiceList:     []openapi.IPAMServiceInstance{},
-		//Services:        openapi.NullableString{},
 	}
 }
