@@ -1,8 +1,8 @@
 ---
-page_title: "Backup Plans Data Source"
+page_title: "Public ip address Data Source"
 ---
 
-# Backup Plans Data Source
+# Public ip address Data Source
 
 Data Source for getting allocated Public IP Addresses list.
 
