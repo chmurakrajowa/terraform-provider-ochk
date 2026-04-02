@@ -119,7 +119,7 @@ func resourcePublicIpRead(ctx context.Context, d *schema.ResourceData, meta inte
 
 func resourcePublicIpUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 
-	if !d.HasChanges("display_name") {
+	if !d.HasChanges("display_name", "description") {
 		return nil
 	}
 	proxy := meta.(*sdk.Client).PublicIPAddresses
