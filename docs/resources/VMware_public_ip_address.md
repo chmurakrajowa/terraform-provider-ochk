@@ -23,8 +23,8 @@ The following arguments are supported:
 
 * `display_name` - (Required) Display name for the public ip address. Updates to this attribute forces recreate.
 * `description` - (Optional) Description.
-* `public_address_ip` - (Required) Public ip accolation.
-* `public_address_ip_id` - (Required) Public ip accolation id.
+* `public_address_ip` - (Required) Public ip allocation. Very important!. This parameter must be explicitly specified in the resource.
+* `public_address_ip_id` - (Required) Public ip allocation id. Very important!. This parameter must be explicitly specified in the resource.
   
 ## Attribute Reference
 

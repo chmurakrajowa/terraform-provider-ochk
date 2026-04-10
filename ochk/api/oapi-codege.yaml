@@ -1,0 +1,6 @@
+package: api
+generate:
+  types: true
+  client: true
+  chi-server: false
+  spec: false
