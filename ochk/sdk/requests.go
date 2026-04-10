@@ -55,6 +55,10 @@ func verifyRequestStatusAndPhase(request *openapi.RequestInstance) error {
 		return fmt.Errorf("Request phase is %s", request.RequestPhase)
 	}
 
+	if request.GetRequestPhase() == "FINISHED" && request.GetRequestStatus() == "FAILED" {
+		return fmt.Errorf("Request status is %s", request.LastErrorMessage)
+	}
+
 	return nil
 }
 
