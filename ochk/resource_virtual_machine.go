@@ -306,7 +306,11 @@ func resourceVirtualMachineCreate(ctx context.Context, d *schema.ResourceData, m
 func resourceVirtualMachineRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).VirtualMachines
 
-	virtualMachine, err := proxy.Read(ctx, strfmt.UUID(d.Id()))
+	virtualMachine, httpResponse, err := proxy.Read(ctx, strfmt.UUID(d.Id()))
+
+	if virtualMachine == nil && httpResponse.StatusCode == 404 {
+		return diag.Errorf("virtual machine with id %s not found: %+v Check your state file.", d.Id(), err)
+	}
 
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
@@ -336,7 +340,7 @@ func resourceVirtualMachineUpdate(ctx context.Context, d *schema.ResourceData, m
 	virtualMachine := mapResourceDataToVirtualMachine(d)
 	virtualMachine.VirtualMachineId = NewNullableString(d.Id())
 
-	request, err := sdkClient.VirtualMachines.Update(ctx, virtualMachine)
+	request, _, err := sdkClient.VirtualMachines.Update(ctx, virtualMachine)
 	if err != nil {
 		return diag.Errorf("error while modifying virtual machine: %+v", err)
 	}

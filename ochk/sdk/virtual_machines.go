@@ -34,44 +34,44 @@ func (p *VirtualMachinesProxy) Create(ctx context.Context, virtualMachine openap
 	return put.RequestInstance, nil
 }
 
-func (p *VirtualMachinesProxy) Update(ctx context.Context, virtualMachine openapi.VirtualMachineInstance) (*openapi.RequestInstance, error) {
+func (p *VirtualMachinesProxy) Update(ctx context.Context, virtualMachine openapi.VirtualMachineInstance) (*openapi.RequestInstance, *http.Response, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
 	action := p.service.VcsVirtualMachinesVirtualMachineIdPut(ctx, virtualMachine.GetVirtualMachineId()).VirtualMachineInstance(virtualMachine)
-	put, _, err := action.Execute()
+	put, httpResponse, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
-		return nil, fmt.Errorf("error while modifying virtual machine: %w", err)
+		return nil, httpResponse, fmt.Errorf("error while modifying virtual machine: %w", err)
 	}
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("modifying virtual machine failed: %s", put.Messages)
+		return nil, httpResponse, fmt.Errorf("modifying virtual machine failed: %s", put.Messages)
 	}
 
-	return put.RequestInstance, nil
+	return put.RequestInstance, httpResponse, nil
 }
 
-func (p *VirtualMachinesProxy) Read(ctx context.Context, VirtualMachineID strfmt.UUID) (*openapi.VirtualMachineInstance, error) {
+func (p *VirtualMachinesProxy) Read(ctx context.Context, VirtualMachineID strfmt.UUID) (*openapi.VirtualMachineInstance, *http.Response, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
 	action := p.service.VcsVirtualMachinesVirtualMachineIdGet(ctx, string(VirtualMachineID))
-	response, _, err := action.Execute()
+	response, httpResponse, err := action.Execute()
 
 	mutex.Unlock()
 
 	if err != nil {
-		return nil, fmt.Errorf("error while reading virtual machine: %w", err)
+		return nil, httpResponse, fmt.Errorf("error while reading virtual machine: %w", err)
 	}
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving virtual machine failed: %s", response.Messages)
+		return nil, httpResponse, fmt.Errorf("retrieving virtual machine failed: %s", response.Messages)
 	}
 
-	return response.VcsVirtualMachineInstance, nil
+	return response.VcsVirtualMachineInstance, httpResponse, nil
 }
 
 func (p *VirtualMachinesProxy) ListByDisplayName(ctx context.Context, displayName string) ([]openapi.VirtualMachineInstance, error) {
