@@ -27,7 +27,7 @@ type VirtualServerInstance struct {
 	Description            NullableString      `json:"description,omitempty"`
 	ResourceType           NullableString      `json:"resourceType,omitempty"`
 	IpAddress              NullableString      `json:"ipAddress,omitempty"`
-	IsPublicIp             *bool               `json:"isPublicIp,omitempty"`
+	AutoNatEnabled         *bool               `json:"autoNatEnabled,omitempty"`
 	Ports                  []string            `json:"ports,omitempty"`
 	ApplicationProfilePath NullableString      `json:"applicationProfilePath,omitempty"`
 	Path                   NullableString      `json:"path,omitempty"`
@@ -366,36 +366,36 @@ func (o *VirtualServerInstance) UnsetIpAddress() {
 	o.IpAddress.Unset()
 }
 
-// GetIsPublicIp returns the IsPublicIp field value if set, zero value otherwise.
-func (o *VirtualServerInstance) GetIsPublicIp() bool {
-	if o == nil || IsNil(o.IsPublicIp) {
+// GetAutoNatEnabled returns the AutoNatEnabled field value if set, zero value otherwise.
+func (o *VirtualServerInstance) GetAutoNatEnabled() bool {
+	if o == nil || IsNil(o.AutoNatEnabled) {
 		var ret bool
 		return ret
 	}
-	return *o.IsPublicIp
+	return *o.AutoNatEnabled
 }
 
-// GetIsPublicIpOk returns a tuple with the IsPublicIp field value if set, nil otherwise
+// GetAutoNatEnabledOk returns a tuple with the AutoNatEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *VirtualServerInstance) GetIsPublicIpOk() (*bool, bool) {
-	if o == nil || IsNil(o.IsPublicIp) {
+func (o *VirtualServerInstance) GetAutoNatEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.AutoNatEnabled) {
 		return nil, false
 	}
-	return o.IsPublicIp, true
+	return o.AutoNatEnabled, true
 }
 
-// HasIsPublicIp returns a boolean if a field has been set.
-func (o *VirtualServerInstance) HasIsPublicIp() bool {
-	if o != nil && !IsNil(o.IsPublicIp) {
+// HasAutoNatEnabled returns a boolean if a field has been set.
+func (o *VirtualServerInstance) HasAutoNatEnabled() bool {
+	if o != nil && !IsNil(o.AutoNatEnabled) {
 		return true
 	}
 
 	return false
 }
 
-// SetIsPublicIp gets a reference to the given bool and assigns it to the IsPublicIp field.
-func (o *VirtualServerInstance) SetIsPublicIp(v bool) {
-	o.IsPublicIp = &v
+// SetAutoNatEnabled gets a reference to the given bool and assigns it to the AutoNatEnabled field.
+func (o *VirtualServerInstance) SetAutoNatEnabled(v bool) {
+	o.AutoNatEnabled = &v
 }
 
 // GetPorts returns the Ports field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1120,8 +1120,8 @@ func (o VirtualServerInstance) ToMap() (map[string]interface{}, error) {
 	if o.IpAddress.IsSet() {
 		toSerialize["ipAddress"] = o.IpAddress.Get()
 	}
-	if !IsNil(o.IsPublicIp) {
-		toSerialize["isPublicIp"] = o.IsPublicIp
+	if !IsNil(o.AutoNatEnabled) {
+		toSerialize["autoNatEnabled"] = o.AutoNatEnabled
 	}
 	if o.Ports != nil {
 		toSerialize["ports"] = o.Ports

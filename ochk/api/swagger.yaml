@@ -19181,7 +19181,7 @@ components:
         ipAddress:
           type: string
           nullable: true
-        isPublicIp:
+        autoNatEnabled:
           type: boolean
         ports:
           type: array
