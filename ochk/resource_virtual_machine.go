@@ -29,6 +29,14 @@ func resourceVirtualMachine() *schema.Resource {
 		UpdateContext: resourceVirtualMachineUpdate,
 		DeleteContext: resourceVirtualMachineDelete,
 
+		CustomizeDiff: func(ctx context.Context, d *schema.ResourceDiff, m interface{}) error {
+			if d.Id() != "" && d.HasChange("storage_policy") {
+				old_value, new_value := d.GetChange("storage_policy")
+				return fmt.Errorf("value of parameter storage_policy: %s can not to be changed to %s", old_value, new_value)
+			}
+			return nil
+		},
+
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(VirtualMachineRetryTimeout),
 			Update: schema.DefaultTimeout(VirtualMachineRetryTimeout),
@@ -198,7 +206,6 @@ func resourceVirtualMachine() *schema.Resource {
 					},
 				},
 			},
-
 			"encryption": {
 				Type:     schema.TypeBool,
 				Default:  false,
