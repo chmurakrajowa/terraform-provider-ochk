@@ -112,9 +112,16 @@ func resourceSnapshotImportState(_ context.Context, d *schema.ResourceData, _ in
 
 func resourceSnapshotCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	proxy := meta.(*sdk.Client).Snapshots
+	proxy_vm := meta.(*sdk.Client).VirtualMachines
 
 	virtualMachineId := strfmt.UUID(d.Get("virtual_machine_id").(string))
 	ram := d.Get("ram").(bool)
+
+	vm, _, err := proxy_vm.Read(ctx, virtualMachineId)
+
+	if ram && vm.GetPowerState() == openapi.POWERSTATE_POWERED_OFF {
+		return diag.Errorf("error while creating snapshot with ram for virtual machine %s. Machine is powered off.", vm.GetVirtualMachineName())
+	}
 
 	if ram {
 		err := d.Set("power_state", openapi.POWERSTATE_POWERED_ON)
