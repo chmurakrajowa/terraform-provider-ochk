@@ -20,24 +20,26 @@ var _ MappedNullable = &ClusterNetworkInfra{}
 
 // ClusterNetworkInfra struct for ClusterNetworkInfra
 type ClusterNetworkInfra struct {
-	ClusterId               *string        `json:"clusterId,omitempty"`
-	RouterId                NullableString `json:"routerId,omitempty"`
-	VirtualNetworkId        NullableString `json:"virtualNetworkId,omitempty"`
-	NatRuleId               NullableString `json:"natRuleId,omitempty"`
-	IpCollectionId          NullableString `json:"ipCollectionId,omitempty"`
-	SecurityGroupId         NullableString `json:"securityGroupId,omitempty"`
-	DfwRuleId               NullableString `json:"dfwRuleId,omitempty"`
-	GfwRuleId               NullableString `json:"gfwRuleId,omitempty"`
-	MgmtGfwRuleId           NullableString `json:"mgmtGfwRuleId,omitempty"`
-	ClientLoadBalancerId    NullableString `json:"clientLoadBalancerId,omitempty"`
-	ClientIpPoolExtId       NullableString `json:"clientIpPoolExtId,omitempty"`
-	ClientIpPoolSubnetExtId NullableString `json:"clientIpPoolSubnetExtId,omitempty"`
-	SnatToVipRuleId         NullableString `json:"snatToVipRuleId,omitempty"`
-	IpcToVipId              NullableString `json:"ipcToVipId,omitempty"`
-	SgToVipId               NullableString `json:"sgToVipId,omitempty"`
-	CsToVipApiId            NullableString `json:"csToVipApiId,omitempty"`
-	CsToVipKonId            NullableString `json:"csToVipKonId,omitempty"`
-	GfwToVipId              NullableString `json:"gfwToVipId,omitempty"`
+	ClusterId                *string        `json:"clusterId,omitempty"`
+	RouterId                 NullableString `json:"routerId,omitempty"`
+	VirtualNetworkId         NullableString `json:"virtualNetworkId,omitempty"`
+	NatRuleId                NullableString `json:"natRuleId,omitempty"`
+	IpCollectionId           NullableString `json:"ipCollectionId,omitempty"`
+	SecurityGroupId          NullableString `json:"securityGroupId,omitempty"`
+	DfwRuleId                NullableString `json:"dfwRuleId,omitempty"`
+	GfwRuleId                NullableString `json:"gfwRuleId,omitempty"`
+	MgmtGfwRuleId            NullableString `json:"mgmtGfwRuleId,omitempty"`
+	ClientLoadBalancerId     NullableString `json:"clientLoadBalancerId,omitempty"`
+	ClientIpPoolExtId        NullableString `json:"clientIpPoolExtId,omitempty"`
+	ClientIpPoolSubnetExtId  NullableString `json:"clientIpPoolSubnetExtId,omitempty"`
+	SnatToVipRuleId          NullableString `json:"snatToVipRuleId,omitempty"`
+	IpcToVipId               NullableString `json:"ipcToVipId,omitempty"`
+	SgToVipId                NullableString `json:"sgToVipId,omitempty"`
+	CsToVipApiId             NullableString `json:"csToVipApiId,omitempty"`
+	CsToVipKonId             NullableString `json:"csToVipKonId,omitempty"`
+	GfwToVipId               NullableString `json:"gfwToVipId,omitempty"`
+	CtrlPlanePublicIp        NullableString `json:"ctrlPlanePublicIp,omitempty"`
+	CtrlPlanePublicSrcIpList []string       `json:"ctrlPlanePublicSrcIpList,omitempty"`
 }
 
 // NewClusterNetworkInfra instantiates a new ClusterNetworkInfra object
@@ -820,6 +822,82 @@ func (o *ClusterNetworkInfra) UnsetGfwToVipId() {
 	o.GfwToVipId.Unset()
 }
 
+// GetCtrlPlanePublicIp returns the CtrlPlanePublicIp field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ClusterNetworkInfra) GetCtrlPlanePublicIp() string {
+	if o == nil || IsNil(o.CtrlPlanePublicIp.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CtrlPlanePublicIp.Get()
+}
+
+// GetCtrlPlanePublicIpOk returns a tuple with the CtrlPlanePublicIp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ClusterNetworkInfra) GetCtrlPlanePublicIpOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CtrlPlanePublicIp.Get(), o.CtrlPlanePublicIp.IsSet()
+}
+
+// HasCtrlPlanePublicIp returns a boolean if a field has been set.
+func (o *ClusterNetworkInfra) HasCtrlPlanePublicIp() bool {
+	if o != nil && o.CtrlPlanePublicIp.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCtrlPlanePublicIp gets a reference to the given NullableString and assigns it to the CtrlPlanePublicIp field.
+func (o *ClusterNetworkInfra) SetCtrlPlanePublicIp(v string) {
+	o.CtrlPlanePublicIp.Set(&v)
+}
+
+// SetCtrlPlanePublicIpNil sets the value for CtrlPlanePublicIp to be an explicit nil
+func (o *ClusterNetworkInfra) SetCtrlPlanePublicIpNil() {
+	o.CtrlPlanePublicIp.Set(nil)
+}
+
+// UnsetCtrlPlanePublicIp ensures that no value is present for CtrlPlanePublicIp, not even an explicit nil
+func (o *ClusterNetworkInfra) UnsetCtrlPlanePublicIp() {
+	o.CtrlPlanePublicIp.Unset()
+}
+
+// GetCtrlPlanePublicSrcIpList returns the CtrlPlanePublicSrcIpList field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ClusterNetworkInfra) GetCtrlPlanePublicSrcIpList() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.CtrlPlanePublicSrcIpList
+}
+
+// GetCtrlPlanePublicSrcIpListOk returns a tuple with the CtrlPlanePublicSrcIpList field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ClusterNetworkInfra) GetCtrlPlanePublicSrcIpListOk() ([]string, bool) {
+	if o == nil || IsNil(o.CtrlPlanePublicSrcIpList) {
+		return nil, false
+	}
+	return o.CtrlPlanePublicSrcIpList, true
+}
+
+// HasCtrlPlanePublicSrcIpList returns a boolean if a field has been set.
+func (o *ClusterNetworkInfra) HasCtrlPlanePublicSrcIpList() bool {
+	if o != nil && !IsNil(o.CtrlPlanePublicSrcIpList) {
+		return true
+	}
+
+	return false
+}
+
+// SetCtrlPlanePublicSrcIpList gets a reference to the given []string and assigns it to the CtrlPlanePublicSrcIpList field.
+func (o *ClusterNetworkInfra) SetCtrlPlanePublicSrcIpList(v []string) {
+	o.CtrlPlanePublicSrcIpList = v
+}
+
 func (o ClusterNetworkInfra) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.ClusterId) {
@@ -875,6 +953,12 @@ func (o ClusterNetworkInfra) ToMap() (map[string]interface{}, error) {
 	}
 	if o.GfwToVipId.IsSet() {
 		toSerialize["gfwToVipId"] = o.GfwToVipId.Get()
+	}
+	if o.CtrlPlanePublicIp.IsSet() {
+		toSerialize["ctrlPlanePublicIp"] = o.CtrlPlanePublicIp.Get()
+	}
+	if o.CtrlPlanePublicSrcIpList != nil {
+		toSerialize["ctrlPlanePublicSrcIpList"] = o.CtrlPlanePublicSrcIpList
 	}
 	return toSerialize, nil
 }

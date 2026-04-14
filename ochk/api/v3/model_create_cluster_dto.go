@@ -20,29 +20,31 @@ var _ MappedNullable = &CreateClusterDto{}
 
 // CreateClusterDto struct for CreateClusterDto
 type CreateClusterDto struct {
-	ClusterId                *string              `json:"clusterId,omitempty"`
-	Name                     NullableString       `json:"name,omitempty"`
-	IpamAddresses            NullableString       `json:"ipamAddresses,omitempty"`
-	IpamGateway              NullableString       `json:"ipamGateway,omitempty"`
-	IpamPrefix               *int32               `json:"ipamPrefix,omitempty"`
-	Version                  NullableString       `json:"version,omitempty"`
-	VersionId                *string              `json:"versionId,omitempty"`
-	ClusterVersion           *ClusterVersion      `json:"clusterVersion,omitempty"`
-	ControlPlaneReplicas     NullableInt32        `json:"controlPlaneReplicas,omitempty"`
-	WorkerPools              []WorkerPool         `json:"workerPools,omitempty"`
-	WorkersNetwork           NullableString       `json:"workersNetwork,omitempty"`
-	WorkersVpcId             NullableString       `json:"workersVpcId,omitempty"`
-	WorkersNetworkCidr       NullableString       `json:"workersNetworkCidr,omitempty"`
-	WorkersDns               []string             `json:"workersDns,omitempty"`
-	Labels                   map[string]string    `json:"labels,omitempty"`
-	ClusterNetworkInfra      *ClusterNetworkInfra `json:"clusterNetworkInfra,omitempty"`
-	NsxLb                    *NsxLb               `json:"nsxLb,omitempty"`
-	ApiServerPort            *int32               `json:"apiServerPort,omitempty"`
-	KonnectivityPort         *int32               `json:"konnectivityPort,omitempty"`
-	ServiceAddress           NullableString       `json:"serviceAddress,omitempty"`
-	ClientLbIpPoolCidr       NullableString       `json:"clientLbIpPoolCidr,omitempty"`
-	ConfigMap                *CreateConfigMapDto  `json:"configMap,omitempty"`
-	WorkerNodeSecurityGroups []string             `json:"workerNodeSecurityGroups,omitempty"`
+	ClusterId                  *string              `json:"clusterId,omitempty"`
+	Name                       NullableString       `json:"name,omitempty"`
+	IpamAddresses              NullableString       `json:"ipamAddresses,omitempty"`
+	IpamGateway                NullableString       `json:"ipamGateway,omitempty"`
+	IpamPrefix                 *int32               `json:"ipamPrefix,omitempty"`
+	Version                    NullableString       `json:"version,omitempty"`
+	VersionId                  *string              `json:"versionId,omitempty"`
+	ClusterVersion             *ClusterVersion      `json:"clusterVersion,omitempty"`
+	ControlPlaneReplicas       NullableInt32        `json:"controlPlaneReplicas,omitempty"`
+	WorkerPools                []WorkerPool         `json:"workerPools,omitempty"`
+	WorkersNetwork             NullableString       `json:"workersNetwork,omitempty"`
+	WorkersVpcId               NullableString       `json:"workersVpcId,omitempty"`
+	WorkersNetworkCidr         NullableString       `json:"workersNetworkCidr,omitempty"`
+	WorkersDns                 []string             `json:"workersDns,omitempty"`
+	Labels                     map[string]string    `json:"labels,omitempty"`
+	ClusterNetworkInfra        *ClusterNetworkInfra `json:"clusterNetworkInfra,omitempty"`
+	NsxLb                      *NsxLb               `json:"nsxLb,omitempty"`
+	ApiServerPort              *int32               `json:"apiServerPort,omitempty"`
+	KonnectivityPort           *int32               `json:"konnectivityPort,omitempty"`
+	ServiceAddress             NullableString       `json:"serviceAddress,omitempty"`
+	ClientLbIpPoolCidr         NullableString       `json:"clientLbIpPoolCidr,omitempty"`
+	ConfigMap                  *CreateConfigMapDto  `json:"configMap,omitempty"`
+	WorkerNodeSecurityGroups   []string             `json:"workerNodeSecurityGroups,omitempty"`
+	CpPublicAccess             NullableBool         `json:"cpPublicAccess,omitempty"`
+	CpPublicAccessSrcAddresses []string             `json:"cpPublicAccessSrcAddresses,omitempty"`
 }
 
 // NewCreateClusterDto instantiates a new CreateClusterDto object
@@ -912,6 +914,82 @@ func (o *CreateClusterDto) SetWorkerNodeSecurityGroups(v []string) {
 	o.WorkerNodeSecurityGroups = v
 }
 
+// GetCpPublicAccess returns the CpPublicAccess field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateClusterDto) GetCpPublicAccess() bool {
+	if o == nil || IsNil(o.CpPublicAccess.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.CpPublicAccess.Get()
+}
+
+// GetCpPublicAccessOk returns a tuple with the CpPublicAccess field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateClusterDto) GetCpPublicAccessOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CpPublicAccess.Get(), o.CpPublicAccess.IsSet()
+}
+
+// HasCpPublicAccess returns a boolean if a field has been set.
+func (o *CreateClusterDto) HasCpPublicAccess() bool {
+	if o != nil && o.CpPublicAccess.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCpPublicAccess gets a reference to the given NullableBool and assigns it to the CpPublicAccess field.
+func (o *CreateClusterDto) SetCpPublicAccess(v bool) {
+	o.CpPublicAccess.Set(&v)
+}
+
+// SetCpPublicAccessNil sets the value for CpPublicAccess to be an explicit nil
+func (o *CreateClusterDto) SetCpPublicAccessNil() {
+	o.CpPublicAccess.Set(nil)
+}
+
+// UnsetCpPublicAccess ensures that no value is present for CpPublicAccess, not even an explicit nil
+func (o *CreateClusterDto) UnsetCpPublicAccess() {
+	o.CpPublicAccess.Unset()
+}
+
+// GetCpPublicAccessSrcAddresses returns the CpPublicAccessSrcAddresses field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CreateClusterDto) GetCpPublicAccessSrcAddresses() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.CpPublicAccessSrcAddresses
+}
+
+// GetCpPublicAccessSrcAddressesOk returns a tuple with the CpPublicAccessSrcAddresses field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CreateClusterDto) GetCpPublicAccessSrcAddressesOk() ([]string, bool) {
+	if o == nil || IsNil(o.CpPublicAccessSrcAddresses) {
+		return nil, false
+	}
+	return o.CpPublicAccessSrcAddresses, true
+}
+
+// HasCpPublicAccessSrcAddresses returns a boolean if a field has been set.
+func (o *CreateClusterDto) HasCpPublicAccessSrcAddresses() bool {
+	if o != nil && !IsNil(o.CpPublicAccessSrcAddresses) {
+		return true
+	}
+
+	return false
+}
+
+// SetCpPublicAccessSrcAddresses gets a reference to the given []string and assigns it to the CpPublicAccessSrcAddresses field.
+func (o *CreateClusterDto) SetCpPublicAccessSrcAddresses(v []string) {
+	o.CpPublicAccessSrcAddresses = v
+}
+
 func (o CreateClusterDto) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.ClusterId) {
@@ -982,6 +1060,12 @@ func (o CreateClusterDto) ToMap() (map[string]interface{}, error) {
 	}
 	if o.WorkerNodeSecurityGroups != nil {
 		toSerialize["workerNodeSecurityGroups"] = o.WorkerNodeSecurityGroups
+	}
+	if o.CpPublicAccess.IsSet() {
+		toSerialize["cpPublicAccess"] = o.CpPublicAccess.Get()
+	}
+	if o.CpPublicAccessSrcAddresses != nil {
+		toSerialize["cpPublicAccessSrcAddresses"] = o.CpPublicAccessSrcAddresses
 	}
 	return toSerialize, nil
 }

@@ -27,6 +27,7 @@ type PublicIpAllocation struct {
 	ServiceList     []IPAMServiceInstance `json:"serviceList"`
 	AssignmentDate  NullableString        `json:"assignmentDate,omitempty"`
 	Services        NullableString        `json:"services,omitempty"`
+	BuildIn         NullableBool          `json:"buildIn,omitempty"`
 }
 
 // NewPublicIpAllocation instantiates a new PublicIpAllocation object
@@ -315,6 +316,49 @@ func (o *PublicIpAllocation) UnsetServices() {
 	o.Services.Unset()
 }
 
+// GetBuildIn returns the BuildIn field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *PublicIpAllocation) GetBuildIn() bool {
+	if o == nil || IsNil(o.BuildIn.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.BuildIn.Get()
+}
+
+// GetBuildInOk returns a tuple with the BuildIn field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PublicIpAllocation) GetBuildInOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BuildIn.Get(), o.BuildIn.IsSet()
+}
+
+// HasBuildIn returns a boolean if a field has been set.
+func (o *PublicIpAllocation) HasBuildIn() bool {
+	if o != nil && o.BuildIn.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBuildIn gets a reference to the given NullableBool and assigns it to the BuildIn field.
+func (o *PublicIpAllocation) SetBuildIn(v bool) {
+	o.BuildIn.Set(&v)
+}
+
+// SetBuildInNil sets the value for BuildIn to be an explicit nil
+func (o *PublicIpAllocation) SetBuildInNil() {
+	o.BuildIn.Set(nil)
+}
+
+// UnsetBuildIn ensures that no value is present for BuildIn, not even an explicit nil
+func (o *PublicIpAllocation) UnsetBuildIn() {
+	o.BuildIn.Unset()
+}
+
 func (o PublicIpAllocation) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.AllocationId) {
@@ -337,6 +381,9 @@ func (o PublicIpAllocation) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Services.IsSet() {
 		toSerialize["services"] = o.Services.Get()
+	}
+	if o.BuildIn.IsSet() {
+		toSerialize["buildIn"] = o.BuildIn.Get()
 	}
 	return toSerialize, nil
 }

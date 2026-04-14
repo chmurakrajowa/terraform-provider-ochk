@@ -9259,6 +9259,11 @@ components:
           items:
             $ref: '#/components/schemas/StatusCondition'
           nullable: true
+        filteredConditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusCondition'
+          nullable: true
         controlPlaneStatus:
           $ref: '#/components/schemas/ControlPlaneStatus'
         workersStatus:
@@ -9287,6 +9292,17 @@ components:
           nullable: true
         clientLbIpPoolCidr:
           type: string
+          nullable: true
+        cpPublicAccess:
+          type: boolean
+          nullable: true
+        cpPublicAccessPublicIp:
+          type: string
+          nullable: true
+        cpPublicAccessSrcAddresses:
+          type: array
+          items:
+            type: string
           nullable: true
       additionalProperties: false
     ClusterInstanceApiResponse:
@@ -9558,6 +9574,14 @@ components:
         gfwToVipId:
           type: string
           format: uuid
+          nullable: true
+        ctrlPlanePublicIp:
+          type: string
+          nullable: true
+        ctrlPlanePublicSrcIpList:
+          type: array
+          items:
+            type: string
           nullable: true
       additionalProperties: false
     ClusterVersion:
@@ -10059,6 +10083,14 @@ components:
         configMap:
           $ref: '#/components/schemas/CreateConfigMapDto'
         workerNodeSecurityGroups:
+          type: array
+          items:
+            type: string
+          nullable: true
+        cpPublicAccess:
+          type: boolean
+          nullable: true
+        cpPublicAccessSrcAddresses:
           type: array
           items:
             type: string
@@ -15086,6 +15118,18 @@ components:
         gfwIngressRuleExtId:
           type: string
           nullable: true
+        cpPaDNatRuleExtId:
+          type: string
+          nullable: true
+        cpPaGfwRuleExtId:
+          type: string
+          nullable: true
+        cpPaGfwCusSvcExtId:
+          type: string
+          nullable: true
+        gfwIngressRuleCusSvcExtId:
+          type: string
+          nullable: true
       additionalProperties: false
     NsxLoadBalancer:
       type: object
@@ -16149,6 +16193,9 @@ components:
           nullable: true
         services:
           type: string
+          nullable: true
+        buildIn:
+          type: boolean
           nullable: true
       additionalProperties: false
     PublicKey:

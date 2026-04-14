@@ -14873,6 +14873,13 @@
             },
             "nullable": true
           },
+          "filteredConditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusCondition"
+            },
+            "nullable": true
+          },
           "controlPlaneStatus": {
             "$ref": "#/components/schemas/ControlPlaneStatus"
           },
@@ -14911,6 +14918,21 @@
           },
           "clientLbIpPoolCidr": {
             "type": "string",
+            "nullable": true
+          },
+          "cpPublicAccess": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "cpPublicAccessPublicIp": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpPublicAccessSrcAddresses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           }
         },
@@ -15267,6 +15289,17 @@
           "gfwToVipId": {
             "type": "string",
             "format": "uuid",
+            "nullable": true
+          },
+          "ctrlPlanePublicIp": {
+            "type": "string",
+            "nullable": true
+          },
+          "ctrlPlanePublicSrcIpList": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           }
         },
@@ -15951,6 +15984,17 @@
             "$ref": "#/components/schemas/CreateConfigMapDto"
           },
           "workerNodeSecurityGroups": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "cpPublicAccess": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "cpPublicAccessSrcAddresses": {
             "type": "array",
             "items": {
               "type": "string"
@@ -22784,6 +22828,22 @@
           "gfwIngressRuleExtId": {
             "type": "string",
             "nullable": true
+          },
+          "cpPaDNatRuleExtId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpPaGfwRuleExtId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpPaGfwCusSvcExtId": {
+            "type": "string",
+            "nullable": true
+          },
+          "gfwIngressRuleCusSvcExtId": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -24181,6 +24241,10 @@
           },
           "services": {
             "type": "string",
+            "nullable": true
+          },
+          "buildIn": {
+            "type": "boolean",
             "nullable": true
           }
         },

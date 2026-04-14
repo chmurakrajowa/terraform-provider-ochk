@@ -20,35 +20,39 @@ var _ MappedNullable = &ClusterInstance{}
 
 // ClusterInstance struct for ClusterInstance
 type ClusterInstance struct {
-	ClusterId                 *string                    `json:"clusterId,omitempty"`
-	ProjectId                 *string                    `json:"projectId,omitempty"`
-	PlatformId                *string                    `json:"platformId,omitempty"`
-	CreationDate              NullableString             `json:"creationDate,omitempty"`
-	CreatedById               NullableString             `json:"createdById,omitempty"`
-	CreatedBy                 NullableString             `json:"createdBy,omitempty"`
-	ModificationDate          NullableString             `json:"modificationDate,omitempty"`
-	ModifiedById              NullableString             `json:"modifiedById,omitempty"`
-	ModifiedBy                NullableString             `json:"modifiedBy,omitempty"`
-	Name                      NullableString             `json:"name,omitempty"`
-	ExternalId                NullableString             `json:"externalId,omitempty"`
-	Version                   NullableString             `json:"version,omitempty"`
-	VersionId                 *string                    `json:"versionId,omitempty"`
-	ApiVersion                NullableString             `json:"apiVersion,omitempty"`
-	Labels                    map[string]string          `json:"labels,omitempty"`
-	Phase                     NullableString             `json:"phase,omitempty"`
-	InfrastructureProvisioned NullableBool               `json:"infrastructureProvisioned,omitempty"`
-	StatusOk                  NullableBool               `json:"statusOk,omitempty"`
-	Ipam                      *ClusterIpam               `json:"ipam,omitempty"`
-	Machines                  []ClusterMachine           `json:"machines,omitempty"`
-	Conditions                []StatusCondition          `json:"conditions,omitempty"`
-	ControlPlaneStatus        *ControlPlaneStatus        `json:"controlPlaneStatus,omitempty"`
-	WorkersStatus             *WorkersStatus             `json:"workersStatus,omitempty"`
-	MachineDeployments        []ClusterMachineDeployment `json:"machineDeployments,omitempty"`
-	ControlPlaneReplicas      NullableInt32              `json:"controlPlaneReplicas,omitempty"`
-	WorkersDns                []string                   `json:"workersDns,omitempty"`
-	RouterId                  *string                    `json:"routerId,omitempty"`
-	WorkerPools               []WorkerPool               `json:"workerPools,omitempty"`
-	ClientLbIpPoolCidr        NullableString             `json:"clientLbIpPoolCidr,omitempty"`
+	ClusterId                  *string                    `json:"clusterId,omitempty"`
+	ProjectId                  *string                    `json:"projectId,omitempty"`
+	PlatformId                 *string                    `json:"platformId,omitempty"`
+	CreationDate               NullableString             `json:"creationDate,omitempty"`
+	CreatedById                NullableString             `json:"createdById,omitempty"`
+	CreatedBy                  NullableString             `json:"createdBy,omitempty"`
+	ModificationDate           NullableString             `json:"modificationDate,omitempty"`
+	ModifiedById               NullableString             `json:"modifiedById,omitempty"`
+	ModifiedBy                 NullableString             `json:"modifiedBy,omitempty"`
+	Name                       NullableString             `json:"name,omitempty"`
+	ExternalId                 NullableString             `json:"externalId,omitempty"`
+	Version                    NullableString             `json:"version,omitempty"`
+	VersionId                  *string                    `json:"versionId,omitempty"`
+	ApiVersion                 NullableString             `json:"apiVersion,omitempty"`
+	Labels                     map[string]string          `json:"labels,omitempty"`
+	Phase                      NullableString             `json:"phase,omitempty"`
+	InfrastructureProvisioned  NullableBool               `json:"infrastructureProvisioned,omitempty"`
+	StatusOk                   NullableBool               `json:"statusOk,omitempty"`
+	Ipam                       *ClusterIpam               `json:"ipam,omitempty"`
+	Machines                   []ClusterMachine           `json:"machines,omitempty"`
+	Conditions                 []StatusCondition          `json:"conditions,omitempty"`
+	FilteredConditions         []StatusCondition          `json:"filteredConditions,omitempty"`
+	ControlPlaneStatus         *ControlPlaneStatus        `json:"controlPlaneStatus,omitempty"`
+	WorkersStatus              *WorkersStatus             `json:"workersStatus,omitempty"`
+	MachineDeployments         []ClusterMachineDeployment `json:"machineDeployments,omitempty"`
+	ControlPlaneReplicas       NullableInt32              `json:"controlPlaneReplicas,omitempty"`
+	WorkersDns                 []string                   `json:"workersDns,omitempty"`
+	RouterId                   *string                    `json:"routerId,omitempty"`
+	WorkerPools                []WorkerPool               `json:"workerPools,omitempty"`
+	ClientLbIpPoolCidr         NullableString             `json:"clientLbIpPoolCidr,omitempty"`
+	CpPublicAccess             NullableBool               `json:"cpPublicAccess,omitempty"`
+	CpPublicAccessPublicIp     NullableString             `json:"cpPublicAccessPublicIp,omitempty"`
+	CpPublicAccessSrcAddresses []string                   `json:"cpPublicAccessSrcAddresses,omitempty"`
 }
 
 // NewClusterInstance instantiates a new ClusterInstance object
@@ -886,6 +890,39 @@ func (o *ClusterInstance) SetConditions(v []StatusCondition) {
 	o.Conditions = v
 }
 
+// GetFilteredConditions returns the FilteredConditions field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ClusterInstance) GetFilteredConditions() []StatusCondition {
+	if o == nil {
+		var ret []StatusCondition
+		return ret
+	}
+	return o.FilteredConditions
+}
+
+// GetFilteredConditionsOk returns a tuple with the FilteredConditions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ClusterInstance) GetFilteredConditionsOk() ([]StatusCondition, bool) {
+	if o == nil || IsNil(o.FilteredConditions) {
+		return nil, false
+	}
+	return o.FilteredConditions, true
+}
+
+// HasFilteredConditions returns a boolean if a field has been set.
+func (o *ClusterInstance) HasFilteredConditions() bool {
+	if o != nil && !IsNil(o.FilteredConditions) {
+		return true
+	}
+
+	return false
+}
+
+// SetFilteredConditions gets a reference to the given []StatusCondition and assigns it to the FilteredConditions field.
+func (o *ClusterInstance) SetFilteredConditions(v []StatusCondition) {
+	o.FilteredConditions = v
+}
+
 // GetControlPlaneStatus returns the ControlPlaneStatus field value if set, zero value otherwise.
 func (o *ClusterInstance) GetControlPlaneStatus() ControlPlaneStatus {
 	if o == nil || IsNil(o.ControlPlaneStatus) {
@@ -1167,6 +1204,125 @@ func (o *ClusterInstance) UnsetClientLbIpPoolCidr() {
 	o.ClientLbIpPoolCidr.Unset()
 }
 
+// GetCpPublicAccess returns the CpPublicAccess field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ClusterInstance) GetCpPublicAccess() bool {
+	if o == nil || IsNil(o.CpPublicAccess.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.CpPublicAccess.Get()
+}
+
+// GetCpPublicAccessOk returns a tuple with the CpPublicAccess field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ClusterInstance) GetCpPublicAccessOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CpPublicAccess.Get(), o.CpPublicAccess.IsSet()
+}
+
+// HasCpPublicAccess returns a boolean if a field has been set.
+func (o *ClusterInstance) HasCpPublicAccess() bool {
+	if o != nil && o.CpPublicAccess.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCpPublicAccess gets a reference to the given NullableBool and assigns it to the CpPublicAccess field.
+func (o *ClusterInstance) SetCpPublicAccess(v bool) {
+	o.CpPublicAccess.Set(&v)
+}
+
+// SetCpPublicAccessNil sets the value for CpPublicAccess to be an explicit nil
+func (o *ClusterInstance) SetCpPublicAccessNil() {
+	o.CpPublicAccess.Set(nil)
+}
+
+// UnsetCpPublicAccess ensures that no value is present for CpPublicAccess, not even an explicit nil
+func (o *ClusterInstance) UnsetCpPublicAccess() {
+	o.CpPublicAccess.Unset()
+}
+
+// GetCpPublicAccessPublicIp returns the CpPublicAccessPublicIp field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ClusterInstance) GetCpPublicAccessPublicIp() string {
+	if o == nil || IsNil(o.CpPublicAccessPublicIp.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CpPublicAccessPublicIp.Get()
+}
+
+// GetCpPublicAccessPublicIpOk returns a tuple with the CpPublicAccessPublicIp field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ClusterInstance) GetCpPublicAccessPublicIpOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CpPublicAccessPublicIp.Get(), o.CpPublicAccessPublicIp.IsSet()
+}
+
+// HasCpPublicAccessPublicIp returns a boolean if a field has been set.
+func (o *ClusterInstance) HasCpPublicAccessPublicIp() bool {
+	if o != nil && o.CpPublicAccessPublicIp.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCpPublicAccessPublicIp gets a reference to the given NullableString and assigns it to the CpPublicAccessPublicIp field.
+func (o *ClusterInstance) SetCpPublicAccessPublicIp(v string) {
+	o.CpPublicAccessPublicIp.Set(&v)
+}
+
+// SetCpPublicAccessPublicIpNil sets the value for CpPublicAccessPublicIp to be an explicit nil
+func (o *ClusterInstance) SetCpPublicAccessPublicIpNil() {
+	o.CpPublicAccessPublicIp.Set(nil)
+}
+
+// UnsetCpPublicAccessPublicIp ensures that no value is present for CpPublicAccessPublicIp, not even an explicit nil
+func (o *ClusterInstance) UnsetCpPublicAccessPublicIp() {
+	o.CpPublicAccessPublicIp.Unset()
+}
+
+// GetCpPublicAccessSrcAddresses returns the CpPublicAccessSrcAddresses field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ClusterInstance) GetCpPublicAccessSrcAddresses() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.CpPublicAccessSrcAddresses
+}
+
+// GetCpPublicAccessSrcAddressesOk returns a tuple with the CpPublicAccessSrcAddresses field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ClusterInstance) GetCpPublicAccessSrcAddressesOk() ([]string, bool) {
+	if o == nil || IsNil(o.CpPublicAccessSrcAddresses) {
+		return nil, false
+	}
+	return o.CpPublicAccessSrcAddresses, true
+}
+
+// HasCpPublicAccessSrcAddresses returns a boolean if a field has been set.
+func (o *ClusterInstance) HasCpPublicAccessSrcAddresses() bool {
+	if o != nil && !IsNil(o.CpPublicAccessSrcAddresses) {
+		return true
+	}
+
+	return false
+}
+
+// SetCpPublicAccessSrcAddresses gets a reference to the given []string and assigns it to the CpPublicAccessSrcAddresses field.
+func (o *ClusterInstance) SetCpPublicAccessSrcAddresses(v []string) {
+	o.CpPublicAccessSrcAddresses = v
+}
+
 func (o ClusterInstance) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.ClusterId) {
@@ -1232,6 +1388,9 @@ func (o ClusterInstance) ToMap() (map[string]interface{}, error) {
 	if o.Conditions != nil {
 		toSerialize["conditions"] = o.Conditions
 	}
+	if o.FilteredConditions != nil {
+		toSerialize["filteredConditions"] = o.FilteredConditions
+	}
 	if !IsNil(o.ControlPlaneStatus) {
 		toSerialize["controlPlaneStatus"] = o.ControlPlaneStatus
 	}
@@ -1255,6 +1414,15 @@ func (o ClusterInstance) ToMap() (map[string]interface{}, error) {
 	}
 	if o.ClientLbIpPoolCidr.IsSet() {
 		toSerialize["clientLbIpPoolCidr"] = o.ClientLbIpPoolCidr.Get()
+	}
+	if o.CpPublicAccess.IsSet() {
+		toSerialize["cpPublicAccess"] = o.CpPublicAccess.Get()
+	}
+	if o.CpPublicAccessPublicIp.IsSet() {
+		toSerialize["cpPublicAccessPublicIp"] = o.CpPublicAccessPublicIp.Get()
+	}
+	if o.CpPublicAccessSrcAddresses != nil {
+		toSerialize["cpPublicAccessSrcAddresses"] = o.CpPublicAccessSrcAddresses
 	}
 	return toSerialize, nil
 }

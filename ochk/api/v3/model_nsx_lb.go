@@ -20,18 +20,22 @@ var _ MappedNullable = &NsxLb{}
 
 // NsxLb struct for NsxLb
 type NsxLb struct {
-	ClusterId             *string        `json:"clusterId,omitempty"`
-	ApiPort               NullableInt32  `json:"apiPort,omitempty"`
-	KonPort               NullableInt32  `json:"konPort,omitempty"`
-	MgmtNetCidr           NullableString `json:"mgmtNetCidr,omitempty"`
-	MgmtVsAddress         NullableString `json:"mgmtVsAddress,omitempty"`
-	ApiMonitorExtId       NullableString `json:"apiMonitorExtId,omitempty"`
-	KonMonitorExtId       NullableString `json:"konMonitorExtId,omitempty"`
-	ApiServerPoolExtId    NullableString `json:"apiServerPoolExtId,omitempty"`
-	KonServerPoolExtId    NullableString `json:"konServerPoolExtId,omitempty"`
-	ApiVirtualServerExtId NullableString `json:"apiVirtualServerExtId,omitempty"`
-	KonVirtualServerExtId NullableString `json:"konVirtualServerExtId,omitempty"`
-	GfwIngressRuleExtId   NullableString `json:"gfwIngressRuleExtId,omitempty"`
+	ClusterId                 *string        `json:"clusterId,omitempty"`
+	ApiPort                   NullableInt32  `json:"apiPort,omitempty"`
+	KonPort                   NullableInt32  `json:"konPort,omitempty"`
+	MgmtNetCidr               NullableString `json:"mgmtNetCidr,omitempty"`
+	MgmtVsAddress             NullableString `json:"mgmtVsAddress,omitempty"`
+	ApiMonitorExtId           NullableString `json:"apiMonitorExtId,omitempty"`
+	KonMonitorExtId           NullableString `json:"konMonitorExtId,omitempty"`
+	ApiServerPoolExtId        NullableString `json:"apiServerPoolExtId,omitempty"`
+	KonServerPoolExtId        NullableString `json:"konServerPoolExtId,omitempty"`
+	ApiVirtualServerExtId     NullableString `json:"apiVirtualServerExtId,omitempty"`
+	KonVirtualServerExtId     NullableString `json:"konVirtualServerExtId,omitempty"`
+	GfwIngressRuleExtId       NullableString `json:"gfwIngressRuleExtId,omitempty"`
+	CpPaDNatRuleExtId         NullableString `json:"cpPaDNatRuleExtId,omitempty"`
+	CpPaGfwRuleExtId          NullableString `json:"cpPaGfwRuleExtId,omitempty"`
+	CpPaGfwCusSvcExtId        NullableString `json:"cpPaGfwCusSvcExtId,omitempty"`
+	GfwIngressRuleCusSvcExtId NullableString `json:"gfwIngressRuleCusSvcExtId,omitempty"`
 }
 
 // NewNsxLb instantiates a new NsxLb object
@@ -556,6 +560,178 @@ func (o *NsxLb) UnsetGfwIngressRuleExtId() {
 	o.GfwIngressRuleExtId.Unset()
 }
 
+// GetCpPaDNatRuleExtId returns the CpPaDNatRuleExtId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NsxLb) GetCpPaDNatRuleExtId() string {
+	if o == nil || IsNil(o.CpPaDNatRuleExtId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CpPaDNatRuleExtId.Get()
+}
+
+// GetCpPaDNatRuleExtIdOk returns a tuple with the CpPaDNatRuleExtId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NsxLb) GetCpPaDNatRuleExtIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CpPaDNatRuleExtId.Get(), o.CpPaDNatRuleExtId.IsSet()
+}
+
+// HasCpPaDNatRuleExtId returns a boolean if a field has been set.
+func (o *NsxLb) HasCpPaDNatRuleExtId() bool {
+	if o != nil && o.CpPaDNatRuleExtId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCpPaDNatRuleExtId gets a reference to the given NullableString and assigns it to the CpPaDNatRuleExtId field.
+func (o *NsxLb) SetCpPaDNatRuleExtId(v string) {
+	o.CpPaDNatRuleExtId.Set(&v)
+}
+
+// SetCpPaDNatRuleExtIdNil sets the value for CpPaDNatRuleExtId to be an explicit nil
+func (o *NsxLb) SetCpPaDNatRuleExtIdNil() {
+	o.CpPaDNatRuleExtId.Set(nil)
+}
+
+// UnsetCpPaDNatRuleExtId ensures that no value is present for CpPaDNatRuleExtId, not even an explicit nil
+func (o *NsxLb) UnsetCpPaDNatRuleExtId() {
+	o.CpPaDNatRuleExtId.Unset()
+}
+
+// GetCpPaGfwRuleExtId returns the CpPaGfwRuleExtId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NsxLb) GetCpPaGfwRuleExtId() string {
+	if o == nil || IsNil(o.CpPaGfwRuleExtId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CpPaGfwRuleExtId.Get()
+}
+
+// GetCpPaGfwRuleExtIdOk returns a tuple with the CpPaGfwRuleExtId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NsxLb) GetCpPaGfwRuleExtIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CpPaGfwRuleExtId.Get(), o.CpPaGfwRuleExtId.IsSet()
+}
+
+// HasCpPaGfwRuleExtId returns a boolean if a field has been set.
+func (o *NsxLb) HasCpPaGfwRuleExtId() bool {
+	if o != nil && o.CpPaGfwRuleExtId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCpPaGfwRuleExtId gets a reference to the given NullableString and assigns it to the CpPaGfwRuleExtId field.
+func (o *NsxLb) SetCpPaGfwRuleExtId(v string) {
+	o.CpPaGfwRuleExtId.Set(&v)
+}
+
+// SetCpPaGfwRuleExtIdNil sets the value for CpPaGfwRuleExtId to be an explicit nil
+func (o *NsxLb) SetCpPaGfwRuleExtIdNil() {
+	o.CpPaGfwRuleExtId.Set(nil)
+}
+
+// UnsetCpPaGfwRuleExtId ensures that no value is present for CpPaGfwRuleExtId, not even an explicit nil
+func (o *NsxLb) UnsetCpPaGfwRuleExtId() {
+	o.CpPaGfwRuleExtId.Unset()
+}
+
+// GetCpPaGfwCusSvcExtId returns the CpPaGfwCusSvcExtId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NsxLb) GetCpPaGfwCusSvcExtId() string {
+	if o == nil || IsNil(o.CpPaGfwCusSvcExtId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CpPaGfwCusSvcExtId.Get()
+}
+
+// GetCpPaGfwCusSvcExtIdOk returns a tuple with the CpPaGfwCusSvcExtId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NsxLb) GetCpPaGfwCusSvcExtIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CpPaGfwCusSvcExtId.Get(), o.CpPaGfwCusSvcExtId.IsSet()
+}
+
+// HasCpPaGfwCusSvcExtId returns a boolean if a field has been set.
+func (o *NsxLb) HasCpPaGfwCusSvcExtId() bool {
+	if o != nil && o.CpPaGfwCusSvcExtId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCpPaGfwCusSvcExtId gets a reference to the given NullableString and assigns it to the CpPaGfwCusSvcExtId field.
+func (o *NsxLb) SetCpPaGfwCusSvcExtId(v string) {
+	o.CpPaGfwCusSvcExtId.Set(&v)
+}
+
+// SetCpPaGfwCusSvcExtIdNil sets the value for CpPaGfwCusSvcExtId to be an explicit nil
+func (o *NsxLb) SetCpPaGfwCusSvcExtIdNil() {
+	o.CpPaGfwCusSvcExtId.Set(nil)
+}
+
+// UnsetCpPaGfwCusSvcExtId ensures that no value is present for CpPaGfwCusSvcExtId, not even an explicit nil
+func (o *NsxLb) UnsetCpPaGfwCusSvcExtId() {
+	o.CpPaGfwCusSvcExtId.Unset()
+}
+
+// GetGfwIngressRuleCusSvcExtId returns the GfwIngressRuleCusSvcExtId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NsxLb) GetGfwIngressRuleCusSvcExtId() string {
+	if o == nil || IsNil(o.GfwIngressRuleCusSvcExtId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.GfwIngressRuleCusSvcExtId.Get()
+}
+
+// GetGfwIngressRuleCusSvcExtIdOk returns a tuple with the GfwIngressRuleCusSvcExtId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NsxLb) GetGfwIngressRuleCusSvcExtIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.GfwIngressRuleCusSvcExtId.Get(), o.GfwIngressRuleCusSvcExtId.IsSet()
+}
+
+// HasGfwIngressRuleCusSvcExtId returns a boolean if a field has been set.
+func (o *NsxLb) HasGfwIngressRuleCusSvcExtId() bool {
+	if o != nil && o.GfwIngressRuleCusSvcExtId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetGfwIngressRuleCusSvcExtId gets a reference to the given NullableString and assigns it to the GfwIngressRuleCusSvcExtId field.
+func (o *NsxLb) SetGfwIngressRuleCusSvcExtId(v string) {
+	o.GfwIngressRuleCusSvcExtId.Set(&v)
+}
+
+// SetGfwIngressRuleCusSvcExtIdNil sets the value for GfwIngressRuleCusSvcExtId to be an explicit nil
+func (o *NsxLb) SetGfwIngressRuleCusSvcExtIdNil() {
+	o.GfwIngressRuleCusSvcExtId.Set(nil)
+}
+
+// UnsetGfwIngressRuleCusSvcExtId ensures that no value is present for GfwIngressRuleCusSvcExtId, not even an explicit nil
+func (o *NsxLb) UnsetGfwIngressRuleCusSvcExtId() {
+	o.GfwIngressRuleCusSvcExtId.Unset()
+}
+
 func (o NsxLb) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.ClusterId) {
@@ -593,6 +769,18 @@ func (o NsxLb) ToMap() (map[string]interface{}, error) {
 	}
 	if o.GfwIngressRuleExtId.IsSet() {
 		toSerialize["gfwIngressRuleExtId"] = o.GfwIngressRuleExtId.Get()
+	}
+	if o.CpPaDNatRuleExtId.IsSet() {
+		toSerialize["cpPaDNatRuleExtId"] = o.CpPaDNatRuleExtId.Get()
+	}
+	if o.CpPaGfwRuleExtId.IsSet() {
+		toSerialize["cpPaGfwRuleExtId"] = o.CpPaGfwRuleExtId.Get()
+	}
+	if o.CpPaGfwCusSvcExtId.IsSet() {
+		toSerialize["cpPaGfwCusSvcExtId"] = o.CpPaGfwCusSvcExtId.Get()
+	}
+	if o.GfwIngressRuleCusSvcExtId.IsSet() {
+		toSerialize["gfwIngressRuleCusSvcExtId"] = o.GfwIngressRuleCusSvcExtId.Get()
 	}
 	return toSerialize, nil
 }
