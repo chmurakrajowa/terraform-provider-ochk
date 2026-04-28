@@ -36,7 +36,7 @@ type VirtualMachineInstance struct {
 	CreationDate                          NullableString                 `json:"creationDate,omitempty"`
 	ModificationDate                      NullableString                 `json:"modificationDate,omitempty"`
 	SshKey                                NullableString                 `json:"sshKey,omitempty"`
-	Tags                                  []Tag                          `json:"tags,omitempty"`
+	Tags                                  []Tag                          `json:"tags"`
 	BackupListCollection                  []BackupList                   `json:"backupListCollection,omitempty"`
 	StoragePolicy                         *StoragePolicy                 `json:"storagePolicy,omitempty"`
 	NumCoresPerSocket                     NullableInt32                  `json:"numCoresPerSocket,omitempty"`

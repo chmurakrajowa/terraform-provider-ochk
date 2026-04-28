@@ -53,6 +53,13 @@ sed -i -e 's/hasDefaultValue/defaultValuePresent/g' ./ochk/api/swagger.json
 
 sed -i -e 's/"format": "date-time",//g' ./ochk/api/swagger.json
 
+sed -i '' '/"startDate": {/,/}/{
+  /"format": "date-time"/d
+  s/"type": "string",/"type": "string"/
+}' ./ochk/api/swagger.json
+
+
+
 openapi-generator generate -i ./ochk/api/swagger.json -g go -o ./ochk/api/v3 \
     --additional-properties=enumClassPrefix=true,useOneOfDiscriminatorLookup=true,generateMarshalJSON=false
 
@@ -68,6 +75,13 @@ rm ./ochk/api/v3/README.md
 rm -rf ./ochk/api/v3/go.mod
 rm ./ochk/api/v3/go.sum
 
+
+# na potrzeby rezerwacji allocation public address ip: musimy wyslac serviceList: []
+sed -i -e 's/serviceList,omitempty/serviceList/g' ochk/api/v3/model_public_ip_allocation.go
+
+# na potrzeby modyfikacji viertul machine  musimy wyslac dać mozliwość wysyłki   "tags": [],  w obiekcie virtual machine
+
+sed -i -e 's/tags,omitempty/tags/g' ochk/api/v3/model_virtual_machine_instance.go
 
 
 sed -i -e 's/Body Nullable/Body /g' ochk/api/v3/model_http_response.go
@@ -112,11 +126,11 @@ jq '
 # change date-time type field to string in modification and creation date
 
 # for AccountInstance
-#jq '
-#  .components.schemas.AccountInstance.properties.creationDate.format = "string"
-#' ./ochk/api/swagger.json > ./ochk/api/tmp.json && mv ./ochk/api/tmp.json ./ochk/api/swagger.json
-#
-#
+jq '
+  .components.schemas.AccountInstance.properties.creationDate.format = "string"
+' ./ochk/api/swagger.json > ./ochk/api/tmp.json && mv ./ochk/api/tmp.json ./ochk/api/swagger.json
+
+
 #jq '
 #  .components.schemas.AccountInstance.properties.modificationDate.format = "string"
 #' ./ochk/api/swagger.json > ./ochk/api/tmp.json && mv ./ochk/api/tmp.json ./ochk/api/swagger.json
