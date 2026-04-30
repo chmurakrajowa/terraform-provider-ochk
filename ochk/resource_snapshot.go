@@ -162,7 +162,7 @@ func resourceSnapshotRead(ctx context.Context, d *schema.ResourceData, meta inte
 			d.SetId("")
 			return diag.Errorf("snapshot with id %s not found: %+v", id, err)
 		}
-		return diag.Errorf("error while reading snapshot sss : %+v", err)
+		return diag.Errorf("error while reading snapshot: %+v", err)
 	}
 
 	if err := d.Set("display_name", snapshot.GetSnapshotName()); err != nil {

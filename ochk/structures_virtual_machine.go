@@ -108,14 +108,6 @@ func validateVirtualMachine(d *schema.ResourceData, platformType openapi.Platfor
 			return fmt.Sprintf(E1003, "backup_lists", "backup_lists")
 		}
 
-		if d.Get("encryption").(bool) {
-			return fmt.Sprintf(E1004, "encryption")
-		}
-
-		if len(d.Get("encryption_key_id").(string)) > 0 {
-			return fmt.Sprintf(E1004, "encryption_key_id")
-		}
-
 		if len(d.Get("encryption_recrypt").(string)) > 0 {
 			return fmt.Sprintf(E1004, "encryption_recrypt")
 		}
