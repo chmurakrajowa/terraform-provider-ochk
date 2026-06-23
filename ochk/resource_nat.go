@@ -195,19 +195,19 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error while reading nat: %+v", err)
 	}
 
-	if err := d.Set("display_name", Nat.DisplayName); err != nil {
+	if err := d.Set("display_name", Nat.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("vrf_id", Nat.TierZeroRouterId); err != nil {
+	if err := d.Set("vrf_id", Nat.GetTierZeroRouterId()); err != nil {
 		return diag.Errorf("error setting vrf_id: %+v", err)
 	}
 
-	if err := d.Set("nat_type", Nat.NatType); err != nil {
+	if err := d.Set("nat_type", Nat.GetNatType()); err != nil {
 		return diag.Errorf("error setting nat_type: %+v", err)
 	}
 
-	if err := d.Set("created_by", Nat.CreatedBy); err != nil {
+	if err := d.Set("created_by", Nat.GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
@@ -215,7 +215,7 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", Nat.ModifiedBy); err != nil {
+	if err := d.Set("modified_by", Nat.GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
@@ -223,15 +223,14 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
-	if err := d.Set("action", Nat.Action); err != nil {
+	if err := d.Set("action", Nat.GetAction()); err != nil {
 		return diag.Errorf("error setting action: %+v", err)
 	}
 
-	if err := d.Set("priority", Nat.Priority); err != nil {
+	if err := d.Set("priority", Nat.GetPriority()); err != nil {
 		return diag.Errorf("error setting priority: %+v", err)
 	}
 
-	Nat.GetVirtualNetworkId()
 	if *Nat.NatType == "AUTO" {
 		if err := d.Set("virtual_network_id", Nat.GetVirtualNetworkId()); err != nil {
 			return diag.Errorf("error setting virtual_network_id: %+v", err)
@@ -244,36 +243,36 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 				return diag.Errorf("error setting description: %+v", err)
 			}
 		} else {
-			if err := d.Set("description", Nat.Description); err != nil {
+			if err := d.Set("description", Nat.GetDescription()); err != nil {
 				return diag.Errorf("error setting description: %+v", err)
 			}
 		}
 
-		if err := d.Set("enabled", Nat.Enabled); err != nil {
+		if err := d.Set("enabled", Nat.GetEnabled()); err != nil {
 			return diag.Errorf("error setting enabled: %+v", err)
 		}
 
-		if err := d.Set("source_network", Nat.SourceNetwork); err != nil {
+		if err := d.Set("source_network", Nat.GetSourceNetwork()); err != nil {
 			return diag.Errorf("error setting source_network: %+v", err)
 		}
 
-		if err := d.Set("destination_network", Nat.DestinationNetwork); err != nil {
+		if err := d.Set("destination_network", Nat.GetDestinationNetwork()); err != nil {
 			return diag.Errorf("error setting destination_network: %+v", err)
 		}
 
 		if Nat.GetAction() == "DNAT" || Nat.GetAction() == "SNAT" {
-			if err := d.Set("translated_network", Nat.TranslatedNetwork); err != nil {
+			if err := d.Set("translated_network", Nat.GetTranslatedNetwork()); err != nil {
 				return diag.Errorf("error setting translated_network: %+v", err)
 			}
 		}
 
 		if Nat.GetAction() == "DNAT" {
 			if Nat.GetTranslatedPorts() != "" && Nat.ServiceInstance.GetServiceId() != "" {
-				if err := d.Set("service_id", Nat.ServiceInstance.ServiceId); err != nil {
+				if err := d.Set("service_id", Nat.ServiceInstance.GetServiceId()); err != nil {
 					return diag.Errorf("error setting service_id: %+v", err)
 				}
 
-				if err := d.Set("translated_ports", Nat.TranslatedPorts); err != nil {
+				if err := d.Set("translated_ports", Nat.GetTranslatedPorts()); err != nil {
 					return diag.Errorf("error setting translated_ports: %+v", err)
 				}
 			}
