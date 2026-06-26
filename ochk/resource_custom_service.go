@@ -139,7 +139,8 @@ func resourceCustomServiceRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("description", customService.GetDescription()); err != nil {
+	description := customService.GetDescription()
+	if err := d.Set("description", description); err != nil {
 		return diag.Errorf("error setting description: %+v", err)
 	}
 
@@ -208,10 +209,11 @@ func resourceCustomServiceDelete(ctx context.Context, d *schema.ResourceData, me
 func mapResourceDataToCustomService(d *schema.ResourceData) openapi.CustomServiceInstance {
 
 	if d.Get("description") == "" {
+		description := d.Get("description").(string)
 		return openapi.CustomServiceInstance{
 			DisplayName:      NewNullableString(d.Get("display_name").(string)),
 			ProjectId:        NewNullableString(d.Get("project_id").(string)),
-			Description:      openapi.NullableString{},
+			Description:      NewNullableString(description),
 			L4PortSetEntries: expandCustomServicePorts(d.Get("ports").([]interface{})),
 		}
 	} else {
