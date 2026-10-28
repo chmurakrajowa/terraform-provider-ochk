@@ -1,13 +1,17 @@
 package ochk
 
 import (
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFlattenVrfs(t *testing.T) {
+	stringPtr := func(value string) *string {
+		return &value
+	}
 	cases := []struct {
 		expanded  []openapi.RouterInstance
 		flattened []map[strfmt.UUID]interface{}
@@ -22,22 +26,22 @@ func TestFlattenVrfs(t *testing.T) {
 				{
 					RouterId:    NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
 					DisplayName: NewNullableString("VRF1"),
-					RouterType:  openapi.TIER0.Ptr(),
+					RouterType:  openapi.ROUTERTYPE_TIER0.Ptr(),
 				},
 				{
 					RouterId:    NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
 					DisplayName: NewNullableString("VRF2"),
-					RouterType:  openapi.TIER0.Ptr(),
+					RouterType:  openapi.ROUTERTYPE_TIER0.Ptr(),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"vrf_id":       strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
-					"display_name": "VRF1",
+					"vrf_id":       stringPtr("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					"display_name": stringPtr("VRF1"),
 				},
 				{
-					"vrf_id":       strfmt.UUID("791bf702-22fb-4c76-bebb-1fee7ee75607"),
-					"display_name": "VRF2",
+					"vrf_id":       stringPtr("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					"display_name": stringPtr("VRF2"),
 				},
 			},
 		},

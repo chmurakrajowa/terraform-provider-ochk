@@ -3,11 +3,12 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"testing"
 )
 
 func testAccPortForwardingResourceConfig(display_name string, protocol string, internal_port_id string, internal_ip_address string, internal_port int, public_address string, external_port int) string {
@@ -97,7 +98,7 @@ func testAccPortForwardingResourceNotExists(displayName string, floatingIpId str
 		}
 
 		if len(PortFwd) > 0 {
-			return fmt.Errorf("port_forwarding %s still exists", PortFwd[0].PortForwardingId)
+			return fmt.Errorf("port_forwarding %s still exists", PortFwd[0].GetPortForwardingId())
 		}
 		return nil
 	}

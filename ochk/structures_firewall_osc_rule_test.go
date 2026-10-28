@@ -1,10 +1,11 @@
 package ochk
 
 import (
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFirewallOscRule(t *testing.T) {
@@ -28,7 +29,7 @@ func TestFirewallOscRule(t *testing.T) {
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"rule_id": strfmt.UUID("c3514ee8-ee12-42b8-8dae-6f97c5271721"),
+					"rule_id": "c3514ee8-ee12-42b8-8dae-6f97c5271721",
 					"name":    "test1",
 				},
 			},

@@ -1,10 +1,11 @@
 package ochk
 
 import (
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFlattenExpandServicesFromIDs(t *testing.T) {
@@ -98,11 +99,11 @@ func TestFlattenServices(t *testing.T) {
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"service_id":   strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					"service_id":   "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					"display_name": "test1",
 				},
 				{
-					"service_id":   strfmt.UUID("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					"service_id":   "791bf702-22fb-4c76-bebb-1fee7ee75607",
 					"display_name": "test2",
 				},
 			},

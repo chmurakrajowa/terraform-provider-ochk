@@ -2,10 +2,11 @@ package ochk
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFlattenFloatingIpAddress(t *testing.T) {
@@ -29,7 +30,7 @@ func TestFlattenFloatingIpAddress(t *testing.T) {
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"floating_ip_id": strfmt.UUID("92457621-e5af-49d6-921e-184566018fa9"),
+					"floating_ip_id": "92457621-e5af-49d6-921e-184566018fa9",
 					"display_name":   "publicIp1",
 					"public_address": "203.0.113.15",
 				},

@@ -1,10 +1,11 @@
 package ochk
 
 import (
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 //const (
@@ -39,45 +40,45 @@ func TestFlattenDeployments(t *testing.T) {
 					DeploymentId:            NewNullableString("3e8b5314-6c6c-4848-9830-6af905c3d878"),
 					DisplayName:             NewNullableString("rchlinux.iso"),
 					DeploymentCategory:      openapi.DeploymentCategory("LINUX").Ptr(),
-					DeploymentType:          openapi.ISO.Ptr(),
+					DeploymentType:          openapi.DEPLOYMENTTYPE_ISO.Ptr(),
 					DeploymentInitialSizeGB: NewNullableFloat32(32),
 				},
 				{
 					DeploymentId:            NewNullableString("198405db-6d29-41db-b2fa-5f8a0b33de39"),
 					DisplayName:             NewNullableString("centOS"),
 					DeploymentCategory:      openapi.DeploymentCategory("LINUX").Ptr(),
-					DeploymentType:          openapi.ISO.Ptr(),
+					DeploymentType:          openapi.DEPLOYMENTTYPE_ISO.Ptr(),
 					DeploymentInitialSizeGB: NewNullableFloat32(40),
 				},
 				{
 					DeploymentId:            NewNullableString("564e684a-b2f2-4236-ba48-ae9bf32d0f1a"),
 					DisplayName:             NewNullableString("Rocky 8"),
 					DeploymentCategory:      openapi.DeploymentCategory("LINUX").Ptr(),
-					DeploymentType:          openapi.ISO.Ptr(),
+					DeploymentType:          openapi.DEPLOYMENTTYPE_ISO.Ptr(),
 					DeploymentInitialSizeGB: NewNullableFloat32(50),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"deployment_id":       strfmt.UUID("3e8b5314-6c6c-4848-9830-6af905c3d878"),
+					"deployment_id":       "3e8b5314-6c6c-4848-9830-6af905c3d878",
 					"display_name":        "rchlinux.iso",
 					"deployment_category": openapi.DeploymentCategory("LINUX"),
 					"deployment_type":     openapi.DeploymentType("ISO"),
-					"initial_size_gb":     30,
+					"initial_size_gb":     float32(32),
 				},
 				{
-					"deployment_id":       strfmt.UUID("198405db-6d29-41db-b2fa-5f8a0b33de39"),
+					"deployment_id":       "198405db-6d29-41db-b2fa-5f8a0b33de39",
 					"display_name":        "centOS",
 					"deployment_category": openapi.DeploymentCategory("LINUX"),
 					"deployment_type":     openapi.DeploymentType("ISO"),
-					"initial_size_gb":     40,
+					"initial_size_gb":     float32(40),
 				},
 				{
-					"deployment_id":       strfmt.UUID("564e684a-b2f2-4236-ba48-ae9bf32d0f1a"),
+					"deployment_id":       "564e684a-b2f2-4236-ba48-ae9bf32d0f1a",
 					"display_name":        "Rocky 8",
 					"deployment_category": openapi.DeploymentCategory("LINUX"),
 					"deployment_type":     openapi.DeploymentType("ISO"),
-					"initial_size_gb":     50,
+					"initial_size_gb":     float32(50),
 				},
 			},
 		},

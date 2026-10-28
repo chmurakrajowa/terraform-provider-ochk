@@ -3,13 +3,14 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func testAccFirewallEWRuleCreateResourceId(firewallRuleResourceName string) resource.ImportStateIdFunc {
@@ -166,23 +167,31 @@ func TestCheckOrderOfSecurityPolicies(t *testing.T) {
 	})
 }
 
-func checkOrderOfSecurityPolicies(securityPolicies []openapi.DfwRule, displayNames []string) bool {
-	indexOfFirstElement := findIndexOfFirstMatch(len(securityPolicies), func(idx int) bool {
-		return securityPolicies[idx].DisplayName == NewNullableString(displayNames[0])
-	})
-
-	if indexOfFirstElement == -1 {
-		return false
+func checkOrderOfSecurityPolicies(
+	securityPolicies []openapi.DfwRule,
+	displayNames []string,
+) bool {
+	if len(displayNames) == 0 {
+		return true
 	}
 
-	if indexOfFirstElement+len(displayNames) > len(securityPolicies) {
-		return false
+	for start := 0; start+len(displayNames) <= len(securityPolicies); start++ {
+		matches := true
+
+		for i, expected := range displayNames {
+			name := securityPolicies[start+i].DisplayName.Get()
+			if name == nil || *name != expected {
+				matches = false
+				break
+			}
+		}
+
+		if matches {
+			return true
+		}
 	}
 
-	leftSlice := securityPolicies[indexOfFirstElement : indexOfFirstElement+len(displayNames)]
-	return slicesEqual(len(leftSlice), len(displayNames), func(lhsIdx int, rhsIdx int) bool {
-		return leftSlice[lhsIdx].DisplayName == NewNullableString(displayNames[rhsIdx])
-	})
+	return false
 }
 
 func testAccFirewallEWRuleResourceConfig(displayName string, source string, destination string, action string, ipProtocol string, direction string, priority int64, customServiceResourceID string) string {
@@ -412,7 +421,7 @@ func testAccFirewallEWRuleResourceDoesntExist(displayName string) resource.TestC
 		}
 
 		if len(firewallRule) > 0 {
-			return fmt.Errorf("firewall EW rule %s still exists", firewallRule[0].RuleId)
+			return fmt.Errorf("firewall EW rule %s still exists", firewallRule[0].GetRuleId())
 		}
 
 		return nil

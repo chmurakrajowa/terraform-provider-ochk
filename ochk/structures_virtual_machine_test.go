@@ -1,9 +1,10 @@
 package ochk
 
 import (
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFlattenExpandVirtualDisks(t *testing.T) {
@@ -25,7 +26,7 @@ func TestFlattenExpandVirtualDisks(t *testing.T) {
 					ControllerId:          &ControllerIdValue,
 					LunId:                 &LunIdValue,
 					SizeMB:                &SizeMBValue,
-					VirtualDiskDeviceType: openapi.IDE.Ptr(),
+					VirtualDiskDeviceType: openapi.VIRTUALDISKDEVICETYPE_IDE.Ptr(),
 				},
 			},
 			flattened: []map[string]interface{}{
@@ -43,13 +44,13 @@ func TestFlattenExpandVirtualDisks(t *testing.T) {
 					ControllerId:          &ControllerIdValue,
 					LunId:                 &LunIdValue,
 					SizeMB:                &SizeMBValue,
-					VirtualDiskDeviceType: openapi.IDE.Ptr(),
+					VirtualDiskDeviceType: openapi.VIRTUALDISKDEVICETYPE_IDE.Ptr(),
 				},
 				{
 					ControllerId:          &ControllerIdValue2,
 					LunId:                 &LunIdValue2,
 					SizeMB:                &SizeMBValue2,
-					VirtualDiskDeviceType: openapi.SATA.Ptr(), // before it was IDE2
+					VirtualDiskDeviceType: openapi.VIRTUALDISKDEVICETYPE_SATA.Ptr(), // before it was IDE2
 				},
 			},
 			flattened: []map[string]interface{}{
@@ -63,8 +64,7 @@ func TestFlattenExpandVirtualDisks(t *testing.T) {
 					"controller_id": 11,
 					"lun_id":        22,
 					"size_mb":       33,
-					"device_type":   openapi.VirtualDiskDeviceType("IDE2"),
-				},
+					"device_type":   openapi.VirtualDiskDeviceType("SATA")},
 			},
 		},
 	}

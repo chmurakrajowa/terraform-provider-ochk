@@ -3,11 +3,12 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"testing"
 )
 
 type AccountTestData struct {
@@ -99,7 +100,7 @@ func testAccountResourceNotExists(displayName string) resource.TestCheckFunc {
 		}
 
 		if len(accounts) > 0 {
-			return fmt.Errorf("account %s still exists", accounts[0].AccountId)
+			return fmt.Errorf("account %s still exists", accounts[0].GetAccountId())
 		}
 
 		return nil

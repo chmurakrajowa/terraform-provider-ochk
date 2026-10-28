@@ -1,10 +1,11 @@
 package ochk
 
 import (
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFlattenTags(t *testing.T) {
@@ -40,14 +41,14 @@ func TestFlattenTags(t *testing.T) {
 				{
 					"tag_id":                   "10",
 					"display_name":             "Tag1",
-					"project_id":               strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
-					"related_virtual_machines": []strfmt.UUID(nil),
+					"project_id":               "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					"related_virtual_machines": []*string(nil),
 				},
 				{
 					"tag_id":                   "20",
 					"display_name":             "Tag2",
-					"project_id":               strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867aa"),
-					"related_virtual_machines": []strfmt.UUID(nil),
+					"project_id":               "e1675817-f1a1-45c1-988b-ec2f142867aa",
+					"related_virtual_machines": []*string(nil),
 				},
 			},
 		},

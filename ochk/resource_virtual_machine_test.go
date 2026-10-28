@@ -3,11 +3,12 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"testing"
 )
 
 type VirtualDiskTestData struct {
@@ -471,7 +472,7 @@ func testAccVirtualMachineResourceNotExists(displayName string) resource.TestChe
 		}
 
 		if len(virtualMachines) > 0 {
-			return fmt.Errorf("virtual machine %s still exists", virtualMachines[0].VirtualMachineId)
+			return fmt.Errorf("virtual machine %s still exists", virtualMachines[0].GetVirtualMachineId())
 		}
 
 		return nil

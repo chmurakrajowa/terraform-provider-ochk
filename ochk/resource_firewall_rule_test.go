@@ -2,6 +2,7 @@ package ochk
 
 import (
 	"fmt"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
@@ -125,7 +126,7 @@ func testAccFirewallRuleResourceNotExists(displayName string) resource.TestCheck
 		}
 
 		if len(firewallRule) > 0 {
-			return fmt.Errorf("firewall rule %s still exists", firewallRule[0].RuleId)
+			return fmt.Errorf("firewall rule %s still exists", firewallRule[0].GetRuleId())
 		}
 		return nil
 	}

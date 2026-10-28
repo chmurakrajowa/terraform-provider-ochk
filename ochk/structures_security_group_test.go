@@ -1,10 +1,11 @@
 package ochk
 
 import (
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFlattenExpandSecurityGroupMembers(t *testing.T) {
@@ -29,8 +30,8 @@ func TestFlattenExpandSecurityGroupMembers(t *testing.T) {
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"security_group_id": strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
-					"project_id":        strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
+					"security_group_id": "dcbf922a-a2fc-401f-ac1f-5159c15d4b8b",
+					"project_id":        "dcbf922a-a2fc-401f-ac1f-5159c15d4b8b",
 					"display_name":      "MySG1",
 				},
 			},

@@ -3,11 +3,12 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"strconv"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"strconv"
-	"testing"
 )
 
 type AutoNatTestData struct {
@@ -358,7 +359,7 @@ func testAccNatResourceNotExists(displayName string) resource.TestCheckFunc {
 		}
 
 		if len(nat) > 0 {
-			return fmt.Errorf("nat %s still exists", nat[0].RuleId)
+			return fmt.Errorf("nat %s still exists", nat[0].GetRuleId())
 		}
 		return nil
 	}

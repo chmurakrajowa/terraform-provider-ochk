@@ -1,10 +1,10 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/go-openapi/strfmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestFlattenExpandRouterInstanceFromIDs(t *testing.T) {
@@ -27,7 +27,7 @@ func TestFlattenExpandRouterInstanceFromIDs(t *testing.T) {
 				},
 			},
 			flattened: []interface{}{
-				strfmt.UUID("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
+				"afdb07d8-d0d2-11ea-87d0-0242ac130003",
 			},
 		},
 
@@ -37,11 +37,11 @@ func TestFlattenExpandRouterInstanceFromIDs(t *testing.T) {
 				{
 					DisplayName: NewNullableString("T1"),
 					RouterId:    NewNullableString("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
-					RouterType:  openapi.TIER1.Ptr(), // tutaj było coś takiego "Ingress Router"
+					RouterType:  openapi.ROUTERTYPE_TIER1.Ptr(), // tutaj było coś takiego "Ingress Router"
 				},
 			},
 			flattened: []interface{}{
-				strfmt.UUID("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
+				"afdb07d8-d0d2-11ea-87d0-0242ac130003",
 			},
 			onlyTestFlatten: true,
 		},
@@ -57,8 +57,8 @@ func TestFlattenExpandRouterInstanceFromIDs(t *testing.T) {
 				},
 			},
 			flattened: []interface{}{
-				strfmt.UUID("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
-				strfmt.UUID("114d82f0-79cc-4501-a574-dd920b6b6e7e"),
+				"afdb07d8-d0d2-11ea-87d0-0242ac130003",
+				"114d82f0-79cc-4501-a574-dd920b6b6e7e",
 			},
 		},
 	}

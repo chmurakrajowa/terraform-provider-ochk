@@ -1,66 +1,56 @@
 package ochk
 
 import (
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
-
-const (
-	protocol  L4ProtocolType = "protocol"
-	protocol2 L4ProtocolType = "protocol2"
-)
-
-func castTestStringToL4ProtocolEnum(e string) openapi.L4Protocol {
-	switch e {
-	case "protocol":
-		return protocol
-	case "protocol2":
-		return protocol2
-	default:
-		return ""
-	}
-}
 
 func TestFlattenExpandCustomServicePorts(t *testing.T) {
-
 	cases := []struct {
+		name      string
 		expanded  []openapi.L4PortSetEntry
 		flattened []map[string]interface{}
 	}{
-
-		// nil values
 		{
+			name:      "nil input",
 			expanded:  nil,
 			flattened: nil,
 		},
-
 		{
+			name: "TCP and UDP ports",
 			expanded: []openapi.L4PortSetEntry{
 				{
-					L4PortSetEntryId: NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867aa"),
-					L4Protocol:       castTestStringToL4ProtocolEnum("protocol").Ptr(),
-					SourcePorts:      transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"1", "2", "3"}).List()),
-					DestinationPorts: transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"3", "4", "5"}).List()),
+					L4Protocol: openapi.L4Protocol("TCP").Ptr(),
+					SourcePorts: transformInterfaceSliceToStringSlice(
+						flattenStringSlice([]string{"1", "2", "3"}).List(),
+					),
+					DestinationPorts: transformInterfaceSliceToStringSlice(
+						flattenStringSlice([]string{"3", "4", "5"}).List(),
+					),
 				},
 				{
-					L4PortSetEntryId: NewNullableString("21675817-f1a1-45c1-988b-ec2f142867aa"),
-					L4Protocol:       castTestStringToL4ProtocolEnum("protocol2").Ptr(),
-					SourcePorts:      transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"11", "22", "33"}).List()),
-					DestinationPorts: transformInterfaceSliceToStringSlice(flattenStringSlice([]string{"33", "44", "55"}).List()),
+					L4Protocol: openapi.L4Protocol("UDP").Ptr(),
+					SourcePorts: transformInterfaceSliceToStringSlice(
+						flattenStringSlice([]string{"11", "22", "33"}).List(),
+					),
+					DestinationPorts: transformInterfaceSliceToStringSlice(
+						flattenStringSlice([]string{"33", "44", "55"}).List(),
+					),
 				},
 			},
 			flattened: []map[string]interface{}{
 				{
 					"id":          "e1675817-f1a1-45c1-988b-ec2f142867aa",
-					"protocol":    "protocol",
+					"protocol":    "TCP",
 					"source":      flattenStringSlice([]string{"1", "2", "3"}),
 					"destination": flattenStringSlice([]string{"3", "4", "5"}),
 				},
 				{
 					"id":          "21675817-f1a1-45c1-988b-ec2f142867aa",
-					"protocol":    "protocol2",
+					"protocol":    "UDP",
 					"source":      flattenStringSlice([]string{"11", "22", "33"}),
 					"destination": flattenStringSlice([]string{"33", "44", "55"}),
 				},
@@ -69,28 +59,28 @@ func TestFlattenExpandCustomServicePorts(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		//FIXME comparing nested *schema.Set's gives false result because reflect.DeepEquals cannot compare type.Func
-		//flattenedList := mapSliceToInterfaceSlice(c.flattened)
-		//outFlattened := flattenCustomServicePorts(c.expanded)
-		//assert.EqualValues(t, flattenedList, outFlattened, "Error matching output and flattened: %#v vs %#v", outFlattened, flattenedList)
+		t.Run(c.name, func(t *testing.T) {
+			input := mapSliceToInterfaceSliceStr(c.flattened)
+			actual := expandCustomServicePorts(input)
 
-		flattenedInterfaceSlice := mapSliceToInterfaceSliceStr(c.flattened)
-		outExpanded := expandCustomServicePorts(flattenedInterfaceSlice)
-		assert.EqualValues(t, c.expanded, outExpanded, "Error matching output and expanded: %#v vs %#v", outExpanded, c.expanded)
+			assert.EqualValues(t, c.expanded, actual)
+		})
 	}
 }
 
 func TestFlattenCustomServices(t *testing.T) {
 	cases := []struct {
+		name      string
 		expanded  []openapi.CustomServiceInstance
 		flattened []map[strfmt.UUID]interface{}
 	}{
-		// nil values
 		{
+			name:      "nil input",
 			expanded:  nil,
 			flattened: nil,
 		},
 		{
+			name: "two custom services",
 			expanded: []openapi.CustomServiceInstance{
 				{
 					ServiceId:   NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
@@ -105,21 +95,25 @@ func TestFlattenCustomServices(t *testing.T) {
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"custom_service_id": strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					"custom_service_id": "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					"display_name":      "test1",
-					"project_id":        strfmt.UUID("aa675817-f1a1-45c1-988b-ec2f142867e1"),
+					"project_id":        "aa675817-f1a1-45c1-988b-ec2f142867e1",
 				},
 				{
-					"custom_service_id": strfmt.UUID("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					"custom_service_id": "791bf702-22fb-4c76-bebb-1fee7ee75607",
 					"display_name":      "test2",
-					"project_id":        strfmt.UUID("aa675817-f1a1-45c1-988b-ec2f142867e1"),
+					"project_id":        "aa675817-f1a1-45c1-988b-ec2f142867e1",
 				},
 			},
 		},
 	}
+
 	for _, c := range cases {
-		flattenedType := mapSliceToInterfaceSlice(c.flattened)
-		outFlattened := mapSliceToInterfaceSlice(flattenCustomServices(c.expanded))
-		assert.EqualValues(t, flattenedType, outFlattened, "Error matching output and flattened: %#v vs %#v", outFlattened, flattenedType)
+		t.Run(c.name, func(t *testing.T) {
+			expected := mapSliceToInterfaceSlice(c.flattened)
+			actual := mapSliceToInterfaceSlice(flattenCustomServices(c.expanded))
+
+			assert.EqualValues(t, expected, actual)
+		})
 	}
 }

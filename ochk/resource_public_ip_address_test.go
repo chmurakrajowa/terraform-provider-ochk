@@ -3,10 +3,11 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"testing"
 )
 
 type PublicIpTestData struct {
@@ -83,7 +84,7 @@ func testAccPublicIpAddressResourceNotExists(name string) resource.TestCheckFunc
 		}
 
 		if len(publicIp) > 0 {
-			return fmt.Errorf("public ip address %s still exists", publicIp[0].PublicIpAddress.IpAddressId)
+			return fmt.Errorf("public ip address %s still exists", publicIp[0].PublicIpAddress.GetIpAddress())
 		}
 		return nil
 	}

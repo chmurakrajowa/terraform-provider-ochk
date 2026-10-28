@@ -3,11 +3,12 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"testing"
 )
 
 func testAccirewallSNRuleCreateResourceId(firewallRuleResourceName string) resource.ImportStateIdFunc {
@@ -173,7 +174,7 @@ func testAccFirewallSNRuleResourceNotExists(displayName string) resource.TestChe
 		}
 
 		if len(firewallRule) > 0 {
-			return fmt.Errorf("firewall SN rule %s still exists", firewallRule[0].RuleId)
+			return fmt.Errorf("firewall SN rule %s still exists", firewallRule[0].GetRuleId())
 		}
 
 		return nil
