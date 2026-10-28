@@ -3,9 +3,10 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 )
 
 type AvailablePublicIpProxy struct {
@@ -26,7 +27,11 @@ func (p *AvailablePublicIpProxy) Get(ctx context.Context) (*openapi.PublicIpAddr
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("getting first available public ip address failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("getting first available public ip address failed: %s", message)
 	}
 
 	return response.PublicIpAddress, nil

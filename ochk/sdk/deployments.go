@@ -3,6 +3,7 @@ package sdk
 import (
 	"context"
 	"fmt"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 
@@ -24,7 +25,11 @@ func (p *DeploymentsProxy) Read(ctx context.Context, deploymentID strfmt.UUID) (
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving deployment failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving deployment failed: %s", message)
 	}
 
 	return response.DeploymentInstance, nil
@@ -41,7 +46,11 @@ func (p *DeploymentsProxy) ListByDisplayName(ctx context.Context, displayName st
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing deployments by display name %s failed: %s", displayName, response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing deployments by display name %s failed: %s", displayName, message)
 	}
 
 	return response.DeploymentInstanceCollection, nil
@@ -57,7 +66,11 @@ func (p *DeploymentsProxy) List(ctx context.Context) ([]openapi.DeploymentInstan
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing deployments failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing deployments failed: %s", message)
 	}
 
 	return response.DeploymentInstanceCollection, nil

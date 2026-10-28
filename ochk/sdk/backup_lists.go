@@ -3,10 +3,11 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/go-openapi/strfmt"
 )
 
 type BackupListsProxy struct {
@@ -26,7 +27,11 @@ func (p *BackupListsProxy) Read(ctx context.Context, backupPlanID strfmt.UUID, b
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving backup list failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving backup list failed: %s", message)
 	}
 
 	return response.BackupList, nil
@@ -47,7 +52,11 @@ func (p *BackupListsProxy) ListBackupListByName(ctx context.Context, backupPlanI
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("Listing backup list failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing backup list failed: %s", message)
 	}
 
 	return response.BackupListCollection, nil
@@ -68,7 +77,12 @@ func (p *BackupListsProxy) ListBackupList(ctx context.Context, backupPlanID strf
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("Listing backup list failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+
+		return nil, fmt.Errorf("listing backup list failed: %s", message)
 	}
 
 	return response.BackupListCollection, nil

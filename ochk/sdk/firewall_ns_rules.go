@@ -3,10 +3,11 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/go-openapi/strfmt"
 )
 
 type FirewallSNRulesProxy struct {
@@ -29,7 +30,11 @@ func (p *FirewallSNRulesProxy) Create(ctx context.Context, routerID strfmt.UUID,
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating firewall SN rule failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating firewall SN rule failed: %s", message)
 	}
 
 	return put.GfwRule, nil
@@ -49,7 +54,11 @@ func (p *FirewallSNRulesProxy) Update(ctx context.Context, routerID strfmt.UUID,
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("modifing firewall SN rule failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("modifying firewall SN rule failed: %s", message)
 	}
 
 	return put.GfwRule, nil
@@ -69,7 +78,11 @@ func (p *FirewallSNRulesProxy) Read(ctx context.Context, routerID strfmt.UUID, r
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving firewall SN rule failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving firewall SN rule failed: %s", message)
 	}
 
 	return response.RuleInstance, nil
@@ -90,7 +103,11 @@ func (p *FirewallSNRulesProxy) ListByDisplayName(ctx context.Context, routerID s
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing firewall SN rule failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing firewall SN rule failed: %s", message)
 	}
 
 	return response.RuleInstances, nil
@@ -110,7 +127,11 @@ func (p *FirewallSNRulesProxy) List(ctx context.Context, routerID strfmt.UUID) (
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing firewall SN rule failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing firewall SN rule failed: %s", message)
 	}
 
 	return response.RuleInstances, nil
@@ -140,7 +161,11 @@ func (p *FirewallSNRulesProxy) Delete(ctx context.Context, routerID strfmt.UUID,
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting firewall SN rule failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting firewall SN rule failed: %s", message)
 	}
 
 	return nil

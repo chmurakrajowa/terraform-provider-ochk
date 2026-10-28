@@ -2,6 +2,7 @@ package ochk
 
 import (
 	"fmt"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -83,8 +84,11 @@ func expandSecurityGroupMembers(in []interface{}, platformType openapi.PlatformT
 			}
 
 			if !contains([]string{string(VIRTUAL_MACHINE)}, string(memberTypeValue)) {
-				return nil, diag.Errorf("error while expand security group:'' %+v", VIRTUAL_MACHINE),
-					"Available MemberType: " + string(VIRTUAL_MACHINE)
+				return nil, diag.Errorf(
+					"invalid MemberType: %s. Available MemberType: %s",
+					string(memberTypeValue),
+					string(VIRTUAL_MACHINE),
+				), ""
 			}
 		}
 
@@ -99,9 +103,16 @@ func expandSecurityGroupMembers(in []interface{}, platformType openapi.PlatformT
 				return nil, diag.Errorf("error while expand security group:'' %+v", GROUP), "GROUP"
 			}
 
-			if !contains([]string{string(VIRTUAL_MACHINE), string(IPCOLLECTION)}, string(memberTypeValue)) {
-				return nil, diag.Errorf("error while expand security group:'' %+v", VIRTUAL_MACHINE, IPCOLLECTION),
-					"Available MemberType: " + string(VIRTUAL_MACHINE) + " " + string(IPCOLLECTION)
+			if !contains(
+				[]string{string(VIRTUAL_MACHINE), string(IPCOLLECTION)},
+				string(memberTypeValue),
+			) {
+				return nil, diag.Errorf(
+					"invalid MemberType: %s. Available MemberType: %s, %s",
+					string(memberTypeValue),
+					string(VIRTUAL_MACHINE),
+					string(IPCOLLECTION),
+				), ""
 			}
 
 		}

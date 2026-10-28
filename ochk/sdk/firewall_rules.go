@@ -3,6 +3,7 @@ package sdk
 import (
 	"context"
 	"fmt"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 
@@ -28,7 +29,11 @@ func (p *FirewallRulesProxy) Read(ctx context.Context, projectId strfmt.UUID, se
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving firwall openstack rule: failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving firewall openstack rule: failed: %s", message)
 	}
 	if response.FirewallRule != nil {
 		return response.FirewallRule, nil
@@ -46,7 +51,7 @@ func (p *FirewallRulesProxy) List(ctx context.Context, projectId strfmt.UUID, se
 	mutex.Unlock()
 
 	if false {
-		return nil, fmt.Errorf("openstack rule response.Payload.Success: %w", response)
+		return nil, fmt.Errorf("openstack rule response.Payload.Success: %+v", response)
 	}
 
 	if err != nil {
@@ -55,7 +60,11 @@ func (p *FirewallRulesProxy) List(ctx context.Context, projectId strfmt.UUID, se
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing firewall openstack rule failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing firewall openstack rule failed: %s", message)
 	}
 
 	return response.FirewallRuleCollection, nil
@@ -75,7 +84,11 @@ func (p *FirewallRulesProxy) ListByName(ctx context.Context, projectId strfmt.UU
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing firewall rules failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing firewall rules failed: %s", message)
 	}
 
 	return response.FirewallRuleCollection, nil
@@ -95,7 +108,11 @@ func (p *FirewallRulesProxy) Create(ctx context.Context, projectId strfmt.UUID, 
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating firewall rule failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating firewall rule failed: %s", message)
 	}
 
 	return put.FirewallRule, nil
@@ -114,7 +131,11 @@ func (p *FirewallRulesProxy) Update(ctx context.Context, projectId strfmt.UUID, 
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating updating rule failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("updating rule failed: %s", message)
 	}
 
 	return put.FirewallRule, nil
@@ -131,7 +152,11 @@ func (p *FirewallRulesProxy) Delete(ctx context.Context, projectId strfmt.UUID, 
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting firewall rule failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting firewall rule failed: %s", message)
 	}
 
 	return nil

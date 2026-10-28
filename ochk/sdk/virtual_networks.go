@@ -3,10 +3,11 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/go-openapi/strfmt"
 )
 
 type VirtualNetworksProxy struct {
@@ -30,7 +31,11 @@ func (p *VirtualNetworksProxy) Create(ctx context.Context, virtualNetwork openap
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating virtual network failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating virtual network failed: %s", message)
 	}
 
 	return put.RequestInstance, nil
@@ -50,7 +55,11 @@ func (p *VirtualNetworksProxy) Update(ctx context.Context, virtualNetwork openap
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("modifying virtual network failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("modifying virtual network failed: %s", message)
 	}
 
 	return put.RequestInstance, nil
@@ -75,7 +84,11 @@ func (p *VirtualNetworksProxy) Read(ctx context.Context, virtualNetworkID strfmt
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving virtual network failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving virtual network failed: %s", message)
 	}
 
 	return put.VirtualNetworkInstance, nil
@@ -97,7 +110,11 @@ func (p *VirtualNetworksProxy) ListByDisplayName(ctx context.Context, displayNam
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing virtual networks failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing virtual networks failed: %s", message)
 	}
 
 	return response.VirtualNetworkInstanceCollection, nil
@@ -117,7 +134,11 @@ func (p *VirtualNetworksProxy) List(ctx context.Context) ([]openapi.VirtualNetwo
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing virtual networks failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing virtual networks failed: %s", message)
 	}
 
 	return response.VirtualNetworkInstanceCollection, nil
@@ -133,7 +154,11 @@ func (p *VirtualNetworksProxy) Delete(ctx context.Context, virtualNetworkID strf
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("deleting virtual network failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("deleting virtual network failed: %s", message)
 	}
 
 	return response.RequestInstance, nil

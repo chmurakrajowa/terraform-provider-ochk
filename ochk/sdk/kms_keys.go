@@ -3,9 +3,10 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 )
 
 type KMSKeysProxy struct {
@@ -27,7 +28,11 @@ func (p *KMSKeysProxy) Create(ctx context.Context, keyInstance openapi.KeyInstan
 	isSuccess := *post.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating KMS key failed: %s", post.Messages)
+		message := "no error message"
+		if value := post.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating KMS key failed: %s", message)
 	}
 
 	return post.KeyInstance, nil
@@ -46,7 +51,11 @@ func (p *KMSKeysProxy) Import(ctx context.Context, keyImport openapi.KeyImport) 
 	isSuccess := *post.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("importing KMS key failed: %s", post.Messages)
+		message := "no error message"
+		if value := post.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("importing KMS key failed: %s", message)
 	}
 
 	return post.KeyInstance, nil
@@ -64,7 +73,11 @@ func (p *KMSKeysProxy) Read(ctx context.Context, keyID string) (*openapi.KeyInst
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, httpResponse, fmt.Errorf("retrieving KMS key failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, httpResponse, fmt.Errorf("retrieving KMS key failed: %s", message)
 	}
 
 	return response.KeyInstance, httpResponse, nil
@@ -83,7 +96,11 @@ func (p *KMSKeysProxy) ListByDisplayName(ctx context.Context, displayName string
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing KMS keys failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing KMS keys failed: %s", message)
 	}
 
 	return response.KeyInstanceCollection, nil
@@ -102,7 +119,11 @@ func (p *KMSKeysProxy) List(ctx context.Context) ([]openapi.KeyInstance, error) 
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing KMS keys failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing KMS keys failed: %s", message)
 	}
 
 	return response.KeyInstanceCollection, nil
@@ -119,7 +140,11 @@ func (p *KMSKeysProxy) Delete(ctx context.Context, keyID string) error {
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting KMS key failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting KMS key failed: %s", message)
 	}
 
 	return nil

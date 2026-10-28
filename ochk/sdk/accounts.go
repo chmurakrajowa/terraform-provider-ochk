@@ -3,9 +3,10 @@ package sdk
 import (
 	"context"
 	"fmt"
+	"net/http"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
-	"net/http"
 )
 
 type AccountsProxy struct {
@@ -25,7 +26,11 @@ func (p *AccountsProxy) Read(ctx context.Context, accountID strfmt.UUID) (*opena
 	//
 	isSuccess := *response.Success
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving billing account failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving billing account failed: %s", message)
 	}
 
 	return response.AccountInstance, nil
@@ -41,7 +46,11 @@ func (p *AccountsProxy) ListAccountByName(ctx context.Context, accountName strin
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing billing accounts failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing billing accounts failed: %s", message)
 	}
 	return response.AccountInstanceCollection, nil
 }
@@ -56,7 +65,11 @@ func (p *AccountsProxy) ListAccounts(ctx context.Context) ([]openapi.AccountInst
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("Listing billing accounts failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("Listing billing accounts failed: %s", message)
 	}
 
 	return response.AccountInstanceCollection, nil
@@ -71,7 +84,11 @@ func (p *AccountsProxy) Create(ctx context.Context, account openapi.AccountInsta
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating account failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating account failed: %s", message)
 	}
 
 	return put.AccountInstance, nil
@@ -90,7 +107,11 @@ func (p *AccountsProxy) Delete(ctx context.Context, accountID strfmt.UUID) error
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting accountt failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting account failed: %s", message)
 	}
 
 	return nil
@@ -108,7 +129,11 @@ func (p *AccountsProxy) Update(ctx context.Context, account openapi.AccountInsta
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("modifying account failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("modifying account failed: %s", message)
 	}
 	return put.AccountInstance, nil
 }

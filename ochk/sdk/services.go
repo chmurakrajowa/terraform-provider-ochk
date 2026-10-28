@@ -3,10 +3,11 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/go-openapi/strfmt"
 )
 
 type ServicesProxy struct {
@@ -27,7 +28,11 @@ func (p *ServicesProxy) Read(ctx context.Context, serviceID strfmt.UUID) (*opena
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving service failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving service failed: %s", message)
 	}
 
 	return response.ServiceInstance, nil
@@ -47,7 +52,11 @@ func (p *ServicesProxy) ListByDisplayName(ctx context.Context, displayName strin
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing services failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing services failed: %s", message)
 	}
 
 	return response.ServiceInstanceCollection, nil
@@ -67,7 +76,11 @@ func (p *ServicesProxy) ListServices(ctx context.Context) ([]openapi.ServiceInst
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing services failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing services failed: %s", message)
 	}
 
 	return response.ServiceInstanceCollection, nil

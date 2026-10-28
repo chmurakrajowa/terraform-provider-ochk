@@ -3,10 +3,11 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/go-openapi/strfmt"
 )
 
 type SecurityGroupsProxy struct {
@@ -28,7 +29,11 @@ func (p *SecurityGroupsProxy) Create(ctx context.Context, securityGroup openapi.
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating security group failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating security group failed: %s", message)
 	}
 
 	return put.SecurityGroup, nil
@@ -48,7 +53,11 @@ func (p *SecurityGroupsProxy) Update(ctx context.Context, securityGroup openapi.
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("modifying security group failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("modifying security group failed: %s", message)
 	}
 
 	return put.SecurityGroup, nil
@@ -67,7 +76,11 @@ func (p *SecurityGroupsProxy) Read(ctx context.Context, securityGroupID strfmt.U
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving security group failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving security group failed: %s", message)
 	}
 
 	return response.SecurityGroup, nil
@@ -86,7 +99,11 @@ func (p *SecurityGroupsProxy) ListByDisplayName(ctx context.Context, displayName
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing security groups failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing security groups failed: %s", message)
 	}
 
 	return response.SecurityGroupCollection, nil
@@ -105,7 +122,11 @@ func (p *SecurityGroupsProxy) List(ctx context.Context) ([]openapi.SecurityGroup
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing security groups failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing security groups failed: %s", message)
 	}
 
 	return response.SecurityGroupCollection, nil
@@ -133,7 +154,11 @@ func (p *SecurityGroupsProxy) Delete(ctx context.Context, securityGroupID strfmt
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting security group failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting security group failed: %s", message)
 	}
 
 	return nil

@@ -3,10 +3,11 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/go-openapi/strfmt"
 )
 
 type FloatingIPAddressProxy struct {
@@ -27,7 +28,11 @@ func (p *FloatingIPAddressProxy) Read(ctx context.Context, floating_ip_id strfmt
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving floating ip adress: failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving floating ip address: failed: %s", message)
 	}
 	if response.FloatingIp != nil {
 		return response.FloatingIp, nil
@@ -45,12 +50,16 @@ func (p *FloatingIPAddressProxy) List(ctx context.Context) ([]openapi.FloatingIp
 	mutex.Unlock()
 
 	if err != nil {
-		return nil, fmt.Errorf("error while listing floating ip adresses: %w", err)
+		return nil, fmt.Errorf("error while listing floating ip addresses: %w", err)
 	}
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing floating ip adress failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing floating ip address failed: %s", message)
 	}
 
 	return response.FloatingIpCollection, nil
@@ -71,7 +80,11 @@ func (p *FloatingIPAddressProxy) ListByName(ctx context.Context, name string) ([
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing floating ip adress failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing floating ip address failed: %s", message)
 	}
 
 	return response.FloatingIpCollection, nil
@@ -90,7 +103,11 @@ func (p *FloatingIPAddressProxy) Create(ctx context.Context, floatingIPAllocatio
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating floating ip allocation failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating floating ip allocation failed: %s", message)
 	}
 
 	return put.FloatingIp, nil
@@ -111,7 +128,11 @@ func (p *FloatingIPAddressProxy) Update(ctx context.Context, floatingIp openapi.
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("modifying floating ip failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("modifying floating ip failed: %s", message)
 	}
 
 	return put.FloatingIp, nil
@@ -128,7 +149,11 @@ func (p *FloatingIPAddressProxy) Delete(ctx context.Context, floatingIpID strfmt
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting floating ip failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting floating ip failed: %s", message)
 	}
 
 	return nil

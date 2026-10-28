@@ -3,10 +3,11 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/go-openapi/strfmt"
 )
 
 type CustomServicesProxy struct {
@@ -31,7 +32,11 @@ func (p *CustomServicesProxy) Create(ctx context.Context, customService openapi.
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating custom service failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating custom service failed: %s", message)
 	}
 
 	return put.CustomServiceInstance, nil
@@ -54,7 +59,11 @@ func (p *CustomServicesProxy) Update(ctx context.Context, customService openapi.
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("modifying custom service failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("modifying custom service failed: %s", message)
 	}
 
 	return put.CustomServiceInstance, nil
@@ -71,7 +80,11 @@ func (p *CustomServicesProxy) Read(ctx context.Context, customServiceID strfmt.U
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving custom service failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving custom service failed: %s", message)
 	}
 
 	return response.CustomServiceInstance, nil
@@ -88,7 +101,11 @@ func (p *CustomServicesProxy) ListByDisplayName(ctx context.Context, displayName
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing custom services failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing custom services failed: %s", message)
 	}
 
 	return response.CustomServiceInstanceCollection, nil
@@ -106,7 +123,11 @@ func (p *CustomServicesProxy) ListCustomServices(ctx context.Context) ([]openapi
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing custom services failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing custom services failed: %s", message)
 	}
 
 	return response.CustomServiceInstanceCollection, nil
@@ -135,7 +156,11 @@ func (p *CustomServicesProxy) Delete(ctx context.Context, customServiceID strfmt
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting custom service failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting custom service failed: %s", message)
 	}
 
 	return nil

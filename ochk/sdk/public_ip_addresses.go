@@ -3,9 +3,10 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 )
 
 type PublicIPAddressProxy struct {
@@ -27,7 +28,11 @@ func (p *PublicIPAddressProxy) Get(ctx context.Context, allocationId int32) (*op
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing ipam allocated ip failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing ipam allocated ip failed: %s", message)
 	}
 
 	return response.PublicIpAllocation, nil
@@ -46,7 +51,11 @@ func (p *PublicIPAddressProxy) List(ctx context.Context) ([]openapi.PublicIpAllo
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing allocated public ip addresses failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing allocated public ip addresses failed: %s", message)
 	}
 
 	return response.PublicIpAllocationCollection, nil
@@ -65,7 +74,11 @@ func (p *PublicIPAddressProxy) ListByName(ctx context.Context, allocationName st
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing allocated public ip addresses failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing allocated public ip addresses failed: %s", message)
 	}
 
 	return response.PublicIpAllocationCollection, nil
@@ -85,7 +98,11 @@ func (p *PublicIPAddressProxy) ListByIp(ctx context.Context, ipAddress string) (
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing allocated public ip addresses failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing allocated public ip addresses failed: %s", message)
 	}
 
 	return response.PublicIpAllocationCollection, nil
@@ -104,7 +121,11 @@ func (p *PublicIPAddressProxy) Create(ctx context.Context, publicIPAllocation op
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating public ip allocation failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating public ip allocation failed: %s", message)
 	}
 
 	return put.PublicIpAllocation, nil
@@ -124,7 +145,11 @@ func (p *PublicIPAddressProxy) Update(ctx context.Context, publicIPAllocation op
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("modifying public ip allocation failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("modifying public ip allocation failed: %s", message)
 	}
 
 	return put.PublicIpAllocation, nil
@@ -141,7 +166,11 @@ func (p *PublicIPAddressProxy) Delete(ctx context.Context, publicIPAllocationID 
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting public ip allocation failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting public ip allocation failed: %s", message)
 	}
 
 	return nil
@@ -160,7 +189,11 @@ func (p *PublicIPAddressProxy) Read(ctx context.Context, publicIPAllocationID in
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving public ip adress: failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving public ip address: failed: %s", message)
 	}
 	if response.PublicIpAllocation != nil {
 		return response.PublicIpAllocation, nil

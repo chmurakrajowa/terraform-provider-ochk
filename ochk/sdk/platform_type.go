@@ -3,9 +3,10 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 )
 
 type PlatformTypeProxy struct {
@@ -33,7 +34,11 @@ func (p *PlatformTypeProxy) Read(ctx context.Context) (openapi.PlatformType, err
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return unknown, fmt.Errorf("retrieving platform type failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return unknown, fmt.Errorf("retrieving platform type failed: %s", message)
 	}
 
 	return *response.PlatformType, nil

@@ -3,10 +3,11 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/go-openapi/strfmt"
 )
 
 type FoldersProxy struct {
@@ -27,7 +28,11 @@ func (p *FoldersProxy) Read(ctx context.Context, projectID strfmt.UUID) (*openap
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving folders failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving folders failed: %s", message)
 	}
 
 	return &response.FolderInstanceCollection[0], nil
@@ -45,7 +50,11 @@ func (p *FoldersProxy) LisFoldersByProjectId(ctx context.Context, projectID strf
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing folders failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing folders failed: %s", message)
 	}
 
 	return response.FolderInstanceCollection, nil

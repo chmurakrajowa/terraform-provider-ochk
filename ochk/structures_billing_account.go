@@ -2,6 +2,7 @@ package ochk
 
 import (
 	"fmt"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -59,12 +60,23 @@ func expandAcctProjects(in []interface{}) []openapi.AccountProjectInstance {
 		return nil
 	}
 
-	var out = make([]openapi.AccountProjectInstance, len(in))
+	out := make([]openapi.AccountProjectInstance, len(in))
+
 	for i, v := range in {
 		m := v.(map[strfmt.UUID]interface{})
 
+		var projectID string
+		switch id := m["project_id"].(type) {
+		case string:
+			projectID = id
+		case strfmt.UUID:
+			projectID = string(id)
+		default:
+			panic(fmt.Sprintf("unexpected project_id type: %T", id))
+		}
+
 		member := openapi.AccountProjectInstance{
-			ProjectId: NewNullableString(m["project_id"].(string)),
+			ProjectId: NewNullableString(projectID),
 		}
 
 		if displayName, ok := m["display_name"].(string); ok && displayName != "" {
@@ -73,5 +85,6 @@ func expandAcctProjects(in []interface{}) []openapi.AccountProjectInstance {
 
 		out[i] = member
 	}
+
 	return out
 }

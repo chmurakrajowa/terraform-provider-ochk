@@ -3,10 +3,11 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/go-openapi/strfmt"
 )
 
 type RoutersProxy struct {
@@ -27,7 +28,11 @@ func (p *RoutersProxy) Read(ctx context.Context, routerID strfmt.UUID) (*openapi
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving routers failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving routers failed: %s", message)
 	}
 
 	return response.RouterInstance, nil
@@ -46,7 +51,11 @@ func (p *RoutersProxy) ListByDisplayName(ctx context.Context, displayName string
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing routers failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing routers failed: %s", message)
 	}
 
 	return response.RouterCollection, nil
@@ -65,7 +74,11 @@ func (p *RoutersProxy) List(ctx context.Context) ([]openapi.RouterInstance, erro
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing routers failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing routers failed: %s", message)
 	}
 
 	return response.RouterCollection, nil
@@ -85,7 +98,11 @@ func (p *RoutersProxy) Create(ctx context.Context, Router openapi.RouterInstance
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating router failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating router failed: %s", message)
 	}
 
 	return put.RouterInstance, nil
@@ -105,7 +122,11 @@ func (p *RoutersProxy) Update(ctx context.Context, Router openapi.RouterInstance
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("modifying router failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("modifying router failed: %s", message)
 	}
 
 	return put.RouterInstance, nil
@@ -134,7 +155,11 @@ func (p *RoutersProxy) Delete(ctx context.Context, RouterID strfmt.UUID) error {
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting router failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting router failed: %s", message)
 	}
 
 	return nil

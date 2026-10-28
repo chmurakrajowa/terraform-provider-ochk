@@ -3,10 +3,11 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/go-openapi/strfmt"
 )
 
 type PortsForwardingProxy struct {
@@ -28,7 +29,11 @@ func (p *PortsForwardingProxy) Read(ctx context.Context, floatingIpId strfmt.UUI
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving port forwarding: failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving port forwarding: failed: %s", message)
 	}
 	if response.PortForwarding != nil {
 		return response.PortForwarding, nil
@@ -51,7 +56,11 @@ func (p *PortsForwardingProxy) List(ctx context.Context, floatingIpId strfmt.UUI
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing ports forwarding failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing ports forwarding failed: %s", message)
 	}
 
 	return response.PortForwardingCollection, nil
@@ -71,7 +80,11 @@ func (p *PortsForwardingProxy) ListByName(ctx context.Context, floatingIpId strf
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing ports forwarding failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing ports forwarding failed: %s", message)
 	}
 
 	return response.PortForwardingCollection, nil
@@ -90,7 +103,11 @@ func (p *PortsForwardingProxy) Create(ctx context.Context, floatingIpId strfmt.U
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating port forwarding failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating port forwarding failed: %s", message)
 	}
 
 	return put.PortForwarding, nil
@@ -111,7 +128,11 @@ func (p *PortsForwardingProxy) Update(ctx context.Context, floatingIpId strfmt.U
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating updating port forwarding: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating updating port forwarding: %s", message)
 	}
 
 	return put.PortForwarding, nil
@@ -128,7 +149,11 @@ func (p *PortsForwardingProxy) Delete(ctx context.Context, floatingIpId strfmt.U
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting port forwarding failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting port forwarding failed: %s", message)
 	}
 
 	return nil

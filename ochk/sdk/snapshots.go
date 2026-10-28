@@ -3,9 +3,10 @@ package sdk
 import (
 	"context"
 	"fmt"
+	"net/http"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
-	"net/http"
 )
 
 type SnapshotsProxy struct {
@@ -25,7 +26,11 @@ func (p *SnapshotsProxy) Read(ctx context.Context, snapshotID strfmt.UUID, virtu
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving snapshot failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving snapshot failed: %s", message)
 	}
 
 	return response.SnapshotInstance, nil
@@ -42,7 +47,11 @@ func (p *SnapshotsProxy) ListSnapshotsByName(ctx context.Context, virtualMachine
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing snapshots failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing snapshots failed: %s", message)
 	}
 	return response.SnapshotInstanceCollection, nil
 }
@@ -57,7 +66,11 @@ func (p *SnapshotsProxy) ListSnapshots(ctx context.Context, virtualMachineID str
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing snapshots failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing snapshots failed: %s", message)
 	}
 
 	return response.SnapshotInstanceCollection, nil
@@ -77,7 +90,11 @@ func (p *SnapshotsProxy) Create(ctx context.Context, virtualMachineID strfmt.UUI
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, httpResponse, fmt.Errorf("creating snapshot failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, httpResponse, fmt.Errorf("creating snapshot failed: %s", message)
 	}
 
 	return put.SnapshotInstance, httpResponse, nil
@@ -110,7 +127,11 @@ func (p *SnapshotsProxy) Delete(ctx context.Context, virtualMachineID strfmt.UUI
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting snapshot failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting snapshot failed: %s", message)
 	}
 
 	return nil

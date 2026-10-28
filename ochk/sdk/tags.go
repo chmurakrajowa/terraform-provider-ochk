@@ -3,8 +3,9 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"net/http"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 )
 
 type TagsProxy struct {
@@ -22,7 +23,11 @@ func (p *TagsProxy) Read(ctx context.Context, tagID int32) (*openapi.Tag, error)
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving tags failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving tags failed: %s", message)
 	}
 
 	return response.Tag, nil
@@ -38,7 +43,11 @@ func (p *TagsProxy) ListTagsByTagName(ctx context.Context, tagName string) ([]op
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing tags failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing tags failed: %s", message)
 	}
 
 	return response.TagCollection, nil
@@ -55,7 +64,11 @@ func (p *TagsProxy) ListTags(ctx context.Context) ([]openapi.Tag, error) {
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing tags failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing tags failed: %s", message)
 	}
 
 	return response.TagCollection, nil
@@ -72,7 +85,11 @@ func (p *TagsProxy) Create(ctx context.Context, tag openapi.Tag) (*openapi.Tag, 
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating tag failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating tag failed: %s", message)
 	}
 
 	return put.Tag, nil
@@ -89,7 +106,11 @@ func (p *TagsProxy) Update(ctx context.Context, tag openapi.Tag) (*openapi.Tag, 
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("modifying tag failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("modifying tag failed: %s", message)
 	}
 
 	return put.Tag, nil
@@ -125,7 +146,11 @@ func (p *TagsProxy) Delete(ctx context.Context, tagID string) error {
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting tag failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting tag failed: %s", message)
 	}
 
 	return nil

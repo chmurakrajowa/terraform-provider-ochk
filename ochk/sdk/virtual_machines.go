@@ -3,10 +3,11 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/go-openapi/strfmt"
 )
 
 type VirtualMachinesProxy struct {
@@ -28,7 +29,11 @@ func (p *VirtualMachinesProxy) Create(ctx context.Context, virtualMachine openap
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating virtual machine failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating virtual machine failed: %s", message)
 	}
 
 	return put.RequestInstance, nil
@@ -48,7 +53,11 @@ func (p *VirtualMachinesProxy) Update(ctx context.Context, virtualMachine openap
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, httpResponse, fmt.Errorf("modifying virtual machine failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, httpResponse, fmt.Errorf("modifying virtual machine failed: %s", message)
 	}
 
 	return put.RequestInstance, httpResponse, nil
@@ -68,7 +77,11 @@ func (p *VirtualMachinesProxy) Read(ctx context.Context, VirtualMachineID strfmt
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, httpResponse, fmt.Errorf("retrieving virtual machine failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, httpResponse, fmt.Errorf("retrieving virtual machine failed: %s", message)
 	}
 
 	return response.VcsVirtualMachineInstance, httpResponse, nil
@@ -88,7 +101,11 @@ func (p *VirtualMachinesProxy) ListByDisplayName(ctx context.Context, displayNam
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing virtual machines failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing virtual machines failed: %s", message)
 	}
 
 	return response.VcsVirtualMachineInstanceCollection, nil
@@ -108,7 +125,11 @@ func (p *VirtualMachinesProxy) List(ctx context.Context) ([]openapi.VirtualMachi
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing virtual machines failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing virtual machines failed: %s", message)
 	}
 
 	return response.VcsVirtualMachineInstanceCollection, nil
@@ -125,7 +146,11 @@ func (p *VirtualMachinesProxy) Delete(ctx context.Context, virtualMachineID strf
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("deleting virtual machine failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("deleting virtual machine failed: %s", message)
 	}
 
 	return response.RequestInstance, nil

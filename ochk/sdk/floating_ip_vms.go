@@ -3,9 +3,10 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 )
 
 type FloatingIPVmsProxy struct {
@@ -26,7 +27,11 @@ func (p *FloatingIPVmsProxy) List(ctx context.Context) ([]openapi.PortFwdVm, err
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing floating ip vms failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing floating ip vms failed: %s", message)
 	}
 
 	return response.PortFwdVmCollection, nil

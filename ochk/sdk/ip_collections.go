@@ -3,10 +3,11 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/go-openapi/strfmt"
 )
 
 type IPCollectionsProxy struct {
@@ -28,7 +29,11 @@ func (p *IPCollectionsProxy) Read(ctx context.Context, ipCollectionID strfmt.UUI
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving IP collection failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving IP collection failed: %s", message)
 	}
 
 	return response.IpCollection, nil
@@ -50,7 +55,11 @@ func (p *IPCollectionsProxy) ListByDisplayName(ctx context.Context, displayName 
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing IP collections by display name %s failed: %s", displayName, response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing IP collections by display name %s failed: %s", displayName, message)
 	}
 
 	return response.IpCollectionSet, nil
@@ -70,7 +79,11 @@ func (p *IPCollectionsProxy) List(ctx context.Context) ([]openapi.IpCollection, 
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing IP collections failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing IP collections failed: %s", message)
 	}
 
 	return response.IpCollectionSet, nil
@@ -90,7 +103,11 @@ func (p *IPCollectionsProxy) Create(ctx context.Context, IPCollection openapi.Ip
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating ip collection failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating ip collection failed: %s", message)
 	}
 
 	return put.IpCollection, nil
@@ -109,7 +126,11 @@ func (p *IPCollectionsProxy) Update(ctx context.Context, IPCollection openapi.Ip
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("modifying ip collection failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("modifying ip collection failed: %s", message)
 	}
 
 	return put.IpCollection, nil
@@ -137,7 +158,11 @@ func (p *IPCollectionsProxy) Delete(ctx context.Context, IPCollectionID strfmt.U
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting ip collection failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting ip collection failed: %s", message)
 	}
 
 	return nil

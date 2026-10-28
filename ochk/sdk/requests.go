@@ -3,12 +3,14 @@ package sdk
 import (
 	"context"
 	"fmt"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"net/http"
 	"time"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
 type RequestsProxy struct {
@@ -30,11 +32,15 @@ func (p *RequestsProxy) FetchResourceID(ctx context.Context, timeout time.Durati
 		}
 
 		if err := verifyRequestStatusAndPhase(requestState); err != nil {
-			return resource.NonRetryableError(fmt.Errorf("Request is not in valid state. %w. %s", err, requestState.LastErrorMessage))
+			message := "no error message"
+			if value := requestState.LastErrorMessage.Get(); value != nil {
+				message = *value
+			}
+			return resource.NonRetryableError(fmt.Errorf("Request is not in valid state. %w. %s", err, message))
 		}
 
 		if requestState.GetRequestPhase() != "FINISHED" {
-			return resource.RetryableError(fmt.Errorf("expected request state FINISHED but was in state %s", requestState.RequestPhase))
+			return resource.RetryableError(fmt.Errorf("expected request state FINISHED but was in state %s", requestState.GetRequestPhase()))
 		}
 
 		if requestState.ResourceId.IsSet() {
@@ -48,15 +54,15 @@ func (p *RequestsProxy) FetchResourceID(ctx context.Context, timeout time.Durati
 
 func verifyRequestStatusAndPhase(request *openapi.RequestInstance) error {
 	if request.GetRequestPhase() == "FAILED" {
-		return fmt.Errorf("Request status is %s", request.RequestStatus)
+		return fmt.Errorf("Request status is %s", request.GetRequestStatus())
 	}
 
 	if request.GetRequestPhase() == "CANCELLED" || request.GetRequestPhase() == "TIMEOUT" {
-		return fmt.Errorf("Request phase is %s", request.RequestPhase)
+		return fmt.Errorf("Request phase is %s", request.GetRequestStatus())
 	}
 
 	if request.GetRequestPhase() == "FINISHED" && request.GetRequestStatus() == "FAILED" {
-		return fmt.Errorf("Request status is %s", request.LastErrorMessage)
+		return fmt.Errorf("Request status is %s", request.GetLastErrorMessage())
 	}
 
 	return nil
@@ -71,7 +77,11 @@ func (p *RequestsProxy) Read(ctx context.Context, requestID strfmt.UUID) (*opena
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving request failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving request failed: %s", message)
 	}
 
 	return response.RequestInstance, nil
@@ -86,7 +96,11 @@ func (p *RequestsProxy) ReadByStringValue(ctx context.Context, requestID string)
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving request failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving request failed: %s", message)
 	}
 
 	return response.RequestInstance, nil

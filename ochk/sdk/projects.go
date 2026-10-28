@@ -3,9 +3,10 @@ package sdk
 import (
 	"context"
 	"fmt"
+	"io"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
-	"io"
 
 	"net/http"
 	"sync"
@@ -35,7 +36,11 @@ func (p *ProjectsProxy) Create(ctx context.Context, project openapi.ProjectInsta
 
 	isSuccess := put.Success
 	if !*isSuccess {
-		return nil, fmt.Errorf("creating project failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating project failed: %s", message)
 	}
 
 	return put.ProjectInstance, nil
@@ -55,7 +60,11 @@ func (p *ProjectsProxy) Update(ctx context.Context, project openapi.ProjectInsta
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("modifying project failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("modifying project failed: %s", message)
 	}
 
 	return put.ProjectInstance, nil
@@ -76,7 +85,11 @@ func (p *ProjectsProxy) Read(ctx context.Context, projectID strfmt.UUID) (*opena
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving project failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving project failed: %s", message)
 	}
 
 	return response.ProjectInstance, nil
@@ -96,7 +109,11 @@ func (p *ProjectsProxy) ListByName(ctx context.Context, name string) ([]openapi.
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing projects failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing projects failed: %s", message)
 	}
 
 	return response.ProjectInstanceCollection, nil
@@ -114,7 +131,11 @@ func (p *ProjectsProxy) List(ctx context.Context) ([]openapi.ProjectInstance, er
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing projects failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing projects failed: %s", message)
 	}
 
 	return response.ProjectInstanceCollection, nil
@@ -142,7 +163,11 @@ func (p *ProjectsProxy) Delete(ctx context.Context, projectID strfmt.UUID) error
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting project failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting project failed: %s", message)
 	}
 
 	return nil

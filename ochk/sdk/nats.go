@@ -3,10 +3,11 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/go-openapi/strfmt"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/go-openapi/strfmt"
 )
 
 type NatProxy struct {
@@ -26,7 +27,11 @@ func (p *NatProxy) Read(ctx context.Context, natRuleID strfmt.UUID) (*openapi.NA
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("retrieving nats failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving nats failed: %s", message)
 	}
 
 	return response.NatRuleInstance, nil
@@ -46,7 +51,11 @@ func (p *NatProxy) ListNatsByName(ctx context.Context, displayName string) ([]op
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing nats failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing nats failed: %s", message)
 	}
 
 	return response.NatRuleInstances, nil
@@ -65,7 +74,11 @@ func (p *NatProxy) List(ctx context.Context) ([]openapi.NATRuleInstance, error) 
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("listing nats failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing nats failed: %s", message)
 	}
 
 	return response.NatRuleInstances, nil
@@ -86,7 +99,11 @@ func (p *NatProxy) CreateNat(ctx context.Context, natRuleInstance openapi.NATRul
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("creating nat failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("creating nat failed: %s", message)
 	}
 
 	return put.RequestInstance, nil
@@ -107,7 +124,11 @@ func (p *NatProxy) Update(ctx context.Context, natRuleInstance openapi.NATRuleIn
 	isSuccess := *put.Success
 
 	if !isSuccess {
-		return nil, fmt.Errorf("modifying nat failed: %s", put.Messages)
+		message := "no error message"
+		if value := put.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("modifying nat failed: %s", message)
 	}
 
 	return put.RequestInstance, nil
@@ -124,7 +145,11 @@ func (p *NatProxy) Delete(ctx context.Context, ruleID strfmt.UUID) error {
 	isSuccess := *response.Success
 
 	if !isSuccess {
-		return fmt.Errorf("deleting nat failed: %s", response.Messages)
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return fmt.Errorf("deleting nat failed: %s", message)
 	}
 
 	return nil

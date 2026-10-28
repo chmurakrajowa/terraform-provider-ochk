@@ -14,7 +14,7 @@ func flattenBackupPlans(in []openapi.BackupPlan) []map[strfmt.UUID]interface{} {
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["backup_plan_id"] = v.GetBackupPlanId()
+		m["backup_plan_id"] = strfmt.UUID(v.GetBackupPlanId())
 		m["display_name"] = v.GetBackupPlanName()
 		out = append(out, m)
 	}
