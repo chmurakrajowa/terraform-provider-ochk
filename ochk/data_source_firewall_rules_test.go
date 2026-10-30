@@ -2,8 +2,9 @@ package ochk
 
 import (
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"testing"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
 func TestFirewallRulesDataSource_read(t *testing.T) {
@@ -26,11 +27,11 @@ func TestFirewallRulesDataSource_read(t *testing.T) {
 func testFirewallRulesDataSourceConfig() string {
 	return fmt.Sprintf(`
 data "ochk_project" "default" {
-	display_name = "` + testData.Project1Name + `"
+	display_name = %q
 }
 
 data "ochk_security_group" "default" {
-  display_name = "` + testData.SecurityGroupName + `"
+  display_name = %q
   project_id = data.ochk_project.default.id
 }
 
@@ -38,5 +39,5 @@ data "ochk_firewall_rules" "default" {
   project_id = data.ochk_project.default.id
   security_group_id = data.ochk_security_group.default.id
 }
-`)
+`, testData.Project1Name, testData.SecurityGroupName)
 }

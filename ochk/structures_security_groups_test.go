@@ -1,15 +1,16 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"testing"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFlattenSecurityGroups(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.SecurityGroup
+		expanded  []openapi.SecurityGroup
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -18,27 +19,27 @@ func TestFlattenSecurityGroups(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.SecurityGroup{
+			expanded: []openapi.SecurityGroup{
 				{
-					ID:          "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					ProjectID:   strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
-					DisplayName: "test1",
+					Id:          NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					ProjectId:   NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName: NewNullableString("test1"),
 				},
 				{
-					ID:          "791bf702-22fb-4c76-bebb-1fee7ee75607",
-					ProjectID:   strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
-					DisplayName: "test2",
+					Id:          NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					ProjectId:   NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName: NewNullableString("test2"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"security_group_id": strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
-					"project_id":        strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					"security_group_id": "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					"project_id":        "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					"display_name":      "test1",
 				},
 				{
-					"security_group_id": strfmt.UUID("791bf702-22fb-4c76-bebb-1fee7ee75607"),
-					"project_id":        strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					"security_group_id": "791bf702-22fb-4c76-bebb-1fee7ee75607",
+					"project_id":        "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					"display_name":      "test2",
 				},
 			},

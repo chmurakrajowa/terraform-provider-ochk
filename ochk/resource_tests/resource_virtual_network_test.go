@@ -3,13 +3,14 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"strconv"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"strconv"
-	"testing"
 )
 
 type VirtualNetworkTestData struct {
@@ -200,7 +201,7 @@ func testAccVirtualNetworkResourceNotExists(displayName string) resource.TestChe
 		}
 
 		if len(virtualNetworks) > 0 {
-			return fmt.Errorf("virtual network %s still exists", virtualNetworks[0].VirtualNetworkID)
+			return fmt.Errorf("virtual network %s still exists", virtualNetworks[0].GetVirtualNetworkId())
 		}
 
 		return nil

@@ -2,8 +2,9 @@ package ochk
 
 import (
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"testing"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
 func TestAccBackupListsDataSource_read(t *testing.T) {
@@ -22,15 +23,14 @@ func TestAccBackupListsDataSource_read(t *testing.T) {
 		},
 	})
 }
-
 func testAccBackupListsDataSourceConfig() string {
 	return fmt.Sprintf(`
 data "ochk_backup_plan" "backup_plan" {
-  display_name = "` + testData.BackupPlanName + `"
+  display_name = %q
 }
 
 data "ochk_backup_lists" "default" {
   backup_plan_id = data.ochk_backup_plan.backup_plan.id
 }
-`)
+`, testData.BackupPlanName)
 }

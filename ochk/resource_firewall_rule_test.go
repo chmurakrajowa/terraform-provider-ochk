@@ -2,6 +2,7 @@ package ochk
 
 import (
 	"fmt"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
@@ -116,13 +117,16 @@ func testAccFirewallRuleResourceNotExists(displayName string) resource.TestCheck
 			return fmt.Errorf("wrong number of security groups")
 		}
 
-		firewallRule, err := client.FirewallRules.ListByName(ctx, projects[0].ProjectID, security_groups[0].ID, displayName)
+		security_groupId, _ := StringToUUID(security_groups[0].GetId())
+		projectUUID, _ := StringToUUID(projects[0].GetProjectId())
+
+		firewallRule, err := client.FirewallRules.ListByName(ctx, projectUUID, security_groupId, displayName)
 		if err != nil {
 			return err
 		}
 
 		if len(firewallRule) > 0 {
-			return fmt.Errorf("firewall rule %s still exists", firewallRule[0].RuleID)
+			return fmt.Errorf("firewall rule %s still exists", firewallRule[0].GetRuleId())
 		}
 		return nil
 	}

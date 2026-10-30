@@ -3,10 +3,11 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"testing"
 )
 
 type KMSKeyTestData struct {
@@ -137,7 +138,7 @@ func testAccKMSKeyResourceNotExists(displayName string) resource.TestCheckFunc {
 		}
 
 		if len(KMSKeys) > 0 {
-			return fmt.Errorf("kms_key %s still exists", KMSKeys[0].ID)
+			return fmt.Errorf("kms_key %s still exists", KMSKeys[0].GetId())
 		}
 
 		return nil

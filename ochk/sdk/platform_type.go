@@ -2,44 +2,44 @@ package sdk
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/identification"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 )
 
 type PlatformTypeProxy struct {
 	httpClient *http.Client
-	service    identification.ClientService
+	service    *openapi.IdentificationAPIService
 }
 
-func (p *PlatformTypeProxy) Read(ctx context.Context) (models.PlatformType, error) {
-	params := &identification.GetIdentificationPlatformTypeParams{
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
+func (p *PlatformTypeProxy) Read(ctx context.Context) (openapi.PlatformType, error) {
 
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetIdentificationPlatformType(params)
+	action := p.service.IdentificationPlatformTypeGet(ctx)
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
-	var unknown models.PlatformType = "UNKNOWN"
+	var unknown openapi.PlatformType = "UNKNOWN"
 
 	if err != nil {
-		var badRequest *identification.GetIdentificationPlatformTypeBadRequest
-		if ok := errors.As(err, &badRequest); ok {
-			return unknown, &NotFoundError{Err: err}
-		}
-
+		//var badRequest *identification.GetIdentificationPlatformTypeBadRequest
+		//if ok := errors.As(err, &badRequest); ok {
+		//	return unknown, &NotFoundError{Err: err}
+		//}
 		return unknown, fmt.Errorf("error while reading platform type: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return unknown, fmt.Errorf("retrieving platform type failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return unknown, fmt.Errorf("retrieving platform type failed: %s", message)
 	}
 
-	return response.Payload.PlatformType, nil
+	return *response.PlatformType, nil
 }

@@ -3,10 +3,12 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"testing"
 )
 
 func testAccirewallSNRuleCreateResourceId(firewallRuleResourceName string) resource.ImportStateIdFunc {
@@ -166,13 +168,13 @@ func testAccFirewallSNRuleResourceNotExists(displayName string) resource.TestChe
 			return fmt.Errorf("wrong number of routers")
 		}
 
-		firewallRule, err := client.FirewallSNRules.ListByDisplayName(ctx, routers[0].RouterID, displayName)
+		firewallRule, err := client.FirewallSNRules.ListByDisplayName(ctx, strfmt.UUID(routers[0].GetRouterId()), displayName)
 		if err != nil {
 			return err
 		}
 
 		if len(firewallRule) > 0 {
-			return fmt.Errorf("firewall SN rule %s still exists", firewallRule[0].RuleID)
+			return fmt.Errorf("firewall SN rule %s still exists", firewallRule[0].GetRuleId())
 		}
 
 		return nil

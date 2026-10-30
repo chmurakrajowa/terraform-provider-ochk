@@ -3,7 +3,7 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -40,6 +40,10 @@ func resourceProject() *schema.Resource {
 				Computed: true,
 			},
 			"display_name": {
+				Type:     schema.TypeString,
+				Required: true,
+			},
+			"account_id": {
 				Type:     schema.TypeString,
 				Required: true,
 			},
@@ -92,7 +96,7 @@ func resourceProjectCreate(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.Errorf("error while creating project: %+v", err)
 	}
 
-	d.SetId(created.ProjectID.String())
+	d.SetId(created.GetProjectId())
 	return resourceProjectRead(ctx, d, meta)
 }
 
@@ -109,44 +113,49 @@ func resourceProjectRead(ctx context.Context, d *schema.ResourceData, meta inter
 		return diag.Errorf("error while reading project: %+v", err)
 	}
 
-	if err := mapProjectToResourceData(d, project); err != nil {
+	if err := mapProjectToResourceData(d, *project); err != nil {
 		return diag.Errorf("error while mapping project to resource data: %+v", err)
 	}
 
 	return nil
 }
 
-func mapProjectToResourceData(d *schema.ResourceData, project *models.ProjectInstance) error {
-	if err := d.Set("project_id", strings.ToLower(strfmt.UUID.String(project.ProjectID))); err != nil {
+func mapProjectToResourceData(d *schema.ResourceData, project openapi.ProjectInstance) error {
+
+	if err := d.Set("project_id", strings.ToLower(project.GetProjectId())); err != nil {
 		return fmt.Errorf("error setting project_id: %w", err)
 	}
 
-	if err := d.Set("display_name", project.Name); err != nil {
+	if err := d.Set("display_name", project.GetName()); err != nil {
 		return fmt.Errorf("error setting name: %w", err)
 	}
 
-	if err := d.Set("vrf_id", project.VrfID); err != nil {
+	if err := d.Set("vrf_id", project.GetVrfId()); err != nil {
 		return fmt.Errorf("error setting vrf_id: %w", err)
 	}
 
-	if err := d.Set("description", project.Description); err != nil {
+	if err := d.Set("description", project.GetDescription()); err != nil {
 		return fmt.Errorf("error setting description: %w", err)
 	}
 
-	if err := d.Set("limits_enabled", project.LimitEnabled); err != nil {
+	if err := d.Set("limits_enabled", project.GetLimitEnabled()); err != nil {
 		return fmt.Errorf("error setting limits_enabled: %w", err)
 	}
 
-	if err := d.Set("memory_reserved_size_mb", project.MemoryReservedSizeMB); err != nil {
+	if err := d.Set("memory_reserved_size_mb", project.GetMemoryReservedSizeMB()); err != nil {
 		return fmt.Errorf("error setting memory_reserved_size_mb: %w", err)
 	}
 
-	if err := d.Set("storage_reserved_size_gb", project.StorageReservedSizeGB); err != nil {
+	if err := d.Set("storage_reserved_size_gb", project.GetStorageReservedSizeGB()); err != nil {
 		return fmt.Errorf("error setting storage_reserved_size_gb: %w", err)
 	}
 
-	if err := d.Set("vcpu_reserved_quantity", project.CPUReserved); err != nil {
+	if err := d.Set("vcpu_reserved_quantity", project.GetCpuReserved()); err != nil {
 		return fmt.Errorf("error setting vcpu_reserved_quantity: %w", err)
+	}
+
+	if err := d.Set("account_id", project.GetAccountId()); err != nil {
+		return fmt.Errorf("error setting account_id: %w", err)
 	}
 	return nil
 }
@@ -158,7 +167,7 @@ func resourceProjectUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	platformType, _ := proxy_pt.Read(ctx)
 
 	project := mapResourceDataToProject(d, platformType)
-	project.ProjectID = strfmt.UUID(d.Id())
+	project.ProjectId = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, project)
 	if err != nil {
@@ -185,19 +194,27 @@ func resourceProjectDelete(ctx context.Context, d *schema.ResourceData, meta int
 	return nil
 }
 
-func mapResourceDataToProject(d *schema.ResourceData, platformType models.PlatformType) *models.ProjectInstance {
+func mapResourceDataToProject(d *schema.ResourceData, platformType openapi.PlatformType) openapi.ProjectInstance {
 	var factor int64 = 1
 	if platformType == "OPENSTACK" {
-		factor = 1024
+		factor = 1 // fix in PCK-4431 for project in Openstack we need to multiply size by 1024, temporary stay with this multiplication
 	}
-	return &models.ProjectInstance{
-		Description:           d.Get("description").(string),
-		MemoryReservedSizeMB:  int64(d.Get("memory_reserved_size_mb").(int)) * factor,
-		Name:                  d.Get("display_name").(string),
-		StorageReservedSizeGB: int64(d.Get("storage_reserved_size_gb").(int)),
-		VrfID:                 strfmt.UUID(d.Get("vrf_id").(string)),
-		CPUReserved:           int64(d.Get("vcpu_reserved_quantity").(int)),
-		LimitEnabled:          d.Get("limits_enabled").(bool),
-		ProjectID:             strfmt.UUID(d.Get("project_id").(string)),
+	MemoryReservedSizeMBValue := int64(d.Get("memory_reserved_size_mb").(int)) * factor
+	StorageReservedSizeGBValue := int64(d.Get("storage_reserved_size_gb").(int))
+	CpuReservedValue := int64(d.Get("vcpu_reserved_quantity").(int))
+	LimitEnabledValue := d.Get("limits_enabled").(bool)
+	return openapi.ProjectInstance{
+		Description:           NewNullableString(d.Get("description").(string)),
+		MemoryReservedSizeMB:  &MemoryReservedSizeMBValue,
+		Name:                  NewNullableString(d.Get("display_name").(string)),
+		StorageReservedSizeGB: &StorageReservedSizeGBValue,
+		VrfId:                 NewNullableString(d.Get("vrf_id").(string)),
+		CpuReserved:           &CpuReservedValue,
+		LimitEnabled:          &LimitEnabledValue,
+		ProjectId:             openapi.NullableString{},
+		Id:                    openapi.NullableString{},
+		CreationDate:          openapi.NullableString{},
+		ModificationDate:      openapi.NullableString{},
+		AccountId:             NewNullableString(d.Get("account_id").(string)),
 	}
 }

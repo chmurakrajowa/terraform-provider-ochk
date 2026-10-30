@@ -2,8 +2,9 @@ package ochk
 
 import (
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"testing"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
 func TestAccPortsForwardingDataSource_read(t *testing.T) {
@@ -29,11 +30,11 @@ func testAccPortsForwardingSourceConfig() string {
 	return fmt.Sprintf(`
 
 data "ochk_floating_ip_address" "floating_ip" {
-     display_name = "` + testData.FloatingIpAddressName + `"
+     display_name = %q
 }
 
 data "ochk_ports_forwarding" "default" {
 	 floating_ip_id = data.ochk_floating_ip_address.floating_ip.id
 }
-`)
+`, testData.FloatingIpAddressName)
 }

@@ -1,16 +1,17 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"testing"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFlattenExpandSecurityGroupMembers(t *testing.T) {
 
 	cases := []struct {
-		expanded  []*models.SecurityGroup
+		expanded  []openapi.SecurityGroup
 		flattened []map[strfmt.UUID]interface{}
 	}{
 
@@ -20,17 +21,17 @@ func TestFlattenExpandSecurityGroupMembers(t *testing.T) {
 		},
 
 		{
-			expanded: []*models.SecurityGroup{
+			expanded: []openapi.SecurityGroup{
 				{
-					ID:          strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
-					ProjectID:   strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
-					DisplayName: "MySG1",
+					Id:          NewNullableString("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
+					ProjectId:   NewNullableString("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
+					DisplayName: NewNullableString("MySG1"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"security_group_id": strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
-					"project_id":        strfmt.UUID("dcbf922a-a2fc-401f-ac1f-5159c15d4b8b"),
+					"security_group_id": "dcbf922a-a2fc-401f-ac1f-5159c15d4b8b",
+					"project_id":        "dcbf922a-a2fc-401f-ac1f-5159c15d4b8b",
 					"display_name":      "MySG1",
 				},
 			},

@@ -1,7 +1,7 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -20,7 +20,7 @@ func flattenStringSlice(in []string) *schema.Set {
 	return out
 }
 
-func flattenVirtualNetworks(in []*models.VirtualNetworkInstance) []map[strfmt.UUID]interface{} {
+func flattenVirtualNetworks(in []openapi.VirtualNetworkInstance) []map[strfmt.UUID]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -29,26 +29,26 @@ func flattenVirtualNetworks(in []*models.VirtualNetworkInstance) []map[strfmt.UU
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["virtual_network_id"] = v.VirtualNetworkID
-		m["display_name"] = v.DisplayName
+		m["virtual_network_id"] = v.GetVirtualNetworkId()
+		m["display_name"] = v.GetDisplayName()
 		m["ipam_enabled"] = v.IpamEnabled
-		m["vpc_id"] = v.RouterRefID
-		m["folder_path"] = v.FolderPath
-		m["project_id"] = v.ProjectID
+		m["vpc_id"] = v.GetRouterRefId()
+		m["folder_path"] = v.GetFolderPath()
+		m["project_id"] = v.GetProjectId()
 		out = append(out, m)
 	}
 	return out
 }
 
-func flattenDnsServers(in []*models.DNSServerInstance) []map[strfmt.UUID]interface{} {
+func flattenDnsServers(in []openapi.DnsServerInstance) []map[strfmt.UUID]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
 	var out []map[strfmt.UUID]interface{}
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["id"] = v.ID
-		m["address"] = v.Address
+		m["id"] = v.GetId()
+		m["address"] = v.GetAddress()
 		out = append(out, m)
 	}
 	return out

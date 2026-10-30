@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -119,7 +119,7 @@ func resourcePortForwardingCreate(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error while creating port forwarding: %+v", err)
 	}
 
-	d.SetId(created.PortForwardingID.String())
+	d.SetId(created.GetPortForwardingId())
 
 	return resourcePortForwardingRead(ctx, d, meta)
 }
@@ -140,7 +140,7 @@ func resourcePortForwardingRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error while reading port forwarding: %+v", err)
 	}
 
-	if err := d.Set("display_name", portForwarding.Name); err != nil {
+	if err := d.Set("display_name", portForwarding.GetName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
@@ -148,59 +148,59 @@ func resourcePortForwardingRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting floating_ip_id: %+v", err)
 	}
 
-	if err := d.Set("port_forwarding_id", portForwarding.PortForwardingID); err != nil {
+	if err := d.Set("port_forwarding_id", portForwarding.GetPortForwardingId()); err != nil {
 		return diag.Errorf("error setting port_forwarding_id: %+v", err)
 	}
 
-	if err := d.Set("description", portForwarding.Description); err != nil {
+	if err := d.Set("description", portForwarding.GetDescription()); err != nil {
 		return diag.Errorf("error setting description: %+v", err)
 	}
 
-	if err := d.Set("protocol", portForwarding.Protocol); err != nil {
+	if err := d.Set("protocol", portForwarding.GetProtocol()); err != nil {
 		return diag.Errorf("error setting protocol: %+v", err)
 	}
 
-	if err := d.Set("internal_port_id", portForwarding.InternalPortID); err != nil {
+	if err := d.Set("internal_port_id", portForwarding.GetInternalPortId()); err != nil {
 		return diag.Errorf("error setting internal_port_id: %+v", err)
 	}
 
-	if err := d.Set("internal_ip_address", portForwarding.InternalIPAddress); err != nil {
+	if err := d.Set("internal_ip_address", portForwarding.GetInternalIpAddress()); err != nil {
 		return diag.Errorf("error setting internal_ip_address: %+v", err)
 	}
 
-	if err := d.Set("internal_port", portForwarding.InternalPort); err != nil {
+	if err := d.Set("internal_port", portForwarding.GetInternalPort()); err != nil {
 		return diag.Errorf("error setting internal_port: %+v", err)
 	}
 
-	if err := d.Set("internal_port_range", portForwarding.InternalPortRange); err != nil {
+	if err := d.Set("internal_port_range", portForwarding.GetInternalPortRange()); err != nil {
 		return diag.Errorf("error setting internal_port_range: %+v", err)
 	}
 
-	if err := d.Set("public_address", portForwarding.PublicAddress); err != nil {
+	if err := d.Set("public_address", portForwarding.GetPublicAddress()); err != nil {
 		return diag.Errorf("error setting public_address: %+v", err)
 	}
 
-	if err := d.Set("external_port", portForwarding.ExternalPort); err != nil {
+	if err := d.Set("external_port", portForwarding.GetExternalPort()); err != nil {
 		return diag.Errorf("error setting external_port: %+v", err)
 	}
 
-	if err := d.Set("external_port_range", portForwarding.ExternalPortRange); err != nil {
+	if err := d.Set("external_port_range", portForwarding.GetExternalPortRange()); err != nil {
 		return diag.Errorf("error setting external_port_range: %+v", err)
 	}
 
-	if err := d.Set("created_by", portForwarding.CreatedBy); err != nil {
+	if err := d.Set("created_by", portForwarding.GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", portForwarding.CreationDate.String()); err != nil {
+	if err := d.Set("created_at", portForwarding.GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", portForwarding.ModifiedBy); err != nil {
+	if err := d.Set("modified_by", portForwarding.GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", portForwarding.ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", portForwarding.GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
@@ -215,7 +215,9 @@ func resourcePortForwardingUpdate(ctx context.Context, d *schema.ResourceData, m
 
 	floatingIpId := strfmt.UUID(d.Get("floating_ip_id").(string))
 	portForwarding := mapResourceDataToPortForwarding(d)
-	portForwarding.PortForwardingID = strfmt.UUID(d.Id())
+
+	idValue := d.Id()
+	portForwarding.PortForwardingId = &idValue
 
 	_, err := proxy.Update(ctx, floatingIpId, portForwarding)
 	if err != nil {
@@ -225,20 +227,39 @@ func resourcePortForwardingUpdate(ctx context.Context, d *schema.ResourceData, m
 	return resourcePortForwardingRead(ctx, d, meta)
 }
 
-func mapResourceDataToPortForwarding(d *schema.ResourceData) *models.PortForwarding {
-	portForwarding := &models.PortForwarding{
-		Name:              d.Get("display_name").(string),
-		Description:       d.Get("description").(string),
-		Protocol:          d.Get("protocol").(string),
-		InternalPortID:    strfmt.UUID(d.Get("internal_port_id").(string)),
-		InternalIPAddress: d.Get("internal_ip_address").(string),
-		InternalPort:      int32(d.Get("internal_port").(int)),
-		InternalPortRange: d.Get("internal_port_range").(string),
-		PublicAddress:     d.Get("public_address").(string),
-		ExternalPort:      int32(d.Get("external_port").(int)),
-		ExternalPortRange: d.Get("external_port_range").(string),
-	}
+func mapResourceDataToPortForwarding(d *schema.ResourceData) openapi.PortForwarding {
+	internalPortIdValue := d.Get("internal_port_id").(string)
+	internalPort := d.Get("internal_port").(int)
+	internalPortValue := int32(internalPort)
 
+	externalPort := d.Get("external_port").(int)
+	externalPortValue := int32(externalPort)
+	portForwarding := openapi.PortForwarding{}
+	if internalPortValue == 0 || externalPortValue == 0 {
+		portForwarding = openapi.PortForwarding{
+			Name:              NewNullableString(d.Get("display_name").(string)),
+			Description:       NewNullableString(d.Get("description").(string)),
+			Protocol:          NewNullableString(d.Get("protocol").(string)),
+			InternalPortId:    &internalPortIdValue,
+			InternalIpAddress: NewNullableString(d.Get("internal_ip_address").(string)),
+			InternalPortRange: NewNullableString(d.Get("internal_port_range").(string)),
+			PublicAddress:     NewNullableString(d.Get("public_address").(string)),
+			ExternalPortRange: NewNullableString(d.Get("external_port_range").(string)),
+		}
+	} else {
+		portForwarding = openapi.PortForwarding{
+			Name:              NewNullableString(d.Get("display_name").(string)),
+			Description:       NewNullableString(d.Get("description").(string)),
+			Protocol:          NewNullableString(d.Get("protocol").(string)),
+			InternalPortId:    &internalPortIdValue,
+			InternalIpAddress: NewNullableString(d.Get("internal_ip_address").(string)),
+			InternalPort:      NewNullableInt32(internalPortValue),
+			InternalPortRange: NewNullableString(d.Get("internal_port_range").(string)),
+			PublicAddress:     NewNullableString(d.Get("public_address").(string)),
+			ExternalPort:      NewNullableInt32(externalPortValue),
+			ExternalPortRange: NewNullableString(d.Get("external_port_range").(string)),
+		}
+	}
 	return portForwarding
 }
 

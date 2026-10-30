@@ -3,12 +3,13 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"strconv"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"strconv"
-	"testing"
 )
 
 type SnapshotTestData struct {
@@ -79,7 +80,7 @@ func testAccSnapshotResourceNotExists(Name string, VirtualMachineID strfmt.UUID)
 		}
 
 		if len(snapshots) > 0 {
-			return fmt.Errorf("snapshot %s still exists", snapshots[0].SnapshotID)
+			return fmt.Errorf("snapshot %s still exists", snapshots[0].GetSnapshotId())
 		}
 
 		return nil

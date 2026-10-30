@@ -3,7 +3,7 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -139,7 +139,7 @@ func resourceFirewallRuleCreate(ctx context.Context, d *schema.ResourceData, met
 	if err != nil {
 		return diag.Errorf(E3001, err)
 	}
-	d.SetId(created.RuleID.String())
+	d.SetId(created.GetRuleId())
 	return resourceFirewallRuleRead(ctx, d, meta)
 }
 
@@ -160,7 +160,7 @@ func resourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf(E3006, err)
 	}
 
-	if err := d.Set("display_name", firewallRule.Name); err != nil {
+	if err := d.Set("display_name", firewallRule.GetName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
@@ -172,57 +172,57 @@ func resourceFirewallRuleRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error setting security_group_id: %+v", err)
 	}
 
-	if err := d.Set("rule_id", firewallRule.RuleID); err != nil {
+	if err := d.Set("rule_id", firewallRule.GetRuleId()); err != nil {
 		return diag.Errorf("error setting rule_id: %+v", err)
 	}
 
-	if err := d.Set("direction", firewallRule.Direction); err != nil {
+	if err := d.Set("direction", firewallRule.GetDirection()); err != nil {
 		return diag.Errorf("error setting direction: %+v", err)
 	}
 
-	if err := d.Set("description", firewallRule.Description); err != nil {
+	if err := d.Set("description", firewallRule.GetDescription()); err != nil {
 		return diag.Errorf("error setting description: %+v", err)
 	}
 
-	if err := d.Set("ether_type", firewallRule.EtherType); err != nil {
+	if err := d.Set("ether_type", firewallRule.GetEtherType()); err != nil {
 		return diag.Errorf("error setting ether_type: %+v", err)
 	}
 
-	if err := d.Set("protocol", firewallRule.Protocol); err != nil {
+	if err := d.Set("protocol", firewallRule.GetProtocol()); err != nil {
 		return diag.Errorf("error setting protocol: %+v", err)
 	}
 
-	if err := d.Set("port_range_min", firewallRule.PortRangeMin); err != nil {
+	if err := d.Set("port_range_min", firewallRule.GetPortRangeMin()); err != nil {
 		return diag.Errorf("error setting port_range_min: %+v", err)
 	}
 
-	if err := d.Set("port_range_max", firewallRule.PortRangeMax); err != nil {
+	if err := d.Set("port_range_max", firewallRule.GetPortRangeMax()); err != nil {
 		return diag.Errorf("error setting port_range_max: %+v", err)
 	}
 
-	if err := d.Set("remote_ip_prefix", firewallRule.RemoteIPPrefix); err != nil {
+	if err := d.Set("remote_ip_prefix", firewallRule.GetRemoteIpPrefix()); err != nil {
 		return diag.Errorf("error setting remote_ip_prefix: %+v", err)
 	}
 
 	if firewallRule.SecurityGroup != nil {
-		if err := d.Set("dest_security_group", firewallRule.SecurityGroup.ID); err != nil {
+		if err := d.Set("dest_security_group", firewallRule.SecurityGroup.GetId()); err != nil {
 			return diag.Errorf("error setting dest_security_group: %+v", err)
 		}
 	}
 
-	if err := d.Set("created_by", firewallRule.CreatedBy.DisplayName); err != nil {
+	if err := d.Set("created_by", firewallRule.CreatedBy.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", firewallRule.CreationDate.String()); err != nil {
+	if err := d.Set("created_at", firewallRule.GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", firewallRule.ModifiedBy.DisplayName); err != nil {
+	if err := d.Set("modified_by", firewallRule.ModifiedBy.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", firewallRule.ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", firewallRule.GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
@@ -243,7 +243,8 @@ func resourceFirewallRuleUpdate(ctx context.Context, d *schema.ResourceData, met
 	if errRule != nil {
 		return diag.Errorf(E3001_UPDATE, errRule)
 	}
-	firewallRule.RuleID = strfmt.UUID(d.Id())
+	id := d.Id()
+	firewallRule.RuleId = &id
 
 	_, err := proxy.Update(ctx, projectID, securityGroupID, firewallRule)
 	if err != nil {
@@ -253,35 +254,105 @@ func resourceFirewallRuleUpdate(ctx context.Context, d *schema.ResourceData, met
 	return resourceFirewallRuleRead(ctx, d, meta)
 }
 
-func mapResourceDataToRule(d *schema.ResourceData) (*models.FirewallRule, diag.Diagnostics) {
+func castStringToEtherTypeEnum(e string) *openapi.EtherType {
+	switch e {
+	case "IPv4":
+		return &openapi.AllowedEtherTypeEnumValues[0]
+	case "IPv6":
+		return &openapi.AllowedEtherTypeEnumValues[1]
+	default:
+		return nil
+	}
+}
+
+func castStringToDirectionEnum(e string) *openapi.Direction1 {
+	switch e {
+	case "INGRESS":
+		return &openapi.AllowedDirection1EnumValues[0]
+	case "EGRESS":
+		return &openapi.AllowedDirection1EnumValues[1]
+	default:
+		return nil
+	}
+}
+
+const (
+	ProtocolANY       openapi.Protocol = "ANY"
+	ProtocolICMP      openapi.Protocol = "ICMP"
+	ProtocolIGMP      openapi.Protocol = "IGMP"
+	ProtocolIPIP      openapi.Protocol = "IPIP"
+	ProtocolTCP       openapi.Protocol = "TCP"
+	ProtocolEGP       openapi.Protocol = "EGP"
+	ProtocolUDP       openapi.Protocol = "UDP"
+	ProtocolDCCP      openapi.Protocol = "DCCP"
+	ProtocolIPv6Encap openapi.Protocol = "ipv6-encap"
+	ProtocolIPv6Route openapi.Protocol = "ipv6-route"
+	ProtocolIPv6Frag  openapi.Protocol = "ipv6-frag"
+	ProtocolRSVP      openapi.Protocol = "RSVP"
+	ProtocolGRE       openapi.Protocol = "GRE"
+	ProtocolESP       openapi.Protocol = "ESP"
+	ProtocolAH        openapi.Protocol = "AH"
+	ProtocolIPv6ICMP  openapi.Protocol = "ipv6-icmp"
+	ProtocolIPv6Nonxt openapi.Protocol = "ipv6-nonxt"
+	ProtocolIPv6Opts  openapi.Protocol = "ipv6-opts"
+	ProtocolOSPF      openapi.Protocol = "OSPF"
+	ProtocolVRRP      openapi.Protocol = "VRRP"
+	ProtocolPGM       openapi.Protocol = "PGM"
+	ProtocolSCTP      openapi.Protocol = "SCTP"
+	ProtocolUDPLite   openapi.Protocol = "UDPLITE"
+)
+
+var AllProtocols = []openapi.Protocol{
+	ProtocolANY, ProtocolICMP,
+	ProtocolIGMP, ProtocolIPIP, ProtocolTCP,
+	ProtocolEGP, ProtocolUDP, ProtocolDCCP, ProtocolIPv6Encap, ProtocolIPv6Route,
+	ProtocolIPv6Frag, ProtocolRSVP, ProtocolGRE, ProtocolESP, ProtocolAH,
+	ProtocolIPv6ICMP, ProtocolIPv6Nonxt, ProtocolIPv6Opts, ProtocolOSPF,
+	ProtocolVRRP, ProtocolPGM, ProtocolSCTP, ProtocolUDPLite,
+}
+
+func ParseProtocol(s string) *openapi.Protocol {
+	for _, p := range AllProtocols {
+		if strings.EqualFold(string(p), s) {
+			return &p
+		}
+	}
+	return nil
+}
+
+func mapResourceDataToRule(d *schema.ResourceData) (openapi.FirewallRule, diag.Diagnostics) {
 	if d.Get("dest_security_group").(string) != "" && d.Get("remote_ip_prefix").(string) != "" {
-		return nil, diag.Errorf(E3004, "[dest_security_group, remote_ip_prefix]")
+		rule := openapi.FirewallRule{} // empty structure FirewallRule
+		return rule, diag.Errorf(E3004, "[dest_security_group, remote_ip_prefix]")
 	}
 
+	portRangeMaxValue := d.Get("port_range_max").(int)
+	portRangeMinValue := d.Get("port_range_min").(int)
+
 	if d.Get("dest_security_group").(string) != "" {
-		rule := &models.FirewallRule{
-			Name:              d.Get("display_name").(string),
-			Description:       d.Get("description").(string),
-			ProjectExternalID: strfmt.UUID(d.Get("project_id").(string)),
-			EtherType:         models.EtherType(d.Get("ether_type").(string)),
-			Direction:         models.Direction1(d.Get("direction").(string)),
-			Protocol:          models.Protocol(d.Get("protocol").(string)),
-			PortRangeMax:      int64(d.Get("port_range_max").(int)),
-			PortRangeMin:      int64(d.Get("port_range_min").(int)),
+		rule := openapi.FirewallRule{
+			Name:              NewNullableString(d.Get("display_name").(string)),
+			Description:       NewNullableString(d.Get("description").(string)),
+			ProjectExternalId: NewNullableString(d.Get("project_id").(string)),
+			EtherType:         castStringToEtherTypeEnum(d.Get("ether_type").(string)),
+			Direction:         castStringToDirectionEnum(d.Get("direction").(string)),
+			Protocol:          ParseProtocol(d.Get("protocol").(string)),
+			PortRangeMax:      NewNullableInt64(int64(portRangeMaxValue)),
+			PortRangeMin:      NewNullableInt64(int64(portRangeMinValue)),
 			SecurityGroup:     expandSecurityGroup(d.Get("dest_security_group").(string)),
 		}
 		return rule, nil
 	} else {
-		rule := &models.FirewallRule{
-			Name:              d.Get("display_name").(string),
-			Description:       d.Get("description").(string),
-			ProjectExternalID: strfmt.UUID(d.Get("project_id").(string)),
-			EtherType:         models.EtherType(d.Get("ether_type").(string)),
-			Direction:         models.Direction1(d.Get("direction").(string)),
-			Protocol:          models.Protocol(d.Get("protocol").(string)),
-			PortRangeMax:      int64(d.Get("port_range_max").(int)),
-			PortRangeMin:      int64(d.Get("port_range_min").(int)),
-			RemoteIPPrefix:    d.Get("remote_ip_prefix").(string),
+		rule := openapi.FirewallRule{
+			Name:              NewNullableString(d.Get("display_name").(string)),
+			Description:       NewNullableString(d.Get("description").(string)),
+			ProjectExternalId: NewNullableString(d.Get("project_id").(string)),
+			EtherType:         castStringToEtherTypeEnum(d.Get("ether_type").(string)),
+			Direction:         castStringToDirectionEnum(d.Get("direction").(string)),
+			Protocol:          ParseProtocol(d.Get("protocol").(string)),
+			PortRangeMax:      NewNullableInt64(int64(portRangeMaxValue)),
+			PortRangeMin:      NewNullableInt64(int64(portRangeMinValue)),
+			RemoteIpPrefix:    NewNullableString(d.Get("remote_ip_prefix").(string)),
 		}
 		return rule, nil
 	}
@@ -304,9 +375,9 @@ func resourceFirewallRuleDelete(ctx context.Context, d *schema.ResourceData, met
 	return nil
 }
 
-func expandSecurityGroup(dest_security_group string) *models.SecurityGroup {
-	sg_dest := &models.SecurityGroup{
-		ID: strfmt.UUID(dest_security_group),
+func expandSecurityGroup(dest_security_group string) *openapi.SecurityGroup {
+	sg_dest := openapi.SecurityGroup{
+		Id: NewNullableString(dest_security_group),
 	}
-	return sg_dest
+	return &sg_dest
 }

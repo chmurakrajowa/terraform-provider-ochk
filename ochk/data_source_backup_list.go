@@ -46,7 +46,7 @@ func dataSourceBackupListRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("more than one backup list with name: %s found!", backupListName)
 	}
 
-	d.SetId(backupLists[0].BackupListID.String())
+	d.SetId(backupLists[0].GetBackupListId())
 
 	if err := d.Set("display_name", backupLists[0].BackupListName); err != nil {
 		return diag.Errorf("error setting backup list name: %+v", err)

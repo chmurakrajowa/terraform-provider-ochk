@@ -78,25 +78,25 @@ func datSourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("more than one security group with display_name: %s found!", displayName)
 	}
 
-	d.SetId(securityGroups[0].ID.String())
+	d.SetId(securityGroups[0].GetId())
 
-	if err := d.Set("project_id", securityGroups[0].ProjectID); err != nil {
+	if err := d.Set("project_id", securityGroups[0].GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
-	if err := d.Set("created_by", securityGroups[0].CreatedBy); err != nil {
+	if err := d.Set("created_by", securityGroups[0].GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", securityGroups[0].CreationDate.String()); err != nil {
+	if err := d.Set("created_at", securityGroups[0].GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", securityGroups[0].ModifiedBy); err != nil {
+	if err := d.Set("modified_by", securityGroups[0].GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", securityGroups[0].ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", securityGroups[0].GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 

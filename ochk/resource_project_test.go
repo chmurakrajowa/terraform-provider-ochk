@@ -3,11 +3,12 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"strconv"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"strconv"
-	"testing"
 )
 
 type ProjectTestData struct {
@@ -63,8 +64,9 @@ func TestAccProjectResource_create(t *testing.T) {
 
 	fmt.Printf("checkPlatformType%s ", platformType)
 	vrfRouter := testData.VRF_OPENSTACK
-	var mem int64 = 23
-	var mem_update int64 = 25
+	//var mem int64 = 23
+	var mem int64 = 23561
+	var mem_update int64 = mem + 2
 	if platformType == "VMWARE" {
 		vrfRouter = testData.VRF
 		mem = 23561
@@ -155,7 +157,7 @@ func testAccProjectResourceNotExists(name string) resource.TestCheckFunc {
 		}
 
 		if len(projects) > 0 {
-			return fmt.Errorf("project %s still exists", projects[0].ProjectID)
+			return fmt.Errorf("project %s still exists", projects[0].GetProjectId())
 		}
 
 		return nil

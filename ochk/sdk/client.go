@@ -4,14 +4,14 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
-	httptransport "github.com/go-openapi/runtime/client"
-	"github.com/go-openapi/runtime/logger"
-	"github.com/go-openapi/strfmt"
+	"log"
 	"net/http"
 	"sync"
 	"time"
+
+	openapi "github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	httptransport "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/runtime/logger"
 )
 
 type Client struct {
@@ -38,11 +38,12 @@ type Client struct {
 	PortForwarding      PortsForwardingProxy
 	Folders             FoldersProxy
 	PublicIPAddresses   PublicIPAddressProxy
+	AvailablePublicIp   AvailablePublicIpProxy
 	Snapshots           SnapshotsProxy
 	Accounts            AccountsProxy
 	PlatformType        PlatformTypeProxy
 	key                 string
-	PType               models.PlatformType
+	PType               openapi.PlatformType
 	apiClientTransport  httptransport.Runtime
 }
 
@@ -54,13 +55,24 @@ type myTransport struct {
 var PLATFORM = ""
 var API_KEY = ""
 var PLATFORM_TYPE = ""
+var HOST = ""
+
+const (
+	// DefaultHost is the default Host
+	// found in Meta (info) section of spec file
+	//DefaultHost string = "localhost" // set if provider is run locally build from code
+	// DefaultBasePath is the default BasePath
+	// found in Meta (info) section of spec file
+	DefaultBasePath string = "/"
+)
 
 var E1000 = "ERROR{1000}: Check input variables. Selected platform: \"%s\" is not from indicated virtualization platform: \"%s\"."
 
-func assign(platform_type string, platform string, api_key string) {
+func assign(platform_type string, platform string, api_key string, host string) {
 	PLATFORM = platform
 	API_KEY = api_key
 	PLATFORM_TYPE = platform_type
+	HOST = host
 }
 
 func (t *myTransport) RoundTrip(req *http.Request) (*http.Response, error) {
@@ -74,7 +86,7 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 
 	clientMutex.Lock()
 	defer clientMutex.Unlock()
-	assign(platformType, platform, api_key)
+	assign(platformType, platform, api_key, host)
 
 	if c := getClientFromCache(host, platform, api_key, insecure, debugLogFile); c != nil {
 		return c, nil
@@ -99,7 +111,7 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		Transport: &myTransport{},
 	}
 
-	apiClientTransport := httptransport.New(host, client.DefaultBasePath, mapToSchemes(insecure))
+	apiClientTransport := httptransport.New(host, DefaultBasePath, mapToSchemes(insecure))
 	apiClientTransport.SetDebug(true)
 	apiClientTransport.Transport = &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
@@ -109,118 +121,142 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 		apiClientTransport.SetLogger(defaultLogger)
 	}
 
-	apiClientAuthTransport := httptransport.New(host, client.DefaultBasePath, mapToSchemes(insecure))
+	apiClientAuthTransport := httptransport.New(host, DefaultBasePath, mapToSchemes(insecure))
 	apiClientAuthTransport.SetDebug(true)
 	if defaultLogger != nil {
 		apiClientAuthTransport.SetLogger(defaultLogger)
 	}
 
-	authClient := client.New(apiClientAuthTransport, strfmt.Default)
+	configuration := openapi.NewConfiguration()
+	configuration.HTTPClient = httpClient
+	if insecure {
+		configuration.Servers = openapi.ServerConfigurations{
+			{
+				URL: "http://" + HOST,
+			},
+		}
+		log.Printf("Base URL: %+v", configuration.Servers)
+
+		configuration.Scheme = "http"
+	} else {
+		configuration.Servers = openapi.ServerConfigurations{
+			{
+				URL: "https://" + HOST,
+			},
+		}
+		configuration.Scheme = "https"
+	}
+
+	authClient := openapi.NewAPIClient(configuration)
 
 	c := &Client{
 		SecurityGroups: SecurityGroupsProxy{
 			httpClient: httpClient,
-			service:    authClient.SecurityGroup,
+			service:    authClient.SecurityGroupAPI,
 		},
 		FirewallEWRules: FirewallEWRulesProxy{
 			httpClient: httpClient,
-			service:    authClient.DfwRule,
+			service:    authClient.DfwRuleAPI,
 		},
 		FirewallSNRules: FirewallSNRulesProxy{
 			httpClient: httpClient,
-			service:    authClient.GfwRule,
+			service:    authClient.GfwRuleAPI,
 		},
 		FirewallRules: FirewallRulesProxy{
 			httpClient: httpClient,
-			service:    authClient.FirewallRule,
+			service:    authClient.FirewallRuleAPI,
 		},
 		Services: ServicesProxy{
 			httpClient: httpClient,
-			service:    authClient.DefaultServices,
+			service:    authClient.DefaultServicesAPI,
 		},
 		Routers: RoutersProxy{
 			httpClient: httpClient,
-			service:    authClient.Router,
+			service:    authClient.RouterAPI,
 		},
 		VirtualMachines: VirtualMachinesProxy{
 			httpClient: httpClient,
-			service:    authClient.VirtualMachine,
+			service:    authClient.VirtualMachineAPI,
 		},
 		Projects: ProjectsProxy{
 			httpClient: httpClient,
-			service:    authClient.Projects,
+			service:    authClient.ProjectsAPI,
 		},
 		VirtualNetworks: VirtualNetworksProxy{
 			httpClient: httpClient,
-			service:    authClient.VirtualNetwork,
+			service:    authClient.VirtualNetworkAPI,
 		},
 		Requests: RequestsProxy{
 			httpClient: httpClient,
-			service:    authClient.Requests,
+			service:    authClient.RequestsAPI,
 		},
 		IPCollections: IPCollectionsProxy{
 			httpClient: httpClient,
-			service:    authClient.IPCollection,
+			service:    authClient.IpCollectionAPI,
 		},
 		Deployments: DeploymentsProxy{
 			httpClient: httpClient,
-			service:    authClient.Deployments,
+			service:    authClient.DeploymentsAPI,
 		},
 		CustomServices: CustomServicesProxy{
 			httpClient: httpClient,
-			service:    authClient.CustomServices,
+			service:    authClient.CustomServicesAPI,
 		},
 		KMSKeys: KMSKeysProxy{
 			httpClient: httpClient,
-			service:    authClient.Key,
+			service:    authClient.KeyAPI,
 		},
 		BackupPlans: BackupPlansProxy{
 			httpClient: httpClient,
-			service:    authClient.Backups,
+			service:    authClient.BackupsAPI,
 		},
 		BackupLists: BackupListsProxy{
 			httpClient: httpClient,
-			service:    authClient.Backups,
+			service:    authClient.BackupsAPI,
 		},
 		Tags: TagsProxy{
 			httpClient: httpClient,
-			service:    authClient.Tags,
+			service:    authClient.TagsAPI,
 		},
 		Nats: NatProxy{
 			httpClient: httpClient,
-			service:    authClient.NatRule,
+			service:    authClient.NatRuleAPI,
 		},
 		PortForwarding: PortsForwardingProxy{
 			httpClient: httpClient,
-			service:    authClient.PortForwarding,
+			service:    authClient.PortForwardingAPI,
 		},
 		Folders: FoldersProxy{
 			httpClient: httpClient,
-			service:    authClient.Folder,
+			service:    authClient.FolderAPI,
 		},
 		PublicIPAddresses: PublicIPAddressProxy{
 			httpClient: httpClient,
-			service:    authClient.PublicIP,
+			service:    authClient.PublicIpAPI,
+		},
+		AvailablePublicIp: AvailablePublicIpProxy{
+			httpClient: httpClient,
+			service:    authClient.AvailablePublicIpAPI,
 		},
 		FloatingIPAddresses: FloatingIPAddressProxy{
 			httpClient: httpClient,
-			service:    authClient.FloatingIP,
+			service:    authClient.FloatingIpAPI,
 		},
 		FloatingIPVms: FloatingIPVmsProxy{
 			httpClient: httpClient,
-			service:    authClient.FloatingIPVms,
+			service:    authClient.FloatingIpVmsAPI,
 		},
 		Snapshots: SnapshotsProxy{
 			httpClient: httpClient,
-			service:    authClient.VirtualMachineSnapshot,
+			service:    authClient.VirtualMachineSnapshotAPI,
 		},
 		Accounts: AccountsProxy{
 			httpClient: httpClient,
-			service:    authClient.Accounts,
+			service:    authClient.AccountsAPI,
 		},
 		PlatformType: PlatformTypeProxy{
 			httpClient: httpClient,
-			service:    authClient.Identification,
+			service:    authClient.IdentificationAPI,
 		},
 	}
 
@@ -246,7 +282,7 @@ type cachedClient struct {
 	ctx       *context.Context
 }
 
-func checkPlatformType(ctx context.Context, c *Client) (models.PlatformType, error) {
+func checkPlatformType(ctx context.Context, c *Client) (openapi.PlatformType, error) {
 	proxy := c.PlatformType
 	platformType, err := proxy.Read(ctx)
 	if err != nil {

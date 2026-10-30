@@ -1,15 +1,20 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"testing"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFlattenTags(t *testing.T) {
+	TagIdValue := int32(10)
+	TagIdValue2 := int32(20)
+	var virtualMachines []*string
+
 	cases := []struct {
-		expanded  []*models.Tag
+		expanded  []openapi.Tag
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -18,32 +23,32 @@ func TestFlattenTags(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.Tag{
+			expanded: []openapi.Tag{
 				{
-					TagID:                  10,
-					TagValue:               "Tag1",
-					ProjectID:              strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
-					RelatedVirtualMachines: []strfmt.UUID(nil),
+					TagId:                  &TagIdValue,
+					TagValue:               NewNullableString("Tag1"),
+					ProjectId:              NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					RelatedVirtualMachines: virtualMachines,
 				},
 				{
-					TagID:                  20,
-					TagValue:               "Tag2",
-					ProjectID:              strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867aa"),
-					RelatedVirtualMachines: []strfmt.UUID(nil),
+					TagId:                  &TagIdValue2,
+					TagValue:               NewNullableString("Tag2"),
+					ProjectId:              NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867aa"),
+					RelatedVirtualMachines: virtualMachines,
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
 					"tag_id":                   "10",
 					"display_name":             "Tag1",
-					"project_id":               strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
-					"related_virtual_machines": []strfmt.UUID(nil),
+					"project_id":               "e1675817-f1a1-45c1-988b-ec2f142867e0",
+					"related_virtual_machines": []*string(nil),
 				},
 				{
 					"tag_id":                   "20",
 					"display_name":             "Tag2",
-					"project_id":               strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867aa"),
-					"related_virtual_machines": []strfmt.UUID(nil),
+					"project_id":               "e1675817-f1a1-45c1-988b-ec2f142867aa",
+					"related_virtual_machines": []*string(nil),
 				},
 			},
 		},

@@ -2,15 +2,17 @@ package ochk
 
 import (
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"testing"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFlattenFloatingIpAddress(t *testing.T) {
+	FloatingIpIdValue := "92457621-e5af-49d6-921e-184566018fa9"
 	cases := []struct {
-		expanded  []*models.FloatingIP
+		expanded  []openapi.FloatingIp
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -19,16 +21,16 @@ func TestFlattenFloatingIpAddress(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.FloatingIP{
+			expanded: []openapi.FloatingIp{
 				{
-					FloatingIPID:  "92457621-e5af-49d6-921e-184566018fa9",
-					Name:          "publicIp1",
-					PublicAddress: "203.0.113.15",
+					FloatingIpId:  &FloatingIpIdValue,
+					Name:          NewNullableString("publicIp1"),
+					PublicAddress: NewNullableString("203.0.113.15"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"floating_ip_id": strfmt.UUID("92457621-e5af-49d6-921e-184566018fa9"),
+					"floating_ip_id": "92457621-e5af-49d6-921e-184566018fa9",
 					"display_name":   "publicIp1",
 					"public_address": "203.0.113.15",
 				},

@@ -40,9 +40,9 @@ func dataSourceBackupPlanRead(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("more than one backup plan with name: %s found!", backupPlanName)
 	}
 
-	d.SetId(backupPlans[0].BackupPlanID.String())
+	d.SetId(backupPlans[0].GetBackupPlanId())
 
-	if err := d.Set("display_name", backupPlans[0].BackupPlanName); err != nil {
+	if err := d.Set("display_name", backupPlans[0].GetBackupPlanName()); err != nil {
 		return diag.Errorf("error setting backup plan name: %+v", err)
 	}
 	return nil
