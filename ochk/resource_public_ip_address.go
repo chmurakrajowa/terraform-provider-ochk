@@ -3,11 +3,12 @@ package ochk
 import (
 	"context"
 	"fmt"
-	openapi "github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"strconv"
 	"strings"
 	"time"
+
+	openapi "github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -86,9 +87,8 @@ func resourcePublicIpRead(ctx context.Context, d *schema.ResourceData, meta inte
 	public_ip, err := proxy.Read(ctx, (int32)(public_ip_id))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
-			id := d.Id()
 			d.SetId("")
-			return diag.Errorf("public ip with id %s not found: %+v", id, err)
+			return nil
 		}
 
 		return diag.Errorf("error while reading public ip: %+v", err)
@@ -144,9 +144,8 @@ func resourcePublicIpDelete(ctx context.Context, d *schema.ResourceData, meta in
 	err := proxy.Delete(ctx, (int32)(id_value))
 	if err != nil {
 		if sdk.IsNotFoundError(err) {
-			id := d.Id()
 			d.SetId("")
-			return diag.Errorf("public ip address with id %s not found: %+v", id, err)
+			return nil
 		}
 
 		return diag.Errorf("error while deleting public ip address: %+v", err)

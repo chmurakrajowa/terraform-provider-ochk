@@ -4,13 +4,14 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
-	openapi "github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
-	httptransport "github.com/go-openapi/runtime/client"
-	"github.com/go-openapi/runtime/logger"
 	"log"
 	"net/http"
 	"sync"
 	"time"
+
+	openapi "github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
+	httptransport "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/runtime/logger"
 )
 
 type Client struct {
@@ -140,13 +141,11 @@ func NewClient(ctx context.Context, host string, platform string, api_key string
 	} else {
 		configuration.Servers = openapi.ServerConfigurations{
 			{
-				URL: HOST,
+				URL: "https://" + HOST,
 			},
 		}
 		configuration.Scheme = "https"
-
 	}
-	configuration.Debug = true
 
 	authClient := openapi.NewAPIClient(configuration)
 

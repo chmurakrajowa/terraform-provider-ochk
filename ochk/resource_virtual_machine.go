@@ -3,11 +3,12 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"strings"
+	"time"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
-	"strings"
-	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -598,7 +599,7 @@ func castStringToStorageEnum(e string) openapi.StoragePolicy {
 	case "STANDARD_W1_ENCRYPTION":
 		return openapi.STORAGEPOLICY_STANDARD_W1_ENCRYPTION
 	case "STANDARD_W2_ENCRYPTION":
-		return openapi.STORAGEPOLICY_STANDARD_W2
+		return openapi.STORAGEPOLICY_STANDARD_W2_ENCRYPTION
 	default:
 		return ""
 	}
