@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -85,22 +85,22 @@ func dataSourceKMSKeyRead(ctx context.Context, d *schema.ResourceData, meta inte
 		return diag.Errorf("no KMS key found for display_name: %s", displayName)
 	}
 
-	var keyInstance *models.KeyInstance
+	var keyInstance openapi.KeyInstance
 	for _, key := range kmsKeys {
-		if int(key.Version) == version {
+		if castInt32ToInt(key.Version.Get()) == version {
 			keyInstance = key
 			break
 		}
 	}
 
-	if keyInstance == nil {
+	if !keyInstance.Id.IsSet() { // check is Id is set value as boolean
 		return diag.Errorf("no KMS key found for display_name: %s and version: %d", displayName, version)
 	}
 
-	if err := mapKMSKeyToResourceData(d, keyInstance); err != nil {
+	if err := mapKMSKeyToResourceData(d, &keyInstance); err != nil {
 		return nil
 	}
-	d.SetId(keyInstance.ID)
+	d.SetId(keyInstance.GetId())
 
 	return nil
 }

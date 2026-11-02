@@ -54,25 +54,25 @@ func dataSourceVrfRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("more than one vrf with display_name: %s found!", displayName)
 	}
 
-	if vrfs[0].RouterType != "TIER0" {
+	if vrfs[0].GetRouterType() != "TIER0" {
 		return diag.Errorf("no vrf found for display_name: %s", displayName)
 	}
 
-	d.SetId(vrfs[0].RouterID.String())
+	d.SetId(vrfs[0].GetRouterId())
 
-	if err := d.Set("created_by", vrfs[0].CreatedBy); err != nil {
+	if err := d.Set("created_by", vrfs[0].GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", vrfs[0].CreationDate.String()); err != nil {
+	if err := d.Set("created_at", vrfs[0].GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", vrfs[0].ModifiedBy); err != nil {
+	if err := d.Set("modified_by", vrfs[0].GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", vrfs[0].ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", vrfs[0].GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 

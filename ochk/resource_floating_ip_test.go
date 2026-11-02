@@ -3,10 +3,11 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"testing"
 )
 
 type FloatingIpTestData struct {
@@ -100,7 +101,7 @@ func testAccFloatingIpAddressResourceNotExists(name string) resource.TestCheckFu
 		}
 
 		if len(floatingIp) > 0 {
-			return fmt.Errorf("project %s still exists", floatingIp[0].FloatingIPID)
+			return fmt.Errorf("project %s still exists", floatingIp[0].GetFloatingIpId())
 		}
 		return nil
 	}

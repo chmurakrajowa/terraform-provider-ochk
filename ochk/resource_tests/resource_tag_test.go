@@ -3,11 +3,12 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"testing"
 )
 
 type TagTestData struct {
@@ -80,7 +81,7 @@ func testAccTagResourceNotExists(displayName string) resource.TestCheckFunc {
 		}
 
 		if len(tags) > 0 {
-			return fmt.Errorf("tag %d still exists", tags[0].TagID)
+			return fmt.Errorf("tag %d still exists", tags[0].GetTagId())
 		}
 
 		return nil

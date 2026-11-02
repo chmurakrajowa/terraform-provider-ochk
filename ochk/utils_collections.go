@@ -1,7 +1,6 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -61,11 +60,9 @@ func transformSetToStringSlice(set *schema.Set) []string {
 	})
 }
 
-func transformSetToSKeyUsage(set *schema.Set) []models.KeyUsage {
+func transformSetToSKeyUsage(set *schema.Set) []string {
 	list := set.List()
-	return transformToKeyUsageSlice(len(list), func(idx int) string {
-		return list[idx].(string)
-	})
+	return transformToKeyUsageSlice(len(list))
 }
 
 func transformInterfaceSliceToStringSlice(in []interface{}) []string {
@@ -86,10 +83,10 @@ func transformToStringSlice(size int, mapFunc func(idx int) string) []string {
 	return resultSlice
 }
 
-func transformToKeyUsageSlice(size int, mapFunc func(idx int) string) []models.KeyUsage {
-	var resultSlice []models.KeyUsage
+func transformToKeyUsageSlice(size int) []string {
+	var resultSlice []string
 	for i := 0; i < size; i++ {
-		resultSlice = append(resultSlice, models.KeyUsage(mapFunc(i)))
+		resultSlice = make([]string, i)
 	}
 
 	return resultSlice

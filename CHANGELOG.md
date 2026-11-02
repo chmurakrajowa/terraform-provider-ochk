@@ -1,4 +1,15 @@
-## 3.0.1 (2025-05-06)
+## 3.1.0 (2026-10-28)
+
+### Resources
+
+* Changed resources for VMwware and Openstack
+* `resource_snapshot` - add encypted field
+
+### Misc
+* Use openapi 3.0.1 instead swagger 2.0
+
+
+## 3.0.1 (2025-04-17)
 
 ### Resources
 

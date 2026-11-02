@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -195,84 +195,84 @@ func resourceNatRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error while reading nat: %+v", err)
 	}
 
-	if err := d.Set("display_name", Nat.DisplayName); err != nil {
+	if err := d.Set("display_name", Nat.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("vrf_id", Nat.TierZeroRouter.RouterID); err != nil {
+	if err := d.Set("vrf_id", Nat.GetTierZeroRouterId()); err != nil {
 		return diag.Errorf("error setting vrf_id: %+v", err)
 	}
 
-	if err := d.Set("nat_type", Nat.NatType); err != nil {
+	if err := d.Set("nat_type", Nat.GetNatType()); err != nil {
 		return diag.Errorf("error setting nat_type: %+v", err)
 	}
 
-	if err := d.Set("created_by", Nat.CreatedBy); err != nil {
+	if err := d.Set("created_by", Nat.GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", Nat.CreationDate.String()); err != nil {
+	if err := d.Set("created_at", Nat.GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", Nat.ModifiedBy); err != nil {
+	if err := d.Set("modified_by", Nat.GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", Nat.ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", Nat.GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
-	if err := d.Set("action", Nat.Action); err != nil {
+	if err := d.Set("action", Nat.GetAction()); err != nil {
 		return diag.Errorf("error setting action: %+v", err)
 	}
 
-	if err := d.Set("priority", Nat.Priority); err != nil {
+	if err := d.Set("priority", Nat.GetPriority()); err != nil {
 		return diag.Errorf("error setting priority: %+v", err)
 	}
 
-	if Nat.NatType == "AUTO" {
-		if err := d.Set("virtual_network_id", Nat.VirtualNetworkInstance.VirtualNetworkID); err != nil {
+	if *Nat.NatType == "AUTO" {
+		if err := d.Set("virtual_network_id", Nat.GetVirtualNetworkId()); err != nil {
 			return diag.Errorf("error setting virtual_network_id: %+v", err)
 		}
 	}
 
-	if Nat.NatType == "MANUAL" {
-		if Nat.Description == "UNKNOWN" || Nat.Description == "" {
+	if *Nat.NatType == "MANUAL" {
+		if Nat.GetDescription() == "UNKNOWN" || Nat.GetDescription() == "" {
 			if err := d.Set("description", ""); err != nil {
 				return diag.Errorf("error setting description: %+v", err)
 			}
 		} else {
-			if err := d.Set("description", Nat.Description); err != nil {
+			if err := d.Set("description", Nat.GetDescription()); err != nil {
 				return diag.Errorf("error setting description: %+v", err)
 			}
 		}
 
-		if err := d.Set("enabled", Nat.Enabled); err != nil {
+		if err := d.Set("enabled", Nat.GetEnabled()); err != nil {
 			return diag.Errorf("error setting enabled: %+v", err)
 		}
 
-		if err := d.Set("source_network", Nat.SourceNetwork); err != nil {
+		if err := d.Set("source_network", Nat.GetSourceNetwork()); err != nil {
 			return diag.Errorf("error setting source_network: %+v", err)
 		}
 
-		if err := d.Set("destination_network", Nat.DestinationNetwork); err != nil {
+		if err := d.Set("destination_network", Nat.GetDestinationNetwork()); err != nil {
 			return diag.Errorf("error setting destination_network: %+v", err)
 		}
 
-		if Nat.Action == "DNAT" || Nat.Action == "SNAT" {
-			if err := d.Set("translated_network", Nat.TranslatedNetwork); err != nil {
+		if Nat.GetAction() == "DNAT" || Nat.GetAction() == "SNAT" {
+			if err := d.Set("translated_network", Nat.GetTranslatedNetwork()); err != nil {
 				return diag.Errorf("error setting translated_network: %+v", err)
 			}
 		}
 
-		if Nat.Action == "DNAT" {
-			if Nat.TranslatedPorts != "" && Nat.ServiceInstance.ServiceID != "" {
-				if err := d.Set("service_id", Nat.ServiceInstance.ServiceID); err != nil {
+		if Nat.GetAction() == "DNAT" {
+			if Nat.GetTranslatedPorts() != "" && Nat.ServiceInstance.GetServiceId() != "" {
+				if err := d.Set("service_id", Nat.ServiceInstance.GetServiceId()); err != nil {
 					return diag.Errorf("error setting service_id: %+v", err)
 				}
 
-				if err := d.Set("translated_ports", Nat.TranslatedPorts); err != nil {
+				if err := d.Set("translated_ports", Nat.GetTranslatedPorts()); err != nil {
 					return diag.Errorf("error setting translated_ports: %+v", err)
 				}
 			}
@@ -328,7 +328,7 @@ func resourceAutoNatUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	proxy := meta.(*sdk.Client).Nats
 
 	Nat := mapResourceDataToAutoNat(d)
-	Nat.RuleID = strfmt.UUID(d.Id())
+	Nat.RuleId = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, Nat)
 	if err != nil {
@@ -342,7 +342,7 @@ func resourceManualNatUpdate(ctx context.Context, d *schema.ResourceData, meta i
 	proxy := meta.(*sdk.Client).Nats
 
 	Nat := mapResourceDataToManualNat(d)
-	Nat.RuleID = strfmt.UUID(d.Id())
+	Nat.RuleId = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, Nat)
 	if err != nil {
@@ -369,63 +369,70 @@ func resourceNatDelete(ctx context.Context, d *schema.ResourceData, meta interfa
 	return nil
 }
 
-func mapResourceDataToAutoNat(d *schema.ResourceData) *models.NATRuleInstance {
-	return &models.NATRuleInstance{
-		DisplayName:            d.Get("display_name").(string),
-		VirtualNetworkInstance: mapResourceDataToVirtualNetworkInstance(d),
-		NatType:                "AUTO",
+type NetworkNATType = openapi.NATType
+
+const (
+	NetworkManual NetworkNATType = "MANUAL"
+	NetworkAuto   NetworkNATType = "AUTO"
+)
+
+func mapResourceDataToAutoNat(d *schema.ResourceData) openapi.NATRuleInstance {
+	return openapi.NATRuleInstance{
+		DisplayName:      NewNullableString(d.Get("display_name").(string)),
+		VirtualNetworkId: mapResourceDataToVirtualNetworkInstance(d).VirtualNetworkId,
+		NatType:          NetworkAuto.Ptr(),
 	}
 }
 
-func mapResourceDataToManualNat(d *schema.ResourceData) *models.NATRuleInstance {
+func mapResourceDataToManualNat(d *schema.ResourceData) openapi.NATRuleInstance {
 
 	publicPriorityInt64 := int64(d.Get("priority").(int))
-
-	natManualRule := &models.NATRuleInstance{
-		DisplayName:        d.Get("display_name").(string),
-		Description:        d.Get("description").(string),
-		Enabled:            d.Get("enabled").(bool),
-		TierZeroRouter:     mapResourceDataToVrfRouter(d),
-		Action:             models.NATRuleAction(d.Get("action").(string)),
-		Priority:           publicPriorityInt64,
-		SourceNetwork:      d.Get("source_network").(string),
-		DestinationNetwork: d.Get("destination_network").(string),
-		NatType:            "MANUAL",
+	actionValue := openapi.NATRuleAction(d.Get("action").(string))
+	natManualRule := openapi.NATRuleInstance{
+		DisplayName:        NewNullableString(d.Get("display_name").(string)),
+		Description:        NewNullableString(d.Get("description").(string)),
+		Enabled:            NewNullableBool(d.Get("enabled").(bool)),
+		TierZeroRouterId:   mapResourceDataToVrfRouter(d).RouterId,
+		Action:             &actionValue,
+		Priority:           NewNullableInt64(publicPriorityInt64),
+		SourceNetwork:      NewNullableString(d.Get("source_network").(string)),
+		DestinationNetwork: NewNullableString(d.Get("destination_network").(string)),
+		NatType:            NetworkManual.Ptr(),
 	}
 	natAction := d.Get("action")
 
 	if natAction == "DNAT" {
 		if d.Get("translated_ports") != "" && d.Get("service_id") != "" {
 			natManualRule.ServiceInstance = mapResourceDataToServiceInstance(d)
-			natManualRule.TranslatedPorts = d.Get("translated_ports").(string)
+			natManualRule.TranslatedPorts = NewNullableString(d.Get("translated_ports").(string))
 		}
 	}
 
 	if natAction == "DNAT" || natAction == "SNAT" {
-		natManualRule.TranslatedNetwork = d.Get("translated_network").(string)
+		natManualRule.TranslatedNetwork = NewNullableString(d.Get("translated_network").(string))
 	}
 
 	return natManualRule
 }
 
-func mapResourceDataToVrfRouter(d *schema.ResourceData) *models.RouterInstance {
+func mapResourceDataToVrfRouter(d *schema.ResourceData) *openapi.RouterInstance {
 	var vrf_id = d.Get("vrf_id").(string)
-	routerInstance := models.RouterInstance{
-		RouterID: strfmt.UUID(vrf_id),
+	routerInstance := openapi.RouterInstance{
+		RouterId: NewNullableString(vrf_id),
 	}
 	return &routerInstance
 }
 
-func mapResourceDataToVirtualNetworkInstance(d *schema.ResourceData) *models.VirtualNetworkInstance {
-	virtualNetworkInstance := models.VirtualNetworkInstance{
-		VirtualNetworkID: strfmt.UUID(d.Get("virtual_network_id").(string)),
+func mapResourceDataToVirtualNetworkInstance(d *schema.ResourceData) *openapi.VirtualNetworkInstance {
+	virtualNetworkInstance := openapi.VirtualNetworkInstance{
+		VirtualNetworkId: NewNullableString(d.Get("virtual_network_id").(string)),
 	}
 	return &virtualNetworkInstance
 }
 
-func mapResourceDataToServiceInstance(d *schema.ResourceData) *models.ServiceInstance {
-	serviceInstance := models.ServiceInstance{
-		ServiceID: strfmt.UUID(d.Get("service_id").(string)),
+func mapResourceDataToServiceInstance(d *schema.ResourceData) *openapi.ServiceInstance {
+	serviceInstance := openapi.ServiceInstance{
+		ServiceId: NewNullableString(d.Get("service_id").(string)),
 	}
 	return &serviceInstance
 }

@@ -3,16 +3,17 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"testing"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
-func testAccirewallEWRuleCreateResourceId(firewallRuleResourceName string) resource.ImportStateIdFunc {
+func testAccFirewallEWRuleCreateResourceId(firewallRuleResourceName string) resource.ImportStateIdFunc {
 	return func(s *terraform.State) (string, error) {
 		firewallRuleResource := s.RootModule().Resources[firewallRuleResourceName]
 		resourceID := firewallRuleResource.Primary.Attributes["vpc_id"] + "/" + firewallRuleResource.Primary.ID
@@ -59,7 +60,7 @@ func TestAccFirewallEWRuleResource_create_update(t *testing.T) {
 				ResourceName:      resourceName,
 				ImportState:       true,
 				ImportStateVerify: true,
-				ImportStateIdFunc: testAccirewallEWRuleCreateResourceId(resourceName),
+				ImportStateIdFunc: testAccFirewallEWRuleCreateResourceId(resourceName),
 			},
 			{
 				Config: testAccFirewallEWRuleResourceConfig(displayNameUpdated, source, destination, actionUpdated, ipProtocolUpdated, directionUpdated, 2000, "data.ochk_custom_service.custom_service2.id"),
@@ -119,7 +120,7 @@ func testAccFirewallEWRuleCheckRulesOrder(securityPolicyResourceName string, dis
 
 		if !checkOrderOfSecurityPolicies(securityPolicies, displayNames) {
 			securityPoliciesDisplayNames := transformToStringSlice(len(securityPolicies), func(idx int) string {
-				return securityPolicies[idx].DisplayName
+				return StringValue(securityPolicies[idx].DisplayName.Get())
 			})
 			return fmt.Errorf("security policies not found in expected order: %+v, security polices: %+v", displayNames, securityPoliciesDisplayNames)
 		}
@@ -148,10 +149,10 @@ func TestCheckOrderOfSecurityPolicies(t *testing.T) {
 			{},
 		}
 
-		stringArrayToDFWRule := func(strArr []string) []*models.DfwRule {
-			var result []*models.DfwRule
+		stringArrayToDFWRule := func(strArr []string) []openapi.DfwRule {
+			var result []openapi.DfwRule
 			for i := 0; i < len(strArr); i++ {
-				result = append(result, &models.DfwRule{DisplayName: strArr[i]})
+				result = append(result, openapi.DfwRule{DisplayName: NewNullableString(strArr[i])})
 			}
 			return result
 		}
@@ -166,23 +167,31 @@ func TestCheckOrderOfSecurityPolicies(t *testing.T) {
 	})
 }
 
-func checkOrderOfSecurityPolicies(securityPolicies []*models.DfwRule, displayNames []string) bool {
-	indexOfFirstElement := findIndexOfFirstMatch(len(securityPolicies), func(idx int) bool {
-		return securityPolicies[idx].DisplayName == displayNames[0]
-	})
-
-	if indexOfFirstElement == -1 {
-		return false
+func checkOrderOfSecurityPolicies(
+	securityPolicies []openapi.DfwRule,
+	displayNames []string,
+) bool {
+	if len(displayNames) == 0 {
+		return true
 	}
 
-	if indexOfFirstElement+len(displayNames) > len(securityPolicies) {
-		return false
+	for start := 0; start+len(displayNames) <= len(securityPolicies); start++ {
+		matches := true
+
+		for i, expected := range displayNames {
+			name := securityPolicies[start+i].DisplayName.Get()
+			if name == nil || *name != expected {
+				matches = false
+				break
+			}
+		}
+
+		if matches {
+			return true
+		}
 	}
 
-	leftSlice := securityPolicies[indexOfFirstElement : indexOfFirstElement+len(displayNames)]
-	return slicesEqual(len(leftSlice), len(displayNames), func(lhsIdx int, rhsIdx int) bool {
-		return leftSlice[lhsIdx].DisplayName == displayNames[rhsIdx]
-	})
+	return false
 }
 
 func testAccFirewallEWRuleResourceConfig(displayName string, source string, destination string, action string, ipProtocol string, direction string, priority int64, customServiceResourceID string) string {
@@ -404,13 +413,15 @@ func testAccFirewallEWRuleResourceDoesntExist(displayName string) resource.TestC
 			return fmt.Errorf("wrong number of routers")
 		}
 
-		firewallRule, err := client.FirewallEWRules.ListByDisplayName(ctx, routers[0].RouterID, displayName)
+		routerUuid, _ := NullableStringToUUID(routers[0].RouterId)
+
+		firewallRule, err := client.FirewallEWRules.ListByDisplayName(ctx, *routerUuid, displayName)
 		if err != nil {
 			return err
 		}
 
 		if len(firewallRule) > 0 {
-			return fmt.Errorf("firewall EW rule %s still exists", firewallRule[0].RuleID)
+			return fmt.Errorf("firewall EW rule %s still exists", firewallRule[0].GetRuleId())
 		}
 
 		return nil

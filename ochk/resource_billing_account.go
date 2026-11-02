@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -47,7 +47,7 @@ func resourceBillingAccount() *schema.Resource {
 			},
 			"alarms": {
 				Type:     schema.TypeBool,
-				Optional: true,
+				Required: true,
 			},
 			"cost": {
 				Type:     schema.TypeFloat,
@@ -61,7 +61,7 @@ func resourceBillingAccount() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"project_id": {
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"display_name": {
 							Type:     schema.TypeString,
@@ -89,7 +89,7 @@ func resourceAccountCreate(ctx context.Context, d *schema.ResourceData, meta int
 		return diag.Errorf("error while creating account: %+v", err)
 	}
 
-	d.SetId(created.AccountID.String())
+	d.SetId(created.GetAccountId())
 	return resourceAccountRead(ctx, d, meta)
 }
 
@@ -97,8 +97,10 @@ func resourceAccountUpdate(ctx context.Context, d *schema.ResourceData, meta int
 	proxy := meta.(*sdk.Client).Accounts
 
 	account := mapResourceDataToAccount(d)
-	account.AccountID = strfmt.UUID(d.Id())
+	account.AccountId = NewNullableString(d.Id())
 
+	//b, _ := json.MarshalIndent(req, "", "  ")
+	//fmt.Println(string(b))
 	_, err := proxy.Update(ctx, account)
 	if err != nil {
 		return diag.Errorf("error while modifying account: %+v", err)
@@ -121,23 +123,23 @@ func resourceAccountRead(ctx context.Context, d *schema.ResourceData, meta inter
 		return diag.Errorf("error while reading account: %+v", err)
 	}
 
-	if err := d.Set("display_name", account.AccountName); err != nil {
+	if err := d.Set("display_name", account.GetAccountName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("account_description", account.AccountDescription); err != nil {
+	if err := d.Set("account_description", account.GetAccountDescription()); err != nil {
 		return diag.Errorf("error setting account_description: %+v", err)
 	}
 
-	if err := d.Set("discount", account.Discount); err != nil {
+	if err := d.Set("discount", account.GetDiscount()); err != nil {
 		return diag.Errorf("error setting discount: %+v", err)
 	}
 
-	if err := d.Set("alarms", account.Alarms); err != nil {
+	if err := d.Set("alarms", account.GetAlarms()); err != nil {
 		return diag.Errorf("error setting alarms: %+v", err)
 	}
 
-	if err := d.Set("cost", account.Cost); err != nil {
+	if err := d.Set("cost", account.GetCost()); err != nil {
 		return diag.Errorf("error setting cost: %+v", err)
 	}
 
@@ -164,30 +166,37 @@ func resourceAccountDelete(ctx context.Context, d *schema.ResourceData, meta int
 	return nil
 }
 
-func mapResourceDataToAccount(d *schema.ResourceData) *models.AccountInstance {
-	return &models.AccountInstance{
-		AccountName:        d.Get("display_name").(string),
-		AccountDescription: d.Get("account_description").(string),
+func mapResourceDataToAccount(d *schema.ResourceData) openapi.AccountInstance {
+	return openapi.AccountInstance{
+		AccountName:        NewNullableString(d.Get("display_name").(string)),
+		AccountDescription: NewNullableString(d.Get("account_description").(string)),
 		Projects:           expandAccountProjects(d.Get("projects").(*schema.Set).List()),
 	}
 }
 
-func expandAccountProjects(in []interface{}) []*models.AccountProjectInstance {
+func expandAccountProjects(in []interface{}) []openapi.AccountProjectInstance {
 	if len(in) == 0 {
 		return nil
 	}
 
-	var out = make([]*models.AccountProjectInstance, len(in))
+	for _, v := range in {
+		m := v.(map[string]interface{})
+		if m["project_id"].(string) == "" { // for account without assigned project we can not send empty array projects - error in core
+			return nil
+		}
+	}
+
+	var out = make([]openapi.AccountProjectInstance, len(in))
 	for i, v := range in {
 		m := v.(map[string]interface{})
 
-		project := &models.AccountProjectInstance{
-			ProjectID: strfmt.UUID(m["project_id"].(string)),
-			Name:      m["display_name"].(string),
+		project := openapi.AccountProjectInstance{
+			ProjectId: NewNullableString(m["project_id"].(string)),
+			Name:      NewNullableString(m["display_name"].(string)),
 		}
 
 		if displayName, ok := m["display_name"].(string); ok && displayName != "" {
-			project.Name = displayName
+			project.Name = NewNullableString(displayName)
 		}
 
 		out[i] = project

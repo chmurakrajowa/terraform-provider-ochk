@@ -32,7 +32,10 @@ case $1 in
   *)
     cd examples/OPENSTACK
     rm -r debug.log
+#    terraform init -var-file=test.tfvars -backend-config="path=test.tfstate"
+#    TF_DEBUG=DEBUG TF_LOG=DEBUG terraform apply -var-file=test.tfvars  -no-color 2>&1 | tee plan.log
+
     terraform init -var-file=test.tfvars -backend-config="path=test.tfstate"
-    TF_DEBUG=DEBUG TF_LOG=DEBUG terraform apply -var-file=test.tfvars  -no-color 2>&1 | tee plan.log
+    TF_DEBUG=TRACE TF_LOG=TRACE TF_LOG_PROVIDER=TRACE terraform apply -var-file=test.tfvars  -no-color 2>&1 | tee plan.log
     ;;
 esac

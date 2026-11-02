@@ -3,36 +3,36 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/floating_ip_vms"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
 	"net/http"
 	"sync"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 )
 
 type FloatingIPVmsProxy struct {
 	httpClient *http.Client
-	service    floating_ip_vms.ClientService
+	service    *openapi.FloatingIpVmsAPIService
 }
 
-func (p *FloatingIPVmsProxy) List(ctx context.Context) ([]*models.PortFwdVM, error) {
-
-	params := &floating_ip_vms.GetNetworkFloatingIpsVmsParams{
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
-
+func (p *FloatingIPVmsProxy) List(ctx context.Context) ([]openapi.PortFwdVm, error) {
 	mutex := sync.Mutex{}
 	mutex.Lock()
-	response, err := p.service.GetNetworkFloatingIpsVms(params)
+	action := p.service.NetworkFloatingIpsVmsGet(ctx)
+	response, _, err := action.Execute()
 	mutex.Unlock()
 
 	if err != nil {
 		return nil, fmt.Errorf("error while listing floating ip vms: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("listing floating ip vms failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("listing floating ip vms failed: %s", message)
 	}
 
-	return response.Payload.PortFwdVMCollection, nil
+	return response.PortFwdVmCollection, nil
 }

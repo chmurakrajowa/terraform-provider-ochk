@@ -1,52 +1,63 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"testing"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFlattenFolders(t *testing.T) {
+	stringPtr := func(value string) *string {
+		return &value
+	}
+
 	cases := []struct {
-		expanded  []*models.FolderInstance
+		name      string
+		expanded  []openapi.FolderInstance
 		flattened []map[strfmt.UUID]interface{}
 	}{
-		// nil values
 		{
+			name:      "nil input",
 			expanded:  nil,
 			flattened: nil,
 		},
 		{
-			expanded: []*models.FolderInstance{
+			name: "two folders",
+			expanded: []openapi.FolderInstance{
 				{
-					ID:         "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					Name:       "test1",
-					FolderPath: "/test1",
+					Id:         stringPtr("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					Name:       NewNullableString("test1"),
+					FolderPath: NewNullableString("/test1"),
 				},
 				{
-					ID:         "791bf702-22fb-4c76-bebb-1fee7ee75607",
-					Name:       "test2",
-					FolderPath: "/test1/test2",
+					Id:         stringPtr("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					Name:       NewNullableString("test2"),
+					FolderPath: NewNullableString("/test1/test2"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"folder_id":   strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
-					"folder_name": "test1",
-					"folder_path": "/test1",
+					"folder_id":   stringPtr("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					"folder_name": stringPtr("test1"),
+					"folder_path": stringPtr("/test1"),
 				},
 				{
-					"folder_id":   strfmt.UUID("791bf702-22fb-4c76-bebb-1fee7ee75607"),
-					"folder_name": "test2",
-					"folder_path": "/test1/test2",
+					"folder_id":   stringPtr("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					"folder_name": stringPtr("test2"),
+					"folder_path": stringPtr("/test1/test2"),
 				},
 			},
 		},
 	}
+
 	for _, c := range cases {
-		flattenedType := mapSliceToInterfaceSlice(c.flattened)
-		outFlattened := mapSliceToInterfaceSlice(flattenFolders(c.expanded))
-		assert.EqualValues(t, flattenedType, outFlattened, "Error matching output and flattened: %#v vs %#v", outFlattened, flattenedType)
+		t.Run(c.name, func(t *testing.T) {
+			expected := mapSliceToInterfaceSlice(c.flattened)
+			actual := mapSliceToInterfaceSlice(flattenFolders(c.expanded))
+
+			assert.EqualValues(t, expected, actual)
+		})
 	}
 }

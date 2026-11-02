@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -77,7 +77,7 @@ func resourceFloatingIpCreate(ctx context.Context, d *schema.ResourceData, meta 
 		return diag.Errorf("error while allocation floating ip: %+v", err)
 	}
 
-	d.SetId(created.FloatingIPID.String())
+	d.SetId(created.GetFloatingIpId())
 
 	return resourceFloatingIpRead(ctx, d, meta)
 }
@@ -97,23 +97,23 @@ func resourceFloatingIpRead(ctx context.Context, d *schema.ResourceData, meta in
 		return diag.Errorf("error while reading floating ip: %+v", err)
 	}
 
-	if err := d.Set("display_name", floating_ip.Name); err != nil {
+	if err := d.Set("display_name", floating_ip.GetName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("description", floating_ip.Description); err != nil {
+	if err := d.Set("description", floating_ip.GetDescription()); err != nil {
 		return diag.Errorf("error setting description: %+v", err)
 	}
 
-	if err := d.Set("vm_name", floating_ip.VMName); err != nil {
+	if err := d.Set("vm_name", floating_ip.GetVmName()); err != nil {
 		return diag.Errorf("error setting vm_name: %+v", err)
 	}
 
-	if err := d.Set("vm_port_id", floating_ip.VMPortID); err != nil {
+	if err := d.Set("vm_port_id", floating_ip.GetVmPortId()); err != nil {
 		return diag.Errorf("error setting vm_port_id: %+v", err)
 	}
 
-	if err := d.Set("vm_fixed_ip", floating_ip.VMFixedIP); err != nil {
+	if err := d.Set("vm_fixed_ip", floating_ip.GetVmFixedIp()); err != nil {
 		return diag.Errorf("error setting vm_fixed_ip: %+v", err)
 	}
 
@@ -127,7 +127,8 @@ func resourceFloatingIpUpdate(ctx context.Context, d *schema.ResourceData, meta 
 	proxy := meta.(*sdk.Client).FloatingIPAddresses
 
 	floatingIp := mapResourceDataToFloatingIp(d)
-	floatingIp.FloatingIPID = strfmt.UUID(d.Id())
+	var id = d.Id()
+	floatingIp.FloatingIpId = &id
 
 	_, err := proxy.Update(ctx, floatingIp)
 	if err != nil {
@@ -154,12 +155,12 @@ func resourceFloatingIpDelete(ctx context.Context, d *schema.ResourceData, meta 
 	return nil
 }
 
-func mapResourceDataToFloatingIp(d *schema.ResourceData) *models.FloatingIP {
-	return &models.FloatingIP{
-		Description: d.Get("description").(string),
-		Name:        d.Get("display_name").(string),
-		VMName:      d.Get("vm_name").(string),
-		VMPortID:    strfmt.UUID(d.Get("vm_port_id").(string)),
-		VMFixedIP:   d.Get("vm_fixed_ip").(string),
+func mapResourceDataToFloatingIp(d *schema.ResourceData) openapi.FloatingIp {
+	return openapi.FloatingIp{
+		Description: NewNullableString(d.Get("description").(string)),
+		Name:        NewNullableString(d.Get("display_name").(string)),
+		VmName:      NewNullableString(d.Get("vm_name").(string)),
+		VmPortId:    NewNullableString(d.Get("vm_port_id").(string)),
+		VmFixedIp:   NewNullableString(d.Get("vm_fixed_ip").(string)),
 	}
 }

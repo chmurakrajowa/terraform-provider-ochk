@@ -41,7 +41,7 @@ func dataSourceVrfsRead(ctx context.Context, d *schema.ResourceData, meta interf
 	}
 
 	if err := d.Set("vrfs", flattenVrfs(vrfs)); err != nil {
-		return diag.Errorf("error settingv rfs list: %v", err)
+		return diag.Errorf("error settings rfs list: %v", err)
 	}
 
 	d.SetId("vrfs-list")

@@ -3,12 +3,13 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"strconv"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"strconv"
-	"testing"
 )
 
 type ProjectTestData struct {
@@ -131,7 +132,7 @@ func testAccProjectResourceNotExists(name string) resource.TestCheckFunc {
 		}
 
 		if len(projects) > 0 {
-			return fmt.Errorf("project %s still exists", projects[0].ProjectID)
+			return fmt.Errorf("project %s still exists", projects[0].GetProjectId())
 		}
 
 		return nil

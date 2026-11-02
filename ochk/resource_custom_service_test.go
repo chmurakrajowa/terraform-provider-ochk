@@ -3,10 +3,11 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"testing"
 )
 
 type CustomServiceTestData struct {
@@ -152,7 +153,7 @@ func testAccCustomServiceResourceNotExists(displayNames ...string) resource.Test
 			}
 
 			if len(customServices) > 0 {
-				return fmt.Errorf("custom service %s still exists", customServices[0].ServiceID)
+				return fmt.Errorf("custom service %s still exists", customServices[0].GetServiceId())
 			}
 		}
 

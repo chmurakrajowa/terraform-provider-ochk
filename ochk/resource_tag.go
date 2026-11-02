@@ -3,9 +3,8 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
-	"github.com/go-openapi/strfmt"
 	"strings"
 	"time"
 
@@ -62,7 +61,7 @@ func resourceTagCreate(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("error while creating tag: %+v", err)
 	}
 
-	d.SetId(fmt.Sprint(created.TagID))
+	d.SetId(fmt.Sprint(created.GetTagId()))
 	return resourceTagRead(ctx, d, meta)
 }
 
@@ -86,11 +85,11 @@ func resourceTagRead(ctx context.Context, d *schema.ResourceData, meta interface
 		return diag.Errorf("error while reading tag: %+v", err)
 	}
 
-	if err := d.Set("display_name", tag.TagValue); err != nil {
+	if err := d.Set("display_name", tag.GetTagValue()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", tag.ProjectID); err != nil {
+	if err := d.Set("project_id", tag.GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
@@ -107,7 +106,7 @@ func resourceTagUpdate(ctx context.Context, d *schema.ResourceData, meta interfa
 	}
 
 	tag := mapResourceDataToTag(d)
-	tag.TagID = tagIDInt32
+	*tag.TagId = tagIDInt32
 
 	_, err = proxy.Update(ctx, tag)
 	if err != nil {
@@ -133,9 +132,9 @@ func resourceTagDelete(ctx context.Context, d *schema.ResourceData, meta interfa
 	return nil
 }
 
-func mapResourceDataToTag(d *schema.ResourceData) *models.Tag {
-	return &models.Tag{
-		TagValue:  d.Get("display_name").(string),
-		ProjectID: strfmt.UUID(d.Get("project_id").(string)),
+func mapResourceDataToTag(d *schema.ResourceData) openapi.Tag {
+	return openapi.Tag{
+		TagValue:  NewNullableString(d.Get("display_name").(string)),
+		ProjectId: NewNullableString(d.Get("project_id").(string)),
 	}
 }

@@ -1,15 +1,16 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"testing"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFlattenExpandServicesFromIDs(t *testing.T) {
 	cases := []struct {
-		expanded        []*models.ServiceInstance
+		expanded        []openapi.ServiceInstance
 		flattened       []interface{}
 		onlyTestFlatten bool
 	}{
@@ -21,9 +22,9 @@ func TestFlattenExpandServicesFromIDs(t *testing.T) {
 
 		// single router
 		{
-			expanded: []*models.ServiceInstance{
+			expanded: []openapi.ServiceInstance{
 				{
-					ServiceID: "afdb07d8-d0d2-11ea-87d0-0242ac130003",
+					ServiceId: NewNullableString("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
 				},
 			},
 			flattened: []interface{}{
@@ -33,10 +34,10 @@ func TestFlattenExpandServicesFromIDs(t *testing.T) {
 
 		// more fields then necessary (test only flatten)
 		{
-			expanded: []*models.ServiceInstance{
+			expanded: []openapi.ServiceInstance{
 				{
-					DisplayName: "http",
-					ServiceID:   "afdb07d8-d0d2-11ea-87d0-0242ac130003",
+					DisplayName: NewNullableString("http"),
+					ServiceId:   NewNullableString("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
 				},
 			},
 			flattened: []interface{}{
@@ -47,12 +48,12 @@ func TestFlattenExpandServicesFromIDs(t *testing.T) {
 
 		// multile routers
 		{
-			expanded: []*models.ServiceInstance{
+			expanded: []openapi.ServiceInstance{
 				{
-					ServiceID: "afdb07d8-d0d2-11ea-87d0-0242ac130003",
+					ServiceId: NewNullableString("afdb07d8-d0d2-11ea-87d0-0242ac130003"),
 				},
 				{
-					ServiceID: "114d82f0-79cc-4501-a574-dd920b6b6e7e",
+					ServiceId: NewNullableString("114d82f0-79cc-4501-a574-dd920b6b6e7e"),
 				},
 			},
 			flattened: []interface{}{
@@ -77,7 +78,7 @@ func TestFlattenExpandServicesFromIDs(t *testing.T) {
 
 func TestFlattenServices(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.ServiceInstance
+		expanded  []openapi.ServiceInstance
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -86,23 +87,23 @@ func TestFlattenServices(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.ServiceInstance{
+			expanded: []openapi.ServiceInstance{
 				{
-					ServiceID:   "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName: "test1",
+					ServiceId:   NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName: NewNullableString("test1"),
 				},
 				{
-					ServiceID:   "791bf702-22fb-4c76-bebb-1fee7ee75607",
-					DisplayName: "test2",
+					ServiceId:   NewNullableString("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					DisplayName: NewNullableString("test2"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"service_id":   strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					"service_id":   "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					"display_name": "test1",
 				},
 				{
-					"service_id":   strfmt.UUID("791bf702-22fb-4c76-bebb-1fee7ee75607"),
+					"service_id":   "791bf702-22fb-4c76-bebb-1fee7ee75607",
 					"display_name": "test2",
 				},
 			},

@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -19,6 +19,7 @@ const (
 	IPSET                     MemberType = "IPSET"
 	SEGMENT                   MemberType = "SEGMENT"
 	GROUP                     MemberType = "GROUP"
+	VIRTUAL_MACHINE           MemberType = "VIRTUAL_MACHINE"
 )
 
 func resourceSecurityGroup() *schema.Resource {
@@ -111,7 +112,7 @@ func resourceSecurityGroupCreate(ctx context.Context, d *schema.ResourceData, me
 		return diag.Errorf("ResourceSecurityGroupCreate >>>> error while creating security group: %+v", err)
 	}
 
-	d.SetId(created.ID.String())
+	d.SetId(created.GetId())
 
 	return resourceSecurityGroupRead(ctx, d, meta)
 }
@@ -130,11 +131,11 @@ func resourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error while reading security group: %+v", err)
 	}
 
-	if err := d.Set("display_name", securityGroup.DisplayName); err != nil {
+	if err := d.Set("display_name", securityGroup.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", securityGroup.ProjectID); err != nil {
+	if err := d.Set("project_id", securityGroup.GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
@@ -142,19 +143,19 @@ func resourceSecurityGroupRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error setting members: %+v", err)
 	}
 
-	if err := d.Set("created_by", securityGroup.CreatedBy); err != nil {
+	if err := d.Set("created_by", securityGroup.GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", securityGroup.CreationDate.String()); err != nil {
+	if err := d.Set("created_at", securityGroup.GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", securityGroup.ModifiedBy); err != nil {
+	if err := d.Set("modified_by", securityGroup.GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", securityGroup.ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", securityGroup.GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
@@ -171,7 +172,7 @@ func resourceSecurityGroupUpdate(ctx context.Context, d *schema.ResourceData, me
 		return diag.Errorf("resourceSecurityGroupUpdate >>>> error while update security group: %+v", err_pt)
 
 	}
-	securityGroup.ID = strfmt.UUID(d.Id())
+	securityGroup.Id = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, securityGroup)
 	if err != nil {
@@ -198,14 +199,14 @@ func resourceSecurityGroupDelete(ctx context.Context, d *schema.ResourceData, me
 	return nil
 }
 
-func mapResourceDataToSecurityGroup(d *schema.ResourceData, platformType models.PlatformType) (*models.SecurityGroup, diag.Diagnostics) {
+func mapResourceDataToSecurityGroup(d *schema.ResourceData, platformType openapi.PlatformType) (openapi.SecurityGroup, diag.Diagnostics) {
 	members, err, wrongMemberType := expandSecurityGroupMembers(d.Get("members").(*schema.Set).List(), platformType)
 	if err != nil {
-		return nil, diag.Errorf("Wrong type member: %+v", wrongMemberType)
+		return openapi.SecurityGroup{}, diag.Errorf("Wrong type member: %+v", wrongMemberType)
 	}
-	return &models.SecurityGroup{
-		DisplayName: d.Get("display_name").(string),
-		ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
+	return openapi.SecurityGroup{
+		DisplayName: NewNullableString(d.Get("display_name").(string)),
+		ProjectId:   NewNullableString(d.Get("project_id").(string)),
 		Members:     members,
 	}, nil
 }

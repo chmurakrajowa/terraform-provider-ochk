@@ -2,22 +2,23 @@ package sdk
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/client/requests"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+
 	"net/http"
 	"time"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
 type RequestsProxy struct {
 	httpClient *http.Client
-	service    requests.ClientService
+	service    *openapi.RequestsAPIService
 }
 
-func (p *RequestsProxy) FetchResourceID(ctx context.Context, timeout time.Duration, request *models.RequestInstance) (error, strfmt.UUID) {
+func (p *RequestsProxy) FetchResourceID(ctx context.Context, timeout time.Duration, request *openapi.RequestInstance) (error, strfmt.UUID) {
 	if err := verifyRequestStatusAndPhase(request); err != nil {
 		return fmt.Errorf("request is not in valid state: %w", err), ""
 	}
@@ -25,58 +26,82 @@ func (p *RequestsProxy) FetchResourceID(ctx context.Context, timeout time.Durati
 	var resourceID strfmt.UUID
 
 	return resource.RetryContext(ctx, timeout, func() *resource.RetryError {
-		requestState, err := p.Read(ctx, request.RequestID)
+		requestState, err := p.ReadByStringValue(ctx, request.GetRequestId())
 		if err != nil {
 			return resource.NonRetryableError(fmt.Errorf("error reading request state: %w", err))
 		}
 
 		if err := verifyRequestStatusAndPhase(requestState); err != nil {
-			return resource.NonRetryableError(fmt.Errorf("Request is not in valid state. %w. %s", err, requestState.LastErrorMessage))
+			message := "no error message"
+			if value := requestState.LastErrorMessage.Get(); value != nil {
+				message = *value
+			}
+			return resource.NonRetryableError(fmt.Errorf("Request is not in valid state. %w. %s", err, message))
 		}
 
-		if requestState.RequestPhase != "FINISHED" {
-			return resource.RetryableError(fmt.Errorf("expected request state FINISHED but was in state %s", requestState.RequestPhase))
+		if requestState.GetRequestPhase() != "FINISHED" {
+			return resource.RetryableError(fmt.Errorf("expected request state FINISHED but was in state %s", requestState.GetRequestPhase()))
 		}
 
-		resourceID = requestState.ResourceID
-
+		if requestState.ResourceId.IsSet() {
+			resourceID = strfmt.UUID(requestState.GetResourceId())
+		} else {
+			resourceID = ""
+		}
 		return nil
 	}), resourceID
 }
 
-func verifyRequestStatusAndPhase(request *models.RequestInstance) error {
-	if request.RequestStatus == "FAILED" {
-		return fmt.Errorf("Request status is %s", request.RequestStatus)
+func verifyRequestStatusAndPhase(request *openapi.RequestInstance) error {
+	if request.GetRequestPhase() == "FAILED" {
+		return fmt.Errorf("Request status is %s", request.GetRequestStatus())
 	}
 
-	if request.RequestPhase == "CANCELLED" || request.RequestPhase == "TIMEOUT" {
-		return fmt.Errorf("Request phase is %s", request.RequestPhase)
+	if request.GetRequestPhase() == "CANCELLED" || request.GetRequestPhase() == "TIMEOUT" {
+		return fmt.Errorf("Request phase is %s", request.GetRequestStatus())
+	}
+
+	if request.GetRequestPhase() == "FINISHED" && request.GetRequestStatus() == "FAILED" {
+		return fmt.Errorf("Request status is %s", request.GetLastErrorMessage())
 	}
 
 	return nil
 }
 
-func (p *RequestsProxy) Read(ctx context.Context, requestID strfmt.UUID) (*models.RequestInstance, error) {
-	params := &requests.GetRequestRequestIDParams{
-		RequestID:  requestID,
-		Context:    ctx,
-		HTTPClient: p.httpClient,
-	}
-
-	response, err := p.service.GetRequestRequestID(params)
-
+func (p *RequestsProxy) Read(ctx context.Context, requestID strfmt.UUID) (*openapi.RequestInstance, error) {
+	action := p.service.RequestRequestIdGet(ctx, string(requestID))
+	response, _, err := action.Execute()
 	if err != nil {
-		var notFound *requests.GetRequestRequestIDNotFound
-		if ok := errors.As(err, &notFound); ok {
-			return nil, &NotFoundError{Err: err}
-		}
-
 		return nil, fmt.Errorf("error while reading request: %w", err)
 	}
+	isSuccess := *response.Success
 
-	if !response.Payload.Success {
-		return nil, fmt.Errorf("retrieving request failed: %s", response.Payload.Messages)
+	if !isSuccess {
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving request failed: %s", message)
 	}
 
-	return response.Payload.RequestInstance, nil
+	return response.RequestInstance, nil
+}
+
+func (p *RequestsProxy) ReadByStringValue(ctx context.Context, requestID string) (*openapi.RequestInstance, error) {
+	action := p.service.RequestRequestIdGet(ctx, requestID)
+	response, _, err := action.Execute()
+	if err != nil {
+		return nil, fmt.Errorf("error while reading request: %w", err)
+	}
+	isSuccess := *response.Success
+
+	if !isSuccess {
+		message := "no error message"
+		if value := response.Messages.Get(); value != nil {
+			message = *value
+		}
+		return nil, fmt.Errorf("retrieving request failed: %s", message)
+	}
+
+	return response.RequestInstance, nil
 }

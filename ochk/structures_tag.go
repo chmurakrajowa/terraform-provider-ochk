@@ -2,12 +2,12 @@ package ochk
 
 import (
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func flattenTags(in []*models.Tag) []map[strfmt.UUID]interface{} {
+func flattenTags(in []openapi.Tag) []map[strfmt.UUID]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -16,10 +16,10 @@ func flattenTags(in []*models.Tag) []map[strfmt.UUID]interface{} {
 
 	for _, v := range in {
 		m := make(map[strfmt.UUID]interface{})
-		m["tag_id"] = fmt.Sprint(v.TagID)
-		m["display_name"] = v.TagValue
-		m["project_id"] = v.ProjectID
-		m["related_virtual_machines"] = v.RelatedVirtualMachines
+		m["tag_id"] = fmt.Sprint(v.GetTagId())
+		m["display_name"] = v.GetTagValue()
+		m["project_id"] = v.GetProjectId()
+		m["related_virtual_machines"] = v.GetRelatedVirtualMachines()
 		out = append(out, m)
 	}
 	return out

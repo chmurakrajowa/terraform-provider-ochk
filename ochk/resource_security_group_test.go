@@ -3,11 +3,12 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"testing"
 )
 
 type SecurityGroupTestData struct {
@@ -165,7 +166,7 @@ func testAccSecurityGroupResourceNotExists(displayName string) resource.TestChec
 		}
 
 		if len(securityGroups) > 0 {
-			return fmt.Errorf("security group %s still exists", securityGroups[0].ID)
+			return fmt.Errorf("security group %s still exists", securityGroups[0].GetId())
 		}
 
 		return nil

@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -73,39 +73,39 @@ func dataSourceVpcRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.Errorf("more than one vpc with display_name: %s found!", displayName)
 	}
 
-	d.SetId(routers[0].RouterID.String())
+	d.SetId(routers[0].GetRouterId())
 
-	if err := d.Set("vrf_id", routers[0].ParentT0ID); err != nil {
+	if err := d.Set("vrf_id", routers[0].GetParentT0Id()); err != nil {
 		return diag.Errorf("error setting vrf_id: %+v", err)
 	}
 
-	if err := d.Set("project_id", routers[0].ProjectID); err != nil {
+	if err := d.Set("project_id", routers[0].GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
-	if platformType == models.PlatformTypeOPENSTACK {
+	if platformType == openapi.PLATFORMTYPE_OPENSTACK {
 		if err := d.Set("autonat_enabled", routers[0].SnatEnabled); err != nil {
 			return diag.Errorf("error setting autonat_enabled: %+v", err)
 		}
 	}
 
-	if err := d.Set("folder_path", routers[0].FolderPath); err != nil {
+	if err := d.Set("folder_path", routers[0].GetFolderPath()); err != nil {
 		return diag.Errorf("error setting folder_path: %+v", err)
 	}
 
-	if err := d.Set("created_by", routers[0].CreatedBy); err != nil {
+	if err := d.Set("created_by", routers[0].GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", routers[0].CreationDate.String()); err != nil {
+	if err := d.Set("created_at", routers[0].GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", routers[0].ModifiedBy); err != nil {
+	if err := d.Set("modified_by", routers[0].GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", routers[0].ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", routers[0].GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 

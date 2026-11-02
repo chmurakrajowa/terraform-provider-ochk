@@ -1,15 +1,23 @@
 package ochk
 
 import (
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"testing"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
+
+//type NetworkNATType = openapi.NATType
+//
+//const (
+//	NetworkManual NetworkNATType = "MANUAL"
+//	NetworkAuto   NetworkNATType = "AUTO"
+//)
 
 func TestFlattenAutoNat(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.NATRuleInstance
+		expanded  []openapi.NATRuleInstance
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -18,71 +26,59 @@ func TestFlattenAutoNat(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.NATRuleInstance{
+			expanded: []openapi.NATRuleInstance{
 				{
-					NatType:     "AUTO",
-					RuleID:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName: "nat-test1",
-					VirtualNetworkInstance: &models.VirtualNetworkInstance{
-						VirtualNetworkID: "2ae951f1-5285-496c-b598-aabe1a792319",
-					},
-					Enabled: true,
-					TierZeroRouter: &models.RouterInstance{
-						RouterID: "547948e9-b67d-44d1-ad69-ae9b711e289c",
-					},
+					NatType:          openapi.NATTYPE_AUTO.Ptr(),
+					RuleId:           NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName:      NewNullableString("nat-test1"),
+					VirtualNetworkId: NewNullableString("2ae951f1-5285-496c-b598-aabe1a792319"),
+					Enabled:          NewNullableBool(true),
+					TierZeroRouterId: NewNullableString("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"auto_nat_id":        strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					"auto_nat_id":        "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					"display_name":       "nat-test1",
-					"virtual_network_id": strfmt.UUID("2ae951f1-5285-496c-b598-aabe1a792319"),
+					"virtual_network_id": "2ae951f1-5285-496c-b598-aabe1a792319",
 					"enabled":            true,
-					"vrf_id":             strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
+					"vrf_id":             "547948e9-b67d-44d1-ad69-ae9b711e289c",
 				},
 			},
 		},
 		{
-			expanded: []*models.NATRuleInstance{
+			expanded: []openapi.NATRuleInstance{
 				{
-					NatType:     "AUTO",
-					RuleID:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName: "nat-test1",
-					VirtualNetworkInstance: &models.VirtualNetworkInstance{
-						VirtualNetworkID: "2ae951f1-5285-496c-b598-aabe1a792319",
-					},
-					Enabled: false,
-					TierZeroRouter: &models.RouterInstance{
-						RouterID: "547948e9-b67d-44d1-ad69-ae9b711e289c",
-					},
+					NatType:          openapi.NATTYPE_AUTO.Ptr(),
+					RuleId:           NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName:      NewNullableString("nat-test1"),
+					VirtualNetworkId: NewNullableString("2ae951f1-5285-496c-b598-aabe1a792319"),
+					Enabled:          NewNullableBool(false),
+					TierZeroRouterId: NewNullableString("547948e9-b67d-44d1-ad69-ae9b711e289c"),
 				},
 				{
-					NatType:     "AUTO",
-					RuleID:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName: "nat-test2",
-					VirtualNetworkInstance: &models.VirtualNetworkInstance{
-						VirtualNetworkID: "2ae951f1-5285-496c-b598-aabe1a792319",
-					},
-					Enabled: false,
-					TierZeroRouter: &models.RouterInstance{
-						RouterID: "b0908315-4c61-4326-b18d-2d145e6937a3",
-					},
+					NatType:          openapi.NATTYPE_AUTO.Ptr(),
+					RuleId:           NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName:      NewNullableString("nat-test2"),
+					VirtualNetworkId: NewNullableString("2ae951f1-5285-496c-b598-aabe1a792319"),
+					Enabled:          NewNullableBool(false),
+					TierZeroRouterId: NewNullableString("b0908315-4c61-4326-b18d-2d145e6937a3"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"auto_nat_id":        strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					"auto_nat_id":        "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					"display_name":       "nat-test1",
-					"virtual_network_id": strfmt.UUID("2ae951f1-5285-496c-b598-aabe1a792319"),
+					"virtual_network_id": "2ae951f1-5285-496c-b598-aabe1a792319",
 					"enabled":            false,
-					"vrf_id":             strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
+					"vrf_id":             "547948e9-b67d-44d1-ad69-ae9b711e289c",
 				},
 				{
-					"auto_nat_id":        strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					"auto_nat_id":        "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					"display_name":       "nat-test2",
-					"virtual_network_id": strfmt.UUID("2ae951f1-5285-496c-b598-aabe1a792319"),
+					"virtual_network_id": "2ae951f1-5285-496c-b598-aabe1a792319",
 					"enabled":            false,
-					"vrf_id":             strfmt.UUID("b0908315-4c61-4326-b18d-2d145e6937a3"),
+					"vrf_id":             "b0908315-4c61-4326-b18d-2d145e6937a3",
 				},
 			},
 		},
@@ -97,7 +93,7 @@ func TestFlattenAutoNat(t *testing.T) {
 
 func TestFlattenManualNat(t *testing.T) {
 	cases := []struct {
-		expanded  []*models.NATRuleInstance
+		expanded  []openapi.NATRuleInstance
 		flattened []map[strfmt.UUID]interface{}
 	}{
 		// nil values
@@ -106,75 +102,69 @@ func TestFlattenManualNat(t *testing.T) {
 			flattened: nil,
 		},
 		{
-			expanded: []*models.NATRuleInstance{
+			expanded: []openapi.NATRuleInstance{
 				{
-					NatType:     "MANUAL",
-					RuleID:      strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
-					DisplayName: "nat-test1",
-					Action:      models.NATRuleAction("DNAT"),
-					Enabled:     true,
-					TierZeroRouter: &models.RouterInstance{
-						RouterID: strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
-					},
-					SourceNetwork:      "192.168.15.0/24",
-					DestinationNetwork: "192.168.0.0/24",
+					NatType:            NetworkManual.Ptr(),
+					RuleId:             NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName:        NewNullableString("nat-test1"),
+					Action:             openapi.NATRULEACTION_DNAT.Ptr(),
+					Enabled:            NewNullableBool(true),
+					TierZeroRouterId:   NewNullableString("547948e9-b67d-44d1-ad69-ae9b711e289c"),
+					SourceNetwork:      NewNullableString("192.168.15.0/24"),
+					DestinationNetwork: NewNullableString("192.168.0.0/24"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"manual_nat_id":       strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					"manual_nat_id":       "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					"display_name":        "nat-test1",
-					"action":              models.NATRuleAction("DNAT"),
+					"action":              openapi.NATRuleAction("DNAT"),
 					"enabled":             true,
-					"vrf_id":              strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
+					"vrf_id":              "547948e9-b67d-44d1-ad69-ae9b711e289c",
 					"source_network":      "192.168.15.0/24",
 					"destination_network": "192.168.0.0/24",
 				},
 			},
 		},
 		{
-			expanded: []*models.NATRuleInstance{
+			expanded: []openapi.NATRuleInstance{
 				{
-					NatType:     "MANUAL",
-					RuleID:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName: "nat-test2",
-					Action:      "DNAT",
-					Enabled:     false,
-					TierZeroRouter: &models.RouterInstance{
-						RouterID: "b0908315-4c61-4326-b18d-2d145e6937a3",
-					},
-					SourceNetwork:      "192.168.0.0/24",
-					DestinationNetwork: "192.168.1.0/24",
+					NatType:            NetworkManual.Ptr(),
+					RuleId:             NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName:        NewNullableString("nat-test2"),
+					Action:             openapi.NATRULEACTION_DNAT.Ptr(),
+					Enabled:            NewNullableBool(false),
+					TierZeroRouterId:   NewNullableString("b0908315-4c61-4326-b18d-2d145e6937a3"),
+					SourceNetwork:      NewNullableString("192.168.0.0/24"),
+					DestinationNetwork: NewNullableString("192.168.1.0/24"),
 				},
 				{
-					NatType:     "MANUAL",
-					RuleID:      "e1675817-f1a1-45c1-988b-ec2f142867e0",
-					DisplayName: "nat-test1",
-					Action:      "DNAT",
-					Enabled:     true,
-					TierZeroRouter: &models.RouterInstance{
-						RouterID: "547948e9-b67d-44d1-ad69-ae9b711e289c",
-					},
-					SourceNetwork:      "192.168.15.0/24",
-					DestinationNetwork: "192.168.0.0/24",
+					NatType:            NetworkManual.Ptr(),
+					RuleId:             NewNullableString("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					DisplayName:        NewNullableString("nat-test1"),
+					Action:             openapi.NATRULEACTION_DNAT.Ptr(),
+					Enabled:            NewNullableBool(true),
+					TierZeroRouterId:   NewNullableString("547948e9-b67d-44d1-ad69-ae9b711e289c"),
+					SourceNetwork:      NewNullableString("192.168.15.0/24"),
+					DestinationNetwork: NewNullableString("192.168.0.0/24"),
 				},
 			},
 			flattened: []map[strfmt.UUID]interface{}{
 				{
-					"manual_nat_id":       strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					"manual_nat_id":       "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					"display_name":        "nat-test2",
-					"action":              models.NATRuleAction("DNAT"),
+					"action":              openapi.NATRuleAction("DNAT"),
 					"enabled":             false,
-					"vrf_id":              strfmt.UUID("b0908315-4c61-4326-b18d-2d145e6937a3"),
+					"vrf_id":              "b0908315-4c61-4326-b18d-2d145e6937a3",
 					"source_network":      "192.168.0.0/24",
 					"destination_network": "192.168.1.0/24",
 				},
 				{
-					"manual_nat_id":       strfmt.UUID("e1675817-f1a1-45c1-988b-ec2f142867e0"),
+					"manual_nat_id":       "e1675817-f1a1-45c1-988b-ec2f142867e0",
 					"display_name":        "nat-test1",
-					"action":              models.NATRuleAction("DNAT"),
+					"action":              openapi.NATRuleAction("DNAT"),
 					"enabled":             true,
-					"vrf_id":              strfmt.UUID("547948e9-b67d-44d1-ad69-ae9b711e289c"),
+					"vrf_id":              "547948e9-b67d-44d1-ad69-ae9b711e289c",
 					"source_network":      "192.168.15.0/24",
 					"destination_network": "192.168.0.0/24",
 				},

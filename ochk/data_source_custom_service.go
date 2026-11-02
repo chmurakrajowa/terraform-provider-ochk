@@ -84,13 +84,13 @@ func dataSourceCustomServiceRead(ctx context.Context, d *schema.ResourceData, me
 		return diag.Errorf("more than one custom service with display_name: %s found!", displayName)
 	}
 
-	d.SetId(customServices[0].ServiceID.String())
+	d.SetId(customServices[0].GetServiceId())
 
-	if err := d.Set("display_name", customServices[0].DisplayName); err != nil {
+	if err := d.Set("display_name", customServices[0].GetDisplayName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", customServices[0].ProjectID); err != nil {
+	if err := d.Set("project_id", customServices[0].GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
@@ -98,19 +98,19 @@ func dataSourceCustomServiceRead(ctx context.Context, d *schema.ResourceData, me
 		return diag.Errorf("error setting members: %+v", err)
 	}
 
-	if err := d.Set("created_by", customServices[0].CreatedBy); err != nil {
+	if err := d.Set("created_by", customServices[0].GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", customServices[0].CreationDate.String()); err != nil {
+	if err := d.Set("created_at", customServices[0].GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", customServices[0].ModifiedBy); err != nil {
+	if err := d.Set("modified_by", customServices[0].GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", customServices[0].ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", customServices[0].GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 

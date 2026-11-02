@@ -1,0 +1,635 @@
+provider:
+  name: my_api
+
+resources:
+  billing/accounts:
+    create:
+      path: /billing/accounts
+      method: PUT
+    read:
+      path: /billing/accounts
+      method: GET
+
+  billing/accounts/{accountId}:
+    update:
+      path: /billing/accounts
+      method: PUT
+    delete:
+      path: /billing/accounts
+      method: DELETE
+    read:
+      path: /billing/accounts
+      method: GET
+  authentik/token:
+    create:
+      path: /authentik/token
+      method: POST
+  billing/alarm-definition:
+    create:
+      path: /billing/alarm-definition
+      method: PUT
+  billing/alarm-definition/{alarmDefinitionId}:
+    create:
+      path: /billing/alarm-definition/{alarmDefinitionId}
+      method: PUT
+    delete:
+      path: /billing/alarm-definition/{alarmDefinitionId}
+      method: DELETE
+  network/custom-services:
+    create:
+      path: /network/custom-services
+      method: PUT
+  network/custom-services/{serviceId}:
+    update:
+      path: /network/custom-services/{serviceId}
+      method: PUT
+    delete:
+      path: /billing/alarm-definition/{alarmDefinitionId}
+      method: DELETE
+  network/routers/{routerId}/rules/e-w:
+    create:
+      path: /network/routers/{routerId}/rules/e-w
+      method: PUT
+  network/routers/{routerId}/rules/e-w/{ruleId}:
+    create:
+      path: /network/routers/{routerId}/rules/e-w/{ruleId}
+      method: PUT
+    delete:
+      path: /network/routers/{routerId}/rules/e-w/{ruleId}
+      method: DELETE
+  projects/{projectId}/osc/security-groups/{securityGroupId}/firewall:
+    create:
+      path: /projects/{projectId}/osc/security-groups/{securityGroupId}/firewall
+      method: PUT
+  projects/{projectId}/osc/security-groups/{securityGroupId}/firewall/{ruleId}:
+    create:
+      path: /projects/{projectId}/osc/security-groups/{securityGroupId}/firewall/{ruleId}
+      method: PUT
+    delete:
+      path: /projects/{projectId}/osc/security-groups/{securityGroupId}/firewall/{ruleId}
+      method: DELETE
+  network/floating-ips:
+    create:
+      path: /network/floating-ips
+      method: PUT
+  network/floating-ips/{floatingIpId}:
+    create:
+      path: /network/floating-ips/{floatingIpId}
+      method: PUT
+    delete:
+      path: /network/floating-ips/{floatingIpId}
+      method: DELETE
+  network/routers/{routerId}/rules/s-n:
+    create:
+      path: /network/routers/{routerId}/rules/s-n
+      method: PUT
+  network/routers/{routerId}/rules/s-n/{ruleId}:
+    create:
+      path: /network/routers/{routerId}/rules/s-n/{ruleId}
+      method: PUT
+    delete:
+      path: /network/routers/{routerId}/rules/s-n/{ruleId}
+      method: DELETE
+  ipcs:
+    create:
+      path: /ipcs
+      method: PUT
+  kms/key:
+    create:
+      path: /kms/key
+      method: PUT
+  kms/key/{id}:
+    delete:
+      path: /kms/key/{id}
+      method: DELETE
+  kms/key/import:
+    import:
+      path: /kms/key/import
+      method: POST
+  kms/key/{id}/revoke:
+    revoke:
+      path: /kms/key/{id}/revoke
+      method: POST
+  kms/key/{id}/versions:
+    create:
+      path: /kms/key/{id}/versions
+      method: POST
+  kms/key/{id}/export:
+    export:
+      path: /kms/key/{id}/export
+      method: POST
+  kms/schedule/{id}:
+    update:
+      path: /kms/schedule/{id}
+      method: PUT
+    delete:
+      path: /kms/schedule/{id}
+      method: DELETE
+  kms/schedule:
+    create:
+      path: /kms/schedule
+      method: PUT
+  log/categories/{logCategoryId}/generate:
+    read:
+      path: /log/categories/{logCategoryId}/generate
+      method: POST
+  log/categories/{logCategoryId}/generatebydsl:
+    read:
+      path: /log/categories/{logCategoryId}/generatebydsl
+      method: POST
+  log/categories/{logCategoryId}:
+    read:
+      path: /log/categories/{logCategoryId}
+      method: GET
+    update:
+      path: /log/categories/{logCategoryId}
+      method: PUT
+  authentik/logout:
+    read:
+      path: /authentik/logout
+      method: POST
+  log/stats/{logCategoryId}:
+    read:
+      path: /log/stats/{logCategoryId}
+      method: POST
+  log/stats:
+    read:
+      path: /log/stats
+      method: POST
+  log/stats/user/{logCategoryId}:
+    read:
+      path: /log/stats/user/{logCategoryId}
+      method: POST
+  log/stats/user:
+    read:
+      path: /log/stats/user
+      method: POST
+  log/user/categories/{logCategoryId}/generate:
+    read:
+      path: /log/user/categories/{logCategoryId}/generate
+      method: POST
+  log/user/categories/{logCategoryId}/generatebydsl:
+    read:
+      path: /log/user/categories/{logCategoryId}/generatebydsl
+      method: POST
+  network/nat/rules:
+    read:
+      path: /network/nat/rules
+      method: PUT
+  network/nat/rules/{ruleId}:
+    create:
+      path: /network/nat/rules/{ruleId}
+      method: PUT
+    delete:
+      path: /network/nat/rules/{ruleId}
+      method: DELETE
+  projects/{projectId}/nlb/load-balancers/ovn:
+    create:
+      path: /projects/{projectId}/nlb/load-balancers/ovn
+      method: PUT
+  projects/{projectId}/nlb/load-balancers/ovn/{ovnLoadBalancerId}:
+    create:
+      path: /projects/{projectId}/nlb/load-balancers/ovn/{ovnLoadBalancerId}
+      method: PUT
+    delete:
+      path: /projects/{projectId}/nlb/load-balancers/ovn/{ovnLoadBalancerId}
+      method: DELETE
+  network/floating-ips/{floatingIpId}/port-forwardings:
+    read:
+      path: /network/floating-ips/{floatingIpId}/port-forwardings
+      method: GET
+    create:
+      path: /network/floating-ips/{floatingIpId}/port-forwardings
+      method: PUT
+  network/floating-ips/{floatingIpId}/port-forwardings/{portForwardingId}:
+    read:
+      path: /network/floating-ips/{floatingIpId}/port-forwardings/{portForwardingId}
+      method: GET
+    create:
+      path: /network/floating-ips/{floatingIpId}/port-forwardings/{portForwardingId}
+      method: PUT
+    delete:
+      path: /network/floating-ips/{floatingIpId}/port-forwardings/{portForwardingId}
+      method: DELETE
+  projects:
+    read:
+      path: /projects
+      method: GET
+    create:
+      path: /projects
+      method: PUT
+  projects/{projectId}:
+    read:
+      path: /projects/{projectId}
+      method: GET
+    create:
+      path: /projects/{projectId}
+      method: PUT
+    delete:
+      path: /projects/{projectId}
+      method: DELETE
+  ipam/ipaddress/public/allocation":
+    read:
+      path: /ipam/ipaddress/public/allocation"
+      method: GET
+    create:
+      path: /ipam/ipaddress/public/allocation"
+      method: PUT
+  ipam/ipaddress/public/allocation/{allocationId}:
+    read:
+      path: /ipam/ipaddress/public/allocation/{allocationId}
+      method: GET
+    create:
+      path: /ipam/ipaddress/public/allocation/{allocationId}
+      method: PUT
+    delete:
+      path: /ipam/ipaddress/public/allocation/{allocationId}
+      method: DELETE
+  network/routers:
+    read:
+      path: /network/routers
+      method: GET
+    create:
+      path: /network/routers
+      method: PUT
+    update:
+      path: /network/routers
+      method: POST
+  network/routers/{routerId}:
+    read:
+      path: /network/routers/{routerId}
+      method: GET
+    create:
+      path: /network/routers/{routerId}
+      method: PUT
+    delete:
+      path: /network/routers/{routerId}
+      method: DELETE
+  network/security-groups:
+    read:
+      path: /network/security-groups
+      method: GET
+    create:
+      path: /network/security-groups
+      method: PUT
+  network/security-groups/{groupId}:
+    read:
+      path: /network/security-groups/{groupId}
+      method: GET
+    create:
+      path: /network/security-groups/{groupId}
+      method: PUT
+    delete:
+      path: /network/security-groups/{groupId}
+      method: DELETE
+  network/security-groups/waiting-room/import:
+    read:
+      path: /network/security-groups/waiting-room/import
+      method: POST
+  tags:
+    read:
+      path: /tags
+      method: GET
+    create:
+      path: /tags
+      method: PUT
+  tags/{tagId}:
+    read:
+      path: /tags/{tagId}
+      method: GET
+    create:
+      path: /tags/{tagId}
+      method: PUT
+    delete:
+      path: /tags/{tagId}
+      method: DELETE
+  vcs/virtual-machines:
+    read:
+      path: /vcs/virtual-machines
+      method: GET
+    create:
+      path: /vcs/virtual-machines
+      method: PUT
+  vcs/virtual-machines/{virtualMachineId}:
+    read:
+      path: /vcs/virtual-machines/{virtualMachineId}
+      method: GET
+    create:
+      path: /vcs/virtual-machines/{virtualMachineId}
+      method: PUT
+    delete:
+      path: /vcs/virtual-machines/{virtualMachineId}
+      method: DELETE
+  vcs/virtual-machines/{virtualMachineId}/console:
+    read:
+      path: /vcs/virtual-machines/{virtualMachineId}/console
+      method: POST
+  vcs/virtual-machines/{virtualMachineId}/reset:
+    read:
+      path: /vcs/virtual-machines/{virtualMachineId}/reset
+      method: POST
+  vcs/virtual-machines/waiting-room/import:
+    read:
+      path: /vcs/virtual-machines/waiting-room/import
+      method: POST
+  vcs/virtual-machines/{virtualMachineId}/snapshots:
+    read:
+      path: /vcs/virtual-machines/{virtualMachineId}/snapshots
+      method: GET
+    create:
+      path: /vcs/virtual-machines/{virtualMachineId}/snapshots
+      method: PUT
+  vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}:
+    read:
+      path: /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}
+      method: GET
+    create:
+      path: /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}
+      method: PUT
+    delete:
+      path: /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}
+      method: DELETE
+  vcs/virtual-machines/{virtualMachineId}/removeAllSnapshots:
+    read:
+      path: /vcs/virtual-machines/{virtualMachineId}/removeAllSnapshots
+      method: POST
+  vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}/revert:
+    read:
+      path: /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}/revert
+      method: POST
+  networks:
+    read:
+      path: /networks
+      method: GET
+    create:
+      path: /networks
+      method: PUT
+  networks/{virtualNetworkId}:
+    read:
+      path: /networks/{virtualNetworkId}
+      method: GET
+    create:
+      path: /networks/{virtualNetworkId}
+      method: PUT
+    delete:
+      path: /networks/{virtualNetworkId}
+      method: DELETE
+
+# DATA SOURCES DEFINITIONS
+data_sources:
+  billing/accounts:
+    read:
+      path: /billing/accounts/{accountId}
+      method: GET
+  ipam/ipaddress/public/available:
+    read:
+      path: /ipam/ipaddress/public/available
+      method: GET
+  backups/plans:
+    read:
+      path: /backups/plans
+      method: GET
+  backups/plans/{backupPlanId}:
+    read:
+      path: /backups/plans/{backupPlanId}
+      method: GET
+  backups/plans/{backupPlanId}/lists:
+    read:
+      path: /backups/plans/{backupPlanId}/lists
+      method: GET
+  backups/plans/{backupPlanId}/lists/{backupListId}:
+    read:
+      path: /backups/plans/{backupPlanId}/lists/{backupListId}
+      method: GET
+  billing/alarm-definition:
+    read:
+      path: /billing/alarm-definition
+      method: GET
+  billing/alarm-definition/{alarmDefinitionId}:
+    read:
+      path: /billing/alarm-definition/{alarmDefinitionId}
+      method: GET
+  billing/accounts/{accountId}/reports/{billingPeriodId}/kms:
+    read:
+      path: /billing/accounts/{accountId}/reports/{billingPeriodId}/kms
+      method: GET
+  billing/accounts/billing-periods:
+    read:
+      path: /billing/accounts/billing-periods
+      method: GET
+  billing/accounts/billing-periods/{billingPeriodId}:
+    read:
+      path: /billing/accounts/billing-periods/{billingPeriodId}
+      method: GET
+  billing/accounts/{accountId}/reports/{billingPeriodId}/pip:
+    read:
+      path: /billing/accounts/{accountId}/reports/{billingPeriodId}/pip
+      method: GET
+  billing/accounts/{accountId}/reports/{billingPeriodId}/vm:
+    read:
+      path: /billing/accounts/{accountId}/reports/{billingPeriodId}/vm
+      method: GET
+  billing/accounts/{accountId}/reports/{billingPeriodId}/vrf:
+    read:
+      path: /billing/accounts/{accountId}/reports/{billingPeriodId}/vrf
+      method: GET
+  network/custom-services:
+    read:
+      path: /network/custom-services
+      method: GET
+  network/custom-services/{serviceId}:
+    read:
+      path: /network/custom-services/{serviceId}
+      method: GET
+  network/default-services:
+    read:
+      path: /network/default-services
+      method: GET
+  network/default-services/{serviceId}:
+    read:
+      path: /network/default-services/{serviceId}
+      method: GET
+  deployments:
+    read:
+      path: /deployments
+      method: GET
+  deployments/{deploymentId}:
+    read:
+      path: /deployments/{deploymentId}
+      method: GET
+  network/routers/{routerId}/rules/e-w:
+    read:
+      path: /network/routers/{routerId}/rules/e-w
+      method: GET
+  network/routers/{routerId}/rules/e-w/{ruleId}:
+    read:
+      path: /network/routers/{routerId}/rules/e-w/{ruleId}
+      method: GET
+  projects/{projectId}/osc/security-groups/{securityGroupId}/firewall:
+    read:
+      path: /projects/{projectId}/osc/security-groups/{securityGroupId}/firewall
+      method: GET
+  projects/{projectId}/osc/security-groups/{securityGroupId}/firewall/{ruleId}:
+    read:
+      path: /projects/{projectId}/osc/security-groups/{securityGroupId}/firewall/{ruleId}
+      method: GET
+  network/floating-ips:
+    read:
+      path: /network/floating-ips
+      method: GET
+  network/floating-ips/{floatingIpId}:
+    read:
+      path: /network/floating-ips/{floatingIpId}
+      method: GET
+  network/floating-ips-vms:
+    read:
+      path: /network/floating-ips-vms
+      method: GET
+  folder/{projectId}:
+    read:
+      path: /folder/{projectId}
+      method: GET
+  folder/{projectId}/{id}:
+    read:
+      path: /folder/{projectId}/{id}
+      method: GET
+  network/routers/{routerId}/rules/s-n:
+    read:
+      path: /network/routers/{routerId}/rules/s-n
+      method: GET
+  network/routers/{routerId}/rules/s-n/{ruleId}:
+    read:
+      path: /network/routers/{routerId}/rules/s-n/{ruleId}
+      method: GET
+  api/v1/healthcheck:
+    read:
+      path: /api/v1/healthcheck
+      method: GET
+  identification/platform-type:
+    read:
+      path: /identification/platform-type
+      method: GET
+  ipam/services:
+    read:
+      path: /ipam/services
+      method: GET
+  ipam/services/{serviceId}:
+    read:
+      path: /ipam/services/{serviceId}
+      method: GET
+  ipcs:
+    read:
+      path: /ipcs
+      method: GET
+  ipcs/{ipCollectionId}:
+    read:
+      path: /ipcs/{ipCollectionId}
+      method: GET
+  kms/key:
+    read:
+      path: /kms/key
+      method: GET
+  kms/schedule/{id}:
+    read:
+      path: /kms/schedule/{id}
+      method: GET
+  log/categories:
+    read:
+      path: /log/categories
+      method: GET
+  log/user/categories:
+    read:
+      path: /log/user/categories
+      method: GET
+  log/user/categories/{logCategoryId}:
+    read:
+      path: /log/user/categories/{logCategoryId}
+      method: GET
+  network/nat/rules:
+    read:
+      path: /network/nat/rules
+      method: GET
+  network/nat/rules/{ruleId}:
+    read:
+      path: /network/nat/rules/{ruleId}
+      method: GET
+  network/floating-ips/{floatingIpId}/port-forwardings:
+    read:
+      path: /network/floating-ips/{floatingIpId}/port-forwardings
+      method: GET
+  network/floating-ips/{floatingIpId}/port-forwardings/{portForwardingId}:
+    read:
+      path: /network/floating-ips/{floatingIpId}/port-forwardings/{portForwardingId}
+      method: GET
+  projects:
+    read:
+      path: /projects
+      method: GET
+  projects/{projectId}:
+    read:
+      path: /projects/{projectId}
+      method: GET
+  ipam/ipaddress/public/allocation:
+    read:
+      path: /ipam/ipaddress/public/allocation
+      method: GET
+  ipam/ipaddress/public/allocation/{allocationId}:
+    read:
+      path: /ipam/ipaddress/public/allocation/{allocationId}
+      method: GET
+  api/v1/readiness:
+    read:
+      path: /api/v1/readiness
+      method: GET
+  request:
+    read:
+      path: /request
+      method: GET
+  request/{requestId}:
+    read:
+      path: /request/{requestId}
+      method: GET
+  network/routers:
+    read:
+      path: /network/routers
+      method: GET
+  network/routers/{routerId}:
+    read:
+      path: /network/routers/{routerId}
+      method: GET
+  network/security-groups:
+    read:
+      path: /network/security-groups
+      method: GET
+  tags:
+    read:
+      path: /tags
+      method: GET
+  tags/{tagId}:
+    read:
+      path: /tags/{tagId}
+      method: GET
+  auth/token-info:
+    read:
+      path: /auth/token-info
+      method: GET
+  vcs/virtual-machines:
+    read:
+      path: /vcs/virtual-machines
+      method: GET
+  vcs/virtual-machines/{virtualMachineId}/snapshots:
+    read:
+      path: /vcs/virtual-machines/{virtualMachineId}/snapshots
+      method: GET
+  vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}:
+    read:
+      path: /vcs/virtual-machines/{virtualMachineId}/snapshots/{snapshotId}
+      method: GET
+  networks:
+    read:
+      path: /networks
+      method: GET
+  networks/{virtualNetworkId}:
+    read:
+      path: /networks/{virtualNetworkId}
+      method: GET

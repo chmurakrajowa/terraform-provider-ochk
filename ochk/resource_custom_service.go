@@ -2,7 +2,7 @@ package ochk
 
 import (
 	"context"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -37,6 +37,15 @@ func resourceCustomService() *schema.Resource {
 			"display_name": {
 				Type:     schema.TypeString,
 				Required: true,
+			},
+			"description": {
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"build_in": {
+				Type:     schema.TypeBool,
+				Computed: true,
+				Default:  nil,
 			},
 			"project_id": {
 				Type:     schema.TypeString,
@@ -107,7 +116,7 @@ func resourceCustomServiceCreate(ctx context.Context, d *schema.ResourceData, me
 		return diag.Errorf("error while creating custom service: %+v", err)
 	}
 
-	d.SetId(created.ServiceID.String())
+	d.SetId(created.GetServiceId())
 
 	return resourceCustomServiceRead(ctx, d, meta)
 }
@@ -126,11 +135,16 @@ func resourceCustomServiceRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error while reading custom service: %+v", err)
 	}
 
-	if err := d.Set("display_name", customService.DisplayName); err != nil {
+	if err := d.Set("display_name", customService.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", customService.ProjectID); err != nil {
+	description := customService.GetDescription()
+	if err := d.Set("description", description); err != nil {
+		return diag.Errorf("error setting description: %+v", err)
+	}
+
+	if err := d.Set("project_id", customService.GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
@@ -138,19 +152,23 @@ func resourceCustomServiceRead(ctx context.Context, d *schema.ResourceData, meta
 		return diag.Errorf("error setting members: %+v", err)
 	}
 
-	if err := d.Set("created_by", customService.CreatedBy); err != nil {
+	//if err := d.Set("build_in", customService.GetBuildIn()); err != nil {
+	//	return diag.Errorf("error setting buildIn: %+v", err)
+	//}
+
+	if err := d.Set("created_by", customService.GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", customService.CreationDate.String()); err != nil {
+	if err := d.Set("created_at", customService.GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", customService.ModifiedBy); err != nil {
+	if err := d.Set("modified_by", customService.GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", customService.ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", customService.GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
@@ -161,7 +179,7 @@ func resourceCustomServiceUpdate(ctx context.Context, d *schema.ResourceData, me
 	proxy := meta.(*sdk.Client).CustomServices
 
 	customService := mapResourceDataToCustomService(d)
-	customService.ServiceID = strfmt.UUID(d.Id())
+	customService.ServiceId = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, customService)
 	if err != nil {
@@ -188,10 +206,22 @@ func resourceCustomServiceDelete(ctx context.Context, d *schema.ResourceData, me
 	return nil
 }
 
-func mapResourceDataToCustomService(d *schema.ResourceData) *models.CustomServiceInstance {
-	return &models.CustomServiceInstance{
-		DisplayName:      d.Get("display_name").(string),
-		ProjectID:        strfmt.UUID(d.Get("project_id").(string)),
-		L4PortSetEntries: expandCustomServicePorts(d.Get("ports").([]interface{})),
+func mapResourceDataToCustomService(d *schema.ResourceData) openapi.CustomServiceInstance {
+
+	if d.Get("description") == "" {
+		description := d.Get("description").(string)
+		return openapi.CustomServiceInstance{
+			DisplayName:      NewNullableString(d.Get("display_name").(string)),
+			ProjectId:        NewNullableString(d.Get("project_id").(string)),
+			Description:      NewNullableString(description),
+			L4PortSetEntries: expandCustomServicePorts(d.Get("ports").([]interface{})),
+		}
+	} else {
+		return openapi.CustomServiceInstance{
+			DisplayName:      NewNullableString(d.Get("display_name").(string)),
+			ProjectId:        NewNullableString(d.Get("project_id").(string)),
+			Description:      NewNullableString(d.Get("description").(string)),
+			L4PortSetEntries: expandCustomServicePorts(d.Get("ports").([]interface{})),
+		}
 	}
 }

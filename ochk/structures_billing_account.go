@@ -2,12 +2,13 @@ package ochk
 
 import (
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func flattenAccount(in []*models.AccountInstance) []map[string]interface{} {
+func flattenAccount(in []openapi.AccountInstance) []map[string]interface{} {
 	if len(in) == 0 {
 		return nil
 	}
@@ -16,54 +17,74 @@ func flattenAccount(in []*models.AccountInstance) []map[string]interface{} {
 
 	for _, v := range in {
 		m := make(map[string]interface{})
-		m["account_id"] = fmt.Sprint(v.AccountID)
-		m["display_name"] = v.AccountName
+		m["account_id"] = fmt.Sprint(v.GetAccountId())
+		m["display_name"] = v.AccountName.Get()
 
 		out = append(out, m)
 	}
 	return out
 }
 
-func flattenAccProjects(in []*models.AccountProjectInstance) *schema.Set {
+func flattenAccProjects(in []openapi.AccountProjectInstance) *schema.Set {
 	out := &schema.Set{
 		F: projectsHash,
 	}
 
 	for _, v := range in {
-		m := make(map[strfmt.UUID]interface{})
-		m["project_id"] = v.ProjectID
-		if v.Name != "" {
-			m["display_name"] = v.Name
+		m := make(map[string]interface{})
+		m["project_id"] = v.GetProjectId()
+		if v.Name != NewNullableString("") {
+			m["display_name"] = v.Name.Get()
 		}
 		out.Add(m)
 	}
 	return out
 }
 
-func projectsHash(v interface{}) int {
-	m := v.(map[strfmt.UUID]interface{})
+//func projectsHash(v interface{}) int {
+//	m := v.(map[strfmt.UUID]interface{})
+//
+//	return schema.HashString((m["project_id"].(strfmt.UUID)).String())
+//}
 
-	return schema.HashString((m["project_id"].(strfmt.UUID)).String())
+func projectsHash(v interface{}) int {
+	m := v.(map[string]interface{})
+
+	projectID := m["project_id"].(string)
+
+	return schema.HashString(projectID)
 }
 
-func expandAcctProjects(in []interface{}) []*models.AccountProjectInstance {
+func expandAcctProjects(in []interface{}) []openapi.AccountProjectInstance {
 	if len(in) == 0 {
 		return nil
 	}
 
-	var out = make([]*models.AccountProjectInstance, len(in))
+	out := make([]openapi.AccountProjectInstance, len(in))
+
 	for i, v := range in {
 		m := v.(map[strfmt.UUID]interface{})
 
-		member := &models.AccountProjectInstance{
-			ProjectID: m["project_id"].(strfmt.UUID),
+		var projectID string
+		switch id := m["project_id"].(type) {
+		case string:
+			projectID = id
+		case strfmt.UUID:
+			projectID = string(id)
+		default:
+			panic(fmt.Sprintf("unexpected project_id type: %T", id))
+		}
+
+		member := openapi.AccountProjectInstance{
+			ProjectId: NewNullableString(projectID),
 		}
 
 		if displayName, ok := m["display_name"].(string); ok && displayName != "" {
-			member.Name = displayName
+			member.Name = NewNullableString(displayName)
 		}
 
 		out[i] = member
 	}
+
 	return out
 }

@@ -3,7 +3,7 @@ package ochk
 import (
 	"context"
 	"fmt"
-	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3/models"
+	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/api/v3"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/go-openapi/strfmt"
 	"strings"
@@ -135,7 +135,7 @@ func resourceFirewallEWRuleCreate(ctx context.Context, d *schema.ResourceData, m
 		return diag.Errorf("error while creating firewall EW rule: %+v", err)
 	}
 
-	d.SetId(created.RuleID.String())
+	d.SetId(created.GetRuleId())
 
 	return resourceFirewallEWRuleRead(ctx, d, meta)
 }
@@ -156,27 +156,27 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error while reading firewall EW rule: %+v", err)
 	}
 
-	if err := d.Set("display_name", firewallEWRule.DisplayName); err != nil {
+	if err := d.Set("display_name", firewallEWRule.GetDisplayName()); err != nil {
 		return diag.Errorf("error setting display_name: %+v", err)
 	}
 
-	if err := d.Set("project_id", firewallEWRule.ProjectID); err != nil {
+	if err := d.Set("project_id", firewallEWRule.GetProjectId()); err != nil {
 		return diag.Errorf("error setting project_id: %+v", err)
 	}
 
-	if err := d.Set("action", firewallEWRule.Action); err != nil {
+	if err := d.Set("action", firewallEWRule.GetAction()); err != nil {
 		return diag.Errorf("error setting action: %+v", err)
 	}
 
-	if err := d.Set("direction", firewallEWRule.Direction); err != nil {
+	if err := d.Set("direction", firewallEWRule.GetDirection()); err != nil {
 		return diag.Errorf("error setting direction: %+v", err)
 	}
 
-	if err := d.Set("disabled", firewallEWRule.Disabled); err != nil {
+	if err := d.Set("disabled", firewallEWRule.GetDisabled()); err != nil {
 		return diag.Errorf("error setting disabled: %+v", err)
 	}
 
-	if err := d.Set("ip_protocol", firewallEWRule.IPProtocol); err != nil {
+	if err := d.Set("ip_protocol", firewallEWRule.GetIpProtocol()); err != nil {
 		return diag.Errorf("error setting ip_protocol: %+v", err)
 	}
 
@@ -198,23 +198,23 @@ func resourceFirewallEWRuleRead(ctx context.Context, d *schema.ResourceData, met
 		return diag.Errorf("error setting destination: %+v", err)
 	}
 
-	if err := d.Set("priority", int(firewallEWRule.Priority)); err != nil {
+	if err := d.Set("priority", firewallEWRule.GetPriority()); err != nil {
 		return diag.Errorf("error setting priority: %+v", err)
 	}
 
-	if err := d.Set("created_by", firewallEWRule.CreatedBy); err != nil {
+	if err := d.Set("created_by", firewallEWRule.GetCreatedBy()); err != nil {
 		return diag.Errorf("error setting created_by: %+v", err)
 	}
 
-	if err := d.Set("created_at", firewallEWRule.CreationDate.String()); err != nil {
+	if err := d.Set("created_at", firewallEWRule.GetCreationDate()); err != nil {
 		return diag.Errorf("error setting created_at: %+v", err)
 	}
 
-	if err := d.Set("modified_by", firewallEWRule.ModifiedBy); err != nil {
+	if err := d.Set("modified_by", firewallEWRule.GetModifiedBy()); err != nil {
 		return diag.Errorf("error setting modified_by: %+v", err)
 	}
 
-	if err := d.Set("modified_at", firewallEWRule.ModificationDate.String()); err != nil {
+	if err := d.Set("modified_at", firewallEWRule.GetModificationDate()); err != nil {
 		return diag.Errorf("error setting modified_at: %+v", err)
 	}
 
@@ -231,7 +231,7 @@ func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 	routerID := strfmt.UUID(d.Get("vpc_id").(string))
 
 	firewallEWRule := mapResourceDataToEWRule(d)
-	firewallEWRule.RuleID = strfmt.UUID(d.Id())
+	firewallEWRule.RuleId = NewNullableString(d.Id())
 
 	_, err := proxy.Update(ctx, routerID, firewallEWRule)
 	if err != nil {
@@ -241,60 +241,61 @@ func resourceFirewallEWRuleUpdate(ctx context.Context, d *schema.ResourceData, m
 	return resourceFirewallEWRuleRead(ctx, d, meta)
 }
 
-func castStringToActionEnum(e string) models.Action {
+func castStringToActionEnum(e string) *openapi.Action {
 	switch e {
 	case "ALLOW":
-		return models.ActionALLOW
+		return &openapi.AllowedActionEnumValues[0]
 	case "REJECT":
-		return models.ActionREJECT
+		return &openapi.AllowedActionEnumValues[1]
 	case "DROP":
-		return models.ActionDROP
+		return &openapi.AllowedActionEnumValues[2]
 	default:
-		return ""
+		return nil
 	}
 }
 
-func castStringToADirectionEnum(e string) models.Direction {
+func castStringToADirectionEnum(e string) *openapi.Direction {
 	switch e {
 	case "IN_OUT":
-		return models.DirectionINOUT
+		return &openapi.AllowedDirectionEnumValues[0]
 	case "IN":
-		return models.DirectionIN
+		return &openapi.AllowedDirectionEnumValues[1]
 	case "OUT":
-		return models.DirectionOUT
+		return &openapi.AllowedDirectionEnumValues[2]
 	default:
-		return ""
+		return nil
 	}
 }
 
-func castStringToAIPProtocolEnum(e string) models.IPProtocol {
+func castStringToAIPProtocolEnum(e string) *openapi.IpProtocol {
 	switch e {
 	case "IPV4_IPV6":
-		return models.IPProtocolIPV4IPV6
+		return &openapi.AllowedIpProtocolEnumValues[0]
 	case "IPV4":
-		return models.IPProtocolIPV4
+		return &openapi.AllowedIpProtocolEnumValues[1] // IPV4 is duplicated in EtherType
 	case "IPV6":
-		return models.IPProtocolIPV6
+		return &openapi.AllowedIpProtocolEnumValues[2] // IPV6 is duplicated in EtherType
 	default:
-		return ""
+		return nil
 	}
 }
 
-func mapResourceDataToEWRule(d *schema.ResourceData) *models.DfwRule {
-	rule := &models.DfwRule{
-		DisplayName: d.Get("display_name").(string),
-		ProjectID:   strfmt.UUID(d.Get("project_id").(string)),
+func mapResourceDataToEWRule(d *schema.ResourceData) openapi.DfwRule {
+	priorityValue := d.Get("priority").(int)
+	rule := openapi.DfwRule{
+		DisplayName: NewNullableString(d.Get("display_name").(string)),
+		ProjectId:   NewNullableString(d.Get("project_id").(string)),
 		Action:      castStringToActionEnum(d.Get("action").(string)),
 		Direction:   castStringToADirectionEnum(d.Get("direction").(string)),
-		Priority:    int64(d.Get("priority").(int)),
+		Priority:    NewNullableInt64(int64(priorityValue)),
 	}
 
 	if disabled, ok := d.GetOk("disabled"); ok && disabled.(bool) {
-		rule.Disabled = true
+		rule.Disabled = NewNullableBool(true)
 	}
 
 	if ipProtocol, ok := d.GetOk("ip_protocol"); ok {
-		rule.IPProtocol = castStringToAIPProtocolEnum(ipProtocol.(string))
+		rule.IpProtocol = castStringToAIPProtocolEnum(ipProtocol.(string))
 	}
 
 	if services, ok := d.GetOk("services"); ok {

@@ -3,11 +3,12 @@ package ochk
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk"
 	"github.com/chmurakrajowa/terraform-provider-ochk/ochk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"testing"
 )
 
 type RouterTestData struct {
@@ -99,7 +100,7 @@ func testAccRouterResourceNotExists(displayName string) resource.TestCheckFunc {
 		}
 
 		if len(Routers) > 0 {
-			return fmt.Errorf("vpc %s still exists", Routers[0].RouterID)
+			return fmt.Errorf("vpc %s still exists", Routers[0].GetRouterId())
 		}
 
 		return nil
